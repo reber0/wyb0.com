@@ -45,17 +45,20 @@ git config --global user.email "123456@qq.com"
 
 ### 0x08 生成html文档，然后创建分支，进行同步
 > ```
-hugo  
-cd public/  
-git init  
-git checkout - -orphan gh-pages  
-git remote add origin git@github.com:reber-9/reber-9.com.git  
-git pull origin gh-pages
+$ mkdir public
+$ cd public/
+$ git init  
+$ git checkout --orphan gh-pages  
+$ git remote add origin git@github.com:reber-9/reber-9.com.git  
+$ git pull origin gh-pages
+$ cd ../
 ```
 
 ### 0x09 添加文件然后上传
 > ```
-git add .  
-git commit -m "add html"  
-git push origin gh-pages
+$ hugo
+$ cd pulbic/
+$ git add .  
+$ git commit -m "add html"  
+$ git push origin gh-pages
 ```
