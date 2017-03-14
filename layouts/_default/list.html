@@ -1,0 +1,46 @@
+{{ partial "header.html" . }}
+
+<!-- 显示Posts列表，即所有文章题目 -->
+
+<div class="reber">
+    {{ partial "page_head.html" . }}
+
+    <div class="main">
+        <div class="left">
+            {{ range .Data.Pages.GroupByDate "2006" }}
+            <h2>{{ .Key }}</h2>
+            <ul>
+                {{ range .Pages }}
+                    <li>
+                        <div class="pure-u-16-24">
+                            <a href="{{ .Permalink }}">{{ .Title }}</a>
+                        </div>
+                        <div class="pure-u-5-24">
+                            <time>
+                                {{ with .Site.Params.DateFormat }}
+                                    {{ $.Date.Format "2006-01-02 15:04" }}
+                                {{ else }}
+                                    {{ .Date.Format "02 Jan 2006, 15:04" }}
+                                {{ end }}
+                            </time>
+                        </div>
+                    </li>
+                {{ end }}
+            </ul>
+            {{ end }}
+        </div>
+        <div class="right">
+            <div>
+                <br>
+                {{ partial "topics.html" . }}
+                {{ partial "tags.html" . }}
+                {{ partial "links.html" . }}
+            </div>
+        </div>
+    </div>
+
+    <br><br><br>
+    {{ partial "page_foot.html" . }}
+</div>
+
+{{ partial "footer.html" . }}

@@ -1,0 +1,20 @@
+
+<div class="main">
+    <div class="left">
+        <div class="cont">
+            {{ range first .Site.Params.Paginate .Data.Pages }}
+                {{ .Render "summary"}}
+            {{ end }}
+
+            {{ partial "pagination.html" . }}
+        </div>
+    </div>
+    <div class="right">
+        <div>
+            <br>
+            {{ partial "topics.html" . }}
+            {{ partial "tags.html" . }}
+            {{ partial "links.html" . }}
+        </div>
+    </div>
+</div>

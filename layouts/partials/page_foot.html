@@ -1,0 +1,25 @@
+
+<div class="foot">
+    <div style="float:left;text-align: center;">
+        <!-- Copyright -->
+        {{ .Site.Copyright | safeHTML }}
+
+        <!-- 站点统计 -->
+        <script type="text/javascript">
+          var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1261003390'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261003390%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+    <div style="float:right;">
+        <!-- social -->
+        {{ with .Site.Params.Social.GitHub }}
+            <a href="https://github.com/{{ . }}" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+        {{ end }}
+        &nbsp;&nbsp;
+        {{ with .Site.Params.Social.WeiboID }}
+            <a href="http://weibo.com/u/{{ . }}" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+        {{ end }}
+        &nbsp;&nbsp;
+        <a href="{{ .Site.BaseURL }}/index.xml" target="_blank"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </div>
+</div>
