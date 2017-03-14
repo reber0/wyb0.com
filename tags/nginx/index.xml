@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nginx on </title>
+    <link>http://wyb0.com/tags/nginx/</link>
+    <description>Recent content in Nginx on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Fri, 17 Jun 2016 22:41:50 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Linux下搭建Nginx&#43;MySQL&#43;PHP</title>
+      <link>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BANginx&#43;MySQL&#43;PHP/</link>
+      <pubDate>Fri, 17 Jun 2016 22:41:50 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BANginx&#43;MySQL&#43;PHP/</guid>
+      <description>
+
+&lt;pre&gt;&lt;code&gt;安装环境为：CentOS-6.5-x86_64-minimal
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;一-准备工作:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;一、准备工作&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;首先执行：
+    sudo yum groupinstall &amp;quot;Development tools&amp;quot;
+安装make：
+    yum -y install gcc automake autoconf libtool make
+安装g++：
+    yum install gcc gcc-c++
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;二-安装mysql和php:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;二、安装mysql和php&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;sudo yum install mysql mysql-server mysql-devel
+sudo yum install php php-devel
+sudo yum install php-gd php-mysql php-fpm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;三-安装依赖:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;三、安装依赖&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;安装pcre、pcre-devel&lt;br /&gt;
+sudo yum install pcre pcre-devel&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装zlib、zlib-devel&lt;br /&gt;
+sudo yum install zlib zlib-devel&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装ssl&lt;br /&gt;
+sudo yum install openssl openssl-devel&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;四-安装nginx:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;四、安装Nginx&lt;/h2&gt;
+
+&lt;p&gt;可在&lt;a href=&#34;http://nginx.org/download/nginx-1.9.9.tar.gz&#34;&gt;http://nginx.org/download/nginx-1.9.9.tar.gz&lt;/a&gt; 下载
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/download_nginx.png&#34; alt=&#34;下载nginx安装包&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;[reber@WYB nginx-1.9.9]$ ./configure
+[reber@WYB nginx-1.9.9]$ make
+[reber@WYB nginx-1.9.9]$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;五-启动与关闭nginx:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;五、启动与关闭nginx&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# 开启服务：
+[reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
+# 关闭服务：
+[reber@WYB nginx-1.9.9]$ killall nginx
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/visit_nginx.png&#34; alt=&#34;访问nginx.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;六-配置nginx支持php:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;六、配置nginx支持php&lt;/h2&gt;
+
+&lt;p&gt;[reber@WYB nginx-1.9.9]$ killall nginx&lt;br /&gt;
+[reber@WYB nginx-1.9.9]$ vim /usr/local/nginx/conf/nginx.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;location / {
+    root   html;
+    index  index.html index.htm index.php;
+}
+
+location ~ \.php$ {
+    root           html;
+    fastcgi_pass   127.0.0.1:9000;
+    fastcgi_index  index.php;
+    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    include        fastcgi_params;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;[reber@WYB nginx-1.9.9]$ sudo service php-fpm start
+[reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/visit_nginx_phpinfo.png&#34; alt=&#34;访问nginx的phpinfo.php.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

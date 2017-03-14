@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>目录 on </title>
+    <link>http://wyb0.com/tags/%E7%9B%AE%E5%BD%95/</link>
+    <description>Recent content in 目录 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Sun, 22 May 2016 16:29:47 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E7%9B%AE%E5%BD%95/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>PHP之目录与文件</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Sun, 22 May 2016 16:29:47 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/</guid>
+      <description>
+
+&lt;h2 id=&#34;1-目录的操作:4fd6cf0d51b03c2fe6439209faf46b96&#34;&gt;1.目录的操作&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+  $path = &amp;quot;/var/www/html/php/dir.php&amp;quot;;
+  echo dirname($path).&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;  //返回上级路径
+  echo basename($path).&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;  //返回文件名部分
+  print_r(pathinfo($path));  //返回包含path信息的数组
+
+  echo &amp;quot;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;quot;;
+
+  //readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动
+  $path = &amp;quot;D:/phpStudy/WWW/php&amp;quot;;
+  $dh = opendir($path);
+  while (false !== ($filename=readdir($dh))) {
+    echo $filename.&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;
+  }
+  rewinddir($dh);  //指针复位
+  echo readdir($dh);
+  closedir($dh);
+
+  mkdir(&amp;quot;./aaa&amp;quot;);//创建文件夹aaa
+  rmdir(&amp;quot;./aaa&amp;quot;);//删除文件夹aaa
+
+  file_put_contents(&amp;quot;aa.php&amp;quot;, &amp;quot;&amp;quot;);//创建文件aa.php
+  unlink(&amp;quot;./aa.php&amp;quot;);//删除文件aa.php
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;center&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/arrow.png&#34; alt=&#34;箭头&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/dir.png&#34; alt=&#34;目录的操作&#34;&gt;
+&lt;/div&gt;
+
+&lt;/center&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;2-文件的读写:4fd6cf0d51b03c2fe6439209faf46b96&#34;&gt;2.文件的读写&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;fopen(filename,mode)和fclose(filename,mode)
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/file_open_mode.png&#34; alt=&#34;fopen()打开文件的模式&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h5 id=&#34;例子:4fd6cf0d51b03c2fe6439209faf46b96&#34;&gt;例子：&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+$file = fopen(&amp;quot;test.txt&amp;quot;,&amp;quot;r&amp;quot;);
+$file = fopen(&amp;quot;/home/test/test.txt&amp;quot;,&amp;quot;r&amp;quot;);
+$file = fopen(&amp;quot;/home/test/test.gif&amp;quot;,&amp;quot;wb&amp;quot;);
+$file = fopen(&amp;quot;http://www.example.com/&amp;quot;,&amp;quot;r&amp;quot;);
+$file = fopen(&amp;quot;ftp://user:password@example.com/test.txt&amp;quot;,&amp;quot;w&amp;quot;);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;读取内容&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;fread(h_file,length)  //读取打开文件的length个字节，返回读取的字符串  
+fgets(h_file,length)  //读取一行返回length个字节，不加length时默认1024个字节，失败返回false  
+fgetc(h_file)   //逐字读取
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;file_get_content()和file_put_content()&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;file_get_content($filename)可以得到文件中的所有内容  
+file_put_content($filename, $str)可以将字符串覆盖写入文件中  
+file_put_content($filename, $str, FILE_APPEND)可以将字符串追加到文件中
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;filetype()&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;filetype($filename)可以得到文件的类型
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;3-查看文件夹下的文件信息:4fd6cf0d51b03c2fe6439209faf46b96&#34;&gt;3.查看文件夹下的文件信息&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $path = &amp;quot;./&amp;quot;;
+    $filelist=array(&amp;quot;filesystem.php&amp;quot;);//要过滤掉的文件
+
+    //浏览指定目录下的文件，并使用表格输出
+    //path目录信息的过滤，判断path存在，并且是否是个目录
+    if(!file_exists($path) || !is_dir($path)){
+        die($path.&amp;quot;目录无效！&amp;quot;);
+    }
+    //2. 输出表头信息
+    echo &amp;quot;&amp;lt;h3&amp;gt;{$path}目录下的文件信息&amp;lt;h3&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;table width=&#39;600&#39; border=&#39;0&#39;&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;tr bgcolor=&#39;#cccccc&#39; align=&#39;left&#39;&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;th&amp;gt;序号&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;名称&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;类型&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;大小&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;创建时间&amp;lt;/th&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;/tr&amp;gt;&amp;quot;;
+
+    //打开这个目录，并遍历目录下面的所有文件
+    $dir = opendir($path);
+    if($dir){
+        $i=0;
+        //遍历目录中的文件,并输出文件的信息
+        while($f = readdir($dir)){
+            if($f==&amp;quot;.&amp;quot; || $f==&amp;quot;..&amp;quot; || in_array($f,$filelist)){
+                continue;//跳出本次循环，继续下一次遍历。
+            }
+            $file = trim($path,&amp;quot;/&amp;quot;).&amp;quot;/&amp;quot;.$f;
+            $i++;
+            echo &amp;quot;&amp;lt;tr&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;{$i}&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;{$f}&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;&amp;quot;.filetype($file).&amp;quot;&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;&amp;quot;.filesize($file).&amp;quot;&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;&amp;quot;.date(&amp;quot;Y-m-d H:i:s&amp;quot;,filectime($file)).&amp;quot;&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;/tr&amp;gt;&amp;quot;;
+        }
+        closedir($dir); //关闭目录
+    }
+    echo &amp;quot;&amp;lt;tr bgcolor=&#39;#cccccc&#39; align=&#39;left&#39;&amp;gt;&amp;lt;td colspan=&#39;6&#39;&amp;gt;&amp;amp;nbsp;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;/table&amp;gt;&amp;quot;;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;center&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/arrow.png&#34; alt=&#34;箭头&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/file_info.png&#34; alt=&#34;查看文件夹下的文件信息&#34;&gt;
+&lt;/div&gt;
+
+&lt;/center&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Termcolor on </title>
+    <link>http://wyb0.com/tags/termcolor/</link>
+    <description>Recent content in Termcolor on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Fri, 19 Aug 2016 19:42:14 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/termcolor/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Python的一些小模块</title>
+      <link>http://wyb0.com/posts/Python%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Fri, 19 Aug 2016 19:42:14 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Python%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%A8%A1%E5%9D%97/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-colorama:790dd5e6005cf75dbef05cf9a3332221&#34;&gt;0x00 colorama&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;这个模块可以输出带有颜色的字符&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import colorama
+
+colorama.init()
+
+print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.CYAN,content=&#39;debug&#39;,g_color=colorama.Fore.RESET)
+print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.YELLOW,content=&#39;warning&#39;,g_color=colorama.Fore.RESET)
+print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.RED,content=&#39;error&#39;,g_color=colorama.Fore.RESET)
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_moudle_colorama.png&#34; alt=&#34;python的colorama模块&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-pyfiglet:790dd5e6005cf75dbef05cf9a3332221&#34;&gt;0x01 pyfiglet&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可以输出字体的图片效果&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from pyfiglet import figlet_format
+
+print figlet_format(&amp;quot;reber&amp;quot;, font=&amp;quot;xtty&amp;quot;) #font可以控制输出的类型
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_moudle_pyfiglet.png&#34; alt=&#34;python的pyfiglet模块&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-chardet:790dd5e6005cf75dbef05cf9a3332221&#34;&gt;0x02 chardet&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
+import chardet
+import requests
+
+resp = requests.get(&amp;quot;https://tower.im/users/sign_in&amp;quot;)
+html = resp.content
+
+if not isinstance(html,unicode):
+    code = chardet.detect(html)
+    print code #输出当前的编码方式
+    
+    #解码为unicode，然后编码为gbk
+    str1 = html.decode(code[&#39;encoding&#39;]).encode(&#39;gbk&#39;)
+    print chardet.detect(str1)
+
+    start = str1.find(&#39;&amp;lt;title&amp;gt;&#39;)
+    stop = str1.find(&#39;&amp;lt;/title&#39;)
+    print str1[start+7:stop]
+else:
+    print u&amp;quot;编码是unicode.&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_moudle_chardet.png&#34; alt=&#34;python的chardet模块&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-tqdm:790dd5e6005cf75dbef05cf9a3332221&#34;&gt;0x03 tqdm&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;进度条&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from tqdm import tqdm
+import time
+
+num = 233
+for x in tqdm(xrange(1,num+1)):
+    time.sleep(0.001)
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_moudle_tqdm.png&#34; alt=&#34;python的tqdm模块&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-xpinyin:790dd5e6005cf75dbef05cf9a3332221&#34;&gt;0x04 xpinyin&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可以将汉字转化为拼音&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; from xpinyin import Pinyin
+&amp;gt;&amp;gt;&amp;gt; p = Pinyin()
+&amp;gt;&amp;gt;&amp;gt; p.get_pinyin(u&#39;上海&#39;)
+u&#39;shang-hai&#39;
+&amp;gt;&amp;gt;&amp;gt; p.get_pinyin(u&#39;上海&#39;,&#39;&#39;)
+u&#39;shanghai&#39;
+&amp;gt;&amp;gt;&amp;gt; p.get_pinyin(u&#39;上海&#39;,&#39;:::&#39;)
+u&#39;shang:::hai&#39;
+&amp;gt;&amp;gt;&amp;gt; p.get_initials(u&#39;上海&#39;,&#39;&#39;)
+u&#39;SH&#39;
+&amp;gt;&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

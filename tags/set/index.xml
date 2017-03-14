@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Set on </title>
+    <link>http://wyb0.com/tags/set/</link>
+    <description>Recent content in Set on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 19 Jan 2016 13:47:17 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/set/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Python的数据类型</title>
+      <link>http://wyb0.com/posts/Python%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Tue, 19 Jan 2016 13:47:17 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Python%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-特点及差别:c733b8ea7a338b199e34e6a4d816e9d6&#34;&gt;0x00 特点及差别&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;常见4种数据类型：list、tuple、dict、set
+
+list即列表，它内部是有序的，可以添加、更新、删除元素
+tuple是元组，它的内部也是有序的，但一般不可更新、删除，即内部元素不可变
+dict即字典，它的内部无序，key不可变、不可重复，key值可更新，可删除键值对
+set可用作求交集、并集等，它的内部无序，key不可变、不可重复，可添加和删除
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-操作示例:c733b8ea7a338b199e34e6a4d816e9d6&#34;&gt;0x01 操作示例&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+#######################################
+print &#39;-----list-----&#39;
+L = [] #这样就可以声明一个list了
+n = 1
+while n &amp;lt;= 9:
+    L.append(n) #添加
+    n = n + 2
+print L #[1,3,5,7,9]
+L[len(L)-1] = 11 #更新
+print L #[1,3,5,7,11]
+L.pop() #删除,和L.pop(-1)一样
+L.pop(-2)
+print L #[1,3,7]
+L.insert(1,&#39;jack&#39;)
+for x in range(len(L)):
+    print L[x], #逗号可抑制换行，结果为 1 jack 3 7
+print &#39;\n-----list-----\n&#39;
+#######################################
+print &#39;-----tuple-----&#39;
+T =(&#39;Michael&#39;,&#39;Bob&#39;,&#39;Tracy&#39;)
+print T #[&#39;Michael&#39;, &#39;Bob&#39;, &#39;Tracy&#39;]
+for x in range(len(T)):
+    print T[x], # Michael Bob Tracy
+print &#39;\n-----tuple-----\n&#39;
+#######################################
+print &#39;-----dict-----&#39;
+D = {&#39;Adam&#39;:95,&#39;Lisa&#39;:90,&#39;Bart&#39;:75}
+print D #{&#39;Lisa&#39;: 90, &#39;Adam&#39;: 95, &#39;Bart&#39;: 75}
+D[&#39;Lisa&#39;] = 99 #更新
+D[&#39;Kongming&#39;] = &#39;X&#39;  #添加
+print D #{&#39;Lisa&#39;: 99, &#39;Kongming&#39;: &#39;X&#39;, &#39;Adam&#39;: 95, &#39;Bart&#39;: 75}
+D.pop(&#39;Bart&#39;) #删除key和对应的值
+print D #{&#39;Lisa&#39;: 99, &#39;Kongming&#39;: &#39;X&#39;, &#39;Adam&#39;: 95}
+print D.get(&#39;Adam&#39;)
+for key in D:
+    print (key), #Lisa Kongming Adam
+print #单个print默认为换行
+for key in D:
+    print (D[key]), #99 X 95
+print &#39;\n-----dict-----\n&#39;
+#######################################
+print &#39;-----set-----&#39;
+S = set([&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;d&#39;,&#39;e&#39;])
+print S #set([&#39;a&#39;, &#39;c&#39;, &#39;b&#39;, &#39;e&#39;, &#39;d&#39;])
+S.remove(&#39;b&#39;) #删除
+print S # set([&#39;a&#39;, &#39;c&#39;, &#39;e&#39;, &#39;d&#39;])
+S.add(5) #添加
+for x in S:
+    print x, #a c e d 5
+print &#39;\n-----set-----&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_data_type.png&#34; alt=&#34;python数据的操作&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-切片:c733b8ea7a338b199e34e6a4d816e9d6&#34;&gt;0x02 切片&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+L = [&#39;Michael&#39;,&#39;Sarah&#39;,&#39;Tracy&#39;,&#39;Bob&#39;,&#39;Jack&#39;]
+r = []
+for i in range(3): #i的值为0、1、2
+    r.append(L[i]) #取前3个元素依次添加到r
+print r
+
+#切片取前3个元素,L[1:3]表示从索引1开始取,直到索引3为止,但不包括索引3
+print L[1:3]
+print L[:2] #第一个索引为0,可以省略
+print L[-2:] #倒数第一个元素的索引是-1
+
+L = range(20) #取0-19
+print L
+print L[:10] #取前10个数
+print L[-10:] #取后10个数
+print L[:10:2] #取前10个数,且每两个取一个,即取2的倍数
+print L[::5] #所有数每5个取1个,取5的倍数
+print L[:] #原样复制一个list
+LL = L[::]  #LL的值将和L中的一样，就是复制了
+SS = L[::-1]  #SS的内容为L内容的倒序
+
+#tuple也是一种list，唯一区别是tuple不可变，它也可用切片操作
+print (1,2,3,4,5)[:3]
+#字符串&#39;xxx&#39;或Unicode字符串u&#39;xxx&#39;也可看成一种list
+print &#39;abcdefg&#39;[1:4]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_slice.png&#34; alt=&#34;python的切片&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-迭代:c733b8ea7a338b199e34e6a4d816e9d6&#34;&gt;0x03 迭代&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;通过for循环遍历list或tuple这种遍历在python中称为迭代&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;d = {&#39;a&#39;:1,&#39;b&#39;:2,&#39;c&#39;:3}
+for k,v in d.iteritems():
+    print k,v
+for k in d:
+    print k,
+print
+for v in d.itervalues():
+    print v,
+print
+for x,y in [(1,1),(2,4),(3,9)]: #python可一次将多个值赋给多个变量
+    print x,y
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_iteration.png&#34; alt=&#34;python的迭代&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-解析json:c733b8ea7a338b199e34e6a4d816e9d6&#34;&gt;0x04 解析json&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;常用函数&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;json.dumps()
+
+&lt;ul&gt;
+&lt;li&gt;编码：把一个Python对象编码转换成Json字符串&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;json.loads()
+
+&lt;ul&gt;
+&lt;li&gt;解码：把Json格式字符串解码转换成Python对象&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_json.png&#34; alt=&#34;python解析json&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;排序和缩进&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_sort_and_indent.png&#34; alt=&#34;排序和缩进&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cmd on </title>
+    <link>http://wyb0.com/tags/cmd/</link>
+    <description>Recent content in Cmd on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Thu, 14 Jul 2016 09:44:06 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/cmd/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Python的cmd模块</title>
+      <link>http://wyb0.com/posts/Python%E7%9A%84cmd%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Thu, 14 Jul 2016 09:44:06 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Python%E7%9A%84cmd%E6%A8%A1%E5%9D%97/</guid>
+      <description>
+
+&lt;h2 id=&#34;关于cmd模块:0adbccfbc65375db49c626d1a3a0e246&#34;&gt;关于cmd模块&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;cmd模块的一些常用方法:0adbccfbc65375db49c626d1a3a0e246&#34;&gt;cmd模块的一些常用方法：&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器&lt;/li&gt;
+&lt;li&gt;onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名&lt;/li&gt;
+&lt;li&gt;emptyline()：当输入空行时调用该方法&lt;/li&gt;
+&lt;li&gt;default(line)：当无法识别输入的command时调用该方法&lt;/li&gt;
+&lt;li&gt;completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数&lt;/li&gt;
+&lt;li&gt;precmd(line)：命令line解析之前被调用该方法&lt;/li&gt;
+&lt;li&gt;postcmd(stop，line)：命令line解析之后被调用该方法&lt;/li&gt;
+&lt;li&gt;preloop()：cmdloop()运行之前调用该方法&lt;/li&gt;
+&lt;li&gt;postloop()：cmdloop()退出之后调用该方法&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;用cmd模块简单实现shell命令:0adbccfbc65375db49c626d1a3a0e246&#34;&gt;用cmd模块简单实现shell命令&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
+import sys
+import os
+import socket
+from cmd import Cmd
+
+class ClassShell(Cmd):
+    &amp;quot;&amp;quot;&amp;quot;docstring for ClassShell&amp;quot;&amp;quot;&amp;quot;
+    def __init__(self):
+        Cmd.__init__(self)
+        os.chdir(&amp;quot;C:/Users/WYB_9/Desktop&amp;quot;)
+        hostName = socket.gethostname()
+        self.prompt = &amp;quot;reber@&amp;quot; + hostName + &amp;quot;  &amp;quot; + os.path.abspath(&#39;.&#39;) + &amp;quot;\n$ &amp;quot;
+        
+
+    def help_dir(self):
+        print &amp;quot;dir [path]&amp;quot;
+    def do_dir(self, arg):
+        if not arg:
+            print &amp;quot;\n&amp;quot;.join(os.listdir(&#39;.&#39;))
+        elif os.path.exists(arg):
+            print &amp;quot;\n&amp;quot;.join(os.listdir(arg))
+        else:
+            print &amp;quot;no such path exists&amp;quot;
+
+    def help_ls(self):
+        print &amp;quot;ls [path]&amp;quot;
+    def do_ls(self, arg):
+        if not arg:
+            print &amp;quot;\n&amp;quot;.join(os.listdir(&#39;.&#39;))
+        elif os.path.exists(arg):
+            print &amp;quot;\n&amp;quot;.join(os.listdir(arg))
+        else:
+            print &amp;quot;no such path exists&amp;quot;
+
+    def help_pwd(self):
+        print &amp;quot;pwd&amp;quot;
+    def do_pwd(self, arg):
+        print os.path.abspath(&#39;.&#39;)
+
+    def help_cd(self):
+        print &amp;quot;cd [path]&amp;quot;
+    def do_cd(self, arg):
+        hostName = socket.gethostname()
+        if not arg:
+            os.chdir(&amp;quot;C:/Users/WYB_9/Desktop&amp;quot;)
+            self.prompt = &amp;quot;reber@&amp;quot; + hostName + &amp;quot;  &amp;quot; + os.path.abspath(&#39;.&#39;) + &amp;quot;\n$ &amp;quot;
+        elif os.path.exists(arg):
+            os.chdir(arg)
+            self.prompt = &amp;quot;reber@&amp;quot; + hostName + &amp;quot;  &amp;quot; + os.path.abspath(&#39;.&#39;) + &amp;quot;\n$ &amp;quot;
+        else:
+            print &amp;quot;no such path&amp;quot;
+
+    def help_clear(self):
+        print &amp;quot;clear&amp;quot;
+    def do_clear(self, arg):
+        i = os.system(&#39;cls&#39;)
+
+    def help_cat(self):
+        print &amp;quot;cat filename&amp;quot;
+    def do_cat(self, arg):
+        if os.path.exists(arg):
+            with open(arg,&amp;quot;r&amp;quot;) as f:
+                data = f.read()
+            print data
+        else:
+            print &amp;quot;no such file exists&amp;quot;
+
+    def help_mv(self):
+        print &amp;quot;mv oldfilename newfilename&amp;quot;
+    def do_mv(self, arg):
+        oldfilename,newfilename = arg.split()
+        if os.path.exists(oldfilename):
+            os.rename(oldfilename,newfilename)
+        else:
+            print &amp;quot;no such file:&amp;quot; + oldfilename
+
+    def help_touch(self):
+        print &amp;quot;touch filename&amp;quot;
+    def do_touch(self, arg):
+        with open(arg, &amp;quot;w&amp;quot;) as f:
+            pass
+
+    def help_rm(self):
+        print &amp;quot;rm filepath&amp;quot;
+    def do_rm(self, arg):
+        if os.path.exists(arg):
+            os.remove(arg)
+        else:
+            print &amp;quot;no such file:&amp;quot; + arg
+        
+    def help_cp(self):
+        print &amp;quot;cp oldfilepath newfilepath&amp;quot;
+    def do_cp(self, arg):
+        oldfilepath,newfilepath = arg.split()
+        if os.path.exists(oldfilepath):
+            with open(oldfilepath, &amp;quot;r&amp;quot;) as f:
+                data = f.read()
+            with open(newfilepath, &amp;quot;w&amp;quot;) as f:
+                f.write(data)
+        else:
+            print &amp;quot;no such path:&amp;quot; + oldfilepath
+
+    def help_exit(self):
+        print &amp;quot;input exit will exit the program&amp;quot;
+
+    def do_exit(self, arg):
+        print &amp;quot;Exit:&amp;quot;,arg
+        sys.exit()
+
+
+if __name__ == &#39;__main__&#39;:
+    shell = ClassShell()
+    shell.cmdloop()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;程序执行结果如下:0adbccfbc65375db49c626d1a3a0e246&#34;&gt;程序执行结果如下&lt;/h2&gt;
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/cmd_results_sample.png&#34; alt=&#34;cmd简单实现shell运行结果.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

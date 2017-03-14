@@ -1,0 +1,1320 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>软件 on </title>
+    <link>http://wyb0.com/tags/%E8%BD%AF%E4%BB%B6/</link>
+    <description>Recent content in 软件 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 23 Aug 2016 10:05:52 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E8%BD%AF%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Metasploit的简单使用</title>
+      <link>http://wyb0.com/posts/Metasploit%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 23 Aug 2016 10:05:52 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Metasploit%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-启动:5a9e5b832dc85eacc2ff860e6230e37a&#34;&gt;0x00 启动&lt;/h3&gt;
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_start.png&#34; alt=&#34;启动msf&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-metasploit的工作平台:5a9e5b832dc85eacc2ff860e6230e37a&#34;&gt;0x01 Metasploit的工作平台&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在msf里的工作平台可以保存历史的一些操作信息
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_workspace_h.png&#34; alt=&#34;msf工作平台的帮助信息&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_workspace.png&#34; alt=&#34;创建新的工作平台&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-使用db-nmap扫描主机:5a9e5b832dc85eacc2ff860e6230e37a&#34;&gt;0x02 使用db_nmap扫描主机&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_nmap_lanou3g_ip.png&#34; alt=&#34;扫描lanou3g的ip信息&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;扫描后的结果会保留在工作平台中-可以用hosts和services进行查看:5a9e5b832dc85eacc2ff860e6230e37a&#34;&gt;扫描后的结果会保留在工作平台中，可以用hosts和services进行查看：&lt;/h4&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_hosts.png&#34; alt=&#34;查看主机列表&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_services.png&#34; alt=&#34;查看服务&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-使用msf的模块进行弱口令爆破:5a9e5b832dc85eacc2ff860e6230e37a&#34;&gt;0x03 使用msf的模块进行弱口令爆破&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;h4 id=&#34;注-这里针对ftp服务进行弱口令测试:5a9e5b832dc85eacc2ff860e6230e37a&#34;&gt;注：这里针对ftp服务进行弱口令测试&lt;/h4&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_services_p_21.png&#34; alt=&#34;查看都有那个主机开启了21端口&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_search_module.png&#34; alt=&#34;查找用于ftp爆破的模块&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_use_module_and_set.png&#34; alt=&#34;使用模块并设置参数&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_use_show_options.png&#34; alt=&#34;查看设置的参数&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/msf_start_attack_ftp.png&#34; alt=&#34;开始攻击&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&#34;使用vulns可以查看结果-msf-auxiliary-ftp-login-vulns:5a9e5b832dc85eacc2ff860e6230e37a&#34;&gt;使用vulns可以查看结果：msf auxiliary(ftp_login) &amp;gt; vulns&lt;/h4&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu下安装Metasploit</title>
+      <link>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85Metasploit/</link>
+      <pubDate>Thu, 18 Aug 2016 10:38:41 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85Metasploit/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-安装metasploit:5ef2fdcf3f10108bc00e8ee0aa9fa263&#34;&gt;0x00 安装Metasploit&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;下载msfinstall脚本&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &amp;gt; msfinstall
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;修改文件权限&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ chmod 755 msfinstall
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装(时间较久)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ./msfinstall
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x01-连接数据库:5ef2fdcf3f10108bc00e8ee0aa9fa263&#34;&gt;0x01 连接数据库&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;首先启动postgresql数据库&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ /etc/init.d/postgresql start #service postgresql start也可以
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;初始化MSF数据库(关键步骤)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ msfdb init
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;运行msfconsole&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ msfconsole
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在msf中查看数据库连接状态&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;msf &amp;gt; db_status
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>BurpSuite抓手机包</title>
+      <link>http://wyb0.com/posts/BurpSuite%E6%8A%93%E6%89%8B%E6%9C%BA%E5%8C%85/</link>
+      <pubDate>Sat, 13 Aug 2016 23:53:39 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/BurpSuite%E6%8A%93%E6%89%8B%E6%9C%BA%E5%8C%85/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-环境设置:39a16c0b1f7c33b2e8e1623fba930241&#34;&gt;0x00 环境设置&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Windows Phone手机和电脑处于同一无线环境下：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_pc_ip.png&#34; alt=&#34;PC机的ip&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_ip_set.png&#34; alt=&#34;IP设置&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-burpsuite设置:39a16c0b1f7c33b2e8e1623fba930241&#34;&gt;0x01 BurpSuite设置&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_set_phone_proxy1.png&#34; alt=&#34;设置burpsuite抓8888端口的包1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_set_phone_proxy2.png&#34; alt=&#34;设置burpsuite抓8888端口的包2&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-抓http包:39a16c0b1f7c33b2e8e1623fba930241&#34;&gt;0x02 抓HTTP包&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_phone_visit_internet.png&#34; alt=&#34;手机访问网络&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_get_phone_packet.png&#34; alt=&#34;burpsuite抓手机包&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-抓https包:39a16c0b1f7c33b2e8e1623fba930241&#34;&gt;0x03 抓HTTPS包&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;挂burpsuite的代理下载证书
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_down_ca1.png&#34; alt=&#34;下载证书1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_down_ca2.png&#34; alt=&#34;下载证书2&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;把证书上传到你自己的服务器上(也可以本地搭建网站)，然后手机访问证书&lt;br /&gt;
+安卓手机修改证书后缀为crt，证书可以放在网站上，也可以直接拖到手机上，然后安装
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_phone_install_ca.png&#34; alt=&#34;手机安装证书&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;抓https数据包
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_get_https_packet1.png&#34; alt=&#34;手机访问https链接&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_get_https_packet2.png&#34; alt=&#34;burpsuite抓https包&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Redis的安装</title>
+      <link>http://wyb0.com/posts/Redis%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Wed, 03 Aug 2016 00:00:48 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Redis%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-关于redis:ccfa3b7be55824cf7252716ed708cbb8&#34;&gt;0x00 关于Redis&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库，
+实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高,
+不适合做海量数据存储。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-安装:ccfa3b7be55824cf7252716ed708cbb8&#34;&gt;0x01 安装&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可在&lt;a href=&#34;http://download.redis.io/releases/&#34;&gt;http://download.redis.io/releases/&lt;/a&gt; 下载&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd /opt
+$ wget http://download.redis.io/releases/redis-3.2.3.tar.gz
+$ tar -zxvf redis-3.2.3.tar.gz
+$ cd redis-3.2.3
+$ make
+$ make install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-产生的可执行文件:ccfa3b7be55824cf7252716ed708cbb8&#34;&gt;0x02 产生的可执行文件&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;redis-server：redis服务器启动程序
+redis-cli：redis命令行工具，也可为客户端
+redis-stat：redis状态检测工具
+redis-benchmark：redis性能检测工具(读写)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-配置文件:ccfa3b7be55824cf7252716ed708cbb8&#34;&gt;0x03 配置文件&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;$ vim /opt/redis-3.2.3/redis.conf
+  daemonize yes  # 当值为yes时可以后台运行
+  bind 127.0.0.1  # 绑定ip，配置后只接受来自该ip的请求
+  port 6379  # 监听端口
+  timeout 300 # 客户端连接超时时间，单位为秒
+  loglevel notice  # 日志等级分为4级，debug、verbose、notice、warning
+  logfile &amp;quot;/var/log/redis.log&amp;quot;  # 日志文件位置
+  databases 16  # 数据库数量
+  sava 900 1  # 设置数据库镜像的频率
+  dbfilename dump.rdb  # 镜像备份文件的名字
+  dir ./ 数据库镜像备份保存路径
+  # slaveof &amp;lt;masterip&amp;gt; &amp;lt;masterport&amp;gt;  # 设置这个redis为从服务器
+  # masterauth &amp;lt;master-password&amp;gt;  # 主服务器连接需要的密码验证
+  # requirepass 123456  # 登陆时的密码
+  maxclients 10000  # 最大连接的客户数量
+  # mexmemory &amp;lt;bytes&amp;gt;  # redis能够使用的最大内存
+  appendonly no  # 可以设置是否只能追加
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-启动测试:ccfa3b7be55824cf7252716ed708cbb8&#34;&gt;0x04 启动测试&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;本地启动：
+$ redis-server /opt/redis-3.2.3/redis.conf  # 启动服务
+$ ps -aux | grep redis
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;在另外一个机器上用redis-cli连接刚搭建的服务器：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/redis_install_conn_and_write_file.png&#34; alt=&#34;连接redis并创建文件&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/redis_install_visit_file.png&#34; alt=&#34;访问redis创建的文件&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x05-windows下安装redis:ccfa3b7be55824cf7252716ed708cbb8&#34;&gt;0x05 Windows下安装Redis&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;下载：&lt;a href=&#34;https://github.com/MSOpenTech/redis/releases&#34; target=&#34;_blank&#34;&gt;点此下载&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;安装后添加环境变量&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;添加为系统服务：
+redis-server.exe --service-install redis.windows.conf --loglevel verbose
+
+启动服务：
+redis-server.exe --service-start
+
+关闭服务：
+redis-server.exe --service-stop
+
+为Redis添加密码：
+打开安装目录下的文件redis.windows-service.conf，
+找到requirepass，配置为requirepass mypassword，然后重启redis
+此时仍然可以连接上，但是执行命令时会提示没权限
+
+带密码连接Redis：
+redis-cli.exe -h 127.0.0.1 -p 6379 -a mypassword
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>BurpSuite的Intruder模块</title>
+      <link>http://wyb0.com/posts/BurpSuite%E7%9A%84Intruder%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Mon, 01 Aug 2016 09:17:38 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/BurpSuite%E7%9A%84Intruder%E6%A8%A1%E5%9D%97/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-示例一:53e7ed3163851a3f3d8838699317d11d&#34;&gt;0x00 示例一&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_caught.png&#34; alt=&#34;burpsuite抓包发送给intruder模块&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_attack_type1.png&#34; alt=&#34;burpsuite的intruder模块的攻击类型1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_attack_type2.png&#34; alt=&#34;burpsuite的intruder模块的攻击类型2&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_payload_set.png&#34; alt=&#34;burpsuite的intruder模块payload设置&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_payload_set_variable1.png&#34; alt=&#34;burpsuite的intruder模块payload设置变量1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_payload_set_variable2.png&#34; alt=&#34;burpsuite的intruder模块payload设置变量2&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_payload_processing_rule.png&#34; alt=&#34;burpsuite的intruder模块payload设置的特殊处理&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_start_attack.png&#34; alt=&#34;burpsuite的intruder模块开始攻击&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_attack_interface.png&#34; alt=&#34;burpsuite的intruder攻击界面&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_screening_attack_results.png&#34; alt=&#34;burpsuite的intruder筛选攻击结果&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder_attack_results.png&#34; alt=&#34;burpsuite的intruder筛选后的攻击结果&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-示例二:53e7ed3163851a3f3d8838699317d11d&#34;&gt;0x01 示例二&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder1.png&#34; alt=&#34;burpsuite的intruder1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder2.png&#34; alt=&#34;burpsuite的intruder2&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder3.png&#34; alt=&#34;burpsuite的intruder3&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder4.png&#34; alt=&#34;burpsuite的intruder4&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder5.png&#34; alt=&#34;burpsuite的intruder5&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder6.png&#34; alt=&#34;burpsuite的intruder6&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder7.png&#34; alt=&#34;burpsuite的intruder7&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/burpsuite_intruder8.png&#34; alt=&#34;burpsuite的intruder8&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>无线下ettercap做中间人攻击</title>
+      <link>http://wyb0.com/posts/%E6%97%A0%E7%BA%BF%E4%B8%8Bettercap%E5%81%9A%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB/</link>
+      <pubDate>Wed, 13 Jul 2016 09:22:39 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E6%97%A0%E7%BA%BF%E4%B8%8Bettercap%E5%81%9A%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB/</guid>
+      <description>
+
+&lt;h2 id=&#34;场景:41f62096359316278b6af900e89e243c&#34;&gt;场景&lt;/h2&gt;
+
+&lt;p&gt;攻击主机和被攻击主机在一个无线下面&lt;/p&gt;
+
+&lt;h2 id=&#34;开始攻击:41f62096359316278b6af900e89e243c&#34;&gt;开始攻击&lt;/h2&gt;
+
+&lt;h4 id=&#34;1-打开ettercap:41f62096359316278b6af900e89e243c&#34;&gt;1. 打开ettercap&lt;/h4&gt;
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_start_ettercap.png&#34; alt=&#34;无线网络渗透测试打开ettercap.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;2-查看host列表:41f62096359316278b6af900e89e243c&#34;&gt;2. 查看host列表&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在软件的图形化界面点击sniff，选择unified sniffing选择网卡，然后单击hosts选项，选择scan for host，然后选择host list
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_ettercap_see_host_list.png&#34; alt=&#34;无线网络渗透测试ettercap查看host列表.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;3-选定攻击目标:41f62096359316278b6af900e89e243c&#34;&gt;3. 选定攻击目标&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;选择192.168.1.116的IP地址，点击Add to Target 1,然后选择网关的IP地址192.168.1.1，点击Add to Target 2
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_ettercap_add_target.png&#34; alt=&#34;无线网络渗透测试ettercap添加攻击目标.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;4-开始攻击:41f62096359316278b6af900e89e243c&#34;&gt;4. 开始攻击&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;ettercap选择&amp;rdquo;mitm&amp;rdquo;—&amp;rdquo;arp poisoning&amp;rdquo;—&amp;rdquo;Sniff remote connections&amp;rdquo;— &amp;ldquo;确定&amp;rdquo;，然后再在被攻击端查看arp，可知攻击已经成功
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_ettercap_attack.png&#34; alt=&#34;无线网络渗透测试ettercap开始攻击.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;5-ettercap持续监听目标:41f62096359316278b6af900e89e243c&#34;&gt;5. ettercap持续监听目标&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;软件上开始监听，被攻击端用浏览器登录路由器
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_ettercap_get_msg.png&#34; alt=&#34;无线网络渗透测试ettercap监听到目标用户的账号和密码.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;6-得到cookie:41f62096359316278b6af900e89e243c&#34;&gt;6. 得到Cookie&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;点击主界面的&amp;rdquo;View&amp;rdquo; —  &amp;ldquo;connetcions&amp;rdquo; 可以查看被攻击主机的一些网络链接
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_ettercap_view_conn_msg.png&#34; alt=&#34;无线网络渗透测试ettercap查看目标用户的网络连接信息.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_ettercap_get_cookie.png&#34; alt=&#34;无线网络渗透测试ettercap目标用户的Cookie.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;7-用cookie登陆被入侵账户:41f62096359316278b6af900e89e243c&#34;&gt;7. 用cookie登陆被入侵账户&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;打开火狐浏览器，通过firebug插件添加截获到的cookie从而登陆账户
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_firebug_add_cookie.png&#34; alt=&#34;无线网络渗透测试用firebug添加目标用户的Cookie.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_firebug_sign_success.png&#34; alt=&#34;无线网络渗透测试用目标用户的Cookie成功登陆新浪博客.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>conky配置</title>
+      <link>http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Sat, 04 Jun 2016 20:26:21 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-效果:646d257b96363a28a302cc3ac52c48c7&#34;&gt;0x00 效果&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;使用软件conky可以在linux上看到系统的运行状态，效果如下：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/Conky.png&#34; alt=&#34;conky效果图&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-安装与配置:646d257b96363a28a302cc3ac52c48c7&#34;&gt;0x01 安装与配置&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;先安装conky：&lt;br /&gt;
+sudo apt-get install conky&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在/home/username/下创建文件.conkyrc&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使conky开机自启&lt;br /&gt;
+在/etc/profile最下面添加：/usr/bin/conky &amp;amp;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;0x03-配置文件-conkyrc内容如下:646d257b96363a28a302cc3ac52c48c7&#34;&gt;0x03 配置文件.conkyrc内容如下&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# set to yes if you want Conky to be forked in the background
+background no
+cpu_avg_samples 2
+net_avg_samples 2
+out_to_console no
+# X font when Xft is disabled, you can pick one with program xfontsel
+#font 7x12
+#font 6x10
+#font 7x13
+#font 8x13
+#font 7x12
+#font *mintsmild.se*
+#font -*-*-*-*-*-*-34-*-*-*-*-*-*-*
+#font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1
+# Use Xft?
+use_xft yes
+# Xft font when Xft is enabled
+xftfont Sans:size=11  
+own_window_argb_visual yes
+#own_window_colour hotpink
+# Text alpha when using Xft
+xftalpha 0.8
+# on_bottom yes
+# mail spool
+mail_spool $MAIL
+# Update interval in seconds
+update_interval 1
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_type override
+own_window_type normal
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+# Minimum size of text area
+minimum_size 260 5
+maximum_width 400
+# Draw shades?
+draw_shades no
+# Draw outlines?
+draw_outline no
+# Draw borders around text
+draw_borders no
+# Stippled borders?
+stippled_borders no
+# border margins
+border_margin 4
+# border width
+border_width 1
+# Default colors and also border colors
+default_color white
+default_shade_color white
+default_outline_color white
+# Text alignment, other possible values are commented
+#alignment top_left
+#minimum_size 10 10
+gap_x 10
+gap_y 35
+alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+# Gap between borders of screen and text
+# Add spaces to keep things from moving about?  This only affects
+# certain objects.
+use_spacer none
+# Subtract file system buffers from used memory?
+no_buffers yes
+# set to yes if you want all text to be in uppercase
+uppercase no
+# none, xmms, bmp, audacious, infopipe (default is none)
+# xmms_player bmp
+
+
+TEXT
+${color red}SYSTEM ${hr 1}
+#Time:$alignr${time %Y.%m.%d}$alignc   ${time %H:%M:%S}$alignr   Week:${time %w}
+Hostname: $alignr$nodename
+Kernel: $alignr$kernel
+Machine:$alignr$machine
+Uptime: $alignr$uptime
+Temp: ${alignr}${acpitemp} °C
+Battery:$alignr${battery BAT0}
+#Battery:$alignr${battery_percent BAT0}%  
+###############
+${color green}NETWORK ${hr 1}
+IP:${addr eth0}
+GateWay:$gw_ip
+Down ${downspeed eth0} /s ${alignr}Up ${upspeed eth0} /s
+#${downspeedgraph eth0 25,107} ${alignr}${upspeedgraph eth0 25,107}
+Total ${totaldown eth0} ${alignr}Total ${totalup eth0}
+#############
+${color #9932CC}MEMORY ${hr 1}
+Ram ${alignr}$mem / $memmax ($memperc%)
+${membar 4}
+swap ${alignr}$swap / $swapmax ($swapperc%)
+${swapbar 4}
+Highest MEM $alignr MEM%
+${top_mem name 1}$alignr ${top_mem mem 1}
+${top_mem name 2}$alignr ${top_mem mem 2}
+${top_mem name 3}$alignr ${top_mem mem 3}
+##############
+${color #ffd700}CPU ${hr 1}
+Frequency: ${alignr}${freq dyn} MHz
+Processes: ${alignr}$processes ($running_processes running)
+Load: ${alignr}$loadavg
+CPU1 ${alignr}${cpu cpu1}%
+${cpubar 4 cpu1}
+CPU2 ${alignr}${cpu cpu2}%
+${cpubar 4 cpu2}
+Highest CPU $alignr CPU%
+${top name 1}$alignr${top cpu 1}
+${top name 2}$alignr${top cpu 2}
+${top name 3}$alignr${top cpu 3}
+##############
+${color grey}FILE SYSTEM ${hr 1}
+Disk I/O:$diskio
+Root: ${alignr}${fs_free /} / ${fs_size /}
+${fs_bar 4 /}
+Home: ${alignr}${fs_free /home} / ${fs_size /home}
+${fs_bar 4 /home}
+#############
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Nessus的安装</title>
+      <link>http://wyb0.com/posts/Nessus%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Wed, 11 May 2016 17:09:10 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Nessus%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+      <description>
+
+&lt;h2 id=&#34;下载nessus的deb安装包:f47fb430295d6aa52337b7e6f9734ca3&#34;&gt;下载Nessus的deb安装包:&lt;/h2&gt;
+
+&lt;p&gt;去【&lt;a href=&#34;http://www.tenable.com/products/nessus/select-your-operating-system&#34;&gt;这里&lt;/a&gt;】，选择家庭版，然后下载对应的安装包
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/Nessus_Home.png&#34; alt=&#34;选择家庭版的nessus&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/select_nessus_deb.png&#34; alt=&#34;选择适合kali的deb安装包&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;本地安装nessus:f47fb430295d6aa52337b7e6f9734ca3&#34;&gt;本地安装nessus:&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/install_nessus.png&#34; alt=&#34;通过本地deb包安装nessus&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;执行后续安装步骤:f47fb430295d6aa52337b7e6f9734ca3&#34;&gt;执行后续安装步骤:&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;启动nessus
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/start_nessus.png&#34; alt=&#34;启动nessus&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;web访问nessus服务
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/web_nessus.png&#34; alt=&#34;通过web访问https://localhost:8834&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;设置账户和密码
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/setaccount.png&#34; alt=&#34;设置nessus登陆帐号和密码&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code.png&#34; alt=&#34;被要求输入code&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;申请code，可以在【&lt;a href=&#34;http://www.tenable.com/products/nessus-home&#34;&gt;这里&lt;/a&gt;】申请
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/register_code.png&#34; alt=&#34;申请一个code&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;去邮箱查找code
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/get_code.png&#34; alt=&#34;去邮箱查看code&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;将code填入，然后等待插件的下载
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/input_code.png&#34; alt=&#34;输入code&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wait_download.png&#34; alt=&#34;等插件的下载安装&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;登陆nessus:f47fb430295d6aa52337b7e6f9734ca3&#34;&gt;登陆Nessus:&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sign_in_nessus1.png&#34; alt=&#34;登陆nessus1&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sign_in_nessus2.png&#34; alt=&#34;登陆nessus2&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Nmap思维导图</title>
+      <link>http://wyb0.com/posts/Nmap%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/</link>
+      <pubDate>Tue, 10 May 2016 20:24:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Nmap%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/</guid>
+      <description>
+
+&lt;h2 id=&#34;nmap思维导图如下:ccd45e90afd4d2fb8a9ec757f25acaf3&#34;&gt;nmap思维导图如下：&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/nmap.png&#34; alt=&#34;nmap思维导图&#34;&gt;
+&lt;/div&gt;
+
+</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu下安装sublime text 3</title>
+      <link>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85sublime_text3/</link>
+      <pubDate>Sun, 08 May 2016 00:04:42 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85sublime_text3/</guid>
+      <description>
+
+&lt;h4 id=&#34;环境:f2b5994137532c467d26c4afc116aa08&#34;&gt;环境：&lt;/h4&gt;
+
+&lt;p&gt;ubuntu14.4&lt;/p&gt;
+
+&lt;h2 id=&#34;安装:f2b5994137532c467d26c4afc116aa08&#34;&gt;安装&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;添加Sublime Text 3的仓库&lt;br /&gt;
+sudo add-apt-repository ppa:webupd8team/sublime-text-3&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;更新软件库&lt;br /&gt;
+sudo apt-get update&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装Sublime Text 3&lt;br /&gt;
+sudo apt-get install sublime-text-installer&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;解决不能输入中文的问题:f2b5994137532c467d26c4afc116aa08&#34;&gt;解决不能输入中文的问题&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;新建sublime_imfix.c(位于～目录)，写入如下内容&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-c&#34;&gt;#include &amp;lt;gtk/gtkimcontext.h&amp;gt;
+void gtk_im_context_set_client_window (GtkIMContext *context,GdkWindow  *window)
+{
+GtkIMContextClass *klass;
+g_return_if_fail (GTK_IS_IM_CONTEXT (context));
+klass = GTK_IM_CONTEXT_GET_CLASS (context);
+if (klass-&amp;gt;set_client_window)
+klass-&amp;gt;set_client_window (context, window);
+g_object_set_data(G_OBJECT(context),&amp;quot;window&amp;quot;,window);
+if(!GDK_IS_WINDOW (window))
+return;
+int width = gdk_window_get_width(window);
+int height = gdk_window_get_height(window);
+if(width != 0 &amp;amp;&amp;amp; height !=0)
+gtk_im_context_focus_in(context);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;将上一步的代码编译成共享库libsublime-imfix.so&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd ~  
+sudo apt-get install gtk+-2.0  
+gcc -shared -o libsublime-imfix.so sublime_imfix.c  `pkg-config --libs --cflags gtk+-2.0` -fPIC
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;将libsublime-imfix.so拷贝到sublime_text所在文件夹&lt;br /&gt;
+&lt;code&gt;sudo mv libsublime-imfix.so /opt/sublime_text/&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;修改文件/usr/bin/subl的内容&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo vim /usr/bin/subl  
+将  
+#!/bin/sh  
+exec /opt/sublime_text/sublime_text &amp;quot;$@&amp;quot;  
+修改为  
+#!/bin/sh  
+LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text &amp;quot;$@&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使用鼠标右键打开文件时能够使用中文输入&lt;br /&gt;
+sudo vim /usr/share/applications/sublime_text.desktop&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;将[Desktop Entry]中的字符串  
+Exec=/opt/sublime_text/sublime_text %F  
+修改为  
+Exec=bash -c &amp;quot;LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text %F&amp;quot;  
+
+
+将[Desktop Action Window]中的字符串  
+Exec=/opt/sublime_text/sublime_text -n  
+修改为  
+Exec=bash -c &amp;quot;LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text -n&amp;quot;  
+
+
+将[Desktop Action Document]中的字符串  
+Exec=/opt/sublime_text/sublime_text --command new_file  
+修改为  
+Exec=bash -c &amp;quot;LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text --command new_file&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;插件:f2b5994137532c467d26c4afc116aa08&#34;&gt;插件&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;|Anaconda|ConvertToUTF8|Emmet|&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之安装ettercap</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/</link>
+      <pubDate>Tue, 19 Apr 2016 20:03:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/</guid>
+      <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;操作系统：CentOS&lt;br /&gt;
+首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了&lt;br /&gt;
+执行：sudo yum groupinstall &amp;ldquo;Development tools&amp;rdquo;    &lt;em&gt;源码安装软件就需要安装这个&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;一-下载解压:34c81a6ef52c6fc9b50ea74b9a01b394&#34;&gt;一、下载解压&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可用wget下载&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;二-查看需要的依赖项:34c81a6ef52c6fc9b50ea74b9a01b394&#34;&gt;二、查看需要的依赖项&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ettercap-0.8.2]$ vim INSTALL
+
+ #### Bundled libraries  
+ Ettercap now bundles the following libraries with the source distribution:  
+   libnet 1.1.6  
+   curl 7.41.0  
+   luajit 2.0.3  
+   check 0.9.14  
+[wyb@localhost ettercap-0.8.2]$ cd bundled_deps/  
+[wyb@localhost bundled_deps]$ ls  
+check  curl  libnet  luajit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;三-安装依赖包:34c81a6ef52c6fc9b50ea74b9a01b394&#34;&gt;三、安装依赖包&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;安装check&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost check]$ cd check-0.9.14
+[wyb@localhost check-0.9.14]$ ls
+[wyb@localhost check-0.9.14]$ ./configure 
+[wyb@localhost check-0.9.14]$ make
+[wyb@localhost check-0.9.14]$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装curl&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost check-0.9.14]$ cd ..
+[wyb@localhost curl-7.41.0]$ cd curl/
+[wyb@localhost curl-7.41.0]$ cd curl-7.41.0
+[wyb@localhost curl-7.41.0]$ make
+[wyb@localhost curl-7.41.0]$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装libnet&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost curl-7.41.0]$ cd ../../libnet/
+[wyb@localhost libnet]$ tar -zxvf libnet-1.1.6.tar.gz
+[wyb@localhost libnet]$ cd libnet-1.1.6
+[wyb@localhost libnet-1.1.6]$ ./configure 
+[wyb@localhost libnet-1.1.6]$ make
+[wyb@localhost libnet-1.1.6]$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装luajit&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost luajit]$ tar -zxvf LuaJIT-2.0.3.tar.gz 
+[wyb@localhost luajit]$ make
+[wyb@localhost luajit]$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装ettercap&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ettercap-0.8.2]$ cd ettercap-0.8.2 
+[wyb@localhost ettercap-0.8.2]$ mkdir build                   
+[wyb@localhost ettercap-0.8.2]$ cd build  
+[wyb@localhost build]$ cmake ../    *cmake ettercap时提示未安装cmake*  
+-bash: cmake: command not found  
+[wyb@localhost build]$ sudo yum install cmake   *安装cmake*  
+[wyb@localhost build]$ cmake ../    *提示未安装curses*  
+-- The C compiler identification is GNU 4.4.7  
+-- Check for working C compiler: /usr/bin/cc  
+-- Check for working C compiler: /usr/bin/cc -- works  
+.....  
+.....  
+CMake Error at /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:108 (message):  
+  Could NOT find Curses (missing: CURSES_LIBRARY CURSES_INCLUDE_PATH)  
+.....  
+.....  
+[wyb@localhost build]$ yum search curses    *查找curses*  
+Loaded plugins: fastestmirror, refresh-packagekit, security  
+Determining fastest mirrors  
+ * base: mirrors.yun-idc.com  
+ * extras: mirrors.opencas.cn  
+ * updates: mirrors.btte.net
+============================= N/S Matched: curses   ==============================  
+ncurses.x86_64 : Ncurses support utilities  
+ncurses-devel.i686 : Development files for the ncurses library  
+ncurses-devel.x86_64 : Development files for the ncurses library  
+ncurses-libs.x86_64 : Ncurses libraries  
+ncurses-libs.i686 : Ncurses libraries  
+ncurses-static.x86_64 : Static libraries for the ncurses library  
+ocaml-curses.x86_64 : OCaml bindings for ncurses    
+ocaml-curses-devel.x86_64 : Development files for ocaml-curses  
+ncurses-base.x86_64 : Descriptions of common terminals  
+ncurses-term.x86_64 : Terminal descriptions  
+  Name and summary matches only, use &amp;quot;search all&amp;quot; for everything.  
+[wyb@localhost build]$ sudo yum install ncurses ncurses-devel   *安装ncurses开发包*  
+[wyb@localhost build]$ rm -rf *     *清除上次cmake产生的文件*  
+[wyb@localhost build]$ cmake ../    *出错，缺少依赖包GTK*  
+-- The C compiler identification is GNU 4.4.7  
+-- Check for working C compiler: /usr/bin/cc  
+......  
+......  
+CMake Error at /usr/share/cmake/Modules/FindGTK2.cmake:429 (message):  
+  Could not find GTK2 include directory  
+....  
+....  
+[wyb@localhost build]$ yum search gtk  
+Loaded plugins: fastestmirror, refresh-packagekit, security  
+Loading mirror speeds from cached hostfile  
+ * base: mirrors.yun-idc.com  
+.....  
+.....  
+gtk2.x86_64 : The GIMP ToolKit (GTK+), a library for creating GUIs for X  
+gtk2.i686 : The GIMP ToolKit (GTK+), a library for creating GUIs for X  
+gtk2-devel.i686 : Development files for GTK+   
+.... 
+....  
+[wyb@localhost build]$ sudo yum install gtk2 gtk2-devel *安装gtk及开发包* 
+[wyb@localhost build]$ rm -rf *     *清除上次cmake产生的文件*  
+[wyb@localhost build]$ cmake ../    *缺少依赖包OpenSSL*  
+-- The C compiler identification is GNU 4.4.7  
+-- Check for working C compiler: /usr/bin/cc  
+-- Check for working C compiler: /usr/bin/cc -- works  
+-- Detecting C compiler ABI info  
+-- Detecting C compiler ABI info - done  
+-- Check if the system is big endian  
+.....  
+.....  
+CMake Error at /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:108 (message):  
+  Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the  
+  system variable OPENSSL_ROOT_DIR (missing: OPENSSL_LIBRARIES OPENSSL_INCLUDE_DIR)    
+.....  
+.....  
+[wyb@localhost build]$ yum search openssl   *查找openssl*  
+[wyb@localhost build]$ sudo yum install openssl openssl-devel   *安装openss及其开发包*  
+[wyb@localhost build]$ rm -rf *     *清除上次cmake产生的文件*  
+[wyb@localhost build]$ cmake ../    *依赖libpcap*  
+......  
+......  
+-- Looking for inet_aton  
+-- Looking for inet_aton - found  
+CMake Error at cmake/Modules/EttercapLibCheck.cmake:191 (message):  
+  libpcap not found!  
+....  
+....  
+[wyb@localhost build]$ yum search libpcap   *查找libpcap*  
+Loaded plugins: fastestmirror, refresh-packagekit, security  
+Loading mirror speeds from cached hostfile  
+ * base: mirrors.yun-idc.com   
+ * extras: mirrors.opencas.cn  
+ * updates: mirrors.btte.net  
+============================= N/S Matched: libpcap =============================  
+libpcap-devel.i686 : Libraries and header files for the libpcap library  
+libpcap-devel.x86_64 : Libraries and header files for the libpcap library  
+libpcap.x86_64 : A system-independent interface for user-level packet capture  
+libpcap.i686 : A system-independent interface for user-level packet capture  
+  Name and summary matches only, use &amp;quot;search all&amp;quot; for everything.  
+[wyb@localhost build]$ sudo yum install libpcap-devel   *安装libpcap-devel*  
+[wyb@localhost build]$ rm -rf *     *清除上次cmake产生的文件*  
+[wyb@localhost build]$ cmake ../    *cmake成功*  
+[wyb@localhost build]$ make *make*  
+....  
+....  
+Linking C executable etterlog  
+[100%] Built target etterlog  
+Scanning dependencies of target man  
+[100%] Built target man  
+[wyb@localhost build]$ sudo make install    *make install*  
+.....  
+.....   
+-- Installing: /usr/local/share/man/man8/ettercap_curses.8  
+-- Installing: /usr/local/share/man/man8/ettercap-pkexec.8  
+-- Installing: /usr/local/share/man/man5/etter.conf.5  
+[wyb@localhost build]$ cd  
+[wyb@localhost ~]$ ettercap -v  *查看版本且能查看，证明安装成功*  
+ettercap 0.8.2 copyright 2001-2015 Ettercap Development Team  
+ettercap 0.8.2  
+[wyb@localhost ~]$
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之vim</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8Bvim/</link>
+      <pubDate>Fri, 15 Apr 2016 21:03:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8Bvim/</guid>
+      <description>
+
+&lt;h3 id=&#34;vim的安装及配置:f90366760980ccb4eafda2e647a35758&#34;&gt;Vim的安装及配置：&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;安装vim&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;yum install vim
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;配置文件的位置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;在目录 /etc/ 下面，有个名为vimrc的 文件，
+这是系统中公共的vim配置文件，对所有用户都有效。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;设置语法高亮显示&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;1) 打开vimrc，添加以下语句来使得语法高亮显示：
+    syntax on
+2) 如果此时语法还是没有高亮显示，那么在/etc目录下的profile文件中添加以下语句：
+    export TERM=xterm-color
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;设置Windows风格的C/C++自动缩进（添加以下set语句到vimrc中）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;1）设置Tab为4个空格
+    set tabstop=4 # 设定tab长度为4
+    set softtabstop=4 # 使按退格键时可以一次删除4个空格
+    set shiftwidth=4 # 表示每一级缩进的长度，一般设置成跟softtabstop一样
+    set noexpandtab/expandtab # 缩进用空格/制表符表示
+2）自动缩进
+    set autoindent/noautoindent # 设置每行的缩进值与上一行相等/不相等
+3）使用 C/C++ 语言的自动缩进方式
+    set cindent
+4）在左侧显示文本的行号
+    set nu
+5）搜索设置
+    set incsearch # 输入搜索内容时就显示搜索结果
+    set hlsearch # 搜索时高亮显示被找到的文本
+6）如果没有下列语句，就加上吧
+    if &amp;amp;term==&amp;quot;xterm&amp;quot;
+        set t_Co=8
+        set t_Sb=^[[4%dm
+        set t_Sf=^[[3%dm
+    endif
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;vim编辑器的三种模式:f90366760980ccb4eafda2e647a35758&#34;&gt;Vim编辑器的三种模式&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;命令行模式&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;$vim 文件名 #直接进入命令行模式
+Ctrl+ZZ# 可保存文件
+
+5dd/4yy# 剪切5行/复制4行
+p      # 粘贴到当前行后面
+u      # 一直点的话会一直撤销，直到回复到文件最初状态
+
+gg/G   # 光标移动到首行/末行
+H/M/L  # 光标移动到屏幕显示的首行/中间/末行
+0/$    # 光标移动到行首/行尾
+w/b    # 光标跳到下一个/上一个单词
+
+o      # 在下一行插入
+Ctrl+g # 显示文本的信息
+
+dt%      # 删除所有内容直到遇到 %
+d0/d$或D # 删除从光标到行首/行尾的字符
+3dw      # 删除3个单词
+
+v+方向键       # 可以从当前光标向各方向选择字符或行
+4+向下的方向键 # 光标向下移动4行
+
+/和？# 向下和向上搜索
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;末行模式&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;:wq  # 推出并保存
+:wq! # 强制退出并保存
+:num # 跳到第n行
+:$   # 移动到最后一行
+:/aaaa #向下搜aaaa这个字符串  n可以定位到下一个匹配的字符，N向上
+:?aaaa #向上搜索
+:%s/set/ddd/g #将字符串set全部替换为ddd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;插入模式&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;在命令行模式直接点击i即可进入
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

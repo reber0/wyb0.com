@@ -1,0 +1,3113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Miscellanea on </title>
+    <link>http://wyb0.com/topics/miscellanea/</link>
+    <description>Recent content in Miscellanea on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 07 Feb 2017 10:49:38 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/topics/miscellanea/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>301重定向</title>
+      <link>http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/</link>
+      <pubDate>Tue, 07 Feb 2017 10:49:38 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-目的:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x00 目的&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向
+我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上，
+修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301
+
+服务器环境：Ubuntu 14.04.5、Apache2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-开启rewrite模块:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x01 开启rewrite模块&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo a2enmod rewrite
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-根目录下新建-htaccess:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x02 根目录下新建.htaccess：&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Options +FollowSymLinks
+RewriteEngine on
+RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301]  # 这里换上新域名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-修改配置文件:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x03 修改配置文件&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# AllowOverride None 改为AllowOverride All
+
+$ sudo vim /etc/apache2/apache2.conf
+&amp;lt;Directory /var/www/&amp;gt;
+    Options FollowSymLinks
+    AllowOverride All
+    Require all granted
+&amp;lt;/Directory&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-重启apache:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x04 重启Apache&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo /etc/init.d/apache2 restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>准则</title>
+      <link>http://wyb0.com/posts/%E5%87%86%E5%88%99/</link>
+      <pubDate>Wed, 21 Sep 2016 23:05:57 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E5%87%86%E5%88%99/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-创造价值:792f63e4894fbceab9c012d49e32a96c&#34;&gt;0x00 创造价值&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;小鸡问母鸡：可否不用下蛋,带我出去玩啊？母鸡道：不行,我要工作！&lt;br /&gt;
+小鸡说：可你已经下了这么多蛋了！母鸡意味深长地对小鸡说：一天一个蛋,菜刀靠边站,一月不生蛋,高压锅里见。&lt;br /&gt;
+存在是因为你创造价值,淘汰是因为你失去价值。过去的价值不代表未来,所以每天都要努力！&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-韬光养晦:792f63e4894fbceab9c012d49e32a96c&#34;&gt;0x01 韬光养晦&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;毛竹用了4年时间,仅仅长了3厘米,但从第5年开始,以每天30厘米的速度疯狂地生长,仅用6周,就长到了15米。其实,在前面的４年,毛竹将根在土壤里延伸了数百平方米。&lt;br /&gt;
+做人做事亦是如此,不要担心付出得不到回报,因为这些付出都是为了扎根,等到时机成熟,你会登上别人遥不可及的巅峰。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-感恩:792f63e4894fbceab9c012d49e32a96c&#34;&gt;0x02 感恩&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;乞丐：能不能给我一百块钱？&lt;br /&gt;
+路人：我只有八十块钱。&lt;br /&gt;
+乞丐：那你就欠我二十块钱吧。&lt;br /&gt;
+不要总以为是上苍欠你的,老觉得老天爷给的不够多、不够好,不要让贪婪之欲取代了感恩之心。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x05-宽容与谦卑:792f63e4894fbceab9c012d49e32a96c&#34;&gt;0x05 宽容与谦卑&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;一滴墨汁落在一杯清水里,这杯水立即变色,不能喝了；一滴墨汁融在大海里,大海依然是蔚蓝色的大海。为什么？因为两者的肚量不一样。&lt;br /&gt;
+不熟的麦穗直刺刺地向上挺着,成熟的麦穗低垂着头。为什么？因为两者的份量不一样。&lt;br /&gt;
+宽容别人,就是肚量；谦卑自己,就是份量；合起来,就是一个人的质量。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Tmux的使用</title>
+      <link>http://wyb0.com/posts/Tmux%E7%9A%84%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Sat, 10 Sep 2016 16:24:18 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Tmux%E7%9A%84%E4%BD%BF%E7%94%A8/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-tmux的快捷键前缀:f89a7f12279c08beb35a8f290996f94e&#34;&gt;0x00 Tmux的快捷键前缀&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-会话:f89a7f12279c08beb35a8f290996f94e&#34;&gt;0x01 会话&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tmux_new_session1.png&#34; alt=&#34;新建会话&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tmux_new_session2.png&#34; alt=&#34;新建会话&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tmux_view_all_session.png&#34; alt=&#34;查看当前所有会话&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tmux_in_session1.png&#34; alt=&#34;进入会话&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tmux_in_session2.png&#34; alt=&#34;进入会话&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tmux_select_session.png&#34; alt=&#34;选择会话&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tmux_select_session_.png&#34; alt=&#34;选择会话&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-窗口和窗格:f89a7f12279c08beb35a8f290996f94e&#34;&gt;0x02 窗口和窗格&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tmux_windows_and_panes.gif&#34; alt=&#34;窗口和窗格&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tmux_windows.png&#34; alt=&#34;简介&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Sublime Text 3几个好用的插件</title>
+      <link>http://wyb0.com/posts/Sublime_Text_3%E5%87%A0%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84%E6%8F%92%E4%BB%B6/</link>
+      <pubDate>Fri, 02 Sep 2016 23:07:44 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Sublime_Text_3%E5%87%A0%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84%E6%8F%92%E4%BB%B6/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-package-control:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x00 Package Control&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;代码安装&lt;br /&gt;
+ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import urllib.request,os; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), &#39;wb&#39;).write(urllib.request.urlopen( &#39;http://sublime.wbond.net/&#39; + pf.replace(&#39; &#39;,&#39;%20&#39;)).read())
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;手动安装&lt;br /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;点击&lt;a href=&#34;https://sublime.wbond.net/Package%20Control.sublime-package&#34;&gt;https://sublime.wbond.net/Package%20Control.sublime-package&lt;/a&gt; 下载文件&lt;/li&gt;
+&lt;li&gt;将下载的文件放在root path/Data/Installed Packages下&lt;/li&gt;
+&lt;li&gt;重启Sublime Text&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;使用方法
+
+&lt;ul&gt;
+&lt;li&gt;Ctrl+Shift+P调出菜单然后选择相应操作
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_package_control1.png&#34; alt=&#34;插件Package Control1&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;Preferences -&amp;gt; Package Control也可调出
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_package_control2.png&#34; alt=&#34;插件Package Control2&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;选择Install Package后可以输入想安装的插件名搜索安装
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_install.png&#34; alt=&#34;插件安装&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x01-emmet:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x01 Emmet&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装)
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_emmet.png&#34; alt=&#34;插件Emmet&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+&lt;a href=&#39;http://emmet.io/&#39;&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_emmet_demo.png&#34; alt=&#34;插件Emmet示例&#34;&gt;
+&lt;/div&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-anaconda:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x02 Anaconda&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可以自动补全并提示语法，还可跳转到定义、使用等
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_anaconda_set.png&#34; alt=&#34;插件Anaconda设置&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_anaconda_set_default.png&#34; alt=&#34;插件Anaconda设置默认选项&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_anaconda_set_user.png&#34; alt=&#34;插件Anaconda设置用户选项&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_anaconda_add_file.png&#34; alt=&#34;插件Anaconda处理补全问题&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;效果如下：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_anaconda.png&#34; alt=&#34;插件Anaconda&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-git:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x03 Git&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在编辑器就可以执行git命令，有github的开发者必备
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_git.png&#34; alt=&#34;插件Git&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-gitgutter:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x04 GitGutter&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_gitgutter.png&#34; alt=&#34;插件GitGutter&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x05-markdown-preview:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x05 Markdown Preview&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可以在本地预览文件
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_markdown_preview.png&#34; alt=&#34;插件Markdown Preview&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_markdown_preview_html.png&#34; alt=&#34;插件Markdown Preview预览&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x06-docblokr:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x06 DocBlokr&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_docblocr1.gif&#34; alt=&#34;插件DocBlocr&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_docblocr2.gif&#34; alt=&#34;插件DocBlocr&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x07-autofilename:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x07 AutoFileName&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;快捷输入文件名
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_autofilename.png&#34; alt=&#34;插件AutoFileName&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x08-theme-flatland和theme-sodareloaded:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x08 Theme-Flatland和Theme-SoDaReloaded&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;两个很不错的主题插件，安装好之后：首选项 -&amp;gt; 设置-用户，修改文件
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_theme.png&#34; alt=&#34;主题插件&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x09-alignment:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x09 Alignment&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;插件安装好后选中要对齐的文本，然后按Ctrl+Alt+a即可对齐&amp;rdquo;=&amp;ldquo;,&amp;rdquo;+&amp;ldquo;, &amp;ldquo;-&amp;rdquo;, &amp;ldquo;&amp;amp;&amp;ldquo;, &amp;ldquo;|&amp;rdquo;, &amp;ldquo;&amp;lt;&amp;ldquo;,&amp;rdquo;&amp;gt;&amp;ldquo;等符号
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_alignment.gif&#34; alt=&#34;插件Alignment&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0a-converttoutf8:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x0A ConvertToUTF8&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;文件转码成utf-8&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0b-imesupport:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x0B IMESupport&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;解决Sublime Text中文输入法不能跟随光标的问题&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0c-光标所在行高亮显示:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x0C 光标所在行高亮显示&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;首选项-&amp;gt;设置-用户，在文件中添加 &amp;ldquo;highlight_line&amp;rdquo;:true&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0e-后记:ecb96732a752c42dd1e93ff2a82bb920&#34;&gt;0x0E 后记&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在安装插件时总出错提示&amp;rdquo;There are no packages available for installation&amp;rdquo;可以用上面提到的手动安装Package Control来解决，或者：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_end1.png&#34; alt=&#34;后记1&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;有时Package Control不能下载插件时，可以直接下载插件，然后放在下面图示的文件夹中，然后重启Sublime Text使插件生效：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sublime_end2.png&#34; alt=&#34;后记2&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>CGI与FastCGI与PHP-FPM</title>
+      <link>http://wyb0.com/posts/CGI%E4%B8%8EFastCGI%E4%B8%8EPHP-FPM/</link>
+      <pubDate>Tue, 02 Aug 2016 10:45:14 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/CGI%E4%B8%8EFastCGI%E4%B8%8EPHP-FPM/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x01-cgi协议:611254adb271e8e84612e5312ce3c5c5&#34;&gt;0x01 CGI协议&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;0x02-fastcgi:611254adb271e8e84612e5312ce3c5c5&#34;&gt;0x02 FastCGI&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低&lt;/p&gt;
+
+&lt;p&gt;fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-fastcgi工作流程:611254adb271e8e84612e5312ce3c5c5&#34;&gt;0x03 FastCGI工作流程&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;一般情况下，FastCGI的整个工作流程是这样的：&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module)&lt;/li&gt;
+&lt;li&gt;FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待WebServer的连接。&lt;/li&gt;
+&lt;li&gt;当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。 Web server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。&lt;/li&gt;
+&lt;li&gt;FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。在CGI模式中，php-cgi在此便退出了。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;0x04-php-fpm:611254adb271e8e84612e5312ce3c5c5&#34;&gt;0x04 PHP-FPM&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;php-fpm就是fastcgi的实现，是一个php fastcgi进程管理器&lt;/li&gt;
+&lt;li&gt;php-fpm在php5.2之后默认添加&lt;/li&gt;
+&lt;li&gt;千万不要把fastcgi端口对公网暴露&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows下用Proxifier实现全局代理</title>
+      <link>http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8Proxifier%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Sun, 24 Jul 2016 21:33:59 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8Proxifier%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-环境:37d530142c476a688f9dc94b5cc12b88&#34;&gt;0x00 环境&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在windows下用Shadowsocks和Proxifier实现全局代理：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;System：Windows10 Pro x64
+Shadowsocks：Shadowsocks v2.5.2.0 
+Proxifier：Proxifier Portable Edition v3.29
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-配置shadowsocks:37d530142c476a688f9dc94b5cc12b88&#34;&gt;0x01 配置Shadowsocks&lt;/h3&gt;
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_set_shadowsocks.png&#34; alt=&#34;Windows下实现全局代理-设置shadowsocks.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-配置proxifier:37d530142c476a688f9dc94b5cc12b88&#34;&gt;0x02 配置Proxifier&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Proxifier添加代理服务
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_add_proxy_servers1.png&#34; alt=&#34;Windows下实现全局代理-添加代理服务1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_add_proxy_servers2.png&#34; alt=&#34;Windows下实现全局代理-添加代理服务2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_check_proxy.png&#34; alt=&#34;Windows下实现全局代理-检测添加的代理.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Proxifier添加规则
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_set_rules1.png&#34; alt=&#34;Windows下实现全局代理-设置规则1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_set_rules2.png&#34; alt=&#34;Windows下实现全局代理-设置规则2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_add_rules1.png&#34; alt=&#34;Windows下实现全局代理-添加规则1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_add_rules2.png&#34; alt=&#34;Windows下实现全局代理-添加规则2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;测试全局代理设置成功与否
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_test1.png&#34; alt=&#34;Windows下实现全局代理-测试全局代理是否设置成功1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_test2.png&#34; alt=&#34;Windows下实现全局代理-测试全局代理是否设置成功2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>虚拟机下安装vm-tools</title>
+      <link>http://wyb0.com/posts/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8B%E5%AE%89%E8%A3%85vm-tools/</link>
+      <pubDate>Wed, 20 Jul 2016 08:30:53 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8B%E5%AE%89%E8%A3%85vm-tools/</guid>
+      <description>
+
+&lt;p&gt;vm-tools安装后可以在客户机和虚拟机间双向复制文件&lt;/p&gt;
+
+&lt;h2 id=&#34;安装:2ddc510c20d1f37e632d6e5d09678ff0&#34;&gt;安装&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/vm_tools_mount_cd.png&#34; alt=&#34;vm-tools挂载光盘.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/vm_tools_copy_and_unzip.png&#34; alt=&#34;vm-tools拷贝并解压安装包.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/vm_tools_install.png&#34; alt=&#34;vm-tools安装.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/vm_tools_install_complete.png&#34; alt=&#34;vm-tools安装完成.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;kali2-0:2ddc510c20d1f37e632d6e5d09678ff0&#34;&gt;Kali2.0&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;一般安装的话按照上面的步骤即可安装成功，但是Kali2.0不行，可以用如下方法安装：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/vm_tools_kali2.0_install1.png&#34; alt=&#34;vm-tools在Kali2.0下的安装1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/vm_tools_kali2.0_install2.png&#34; alt=&#34;vm-tools在Kali2.0下的安装1.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;安装后可以终端输入：dpkg-reconfigure locales，在弹出的界面选择zh_CN.UTF-8设置语言为中文
+可以用vim /root/.config/user-dirs.dirs将&amp;quot;桌面&amp;quot;修改为&amp;quot;Desktop&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>iptables简单配置DMZ</title>
+      <link>http://wyb0.com/posts/iptables%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AEDMZ/</link>
+      <pubDate>Tue, 05 Jul 2016 09:56:35 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/iptables%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AEDMZ/</guid>
+      <description>
+
+&lt;h2 id=&#34;要求:048f0b8adabe78f01c35e47696f601c8&#34;&gt;要求&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;内网可以访问外网&lt;/li&gt;
+&lt;li&gt;内网可以访问DMZ区&lt;/li&gt;
+&lt;li&gt;外网不能访问内网&lt;/li&gt;
+&lt;li&gt;外网能访问DMZ区的服务&lt;/li&gt;
+&lt;li&gt;DMZ区不能访问内网&lt;/li&gt;
+&lt;li&gt;DMZ区不能主动访问外网&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;拓扑:048f0b8adabe78f01c35e47696f601c8&#34;&gt;拓扑&lt;/h2&gt;
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_topology.png&#34; alt=&#34;iptables简单配置DMZ的拓扑.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;个主机ip信息:048f0b8adabe78f01c35e47696f601c8&#34;&gt;个主机IP信息&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;内网网段为：192.168.1.0/24&lt;br /&gt;
+DMZ区网段为：172.16.1.0/24
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_ip_info.png&#34; alt=&#34;iptables简单配置DMZ的ip信息.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;iptables的策略:048f0b8adabe78f01c35e47696f601c8&#34;&gt;iptables的策略&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;新建iptables.sh,内容如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+
+iptables –F #清空此表中的规则
+iptables –X #清空此表中的自定义规则
+iptables –Z #清空此表中的计数器为0
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
+iptables -F -t nat
+iptables -X -t nat
+iptables -Z -t nat
+iptables -t nat -P PREROUTING ACCEPT
+iptables -t nat -P POSTROUTING ACCEPT
+iptables -t nat -P OUTPUT ACCEPT
+
+#添加必要的模块
+modprobe ip_nat_ftp
+modprobe iptable_nat
+modprobe ip_conntrack
+modprobe ip_conntrack_ftp
+#开启转发功能
+echo &amp;quot;1&amp;quot; &amp;gt; /proc/sys/net/ipv4/ip_forward
+#********************************************************************
+#PREROUTING：
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.16.1.1
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 21 -j DNAT --to-destination 172.16.1.1
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 10000:10100 -j DNAT --to-destination 172.16.1.1
+iptables -t nat -A PREROUTING -i eth2 -p tcp -d 172.16.1.1 --dport 80 -j DNAT --to-destination 172.16.1.1
+iptables -t nat -A PREROUTING -i eth2 -p tcp --dport 80 -j DNAT --to-destination 192.168.2.144
+#********************************************************************
+#FORWARD：
+iptables -A FORWARD -m state --state INVALID -j DROP
+iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth0 -o eth1 -m state --state NEW -j ACCEPT
+iptables -A FORWARD -i eth2 -o eth0 -m state --state NEW -j ACCEPT
+iptables -A FORWARD -i eth2 -o eth1 -m state --state NEW -j ACCEPT
+#********************************************************************
+#INPUT：
+iptables -A INPUT -m state --state INVALID -j DROP
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -i eth0 -p tcp –m multiport --dports 20,21 -j ACCEPT
+iptables -A INPUT -i eth2 -s 192.168.1.0/24 -j ACCEPT
+#********************************************************************
+#OUTPUT：
+iptables -A OUTPUT -m state --state INVALID -j DROP
+iptables -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth1 -p tcp --dport 80 -m state --state NEW -j ACCEPT
+iptables -A OUTPUT -o eth1 -p tcp --dport 20 -m state --state NEW -j ACCEPT
+iptables -A OUTPUT -o eth1 -p tcp --dport 21 -m state --state NEW -j ACCEPT
+iptables -A OUTPUT -o eth1 -p tcp --dport 10000:10100 -m state --state NEW -j ACCEPT
+#********************************************************************
+#POSTROUTING：
+iptables -t nat -A POSTROUTING -o eth0 -s 192.168.1.0/24 -j SNAT --to-source 192.168.2.144
+iptables -t nat -A POSTROUTING -o eth0 -s 172.16.1.0/24 -j SNAT --to-source 192.168.2.144
+#********************************************************************
+service iptables save
+service iptables restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;测试:048f0b8adabe78f01c35e47696f601c8&#34;&gt;测试&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;内网可以访问外网
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_lan_to_internet.png&#34; alt=&#34;内网可以访问外网.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;内网可以访问DMZ
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_lan_to_dmz_www.png&#34; alt=&#34;内网可以访问DMZ的www.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_lan_to_dmz_ftp.png&#34; alt=&#34;内网可以访问DMZ的ftp.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;外网不能访问内网
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_internet_not_to_lan.png&#34; alt=&#34;外网不能访问内网.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;外网可以访问DMZ
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_internet_to_dmz_www.png&#34; alt=&#34;外网可以访问DMZ的www.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_internet_to_dmz_ftp.png&#34; alt=&#34;外网可以访问DMZ的ftp.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;DMZ不能访问内网
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_dmz_not_to_lan.png&#34; alt=&#34;DMZ不能访问内网.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;DMZ不能访问外网
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_dmz_not_to_internet.png&#34; alt=&#34;DMZ不能访问外网.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu下使用ShadowSocks</title>
+      <link>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/</link>
+      <pubDate>Mon, 13 Jun 2016 09:14:45 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/</guid>
+      <description>
+
+&lt;h4 id=&#34;环境:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;环境：&lt;/h4&gt;
+
+&lt;p&gt;ubuntu14.4&lt;/p&gt;
+
+&lt;h2 id=&#34;安装shadowsocks-qt5:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;安装shadowsocks-qt5&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源）
+sudo apt-get update （更新你的软件库）
+sudo apt-get install shadowsocks-qt5 (正式安装)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;配置客户端:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;配置客户端&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_open_client.png&#34; alt=&#34;打开shadowsocks客户端&#34;&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_add_config.png&#34; alt=&#34;shadowsocks添加配置&#34;&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_config.png&#34; alt=&#34;配置shadowsocks&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_connection.png&#34; alt=&#34;连接shadowsocks&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;配置火狐:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;配置火狐&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/firfox_config_agent.png&#34; alt=&#34;火狐配置代理&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;访问youtube:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;访问YouTube&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_go_youtube.png&#34; alt=&#34;访问YouTube&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>RGB颜色对照表</title>
+      <link>http://wyb0.com/posts/RGB%E9%A2%9C%E8%89%B2%E5%AF%B9%E7%85%A7%E8%A1%A8/</link>
+      <pubDate>Sat, 04 Jun 2016 20:03:10 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/RGB%E9%A2%9C%E8%89%B2%E5%AF%B9%E7%85%A7%E8%A1%A8/</guid>
+      <description>&lt;p&gt;&lt;html&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
+  &lt;title&gt;RGB&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p align=&#34;center&#34;&gt;&lt;b&gt; RGB&lt;/b&gt;颜色对照表&lt;/p&gt;
+  &lt;div align=&#34;center&#34;&gt;
+    &lt;center&gt;
+      &lt;table width=&#34;550&#34; cellspacing=&#34;3&#34; border=&#34;1&#34;&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ffffff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFFFFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fffff0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFFFF0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffffe0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFFFE0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffff00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFFF00&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#fffafa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFFAFA&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fffaf0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFFAF0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fffacd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFFACD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fff8dc&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFF8DC&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#fff68f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFF68F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fff5ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFF5EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fff0f5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFF0F5&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffefdb&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFEFDB&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ffefd5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFEFD5&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffec8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFEC8B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffebcd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFEBCD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffe7ba&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFE7BA&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ffe4e1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFE4E1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffe4c4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFE4C4&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffe4b5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFE4B5&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffe1ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFE1FF&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ffdead&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFDEAD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffdab9&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFDAB9&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffd700&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFD700&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffd39b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFD39B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ffc1c1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFC1C1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffc125&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFC125&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffc0cb&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFC0CB&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffbbff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFBBFF&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ffb90f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFB90F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffb6c1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFB6C1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffb5c5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFB5C5&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffaeb9&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFAEB9&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ffa54f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFA54F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffa500&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFA500&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ffa07a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FFA07A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff8c69&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF8C69&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ff8c00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF8C00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff83fa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF83FA&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff82ab&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF82AB&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff8247&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF8247&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ff7f50&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF7F50&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff7f24&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF7F24&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff7f00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF7F00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff7256&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF7256&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ff6eb4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF6EB4&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff6a6a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF6A6A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff69b4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF69B4&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff6347&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF6347&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ff4500&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF4500&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff4040&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF4040&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff3e96&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF3E96&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff34b3&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF34B3&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ff3030&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF3030&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff1493&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF1493&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff00ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF00FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ff0000&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FF0000&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#fdf5e6&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FDF5E6&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fcfcfc&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FCFCFC&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fafafa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FAFAFA&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fafad2&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FAFAD2&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#faf0e6&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FAF0E6&lt;/td&gt;
+            &lt;td bgcolor=&#34;#faebd7&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FAEBD7&lt;/td&gt;
+            &lt;td bgcolor=&#34;#fa8072&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#FA8072&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f8f8ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F8F8FF&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#f7f7f7&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F7F7F7&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f5fffa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F5FFFA&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f5f5f5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F5F5F5&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f5f5dc&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F5F5DC&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#f5deb3&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F5DEB3&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f4f4f4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F4F4F4&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f4a460&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F4A460&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f2f2f2&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F2F2F2&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#f0ffff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F0FFFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f0fff0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F0FFF0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f0f8ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F0F8FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f0f0f0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F0F0F0&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#f0e68c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F0E68C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#f08080&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#F08080&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eeeee0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEEEE0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eeeed1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEEED1&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#eeee00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEEE00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eee9e9&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEE9E9&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eee9bf&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEE9BF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eee8cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEE8CD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#eee8aa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEE8AA&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eee685&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEE685&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eee5de&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEE5DE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eee0e5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEE0E5&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#eedfcc&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEDFCC&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eedc82&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEDC82&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eed8ae&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EED8AE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eed5d2&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EED5D2&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#eed5b7&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EED5B7&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eed2ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EED2EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eecfa1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EECFA1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eecbad&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EECBAD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#eec900&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEC900&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eec591&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEC591&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eeb4b4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEB4B4&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eeb422&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEB422&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#eeaeee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEAEEE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eead0e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEAD0E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eea9b8&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEA9B8&lt;/td&gt;
+            &lt;td bgcolor=&#34;#eea2ad&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EEA2AD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ee9a49&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE9A49&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee9a00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE9A00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee9572&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE9572&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee82ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE82EE&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ee8262&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE8262&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee7ae9&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE7AE9&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee799f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE799F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee7942&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE7942&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ee7621&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE7621&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee7600&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE7600&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee6aa7&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE6AA7&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee6a50&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE6A50&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ee6363&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE6363&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee5c42&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE5C42&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee4000&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE4000&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee3b3b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE3B3B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ee3a8c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE3A8C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee30a7&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE30A7&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee2c2c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE2C2C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee1289&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE1289&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#ee00ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE00EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ee0000&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EE0000&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ededed&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EDEDED&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ebebeb&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EBEBEB&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#eaeaea&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#EAEAEA&lt;/td&gt;
+            &lt;td bgcolor=&#34;#e9967a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E9967A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#e8e8e8&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E8E8E8&lt;/td&gt;
+            &lt;td bgcolor=&#34;#e6e6fa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E6E6FA&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#e5e5e5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E5E5E5&lt;/td&gt;
+            &lt;td bgcolor=&#34;#e3e3e3&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E3E3E3&lt;/td&gt;
+            &lt;td bgcolor=&#34;#e0ffff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E0FFFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#e0eeee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E0EEEE&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#e0eee0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E0EEE0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#e0e0e0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E0E0E0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#e066ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#E066FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#dedede&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#DEDEDE&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#deb887&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#DEB887&lt;/td&gt;
+            &lt;td bgcolor=&#34;#dda0dd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#DDA0DD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#dcdcdc&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#DCDCDC&lt;/td&gt;
+            &lt;td bgcolor=&#34;#dc143c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#DC143C&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#dbdbdb&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#DBDBDB&lt;/td&gt;
+            &lt;td bgcolor=&#34;#db7093&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#DB7093&lt;/td&gt;
+            &lt;td bgcolor=&#34;#daa520&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#DAA520&lt;/td&gt;
+            &lt;td bgcolor=&#34;#da70d6&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#DA70D6&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#d9d9d9&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D9D9D9&lt;/td&gt;
+            &lt;td bgcolor=&#34;#d8bfd8&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D8BFD8&lt;/td&gt;
+            &lt;td bgcolor=&#34;#d6d6d6&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D6D6D6&lt;/td&gt;
+            &lt;td bgcolor=&#34;#d4d4d4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D4D4D4&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#d3d3d3&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D3D3D3&lt;/td&gt;
+            &lt;td bgcolor=&#34;#d2b48c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D2B48C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#d2691e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D2691E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#d1eeee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D1EEEE&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#d1d1d1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D1D1D1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#d15fee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D15FEE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#d02090&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#D02090&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cfcfcf&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CFCFCF&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cdcdc1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDCDC1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdcdb4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDCDB4&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdcd00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDCD00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdc9c9&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDC9C9&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cdc9a5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDC9A5&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdc8b1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDC8B1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdc673&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDC673&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdc5bf&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDC5BF&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cdc1c5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDC1C5&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdc0b0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDC0B0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdbe70&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDBE70&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdba96&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDBA96&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cdb7b5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDB7B5&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdb79e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDB79E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdb5cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDB5CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdb38b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDB38B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cdaf95&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDAF95&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdad00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDAD00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cdaa7d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CDAA7D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd9b9b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD9B9B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cd9b1d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD9B1D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd96cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD96CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd950c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD950C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd919e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD919E&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cd8c95&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD8C95&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd853f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD853F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd8500&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD8500&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd8162&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD8162&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cd7054&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD7054&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd69c9&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD69C9&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd6889&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD6889&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd6839&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD6839&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cd661d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD661D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd6600&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD6600&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd6090&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD6090&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd5c5c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD5C5C&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cd5b45&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD5B45&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd5555&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD5555&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd4f39&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD4F39&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd3700&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD3700&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cd3333&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD3333&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd3278&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD3278&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd2990&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD2990&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd2626&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD2626&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#cd1076&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD1076&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd00cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD00CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cd0000&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CD0000&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cccccc&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CCCCCC&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#caff70&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CAFF70&lt;/td&gt;
+            &lt;td bgcolor=&#34;#cae1ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#CAE1FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c9c9c9&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C9C9C9&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c7c7c7&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C7C7C7&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#c71585&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C71585&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c6e2ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C6E2FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c67171&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C67171&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c5c1aa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C5C1AA&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#c4c4c4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C4C4C4&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c2c2c2&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C2C2C2&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c1ffc1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C1FFC1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c1cdcd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C1CDCD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#c1cdc1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C1CDC1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c1c1c1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C1C1C1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#c0ff3e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#C0FF3E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#bfefff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BFEFFF&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#bfbfbf&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BFBFBF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#bf3eff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BF3EFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#bebebe&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BEBEBE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#bdbdbd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BDBDBD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#bdb76b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BDB76B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#bcee68&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BCEE68&lt;/td&gt;
+            &lt;td bgcolor=&#34;#bcd2ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BCD2EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#bc8f8f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BC8F8F&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#bbffff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BBFFFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#bababa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BABABA&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ba55d3&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#BA55D3&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b9d3ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B9D3EE&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#b8b8b8&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B8B8B8&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b8860b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B8860B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b7b7b7&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B7B7B7&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b5b5b5&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B5B5B5&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#b4eeb4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B4EEB4&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b4cdcd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B4CDCD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b452cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B452CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b3ee3a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B3EE3A&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#b3b3b3&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B3B3B3&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b2dfee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B2DFEE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b23aee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B23AEE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b22222&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B22222&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#b0e2ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B0E2FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b0e0e6&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B0E0E6&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b0c4de&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B0C4DE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#b0b0b0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B0B0B0&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#b03060&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#B03060&lt;/td&gt;
+            &lt;td bgcolor=&#34;#aeeeee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#AEEEEE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#adff2f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#ADFF2F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#add8e6&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#ADD8E6&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#adadad&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#ADADAD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ababab&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#ABABAB&lt;/td&gt;
+            &lt;td bgcolor=&#34;#ab82ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#AB82FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#aaaaaa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#AAAAAA&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#a9a9a9&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A9A9A9&lt;/td&gt;
+            &lt;td bgcolor=&#34;#a8a8a8&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A8A8A8&lt;/td&gt;
+            &lt;td bgcolor=&#34;#a6a6a6&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A6A6A6&lt;/td&gt;
+            &lt;td bgcolor=&#34;#a52a2a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A52A2A&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#a4d3ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A4D3EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#a3a3a3&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A3A3A3&lt;/td&gt;
+            &lt;td bgcolor=&#34;#a2cd5a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A2CD5A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#a2b5cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A2B5CD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#a1a1a1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A1A1A1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#a0522d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A0522D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#a020f0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#A020F0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9fb6cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9FB6CD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#9f79ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9F79EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9e9e9e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9E9E9E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9c9c9c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9C9C9C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9bcd9b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9BCD9B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#9b30ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9B30FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9aff9a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9AFF9A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9acd32&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9ACD32&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9ac0cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9AC0CD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#9a32cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9A32CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#999999&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#999999&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9932cc&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9932CC&lt;/td&gt;
+            &lt;td bgcolor=&#34;#98fb98&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#98FB98&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#98f5ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#98F5FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#97ffff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#97FFFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#96cdcd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#96CDCD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#969696&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#969696&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#949494&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#949494&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9400d3&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9400D3&lt;/td&gt;
+            &lt;td bgcolor=&#34;#9370db&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#9370DB&lt;/td&gt;
+            &lt;td bgcolor=&#34;#919191&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#919191&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#912cee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#912CEE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#90ee90&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#90EE90&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8fbc8f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8FBC8F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8f8f8f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8F8F8F&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8ee5ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8EE5EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8e8e8e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8E8E8E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8e8e38&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8E8E38&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8e388e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8E388E&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8deeee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8DEEEE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8db6cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8DB6CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8c8c8c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8C8C8C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b8b83&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B8B83&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b8b7a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B8B7A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b8b00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B8B00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b8989&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B8989&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b8970&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B8970&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b8878&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B8878&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b8682&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B8682&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b864e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B864E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b8386&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B8386&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b8378&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B8378&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b814c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B814C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b7e66&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B7E66&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b7d7b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B7D7B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b7d6b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B7D6B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b7b8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B7B8B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b795e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B795E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b7765&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B7765&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b7500&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B7500&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b7355&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B7355&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b6969&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B6969&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b6914&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B6914&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b668b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B668B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b6508&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B6508&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b636c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B636C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b5f65&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B5F65&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b5a2b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B5A2B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b5a00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B5A00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b5742&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B5742&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b4c39&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B4C39&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b4789&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B4789&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b475d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B475D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b4726&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B4726&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b4513&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B4513&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b4500&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B4500&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b3e2f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B3E2F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b3a62&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B3A62&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b3a3a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B3A3A&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b3626&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B3626&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b2500&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B2500&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b2323&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B2323&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b2252&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B2252&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b1c62&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B1C62&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b1a1a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B1A1A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b0a50&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B0A50&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8b008b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B008B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#8b0000&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8B0000&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8a8a8a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8A8A8A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8a2be2&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8A2BE2&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8968cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8968CD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#87ceff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#87CEFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#87cefa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#87CEFA&lt;/td&gt;
+            &lt;td bgcolor=&#34;#87ceeb&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#87CEEB&lt;/td&gt;
+            &lt;td bgcolor=&#34;#878787&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#878787&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#858585&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#858585&lt;/td&gt;
+            &lt;td bgcolor=&#34;#848484&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#848484&lt;/td&gt;
+            &lt;td bgcolor=&#34;#8470ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#8470FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#838b8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#838B8B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#838b83&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#838B83&lt;/td&gt;
+            &lt;td bgcolor=&#34;#836fff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#836FFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#828282&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#828282&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7fffd4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7FFFD4&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#7fff00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7FFF00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7f7f7f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7F7F7F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7ec0ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7EC0EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7d9ec0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7D9EC0&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#7d7d7d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7D7D7D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7d26cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7D26CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7cfc00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7CFC00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7ccd7c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7CCD7C&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#7b68ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7B68EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7ac5cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7AC5CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7a8b8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7A8B8B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7a7a7a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7A7A7A&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#7a67ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7A67EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7a378b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7A378B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#79cdcd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#79CDCD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#787878&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#787878&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#778899&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#778899&lt;/td&gt;
+            &lt;td bgcolor=&#34;#76eec6&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#76EEC6&lt;/td&gt;
+            &lt;td bgcolor=&#34;#76ee00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#76EE00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#757575&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#757575&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#737373&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#737373&lt;/td&gt;
+            &lt;td bgcolor=&#34;#71c671&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#71C671&lt;/td&gt;
+            &lt;td bgcolor=&#34;#7171c6&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#7171C6&lt;/td&gt;
+            &lt;td bgcolor=&#34;#708090&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#708090&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#707070&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#707070&lt;/td&gt;
+            &lt;td bgcolor=&#34;#6e8b3d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6E8B3D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#6e7b8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6E7B8B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#6e6e6e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6E6E6E&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#6ca6cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6CA6CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#6c7b8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6C7B8B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#6b8e23&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6B8E23&lt;/td&gt;
+            &lt;td bgcolor=&#34;#6b6b6b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6B6B6B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#6a5acd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6A5ACD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#698b69&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#698B69&lt;/td&gt;
+            &lt;td bgcolor=&#34;#698b22&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#698B22&lt;/td&gt;
+            &lt;td bgcolor=&#34;#696969&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#696969&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#6959cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6959CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#68838b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#68838B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#68228b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#68228B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#66cdaa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#66CDAA&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#66cd00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#66CD00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#668b8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#668B8B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#666666&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#666666&lt;/td&gt;
+            &lt;td bgcolor=&#34;#6495ed&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#6495ED&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#63b8ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#63B8FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#636363&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#636363&lt;/td&gt;
+            &lt;td bgcolor=&#34;#616161&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#616161&lt;/td&gt;
+            &lt;td bgcolor=&#34;#607b8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#607B8B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#5f9ea0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#5F9EA0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#5e5e5e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#5E5E5E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#5d478b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#5D478B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#5cacee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#5CACEE&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#5c5c5c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#5C5C5C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#5b5b5b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#5B5B5B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#595959&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#595959&lt;/td&gt;
+            &lt;td bgcolor=&#34;#575757&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#575757&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#556b2f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#556B2F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#555555&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#555555&lt;/td&gt;
+            &lt;td bgcolor=&#34;#551a8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#551A8B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#54ff9f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#54FF9F&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#548b54&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#548B54&lt;/td&gt;
+            &lt;td bgcolor=&#34;#545454&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#545454&lt;/td&gt;
+            &lt;td bgcolor=&#34;#53868b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#53868B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#528b8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#528B8B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#525252&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#525252&lt;/td&gt;
+            &lt;td bgcolor=&#34;#515151&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#515151&lt;/td&gt;
+            &lt;td bgcolor=&#34;#4f94cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4F94CD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#4f4f4f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4F4F4F&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#4eee94&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4EEE94&lt;/td&gt;
+            &lt;td bgcolor=&#34;#4d4d4d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4D4D4D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#4b0082&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4B0082&lt;/td&gt;
+            &lt;td bgcolor=&#34;#4a708b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4A708B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#4a4a4a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4A4A4A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#48d1cc&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#48D1CC&lt;/td&gt;
+            &lt;td bgcolor=&#34;#4876ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4876FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#483d8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#483D8B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#474747&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#474747&lt;/td&gt;
+            &lt;td bgcolor=&#34;#473c8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#473C8B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#4682b4&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4682B4&lt;/td&gt;
+            &lt;td bgcolor=&#34;#458b74&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#458B74&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#458b00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#458B00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#454545&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#454545&lt;/td&gt;
+            &lt;td bgcolor=&#34;#43cd80&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#43CD80&lt;/td&gt;
+            &lt;td bgcolor=&#34;#436eee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#436EEE&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#424242&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#424242&lt;/td&gt;
+            &lt;td bgcolor=&#34;#4169e1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#4169E1&lt;/td&gt;
+            &lt;td bgcolor=&#34;#40e0d0&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#40E0D0&lt;/td&gt;
+            &lt;td bgcolor=&#34;#404040&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#404040&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#3d3d3d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#3D3D3D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#3cb371&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#3CB371&lt;/td&gt;
+            &lt;td bgcolor=&#34;#3b3b3b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#3B3B3B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#3a5fcd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#3A5FCD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#388e8e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#388E8E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#383838&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#383838&lt;/td&gt;
+            &lt;td bgcolor=&#34;#36648b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#36648B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#363636&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#363636&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#333333&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#333333&lt;/td&gt;
+            &lt;td bgcolor=&#34;#32cd32&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#32CD32&lt;/td&gt;
+            &lt;td bgcolor=&#34;#303030&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#303030&lt;/td&gt;
+            &lt;td bgcolor=&#34;#2f4f4f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#2F4F4F&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#2e8b57&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#2E8B57&lt;/td&gt;
+            &lt;td bgcolor=&#34;#2e2e2e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#2E2E2E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#2b2b2b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#2B2B2B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#292929&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#292929&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#282828&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#282828&lt;/td&gt;
+            &lt;td bgcolor=&#34;#27408b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#27408B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#262626&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#262626&lt;/td&gt;
+            &lt;td bgcolor=&#34;#242424&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#242424&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#228b22&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#228B22&lt;/td&gt;
+            &lt;td bgcolor=&#34;#218868&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#218868&lt;/td&gt;
+            &lt;td bgcolor=&#34;#212121&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#212121&lt;/td&gt;
+            &lt;td bgcolor=&#34;#20b2aa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#20B2AA&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#1f1f1f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#1F1F1F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#1e90ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#1E90FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#1e1e1e&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#1E1E1E&lt;/td&gt;
+            &lt;td bgcolor=&#34;#1c86ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#1C86EE&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#1c1c1c&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#1C1C1C&lt;/td&gt;
+            &lt;td bgcolor=&#34;#1a1a1a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#1A1A1A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#191970&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#191970&lt;/td&gt;
+            &lt;td bgcolor=&#34;#1874cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#1874CD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#171717&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#171717&lt;/td&gt;
+            &lt;td bgcolor=&#34;#141414&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#141414&lt;/td&gt;
+            &lt;td bgcolor=&#34;#121212&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#121212&lt;/td&gt;
+            &lt;td bgcolor=&#34;#104e8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#104E8B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#0f0f0f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#0F0F0F&lt;/td&gt;
+            &lt;td bgcolor=&#34;#0d0d0d&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#0D0D0D&lt;/td&gt;
+            &lt;td bgcolor=&#34;#0a0a0a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#0A0A0A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#080808&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#080808&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#050505&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#050505&lt;/td&gt;
+            &lt;td bgcolor=&#34;#030303&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#030303&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00ffff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00FFFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00ff7f&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00FF7F&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#00ff00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00FF00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00fa9a&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00FA9A&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00f5ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00F5FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00eeee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00EEEE&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#00ee76&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00EE76&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00ee00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00EE00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00e5ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00E5EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00ced1&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00CED1&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#00cdcd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00CDCD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00cd66&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00CD66&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00cd00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00CD00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00c5cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00C5CD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#00bfff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00BFFF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00b2ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00B2EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#009acd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#009ACD&lt;/td&gt;
+            &lt;td bgcolor=&#34;#008b8b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#008B8B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#008b45&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#008B45&lt;/td&gt;
+            &lt;td bgcolor=&#34;#008b00&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#008B00&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00868b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00868B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00688b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00688B&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#006400&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#006400&lt;/td&gt;
+            &lt;td bgcolor=&#34;#0000ff&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#0000FF&lt;/td&gt;
+            &lt;td bgcolor=&#34;#0000ee&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#0000EE&lt;/td&gt;
+            &lt;td bgcolor=&#34;#0000cd&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#0000CD&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;td bgcolor=&#34;#0000aa&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#0000AA&lt;/td&gt;
+            &lt;td bgcolor=&#34;#00008b&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#00008B&lt;/td&gt;
+            &lt;td bgcolor=&#34;#000080&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#000080&lt;/td&gt;
+            &lt;td bgcolor=&#34;#000000&#34; height=&#34;30&#34; width=&#34;30&#34;&gt;&lt;/td&gt;
+            &lt;td&gt;#000000&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/center&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>win/ubuntu双系统分区设置</title>
+      <link>http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/</link>
+      <pubDate>Tue, 31 May 2016 23:35:06 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/</guid>
+      <description>
+
+&lt;h2 id=&#34;win10和ubuntu双系统分区设置:3e030af796631eb52143202ed95ab205&#34;&gt;win10和ubuntu双系统分区设置&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;硬盘采用uefi格式&lt;/li&gt;
+&lt;li&gt;硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息&lt;/li&gt;
+&lt;li&gt;在硬盘末尾给ubuntu划分50G左右空间&lt;/li&gt;
+&lt;li&gt;ubuntu的/分区，格式为ext4，空间为40G&lt;/li&gt;
+&lt;li&gt;ubuntu的/home分区，格式为ext4，空间为10G&lt;/li&gt;
+&lt;li&gt;ubuntu的/boot分区，格式为ext4,空间为200M&lt;/li&gt;
+&lt;li&gt;ubuntu的/swap分区，格式为swap，空间为200M&lt;/li&gt;
+&lt;li&gt;ubuntu的引导分区为/boot&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/hard_disk_partition1.png&#34; alt=&#34;双系统磁盘分区&#34;&gt;
+&lt;/div&gt;
+
+&amp;nbsp;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/hard_disk_partition2.png&#34; alt=&#34;双系统磁盘分区&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>[转]短</title>
+      <link>http://wyb0.com/posts/%5B%E8%BD%AC%5D%E7%9F%AD/</link>
+      <pubDate>Sun, 17 Apr 2016 15:49:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%5B%E8%BD%AC%5D%E7%9F%AD/</guid>
+      <description>
+
+&lt;p&gt;&lt;center&gt;
+&lt;font size=&#34;15&#34;&gt;短&lt;/font&gt;
+俄罗斯某诗人&lt;/p&gt;
+
+&lt;p&gt;&lt;/center&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;一天很短:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;一天很短&lt;/h3&gt;
+
+&lt;h3 id=&#34;短得来不及拥抱清晨:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;短得来不及拥抱清晨&lt;/h3&gt;
+
+&lt;h3 id=&#34;就已经手握黄昏:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;就已经手握黄昏&lt;/h3&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;一年很短:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;一年很短&lt;/h3&gt;
+
+&lt;h3 id=&#34;短得来不及细品初春殷红窦绿:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;短得来不及细品初春殷红窦绿&lt;/h3&gt;
+
+&lt;h3 id=&#34;就要打点素裹秋霜:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;就要打点素裹秋霜&lt;/h3&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;一生很短:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;一生很短&lt;/h3&gt;
+
+&lt;h3 id=&#34;短的来不及享用美好年华:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;短的来不及享用美好年华&lt;/h3&gt;
+
+&lt;h3 id=&#34;就已经身处迟暮:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;就已经身处迟暮&lt;/h3&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;总是经过的太快:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;总是经过的太快&lt;/h3&gt;
+
+&lt;h3 id=&#34;领悟的太晚:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;领悟的太晚&lt;/h3&gt;
+
+&lt;h3 id=&#34;我们要学会珍惜:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;我们要学会珍惜&lt;/h3&gt;
+
+&lt;h3 id=&#34;珍惜人生路上的亲情-友情-同事情-同学情-朋友情:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;珍惜人生路上的亲情、友情、同事情、同学情、朋友情&lt;/h3&gt;
+
+&lt;h3 id=&#34;一旦擦身而过:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;一旦擦身而过&lt;/h3&gt;
+
+&lt;h3 id=&#34;也许永不邂逅:fbb44b3c98bce7965ad95a88b6adfd9c&#34;&gt;也许永不邂逅&lt;/h3&gt;
+
+&lt;p&gt;&lt;/center&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>中小企业网络搭建</title>
+      <link>http://wyb0.com/posts/%E4%B8%AD%E5%B0%8F%E4%BC%81%E4%B8%9A%E7%BD%91%E7%BB%9C%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Mon, 13 Jul 2015 13:53:56 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E4%B8%AD%E5%B0%8F%E4%BC%81%E4%B8%9A%E7%BD%91%E7%BB%9C%E6%90%AD%E5%BB%BA/</guid>
+      <description>
+
+&lt;h2 id=&#34;中小企业需求分析:d09c3168e891248f4b637be9151fd8f6&#34;&gt;中小企业需求分析&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。&lt;/li&gt;
+&lt;li&gt;对网络设备能够方便地进行远程管理。&lt;/li&gt;
+&lt;li&gt;在局域网中公司部门间进行vlan划分，实现安全管理。&lt;/li&gt;
+&lt;li&gt;对三层设备路由技术这方面采取RIPV2协议或OSPF协议。&lt;/li&gt;
+&lt;li&gt;配置访问控制列表（ACL）以对网络数据进行有效的分类和控制，限制终端之间的相互访问。&lt;/li&gt;
+&lt;li&gt;内网通过配置PAT技术实现与外网之间的通信。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;所需设备:d09c3168e891248f4b637be9151fd8f6&#34;&gt;所需设备&lt;/h2&gt;
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_the_required_equipment.png&#34; alt=&#34;中小企业所需设备.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;网络规划:d09c3168e891248f4b637be9151fd8f6&#34;&gt;网络规划&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在三层交换机设置ACL，控制个vlan间的通信&lt;/li&gt;
+&lt;li&gt;在防火墙(路由器)上设置NAT转换&lt;/li&gt;
+&lt;li&gt;路由协议采用OSPF&lt;/li&gt;
+&lt;li&gt;内网访问控制
+
+&lt;ul&gt;
+&lt;li&gt;内网中只有市场部可以访问外网&lt;/li&gt;
+&lt;li&gt;市场部可以访问市场部、打印机&lt;/li&gt;
+&lt;li&gt;设计部可以访问设计部、财务部、打印机&lt;/li&gt;
+&lt;li&gt;外网只有202.202.2.0/24能访问内网&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;IP规划如下：
+
+&lt;ul&gt;
+&lt;li&gt;打印机：192.168.1.0/24&lt;/li&gt;
+&lt;li&gt;市场部：192.168.2.0/24&lt;/li&gt;
+&lt;li&gt;设计部：192.168.3.0/24&lt;/li&gt;
+&lt;li&gt;财务部：192.168.4.0/24&lt;/li&gt;
+&lt;li&gt;防火墙和三层交换机所在网段：192.168.5.0/24&lt;/li&gt;
+&lt;li&gt;管理ip所在网段：192.168.100.0/24&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;网络设备配置命令代码:d09c3168e891248f4b637be9151fd8f6&#34;&gt;网络设备配置命令代码&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Firewall配置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Router&amp;gt;enable 
+Router#conf t
+Router(config)#no ip domain-lookup  //禁止域名解析
+Router(config)#hostname Firewall  //更改设备名
+Firewall(config)#enable password 123
+Firewall(config)#router eigrp 1
+Firewall(config-router)#no auto-summary  //关闭自动汇总
+Firewall(config-router)#exit
+Firewall(config)#int f0/0
+Firewall(config-if)#ip add 192.168.5.2 255.255.255.0  //配端口ip
+Firewall(config-if)#no shut
+Firewall(config-if)#exit
+Firewall(config)#router ospf 1  //配路由协议ospf
+Firewall(config-router)#network 202.202.1.0 0.0.0.255 area 0
+Firewall(config-router)#network 192.168.5.0 0.0.0.255 area 0
+Firewall(config-router)#exit
+Firewall(config)#int s1/0
+Firewall(config-if)#ip add 202.202.1.1 255.255.255.0
+Firewall(config-if)#clock rate 128000   //配同步时钟
+Firewall(config-if)#no shut
+Firewall(config-if)#exit
+Firewall(config)#ip nat pool NAT 202.202.1.1 202.202.1.1 netmask 255.255.255.0 //地址池
+Firewall(config)#ip nat inside source list 1 pool NAT overload //定义接口复用
+Firewall(config)#access-list 1 permit 192.168.0.0 0.0.255.255  //定义需要转换的内部本地地址
+Firewall(config)#int f0/0
+Firewall(config-if)#ip nat inside //定义NAT接口
+Firewall(config-if)#int s1/0
+Firewall(config-if)#ip nat outside 
+Firewall(config-if)#exit
+Firewall(config)#access-list 101 permit ip 202.202.2.0 0.0.0.255 192.168.0.0 0.0.255.255   //配置ACL
+Firewall(config)#access-list 101 deny ip any any 
+Firewall(config)#int f0/0
+Firewall(config-if)#ip access-group 101 out  //应用ACL到接口
+Firewall(config-if)#end
+Firewall#write
+Building configuration...
+[OK]
+Firewall#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;R1的配置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Router&amp;gt;enable 
+Router#conf t
+Router(config)#no ip domain-lookup 
+Router(config)#hostname R1
+R1(config)#enable password 123
+R1(config)#router eigrp 1
+R1(config-router)#no auto-summary
+R1(config-router)#exit
+R1(config)#int s1/1
+R1(config-if)#ip add 202.202.1.2 255.255.255.0
+R1(config-if)#no shut
+R1(config-if)#exit
+R1(config)#int f0/0 
+R1(config-if)#ip add 202.202.2.254 255.255.255.0
+R1(config-if)#no shut
+R1(config-if)#exit
+R1(config)#int f0/1
+R1(config-if)#ip add 202.202.3.254 255.255.255.0
+R1(config-if)#no shut
+R1(config-if)#exit
+R1(config)#router ospf 1
+R1(config-router)#network 202.202.1.0 0.0.0.255 area 0
+R1(config-router)#network 202.202.2.0 0.0.0.255 area 0
+R1(config-router)#network 202.202.3.0 0.0.0.255 area 0
+R1(config-router)#exit
+R1(config)#exit
+R1#write
+Building configuration...
+[OK]
+R1#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;三层交换机配置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Switch&amp;gt;enable 
+Switch#conf t
+Switch(config)#no ip domain-lookup
+Switch(config)#hostname MS1
+MS1(config)#line vty 0 4
+MS1(config-line)#password soft  
+MS1(config-line)#exit
+MS1(config)#enable password 123
+MS1(config)#int vlan 1
+MS1(config-if)#ip add 192.168.100.254 255.255.255.0 //配管理ip
+MS1(config-if)#no shut
+MS1(config-if)#exit
+MS1(config)#int f0/1
+MS1(config-if)#switchport trunk encapsulation dot1q//封IEEE802.1q协议
+MS1(config-if)#switchport mode trunk  //将端口设为trunk
+MS1(config-if)#exit
+MS1(config)#int f0/2
+MS1(config-if)#switchport trunk encapsulation dot1q 
+MS1(config-if)#switchport mode trunk 
+MS1(config-if)#int f0/3
+MS1(config-if)#switchport trunk encapsulation dot1q
+MS1(config-if)#switchport mode trunk 
+MS1(config-if)#exit
+MS1(config)#int g0/1
+MS1(config-if)#no switchport  //将2层接口变为3层
+MS1(config-if)#exit
+MS1(config)#exit
+MS1#vlan database 
+MS1(vlan)#vlan 10 name vlan10  //创建vlan
+VLAN 10 added:
+    Name: vlan10
+MS1(vlan)#vlan 20 name vlan20
+VLAN 20 added:
+    Name: vlan20
+MS1(vlan)#vlan 30 name vlan30
+VLAN 30 added:
+    Name: vlan30
+MS1(vlan)#vlan 40 name vlan40
+VLAN 40 added:
+    Name: vlan40
+MS1(vlan)#exit
+APPLY completed.
+Exiting....
+MS1#conf t
+MS1(config)#int vlan 10
+MS1(config-if)#ip add 192.168.1.254 255.255.255.0  //为vlan配ip，也是vlan的网关
+MS1(config-if)#int vlan 20
+MS1(config-if)#ip add 192.168.2.254 255.255.255.0
+MS1(config-if)#int vlan 30
+MS1(config-if)#ip add 192.168.3.254 255.255.255.0
+MS1(config-if)#int vlan 40
+MS1(config-if)#ip add 192.168.4.254 255.255.255.0
+MS1(config-if)#exit
+MS1(config)#int g0/0
+MS1(config-if)#ip add 192.168.5.1 255.255.255.0
+MS1(config-if)#no shut
+MS1(config-if)#exit
+MS1(config)#route ospf 1
+MS1(config-router)#network 192.168.1.0 0.0.0.255 area 0
+MS1(config-router)#network 192.168.2.0 0.0.0.255 area 0
+MS1(config-router)#network 192.168.3.0 0.0.0.255 area 0
+MS1(config-router)#network 192.168.4.0 0.0.0.255 area 0
+MS1(config-router)#network 192.168.5.0 0.0.0.255 area 0
+MS1(config-router)#network 192.168.100.0 0.0.0.255 area 0
+MS1(config-router)#exit
+MS1(config)#access-list 1 permit 192.168.2.0 0.0.0.255 
+MS1(config)#access-list 1 deny 192.168.0.0 0.0.255.255
+MS1(config)#access-list 1 permit any 
+MS1(config)#int g0/1
+MS1(config-if)#ip access-group 1 out
+MS1(config-if)#exit
+MS1(config)#access-list 20 permit 192.168.1.0 0.0.0.255
+MS1(config)#access-list 20 deny 192.168.0.0 0.0.255.255
+MS1(config)#access-list 20 permit any
+MS1(config)#int vlan 20
+MS1(config-if)#ip access-group 20 out
+MS1(config-if)#exit
+MS1(config)#access-list 30 permit 192.168.1.0 0.0.0.255
+MS1(config)#access-list 30 permit 192.168.4.0 0.0.0.255
+MS1(config)#access-list 30 deny 192.168.0.0 0.0.255.255
+MS1(config)#access-list 30 permit any
+MS1(config)#int vlan 30
+MS1(config-if)#ip access-group 30 out
+MS1(config-if)#end
+MS1#write
+Building configuration...
+[OK]
+MS1#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;S1的配置(S2、S3和S1一样)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Switch&amp;gt;enable 
+Switch#conf t
+Switch(config)#no ip domain-lookup 
+Switch(config)#hostname S1
+S1(config)#line vty 0 4
+S1(config-line)#password soft
+S1(config-line)#exit
+S1(config)#enable password 123
+S1(config)#int vlan 1
+S1(config-if)#ip add 192.168.100.1 255.255.255.0
+S1(config-if)#no shut
+S1(config-if)#exit
+S1(config)#int g1/1
+S1(config-if)#switchport mode trunk 
+S1(config-if)#exit
+S1(config)#int f0/24
+S1(config-if)#switchport mode trunk 
+S1(config-if)#int f0/23
+S1(config-if)#switchport mode trunk 
+S1(config-if)#exit
+S1(config)#exit
+S1#write
+Building configuration...
+[OK]
+S1#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;S4的配置(S5、S6、S7和S4一样)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Switch&amp;gt;enable 
+Switch#conf t
+Switch(config)#no ip domain-lookup 
+Switch(config)#hostname S4
+S4(config)#line vty 0 4
+S4(config-line)#password soft
+S4(config-line)#exit
+S4(config)#enable password 123
+S4(config)#int vlan 1
+S4(config-if)#ip add 192.168.100.4 255.255.255.0
+S4(config-if)#no shut
+S4(config-if)#exit 
+S4(config)#int f0/24
+S4(config-if)#switchport mode trunk 
+S4(config-if)#exit
+S4(config)#exit
+S4#vlan database 
+S4(vlan)#vlan 10 name vlan10
+VLAN 10 added:
+    Name: vlan10
+S4(vlan)#vlan 20 name vlan20
+VLAN 20 added:
+    Name: vlan20
+S4(vlan)#vlan 30 name vlan30
+VLAN 30 added:
+    Name: vlan30
+S4(vlan)#vlan 40 name vlan40
+VLAN 40 added:
+    Name: vlan40
+S4(vlan)#exit
+APPLY completed.
+Exiting....
+S4#conf t
+S4(config)#int vlan 10  //激活vlan
+S4(config-if)#
+%LINK-5-CHANGED: Interface Vlan10, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan10, changed state to up
+S4(config-if)#int vlan 20
+S4(config-if)#int vlan 30
+S4(config-if)#exit
+S4(config)#exit
+S4#write
+Building configuration...
+[OK]
+S4#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;测试及结果截图:d09c3168e891248f4b637be9151fd8f6&#34;&gt;测试及结果截图&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;开始时外网和内网均能相互通信
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_init1.png&#34; alt=&#34;开始时内外网能相互ping通1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_init2.png&#34; alt=&#34;开始时内外网能相互ping通2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;外网的2.0网段和3.0网段ping内网网段，只有2.0只能ping通内网的网段，且只能ping通192.168.2.0
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_test1.png&#34; alt=&#34;测试1.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;内网网段ping外网的202.202.2.1，只有2.0能ping通外网
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_test2.png&#34; alt=&#34;测试2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;内网2.0网段ping内网网段，只能访问1.0
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_test3.png&#34; alt=&#34;测试3.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;内网3.0网段ping内网网段，能ping通1.0和4.0
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_test4.png&#34; alt=&#34;测试4.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;内网4.0网段ping内网网段，能ping通1.0和3.0
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_test5.png&#34; alt=&#34;测试5.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;远程配置设备
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_test6.png&#34; alt=&#34;测试6.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;查看NAT转换
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/enterprise_network_test7.png&#34; alt=&#34;测试7.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;以上&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>单重DES的简单实现</title>
+      <link>http://wyb0.com/posts/%E5%8D%95%E9%87%8DDES%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Fri, 22 May 2015 16:52:55 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E5%8D%95%E9%87%8DDES%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/</guid>
+      <description>
+
+&lt;h2 id=&#34;简介:7e6a384da66e0e1e18c9cc181223ebd4&#34;&gt;简介&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;此程序通过单重des实现8个字节的加密和解密。
+新建一个工程，这个工程需要3个cpp文件(c文件也可以)和2个头文件。
+cpp文件：main.cpp、des.cpp、status.cpp
+头文件：des.h、status.h
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;代码:7e6a384da66e0e1e18c9cc181223ebd4&#34;&gt;代码&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;以下为主函数main.cpp的内容：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+#include &amp;quot;status.h&amp;quot;
+#include &amp;quot;des.h&amp;quot;
+
+int main()
+{
+    char M[8],Key[9];
+    printf(&amp;quot;Input Plaintext :&amp;quot;);
+    scanf(&amp;quot;%s&amp;quot;,&amp;amp;M);
+    printf(&amp;quot;Input Key :&amp;quot;);
+    scanf(&amp;quot;%s&amp;quot;,&amp;amp;Key);
+
+    SetKey(Key);//生成16个子秘钥
+
+    printf(&amp;quot;加密：&amp;quot;);
+    Des(M,&#39;e&#39;);
+    printf(&amp;quot;%s\n&amp;quot;,M);
+
+    printf(&amp;quot;解密：&amp;quot;);
+    Des(M,&#39;d&#39;);
+    printf(&amp;quot;%s\n&amp;quot;,M);
+    
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;以下为des.cpp的内容：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;
+#include &amp;lt;string.h&amp;gt;
+#include &amp;quot;status.h&amp;quot;
+#include &amp;quot;des.h&amp;quot;
+
+void ByteToBit(const char *In,bool *Out,int bits)
+{
+    for (int j=0;j&amp;lt;bits;j++)
+        Out[j]=(In[j/8]&amp;gt;&amp;gt;(j%8))&amp;amp; 1;
+}
+
+void BitToByte(bool *In,char *Out,int bits)
+{
+    memset(Out,0,(bits+7)/8);
+    for (int k=0;k&amp;lt;bits;k++)
+        Out[k/8]|=In[k]&amp;lt;&amp;lt;(k%8);
+}
+
+void Transform(bool *Y,bool *X,const char *Table,int len)
+{
+    for (int l=0;l&amp;lt;len;l++)
+        Temp[l]=X[Table[l]-1];
+    memcpy(Y,Temp,len);
+}
+
+void Des(char *m,char ch)
+{
+    bool Tem[32];
+    ByteToBit(m,P,64);
+    Transform(P,P,IP1_Table,64);
+    Li=&amp;amp;P[0];
+    Ri=&amp;amp;P[32];
+
+    if (ch==&#39;e&#39;)
+    {
+        for (i=0;i&amp;lt;16;i++)
+        {
+            memcpy(Tem,Ri,32);//临时存放明文的右半部分
+            f(Ri,SubKey[i]);
+            XOR(Ri,Li,32);
+            memcpy(Li,Tem,32);//将明文的右半部分写入Li
+        }
+    } 
+    else
+    {
+        for (i=15;i&amp;gt;=0;i--)
+        {
+            memcpy(Tem,Li,32);//临时存放明文的右半部分
+            f(Li,SubKey[i]);
+            XOR(Li,Ri,32);
+            memcpy(Ri,Tem,32);//将明文的右半部分写入Li
+        }
+    }
+
+    Transform(P,P,IP2_Table,64);
+    BitToByte(P,m,64);
+}
+
+void f(bool *R,bool *k)
+{
+    bool T[48];
+    Transform(T,R,E_Table,48);//32位的Ri扩展为48位
+    XOR(T,k,48);//Ri和轮秘钥的异或
+    S_Box_f(T,R);
+    Transform(R,R,P_Table,32);
+}
+
+void XOR(bool *R,bool *k,int len)
+{
+    for (int m=0;m&amp;lt;len;m++)
+        R[m]=R[m]^k[m];
+}
+
+void S_Box_f(bool *B,bool *C)
+{
+    int a,b;
+    for (int k=0;k&amp;lt;8;k++)
+    {
+        a=B[0]*2+B[5];
+        b=B[1]*8+B[2]*4+B[3]*2+B[4];
+        ByteToBit(&amp;amp;S_Box[k][a][b],C,4);
+        B+=6;
+        C+=4;
+    }
+}
+
+//以下求得子秘钥
+void SetKey(char *KEY)
+{
+    ByteToBit(KEY,K,64);
+    Transform(K,K,PC1_Table,56);
+    printf(&amp;quot;\n\n\n&amp;quot;);
+    Ci=&amp;amp;K[0];
+    Di=&amp;amp;K[28];
+    for (int j=0;j&amp;lt;16;j++)
+    {
+        MovKey(Ci,28,LOOP_Table[j]);
+        MovKey(Di,28,LOOP_Table[j]);
+        Transform(SubKey[j],K,PC2_Table,48);
+    }
+}
+
+void MovKey(bool *LR,int len,int loop)
+{
+    memcpy(Temp,LR,loop);
+    memcpy(LR,LR+loop,len-loop);
+    memcpy(LR+len-loop,Temp,loop);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;以下为status.cpp中的内容：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;quot;status.h&amp;quot;
+
+int i;
+bool P[64],K[64];
+bool *Li,*Ri;
+bool *Ci,*Di;
+bool Temp[100];
+bool SubKey[16][48];
+
+//子密钥各轮移位位数
+const char LOOP_Table[16]={
+    1,1,2,2,2,2,2,2,1,2,2,2,2,2,2,1
+};
+
+//16轮乘积变换前的初始变换
+const char IP1_Table[64]={
+    58, 50, 42, 34, 26, 18, 10, 2,
+        60, 52, 44, 36, 28, 20, 12, 4,
+        62, 54, 46, 38, 30, 22, 14, 6,
+        64, 56, 48, 40, 32, 24, 16, 8,
+        57, 49, 41, 33, 25, 17, 9,  1,
+        59, 51, 43, 35, 27, 19, 11, 3,
+        61, 53, 45, 37, 29, 21, 13, 5,
+        63, 55, 47, 39, 31, 23, 15, 7
+};
+
+//16轮乘积变换后的逆初始变换
+const char IP2_Table[64]={
+    40, 8, 48, 16, 56, 24, 64, 32,
+        39, 7, 47, 15, 55, 23, 63, 31,
+        38, 6, 46, 14, 54, 22, 62, 30,
+        37, 5, 45, 13, 53, 21, 61, 29,
+        36, 4, 44, 12, 52, 20, 60, 28,
+        35, 3, 43, 11, 51, 19, 59, 27,
+        34, 2, 42, 10, 50, 18, 58, 26,
+        33, 1, 41, 9,  49, 17, 57, 25
+};
+
+//扩展置换，将32位的数据扩展为48位
+const char E_Table[48]={
+    32, 1,  2,  3,  4,  5,
+        4,  5,  6,  7,  8,  9,
+        8,  9,  10, 11, 12, 13,
+        12, 13, 14, 15, 16, 17,
+        16, 17, 18, 19, 20, 21,
+        20, 21, 22, 23, 24, 25,
+        24, 25, 26, 27, 28, 29,
+        28, 29, 30, 31, 32, 1
+};
+
+//经过S盒后的P置换
+const char P_Table[32]={
+    16, 7,  20, 21, 29, 12, 28, 17,
+        1,  15, 23, 26, 5,  18, 31, 10,
+        2,  8,  24, 14, 32, 27, 3,  9,
+        19, 13, 30, 6,  22, 11, 4,  25
+};
+
+//子密钥换位表PC-1
+const char PC1_Table[56]={
+    57, 49, 41, 33, 25, 17, 9,
+        1,  58, 50, 42, 34, 26, 18,
+        10, 2,  59, 51, 43, 35, 27,
+        19, 11, 3,  60, 52, 44, 36,
+        63, 55, 47, 39, 31, 33, 15,
+        7,  62, 54, 46, 38, 30, 22,
+        14, 6,  61, 53, 45, 37, 29,
+        21, 13, 5,  28, 20, 12, 4
+};
+
+//子密钥换位表PC-2(去掉了PC-1的最后一列)
+const char PC2_Table[48]={
+    14, 17, 11, 24, 1,  5,
+        3,  28, 15, 6,  21, 10,
+        23, 19, 12, 4,  26, 8,
+        16, 7,  27, 20, 13, 2,
+        41, 52, 31, 37, 47, 55,
+        30, 40, 51, 45, 33, 48,
+        44, 49, 39, 56, 34, 53,
+        46, 42, 50, 36, 29, 32
+};
+
+//S盒
+const char S_Box[8][4][16]={
+    {
+        {14,4,13,1,2,15,11,8,3,10,6,12,5,9,0,7},//S1
+        {0,15,7,4,14,2,13,1,10,6,12,11,9,5,3,8},
+        {4,1,14,8,13,6,2,11,15,12,9,7,3,10,5,0},
+        {15,12,8,2,4,9,1,7,5,11,3,14,10,0,6,13}
+    },
+    {
+        {15,1,8,14,6,11,3,4,9,7,2,13,12,0,5,10},//S2
+        {3,13,4,7,15,2,8,14,12,0,1,10,6,9,11,5},
+        {0,14,7,11,10,4,13,1,5,8,12,6,9,3,2,15},
+        {13,8,10,1,3,15,4,2,11,6,7,12,0,5,14,9}
+    },
+    {
+        {10,0,9,14,6,3,15,5,1,13,12,7,11,4,2,8},//S3
+        {13,7,0,9,3,4,6,10,2,8,5,14,12,11,15,1},
+        {13,6,4,9,8,15,3,0,11,1,2,12,5,10,14,7},
+        {1,10,13,0,6,9,8,7,4,15,14,3,11,5,2,12}
+    },
+    {
+        {7,13,14,3,0,6,9,10,1,2,8,5,11,12,4,15},//S4
+        {13,8,11,5,6,15,0,3,4,7,2,12,1,10,14,9},
+        {10,6,9,0,12,11,7,13,15,1,3,14,5,2,8,4},
+        {3,15,0,6,10,1,13,8,9,4,5,11,12,7,2,14}
+    },
+    {
+        {2,12,4,1,7,10,11,6,8,5,3,15,13,0,14,9},//S5
+        {14,11,2,12,4,7,13,1,5,0,15,10,3,9,8,6},
+        {4,2,1,11,10,13,7,8,15,9,12,5,6,3,0,14},
+        {11,8,12,7,1,14,2,13,6,15,0,9,10,4,5,3}
+    },
+    {
+        {12,1,10,15,9,2,6,8,0,13,3,4,14,7,5,11},//S6
+        {10,15,4,2,7,12,9,5,6,1,13,14,0,11,3,8},
+        {9,14,15,5,2,8,12,3,7,0,4,10,1,13,11,6},
+        {4,3,2,12,9,5,15,10,11,14,1,7,6,0,8,13}
+    },
+    {
+        {4,11,2,14,15,0,8,13,3,12,9,7,5,10,6,1},//S7
+        {13,0,11,7,4,9,1,10,14,3,5,12,2,15,8,6},
+        {1,4,11,13,12,3,7,14,10,15,6,8,0,5,9,2},
+        {6,11,13,8,1,4,10,7,9,5,0,15,14,2,3,12}
+    },
+    {
+        {13,2,8,4,6,15,11,1,10,9,3,14,5,0,12,7},//S8
+        {1,15,13,8,10,3,7,4,12,5,6,11,0,14,9,2},
+        {7,11,4,1,9,12,14,2,0,6,10,13,15,3,5,8},
+        {2,1,14,7,4,10,8,13,15,12,9,0,3,5,6,11}
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;以下为des.h的内容：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;//函数的声明
+
+void ByteToBit(const char *In,bool *Out,int bits);//将字节转换为位
+void BitToByte(bool *In,char *Out,int bits);//将位转换为字节
+void Transform(bool *Y,bool *X,const char *Table,int len);//按表变换位置
+void SetKey(char *KEY);//生成子秘钥
+void MovKey(bool *LR,int len,int loop);//秘钥的LS移位
+void Des(char *m,char ch);//DES
+void XOR(bool *R,bool *k,int len);//异或
+void S_Box_f(bool *B,bool *C);//在S盒置换
+void f(bool *Ri,bool *k);//f函数
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;以下为status.h的内容：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;//变量的声明
+
+extern int i;
+extern bool P[64],K[64];//存放明文和秘钥
+extern bool *Li,*Ri;//指向明文的左右两部分
+extern bool *Ci,*Di;//指向子秘钥的左右两部分
+extern bool Temp[100];
+extern bool SubKey[16][48];//存放16轮的秘钥
+
+extern const char IP1_Table[64];
+extern const char IP2_Table[64];
+extern const char E_Table[48];
+extern const char P_Table[32];
+extern const char PC1_Table[56];
+extern const char PC2_Table[48];
+extern const char LOOP_Table[16];
+extern const char S_Box[8][4][16];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;执行结果:7e6a384da66e0e1e18c9cc181223ebd4&#34;&gt;执行结果&lt;/h2&gt;
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/des.png&#34; alt=&#34;单重DES运行结果.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>思科交换机基本配置</title>
+      <link>http://wyb0.com/posts/%E6%80%9D%E7%A7%91%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Wed, 06 May 2015 23:46:26 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E6%80%9D%E7%A7%91%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/</guid>
+      <description>
+
+&lt;h2 id=&#34;简单配置命令:4ccebcc59956ea5a8e807cda96b624c8&#34;&gt;简单配置命令&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Switch&amp;gt;enable(配置交换机名称)
+Switch(config)#hostname S
+
+S(config)#enable password 222//(加密特权密码，密码为222)
+S(config)#no enable password //(取消enable密码)
+S(config)#enable secret 333//(设置后用show命令时不能看到密码)
+S(config)#no enable secret //(取消enable密码)
+
+S(config)#line vty 0 4//(有5个虚拟终端，即0-4)
+S(config-line)#password 444//(设置虚拟终端密码)
+S(config-line)#login//(使密码生效)
+
+S(config)#line console 0//(设置控制台密码)
+S(config-line)#password 111
+S(config-line)#login
+S(config)#line con 0//(取消控制台密码)
+S(config-line)#no password
+
+S(config-line)#exec-timeout 5 30//(超时时间)(分、秒)
+
+S(config)#no ip domain-lookup//(禁止名称解析)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;配置交换机管理ip-默认网关:4ccebcc59956ea5a8e807cda96b624c8&#34;&gt;配置交换机管理IP、默认网关&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;S(config)#interface vlan 1  //(配置交换机管理IP、子网掩码)
+S(config-if)#ip address 192.168.1.1 255.255.255.0
+S(config-if)#no shutdown
+
+S(config)#  exit
+S(config)#ip default-gateway 192.168.1.250//(默认网关)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;配置交换机的端口速率-端口双工模式:4ccebcc59956ea5a8e807cda96b624c8&#34;&gt;配置交换机的端口速率、端口双工模式&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;S(config)#//(端口双工模式)
+S(config)#interface f0/1
+S(config-if)#duplex ?
+  auto  Enable AUTO duplex configuration
+  full  Force full duplex operation
+  half  Force half-duplex operation
+S(config-if)#duplex auto
+
+S(config-if)#speed ? // (配置交换机的端口速率)
+  10    Force 10 Mbps operation
+  100   Force 100 Mbps operation
+  auto  Enable AUTO speed configuration
+S(config-if)#speed 100
+
+Switch#write  //(保存配置)
+Building configuration...
+[OK]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

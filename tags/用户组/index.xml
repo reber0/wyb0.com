@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>用户组 on </title>
+    <link>http://wyb0.com/tags/%E7%94%A8%E6%88%B7%E7%BB%84/</link>
+    <description>Recent content in 用户组 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Sun, 17 Apr 2016 20:48:07 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E7%94%A8%E6%88%B7%E7%BB%84/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Linux之用户组</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E7%94%A8%E6%88%B7%E7%BB%84/</link>
+      <pubDate>Sun, 17 Apr 2016 20:48:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E7%94%A8%E6%88%B7%E7%BB%84/</guid>
+      <description>&lt;p&gt;初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个
+&lt;br/&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;useradd xm   用户xm会默认加到xm组
+useradd -g fans xm  将xm的所属组改为fans
+useradd -G fans xm  初始组为xm，有效组为fans
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;useradd xiaoming
+usermod -g fans xiaoming  只有一个初始组，被修改为fans
+useradd xm
+usermod -G fans xm    xm用户会有两个组，初始组为xm，又添加一个有效组fans
+usermod -G fans1 xm    xm用户两个组，初始组为xm，有效组更改为fans1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;用户创建的文件拥有者是初始组
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

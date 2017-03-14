@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数组 on </title>
+    <link>http://wyb0.com/tags/%E6%95%B0%E7%BB%84/</link>
+    <description>Recent content in 数组 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Wed, 18 May 2016 11:09:46 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E6%95%B0%E7%BB%84/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>PHP之数组</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8B%E6%95%B0%E7%BB%84/</link>
+      <pubDate>Wed, 18 May 2016 11:09:46 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E6%95%B0%E7%BB%84/</guid>
+      <description>
+
+&lt;h2 id=&#34;分类:54df41877fa5526682b527cf171c76f5&#34;&gt;分类&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;索引数组
+索引值从0开始，依次递增&lt;/li&gt;
+&lt;li&gt;关联数组
+以字符串为索引，键和值对是无序组合，每个键都是唯一的&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;数组的定义:54df41877fa5526682b527cf171c76f5&#34;&gt;数组的定义&lt;/h2&gt;
+
+&lt;p&gt;两种方法：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;直接为数组元素赋值即可声明数组&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使用array()函数声明数组&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    // 1.直接为数组元素赋值即可声明数组
+    $contact_index[0] = 1;
+    $contact_index[1] = &amp;quot;高某&amp;quot;;
+    $contact_index[2] = &amp;quot;A公司&amp;quot;;
+    $contact_index[3] = &amp;quot;北京市&amp;quot;;
+    $contact_index[] = &amp;quot;gao@a.com&amp;quot;;
+    var_dump($contact_index);
+
+
+    $contact_key[&amp;quot;ID&amp;quot;] = &amp;quot;2&amp;quot;;
+    $contact_key[&amp;quot;姓名&amp;quot;] = &amp;quot;峰某&amp;quot;;
+    $contact_key[&amp;quot;公司&amp;quot;] = &amp;quot;B公司&amp;quot;;
+    $contact_key[&amp;quot;邮箱&amp;quot;] = &amp;quot;feng@b.com&amp;quot;;
+    var_dump($contact_key);
+
+
+    // 2.使用array()函数声明数组
+    $contact_key_array = array(
+        &amp;quot;ID&amp;quot; =&amp;gt; 1;
+        &amp;quot;姓名&amp;quot; =&amp;gt; &amp;quot;峰某&amp;quot;;
+        &amp;quot;公司&amp;quot; =&amp;gt; &amp;quot;B公司&amp;quot;;
+        &amp;quot;邮箱&amp;quot; =&amp;gt; &amp;quot;feng@b.com&amp;quot;;
+    );
+    var_dump($contact_key_array);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;数组的遍历:54df41877fa5526682b527cf171c76f5&#34;&gt;数组的遍历&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;for语句遍历数组&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;foreach语句遍历数组&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    // for语句遍历索引数组
+    $cars=array(&amp;quot;Volvo&amp;quot;,&amp;quot;BMW&amp;quot;,&amp;quot;SAAB&amp;quot;);
+    $arrlength=count($cars);
+    for($x=0; $x &amp;lt; $arrlength; $x++) {
+        echo $cars[$x];
+        echo &amp;quot;&amp;lt;br&amp;gt;&amp;quot;;
+    }
+
+
+    // foreach语句遍历关联数组
+    $age=array(&amp;quot;Bill&amp;quot;=&amp;gt;&amp;quot;35&amp;quot;, &amp;quot;Steve&amp;quot;=&amp;gt;&amp;quot;37&amp;quot;, &amp;quot;Peter&amp;quot;=&amp;gt;&amp;quot;43&amp;quot;);
+    foreach($age as $x =&amp;gt; $x_value) {
+        echo &amp;quot;Key=&amp;quot; . $x . &amp;quot;, Value=&amp;quot; . $x_value;
+        echo &amp;quot;&amp;lt;br&amp;gt;&amp;quot;;
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;预定义数组:54df41877fa5526682b527cf171c76f5&#34;&gt;预定义数组&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;它就是一个特殊数组，操作方式没有区别&lt;/li&gt;
+&lt;li&gt;不用声明它们，每个PHP脚本中默认存在&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;它们在全局范围内自动生效&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;预定义数组&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;$_SERVER&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;变量由Web服务器设定或者直接与当前脚本的执行环境相关联&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_ENV&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;执行环境提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_GET&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由URL请求提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_POST&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由HTTP POST方法提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_REQUEST&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由GET，POST，COOKIE机制提交至脚本的变量，该数组不值得信任&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_FILES&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由HTTP POST文件上传而提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_COOKIE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;经由HTTP Cookies方法提交至脚本的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$_SESSION&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;当前注册给脚本会话的变量&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;$GLOBALS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;包含一个引用指向每个当前脚本的全局范围内的有效的变量。该数组的键名为全局变量的名称&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;合并数组:54df41877fa5526682b527cf171c76f5&#34;&gt;合并数组&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_merge()函数将数组合并到一起，返回一个联合的数组。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;array array_merge(array array1 array2&amp;hellip;,arrayN)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;pear&amp;quot;);
+    $numbered = array(&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;);
+    $cards = array_merge($fruits, $numbered);
+    print_r($cards);
+    // output
+    // Array ( [0] =&amp;gt; apple [1] =&amp;gt; banana [2] =&amp;gt; pear [3] =&amp;gt; 1 [4] =&amp;gt; 2 [5] =&amp;gt; 3 )
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;拆分数组:54df41877fa5526682b527cf171c76f5&#34;&gt;拆分数组&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_slice()函数将返回数组中的一部分，从键offset开始，到offset+length位置结束&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;array array_slice(array array,int offset[,int length])&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;offset为正值时从前面开始，为负值时从后面开始&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;Apple&amp;quot;, &amp;quot;Banana&amp;quot;, &amp;quot;Orange&amp;quot;, &amp;quot;Pear&amp;quot;, &amp;quot;Grape&amp;quot;, &amp;quot;Lemon&amp;quot;,
+    &amp;quot;Watermelon&amp;quot;);
+    $subset = array_slice($fruits, 3);
+    print_r($subset);
+    // output
+    // Array ( [0] =&amp;gt; Pear [1] =&amp;gt; Grape [2] =&amp;gt; Lemon [3] =&amp;gt; Watermelon )
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;Apple&amp;quot;, &amp;quot;Banana&amp;quot;, &amp;quot;Orange&amp;quot;, &amp;quot;Pear&amp;quot;, &amp;quot;Grape&amp;quot;, &amp;quot;Lemon&amp;quot;,
+    &amp;quot;Watermelon&amp;quot;);
+    $subset = array_slice($fruits, 2, -2);
+    print_r($subset);
+    // output
+    // Array ( [0] =&amp;gt; Orange [1] =&amp;gt; Pear [2] =&amp;gt; Grape )
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组的交集:54df41877fa5526682b527cf171c76f5&#34;&gt;数组的交集&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_intersect()函数返回一个保留了键的数组，这个数组只由第一个数组中出现的且在其他每个输入数组中都出现的值组成&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;array array_intersect(array array1,array array2[,arrayN&amp;hellip;])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruit1 = array(&amp;quot;Apple&amp;quot;,&amp;quot;Banana&amp;quot;,&amp;quot;Orange&amp;quot;);
+    $fruit2 = array(&amp;quot;Pear&amp;quot;,&amp;quot;Apple&amp;quot;,&amp;quot;Grape&amp;quot;);
+    $fruit3 = array(&amp;quot;Watermelon&amp;quot;,&amp;quot;Orange&amp;quot;,&amp;quot;Apple&amp;quot;);
+    $intersection = array_intersect($fruit1, $fruit2, $fruit3);
+    print_r($intersection);
+    // output
+    // Array ( [0] =&amp;gt; Apple )
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;in-array:54df41877fa5526682b527cf171c76f5&#34;&gt;in_array&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;in_array()函数在一个数组中汇总搜索一个特定值，若找到则返回true，否则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;boolean in_array(mixed needle,array haystack[,boolean strice])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruit = &amp;quot;apple&amp;quot;;
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;);
+    if( in_array($fruit,$fruits) ){
+        echo &amp;quot;$fruit已经在数组中&amp;quot;;
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;array-key-exists:54df41877fa5526682b527cf171c76f5&#34;&gt;array_key_exists&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;若在数组中找到一个指定的键，函数返回true，否则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;boolean array_key_exists(mixed key,array array)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruit[&amp;quot;apple&amp;quot;] = &amp;quot;red&amp;quot;;
+    $fruit[&amp;quot;banana&amp;quot;] = &amp;quot;yellow&amp;quot;;
+    $fruit[&amp;quot;pear&amp;quot;] = &amp;quot;green&amp;quot;;
+    if(array_key_exists(&amp;quot;apple&amp;quot;, $fruit)){
+        printf(&amp;quot;apple&#39;s color is %s&amp;quot;,$fruit[&amp;quot;apple&amp;quot;]);
+    }
+    //apple&#39;s color is red
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;array-search:54df41877fa5526682b527cf171c76f5&#34;&gt;array_search&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_search()函数在一个数组中搜索指定的值，若存在则返回相应的键，否则返回true&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mixed array_search(mixed needle,array haystack[,boolean strict])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits[&amp;quot;apple&amp;quot;] = &amp;quot;red&amp;quot;;
+    $fruits[&amp;quot;banana&amp;quot;] = &amp;quot;yellow&amp;quot;;
+    $fruits[&amp;quot;watermelon&amp;quot;]=&amp;quot;green&amp;quot;;
+    $founded = array_search(&amp;quot;green&amp;quot;, $fruits);
+    if($founded){
+        printf(&amp;quot;%s was founded on %s.&amp;quot;,$founded, $fruits[$founded]);
+    }
+    //watermelon was founded on green.
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组头添加元素:54df41877fa5526682b527cf171c76f5&#34;&gt;数组头添加元素&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_unshift()函数在数组头添加元素。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;所有已有的数值键都会相应地修改，以反应其在数组中的新位置，但是关联键不受影响&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;int array_unshift(array array,mixed variable[,mixed variable])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;);
+    array_unshift($fruits,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;)
+    // $fruits = array(&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;,&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组头删除元素:54df41877fa5526682b527cf171c76f5&#34;&gt;数组头删除元素&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_shift()函数删除并返回数组中找到的元素。其结果是，若使用的是数值键，则所有相应的值都会下移，而使用关联键的数组不受影响。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mixed array_shift(array array)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;);
+    $fruit = array_shift($fruits);
+    // $fruits = array(&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;)
+    // $fruit = &amp;quot;apple&amp;quot;;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组尾添加元素:54df41877fa5526682b527cf171c76f5&#34;&gt;数组尾添加元素&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_push()函数的返回值类型是int型，是压入数据后数组中元素的个数，可以为此函数传递多个变量作为参数，同时向数组压入多个变量&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;int array_push(array array,mixed variable [,mixed variable&amp;hellip;])&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;);
+    array_push($fruits,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;)
+    //$fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;)
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;数组尾删除元素:54df41877fa5526682b527cf171c76f5&#34;&gt;数组尾删除元素&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;array_pop()函数删除并返回数组的最后一个元素&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mixed array_pop(array target_array)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;,&amp;quot;pear&amp;quot;);
+    $fruit = array_pop($fruits);
+    //$fruits = array(&amp;quot;apple&amp;quot;,&amp;quot;banana&amp;quot;,&amp;quot;orange&amp;quot;);
+    //$fruit = &amp;quot;pear&amp;quot;;
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

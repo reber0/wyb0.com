@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>网络配置 on </title>
+    <link>http://wyb0.com/tags/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</link>
+    <description>Recent content in 网络配置 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Sun, 17 Apr 2016 17:58:07 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Linux之网络配置</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sun, 17 Apr 2016 17:58:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</guid>
+      <description>
+
+&lt;h2 id=&#34;第一种方法:851392bd99614cbfb4963ab526596f8a&#34;&gt;第一种方法&lt;/h2&gt;
+
+&lt;h3 id=&#34;分5步:851392bd99614cbfb4963ab526596f8a&#34;&gt;分5步：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;1. 启动网卡：  
+$ ifconfig eth0 up/down
+2. 配置ip：  
+$ ifconfig eth0 192.168.22.231 netmask 255.255.255.0
+3. 配置网关：
+$ route add default gw 192.168.22.1
+4. 配DNS：  
+$ vim /etc/resolv.conf  
+$ echo &amp;quot;nameserver 114.114.114.114&amp;quot; &amp;gt; /etc/resolv.cof
+5. 重启网络使配置生效：  
+6. 用文件配置ip信息
+$ /etc/sysconfig/network-scripts/ifcfg-eth0
+
+ps:添加静态路由
+route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3
+//添加静态路由添加网络10.211.55.0，从eth0出去
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;第二种方法:851392bd99614cbfb4963ab526596f8a&#34;&gt;第二种方法&lt;/h2&gt;
+
+&lt;h3 id=&#34;分1步:851392bd99614cbfb4963ab526596f8a&#34;&gt;分1步：&lt;/h3&gt;
+
+&lt;p&gt;打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DEVICE=ethl
+ONBOOT=yes
+BOOTPROTO=static
+IPADDR=
+NETMASK=
+GATEWAY=
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;打开ip转发:851392bd99614cbfb4963ab526596f8a&#34;&gt;打开ip转发&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;echo &amp;quot;1&amp;quot; &amp;gt;&amp;gt; /proc/sys/net/ipv4/ip_forward
+或者vim /etc/sysctl.conf
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

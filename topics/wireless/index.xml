@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wireless on </title>
+    <link>http://wyb0.com/topics/wireless/</link>
+    <description>Recent content in Wireless on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Wed, 13 Jul 2016 08:18:59 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/topics/wireless/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>攻击WPA保护下的802.11网络</title>
+      <link>http://wyb0.com/posts/%E6%94%BB%E5%87%BBWPA%E4%BF%9D%E6%8A%A4%E4%B8%8B%E7%9A%84802.11%E7%BD%91%E7%BB%9C/</link>
+      <pubDate>Wed, 13 Jul 2016 08:18:59 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E6%94%BB%E5%87%BBWPA%E4%BF%9D%E6%8A%A4%E4%B8%8B%E7%9A%84802.11%E7%BD%91%E7%BB%9C/</guid>
+      <description>
+
+&lt;h2 id=&#34;网络拓扑及信息:f51d0ddcb8bf525d24f5197a2a2a78bc&#34;&gt;网络拓扑及信息&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_topology.png&#34; alt=&#34;无线网络渗透测试拓扑图.png&#34;&gt;
+&lt;/div&gt;
+
+其中ip等信息如下：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_base_msg.png&#34; alt=&#34;无线网络渗透测试IP等基本信息.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;攻击wpa保护下的802-11网络:f51d0ddcb8bf525d24f5197a2a2a78bc&#34;&gt;攻击WPA保护下的802.11网络&lt;/h2&gt;
+
+&lt;h4 id=&#34;1-查看无线网卡并将其设置为监听模式:f51d0ddcb8bf525d24f5197a2a2a78bc&#34;&gt;1. 查看无线网卡并将其设置为监听模式&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_ifconfig.png&#34; alt=&#34;无线网络渗透测试查看网卡信息.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_mode_to_monitor.png&#34; alt=&#34;无线网络渗透测试设置网卡为监听模式.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;2-打开kismet-进行基本设置:f51d0ddcb8bf525d24f5197a2a2a78bc&#34;&gt;2. 打开kismet，进行基本设置&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_start_kismet.png&#34; alt=&#34;无线网络渗透测试开启kismet.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_kismet_add_source.png&#34; alt=&#34;无线网络渗透测试add source.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_kismet.png&#34; alt=&#34;无线网络渗透测试kismet主界面.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;3-选择名字为111111的ap为目标:f51d0ddcb8bf525d24f5197a2a2a78bc&#34;&gt;3. 选择名字为111111的AP为目标&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_select_target.png&#34; alt=&#34;无线网络渗透测试kismet选择目标.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_target_msg.png&#34; alt=&#34;无线网络渗透测试AP的信息.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_quit_kismet.png&#34; alt=&#34;无线网络渗透测试退出kismet.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;4-查看kismet抓包信息:f51d0ddcb8bf525d24f5197a2a2a78bc&#34;&gt;4. 查看kismet抓包信息&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;kismet生成的nettxt文件的部分信息如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Network 104: BSSID D8:42:AC:C9:5C:1D
+ Manuf      : Shanghai
+ First      : Mon Nov 16 12:46:21 2015
+ Last       : Mon Nov 16 13:10:23 2015
+ Type       : infrastructure
+ BSSID      : D8:42:AC:C9:5C:1D
+   SSID 1
+    Type       : Probe Response
+    SSID       : &amp;quot;111111&amp;quot; 
+    First      : Mon Nov 16 12:46:30 2015
+    Last       : Mon Nov 16 13:10:22 2015
+    Max Rate   : 54.0
+    Packets    : 249
+    Encryption : WPA+PSK
+Encryption : WPA+AES-CCM
+ Channel    : 5
+ Frequency  : 0 - 979 packets, 83.75%
+ Frequency  : 2432 - 9 packets, 0.77%
+ Frequency  : 2437 - 61 packets, 5.22%
+ Frequency  : 2442 - 77 packets, 6.59%
+ Frequency  : 2447 - 42 packets, 3.59%
+ Frequency  : 2452 - 1 packets, 0.09%
+ Max Seen   : 1000
+ LLC        : 249
+ Data       : 920
+ Crypt      : 341
+ Fragments  : 0
+ Retries    : 0
+ Total      : 1169
+ Datasize   : 146798
+ Last BSSTS : 0
+    Seen By : aaa (wlan0mon) fae5a030-8c1c-11e5-a78b-0403b30d2c03 1169 packets
+              Mon Nov 16 13:10:23 2015
+ Client 3: MAC DC:C7:93:C5:05:58
+  Manuf      : WP
+  First      : Mon Nov 16 12:47:01 2015
+  Last       : Mon Nov 16 13:09:55 2015
+  Type       : To Distribution
+  MAC        : 68:DF:DD:42:6A:F2
+  Channel    : 0
+  Frequency  : 0 - 149 packets, 99.33%
+  Frequency  : 2447 - 1 packets, 0.67%
+  Max Seen   : 1000
+  LLC        : 0
+  Data       : 150
+  Crypt      : 22
+  Fragments  : 0
+  Retries    : 0
+  Total      : 150
+  Datasize   : 10740
+     Seen By : aaa (wlan0) fae5a030-8c1c-11e5-a78b-0403b30d2c03 150 packets
+               Mon Nov 16 13:09:55 2015
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;筛选出的有用信息如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;BSSID      : D8:42:AC:C9:5C:1D
+SSID       : &amp;quot;111111&amp;quot; 
+Encryption : WPA+PSK
+Encryption : WPA+AES-CCM
+Channel    : 5
+Client 3: MAC DC:C7:93:C5:05:58
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;5-通过airodump-ng-c-5-w-20151117-wlan0开始抓包保存:f51d0ddcb8bf525d24f5197a2a2a78bc&#34;&gt;5. 通过airodump-ng -c 5 -w 20151117 wlan0开始抓包保存&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_get_package.png&#34; alt=&#34;无线网络渗透测试抓包.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;6-得到handshake包-用另一个终端进行deauth攻击:f51d0ddcb8bf525d24f5197a2a2a78bc&#34;&gt;6. 得到handshake包，用另一个终端进行deauth攻击&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_start_deauth_attack.png&#34; alt=&#34;无线网络渗透测试开始deauth攻击.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_get_handshake_package.png&#34; alt=&#34;无线网络渗透测试得到handshake包.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;6-得到ap密码:f51d0ddcb8bf525d24f5197a2a2a78bc&#34;&gt;6. 得到AP密码&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/wireless_get_ap_password.png&#34; alt=&#34;无线网络渗透测试得到无线的密码.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

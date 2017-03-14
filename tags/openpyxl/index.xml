@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Openpyxl on </title>
+    <link>http://wyb0.com/tags/openpyxl/</link>
+    <description>Recent content in Openpyxl on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Fri, 25 Nov 2016 17:44:23 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/openpyxl/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Python的openpyxl模块</title>
+      <link>http://wyb0.com/posts/Python%E7%9A%84openpyxl%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Fri, 25 Nov 2016 17:44:23 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Python%E7%9A%84openpyxl%E6%A8%A1%E5%9D%97/</guid>
+      <description>
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/anime/anime001.jpg&#34; alt=&#34;夏目友人帐&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x00-openpyxl模块:0b7f64e8e3e46c70232ec5559c09b532&#34;&gt;0x00 openpyxl模块&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;这个模块可以让你读写excel文件
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-读取数据:0b7f64e8e3e46c70232ec5559c09b532&#34;&gt;0x01 读取数据&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/openpyxl_excel.png&#34; alt=&#34;excel数据&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from openpyxl import load_workbook
+
+wb = load_workbook(filename=&#39;aa.xlsx&#39;)
+
+sheetnames = wb.get_sheet_names() #获得所有表名
+print u&amp;quot;存在表：%s&amp;quot; % sheetnames
+
+ws = wb.get_sheet_by_name(sheetnames[0])
+print u&amp;quot;第一张表表名为：%s&amp;quot; % ws.title  #Sheet1
+rows = ws.max_row  #行数
+columns = ws.max_column  #列数
+print &amp;quot;表%s有%d行%d列&amp;quot; % (ws.title,rows,columns)  #10 2  共10行2列
+
+
+print
+print u&amp;quot;取部分数据：&amp;quot;
+print ws[&#39;A1&#39;].value,ws[&#39;B1&#39;].value  
+print ws[&#39;A2&#39;].value,ws[&#39;B2&#39;].value
+print ws.cell(row=1, column=2).value
+
+print u&amp;quot;\n输出表%s的所有数据：&amp;quot; % ws.title
+for x in range(1,rows+1):
+    for y in range(1,columns+1):
+        print ws.cell(row=x,column=y).value,&#39;\t&#39;,
+    print
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;结果如下：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/openpyxl_result.png&#34; alt=&#34;excel数据提取结果&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-写入数据:0b7f64e8e3e46c70232ec5559c09b532&#34;&gt;0x02 写入数据&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from openpyxl import Workbook
+
+wb = Workbook()
+
+# 建表
+ws1 = wb.active # 第一张表需要这样写，代表从第一张表开始
+ws1.title = &#39;s1&#39;
+ws2 = wb.create_sheet(title=&#39;s2&#39;)
+ws3 = wb.create_sheet(title=&#39;s3&#39;)
+
+# 写入数据
+ws1[&#39;A1&#39;] = 1111
+ws1[&#39;A2&#39;] = 2222
+ws1[&#39;A3&#39;] = 3333
+ws2[&#39;A1&#39;] = &#39;ssssssssss&#39;
+ws2[&#39;B1&#39;] = &#39;dddddddddd&#39;
+for x in range(1,4):
+    for y in range(1,8):
+        v = int(str(x)+str(y))
+        _ = ws3.cell(column=x,row=y,value=v)
+
+wb.save(filename=&#39;test.xlsx&#39;) # 保存数据
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;结果如下：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/openpyxl_write.png&#34; alt=&#34;向excel写入数据&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

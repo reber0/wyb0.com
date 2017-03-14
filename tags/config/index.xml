@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Config on </title>
+    <link>http://wyb0.com/tags/config/</link>
+    <description>Recent content in Config on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Thu, 01 Sep 2016 08:46:03 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/config/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>PHP安全配置</title>
+      <link>http://wyb0.com/posts/PHP%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 01 Sep 2016 08:46:03 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-php的配置:c1fc7a0ce52bc78623453ccfa3802bc5&#34;&gt;0x00 PHP的配置&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-远程文件包含:c1fc7a0ce52bc78623453ccfa3802bc5&#34;&gt;0x01 远程文件包含&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;涉及配置项
+
+&lt;ul&gt;
+&lt;li&gt;allow_url_include
+
+&lt;ul&gt;
+&lt;li&gt;配置为On时允许进行远程文件包含&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;allow_url_fopen
+
+&lt;ul&gt;
+&lt;li&gt;配置为On时允许使用函数fopen、file_put_contents&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;配置方案
+
+&lt;ul&gt;
+&lt;li&gt;alllow_url_include = Off&lt;/li&gt;
+&lt;li&gt;allow_url_fopen = Off&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x02-关闭错误回显:c1fc7a0ce52bc78623453ccfa3802bc5&#34;&gt;0x02 关闭错误回显&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;涉及配置项
+
+&lt;ul&gt;
+&lt;li&gt;display_errors
+
+&lt;ul&gt;
+&lt;li&gt;配置为On时会显示错误信息&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;配置方案
+
+&lt;ul&gt;
+&lt;li&gt;display_errors = Off&lt;/li&gt;
+&lt;li&gt;log_errors = On&lt;/li&gt;
+&lt;li&gt;error_log = /var/log/php_error.log&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x03-隐藏php版本:c1fc7a0ce52bc78623453ccfa3802bc5&#34;&gt;0x03 隐藏php版本&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;涉及配置项
+
+&lt;ul&gt;
+&lt;li&gt;expose_php
+
+&lt;ul&gt;
+&lt;li&gt;为Off时会隐藏php版本&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;配置方案
+
+&lt;ul&gt;
+&lt;li&gt;expose_php = Off&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x04-魔术引号:c1fc7a0ce52bc78623453ccfa3802bc5&#34;&gt;0x04 魔术引号&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;涉及配置项
+
+&lt;ul&gt;
+&lt;li&gt;magic_quotes_gpc
+
+&lt;ul&gt;
+&lt;li&gt;过滤get、post、cookie的单引号、双引号、反斜杠、空字符，但不过滤$_SERVER&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;magic_quotes_runtime
+
+&lt;ul&gt;
+&lt;li&gt;对文件或数据库中取出的数据进行过滤，可防止二次注入&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;配置方案
+
+&lt;ul&gt;
+&lt;li&gt;做逻辑判断时需要去掉反斜杠，所以用全局过滤框架做过滤吧&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x05-安全模式:c1fc7a0ce52bc78623453ccfa3802bc5&#34;&gt;0x05 安全模式&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;涉及配置项
+
+&lt;ul&gt;
+&lt;li&gt;safe_mode
+
+&lt;ul&gt;
+&lt;li&gt;开启后安全系数提升，但会限制函数使用权限和操作目录文件权限等&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;配置方案
+
+&lt;ul&gt;
+&lt;li&gt;在安全模式下可以使用safe_mode_include_dir = /var/www/common来排除某些文件&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x06-目录权限控制:c1fc7a0ce52bc78623453ccfa3802bc5&#34;&gt;0x06 目录权限控制&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;涉及配置项
+
+&lt;ul&gt;
+&lt;li&gt;open_basedir
+
+&lt;ul&gt;
+&lt;li&gt;开启后可将用户访问范围限定，可防止跨站，但会影响性能&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;配置方案
+
+&lt;ul&gt;
+&lt;li&gt;open_basedir = /var/www/web1/:/var/www/web2/  (后面的斜杠不能少)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x07-禁止函数:c1fc7a0ce52bc78623453ccfa3802bc5&#34;&gt;0x07 禁止函数&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;涉及配置项
+
+&lt;ul&gt;
+&lt;li&gt;disable_functions
+
+&lt;ul&gt;
+&lt;li&gt;禁止某些命令执行函数和文件操作函数的使用&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;配置方案
+
+&lt;ul&gt;
+&lt;li&gt;disable_functions = system,passthru,exec,shell_exec,popen,pcntl_exec,proc_open,chdir,chroot,getcwd,readdir,mkdir,copy,file_get_contents,&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x08-注册全局变量:c1fc7a0ce52bc78623453ccfa3802bc5&#34;&gt;0x08 注册全局变量&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;涉及配置项
+
+&lt;ul&gt;
+&lt;li&gt;register_globals
+
+&lt;ul&gt;
+&lt;li&gt;值为On是会开启全局注册变量功能&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;配置方案
+
+&lt;ul&gt;
+&lt;li&gt;register_globals = Off&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

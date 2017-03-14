@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>函数 on </title>
+    <link>http://wyb0.com/tags/%E5%87%BD%E6%95%B0/</link>
+    <description>Recent content in 函数 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Thu, 02 Jun 2016 13:21:49 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E5%87%BD%E6%95%B0/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>PHP之MySQL常用函数</title>
+      <link>http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Thu, 02 Jun 2016 13:21:49 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
+      <description>
+
+&lt;h2 id=&#34;处理函数:5a754a6f2338ff77c37d8e8e11f32a1d&#34;&gt;处理函数&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;mysql_connect(server,user,pwd,newlink,clientflag)&lt;br /&gt;
+连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_select_db(database,connection)&lt;br /&gt;
+选择数据库的函数，成功则返回true，失败则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_query(query,connection)&lt;br /&gt;
+执行一条查询，返回一个资源标识符(结果集)，如果查询执行不正确则返回FALSE&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_num_rows(data)和mysql_num_fields(data)&lt;br /&gt;
+函数分别返回结果集中行和列的数目(禁对SELECT语句有效),结果集从 mysql_query()的调用中得到&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_fetch_assoc(data)&lt;br /&gt;
+从结果集中取得一行作为关联数组，若没有更多行则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_fetch_row(data)&lt;br /&gt;
+从结果集中取得一行作为索引数组，若没有更多行则返回false&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_error(connection)&lt;br /&gt;
+返回上一个MySQL函数的错误文本，如果没有出错则返回&amp;rdquo;(空字符串)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_affected_rows(link_identifier)&lt;br /&gt;
+返回前一次MySQL操作(增删改)所影响的记录行数,失败则返回-1&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_insert_id(connection)&lt;br /&gt;
+返回上一步INSERT操作产生的 ID。如果上一查询没有产生AUTO_INCREMENT的ID，则mysql_insert_id()返回 0。&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mysql_data_seek(data,row)&lt;br /&gt;
+结果集data从mysql_query()的调用中得到,行指针移动到指定的行号，接着调用 mysql_fetch_row() 将返回那一行。如果成功则返回 true，失败则返回 false&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;例子:5a754a6f2338ff77c37d8e8e11f32a1d&#34;&gt;例子&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
+    $server = &amp;quot;127.0.0.1&amp;quot;;
+    $dbname = &amp;quot;massage&amp;quot;;
+    $user = &amp;quot;msg&amp;quot;;
+    $pass = &amp;quot;123456&amp;quot;
+
+    $conn = mysql_connect($server,$user,$pass) or die(&#39;连接服务器失败:&#39;.mysql_error());
+    mysql_query(&amp;quot;set names &#39;utf8&#39;&amp;quot;);//设置数据库输出编码
+    mysql_select_db($dbname,$conn) or die(mysql_error($conn)); //选择数据库
+
+    $sql = &amp;quot;select username,password from user&amp;quot;;   //构造sql语句
+    $result = mysql_query($sql);  //执行sql语句，返回结果集
+
+    $num = mysql_num_rows($result);//返回执行结果的行数
+    echo &amp;quot;&amp;lt;br /&amp;gt;结果的行数:{$num}&amp;lt;br /&amp;gt;&amp;quot;;
+
+    while ($row = mysql_fetch_assoc($result)) {
+        echo $row[id].&amp;quot;:&amp;quot;.$row[username].&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;
+    }
+
+    $sql = &amp;quot;insert into user(username,password) values(&#39;3333&#39;,&#39;mm3333&#39;)&amp;quot;;
+    mysql_query($sql);
+    echo &amp;quot;受影响行数：&amp;quot;.mysql_affected_rows().&amp;quot;最后一次插入的id为：&amp;quot;.mysql_insert_id();
+
+    mysql_free_result($result);  //释放结果内存
+    mysql_close($conn);  //关闭非持久的MySQL连接
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

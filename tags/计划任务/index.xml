@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计划任务 on </title>
+    <link>http://wyb0.com/tags/%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</link>
+    <description>Recent content in 计划任务 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 19 Apr 2016 10:03:07 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Linux之服务和计划任务</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</link>
+      <pubDate>Tue, 19 Apr 2016 10:03:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</guid>
+      <description>
+
+&lt;h2 id=&#34;服务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;服务：&lt;/h2&gt;
+
+&lt;p&gt;在后台运行的软件就叫服务
+参数：
+start
+stop
+restart&lt;/p&gt;
+
+&lt;p&gt;apache启动后默认降权&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;service httpd start实际调用的是/etc/init.d/httpd这个shell脚本
+而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d
+[wyb@localhost ~]$ ls -al /etc/init.d
+lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&amp;gt; rc.d/init.d
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;添加服务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;添加服务：&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;将脚本放在/etc/init.d/下即可
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;若要自启则:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;若要自启则：&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;chkconfig --list   //查看chk管理的自启动项
+chkconfig --add httpd   添加到chk管理里面
+chkconfig --del httpd   将httpd移出chk管理
+chkcofnig --level 35 httpd on  init的345将开启
+chkcofnig --level 345 httpd off
+/etc/rc.d/rc3.d和rc5.d里将有httpd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;计划任务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;计划任务：&lt;/h2&gt;
+
+&lt;p&gt;启动方式：
+系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件&lt;/p&gt;
+
+&lt;p&gt;cron：每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟&lt;/p&gt;
+
+&lt;h4 id=&#34;添加任务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;添加任务：&lt;/h4&gt;
+
+&lt;p&gt;格式：分(0-59) 时 日 月 周(0-6) 命令&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;第一种方法：
+crontab -e  //任何权限都可以运行这个命令，针对某个用户
+
+[wyb@localhost spool]$ crontab -e   //进入编辑，实际是写入到/var/spool/cron/username这个文件中
+no crontab for wyb - using an empty one
+*/1 * * * * date &amp;gt;&amp;gt; /tmp/date.txt   //每一分钟都向date.txt写入
+1 * * * * date &amp;gt;&amp;gt; /tmp/date1.txt        //在第一分钟时将数据写入
+~
+~
+~
+&amp;quot;/tmp/crontab.T8sDqC&amp;quot; 1L, 34C written
+crontab: installing new crontab
+[wyb@localhost spool]$ sudo ls /var/spool/cron/
+wyb
+[wyb@localhost spool]$ sudo cat /var/spool/cron/wyb
+*/1 * * * * date &amp;gt;&amp;gt; /tmp/date.txt
+1 * * * * date &amp;gt;&amp;gt; /tmp/date1.txt
+[wyb@localhost spool]$ 
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;第二种方法：
+编辑/etc/crontab文件    //要具有root权限，针对系统任务
+vim /etc/crontab会以root权限执行，不推荐使用
+01 * * * *　用户名　命令 date &amp;gt;&amp;gt; /tmp/date2.txt在每个小时的第一分钟执行
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;查看用户任务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;查看用户任务：&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ sudo cat /var/spool/cron/wyb   //用户的计划任务
+*/1 * * * * date &amp;gt;&amp;gt; /tmp/date.txt
+[wyb@localhost tmp]$ sudo tail -5 /etc/crontab   //系统计划任务
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+*/1 * * * * wyb date &amp;gt;&amp;gt; /tmp/wyb.txt
+[wyb@localhost tmp]$ crontab -l   //只能显示普通用户定义的任务
+*/1 * * * * date &amp;gt;&amp;gt; /tmp/date.txt
+[wyb@localhost tmp]$ crontab -r   //移除用户所有计划任务，不能移除系统定的计划任务，即不能移除在/etc/crontab中的任务
+[wyb@localhost tmp]$ crontab -l
+no crontab for wyb
+[wyb@localhost tmp]$ sudo tail -3 /etc/crontab 
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+*/1 * * * * wyb date &amp;gt;&amp;gt; /tmp/wyb.txt
+[wyb@localhost tmp]$ 
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

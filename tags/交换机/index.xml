@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>交换机 on </title>
+    <link>http://wyb0.com/tags/%E4%BA%A4%E6%8D%A2%E6%9C%BA/</link>
+    <description>Recent content in 交换机 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Wed, 06 May 2015 23:46:26 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E4%BA%A4%E6%8D%A2%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>思科交换机基本配置</title>
+      <link>http://wyb0.com/posts/%E6%80%9D%E7%A7%91%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Wed, 06 May 2015 23:46:26 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E6%80%9D%E7%A7%91%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/</guid>
+      <description>
+
+&lt;h2 id=&#34;简单配置命令:4ccebcc59956ea5a8e807cda96b624c8&#34;&gt;简单配置命令&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Switch&amp;gt;enable(配置交换机名称)
+Switch(config)#hostname S
+
+S(config)#enable password 222//(加密特权密码，密码为222)
+S(config)#no enable password //(取消enable密码)
+S(config)#enable secret 333//(设置后用show命令时不能看到密码)
+S(config)#no enable secret //(取消enable密码)
+
+S(config)#line vty 0 4//(有5个虚拟终端，即0-4)
+S(config-line)#password 444//(设置虚拟终端密码)
+S(config-line)#login//(使密码生效)
+
+S(config)#line console 0//(设置控制台密码)
+S(config-line)#password 111
+S(config-line)#login
+S(config)#line con 0//(取消控制台密码)
+S(config-line)#no password
+
+S(config-line)#exec-timeout 5 30//(超时时间)(分、秒)
+
+S(config)#no ip domain-lookup//(禁止名称解析)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;配置交换机管理ip-默认网关:4ccebcc59956ea5a8e807cda96b624c8&#34;&gt;配置交换机管理IP、默认网关&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;S(config)#interface vlan 1  //(配置交换机管理IP、子网掩码)
+S(config-if)#ip address 192.168.1.1 255.255.255.0
+S(config-if)#no shutdown
+
+S(config)#  exit
+S(config)#ip default-gateway 192.168.1.250//(默认网关)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;配置交换机的端口速率-端口双工模式:4ccebcc59956ea5a8e807cda96b624c8&#34;&gt;配置交换机的端口速率、端口双工模式&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;S(config)#//(端口双工模式)
+S(config)#interface f0/1
+S(config-if)#duplex ?
+  auto  Enable AUTO duplex configuration
+  full  Force full duplex operation
+  half  Force half-duplex operation
+S(config-if)#duplex auto
+
+S(config-if)#speed ? // (配置交换机的端口速率)
+  10    Force 10 Mbps operation
+  100   Force 100 Mbps operation
+  auto  Enable AUTO speed configuration
+S(config-if)#speed 100
+
+Switch#write  //(保存配置)
+Building configuration...
+[OK]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

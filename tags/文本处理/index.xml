@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>文本处理 on </title>
+    <link>http://wyb0.com/tags/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/</link>
+    <description>Recent content in 文本处理 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Wed, 20 Apr 2016 15:54:07 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Linux之文本处理软件awk</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/</link>
+      <pubDate>Wed, 20 Apr 2016 15:54:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/</guid>
+      <description>
+
+&lt;p&gt;&lt;center&gt;
+awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &amp;ldquo;{ }&amp;rdquo; 中的语句。
+&lt;/center&gt;&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;xiaosan sadasdw jiaozuo
+234wer  asdfasd asdas
+1111    aaaa    cccc
+2222    aaaa    degd
+1111    aaaa    cccc
+3333    aaaa    dfger
+21asd   sdfsd   sadasd
+dwqx    asds    sasdfcv
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;要求：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1.里面有重复数据，使用命令去重
+2.提取出用户名和密码 每一行前面加上id数字，递增。
+3.只提取出密码作为爆破字典
+4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名
+5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;去重:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39;
+[wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同
+aosan sadasdw jiaozuo
+234wer  asdfasd asdas
+1111    aaaa    cccc
+2222    aaaa    degd
+3333    aaaa    dfger
+21asd   sdfsd   sadasd
+dwqx    asds    sasdfcv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;去重-添加id:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重、添加id：&lt;/h2&gt;
+
+&lt;p&gt;一般字典不需要id、user、pass等标示符，这里只是为了便于观看&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;id:&amp;quot;NR&amp;quot;\tuser:&amp;quot;$1&amp;quot;\tpass:&amp;quot;$2&amp;quot;\taddress:&amp;quot;$3}&#39; | column -t  //最后一个命令可以将列对齐
+id:1    user:aosan      pass:sadasdw    address:jiaozuo
+id:2    user:234wer     pass:asdfasd    address:asdas
+id:3    user:1111       pass:aaaa       address:cccc
+id:4    user:2222       pass:aaaa       address:degd
+id:5    user:3333       pass:aaaa       address:dfger
+id:6    user:21asd      pass:sdfsd      address:sadasd
+id:7    user:dwqx       pass:asds       address:sasdfcv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;去重-添加id-添加公司前缀:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重、添加id、添加公司前缀：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;id:&amp;quot;NR&amp;quot;\tuser:uv_&amp;quot;$1&amp;quot;\tpass:&amp;quot;$2&amp;quot;\taddress:&amp;quot;$3}&#39;
+id:1    user:uv_aosan   pass:sadasdw    address:jiaozuo
+id:2    user:uv_234wer  pass:asdfasd    address:asdas
+id:3    user:uv_1111    pass:aaaa       address:cccc
+id:4    user:uv_2222    pass:aaaa       address:degd
+id:5    user:uv_3333    pass:aaaa       address:dfger
+id:6    user:uv_21asd   pass:sdfsd      address:sadasd
+id:7    user:uv_dwqx    pass:asds       address:sasdfcv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;去重然后输出密码:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重然后输出密码：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;pass:&amp;quot;$2}&#39;
+pass:sadasdw
+pass:asdfasd
+pass:aaaa
+pass:aaaa
+pass:aaaa
+pass:sdfsd
+pass:asds
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;输出密码-得到密码出现次数:42bebd4d9e7287de331693a6d85c474f&#34;&gt;输出密码、得到密码出现次数：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;下面的&#39;a[$1]++&#39;是按第一列来去重的,若有两条数据只有第一列重复则成功，可以用$0按行来去重
+[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print $2}&#39; | awk &#39;{a[$1]++} END {for (j in a) print a[j],j}&#39;
+1 sadasdw
+1 sdfsd
+1 asdfasd
+1 asds
+3 aaaa
+
+uniq 只能去除挨着的重复数据，所以先sort升序排序，然后uniq -c统计重复，再sort -r降序排序
+cat test.txt | awk &#39;{print $2}&#39; | sed &#39;1d&#39; |sort | uniq -c |sort -r
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;其他:42bebd4d9e7287de331693a6d85c474f&#34;&gt;其他：&lt;/h2&gt;
+
+&lt;h4 id=&#34;对-a-1-的解释如下:42bebd4d9e7287de331693a6d85c474f&#34;&gt;对&amp;rsquo;!a[$1]++&amp;lsquo;的解释如下：&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a[e54r56wer]为空，!a[e54r56wer]为真，可以输出，然后++&lt;/li&gt;
+&lt;li&gt;若再来一个a[e54r56wer]，因为上一步已经++，此时值为1，!a[e54r56wer]为假，不输出，再++&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;对for输出数组的解释如下:42bebd4d9e7287de331693a6d85c474f&#34;&gt;对for输出数组的解释如下：&lt;/h4&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;awk &amp;lsquo;{a[$1]++} END {for (j in a) print a[j],j}&amp;rsquo; test.txt&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在遍历完文件后，通过END把后面的句子连起来&lt;/li&gt;
+&lt;li&gt;for (j in a) 是指打印数组a的下标，并定义下标为变量j&lt;/li&gt;
+&lt;li&gt;最后print a[j],j就是打印数组下标和数组，这样就相同的$1排重并计数&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

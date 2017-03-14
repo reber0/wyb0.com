@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sqlmap on </title>
+    <link>http://wyb0.com/tags/sqlmap/</link>
+    <description>Recent content in Sqlmap on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 28 Jun 2016 11:19:11 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/sqlmap/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>sqlmapapi的简单使用</title>
+      <link>http://wyb0.com/posts/sqlmapapi%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Tue, 28 Jun 2016 11:19:11 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/sqlmapapi%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</guid>
+      <description>
+
+&lt;h2 id=&#34;关于sqlmapapi-py:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;关于sqlmapapi.py&lt;/h2&gt;
+
+&lt;p&gt;当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量&lt;/p&gt;
+
+&lt;h2 id=&#34;用于交互的方法:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;用于交互的方法&lt;/h2&gt;
+
+&lt;p&gt;在sqlmap/lib/utils/api.py中:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 用户方法
+@get(&amp;quot;/task/new&amp;quot;) Create new task ID. 
+@get(&amp;quot;/task/&amp;lt;taskid&amp;gt;/delete&amp;quot;) Delete own task ID. 
+
+# 管理函数
+@get(&amp;quot;/admin/&amp;lt;taskid&amp;gt;/list&amp;quot;) List task pull. 
+@get(&amp;quot;/admin/&amp;lt;taskid&amp;gt;/flush&amp;quot;) Flush task spool (delete all tasks). 
+
+# 核心交互函数
+@get(&amp;quot;/option/&amp;lt;taskid&amp;gt;/list&amp;quot;) List options for a certain task ID
+@post(&amp;quot;/option/&amp;lt;taskid&amp;gt;/get&amp;quot;) Get the value of an option (command line switch) for a certain task ID
+@post(&amp;quot;/option/&amp;lt;taskid&amp;gt;/set&amp;quot;) Set an option (command line switch) for a certain task ID
+@post(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/start&amp;quot;) Launch a scan
+@get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/stop&amp;quot;) Kill a scan
+@get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/status&amp;quot;) Return status of a scan
+@get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/data&amp;quot;) Retrieve the data of a scan
+@get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/log/&amp;lt;start&amp;gt;/&amp;lt;end&amp;gt;&amp;quot;) Retrieve a subset of log messages
+@get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/log&amp;quot;) Retrieve the log messages
+@get(&amp;quot;/download/&amp;lt;taskid&amp;gt;/&amp;lt;target&amp;gt;/&amp;lt;filename:path&amp;gt;&amp;quot;) Download a certain file from the file system
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;sqlmapapi-py参数如下:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;sqlmapapi.py参数如下&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sqlmapapi_help.png&#34; alt=&#34;sqlmapapi参数.png&#34;&gt;
+&lt;/div&gt;
+
+它的-s参数可以启动一个服务(返回一个Admin Id)，只要将url给它就行了：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sqlmapapi_server.png&#34; alt=&#34;启动sqlmapapi服务.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;简单使用:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;简单使用&lt;/h2&gt;
+
+&lt;h3 id=&#34;1-创建任务:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;1. 创建任务&lt;/h3&gt;
+
+&lt;p&gt;使用@get(&amp;ldquo;/task/new&amp;rdquo;)方法创建一个新的任务
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sqlmapapi_new_task.png&#34; alt=&#34;sqlmapapi新建任务.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&#34;2-指定参数:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;2. 指定参数&lt;/h3&gt;
+
+&lt;p&gt;使用@post(&amp;ldquo;/option/&amp;lt;taskid&amp;gt;/set&amp;rdquo;)方法设置参数
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sqlmapapi_options.png&#34; alt=&#34;sqlmapapi指定参数.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&#34;3-开始扫描:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;3. 开始扫描&lt;/h3&gt;
+
+&lt;p&gt;使用@post(&amp;ldquo;/scan/&amp;lt;taskid&amp;gt;/start&amp;rdquo;)方法开始扫描
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sqlmapapi_scan_start.png&#34; alt=&#34;sqlmapapi开始扫描.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&#34;4-获取探测是否结束:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;4. 获取探测是否结束&lt;/h3&gt;
+
+&lt;p&gt;使用@get(&amp;ldquo;/scan/&amp;lt;taskid&amp;gt;/status&amp;rdquo;)获取探测是否结束
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sqlmapapi_scan_status.png&#34; alt=&#34;sqlmapapi得到扫描状态.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&#34;5-获取探测结果:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;5. 获取探测结果&lt;/h3&gt;
+
+&lt;p&gt;使用@get(&amp;ldquo;/scan/&amp;lt;taskid&amp;gt;/data&amp;rdquo;)获取探测结果，如果不能注入，则获取到的结果为空，如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{u&#39;data&#39;: [], u&#39;success&#39;: True, u&#39;error&#39;: []}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;若存在注入则可能如下：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sqlmapapi_scan_result.png&#34; alt=&#34;sqlmapapi得到扫描结果.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&#34;6-删除任务:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;6. 删除任务&lt;/h3&gt;
+
+&lt;p&gt;使用@get(&amp;ldquo;/task/delete&amp;rdquo;)方法删除一个任务.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;resp = requests.get(&#39;http://127.0.0.1:8776/task/96f01550dadabab8/delete&#39;)
+&amp;gt;&amp;gt;&amp;gt;resp.json()
+{u&#39;success&#39;: True}
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/sqlmapapi_delete_task.png&#34; alt=&#34;sqlmapapi删除任务.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;简单示例:93ab9a2687d47f1c20ff84d824925e9e&#34;&gt;简单示例&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import time
+import json
+import requests
+
+url_list = {}
+url_list[&#39;url1&#39;] = &#39;http://192.168.188.134/sqli/Less-1/?id=1&#39;
+url_list[&#39;url2&#39;] = &#39;http://192.168.188.134/sqli/Less-2/?id=1&#39;
+url_list[&#39;url3&#39;] = &#39;http://192.168.188.134/sqli/Less-3/?id=1&#39;
+
+
+for key in url_list.keys():
+    payload = {}
+    resp = requests.get(&#39;http://127.0.0.1:8775/task/new&#39;) #创建任务
+    taskid = resp.json()[&#39;taskid&#39;]
+    payload[&#39;url&#39;] = url_list[key]
+    headers = {&#39;Content-Type&#39;:&#39;application/json&#39;}
+    if resp.json()[&#39;success&#39;]: #指定参数
+        print &amp;quot;set options...&amp;quot;
+        url = &amp;quot;http://127.0.0.1:8775/option/%s/set&amp;quot; % taskid
+        resp = requests.post(url,data=json.dumps(payload),headers=headers)
+        if resp.json()[&#39;success&#39;]: #开始扫描
+            print &amp;quot;start scan...&amp;quot;
+            url = &amp;quot;http://127.0.0.1:8775/scan/%s/start&amp;quot; % taskid
+            resp = requests.post(url,data=json.dumps(payload),headers=headers)
+            print &amp;quot;scan runing...&amp;quot;
+            if resp.json()[&#39;success&#39;]:
+                while 1:
+                    url = &amp;quot;http://127.0.0.1:8775/scan/%s/status&amp;quot; % taskid #查看扫描状态
+                    resp = requests.get(url)
+                    if resp.json()[&#39;status&#39;] != &#39;terminated&#39;:
+                        pass
+                    else:
+                        print &amp;quot;scan end.&amp;quot;
+                        url = &amp;quot;http://127.0.0.1:8775/scan/%s/data&amp;quot; % taskid #获取扫描结果
+                        data = requests.get(url)
+                        print data.json()[&#39;data&#39;]
+                        print &amp;quot;delete task&amp;quot;
+                        url = &amp;quot;http://127.0.0.1:8775/task/%s/delete&amp;quot; % taskid
+                        requests.get(url)
+                        break
+                    time.sleep(2)
+    else:
+        print &amp;quot;new task error&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

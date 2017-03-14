@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jsp on </title>
+    <link>http://wyb0.com/tags/jsp/</link>
+    <description>Recent content in Jsp on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Fri, 17 Jun 2016 23:08:05 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/jsp/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Linux下搭建Tomcat&#43;MySQL&#43;JSP</title>
+      <link>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BATomcat&#43;MySQL&#43;JSP/</link>
+      <pubDate>Fri, 17 Jun 2016 23:08:05 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BATomcat&#43;MySQL&#43;JSP/</guid>
+      <description>
+
+&lt;pre&gt;&lt;code&gt;安装环境为：CentOS-6.5-x86_64-minimal
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;安装mysql:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;安装mysql&lt;/h2&gt;
+
+&lt;p&gt;sudo yum install mysql mysql-server mysql-devel&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/install_mysql.png&#34; alt=&#34;安装mysql.png&#34;&gt;
+&lt;/div&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/creat_db_tomcat.png&#34; alt=&#34;创建数据库tomcat.png&#34;&gt;
+&lt;/div&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/grant_db_tomcat.png&#34; alt=&#34;将数据库tomcat分配给用户tomcat.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;安装jdk和tomcat:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;安装jdk和tomcat&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;创建安装jdk和tomcat的文件夹
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mkdir_java_tomcat.png&#34; alt=&#34;创建安装jdk和tomcat的文件夹.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;下载安装包并解压安装&lt;br /&gt;
+jdk包可在&lt;a href=&#34;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&#34;&gt;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&lt;/a&gt; 下载&lt;br /&gt;
+tomcat包可在&lt;a href=&#34;http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz&#34;&gt;http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz&lt;/a&gt; 下载
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/download_tomcat.png&#34; alt=&#34;下载tomcat安装包.png&#34;&gt;
+&lt;/div&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/cp_jdk_tomcat_to_opt.png&#34; alt=&#34;复制解压后的安装包到/opt下对应目录.png&#34;&gt;
+&lt;/div&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/add_java_env.png&#34; alt=&#34;为java添加环境变量.png&#34;&gt;
+&lt;/div&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/java_version.png&#34; alt=&#34;验证jdk是否设置成功.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;简单配置tomcat:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;简单配置tomcat&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/config_tomcat.png&#34; alt=&#34;简单配置tomcat1.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;启动tomcat:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;启动tomcat&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/start_tomcat.png&#34; alt=&#34;启动tomcat.png&#34;&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/see_tomcat_index.png&#34; alt=&#34;访问tomcat主页.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;连接数据库:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;连接数据库&lt;/h2&gt;
+
+&lt;p&gt;驱动可在&lt;a href=&#34;http://dev.mysql.com/downloads/connector/j/&#34;&gt;http://dev.mysql.com/downloads/connector/j/&lt;/a&gt; 下载
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcat_copy_mysql_driver.png&#34; alt=&#34;复制数据库驱动.png&#34;&gt;
+&lt;/div&gt;
+
+[reber@WYB ~]$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-jsp&#34;&gt;&amp;lt;%@page contentType=&amp;quot;text/html;charset=utf-8&amp;quot; import=&amp;quot;java.sql.*&amp;quot; %&amp;gt;
+&amp;lt;%
+    String driver = &amp;quot;com.mysql.jdbc.Driver&amp;quot;; 
+    String url = &amp;quot;jdbc:mysql://localhost:3306/tomcat&amp;quot;; //数据库web
+    String user = &amp;quot;tomcat&amp;quot;; 
+    String password = &amp;quot;123456&amp;quot;; 
+    try { 
+        Class.forName(driver); 
+        Connection conn = DriverManager.getConnection(url, user, password);
+
+        if(!conn.isClosed()) 
+            out.println(&amp;quot;数据库连接成功！&amp;quot;); 
+        conn.close(); 
+    } 
+    catch(ClassNotFoundException e) { 
+        out.println(&amp;quot;找不到驱动程序&amp;quot;); 
+        e.printStackTrace(); 
+    } 
+    catch(SQLException e) { 
+        e.printStackTrace(); 
+    } 
+%&amp;gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcat_conn_mysql.png&#34; alt=&#34;连接数据库.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Logging on </title>
+    <link>http://wyb0.com/tags/logging/</link>
+    <description>Recent content in Logging on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Sat, 25 Jun 2016 08:55:30 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/logging/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Python的logging模块</title>
+      <link>http://wyb0.com/posts/Python%E7%9A%84logging%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Sat, 25 Jun 2016 08:55:30 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Python%E7%9A%84logging%E6%A8%A1%E5%9D%97/</guid>
+      <description>
+
+&lt;h2 id=&#34;使用流程:629db1ae5d01a477f812c40e0796ae10&#34;&gt;使用流程&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;创建一个logger&lt;/li&gt;
+&lt;li&gt;创建一个handler，用于写入日志文件&lt;/li&gt;
+&lt;li&gt;定义handler的输出格式&lt;/li&gt;
+&lt;li&gt;将handler添加到logger&lt;/li&gt;
+&lt;li&gt;记录日志&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;示例:629db1ae5d01a477f812c40e0796ae10&#34;&gt;示例&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import logging
+
+class MyLog(object):
+    &amp;quot;&amp;quot;&amp;quot;docstring for MyLog&amp;quot;&amp;quot;&amp;quot;
+    def __init__(self, logfile, loglevel, logger):
+        super(MyLog, self).__init__()
+        
+        # 创建一个logger
+        self.logger = logging.getLogger(logger)
+        self.logger.setLevel(logging.DEBUG)
+
+        # 创建一个用于写入日志文件的handler
+        fh = logging.FileHandler(logfile)
+        fh.setLevel(logging.DEBUG) # 只要是写入文件的等级都为DEBUG，也可以设置为loglevel
+        formatterf = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;)
+        fh.setFormatter(formatterf)
+
+        # 创建一个用于输出到控制台的handler
+        ch = logging.StreamHandler()
+        ch.setLevel(loglevel)
+        formatterc = logging.Formatter(&#39;%(asctime)s - %(message)s&#39;)
+        ch.setFormatter(formatterc)
+
+        # 将handler添加到logger
+        self.logger.addHandler(fh)
+        self.logger.addHandler(ch)
+    
+    def debug(self,msg):
+        self.logger.debug(msg)
+
+    def info(self,msg):
+        self.logger.info(msg)
+
+    def warn(self,msg):
+        self.logger.warn(msg)
+
+    def error(self,msg):
+        self.logger.error(msg)
+
+    def critical(self,msg):
+        self.logger.critical(msg)
+
+# 等级为WARNING则只会输出级别大于WARNING的日志
+# NOTSET &amp;lt; DEBUG &amp;lt; INFO &amp;lt; WARNING &amp;lt; ERROR &amp;lt; CRITICAL
+
+logger = MyLog(logfile=&#39;log.txt&#39;, loglevel=&#39;INFO&#39;, logger=&#39;test&#39;)
+logger.debug(&amp;quot;debug&amp;quot;)
+logger.info(&amp;quot;info&amp;quot;)
+logger.warn(&amp;quot;warn&amp;quot;)
+logger.error(&amp;quot;error&amp;quot;)
+logger.critical(&amp;quot;critical&amp;quot;)
+print
+logger = MyLog(logfile=&#39;log.txt&#39;, loglevel=&#39;ERROR&#39;, logger=&#39;mylog&#39;)
+logger.debug(&amp;quot;debug&amp;quot;)
+logger.info(&amp;quot;info&amp;quot;)
+logger.warn(&amp;quot;warn&amp;quot;)
+logger.error(&amp;quot;error&amp;quot;)
+logger.critical(&amp;quot;critical&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;结果如下:629db1ae5d01a477f812c40e0796ae10&#34;&gt;结果如下：&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/logging_to_file.png&#34; alt=&#34;日志输出至文件.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/logging_to_cmdline.png&#34; alt=&#34;日志输出到命令行.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

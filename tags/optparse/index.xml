@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Optparse on </title>
+    <link>http://wyb0.com/tags/optparse/</link>
+    <description>Recent content in Optparse on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 16 Aug 2016 15:10:44 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/optparse/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Python的optparse模块</title>
+      <link>http://wyb0.com/posts/Python%E7%9A%84optparse%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Tue, 16 Aug 2016 15:10:44 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Python%E7%9A%84optparse%E6%A8%A1%E5%9D%97/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-关于optparse模块:77d291ec58910c23249e0efe6f6fc982&#34;&gt;0x00 关于optparse模块&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;python2.3之后添加的模块optparse是专门用来处理命令行选项的&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import optparse
+
+parser = optparse.OptionParser(usage=&#39;Usage: %prog [options] domaion&#39;,
+                                version=&#39;%prog 1.2&#39;)
+parser.add_option(&#39;-b&#39;, &#39;--bug&#39;, dest=&#39;isbug&#39;,
+                    default=False, action=&#39;store_true&#39;,
+                    help=&#39;Whether open the debug mode, default is false&#39;)
+parser.add_option(&#39;-u&#39;, &#39;--url&#39;, dest=&#39;url&#39;,
+                    default=None, action=&#39;store&#39;, type=&#39;string&#39;,
+                    help=&#39;target url&#39;)
+parser.add_option(&#39;-n&#39;,&#39;--number&#39;,
+                    dest=&#39;num&#39;, default=10, type=&#39;int&#39;,
+                    help=&#39;the number, default is 10&#39;)
+
+(options, args) = parser.parse_args()
+
+print options
+print args
+print options.url
+# parser.print_help() # show help message
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/parser_example.png&#34; alt=&#34;parser简单示例&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/parser_show_help_msg.png&#34; alt=&#34;显示帮助信息&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-说明:77d291ec58910c23249e0efe6f6fc982&#34;&gt;0x01 说明&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;在输出帮助信息时%prog会被脚本名代替
+-b和--bug作用一样，一个是短标签一个是长标签
+dest：它是存储变量值的变量名
+default：默认的值
+type：值的类型，默认为string，可以不用写
+action：有3种类型
+    默认action=&#39;store&#39;，可以不用写
+    action=&#39;store_true&#39;使用参数时将布尔值true存储到dest指定的变量中
+    action=&#39;store_false&#39;使用参数时将布尔值false存储到dest指定的变量中
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
