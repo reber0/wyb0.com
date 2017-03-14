@@ -1,0 +1,33 @@
+{{ partial "header.html" . }}
+
+<!-- 显示一类 -->
+
+<div class="reber">
+    {{ partial "page_head.html" . }}
+    
+    <div class="main">
+        <div class="left">
+            <h2 style="padding:0px 0px 15px 0px;">-- {{ .Title }} --</h2>
+            <div class="cont">
+                {{ range ( .Paginate (where .Data.Pages "Type" "posts")).Pages }}
+                    {{ .Render "summary"}}
+                {{ end }}
+
+                {{ partial "pagination.html" . }}
+            </div>
+        </div>
+        <div class="right">
+            <div>
+                <br>
+                {{ partial "topics.html" . }}
+                {{ partial "tags.html" . }}
+                {{ partial "links.html" . }}
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    {{ partial "page_foot.html" . }}
+</div>
+
+{{ partial "footer.html" . }}
