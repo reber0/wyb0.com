@@ -11,7 +11,7 @@
                 <h2>{{ .Title }}</h2>
             </div>
             <div class="cont">
-                <!-- 文章的时间、分类、标签的图标 -->
+                <!-- 文章的时间、分类/标签的图标 -->
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
@@ -20,7 +20,7 @@
 
                     {{ $baseUrl := .Site.BaseURL }}
 
-                    <div style="padding:2px 5px 2px 0px;">
+                    <div style="padding:2px 5px 5px 0px;">
                         {{ if isset .Params "topics" }}
                         {{ $count := len .Params.topics }}
                         {{ if gt $count 0 }}
@@ -44,14 +44,15 @@
                 </div>
                 
                 {{ .Content }}
-
-                <br /><br />
-                <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
-                <script>
-                    var link = decodeURI(window.location.href);
-                    var url = '<a href="' + link + '">'+link+'</a>';
-                    document.write(url);
-                </script>
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
 
                 {{ partial "prev_next_post.html" . }}
             </div>
