@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PHP之MySQL语法 - Reber's Blog</title>
+  <title>Windows - Reber's Blog</title>
   <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
   <meta name="description" content="">
   <meta name="author" content="reber">
@@ -74,201 +74,332 @@
     </ul>
 </div>
 
-
+    
     <div class="main">
         <div class="left">
-            <div>
-                <h2>PHP之MySQL语法</h2>
-            </div>
+            <h2 style="padding:0px 0px 15px 0px;">-- Windows --</h2>
             <div class="content">
                 
-                <div class="post-meta">
-                    <div style="padding:5px 5px 2px 0px;">
-                        <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-06-02</time>
-                    </div>
-
                     
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8Proxifier%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/">Windows下用Proxifier实现全局代理</a></h2>
 
-                    <div style="padding:2px 5px 5px 0px;">
-                        
-                        
-                        
-                            <i class="fa fa-folder fa-fw"></i>
-                            
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                            
-                        
-                        
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        
-                        
-                        
-                            <i class="fa fa-tags fa-fw"></i>
-                            
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
-                            
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
-                            
-                        
-                        
-                    </div>
-                </div>
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-24</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
                 
                 
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E8%BD%AF%E4%BB%B6">软件</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
 
-<h2 id="select语句的一般语法:eb5ec6957cb8641e808ae6e4825cc16d">Select语句的一般语法</h2>
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 环境 在windows下用Shadowsocks和Proxifier实现全局代理： System：Windows10 Pro x64 Shadowsocks：Shadowsocks v2.5.2.0 Proxifier：Proxifier Portable Edition v3.29 0x01 配置Shadowsocks 0x02 配置Proxifier Proxifier添加代理服务 Proxifier添加规则 测试全局代理设置成功与否
+    </p>
 
-<pre><code>1.SELECT [ALL|DISTINCT] &lt;目标列表达式&gt; [,&lt;目标列表达式&gt; ]...
-2.FROM &lt;表名或视图名&gt; [,&lt;表名或视图名&gt; ]...
-3.[ WHERE &lt;行条件表达式&gt; ]
-4.[ GROUP BY &lt;列名1&gt; ,[列名2][,...][HAVING组条件表达式] ]
-5.[ ORDER BY &lt;列名1&gt; ,[ASC|DESC][,...] ];
-</code></pre>
+    
+</article>
 
-<p>上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5，<br />
-即先确定从哪个数据源查找，<br />
-然后确定过滤条件，<br />
-若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一布限制，<br />
-然后将符合条件的列查询出来，<br />
-最后对结果进行排序。</p>
-
-<pre><code>select name as '名字',password as '密码' form user;
-select * from message where id between 2 and 6;
-select * from message where title like '%留言_';  //%匹配任意个字符,_匹配一个字符
-select * from message where uid in (2,3,4); //删除2、3、4共3条数据
-</code></pre>
-
-<h2 id="连接查询:eb5ec6957cb8641e808ae6e4825cc16d">连接查询</h2>
-
-<p><code>[&lt;表名1&gt;.][&lt;列名1&gt;]  &lt;比较运算符&gt;  [&lt;表名2&gt;.][&lt;列名2&gt;]</code><br />
-<code>[&lt;表名1&gt;.][&lt;列名1&gt;]  BETWEEN  [&lt;表名2&gt;.][&lt;列名2&gt;] AND [&lt;表名2&gt;.][&lt;列名3&gt;]</code></p>
-
-<pre><code>select * from user,msg where user.id=msg.uid;
-select m.id,m.title '标题',m.ip,u.username '名字' from message as m,user as u where m.uid=u.id;
-</code></pre>
-
-<h2 id="子查询:eb5ec6957cb8641e808ae6e4825cc16d">子查询</h2>
-
-<p>一个SELECT-FROM-WHERE语句成为一个查询块。<br />
-将一个查询块嵌套到另外一个查询块的WHERE子句或HAVING短句条件中的查询成为子查询或嵌套查询，它允许我们根据另一个查询的结果检索数据。<br />
-子查询的方法是由里向外处理，即每个子查询在其上一级查询之前查询，子查询的结果用于建立其副查询的查询条件。</p>
-
-<pre><code>select *
-from message
-where id in (
-    select id
-        from users
-        where username='admin'
-    );
-</code></pre>
-
-<h2 id="集合查询:eb5ec6957cb8641e808ae6e4825cc16d">集合查询</h2>
-
-<p>集合的并操作：使用UNION运算符经多个SELECT查询结果合并起来，形成一个完整的查询结果，系统合并时会自动去掉重复的元组。<br />
-注意：前后SELECT语句查询的列数要相同。</p>
-
-<h2 id="数据更新:eb5ec6957cb8641e808ae6e4825cc16d">数据更新</h2>
-
-<ol>
-<li>插入数据
-
-<ul>
-<li>插入单个元组：<br />
-INSERT INTO &lt;表名&gt; [(&lt;属性列1&gt;[,&lt;属性列2&gt;&hellip;])]<br />
-VALUES (&lt;常量1&gt;[,&lt;常量2&gt;]&hellip;);<br /></li>
-<li>通过子查询向表中插入多条数据<br />
-INSERT INTO &lt;表名&gt; [(&lt;属性列1&gt;[,&lt;属性列2&gt;&hellip;])]<br />
-SELECT [(&lt;属性列1&gt;[,&lt;属性列2&gt;&hellip;])]<br />
-FROM &lt;表名&gt;<br />
-[WHERE 子句]<br />
-[GROUP BY 子句]<br />
-[ORDER BY 子句];</li>
-<li>通过SELECT INTO语句创建新表并插入多条数据<br />
-SELECT &lt;列名1&gt;,&lt;列名2&gt;,&hellip;&lt;表达式1&gt; as &lt;别名1&gt;,&hellip;INTO &lt;表名&gt;<br />
-FROM &lt;表名1&gt;，&lt;表名2&gt;,&hellip;<br />
-[WHERE 条件表达式]<br />
-[GROUP BY 子句]<br />
-[ORDER BY 子句];</li>
-</ul></li>
-<li>修改数据<br />
-UPDATE &lt;表名&gt;<br />
-SET &lt;列名1&gt; = &lt;表达式1&gt; [,&lt;列名2&gt; = &lt;表达式2&gt;]&hellip;<br />
-[WHERE &lt;条件&gt;];</li>
-<li>删除数据<br />
-DELETE<br />
-FROM &lt;表名&gt;<br />
-[WHERE &lt;条件&gt;]</li>
-</ol>
-
-<h2 id="sql的数据控制功能:eb5ec6957cb8641e808ae6e4825cc16d">SQL的数据控制功能</h2>
-
-<p>授权语句</p>
-
-<pre><code>GRENT &lt;权限1&gt;，[,&lt;权限2&gt;]...  
-[ON &lt;对象名&gt;]  
-TO &lt;用户1&gt;[,&lt;用户2&gt;],  
-[WITH GRANT OPTION];
-</code></pre>
-
-<p>创建用户blog，设密码为666666,并将数据库db_blog的所有权限赋给他<br />
-grant all privileges on db_blog.* to blog@localhost identified by &lsquo;666666&rsquo;;</p>
-
-<h2 id="order-by和limit:eb5ec6957cb8641e808ae6e4825cc16d">order by和limit</h2>
-
-<pre><code>select * from message order by uid desc;
-select * from message order by uid desc limit 5; //默认从0开始，查询5条数据
-select * from message order by uid desc limit 2,4;  //从第2条开始查询4条数据
-</code></pre>
-
-<h2 id="统计函数:eb5ec6957cb8641e808ae6e4825cc16d">统计函数</h2>
-
-<p>count()<br />
-sum()<br />
-avg()<br />
-max()<br />
-min()</p>
 
                 
-                <div style="padding:10px 1px;">
-                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
-                    <script>
-                        var link = decodeURI(window.location.href);
-                        var url = '<a href="' + link + '">'+link+'</a>';
-                        document.write(url);
-                    </script>
-                </div>
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Windows2003%E4%B8%8B%E6%90%AD%E5%BB%BAVPN/">Windows2003下搭建VPN</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-07</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/windows">windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        环境及要求 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器 安装服务 配置并启用路由和远程访问 新增路由协议 新增接口 新增VPN用户 尝试连接VPN
+    </p>
+
+    
+</article>
+
 
                 
-<div class="prev-next-post pure-g">
-  <div class="pure-u-1-24" style="text-align: left;">
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Windows2003%E4%B8%8B%E6%90%AD%E5%BB%BAIIS&#43;asp/">Windows2003下搭建IIS&#43;asp</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-18</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/windows">windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
     
-    <a href="http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/"><i class="fa fa-chevron-left"></i></a>
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        添加组件 开启iis 添加Web服务扩展 运行asp 权限
+    </p>
+
     
-  </div>
-  <div class="pure-u-10-24">
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/">win/ubuntu双系统分区设置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-31</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/windows">windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
     
-    <nav class="prev">
-      <a href="http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/">win/ubuntu双系统分区设置</a>
-    </nav>
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        win10和ubuntu双系统分区设置 硬盘采用uefi格式 硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息 在硬盘末尾给ubuntu划分50G左右空间 ubuntu的/分区，格式为ext4，空间为40G ubuntu的/home分区，格式为ext4，空间为10G ubuntu的/boot分区，格式为ext4,空间为200M ubuntu的/swap分区，格式为swap，空间为200M ubuntu的引导分区为/boot &nbsp;
+    </p>
+
     
-  </div>
-  <div class="pure-u-2-24">
-    &nbsp;
-  </div>
-  <div class="pure-u-10-24">
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Windows%E4%B8%8B%E5%90%91github%E6%8E%A8%E9%80%81%E5%8D%9A%E5%AE%A2/">Windows下向github推送博客</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-10</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/git">Git</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/git">git</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/windows">windows</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
     
-    <nav class="next">
-      <a href="http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">PHP之MySQL常用函数</a>
-    </nav>
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        开启本地服务 编辑md文档 推送md文档 推送html 查看推送是否成功
+    </p>
+
     
-  </div>
-  <div class="pure-u-1-24" style="text-align: right;">
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">Windows下用github搭建博客</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-10</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/git">Git</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/git">git</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/windows">windows</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
     
-    <a href="http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/"><i class="fa fa-chevron-right"></i></a>
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        首先在github上新建仓库 本地新建仓库 下载安装hugo 为hugo添加环境变量 下载安装github客户端 新建仓库 下载主题 可以在https://github.com/spf13/hugoThemes 下载你喜欢的主题 使用主题并查看效果 本地环境配置 本地生成秘钥 在github保存秘钥 测试公钥是否添加成功 设置本地用户名和邮箱 配置config.toml # 将reber-9全部替换为你github的账户名，另外你也可以进行一些基本的设置 baseurl = &quot;http://reber-9.github.io&quot; languageCode = &quot;en-us&quot; title = &quot;reber-9's Blog&quot; theme = &quot;beautifulhugo&quot; pygmentsUseClasses = false #disqusShortname = &quot;XXX&quot; #googleAnalytics = &quot;XXX&quot; [Params] logo = &quot;img/avatar-icon.png&quot; subtitle = &quot;This is my personal blog&quot; [Author] name = &quot;Some Person&quot; email = &quot;123123123@163.com&quot; github = &quot;reber-9&quot; [[menu.main]] name = &quot;Blog&quot; url = &quot;/&quot; weight
+    </p>
+
     
-  </div>
-</div>
+    <footer>
+        <a href="http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+
+                
 
 
             </div>
@@ -282,29 +413,31 @@ min()</p>
 
 
     <h2 class="asidetitle">Categories</h2>
-    <ul style="margin-left:10px;left:10px;">
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(7)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(18)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(22)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(15)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(52)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(15)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(32)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(59)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(30)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(8)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/wireless" title="wireless">wireless(1)</a></li>
-        
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/xml" title="xml">xml(1)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
         
     </ul>
 
@@ -574,7 +707,7 @@ min()</p>
         </div>
     </div>
 
-    <br>
+    <br><br>
     
 <div class="foot">
     <div class="copyright">
@@ -666,4 +799,3 @@ min()</p>
 
 </body>
 </html>
-

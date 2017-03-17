@@ -84,61 +84,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84%E6%A8%A1%E5%9D%97/">Python的模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-08-31</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python%E6%A8%A1%E5%9D%97">python模块</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        Python的模块 在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径 使用if __name__ == &lsquo;__main__&lsquo;: 实例 文件结构如下 测试文件test.py #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.test() 包package1 init.py #这个文件可以为空 __all__ = ['module1', 'module2'] #有这一句才能使用import *导入所有模块 module1.py
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Python%E7%9A%84%E6%A8%A1%E5%9D%97/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/Python%E5%AE%9E%E7%8E%B0%E5%AF%86%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8/">Python实现密码生成器</a></h2>
 
         
@@ -209,7 +154,9 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
                     
                 
                 
@@ -608,6 +555,61 @@
 
 
                 
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84requests%E6%A8%A1%E5%9D%97/">Python的requests模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python%E6%A8%A1%E5%9D%97">python模块</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        无参数的get请求 import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串 有参数的get请求 import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } payload = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=payload,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie POST请求 import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.10.10.10:8080/Lab2.0/student.action' payload = { 'userid':'1315935xxx', 'password':'xxxxxxx', 'quan':'Student', } header = {
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/Python%E7%9A%84requests%E6%A8%A1%E5%9D%97/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
 
                 
 
@@ -618,7 +620,7 @@
             <a href="http://wyb0.com/topics/python/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;2 / 4&nbsp;</span>
+        <span>&nbsp;2 / 3&nbsp;</span>
         
         
             <a href="http://wyb0.com/topics/python/page/3/"><i class="fa fa-chevron-right"></i></a>
@@ -637,29 +639,31 @@
 
 
     <h2 class="asidetitle">Categories</h2>
-    <ul style="margin-left:10px;left:10px;">
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(7)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(18)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(22)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(15)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(52)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(15)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(32)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(59)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(30)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(8)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/wireless" title="wireless">wireless(1)</a></li>
-        
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/xml" title="xml">xml(1)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
         
     </ul>
 

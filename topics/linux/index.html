@@ -137,6 +137,153 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/Tmux%E7%9A%84%E4%BD%BF%E7%94%A8/">Tmux的使用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-09-10</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E8%BD%AF%E4%BB%B6">软件</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Tmux的快捷键前缀 Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c 0x01 会话 0x02 窗口和窗格
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B8%8BSSH%E8%BF%9E%E6%8E%A5/">Linux下SSH连接</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-10</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 SSH相关选项 -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，用于端口转发 -D socket5代理 -L tcp转发 -C 使用数据压缩，网速快时会影响速度 0x01 SSH免密码登陆 A主机免密码登陆B主机： A主机运行： ssh-keygen -t rsa 会生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub 将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中 注： 要确保B主机~/.ssh/authorized_keys权限为600 要确保B主机~/.ssh/文件夹权限为700 要确保上述两个文件属主是当前用户 0x02 SSH反向连接 主机A要通过SSH连接主机B： B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定 A主机运行： ssh root@127.0.0.1 -p 8888 输入本机的root的密码即可登入主机B的root用户 0x03 SSH Socks5代理
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/CGI%E4%B8%8EFastCGI%E4%B8%8EPHP-FPM/">CGI与FastCGI与PHP-FPM</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/cgi">cgi</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x01 CGI协议 中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议 0x02 FastCGI 服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低 fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等 0x03 FastCGI工作流程 一般情况下，FastCGI的整个工作流程是这样的： Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module) FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待WebServer的连接。 当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。 Web server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。 FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。在CGI模式中，php-cgi在此便退出了。 0x04 PHP-FPM php-fpm就是fastcgi的实现，是一个php fastcgi进程管理器 php-fpm在php5.2之后默认添加 千万不要把fastcgi端口对公网暴露
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/iptables%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AEDMZ/">iptables简单配置DMZ</a></h2>
 
         
@@ -190,6 +337,55 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/">Ubuntu下使用ShadowSocks</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-13</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        环境： ubuntu14.4 安装shadowsocks-qt5 sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装) 配置客户端 配置火狐 访问YouTube
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">conky配置</a></h2>
 
         
@@ -234,6 +430,59 @@
     <footer>
         <a href="http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/">win/ubuntu双系统分区设置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-31</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/windows">windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        win10和ubuntu双系统分区设置 硬盘采用uefi格式 硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息 在硬盘末尾给ubuntu划分50G左右空间 ubuntu的/分区，格式为ext4，空间为40G ubuntu的/home分区，格式为ext4，空间为10G ubuntu的/boot分区，格式为ext4,空间为200M ubuntu的/swap分区，格式为swap，空间为200M ubuntu的引导分区为/boot &nbsp;
+    </p>
+
     
 </article>
 
@@ -343,275 +592,6 @@
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Ubuntu%E5%88%9D%E6%8E%A5%E8%A7%A6/">Ubuntu初接触(包括搭建LAMP)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-07</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        我是在虚拟机中安装14.04.4版的ubuntu： 下载地址：http://mirrors.163.com/ubuntu-releases/14.04.4/ubuntu-14.04.4-desktop-amd64.iso 1.配源或选择最快的更新服务器 选择最快的更新服务器: System Settings &ndash;&gt; Software &amp; Updates &ndash;&gt; Download from:other &ndash;&gt; Select Best Server &ndash;&gt; Choose Serve &ndash;&gt; Close 配源: reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak reber@ubuntu:~$ vim /etc/apt/sources.list 中科大源： deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse 阿里源： deb http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe reber@ubuntu:~$ sudo apt-get update 2.简单配置 $ sudo apt-get install open-vm-tools-desktop fuse $ sudo apt-get install vim $ sudo apt-get install nautilus-open-terminal #注销,再次登陆即可任意地方右键打开终端 $ vim /etc/default/apport #更改enabled=0可解决开机总是提示有错误 $ vim ~/.bashrc #添加alias c='clear' 3.安装输入法 apt-get -f install可解决依赖问题 reber@ubuntu:~$ apt-get install ibus-sunpinyin #安装后重启系统 进入设置：system setting-&gt;text entry-&gt;添加sunpinyin 4.配置Apache/MySQL/PHP sudo apt-get install apache2 sudo apt-get install mysql-client mysql-server sudo apt-get install php5 sudo apt-get install php5-gd php5-mysql sudo apt-get install libapache2-mod-php5 sudo apt-get install libapache2-mod-auth-mysql sudo chmod 777 /var/www #为了方便 解决乱码问题： apache：sudo vim /etc/apache2/apache2.conf 最后添加AddDefaultCharset UTF-8 mysql：编辑数据库配置文件 在[client]下面添加： default-character-set=utf8 在[mysqld]在下面添加 character_set_server=utf8 测试数据库连接： 编辑mysql_test.php代码如下： &lt;?php $link = mysql_connect(&quot;localhost&quot;, &quot;root&quot;, &quot;password&quot;); if(!$link) die('Could not connect: ' .
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Ubuntu%E5%88%9D%E6%8E%A5%E8%A7%A6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/">Linux之文本处理软件awk</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-20</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。 若有一个需要重新格式化的字典test.txt(用户名、密码、地址)： xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 aaaa cccc 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv 要求： 1.里面有重复数据，使用命令去重 2.提取出用户名和密码 每一行前面加上id数字，递增。 3.只提取出密码作为爆破字典 4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名 5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数 去重： [wyb@localhost ~]$ cat test.txt | awk '!a[$1]++' [wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同 aosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 3333 aaaa dfger 21asd sdfsd sadasd dwqx
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/">Linux之文本处理</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-20</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        这里介绍3种方式： ==&gt;awk ==&gt;grep ==&gt;sed awk处理文本(最常用)： 作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化 awk命令格式：awk [F filed-separator] &lsquo;commands&rsquo; input-fiel(s) 参数-F：可以添加任意的分割符，比较重要 awk工作流程是这样的： 读入有&rsquo;\n&rsquo;换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&rdquo;空白键&rdquo; 或 &ldquo;[tab]键&rdquo;。 1. 入门示例： [wyb@localhost temp]$ head -n 5 /etc/passwd root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin adm:x:3:4:adm:/var/adm:/sbin/nologin lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{print $1}' //输出第1列，域分隔符为： root bin daemon adm lp [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{pri nt &quot;id:&quot;$1&quot;\tshell:&quot;$7}' //输出第1、7列且给予列名 id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' 'BEGIN {print &quot;====begin=====&quot;} {print &quot;id:&quot;$1&quot;\tshell:&quot;$7} END {print &quot;====end====&quot;}' ====begin===== id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin ====end==== [wyb@localhost temp]$ awk -F: '/root/' /etc/passwd //搜索含有root关键字的所有行 root:x:0:0:root:/root:/bin/bash operator:x:11:0:operator:/root:/sbin/nologin [wyb@localhost temp]$ awk -F: '/root/{print $7}' /etc/passwd //匹配root并输出对应shell /bin/bash /sbin/nologin [wyb@localhost temp]$ awk -F: '/^root/' /etc/passwd //匹配以root开头的行 root:x:0:0:root:/root:/bin/bash 2.
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/">Linux之tar</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-19</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        tar主要参数： -c 创建一个新的压缩文件 -x 解压 -t 查看压缩文件的内容 -f 指定档案文件的名字 -v 显示过程信息 -r 增加文件到指定的包 -C 指定解压后的路径 -z 使用gzip -j 使用bzip2 -Z 使用compress tar示例： [wyb@localhost temp]$ ls aaa [wyb@localhost temp]$ tar -cvf 1.tar aaa/ *打包不压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -zcvf 1.tar.gz aaa/ *打包且以gzip压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -jcvf 1.tar.bz2 aaa/ *打包且以bzip2压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]tar -zxvf aa.tar.gz /home/aaa --exclude=dir //排除目录 [wyb@localhost temp]$ ls -l total 24 -rw-r--r--.
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/">Linux之安装ettercap</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-19</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/pentest">pentest</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        操作系统：CentOS 首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了 执行：sudo yum groupinstall &ldquo;Development tools&rdquo; 源码安装软件就需要安装这个 一、下载解压 可用wget下载 二、查看需要的依赖项 [wyb@localhost ettercap-0.8.2]$ vim INSTALL #### Bundled libraries Ettercap now bundles the following libraries with the source distribution: libnet 1.1.6 curl 7.41.0 luajit 2.0.3 check 0.9.14 [wyb@localhost ettercap-0.8.2]$ cd bundled_deps/ [wyb@localhost bundled_deps]$ ls check curl libnet luajit 三、安装依赖包 安装check [wyb@localhost check]$ cd check-0.9.14 [wyb@localhost check-0.9.14]$ ls [wyb@localhost check-0.9.14]$ ./configure [wyb@localhost check-0.9.14]$ make [wyb@localhost check-0.9.14]$ sudo make install 安装curl [wyb@localhost check-0.9.14]$ cd ..
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -622,7 +602,7 @@
             <i class="fa fa-chevron-left"></i>
         
 
-        <span>&nbsp;1 / 2&nbsp;</span>
+        <span>&nbsp;1 / 3&nbsp;</span>
         
         
             <a href="http://wyb0.com/topics/linux/page/2/"><i class="fa fa-chevron-right"></i></a>
@@ -641,29 +621,31 @@
 
 
     <h2 class="asidetitle">Categories</h2>
-    <ul style="margin-left:10px;left:10px;">
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(7)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(18)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(22)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(15)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(52)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(15)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(32)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(59)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(30)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(8)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/wireless" title="wireless">wireless(1)</a></li>
-        
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/xml" title="xml">xml(1)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
         
     </ul>
 

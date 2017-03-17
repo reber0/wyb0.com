@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Other - Reber's Blog</title>
+  <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
+  <meta name="description" content="">
+  <meta name="author" content="reber">
+
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="http://wyb0.com/css/style.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  
+  <link rel="shortcut icon" href="http://wyb0.com/img/favicon.ico" type="image/x-icon" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="" href="http://wyb0.com/index.xml" />
+
+  
+  <link rel="stylesheet" href="http://wyb0.com/css/monokai-sublime.css" type="text/css">
+  <script src="http://wyb0.com/js/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="http://wyb0.com/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="http://wyb0.com/"><img src='http://wyb0.com/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="http://wyb0.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="http://wyb0.com/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="http://wyb0.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+    
+    <div class="main">
+        <div class="left">
+            <h2 style="padding:0px 0px 15px 0px;">-- Other --</h2>
+            <div class="content">
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/">301重定向</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-02-07</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%87%8D%E5%AE%9A%E5%90%91">重定向</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 目的 由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2 0x01 开启rewrite模块 $ sudo a2enmod rewrite 0x02 根目录下新建.htaccess： Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名 0x03 修改配置文件 # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; 0x04 重启Apache $ sudo /etc/init.d/apache2 restart
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Sublime_Text_3%E5%87%A0%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84%E6%8F%92%E4%BB%B6/">Sublime Text 3几个好用的插件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-09-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E8%BD%AF%E4%BB%B6">软件</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Package Control 安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件 代码安装 ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号) import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read()) 手动安装 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text 使用方法 Ctrl+Shift+P调出菜单然后选择相应操作 Preferences -&gt; Package Control也可调出 选择Install Package后可以输入想安装的插件名搜索安装 0x01 Emmet 前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 0x02 Anaconda 可以自动补全并提示语法，还可跳转到定义、使用等 效果如下： 0x03 Git 在编辑器就可以执行git命令，有github的开发者必备 0x04 GitGutter 在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率 0x05 Markdown Preview 可以在本地预览文件 0x06 DocBlokr 这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释 0x07 AutoFileName 快捷输入文件名 0x08 Theme-Flatland和Theme-SoDaReloaded 两个很不错的主题插件，安装好之后：首选项
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/Sublime_Text_3%E5%87%A0%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84%E6%8F%92%E4%BB%B6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8B%E5%AE%89%E8%A3%85vm-tools/">虚拟机下安装vm-tools</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-20</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA">虚拟机</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        vm-tools安装后可以在客户机和虚拟机间双向复制文件 安装 Kali2.0 一般安装的话按照上面的步骤即可安装成功，但是Kali2.0不行，可以用如下方法安装： 安装后可以终端输入：dpkg-reconfigure locales，在弹出的界面选择zh_CN.UTF-8设置语言为中文 可以用vim /root/.config/user-dirs.dirs将&quot;桌面&quot;修改为&quot;Desktop&quot;
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/%E6%94%BB%E5%87%BBWPA%E4%BF%9D%E6%8A%A4%E4%B8%8B%E7%9A%84802.11%E7%BD%91%E7%BB%9C/">攻击WPA保护下的802.11网络</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-13</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/wireless">wireless</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        网络拓扑及信息 其中ip等信息如下： 攻击WPA保护下的802.11网络 1. 查看无线网卡并将其设置为监听模式 2. 打开kismet，进行基本设置 3. 选择名字为111111的AP为目标 4. 查看kismet抓包信息 kismet生成的nettxt文件的部分信息如下： Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:21 2015 Last : Mon Nov 16 13:10:23 2015 Type : infrastructure BSSID : D8:42:AC:C9:5C:1D SSID 1 Type : Probe Response SSID : &quot;111111&quot; First : Mon Nov 16 12:46:30 2015 Last : Mon Nov 16 13:10:22 2015 Max Rate : 54.0 Packets : 249 Encryption : WPA+PSK Encryption : WPA+AES-CCM Channel : 5 Frequency : 0 - 979 packets, 83.75% Frequency : 2432 - 9 packets, 0.77% Frequency : 2437 - 61 packets, 5.22% Frequency : 2442 - 77 packets, 6.59% Frequency : 2447 - 42 packets, 3.59% Frequency : 2452 - 1 packets, 0.09% Max Seen : 1000 LLC : 249 Data : 920 Crypt : 341 Fragments : 0 Retries : 0 Total : 1169 Datasize : 146798 Last BSSTS : 0 Seen By : aaa (wlan0mon) fae5a030-8c1c-11e5-a78b-0403b30d2c03 1169 packets Mon Nov 16 13:10:23 2015 Client 3: MAC DC:C7:93:C5:05:58 Manuf : WP First : Mon Nov 16 12:47:01 2015 Last : Mon Nov 16 13:09:55 2015 Type : To Distribution MAC : 68:DF:DD:42:6A:F2 Channel : 0 Frequency : 0 - 149 packets, 99.33% Frequency : 2447 - 1 packets, 0.67% Max Seen : 1000 LLC : 0 Data : 150 Crypt : 22 Fragments : 0 Retries : 0 Total : 150 Datasize : 10740 Seen By : aaa (wlan0) fae5a030-8c1c-11e5-a78b-0403b30d2c03 150 packets Mon Nov 16 13:09:55 2015 筛选出的有用信息如下： BSSID : D8:42:AC:C9:5C:1D SSID : &quot;111111&quot; Encryption : WPA+PSK Encryption : WPA+AES-CCM Channel : 5 Client 3: MAC DC:C7:93:C5:05:58 5.
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/%E6%94%BB%E5%87%BBWPA%E4%BF%9D%E6%8A%A4%E4%B8%8B%E7%9A%84802.11%E7%BD%91%E7%BB%9C/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/RGB%E9%A2%9C%E8%89%B2%E5%AF%B9%E7%85%A7%E8%A1%A8/">RGB颜色对照表</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-04</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/miscellanea">miscellanea</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        RGB RGB颜色对照表 #FFFFFF #FFFFF0 #FFFFE0 #FFFF00 #FFFAFA #FFFAF0 #FFFACD #FFF8DC #FFF68F #FFF5EE #FFF0F5 #FFEFDB #FFEFD5 #FFEC8B #FFEBCD #FFE7BA #FFE4E1 #FFE4C4 #FFE4B5 #FFE1FF #FFDEAD #FFDAB9 #FFD700 #FFD39B #FFC1C1 #FFC125 #FFC0CB #FFBBFF #FFB90F #FFB6C1 #FFB5C5 #FFAEB9 #FFA54F #FFA500 #FFA07A #FF8C69 #FF8C00 #FF83FA #FF82AB #FF8247 #FF7F50 #FF7F24 #FF7F00 #FF7256 #FF6EB4 #FF6A6A #FF69B4 #FF6347 #FF4500 #FF4040 #FF3E96 #FF34B3 #FF3030 #FF1493 #FF00FF #FF0000 #FDF5E6 #FCFCFC #FAFAFA #FAFAD2 #FAF0E6 #FAEBD7 #FA8072 #F8F8FF #F7F7F7 #F5FFFA #F5F5F5 #F5F5DC
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/RGB%E9%A2%9C%E8%89%B2%E5%AF%B9%E7%85%A7%E8%A1%A8/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/XML%E5%9F%BA%E7%A1%80/">XML基础</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-25</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xml">xml</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        XML简介： xml的设计宗旨是传输数据，而并非显示数据 xms是不作为的，它被设计用来结构化、存储以及传输信息 xml只是纯文本，独立于软硬件和应用程序 xml可供任何软硬设备读取数据 xml可以自定义标签 xml具有自我描述性 xml是对html的补充 xml常用于简化数据的存储和共享 例子：John给George的便签 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;note&gt; //根元素 &lt;to&gt;George&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Don't forget the meeting!&lt;/body&gt; &lt;/note&gt; XML树结构： 必须有根节点 根节点可以有子节点 格式： &lt;root&gt; &lt;child&gt; &lt;subchild&gt;.....&lt;/subchild&gt; &lt;/child&gt; &lt;/root&gt; 例子： &lt;books&gt; &lt;book&gt; &lt;name&gt;Python黑帽子&lt;/name&gt; &lt;date&gt;2015&lt;/date&gt; &lt;price&gt;37￥&lt;/price&gt; &lt;description&gt; 用python写一些程序 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;Web安全深度剖析&lt;/name&gt; &lt;date&gt;2014&lt;/date&gt; &lt;price&gt;39￥&lt;/price&gt; &lt;description&gt; 讲述web渗透的基础知识 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;白帽子讲web安全&lt;/name&gt; &lt;date&gt;2013&lt;/date&gt; &lt;price&gt;44￥&lt;/price&gt; &lt;description&gt; 道哥力作 &lt;/description&gt; &lt;/book&gt; &lt;/books&gt; XML语法规则： 所有元素必有闭合标签 标签对大小写敏感 必须正确的嵌套 XML必须有根元素 XML的属性值必须加引号(能用子元素的就用子元素代替属性) 实体引用 &amp;lt; &lt; 小于 &amp;gt;
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/XML%E5%9F%BA%E7%A1%80/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Markdown%E8%AF%AD%E6%B3%95/">Markdown简单语法</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-12</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/markdown">markdown</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        标题 列表 引用 图片和链接 粗体与斜体 表格 代码块 行内代码块：使用两个Esc按键下的符号`将代码包裹起来即可 代码块：在代码左侧加4个空格即可(tab键缩进也行) 线 字体、字号和颜色设置
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/%E4%B8%AD%E5%B0%8F%E4%BC%81%E4%B8%9A%E7%BD%91%E7%BB%9C%E6%90%AD%E5%BB%BA/">中小企业网络搭建</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2015-07-13</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87">网络设备</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        中小企业需求分析 搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。 对网络设备能够方便地进行远程管理。 在局域网中公司部门间进行vlan划分，实现安全管理。 对三层设备路由技术这方面采取RIPV2协议或OSPF协议。 配置访问控制列表（ACL）以对网络数据进行有效的分类和控制，限制终端之间的相互访问。 内网通过配置PAT技术实现与外网之间的通信。 所需设备 网络规划 在三层交换机设置ACL，控制个vlan间的通信 在防火墙(路由器)上设置NAT转换 路由协议采用OSPF 内网访问控制 内网中只有市场部可以访问外网 市场部可以访问市场部、打印机 设计部可以访问设计部、财务部、打印机 外网只有202.202.2.0/24能访问内网 IP规划如下： 打印机：192.168.1.0/24 市场部：192.168.2.0/24 设计部：192.168.3.0/24 财务部：192.168.4.0/24 防火墙和三层交换机所在网段：192.168.5.0/24 管理ip所在网段：192.168.100.0/24 网络设备配置命令代码 Firewall配置 Router&gt;enable Router#conf t Router(config)#no ip domain-lookup //禁止域名解析 Router(config)#hostname Firewall //更改设备名 Firewall(config)#enable password 123 Firewall(config)#router eigrp 1 Firewall(config-router)#no auto-summary //关闭自动汇总 Firewall(config-router)#exit Firewall(config)#int f0/0 Firewall(config-if)#ip add 192.168.5.2 255.255.255.0 //配端口ip Firewall(config-if)#no shut Firewall(config-if)#exit Firewall(config)#router ospf 1 //配路由协议ospf Firewall(config-router)#network 202.202.1.0 0.0.0.255 area 0 Firewall(config-router)#network 192.168.5.0 0.0.0.255 area 0 Firewall(config-router)#exit Firewall(config)#int s1/0 Firewall(config-if)#ip add 202.202.1.1 255.255.255.0 Firewall(config-if)#clock rate 128000 //配同步时钟 Firewall(config-if)#no shut Firewall(config-if)#exit Firewall(config)#ip nat pool NAT 202.202.1.1 202.202.1.1 netmask 255.255.255.0 //地址池 Firewall(config)#ip nat inside source list 1 pool NAT overload //定义接口复用 Firewall(config)#access-list 1 permit 192.168.0.0 0.0.255.255 //定义需要转换的内部本地地址 Firewall(config)#int f0/0 Firewall(config-if)#ip nat inside //定义NAT接口 Firewall(config-if)#int s1/0 Firewall(config-if)#ip nat outside Firewall(config-if)#exit Firewall(config)#access-list 101 permit ip 202.202.2.0 0.0.0.255 192.168.0.0 0.0.255.255 //配置ACL Firewall(config)#access-list 101 deny ip any any Firewall(config)#int f0/0 Firewall(config-if)#ip access-group 101 out //应用ACL到接口 Firewall(config-if)#end Firewall#write Building configuration...
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/%E4%B8%AD%E5%B0%8F%E4%BC%81%E4%B8%9A%E7%BD%91%E7%BB%9C%E6%90%AD%E5%BB%BA/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/%E5%8D%95%E9%87%8DDES%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/">单重DES的简单实现</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2015-05-22</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/des">des</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/c%E8%AF%AD%E8%A8%80">C语言</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        简介 此程序通过单重des实现8个字节的加密和解密。 新建一个工程，这个工程需要3个cpp文件(c文件也可以)和2个头文件。 cpp文件：main.cpp、des.cpp、status.cpp 头文件：des.h、status.h 代码 以下为主函数main.cpp的内容： #include &lt;stdio.h&gt; #include &quot;status.h&quot; #include &quot;des.h&quot; int main() { char M[8],Key[9]; printf(&quot;Input Plaintext :&quot;); scanf(&quot;%s&quot;,&amp;M); printf(&quot;Input Key :&quot;); scanf(&quot;%s&quot;,&amp;Key); SetKey(Key);//生成16个子秘钥 printf(&quot;加密：&quot;); Des(M,'e'); printf(&quot;%s\n&quot;,M); printf(&quot;解密：&quot;); Des(M,'d'); printf(&quot;%s\n&quot;,M); return 0; } 以下为des.cpp的内容： #include &lt;stdio.h&gt; #include &lt;string.h&gt; #include &quot;status.h&quot; #include &quot;des.h&quot; void ByteToBit(const char *In,bool *Out,int bits) { for (int j=0;j&lt;bits;j++) Out[j]=(In[j/8]&gt;&gt;(j%8))&amp; 1; } void BitToByte(bool *In,char *Out,int bits) { memset(Out,0,(bits+7)/8); for (int k=0;k&lt;bits;k++) Out[k/8]|=In[k]&lt;&lt;(k%8); }
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/%E5%8D%95%E9%87%8DDES%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/%E6%80%9D%E7%A7%91%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/">思科交换机基本配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2015-05-06</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87">网络设备</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        简单配置命令 Switch&gt;enable(配置交换机名称) Switch(config)#hostname S S(config)#enable password 222//(加密特权密码，密码为222) S(config)#no enable password //(取消enable密码) S(config)#enable secret 333//(设置后用show命令时不能看到密码) S(config)#no enable secret //(取消enable密码) S(config)#line vty 0 4//(有5个虚拟终端，即0-4) S(config-line)#password 444//(设置虚拟终端密码) S(config-line)#login//(使密码生效) S(config)#line console 0//(设置控制台密码) S(config-line)#password 111 S(config-line)#login S(config)#line con 0//(取消控制台密码) S(config-line)#no password S(config-line)#exec-timeout 5 30//(超时时间)(分、秒) S(config)#no ip domain-lookup//(禁止名称解析) 配置交换机管理IP、默认网关 S(config)#interface vlan 1 //(配置交换机管理IP、子网掩码) S(config-if)#ip address 192.168.1.1 255.255.255.0 S(config-if)#no shutdown S(config)# exit S(config)#ip default-gateway 192.168.1.250//(默认网关) 配置交换机的端口速率、端口双工模式 S(config)#//(端口双工模式) S(config)#interface f0/1 S(config-if)#duplex ? auto Enable AUTO duplex configuration full Force full duplex operation half Force half-duplex operation S(config-if)#duplex auto S(config-if)#speed ?
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/%E6%80%9D%E7%A7%91%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+
+                
+
+
+            </div>
+        </div>
+        <div class="right">
+            <div>
+                <br>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Categories</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(22)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(59)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(30)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(8)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
+        
+    </ul>
+
+
+</div>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/burpsuite" title="burpsuite">burpsuite</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>21</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/metasploit" title="metasploit">metasploit</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nessus" title="nessus">nessus</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nmap" title="nmap">nmap</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>7</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>29</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python%e6%a8%a1%e5%9d%97" title="python模块">python模块</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>9</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/shell" title="shell">shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlmap" title="sqlmap">sqlmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/windows" title="windows">windows</a>
+                <sup>7</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e6%bc%8f" title="信息泄漏">信息泄漏</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%b7%a5%e5%85%b7" title="工具">工具</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%8f%90%e6%9d%83" title="提权">提权</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%b3%a8%e5%85%a5" title="注入">注入</a>
+                <sup>9</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%b6%8a%e6%9d%83" title="越权">越权</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%bd%af%e4%bb%b6" title="软件">软件</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+                
+<div style="padding-bottom:20px;">
+    <h2 class="asidetitle">友链</h2>
+    <div style="padding:5px 0px 10px 10px;">
+        <a href="http://www.test404.com/">Test404's Blog</a>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        &copy; 2016-2017 Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript">
+          var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1261003390'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261003390%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+    <div class="social">
+        
+        
+            <a href="https://github.com/reber-9" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+        
+        &nbsp;&nbsp;
+        
+            <a href="http://weibo.com/u/5819760166" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+        
+        &nbsp;&nbsp;
+        <a href="http://wyb0.com/index.xml" target="_blank"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </div>
+</div>
+</div>
+
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var alist = $('#tags p');
+        alist.each(function () {
+            var t = $(this);
+            var a = t.find('a');
+            var sup = parseInt(t.find('sup').text());
+            t.find('sup').hide();
+
+            if (0<sup && sup<6) {
+                a.addClass("text8");
+            } else if (5<sup && sup<11) {
+                a.addClass("text7");
+            } else if (10<sup && sup<16) {
+                a.addClass("text6");
+            } else if (15<sup && sup<21) {
+                a.addClass("text5");
+            } else if (20<sup && sup<26) {
+                a.addClass("text4");
+            } else if (25<sup && sup<31) {
+                a.addClass("text3");
+            } else if (30<sup && sup<36) {
+                a.addClass("text2");
+            } else {
+                a.addClass("text1");
+            }
+
+        });
+    });
+    </script>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部" style="display:block;" />
+      </a>
+    </div>
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); 
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
+    
+
+</body>
+</html>

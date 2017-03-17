@@ -84,57 +84,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E2/">代码执行漏洞2</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-14</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C">代码执行</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        接着上一篇：http://reber-9.com/post/代码执行漏洞/ 0x00 函数create_function() php中的函数create_function()可以创建一个匿名函数，其函数原型如下： string create_function ( string $args , string $code ) 其中$args是函数的参数，$code是函数的内容 若对提交的code未过滤或过滤不当则可能会导致代码执行漏洞 0x01 示例 示例a.php代码如下： &lt;?php $test = @$_GET['test']; $newfun = create_function('$a,$b', $test); $newfun('1111','2222'); ?&gt; 上述代码中$nuwfun('1111','2222')代表此时$a='1111',$b='2222',然后将其传给$test 0x02 函数assert() 这个函数和eval()的作用差不多 &lt;?php @assert($_GET['str']); ?&gt;
-    </p>
-
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/PHP%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/">PHP安全配置</a></h2>
 
         
@@ -188,171 +137,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">PHP反序列化漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-25</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/pentest">pentest</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        这里是正文 0x00 关于反序列化漏洞 序列化：使用函数serialize()可将实例序列化为字符串 反序列化：使用函数unserialize()可将序列化的字符串还原 若服务端有如下代码： &lt;?php class foo{ public $file = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct(){ file_put_contents($this-&gt;file,$this-&gt;data); } } $d = $_REQUEST['str']; var_dump($d); echo &quot;&lt;br /&gt;&quot;; $tc = unserialize(base64_decode($d)); var_dump($tc); ?&gt; 客户端可构造如下代码生成序列化后的字符串提交给服务端， 服务端就会生成文件xx.php，内容为&lt;?php phpinfo(); ?&gt;： &lt;?php class foo { public $ﬁle = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct() { ﬁle_put_contents($this-&gt;ﬁle, $this-&gt;data); } } $f = new foo(); $f-&gt;ﬁle = &quot;xx.php&quot;; $f-&gt;data = &quot;&lt;?php phpinfo(); ?&gt;&quot;; echo
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">代码执行漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-25</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C">代码执行</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 代码执行 当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时， 没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。 0x01 相关函数 PHP：eval assert Python：exec asp：&lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&gt; Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能 0x02 phpcms中的string2array函数 这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组 array( //这个是字符串形式的数组，它并不是数组，而是字符串 'upload_maxsize' =&gt; '2048', 'upload_allowext' =&gt; 'jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf', 'watermark_enable' =&gt; '1', 'watermark_minwidth' =&gt; '300', 'watermark_minheight' =&gt; '300', 'watermark_img' =&gt; '/statics/img/water/mark.png', 'watermark_pct' =&gt; '85', 'watermark_quality' =&gt; '80', 'watermark_pos' =&gt; '9', ) function string2array($data) { //这个函数可以将字符串$data转化为数组 if($data == '') return array(); @eval(&quot;\$array = $data;&quot;); return $array; } 0x03 漏洞危害 执行代码 让网站写shell 甚至控制服务器 0x04 漏洞分类(也是利用点) 执行代码的函数：eval、assert callback函数：preg_replace
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">命令执行漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-24</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C">命令执行</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 命令执行 应用有时需要调用一些执行系统命令的函数，如PHP中的system、exec、shell_exec、 passthru、popen、proc_popen等，当用户能控制这些函数中的参数时，就可以将恶意系统命令 拼接到正常命令中，从而造成命令执行攻击，这就是命令执行漏洞。 0x01 利用条件 应用调用执行系统命令的函数 将用户输入作为系统命令的参数拼接到了命令行中 没有对用户输入进行过滤或过滤不严 0x02 漏洞分类 代码层过滤不严 商业应用的一些核心代码封装在二进制文件中，在web应用中通过system函数来调用： system(&ldquo;/bin/program --arg $arg&rdquo;); 系统的漏洞造成命令执行 bash破壳漏洞(CVE-2014-6271) 执行env x='() { :;}; echo vulnerable' bash -c &quot;echo this is a test&quot;后 若输出vulnerable则证明存在漏洞 调用的第三方组件存在代码执行漏洞 如WordPress中用来处理图片的ImageMagick组件 JAVA中的命令执行漏洞(struts2/ElasticsearchGroovy等) ThinkPHP命令执行 0x03 漏洞危害 继承Web服务程序的权限去执行系统命令或读写文件 反弹shell 控制整个网站甚至控制服务器 进一步内网渗透 等等 0x04 漏洞挖掘 可以google hacking 尝试：filetype:action或filetype:do来找struts2 0x05 漏洞可能代码(以system为例) 1. system(&quot;$arg&quot;); //直接输入即可 2. system(&quot;/bin/prog $arg&quot;); //直接输入;ls 3. system(&quot;/bin/prog -p $arg&quot;); //和2一样 4. system(&quot;/bin/prog --p=\&quot;$arg\&quot;&quot;); //可以输入&quot;;ls;&quot; 5. system(&quot;/bin/prog --p='$arg'&quot;);
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%B0%81%E8%A3%85MySQL%E7%B1%BB/">PHP之封装MySQL类</a></h2>
 
         
@@ -370,7 +154,9 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
                     
                 
                 
@@ -425,7 +211,9 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
                     
                 
                 
@@ -463,61 +251,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E8%AF%AD%E6%B3%95/">PHP之MySQL语法</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-02</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        Select语句的一般语法 1.SELECT [ALL|DISTINCT] &lt;目标列表达式&gt; [,&lt;目标列表达式&gt; ]... 2.FROM &lt;表名或视图名&gt; [,&lt;表名或视图名&gt; ]... 3.[ WHERE &lt;行条件表达式&gt; ] 4.[ GROUP BY &lt;列名1&gt; ,[列名2][,...][HAVING组条件表达式] ] 5.[ ORDER BY &lt;列名1&gt; ,[ASC|DESC][,...] ]; 上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5， 即先确定从哪个数据源查找， 然后确定过滤条件， 若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一布限制， 然后将符合条件的列查询出来， 最后对结果进行排序。 select name as '名字',password as '密码' form user; select * from message where id between 2 and 6; select * from message where title like '%留言_'; //%匹配任意个字符,_匹配一个字符 select * from message where uid in (2,3,4); //删除2、3、4共3条数据 连接查询 [&lt;表名1&gt;.][&lt;列名1&gt;] &lt;比较运算符&gt; [&lt;表名2&gt;.][&lt;列名2&gt;] [&lt;表名1&gt;.][&lt;列名1&gt;] BETWEEN [&lt;表名2&gt;.][&lt;列名2&gt;] AND [&lt;表名2&gt;.][&lt;列名3&gt;] select * from user,msg where user.id=msg.uid; select m.id,m.title '标题',m.ip,u.username '名字' from message as m,user as u where m.uid=u.id; 子查询 一个SELECT-FROM-WHERE语句成为一个查询块。 将一个查询块嵌套到另外一个查询块的WHERE子句或HAVING短句条件中的查询成为子查询或嵌套查询，它允许我们根据另一个查询的结果检索数据。 子查询的方法是由里向外处理，即每个子查询在其上一级查询之前查询，子查询的结果用于建立其副查询的查询条件。 select * from message where id in ( select id from users where username='admin' ); 集合查询 集合的并操作：使用UNION运算符经多个SELECT查询结果合并起来，形成一个完整的查询结果，系统合并时会自动去掉重复的元组。 注意：前后SELECT语句查询的列数要相同。 数据更新 插入数据 插入单个元组： INSERT INTO &lt;表名&gt; [(&lt;属性列1&gt;[,&lt;属性列2&gt;&hellip;])] VALUES (&lt;常量1&gt;[,&lt;常量2&gt;]&hellip;); 通过子查询向表中插入多条数据 INSERT INTO &lt;表名&gt; [(&lt;属性列1&gt;[,&lt;属性列2&gt;&hellip;])] SELECT [(&lt;属性列1&gt;[,&lt;属性列2&gt;&hellip;])] FROM &lt;表名&gt; [WHERE 子句] [GROUP BY 子句] [ORDER BY 子句]; 通过SELECT INTO语句创建新表并插入多条数据 SELECT &lt;列名1&gt;,&lt;列名2&gt;,&hellip;&lt;表达式1&gt; as &lt;别名1&gt;,&hellip;INTO &lt;表名&gt; FROM &lt;表名1&gt;，&lt;表名2&gt;,&hellip; [WHERE 条件表达式] [GROUP BY 子句] [ORDER BY 子句]; 修改数据 UPDATE &lt;表名&gt; SET &lt;列名1&gt; = &lt;表达式1&gt; [,&lt;列名2&gt; = &lt;表达式2&gt;]&hellip; [WHERE &lt;条件&gt;]; 删除数据 DELETE FROM &lt;表名&gt; [WHERE &lt;条件&gt;] SQL的数据控制功能 授权语句 GRENT &lt;权限1&gt;，[,&lt;权限2&gt;]...
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E8%AF%AD%E6%B3%95/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/">PHP之MySQL简单操作</a></h2>
 
         
@@ -535,7 +268,9 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
                     
                 
                 
@@ -618,22 +353,273 @@
 
 
                 
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/">PHP之目录与文件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-22</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        1.目录的操作 &lt;?php $path = &quot;/var/www/html/php/dir.php&quot;; echo dirname($path).&quot;&lt;br /&gt;&quot;; //返回上级路径 echo basename($path).&quot;&lt;br /&gt;&quot;; //返回文件名部分 print_r(pathinfo($path)); //返回包含path信息的数组 echo &quot;&lt;br /&gt;&lt;br /&gt;&quot;; //readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动 $path = &quot;D:/phpStudy/WWW/php&quot;; $dh = opendir($path); while (false !== ($filename=readdir($dh))) { echo $filename.&quot;&lt;br /&gt;&quot;; } rewinddir($dh); //指针复位 echo readdir($dh); closedir($dh); mkdir(&quot;./aaa&quot;);//创建文件夹aaa rmdir(&quot;./aaa&quot;);//删除文件夹aaa file_put_contents(&quot;aa.php&quot;, &quot;&quot;);//创建文件aa.php unlink(&quot;./aa.php&quot;);//删除文件aa.php ?&gt; 2.文件的读写 fopen(filename,mode)和fclose(filename,mode) 例子： &lt;?php $file = fopen(&quot;test.txt&quot;,&quot;r&quot;); $file = fopen(&quot;/home/test/test.txt&quot;,&quot;r&quot;); $file = fopen(&quot;/home/test/test.gif&quot;,&quot;wb&quot;); $file = fopen(&quot;http://www.example.com/&quot;,&quot;r&quot;); $file = fopen(&quot;ftp://user:password@example.com/test.txt&quot;,&quot;w&quot;); ?&gt; 读取内容 fread(h_file,length) //读取打开文件的length个字节，返回读取的字符串 fgets(h_file,length) //读取一行返回length个字节，不加length时默认1024个字节，失败返回false fgetc(h_file) //逐字读取 file_get_content()和file_put_content() file_get_content($filename)可以得到文件中的所有内容 file_put_content($filename, $str)可以将字符串覆盖写入文件中 file_put_content($filename, $str, FILE_APPEND)可以将字符串追加到文件中 filetype() filetype($filename)可以得到文件的类型 3.查看文件夹下的文件信息 &lt;?php $path = &quot;./&quot;; $filelist=array(&quot;filesystem.php&quot;);//要过滤掉的文件 //浏览指定目录下的文件，并使用表格输出 //path目录信息的过滤，判断path存在，并且是否是个目录 if(!file_exists($path) || !is_dir($path)){ die($path.&quot;目录无效！&quot;); } //2.
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/">PHP之字符串</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-21</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        特点 字符串可以使用数组的处理函数操作，但并不是真正的数组 双引号中的变量用{}括起来，因为字符串中若遇到$符号，解析器会尽可能多的获取后面的字符以组成一个合法的变量名 &lt;?php $lamp = array('os' =&gt; 'Linux', 'webserver' =&gt; 'Apache', 'db' =&gt; 'Mysql', 'language' =&gt; 'PHP'); echo &quot;A OS is $lamp[os].&quot;; // ok echo &quot;A OS is $lamp['os'].&quot;; // false echo &quot;A OS is {$lamp['os']}.&quot;; //ok echo &quot;A OS is {$lamp[os]}.&quot;; // ok echo &quot;This square is $square-&gt;width meters broad.&quot;; //ok echo &quot;This square is $square-&gt;width meters broad.&quot;; //ok echo &quot;This square is $square-&gt;width meters broad.&quot;; //ok ?&gt; 常用字符串输出函数 函数名 功能描述 echo 输出字符串 print() 输出一个或多个字符串 die() 输出一条消息，并退出当前脚本 printf() 输出格式化字符串 sprintf() 把格式化字符串写入到一个变量中 函数echo() 输出一个或多个字符串 void echo(string arg1 [,string &hellip;]) 函数print() 功能和echo()一样，它有返回值，若成功则返回1,否则返回0 函数die() 该函数是exit()函数的别名 若参数为字符串，则函数会在推出前输出它 若参数为整数(0~254)，则值会被用作推出状态 函数printf() 输出格式化的字符串，和C语言中同名的函数用法一样 第一个参数为必选项，是规定的字符串及如何格式化其中的变量 可以有多个可选参数，是规定插入到第一个参数的格式化字符串中对应%符号处的参数 函数sprintf() 用法和Printf()类似，但他并不是输出字符串，而是格式化的字符串以返回值的形式写入到一个变量中 常用字符串格式化函数 ltrim()：从字符串左删除空格或其他预定义字符串 rtrim()：从字符串的末端开始删除空白字符串或其它预定义字符 trim()：从字符串的两端删除空白字符和其他预定字符 strtolower()：把字符串转换为小写 strtoupper()：把字符串转换为大写 ucfirst()：把字符串中的首字符转为大写 ucwords():把字符串中每个单词的首自负转换为大写 nl2br()：在字符串的每个新行之前插入HTML换行符 htmlentities()：把字符转换为HTML实体 htmlspecialchars()：把一些预定义的字符转换为HTML实体 Stripslashes()：删除由addcslashes()函数添加的反斜杠 number_format()：能过千位分组来格式化数字 strip_tags()：剥去HTML,XML以及PHP的标签 strrev()：反转字符串 str_pad()：把字符串填充为新的长度 md5()：将一个字符串进行MD5计算 过滤字符 ltrim()、rtrim()、trim() 第一个参数为待处理字符串，为必选项 第二个参数是可选项，用于指定希望取出的字符，默认为： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rdquo;&ldquo;：空格 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ldquo;\0&rdquo;：NULL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ldquo;\t&rdquo;：制表符 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ldquo;\n&rdquo;：新行 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ldquo;\r&rdquo;：回车 &lt;?php $str = &quot;123 This is a test ...&quot;; //测试的字符串 echo ltrim($str,&quot;0..9&quot;); //过滤左侧的数字，输出This is a test ...
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">PHP之面向对象</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-20</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        面向对象 面向对象概念 面向对象是达到了软件工程的三个目标：重用性、灵活性和扩展性，使其编程的代码更加简洁、更易于维护、并且具有更强的可重用性。 类和对象的关系 在面向对象的编程语言中，类是一个对立的程序单位，而对象的抽象就是类。类描述了一组有相同特性(属性)和相同行为(方法)的对象。开发时要先抽象类再用该类去创建对象。而我们的程序中直接使用的是对象而不是类。 什么是类 在面向对象的编程语言中，类是一个对立的程序单位，是具有相同属性和服务的一组对象的集合。它为属于该类的所有对象提供了同意的抽象描述，其内部包括成员属性和服务的方法两个部分。 什么是对象 在客观世界里，所有的事物都是由对象和对象之间的联系组成的。对象是系统中用来描述客观事物的一个实体，它是构成系统的一个基本单位，一个对象由一组属性和有权对这些属性进行操作的一组服务的封装体。 类的声明 类名和变量名还有函数名的命名规则类似，都遵循PHP中定义名称的命名规则。 若类名由多个单词组成，习惯上每个单词的首字母要大写 类中成员可分为属性和方法 属性为静态描述，方法为动态描述 在类中声明成员属性时，变量前面一定要有关键字，如：public、private、static等 若不需要有特定意义的修饰，则使用var关键字 格式： [一些修饰类的关键字] class 类名 { 类中成员; } Class Person { 成员属性： 姓名、性别、年龄、身高、体重、电话、住址等 成员方法： 说话、学习、走路、吃饭、开车、使用手机等 } 例子： &lt;?php class Person { var $name; var $age; var $sex; function say() { echo &quot;人在说话&quot;; } function run() { echo &quot;人在走路&quot;; } } ?&gt; 实例化对象 格式： $变量名 = new 类名称([参数列表]); $变量名 = new 类名称; 例子： &lt;?php class Phone { // ...
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/PHP%E4%B9%8B%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E6%95%B0%E7%BB%84/">PHP之数组</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-18</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        分类 索引数组 索引值从0开始，依次递增 关联数组 以字符串为索引，键和值对是无序组合，每个键都是唯一的 数组的定义 两种方法： 直接为数组元素赋值即可声明数组 使用array()函数声明数组 &lt;?php // 1.直接为数组元素赋值即可声明数组 $contact_index[0] = 1; $contact_index[1] = &quot;高某&quot;; $contact_index[2] = &quot;A公司&quot;; $contact_index[3] = &quot;北京市&quot;; $contact_index[] = &quot;gao@a.com&quot;; var_dump($contact_index); $contact_key[&quot;ID&quot;] = &quot;2&quot;; $contact_key[&quot;姓名&quot;] = &quot;峰某&quot;; $contact_key[&quot;公司&quot;] = &quot;B公司&quot;; $contact_key[&quot;邮箱&quot;] = &quot;feng@b.com&quot;; var_dump($contact_key); // 2.使用array()函数声明数组 $contact_key_array = array( &quot;ID&quot; =&gt; 1; &quot;姓名&quot; =&gt; &quot;峰某&quot;; &quot;公司&quot; =&gt; &quot;B公司&quot;; &quot;邮箱&quot; =&gt; &quot;feng@b.com&quot;; ); var_dump($contact_key_array); ?&gt; 数组的遍历 for语句遍历数组 foreach语句遍历数组 &lt;?php // for语句遍历索引数组 $cars=array(&quot;Volvo&quot;,&quot;BMW&quot;,&quot;SAAB&quot;); $arrlength=count($cars); for($x=0; $x &lt; $arrlength; $x++) { echo $cars[$x]; echo &quot;&lt;br&gt;&quot;; } // foreach语句遍历关联数组 $age=array(&quot;Bill&quot;=&gt;&quot;35&quot;, &quot;Steve&quot;=&gt;&quot;37&quot;, &quot;Peter&quot;=&gt;&quot;43&quot;); foreach($age as $x =&gt; $x_value) { echo &quot;Key=&quot; .
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/PHP%E4%B9%8B%E6%95%B0%E7%BB%84/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%9F%BA%E7%A1%80/">PHP之基础</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-15</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        PHP的作用 收集表单数据 生成动态网页 字符串处理 动态输出图片 处理服务器端文件系统 编写数据库支持的网页 会话跟踪控制 处理XML文件 支持大量的网络协议 服务器端的其他相关操作 PHP代码嵌入位置 可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&lt;?php起始符和终止符?&gt;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。 解读开始和结束标记 前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags &lt;?php ?&gt; &lt;script language=&quot;php&quot;&gt;&lt;/script&gt; &lt;? ?&gt; &lt;% %&gt; 指令分割符 php一段代码中除了最后一行不用分号，其他每句都要用分号结束，不过推荐每句都用分号结束 注释 若觉得代码不合适则可以注释，但不要急于删除 注释的目的在于说明程序 注释对调试和编写程序可以起到很好的帮助作用 PHP注释符有：”/**/”、“//”、“#” 空白符 空白符(空格、tab制表符、换行)会被php引擎忽略 变量的声明 其中双引号中的变量可以被解析，单引号中的变量不能被解析 变量名对大小写敏感 变量名开头是字母或下划线 后面跟任意数量的数字、字母、下划线 变量名中间不能有空格 可变变量 &lt;?php $a = 'hello'; $$a = 'world'; //此时$a的值hello就相当于$$a的键 echo &quot;$a $hello&quot;; //输出hello world ?&gt; 引用 &lt;?php $a = 123; $b = $a; $a = 456; //此时$a为456,$b为123 $c = &amp;$b; $b =
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%9F%BA%E7%A1%80/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
 
                 
 
-    
-    
-    <nav class="pagination" role="pagination">
-        
-            <i class="fa fa-chevron-left"></i>
-        
-
-        <span>&nbsp;1 / 2&nbsp;</span>
-        
-        
-            <a href="http://wyb0.com/topics/php/page/2/"><i class="fa fa-chevron-right"></i></a>
-        
-    </nav>
+                
 
 
             </div>
@@ -647,29 +633,31 @@
 
 
     <h2 class="asidetitle">Categories</h2>
-    <ul style="margin-left:10px;left:10px;">
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(7)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(18)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(22)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(15)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(52)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(15)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(32)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(59)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(30)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(8)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/wireless" title="wireless">wireless(1)</a></li>
-        
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/xml" title="xml">xml(1)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
         
     </ul>
 
