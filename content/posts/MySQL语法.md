@@ -3,8 +3,8 @@ date = "2016-06-02T11:19:05+08:00"
 description = ""
 draft = false
 tags = ["php", "mysql"]
-title = "PHP之MySQL语法"
-topics = ["PHP"]
+title = "MySQL语法"
+topics = ["MySQL"]
 
 +++
 
