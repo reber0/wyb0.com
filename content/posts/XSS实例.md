@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["xss"]
 title = "XSS实例"
-topics = ["Pentest","XSS"]
+topics = ["Pentest"]
 
 +++
 

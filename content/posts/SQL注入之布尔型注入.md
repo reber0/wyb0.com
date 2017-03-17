@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["注入"]
 title = "SQL注入之布尔型注入"
-topics = ["Pentest","SQL Injection"]
+topics = ["Pentest"]
 
 +++
 

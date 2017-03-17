@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["注入"]
 title = "SQL注入之判断数据库类型"
-topics = ["Pentest","SQL Injection"]
+topics = ["Pentest"]
 
 +++
 

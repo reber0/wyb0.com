@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["xss"]
 title = "XSS漏洞挖掘与利用"
-topics = ["Pentest","XSS"]
+topics = ["Pentest"]
 
 +++
 

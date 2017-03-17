@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["ssrf"]
 title = "SSRF"
-topics = ["Pentest","SSRF"]
+topics = ["Pentest"]
 
 +++
 
