@@ -6,10 +6,9 @@
     <h2 class="asidetitle">{{ .Site.Params.Strings.Categories }}</h2>
     <ul style="margin-left:10px;left:10px;">
         {{ range $name, $items := .Site.Taxonomies.topics }}
-            <li style="list-style-type:none;float:left;width:50%;"><a href="{{ $.Site.BaseURL }}/topics/{{ $name | urlize | lower }}" title="{{ $name }}">{{ $name }}<sup>{{ len $items }}</sup></a></li>
+            <li style="list-style-type:none;"><a href="{{ $.Site.BaseURL }}/topics/{{ $name | urlize | lower }}" title="{{ $name }}">{{ $name }}({{ len $items }})</a></li>
         {{ end }}
     </ul>
-    <div style="clear:both;"></div>
 {{ end }}
 {{ end }}
 </div>
