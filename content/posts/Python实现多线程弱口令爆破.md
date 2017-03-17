@@ -2,7 +2,7 @@
 date = "2016-08-26T17:53:51+08:00"
 description = ""
 draft = false
-tags = ["python", "ssh", "ftp", "mysql", "爆破", "python实现"]
+tags = ["python", "爆破"]
 title = "Python实现多线程弱口令爆破"
 topics = ["Python"]
 

@@ -2,7 +2,7 @@
 date = "2016-06-18T20:39:50+08:00"
 description = ""
 draft = false
-tags = ["iis","asp"]
+tags = ["windows", "server"]
 title = "Windows2003下搭建IIS+asp"
 topics = ["Server"]
 

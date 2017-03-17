@@ -2,7 +2,7 @@
 date = "2016-12-27T11:49:38+08:00"
 description = "对cookie的增、删、改方法进行封装"
 draft = false
-tags = ["javascript", "cookie"]
+tags = ["javascript"]
 title = "[转]JS操作cookie方法的封装"
 topics = ["JavaScript"]
 

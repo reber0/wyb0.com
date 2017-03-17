@@ -2,7 +2,7 @@
 date = "2017-03-10T10:34:40+08:00"
 description = ""
 draft = false
-tags = ["Shadowsocks", "服务"]
+tags = ["Server"]
 title = "在vps上搭建Shadowsocks"
 topics = ["Linux"]
 

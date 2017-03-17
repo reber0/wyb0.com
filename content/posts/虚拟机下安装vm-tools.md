@@ -2,7 +2,7 @@
 date = "2016-07-20T08:30:53+08:00"
 description = ""
 draft = false
-tags = ["虚拟机","vm-tools"]
+tags = ["虚拟机"]
 title = "虚拟机下安装vm-tools"
 topics = ["Miscellanea"]
 

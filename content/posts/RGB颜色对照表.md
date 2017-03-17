@@ -2,7 +2,7 @@
 date = "2016-06-04T20:03:10+08:00"
 description = ""
 draft = false
-tags = ["颜色"]
+tags = ["miscellanea"]
 title = "RGB颜色对照表"
 topics = ["Miscellanea"]
 

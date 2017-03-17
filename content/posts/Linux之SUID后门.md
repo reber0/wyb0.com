@@ -2,7 +2,7 @@
 date = "2016-04-18T20:03:07+08:00"
 description = ""
 draft = false
-tags = ["后门", "权限"]
+tags = ["pentest"]
 title = "Linux之USID后门"
 topics = ["Linux"]
 

@@ -2,7 +2,7 @@
 date = "2016-04-19T10:03:07+08:00"
 description = ""
 draft = false
-tags = ["基础命令"]
+tags = ["linux"]
 title = "Linux之基础命令"
 topics = ["Linux"]
 

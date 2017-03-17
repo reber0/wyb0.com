@@ -2,7 +2,7 @@
 date = "2016-07-13T09:22:39+08:00"
 description = ""
 draft = false
-tags = ["wireless","软件"]
+tags = ["wireless"]
 title = "无线下ettercap做中间人攻击"
 topics = ["Pentest"]
 

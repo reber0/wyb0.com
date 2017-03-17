@@ -2,7 +2,7 @@
 date = "2016-06-17T23:08:05+08:00"
 description = ""
 draft = false
-tags = ["linux","tomcat","mysql","jsp"]
+tags = ["linux","server"]
 title = "Linux下搭建Tomcat+MySQL+JSP"
 topics = ["Server"]
 

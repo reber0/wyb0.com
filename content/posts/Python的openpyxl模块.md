@@ -2,7 +2,7 @@
 date = "2016-11-25T17:44:23+08:00"
 description = "python中openpyxl模块的使用,可以用来操作excel文件"
 draft = false
-tags = ["python", "openpyxl", "python模块"]
+tags = ["python", "python模块"]
 title = "Python的openpyxl模块"
 topics = ["Python"]
 

@@ -2,7 +2,7 @@
 date = "2016-04-15T21:03:07+08:00"
 description = ""
 draft = false
-tags = ["vim","软件"]
+tags = ["linux"]
 title = "Linux之vim"
 topics = ["Linux"]
 

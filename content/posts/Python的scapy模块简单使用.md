@@ -2,7 +2,7 @@
 date = "2016-08-11T23:26:39+08:00"
 description = ""
 draft = false
-tags = ["scapy", "python", "python模块"]
+tags = ["python", "python模块"]
 title = "Python的scapy模块简单使用"
 topics = ["Python"]
 

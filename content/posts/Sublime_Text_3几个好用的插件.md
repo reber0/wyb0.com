@@ -2,7 +2,7 @@
 date = "2016-09-02T23:07:44+08:00"
 description = ""
 draft = false
-tags = ["sqblime text", "插件"]
+tags = ["软件"]
 title = "Sublime Text 3几个好用的插件"
 topics = ["Miscellanea"]
 

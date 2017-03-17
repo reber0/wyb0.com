@@ -2,7 +2,7 @@
 date = "2017-01-16T20:18:05+08:00"
 description = ""
 draft = false
-tags = ["gitlab"]
+tags = ["git"]
 title = "Ubuntu下部署Gitlab"
 topics = ["Git"]
 

@@ -2,7 +2,7 @@
 date = "2016-05-24T08:31:09+08:00"
 description = ""
 draft = false
-tags = ["php", "上传", "下载"]
+tags = ["php"]
 title = "PHP之上传与下载"
 topics = ["PHP"]
 

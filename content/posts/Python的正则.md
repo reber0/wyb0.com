@@ -2,7 +2,7 @@
 date = "2016-02-05T11:38:23+08:00"
 description = ""
 draft = false
-tags = ["python", "正则"]
+tags = ["python"]
 title = "Python的正则"
 topics = ["Python"]
 

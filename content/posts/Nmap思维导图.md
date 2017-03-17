@@ -2,7 +2,7 @@
 date = "2016-05-10T20:24:07+08:00"
 description = ""
 draft = false
-tags = ["nmap","软件"]
+tags = ["nmap"]
 title = "Nmap思维导图"
 topics = ["Pentest"]
 

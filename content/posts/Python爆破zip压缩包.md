@@ -2,7 +2,7 @@
 date = "2016-09-20T14:50:59+08:00"
 description = ""
 draft = false
-tags = ["python", "python实现"]
+tags = ["python", "爆破"]
 title = "Python爆破zip压缩包"
 topics = ["Python"]
 

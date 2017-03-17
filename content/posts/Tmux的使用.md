@@ -2,7 +2,7 @@
 date = "2016-09-10T16:24:18+08:00"
 description = ""
 draft = false
-tags = ["tmux"]
+tags = ["软件"]
 title = "Tmux的使用"
 topics = ["Miscellanea"]
 

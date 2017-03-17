@@ -2,7 +2,7 @@
 date = "2016-04-19T21:30:07+08:00"
 description = ""
 draft = false
-tags = ["tar","压缩"]
+tags = ["linux"]
 title = "Linux之tar"
 topics = ["Linux"]
 

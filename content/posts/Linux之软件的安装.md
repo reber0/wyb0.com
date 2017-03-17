@@ -2,7 +2,7 @@
 date = "2016-04-19T19:07:07+08:00"
 description = ""
 draft = false
-tags = ["软件安装"]
+tags = ["linux"]
 title = "Linux之软件的安装"
 topics = ["Linux"]
 

@@ -2,7 +2,7 @@
 date = "2016-05-31T23:35:06+08:00"
 description = ""
 draft = false
-tags = ["win","ubuntu","分区"]
+tags = ["windows","linux"]
 title = "win/ubuntu双系统分区设置"
 topics = ["Miscellanea"]
 

@@ -2,7 +2,7 @@
 date = "2016-09-01T08:46:03+08:00"
 description = ""
 draft = false
-tags = ["php", "config"]
+tags = ["php"]
 title = "PHP安全配置"
 topics = ["Config"]
 

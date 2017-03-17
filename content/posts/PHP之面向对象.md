@@ -2,7 +2,7 @@
 date = "2016-05-20T16:07:55+08:00"
 description = ""
 draft = false
-tags = ["php", "面向对象"]
+tags = ["php"]
 title = "PHP之面向对象"
 topics = ["PHP"]
 

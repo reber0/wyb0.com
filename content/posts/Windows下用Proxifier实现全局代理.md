@@ -2,7 +2,7 @@
 date = "2016-07-24T21:33:59+08:00"
 description = ""
 draft = false
-tags = ["代理", "proxifier"]
+tags = ["软件"]
 title = "Windows下用Proxifier实现全局代理"
 topics = ["Miscellanea"]
 

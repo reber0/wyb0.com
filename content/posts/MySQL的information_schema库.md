@@ -2,7 +2,7 @@
 date = "2016-06-19T20:18:48+08:00"
 description = ""
 draft = false
-tags = ["mysql","information_schema"]
+tags = ["mysql"]
 title = "MySQL的information_schema库"
 topics = ["Pentest"]
 

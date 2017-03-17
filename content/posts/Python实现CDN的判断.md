@@ -2,7 +2,7 @@
 date = "2016-12-23T21:10:05+08:00"
 description = "利用python来识别网站是否使用了cdn以及使用了那种cdn"
 draft = false
-tags = ["python", "cdn", "python实现"]
+tags = ["python"]
 title = "Python实现CDN的判断"
 topics = ["Python", "Pentest"]
 

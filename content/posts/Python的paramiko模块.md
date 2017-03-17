@@ -2,7 +2,7 @@
 date = "2016-07-14T15:24:11+08:00"
 description = ""
 draft = false
-tags = ["python","paramiko", "python模块"]
+tags = ["python", "python模块"]
 title = "Python的paramiko模块"
 topics = ["Python"]
 

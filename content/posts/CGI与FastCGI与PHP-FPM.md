@@ -2,7 +2,7 @@
 date = "2016-08-02T10:45:14+08:00"
 description = ""
 draft = false
-tags = ["cgi", "fastcgi", "php-fpm"]
+tags = ["cgi"]
 title = "CGI与FastCGI与PHP-FPM"
 topics = ["Miscellanea"]
 

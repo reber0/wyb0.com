@@ -2,7 +2,7 @@
 date = "2016-09-08T20:38:45+08:00"
 description = ""
 draft = false
-tags = ["poc", "框架"]
+tags = ["poc"]
 title = "POC框架Pocsuite"
 topics = ["Python"]
 

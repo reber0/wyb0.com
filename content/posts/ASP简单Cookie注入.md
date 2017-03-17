@@ -2,7 +2,7 @@
 date = "2015-12-04T19:42:19+08:00"
 description = ""
 draft = false
-tags = ["asp", "cookie", "注入"]
+tags = ["注入"]
 title = "ASP简单Cookie注入"
 topics = ["Pentest"]
 

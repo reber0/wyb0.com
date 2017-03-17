@@ -2,7 +2,7 @@
 date = "2016-06-28T11:19:11+08:00"
 description = ""
 draft = false
-tags = ["sqlmapapi","sqlmap"]
+tags = ["sqlmap"]
 title = "sqlmapapi的简单使用"
 topics = ["Python","Pentest"]
 

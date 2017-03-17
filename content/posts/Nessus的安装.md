@@ -2,7 +2,7 @@
 date = "2016-05-11T17:09:10+08:00"
 description = ""
 draft = false
-tags = ["nessus","软件"]
+tags = ["nessus"]
 title = "Nessus的安装"
 topics = ["Linux", "Pentest"]
 

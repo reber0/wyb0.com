@@ -2,7 +2,7 @@
 date = "2016-06-04T20:26:21+08:00"
 description = ""
 draft = false
-tags = ["软件","开机自启"]
+tags = ["linux"]
 title = "conky配置"
 topics = ["Linux"]
 

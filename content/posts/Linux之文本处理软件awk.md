@@ -2,7 +2,7 @@
 date = "2016-04-20T15:54:07+08:00"
 description = ""
 draft = false
-tags = ["文本处理","awk"]
+tags = ["linux"]
 title = "Linux之文本处理软件awk"
 topics = ["Linux"]
 

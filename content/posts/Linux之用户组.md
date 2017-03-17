@@ -2,7 +2,7 @@
 date = "2016-04-17T20:48:07+08:00"
 description = ""
 draft = false
-tags = ["用户组"]
+tags = ["linux"]
 title = "Linux之用户组"
 topics = ["Linux"]
 

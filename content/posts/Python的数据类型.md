@@ -2,7 +2,7 @@
 date = "2016-01-19T13:47:17+08:00"
 description = ""
 draft = false
-tags = ["python", "list", "tuple", "dict", "set", "json"]
+tags = ["python"]
 title = "Python的数据类型"
 topics = ["Python"]
 

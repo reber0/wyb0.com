@@ -2,7 +2,7 @@
 date = "2016-06-02T13:21:49+08:00"
 description = ""
 draft = false
-tags = ["mysql", "php", "函数"]
+tags = ["mysql", "php"]
 title = "PHP之MySQL常用函数"
 topics = ["PHP"]
 

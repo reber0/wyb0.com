@@ -2,7 +2,7 @@
 date = "2016-07-14T09:44:06+08:00"
 description = ""
 draft = false
-tags = ["python","cmd", "python模块"]
+tags = ["python", "python模块"]
 title = "Python的cmd模块"
 topics = ["Python"]
 
