@@ -7,8 +7,133 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Tue, 28 Jun 2016 11:19:11 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Sep 2016 17:37:33 +0800</lastBuildDate>
     <atom:link href="http://wyb0.com/tags/sqlmap/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>SqlmapApi常用方法封装</title>
+      <link>http://wyb0.com/posts/SqlmapApi%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%B0%81%E8%A3%85/</link>
+      <pubDate>Wed, 21 Sep 2016 17:37:33 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/SqlmapApi%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E5%B0%81%E8%A3%85/</guid>
+      <description>
+
+&lt;h2 id=&#34;代码如下:70bf25f9fe7a9487dff7f73d72c8f2fd&#34;&gt;代码如下&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import threading
+import requests
+import json
+from time import sleep
+
+class Sqli(threading.Thread):
+    &amp;quot;&amp;quot;&amp;quot;docstring for AutoSqli&amp;quot;&amp;quot;&amp;quot;
+    def __init__(self, server, target, data=&#39;&#39;, referer=&#39;&#39;, cookie=&#39;&#39;):
+        threading.Thread.__init__(self)
+        self.server = server[0:-1] if server[-1]==&#39;/&#39; else server
+        self.target = target
+        self.data = data
+        self.referer = referer
+        self.cookie = cookie
+        self.taskid = &#39;&#39;
+        self.data
+
+    def new_task(self):
+        url = &amp;quot;{}/task/new&amp;quot;.format(self.server)
+        self.taskid = json.loads(requests.get(url).text)[&#39;taskid&#39;]
+        if len(self.taskid)&amp;gt;0:
+            print &amp;quot;Create new task,taskid is: %s&amp;quot; % self.taskid
+            return True
+        return False
+
+    def set_option(self):
+        headers = {&#39;Content-Type&#39;: &#39;application/json&#39;}
+        option = {&amp;quot;options&amp;quot;: {
+                    &amp;quot;smart&amp;quot;: True,
+                    }
+                 }
+        url = &amp;quot;{}/option/{}/set&amp;quot;.format(self.server,self.taskid)
+        resp = requests.post(url, data=json.dumps(option), headers=headers)
+        return json.loads(resp.text)[&#39;success&#39;]
+
+    def start_scan(self):
+        headers = {&#39;Content-Type&#39;: &#39;application/json&#39;}
+        payload = {
+            &#39;url&#39;: self.target,
+            &#39;data&#39;: self.data,
+            &#39;cookie&#39;: self.cookie,
+            &#39;referer&#39;: self.referer
+        }
+        url = &amp;quot;{}/scan/{}/start&amp;quot;.format(self.server,self.taskid)
+        t = json.loads(requests.post(url,data=json.dumps(payload),headers=headers).text)
+        if len(str(t[&#39;engineid&#39;])) &amp;gt; 0 and t[&#39;success&#39;]:
+            print &amp;quot;[%s] Start scan&amp;quot; % self.taskid
+            return True
+        return False
+
+    def get_status(self):
+        url = &amp;quot;{}/scan/{}/status&amp;quot;.format(self.server,self.taskid)
+        status = json.loads(requests.get(url).text)[&#39;status&#39;]
+        if status == &#39;running&#39;:
+            return &#39;running&#39;
+        elif status == &#39;terminated&#39;:
+            return &#39;terminated&#39;
+        else:
+            return &#39;error&#39;
+
+    def get_data(self):
+        url = &amp;quot;{}/scan/{}/data&amp;quot;.format(self.server,self.taskid)
+        data = json.loads(requests.get(url).text)[&#39;data&#39;]
+        if len(data) == 0:
+            print &#39;[] not injection:\t&#39; + self.target
+        else:
+            print &#39;=======&amp;gt; injection:\t&#39; + self.target
+            self.data = data
+
+    def delete_task(self):
+        url = &amp;quot;{}/task/{}/delete&amp;quot;.format(self.server,self.taskid)
+        if json.loads(requests.get(url).text)[&#39;success&#39;]:
+            print &amp;quot;[%s] Delete task&amp;quot; % self.taskid
+            return True
+        return False
+
+    def write_to_file(self,msg):
+        with open(&#39;result.txt&#39;,&#39;a+&#39;) as f:
+            f.write(json.dumps(msg)+&#39;\n\n&#39;)
+
+    def run(self):
+        try:
+            if not self.new_task():
+                return False
+            self.set_option()
+            if not self.start_scan():
+                return False
+            while True:
+                if self.get_status() == &#39;running&#39;:
+                    sleep(10)
+                elif self.get_status() == &#39;terminated&#39;:
+                    break
+                else:
+                    break
+            self.get_data()
+            self.write_to_file(self.data)
+            self.delete_task()
+        except Exception, e:
+            print e
+
+if __name__ == &#39;__main__&#39;:
+    server = &#39;http://127.0.0.1:8775&#39;
+    target = &#39;http://192.168.188.134/sqli/Less-1/?id=1&#39;
+    sqli = Sqli(server, target)
+    sqli.start()
+    sqli.join()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>sqlmapapi的简单使用</title>

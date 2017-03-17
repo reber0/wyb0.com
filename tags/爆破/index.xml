@@ -7,8 +7,88 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Mon, 12 Sep 2016 21:31:37 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Sep 2016 14:50:59 +0800</lastBuildDate>
     <atom:link href="http://wyb0.com/tags/%E7%88%86%E7%A0%B4/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Python爆破zip压缩包</title>
+      <link>http://wyb0.com/posts/Python%E7%88%86%E7%A0%B4zip%E5%8E%8B%E7%BC%A9%E5%8C%85/</link>
+      <pubDate>Tue, 20 Sep 2016 14:50:59 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Python%E7%88%86%E7%A0%B4zip%E5%8E%8B%E7%BC%A9%E5%8C%85/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-代码:b937e6266634cef75fcb51fa109b76e7&#34;&gt;0x00 代码&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;多线程爆破加密的zip压缩包&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+import optparse
+import zipfile
+import threading
+import Queue
+
+queue = Queue.Queue()
+lock = threading.Lock()
+result = &#39;&#39;
+
+def load_pwd(filename):
+    for line in open(filename,&#39;r&#39;):
+        if line:
+            queue.put(line.strip())
+
+def bruter(zipname,queue):
+    global result
+    zFile = zipfile.ZipFile(zipname)
+    while not queue.empty():
+        password = queue.get()
+        try:
+            zFile.extractall(pwd=password) # 解压
+            lock.acquire()
+            print &amp;quot;[Ok] password is: %s&amp;quot; % password
+            lock.release()
+            result = password
+        except:
+            lock.acquire()
+            print &amp;quot;[Error] password not is: %s&amp;quot; % password
+            lock.release()
+        queue.task_done()
+
+def main():
+    parser = optparse.OptionParser()
+    parser.add_option(&#39;-f&#39;, &#39;--file&#39;, dest=&#39;zipfile&#39;,
+        type=&#39;string&#39;, help=&#39;Target zip file.&#39;)
+    parser.add_option(&#39;-p&#39;, &#39;--pfile&#39;, dest=&#39;pwdfile&#39;,default=&#39;pass.txt&#39;,
+        type=&#39;string&#39;, help=&#39;Password file.&#39;)
+    parser.add_option(&#39;-t&#39;, &#39;--thread_num&#39;, dest=&#39;thread_num&#39;,default=60,
+        type=&#39;int&#39;, help=&#39;Thread number.&#39;)
+
+    (options, args) = parser.parse_args()
+
+    if options.zipfile and options.pwdfile:
+        load_pwd(options.pwdfile)
+    else:
+        parser.print_help()
+        sys.exit(0)
+
+    threads = []
+    for x in range(options.thread_num):
+        t = threading.Thread(target=bruter,args=(options.zipfile,queue,))
+        t.setDaemon(True)
+        t.start()
+    queue.join()
+    print &amp;quot;result is: %s&amp;quot; % result
+
+if __name__ == &#39;__main__&#39;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>Python爆破二级域名</title>
