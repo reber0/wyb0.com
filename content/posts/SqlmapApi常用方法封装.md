@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["sqlmap"]
 title = "SqlmapApi常用方法封装"
-topics = ["Python","Pentest"]
+topics = ["Pentest", "Pentest"]
 
 +++
 

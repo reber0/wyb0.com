@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["linux"]
 title = "Linux下SSH连接"
-topics = ["Pentest"]
+topics = ["Linux"]
 
 +++
 

@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["git", "windows"]
 title = "Windows下用github搭建博客"
-topics = ["Git"]
+topics = ["Windows", "Git"]
 
 +++
 

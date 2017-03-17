@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["软件"]
 title = "Tmux的使用"
-topics = ["Miscellanea"]
+topics = ["Linux"]
 
 +++
 

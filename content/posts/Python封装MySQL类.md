@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["python", "mysql"]
 title = "Python封装MySQL类"
-topics = ["Python"]
+topics = ["Python", "MySQL"]
 
 +++
 

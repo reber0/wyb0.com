@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["软件"]
 title = "Sublime Text 3几个好用的插件"
-topics = ["Miscellanea"]
+topics = ["Other"]
 
 +++
 

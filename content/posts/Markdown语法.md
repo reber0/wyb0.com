@@ -2,7 +2,7 @@
 title = "Markdown简单语法"
 description = ""
 tags = ["markdown"]
-topics = ["Git"]
+topics = ["Other"]
 date = "2016-04-12T01:01:01+08:00"
 draft = false
 +++

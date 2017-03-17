@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["miscellanea"]
 title = "RGB颜色对照表"
-topics = ["Miscellanea"]
+topics = ["Other"]
 
 +++
 

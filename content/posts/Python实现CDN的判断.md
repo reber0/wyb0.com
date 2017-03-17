@@ -4,7 +4,7 @@ description = "利用python来识别网站是否使用了cdn以及使用了那�
 draft = false
 tags = ["python"]
 title = "Python实现CDN的判断"
-topics = ["Python"]
+topics = ["Python", "Pentest"]
 
 +++
 

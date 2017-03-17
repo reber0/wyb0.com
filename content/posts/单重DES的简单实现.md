@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["des", "C语言"]
 title = "单重DES的简单实现"
-topics = ["Miscellanea"]
+topics = ["Other"]
 
 +++
 

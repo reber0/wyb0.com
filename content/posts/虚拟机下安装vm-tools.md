@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["虚拟机"]
 title = "虚拟机下安装vm-tools"
-topics = ["Miscellanea"]
+topics = ["Other"]
 
 +++
 

@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["软件"]
 title = "Windows下用Proxifier实现全局代理"
-topics = ["Miscellanea"]
+topics = ["Windows"]
 
 +++
 

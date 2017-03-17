@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["linux"]
 title = "Ubuntu下使用ShadowSocks"
-topics = ["Miscellanea"]
+topics = ["Linux"]
 
 +++
 

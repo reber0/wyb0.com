@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["poc"]
 title = "POC框架Pocsuite"
-topics = ["Python"]
+topics = ["Python", "Pentest"]
 
 +++
 

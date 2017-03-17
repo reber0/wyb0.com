@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["windows","linux"]
 title = "win/ubuntu双系统分区设置"
-topics = ["Miscellanea"]
+topics = ["Windows", "Linux"]
 
 +++
 

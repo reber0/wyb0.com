@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["python", "爆破"]
 title = "Python爆破zip压缩包"
-topics = ["Python"]
+topics = ["Python", "Pentest"]
 
 +++
 

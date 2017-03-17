@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["pentest"]
 title = "PHP反序列化漏洞"
-topics = ["Pentest", "PHP"]
+topics = ["Pentest"]
 
 +++
 

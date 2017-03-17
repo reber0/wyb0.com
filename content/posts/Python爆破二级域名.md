@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["python", "爆破"]
 title = "Python爆破二级域名"
-topics = ["Python"]
+topics = ["Python", "Pentest"]
 
 +++
 
