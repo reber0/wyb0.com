@@ -84,6 +84,59 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/">PHP之目录与文件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-22</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        1.目录的操作 &lt;?php $path = &quot;/var/www/html/php/dir.php&quot;; echo dirname($path).&quot;&lt;br /&gt;&quot;; //返回上级路径 echo basename($path).&quot;&lt;br /&gt;&quot;; //返回文件名部分 print_r(pathinfo($path)); //返回包含path信息的数组 echo &quot;&lt;br /&gt;&lt;br /&gt;&quot;; //readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动 $path = &quot;D:/phpStudy/WWW/php&quot;; $dh = opendir($path); while (false !== ($filename=readdir($dh))) { echo $filename.&quot;&lt;br /&gt;&quot;; } rewinddir($dh); //指针复位 echo readdir($dh); closedir($dh); mkdir(&quot;./aaa&quot;);//创建文件夹aaa rmdir(&quot;./aaa&quot;);//删除文件夹aaa file_put_contents(&quot;aa.php&quot;, &quot;&quot;);//创建文件aa.php unlink(&quot;./aa.php&quot;);//删除文件aa.php ?&gt; 2.文件的读写 fopen(filename,mode)和fclose(filename,mode) 例子： &lt;?php $file = fopen(&quot;test.txt&quot;,&quot;r&quot;); $file = fopen(&quot;/home/test/test.txt&quot;,&quot;r&quot;); $file = fopen(&quot;/home/test/test.gif&quot;,&quot;wb&quot;); $file = fopen(&quot;http://www.example.com/&quot;,&quot;r&quot;); $file = fopen(&quot;ftp://user:password@example.com/test.txt&quot;,&quot;w&quot;); ?&gt; 读取内容 fread(h_file,length) //读取打开文件的length个字节，返回读取的字符串 fgets(h_file,length) //读取一行返回length个字节，不加length时默认1024个字节，失败返回false fgetc(h_file) //逐字读取 file_get_content()和file_put_content() file_get_content($filename)可以得到文件中的所有内容 file_put_content($filename, $str)可以将字符串覆盖写入文件中 file_put_content($filename, $str, FILE_APPEND)可以将字符串追加到文件中 filetype() filetype($filename)可以得到文件的类型 3.查看文件夹下的文件信息 &lt;?php $path = &quot;./&quot;; $filelist=array(&quot;filesystem.php&quot;);//要过滤掉的文件 //浏览指定目录下的文件，并使用表格输出 //path目录信息的过滤，判断path存在，并且是否是个目录 if(!file_exists($path) || !is_dir($path)){ die($path.&quot;目录无效！&quot;); } //2.
+    </p>
+
+    
+    <footer>
+        <a href="http://wyb0.com/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/">PHP之字符串</a></h2>
 
         
@@ -325,37 +378,25 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/config" title="config">config(1)</a></li>
-        
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/csrf" title="csrf">csrf(1)</a></li>
-        
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(7)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(18)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(14)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(15)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(53)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(52)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(14)</a></li>
-        
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/plan" title="plan">plan(1)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(15)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(32)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(8)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/sql-injection" title="sql-injection">sql-injection(6)</a></li>
-        
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ssrf" title="ssrf">ssrf(1)</a></li>
-        
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/wireless" title="wireless">wireless(1)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/xml" title="xml">xml(1)</a></li>
-        
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/xss" title="xss">xss(3)</a></li>
         
     </ul>
 
