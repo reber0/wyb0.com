@@ -8,7 +8,7 @@ topics = ["Python"]
 
 +++
 
-## Python异常处理
+### 0x00 Python异常处理
 > ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
