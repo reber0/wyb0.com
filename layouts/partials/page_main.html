@@ -2,7 +2,7 @@
 <div class="main">
     <div class="left">
         <div class="content">
-            {{ range first .Site.Params.Paginate .Data.Pages }}
+            {{ range ( .Paginate (where .Data.Pages "Type" "posts")).Pages }}
                 {{ .Render "summary"}}
             {{ end }}
 
