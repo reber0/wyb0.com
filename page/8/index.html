@@ -20,25 +20,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
   <!--<![endif]-->
 
-  <link rel="stylesheet" href="http://wyb0.com/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   
-  <link rel="shortcut icon" href="http://wyb0.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
 
   
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
 
   
-  <link rel="alternate" type="application/rss+xml" title="" href="http://wyb0.com/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="" href="/index.xml" />
 
   
-  <link rel="stylesheet" href="http://wyb0.com/css/monokai-sublime.css" type="text/css">
-  <script src="http://wyb0.com/js/highlight.min.js"></script>
+  <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+  <script src="/js/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <script src="http://wyb0.com/js/jquery.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
 
 </head>
 <body>
@@ -47,25 +47,25 @@
     
 <div class="head">
     <h1 class="logo" id="logo">
-        <a href="http://wyb0.com/"><img src='http://wyb0.com/img/logo.png' width='70px'></a>
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
         
             
                 <li>
-                    <a href="http://wyb0.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
             
                 </li>
         
             
                 <li>
-                    <a href="http://wyb0.com/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
             
                 </li>
         
             
                 <li>
-                    <a href="http://wyb0.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
             
                 </li>
         
@@ -82,13 +82,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/%E5%9C%A8vps%E4%B8%8A%E6%90%AD%E5%BB%BAShadowsocks/">在vps上搭建Shadowsocks</a></h2>
+        <h2><a href="http://wyb0.com/posts/iptables%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AEDMZ/">iptables简单配置DMZ</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-03-10</time>
+                <time>2016-07-05</time>
             </div>
 
             
@@ -109,7 +109,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">Server</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
                     
                 
                 
@@ -119,12 +119,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 Ubuntu 14.04.1 LTS 0x01 安装与配置 reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;,
+        要求 内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网 拓扑 个主机IP信息 内网网段为：192.168.1.0/24 DMZ区网段为：172.16.1.0/24 iptables的策略 新建iptables.sh,内容如下： #!/bin/bash iptables –F #清空此表中的规则 iptables –X #清空此表中的自定义规则 iptables –Z #清空此表中的计数器为0 iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP iptables -F -t nat iptables -X -t nat iptables -Z -t nat iptables -t nat -P PREROUTING ACCEPT iptables -t nat -P POSTROUTING ACCEPT iptables -t nat -P OUTPUT ACCEPT #添加必要的模块 modprobe ip_nat_ftp modprobe iptable_nat
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/%E5%9C%A8vps%E4%B8%8A%E6%90%AD%E5%BB%BAShadowsocks/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/iptables%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AEDMZ/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -135,115 +135,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/">301重定向</a></h2>
+        <h2><a href="http://wyb0.com/posts/Python%E7%AE%80%E5%8D%95%E8%A7%A3%E7%A0%81IP%E5%A4%B4/">Python简单解码IP头</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-02-07</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%87%8D%E5%AE%9A%E5%90%91">重定向</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 目的 由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2 0x01 开启rewrite模块 $ sudo a2enmod rewrite 0x02 根目录下新建.htaccess： Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名 0x03 修改配置文件 # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; 0x04 重启Apache $ sudo /etc/init.d/apache2 restart
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E9%83%A8%E7%BD%B2Gitlab/">Ubuntu下部署Gitlab</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-01-16</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/git">Git</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/git">git</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 前期准备 # 环境 Ubuntu 14.04 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client reber@ubuntu:~/Desktop$ sudo apt-get install git 0x01 安装 reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb 0x02 配置 reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb external_url 'http://192.168.188.160:80' ...... gitlab_rails['time_zone'] = 'Asia/Shanghai' gitlab_rails['gitlab_email_from'] = 'xxxxxx@163.com' ...... gitlab_rails['smtp_enable'] = true gitlab_rails['smtp_address'] = &quot;smtp.163.com&quot; gitlab_rails['smtp_port'] = 25 gitlab_rails['smtp_user_name'] = &quot;xxxxxx@163.com&quot; gitlab_rails['smtp_password'] = &quot;111111&quot; # 客户端授权密码 gitlab_rails['smtp_domain'] = &quot;163.com&quot; gitlab_rails['smtp_authentication'] = &quot;login&quot; gitlab_rails['smtp_enable_starttls_auto'] = true ......
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E9%83%A8%E7%BD%B2Gitlab/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%E5%88%9D%E8%AF%86Tornado/">初识Tornado</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-01-03</time>
+                <time>2016-07-03</time>
             </div>
 
             
@@ -264,116 +162,6 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/tornado">tornado</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 简介 Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django, 但Tornado更注重速度,能够处理海量的同时发生的流量。 0x01 示例 main.py代码如下： #!/usr/bin/env python # -*- coding: utf-8 -*- import tornado.ioloop import tornado.web class IndexHandler(tornado.web.RequestHandler): def get(self): #访问根时触发这个函数 name = self.get_argument('name','wyb') self.write('Hello,' + name) self.write('&lt;br /&gt;&lt;a href=&quot;/login&quot;&gt;login&lt;/a&gt;') class MyLoginHandler(tornado.web.RequestHandler): def get(self): self.render('login.html') #若用户请求/login页面则将login.html发送给客户端，客户会看的一个登陆表单 def post(self): #当用户点击提交按钮是触发这个函数 name = self.get_argument('name') #接收表单的name password = self.get_argument('password') #接收表单的password self.write(&quot;you name is:%s\nyou password is:%s&quot; % (name,password)) def get_app(): handlers = [ (r&quot;/&quot;,IndexHandler), #代表请求/的都让IndexHandler处理 (r&quot;/login&quot;,MyLoginHandler), #表示请求/login页面的让MyLoginHandler处理 ] app = tornado.web.Application(handlers=handlers)
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/%E5%88%9D%E8%AF%86Tornado/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%5B%E8%BD%AC%5DJS%E6%93%8D%E4%BD%9Ccookie%E6%96%B9%E6%B3%95%E7%9A%84%E5%B0%81%E8%A3%85/">[转]JS操作cookie方法的封装</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-12-27</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/javascript">JavaScript</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/javascript">javascript</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        原文链接：http://www.wyzu.cn/2015/0123/107167.html 0x00 实现功能 添加cookie 获取所有cookie 根据名字获取单个cookie的值 移除所有cookie 根据名字移除单个cookie 0x01 封装cookie.js源码 /* * 名称和值传送时必须是经过RUL编码的 * cookie绑定在指定的域名下，非本域无法共享cookie，但是可以是在主站共享cookie给子站 * cookie的名称不分大小写；同时建议将cookie URL编码 * 建议针对cookie设置expires、domain、 path；每个cookie小于4KB **/ (function(global){ function getCookiesObj() { //获得cookie对象 var cookies = {}; if (document.cookie) { var objs = document.cookie.split('; '); for (var i in objs) { var index = objs[i].indexOf('='), name = objs[i].substr(0,index), value = objs[i].substr(index+1,objs[i].length); cookies[name] = value; } } return cookies; } function set(sName,sValue,Opts) { //设置cookie // Opts expires,path,domain,secure
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/%5B%E8%BD%AC%5DJS%E6%93%8D%E4%BD%9Ccookie%E6%96%B9%E6%B3%95%E7%9A%84%E5%B0%81%E8%A3%85/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Python%E5%AE%9E%E7%8E%B0CDN%E7%9A%84%E5%88%A4%E6%96%AD/">Python实现CDN的判断</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-12-23</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
                         <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
                     
                 
@@ -384,12 +172,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是CDN CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。 0x01 判断方法 可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息 0x02 代码 首先安装dnspython这个第三方模块：pip install dnspython #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.netloc # print url rsv = dns.resolver.Resolver() # rsv.nameservers =
+        解码IP头 Windows上运行时要以管理员身份运行 代码可以解码IP头统计通信信息并保存到文本，同时统计数量 #!/usr/bin/env python #-*- coding:utf-8 -*- import socket import os import sys import time import struct from ctypes import * host = &quot;10.22.114.114&quot; tcp_num = 0 udp_num = 0 icmp_num = 0 class IP(Structure): _fields_ = [ (&quot;ihl&quot;, c_ubyte,4), (&quot;version&quot;, c_ubyte,4), (&quot;tos&quot;, c_ubyte), (&quot;len&quot;, c_ushort), (&quot;id&quot;, c_ushort), (&quot;offset&quot;, c_ushort), (&quot;ttl&quot;, c_ubyte), (&quot;protocol_num&quot;,c_ubyte), (&quot;sum&quot;, c_ushort), (&quot;src&quot;, c_ulong), (&quot;dst&quot;, c_ulong) ] def __new__ (self,socket_buffer=None): return self.from_buffer_copy(socket_buffer) def __init__ (self,socket_buffer=None): self.protocol_map
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/Python%E5%AE%9E%E7%8E%B0CDN%E7%9A%84%E5%88%A4%E6%96%AD/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Python%E7%AE%80%E5%8D%95%E8%A7%A3%E7%A0%81IP%E5%A4%B4/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -400,13 +188,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84openpyxl%E6%A8%A1%E5%9D%97/">Python的openpyxl模块</a></h2>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84requests%E6%A8%A1%E5%9D%97/">Python的requests模块</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-11-25</time>
+                <time>2016-07-02</time>
             </div>
 
             
@@ -439,12 +227,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 openpyxl模块 这个模块可以让你读写excel文件 0x01 读取数据 代码如下： #!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename='aa.xlsx') sheetnames = wb.get_sheet_names() #获得所有表名 print u&quot;存在表：%s&quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&quot;第一张表表名为：%s&quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &quot;表%s有%d行%d列&quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&quot;取部分数据：&quot; print ws['A1'].value,ws['B1'].value print ws['A2'].value,ws['B2'].value print ws.cell(row=1, column=2).value print u&quot;\n输出表%s的所有数据：&quot; % ws.title for x in range(1,rows+1): for
+        无参数的get请求 import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串 有参数的get请求 import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } payload = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=payload,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie POST请求 import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.10.10.10:8080/Lab2.0/student.action' payload = { 'userid':'1315935xxx', 'password':'xxxxxxx', 'quan':'Student', } header = {
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/Python%E7%9A%84openpyxl%E6%A8%A1%E5%9D%97/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Python%E7%9A%84requests%E6%A8%A1%E5%9D%97/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -455,13 +243,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E4%B8%8EPHP/">AJAX与PHP</a></h2>
+        <h2><a href="http://wyb0.com/posts/SSRF/">SSRF</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-11-16</time>
+                <time>2016-06-30</time>
             </div>
 
             
@@ -472,7 +260,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
                     
                 
                 
@@ -482,7 +270,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ssrf">ssrf</a>
                     
                 
                 
@@ -492,12 +280,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 AJAX与PHP ajax.html代码如下： &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;meta charset=&quot;utf-8&quot;&gt; &lt;script&gt; function showHint(str) { var xmlhttp; if (str.length==0) { document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;; return; } if (window.XMLHttpRequest) { // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码 xmlhttp=new XMLHttpRequest(); //创建对象 } else { // IE6, IE5 浏览器执行代码 xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); } xmlhttp.onreadystatechange=function() { if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;./ajax.php?q=&quot;+str,true); xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;h3&gt;在输入框中尝试输入字母 a:&lt;/h3&gt; &lt;form action=&quot;&quot;&gt; 输入姓名: &lt;input type=&quot;text&quot; id=&quot;txt1&quot; onkeyup=&quot;showHint(this.value)&quot; /&gt; &lt;/form&gt; &lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; &lt;/body&gt; &lt;/html&gt; 上面的代码会完成以下的东西： 1.
+        0x00 什么是SSRF &nbsp;&nbsp;&nbsp;&nbsp;SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，它将一个可以发起网络请求的服务当作跳板来攻击其他服务，SSRF的攻击目标一般是内网。 &nbsp;&nbsp;&nbsp;&nbsp;当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。 0x01 SSRF的危害 可以扫描内部网络 可以构造数据攻击内部主机 0x02 漏洞挖掘 其实只要能对外发起网络请求就有可能存在SSRF漏洞。 1. 从WEB功能上寻找 通过URL分享内容 文件处理、编码处理、转码等服务 在线翻译 通过URL地址加载与下载图片 图片、文章的收藏 设置邮件接收服务器 2. 从URL关键字寻找 share、wap、url、link、src、source、target、u、3g、 display、sourceURl、imageURL、domain... 0x03 漏洞验证 http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png 1. 右键在新窗口打开图片，图片地址为http://www.baidu.com/img/bd_logo1.png， 说明不存在SSRF漏洞。 2. firebug看网络连接信息，若没有http://www.baidu.com/img/bd_logo1.png 这个图片请求，则证明图片是aa.com服务端发起的请求，则可能存在SSRF漏洞。 0x04 绕过过滤 有时漏洞利用时会遇到IP限制，可用如下方法绕过： * 使用@：http://A.com@10.10.10.10 = 10.10.10.10 * IP地址转换成十进制、八进制：127.0.0.1 = 2130706433 * 使用短地址：http://10.10.116.11 = http://t.cn/RwbLKDx * 端口绕过：ip后面加一个端口 * xip.io：10.0.0.1.xip.io = 10.0.0.1 www.10.0.0.1.xip.io = 10.0.0.1 mysite.10.0.0.1.xip.io = 10.0.0.1 foo.bar.10.0.0.1.xip.io = 10.0.0.1 * 通过js跳转 0x05 通用的SSRF实例 * weblogin配置不当，天生ssrf漏洞
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/AJAX%E4%B8%8EPHP/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/SSRF/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -508,13 +296,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E4%B9%8BXHR%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/">AJAX之XHR请求与响应</a></h2>
+        <h2><a href="http://wyb0.com/posts/Python%E7%BC%96%E7%A0%81/">Python的编码问题</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-25</time>
+                <time>2016-06-29</time>
             </div>
 
             
@@ -525,7 +313,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
                     
                 
                 
@@ -535,7 +323,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
                     
                 
                 
@@ -545,12 +333,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 GET请求 &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;test&lt;/title&gt; &lt;script type=&quot;text/javascript&quot;&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) { //创建对象 xmlhttp = new XMLHttpRequest(); } else { xmlhttp = new ActiveXObjece(&quot;Microsoft.XMLHTTP&quot;); } // readyState改变时，就会触发onreadystatechange事件 // readyState存有XMLHttpRequest的状态，为0-4，4表示请求已完成，且响应已就绪 // status为200代表ok，为404代表未找到页面 xmlhttp.onreadystatechange=function() { if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { // xmlhttp.responseText获取来自服务器的响应 document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;2.html?t=&quot;+Math.random(),true); //GET请求，改变readyState // xmlhttp.open(&quot;GET&quot;,&quot;2.html?name=test&amp;age=23&quot;,true); //GET发送信息 xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;AJAX&lt;/h2&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;Request data&lt;/button&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;/div&gt; &lt;/body&gt; &lt;/html&gt;
+        几个编码函数 chr(x) 可以将0-255之间的数字转化为ASCII表中的字符 ord(x) 可以ASCII表中的字符转化为0-255之间的数字 hex(x) 将整数转化为十六进制字符串 oct(x) 将整数转化为八进制字符串 在py文件开头 使用： #!/usr/bin/env python #-*- coding: UTF-8 -*- 或： #coding=utf8 永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下： #coding=utf8 import sys reload(sys) sys.setdefaultencoding('utf8') # 此方法修改了python环境，设置系统默认编码，永久有效 编码转换 python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode # coding: UTF-8 &quot;&quot;&quot;从gbk编码的文件中读出数据，重新编码为utf8然后存储&quot;&quot;&quot; f = open('test.txt') # gbk编码 s = f.read() u = s.decode('gbk') # 将gbk解码为unicode # 通常要判断其编码方式是否为unicode # isinstance(s, unicode)可以用来判断是否为unicode # 这里已知是GBK编码，解码成unicode s = u.encode('utf8') # 将unicode编码为utf8 f.write(s) f.close() 网页的编码 #!/usr/bin/env python #-*- coding:utf-8 -*- import requests resp
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/AJAX%E4%B9%8BXHR%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Python%E7%BC%96%E7%A0%81/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -561,13 +349,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E5%88%9D%E8%AF%86/">AJAX初识</a></h2>
+        <h2><a href="http://wyb0.com/posts/sqlmapapi%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">sqlmapapi的简单使用</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-25</time>
+                <time>2016-06-28</time>
             </div>
 
             
@@ -578,7 +366,9 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
                     
                 
                 
@@ -588,7 +378,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/sqlmap">sqlmap</a>
                     
                 
                 
@@ -598,12 +388,226 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是AJAX AJAX全称是Asynchronous JavaScript and XML，即异步的JavaScript和XML AJAX不是新的编程语言，而是一种使用现有标准的新方法。 AJAX可在不重新加载整个页面的情况下与服务器交换数据从而更新部分网页 0x01 示例 &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;script&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari xmlhttp=new XMLHttpRequest(); } else {// code for IE6, IE5 xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); } xmlhttp.onreadystatechange=function(){ if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true); xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改该文本内容&lt;/h2&gt;&lt;/div&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;修改内容&lt;/button&gt; &lt;/body&gt; &lt;/html&gt; 当点击&rdquo;修改内容&rdquo;后，文本就会改变，但html页面源码没变，只向服务器请求了文本 0x02 关于XHR XMLHttpRequest是AJAX的基础，就是它与后台就行交互的 现在大部分浏览器都支持XMLHttpRequest对象(IE5和IE6使用ActiveXObject) //创建对象示例 var xmlhttp;
+        关于sqlmapapi.py 当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量 用于交互的方法 在sqlmap/lib/utils/api.py中: # 用户方法 @get(&quot;/task/new&quot;) Create new task ID. @get(&quot;/task/&lt;taskid&gt;/delete&quot;) Delete own task ID. # 管理函数 @get(&quot;/admin/&lt;taskid&gt;/list&quot;) List task pull. @get(&quot;/admin/&lt;taskid&gt;/flush&quot;) Flush task spool (delete all tasks). # 核心交互函数 @get(&quot;/option/&lt;taskid&gt;/list&quot;) List options for a certain task ID @post(&quot;/option/&lt;taskid&gt;/get&quot;) Get the value of an option (command line switch) for a certain task ID @post(&quot;/option/&lt;taskid&gt;/set&quot;) Set an option (command line switch) for a certain task ID @post(&quot;/scan/&lt;taskid&gt;/start&quot;) Launch a scan @get(&quot;/scan/&lt;taskid&gt;/stop&quot;) Kill a scan @get(&quot;/scan/&lt;taskid&gt;/status&quot;) Return status of a scan @get(&quot;/scan/&lt;taskid&gt;/data&quot;) Retrieve the data of a scan @get(&quot;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&quot;) Retrieve a subset of log messages @get(&quot;/scan/&lt;taskid&gt;/log&quot;) Retrieve the log messages @get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system sqlmapapi.py参数如下 它的-s参数可以启动一个服务(返回一个Admin Id)，只要将url给它就行了： 简单使用 1.
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/AJAX%E5%88%9D%E8%AF%86/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/sqlmapapi%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/CSRF/">CSRF</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-28</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/csrf">csrf</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 概念 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、 删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾认证过的网站并执行某些操作。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作 0x01 利用 利用条件 攻击者可以得知url的所有参数项并了解其含义 诱导用户访问构造好的POC 利用地方 操作是有意义的(比如:修改密码等) 验证过于简单(参数固定、我们可以设置参数) 0x02 GET型CSRF攻击 若有论坛www.aa.com，论坛删除文章的操作是请求类似 http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接 有用户A，他登陆了论坛，且有篇文章id为251，那么他的浏览器此时已经取得了论坛的信任 此时有hacker用户B，他构造了一个html为b.html，b.html内容如下： &lt;html&gt; &lt;head&gt; &lt;title&gt;test&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;img src=&quot;http://www.aa.com/opt.php?id=251&amp;act=del&amp;name=A&quot; /&gt; &lt;/body&gt; &lt;/html&gt; 将b.html放在他自己搭建的网站上，网址为http://www.bb.com/b.html 恶意用户B将链接http://www.bb.com/b.html通过qq发送给用户A， 诱使他访问，用户A一旦访问，他id为251的文章就会被删除 0x03 POST型CSRF攻击 若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图： &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;aa&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;form action=&quot;http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286&quot; method=&quot;post&quot;&gt; 昵称：&lt;input type=&quot;text&quot; name=&quot;password&quot; id=&quot;password&quot; class=&quot;form-control&quot; value=&quot;xxxxx&quot;&gt; 用户名：&lt;input type=&quot;text&quot; name=&quot;password&quot; id=&quot;password&quot; class=&quot;form-control&quot; value=&quot;xiaoming&quot;&gt; 密码：&lt;input type=&quot;password&quot; name=&quot;password&quot; id=&quot;password&quot; class=&quot;form-control&quot; value=&quot;&quot;&gt; 确认密码：&lt;input type=&quot;password&quot; name=&quot;cpassword&quot; id=&quot;conpassword&quot;
+    </p>
+
+    
+    <footer>
+        <a href="/posts/CSRF/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84logging%E6%A8%A1%E5%9D%97/">Python的logging模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-25</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python%E6%A8%A1%E5%9D%97">python模块</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        使用流程 创建一个logger 创建一个handler，用于写入日志文件 定义handler的输出格式 将handler添加到logger 记录日志 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- import logging class MyLog(object): &quot;&quot;&quot;docstring for MyLog&quot;&quot;&quot; def __init__(self, logfile, loglevel, logger): super(MyLog, self).__init__() # 创建一个logger self.logger = logging.getLogger(logger) self.logger.setLevel(logging.DEBUG) # 创建一个用于写入日志文件的handler fh = logging.FileHandler(logfile) fh.setLevel(logging.DEBUG) # 只要是写入文件的等级都为DEBUG，也可以设置为loglevel formatterf = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') fh.setFormatter(formatterf) # 创建一个用于输出到控制台的handler ch = logging.StreamHandler() ch.setLevel(loglevel) formatterc = logging.Formatter('%(asctime)s - %(message)s') ch.setFormatter(formatterc) # 将handler添加到logger self.logger.addHandler(fh) self.logger.addHandler(ch) def debug(self,msg):
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Python%E7%9A%84logging%E6%A8%A1%E5%9D%97/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E9%98%B2%E5%BE%A1/">SQL注入之防御</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-23</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%B3%A8%E5%85%A5">注入</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 要做的事 也就是找到注入点然后修复 0x01 防御方法 使用转义函数 如：addslashes()和mysql_real_escape_string() 在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件 &lt;?php //简单过滤 $filter = array(&amp;$_GET,&amp;$_POST,&amp;$_COOKIE); foreach ($filter as $key =&gt; $value){ foreach ($value as $k =&gt; $v){ $filter[$key][$k] = mysql_real_escape_string($v); } } ?&gt; 检查数据类型 使用(int)或settype()等将数字等进行强制转换 对邮箱、日期等也进行检查 使用预编译语句绑定变量(一般为防御SQL注入的最佳方式) &lt;?php //预编译 $mysqli = new mysqli(&quot;localhost&quot;,&quot;root&quot;,&quot;123456&quot;,&quot;share&quot;); $mysqli-&gt;query(&quot;set names utf8&quot;); $sql = &quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&quot;; $s = $mysqli-&gt;prepare($sql); //绑定参数 $name = &quot;Tom&quot;; $sex = &quot;M&quot;; $age = 23; $s-&gt;bind_param(&quot;sssi&quot;,$name,$sex,$age); //执行 $result = $s-&gt;execute(); var_dump($result);
+    </p>
+
+    
+    <footer>
+        <a href="/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E9%98%B2%E5%BE%A1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E5%B8%83%E5%B0%94%E5%9E%8B%E6%B3%A8%E5%85%A5/">SQL注入之布尔型注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-22</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%B3%A8%E5%85%A5">注入</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 特点 当页面存在注入，但是没有显示位，且没有用echo &quot;mysql_error()&quot;输出错误信息时可以用， 它一次只能猜测一个字节，速度慢，但是只要存在注入就能用 0x01 利用方式 用and连接前后语句：www.xxx.com/aa.php?id=1 and (注入语句) --+ 根据返回页面是否相同来得到数据 0x02 注入步骤 找注入点、猜闭合字符 猜解列数、尝试得到显示位 猜数据库名 猜表名 猜列名 猜列值 找到注入点，判断闭合字符 尝试猜解列数，得到显示位 得到数据库名 最终得到第五个数据库名为security 得到表名 最终依次猜的表名为users 得到列名 同理最终得到第2列列名为username，第3列列名为password 得到列值 依次得到为admin4，同理可得其他数据 0x04 附上python脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- __author__=&quot;reber&quot; import sys import urllib import urllib2 import binascii import hashlib from pyfiglet import figlet_format from optparse import OptionParser def get_md5_html(url): response = urllib2.urlopen(url) html = response.read() m2 = hashlib.md5() m2.update(html)
+    </p>
+
+    
+    <footer>
+        <a href="/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8B%E5%B8%83%E5%B0%94%E5%9E%8B%E6%B3%A8%E5%85%A5/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -617,13 +621,13 @@
     
     <nav class="pagination" role="pagination">
         
-            <a href="http://wyb0.com/page/7/"><i class="fa fa-chevron-left"></i></a>
+            <a href="/page/7/"><i class="fa fa-chevron-left"></i></a>
         
 
         <span>&nbsp;8 / 15&nbsp;</span>
         
         
-            <a href="http://wyb0.com/page/9/"><i class="fa fa-chevron-right"></i></a>
+            <a href="/page/9/"><i class="fa fa-chevron-right"></i></a>
         
     </nav>
 

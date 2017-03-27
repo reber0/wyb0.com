@@ -20,25 +20,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
   <!--<![endif]-->
 
-  <link rel="stylesheet" href="http://wyb0.com/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   
-  <link rel="shortcut icon" href="http://wyb0.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
 
   
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
 
   
-  <link rel="alternate" type="application/rss+xml" title="" href="http://wyb0.com/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="" href="/index.xml" />
 
   
-  <link rel="stylesheet" href="http://wyb0.com/css/monokai-sublime.css" type="text/css">
-  <script src="http://wyb0.com/js/highlight.min.js"></script>
+  <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+  <script src="/js/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <script src="http://wyb0.com/js/jquery.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
 
 </head>
 <body>
@@ -47,25 +47,25 @@
     
 <div class="head">
     <h1 class="logo" id="logo">
-        <a href="http://wyb0.com/"><img src='http://wyb0.com/img/logo.png' width='70px'></a>
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
         
             
                 <li>
-                    <a href="http://wyb0.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
             
                 </li>
         
             
                 <li>
-                    <a href="http://wyb0.com/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
             
                 </li>
         
             
                 <li>
-                    <a href="http://wyb0.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
             
                 </li>
         
@@ -82,13 +82,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/%E5%9C%A8vps%E4%B8%8A%E6%90%AD%E5%BB%BAShadowsocks/">在vps上搭建Shadowsocks</a></h2>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/">Linux之tar</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-03-10</time>
+                <time>2016-04-19</time>
             </div>
 
             
@@ -109,7 +109,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">Server</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
                     
                 
                 
@@ -119,12 +119,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 Ubuntu 14.04.1 LTS 0x01 安装与配置 reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;,
+        tar主要参数： -c 创建一个新的压缩文件 -x 解压 -t 查看压缩文件的内容 -f 指定档案文件的名字 -v 显示过程信息 -r 增加文件到指定的包 -C 指定解压后的路径 -z 使用gzip -j 使用bzip2 -Z 使用compress tar示例： [wyb@localhost temp]$ ls aaa [wyb@localhost temp]$ tar -cvf 1.tar aaa/ *打包不压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -zcvf 1.tar.gz aaa/ *打包且以gzip压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -jcvf 1.tar.bz2 aaa/ *打包且以bzip2压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]tar -zxvf aa.tar.gz /home/aaa --exclude=dir //排除目录 [wyb@localhost temp]$ ls -l total 24 -rw-r--r--.
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/%E5%9C%A8vps%E4%B8%8A%E6%90%AD%E5%BB%BAShadowsocks/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Linux%E4%B9%8B%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -135,13 +135,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/">301重定向</a></h2>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/">Linux之安装ettercap</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-02-07</time>
+                <time>2016-04-19</time>
             </div>
 
             
@@ -152,217 +152,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%87%8D%E5%AE%9A%E5%90%91">重定向</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 目的 由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2 0x01 开启rewrite模块 $ sudo a2enmod rewrite 0x02 根目录下新建.htaccess： Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名 0x03 修改配置文件 # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; 0x04 重启Apache $ sudo /etc/init.d/apache2 restart
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E9%83%A8%E7%BD%B2Gitlab/">Ubuntu下部署Gitlab</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-01-16</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/git">Git</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/git">git</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 前期准备 # 环境 Ubuntu 14.04 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client reber@ubuntu:~/Desktop$ sudo apt-get install git 0x01 安装 reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb 0x02 配置 reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb external_url 'http://192.168.188.160:80' ...... gitlab_rails['time_zone'] = 'Asia/Shanghai' gitlab_rails['gitlab_email_from'] = 'xxxxxx@163.com' ...... gitlab_rails['smtp_enable'] = true gitlab_rails['smtp_address'] = &quot;smtp.163.com&quot; gitlab_rails['smtp_port'] = 25 gitlab_rails['smtp_user_name'] = &quot;xxxxxx@163.com&quot; gitlab_rails['smtp_password'] = &quot;111111&quot; # 客户端授权密码 gitlab_rails['smtp_domain'] = &quot;163.com&quot; gitlab_rails['smtp_authentication'] = &quot;login&quot; gitlab_rails['smtp_enable_starttls_auto'] = true ......
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E9%83%A8%E7%BD%B2Gitlab/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%E5%88%9D%E8%AF%86Tornado/">初识Tornado</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-01-03</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/tornado">tornado</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 简介 Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django, 但Tornado更注重速度,能够处理海量的同时发生的流量。 0x01 示例 main.py代码如下： #!/usr/bin/env python # -*- coding: utf-8 -*- import tornado.ioloop import tornado.web class IndexHandler(tornado.web.RequestHandler): def get(self): #访问根时触发这个函数 name = self.get_argument('name','wyb') self.write('Hello,' + name) self.write('&lt;br /&gt;&lt;a href=&quot;/login&quot;&gt;login&lt;/a&gt;') class MyLoginHandler(tornado.web.RequestHandler): def get(self): self.render('login.html') #若用户请求/login页面则将login.html发送给客户端，客户会看的一个登陆表单 def post(self): #当用户点击提交按钮是触发这个函数 name = self.get_argument('name') #接收表单的name password = self.get_argument('password') #接收表单的password self.write(&quot;you name is:%s\nyou password is:%s&quot; % (name,password)) def get_app(): handlers = [ (r&quot;/&quot;,IndexHandler), #代表请求/的都让IndexHandler处理 (r&quot;/login&quot;,MyLoginHandler), #表示请求/login页面的让MyLoginHandler处理 ] app = tornado.web.Application(handlers=handlers)
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/%E5%88%9D%E8%AF%86Tornado/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%5B%E8%BD%AC%5DJS%E6%93%8D%E4%BD%9Ccookie%E6%96%B9%E6%B3%95%E7%9A%84%E5%B0%81%E8%A3%85/">[转]JS操作cookie方法的封装</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-12-27</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/javascript">JavaScript</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/javascript">javascript</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        原文链接：http://www.wyzu.cn/2015/0123/107167.html 0x00 实现功能 添加cookie 获取所有cookie 根据名字获取单个cookie的值 移除所有cookie 根据名字移除单个cookie 0x01 封装cookie.js源码 /* * 名称和值传送时必须是经过RUL编码的 * cookie绑定在指定的域名下，非本域无法共享cookie，但是可以是在主站共享cookie给子站 * cookie的名称不分大小写；同时建议将cookie URL编码 * 建议针对cookie设置expires、domain、 path；每个cookie小于4KB **/ (function(global){ function getCookiesObj() { //获得cookie对象 var cookies = {}; if (document.cookie) { var objs = document.cookie.split('; '); for (var i in objs) { var index = objs[i].indexOf('='), name = objs[i].substr(0,index), value = objs[i].substr(index+1,objs[i].length); cookies[name] = value; } } return cookies; } function set(sName,sValue,Opts) { //设置cookie // Opts expires,path,domain,secure
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/%5B%E8%BD%AC%5DJS%E6%93%8D%E4%BD%9Ccookie%E6%96%B9%E6%B3%95%E7%9A%84%E5%B0%81%E8%A3%85/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Python%E5%AE%9E%E7%8E%B0CDN%E7%9A%84%E5%88%A4%E6%96%AD/">Python实现CDN的判断</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-12-23</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>&nbsp;&#47;
                     
                         <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
                     
@@ -374,7 +164,9 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/pentest">pentest</a>
                     
                 
                 
@@ -384,12 +176,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是CDN CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。 0x01 判断方法 可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息 0x02 代码 首先安装dnspython这个第三方模块：pip install dnspython #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.netloc # print url rsv = dns.resolver.Resolver() # rsv.nameservers =
+        操作系统：CentOS 首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了 执行：sudo yum groupinstall &ldquo;Development tools&rdquo; 源码安装软件就需要安装这个 一、下载解压 可用wget下载 二、查看需要的依赖项 [wyb@localhost ettercap-0.8.2]$ vim INSTALL #### Bundled libraries Ettercap now bundles the following libraries with the source distribution: libnet 1.1.6 curl 7.41.0 luajit 2.0.3 check 0.9.14 [wyb@localhost ettercap-0.8.2]$ cd bundled_deps/ [wyb@localhost bundled_deps]$ ls check curl libnet luajit 三、安装依赖包 安装check [wyb@localhost check]$ cd check-0.9.14 [wyb@localhost check-0.9.14]$ ls [wyb@localhost check-0.9.14]$ ./configure [wyb@localhost check-0.9.14]$ make [wyb@localhost check-0.9.14]$ sudo make install 安装curl [wyb@localhost check-0.9.14]$ cd ..
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/Python%E5%AE%9E%E7%8E%B0CDN%E7%9A%84%E5%88%A4%E6%96%AD/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -400,13 +192,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84openpyxl%E6%A8%A1%E5%9D%97/">Python的openpyxl模块</a></h2>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85/">Linux之软件的安装</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-11-25</time>
+                <time>2016-04-19</time>
             </div>
 
             
@@ -417,7 +209,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
                     
                 
                 
@@ -427,9 +219,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python%E6%A8%A1%E5%9D%97">python模块</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
                     
                 
                 
@@ -439,12 +229,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 openpyxl模块 这个模块可以让你读写excel文件 0x01 读取数据 代码如下： #!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename='aa.xlsx') sheetnames = wb.get_sheet_names() #获得所有表名 print u&quot;存在表：%s&quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&quot;第一张表表名为：%s&quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &quot;表%s有%d行%d列&quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&quot;取部分数据：&quot; print ws['A1'].value,ws['B1'].value print ws['A2'].value,ws['B2'].value print ws.cell(row=1, column=2).value print u&quot;\n输出表%s的所有数据：&quot; % ws.title for x in range(1,rows+1): for
+        Linux上的软件安装可以分为三种方式： 1. yum安装 yum基于RPM包管理，一次性安装所有依赖包，提供了查找、安装、删除一个、一组 至全部软件包的命令，配置文件在/etc/yum.repos.d/下 主要命令： yum install gcc g++ yum remove wget yum list installed //显示已经安装过的软件 yum list //显示所有可以安装的包 [wyb@localhost ~]$ wget -h //验证有没有安装wget -bash: /usr/bin/wget: No such file or directory [wyb@localhost ~]$ sudo yum search wget //通过yum查找wget，看有没有这个软件包 Loaded plugins: fastestmirror, refresh-packagekit, security Loading mirror speeds from cached hostfile * base: mirrors.yun-idc.com * extras: mirrors.pubyun.com * updates: mirrors.yun-idc.com ============================== N/S Matched: wget =============================== wget.x86_64 : A utility for retrieving files using the HTTP or FTP protocols Name and summary matches only, use &quot;search all&quot; for everything.
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/Python%E7%9A%84openpyxl%E6%A8%A1%E5%9D%97/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Linux%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -455,13 +245,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E4%B8%8EPHP/">AJAX与PHP</a></h2>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">Linux之基础命令</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-11-16</time>
+                <time>2016-04-19</time>
             </div>
 
             
@@ -472,7 +262,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
                     
                 
                 
@@ -482,7 +272,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
                     
                 
                 
@@ -492,12 +282,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 AJAX与PHP ajax.html代码如下： &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;meta charset=&quot;utf-8&quot;&gt; &lt;script&gt; function showHint(str) { var xmlhttp; if (str.length==0) { document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;; return; } if (window.XMLHttpRequest) { // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码 xmlhttp=new XMLHttpRequest(); //创建对象 } else { // IE6, IE5 浏览器执行代码 xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); } xmlhttp.onreadystatechange=function() { if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;./ajax.php?q=&quot;+str,true); xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;h3&gt;在输入框中尝试输入字母 a:&lt;/h3&gt; &lt;form action=&quot;&quot;&gt; 输入姓名: &lt;input type=&quot;text&quot; id=&quot;txt1&quot; onkeyup=&quot;showHint(this.value)&quot; /&gt; &lt;/form&gt; &lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; &lt;/body&gt; &lt;/html&gt; 上面的代码会完成以下的东西： 1.
+        0x00 ls：显示文件 [wyb@localhost tmp]$ ls a a.txt [wyb@localhost tmp]$ ls -l total 4 drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--. 1 wyb root 0 Apr 17 18:23 a.txt [wyb@localhost tmp]$ ls -a . .. a a.txt .esd-500 .ICE-unix [wyb@localhost tmp]$ ls -al total 20 drwxrwxrwt. 5 root root 4096 Apr 17 18:23 . dr-xr-xr-x. 22 root root 4096 Apr 17 16:31 .. drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--.
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/AJAX%E4%B8%8EPHP/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Linux%E4%B9%8B%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -508,13 +298,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E4%B9%8BXHR%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/">AJAX之XHR请求与响应</a></h2>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/">Linux之服务和计划任务</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-25</time>
+                <time>2016-04-19</time>
             </div>
 
             
@@ -525,7 +315,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
                     
                 
                 
@@ -535,7 +325,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
                     
                 
                 
@@ -545,12 +335,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 GET请求 &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;test&lt;/title&gt; &lt;script type=&quot;text/javascript&quot;&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) { //创建对象 xmlhttp = new XMLHttpRequest(); } else { xmlhttp = new ActiveXObjece(&quot;Microsoft.XMLHTTP&quot;); } // readyState改变时，就会触发onreadystatechange事件 // readyState存有XMLHttpRequest的状态，为0-4，4表示请求已完成，且响应已就绪 // status为200代表ok，为404代表未找到页面 xmlhttp.onreadystatechange=function() { if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { // xmlhttp.responseText获取来自服务器的响应 document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;2.html?t=&quot;+Math.random(),true); //GET请求，改变readyState // xmlhttp.open(&quot;GET&quot;,&quot;2.html?name=test&amp;age=23&quot;,true); //GET发送信息 xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;AJAX&lt;/h2&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;Request data&lt;/button&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;/div&gt; &lt;/body&gt; &lt;/html&gt;
+        服务： 在后台运行的软件就叫服务 参数： start stop restart apache启动后默认降权 service httpd start实际调用的是/etc/init.d/httpd这个shell脚本 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d [wyb@localhost ~]$ ls -al /etc/init.d lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&gt; rc.d/init.d 添加服务： 将脚本放在/etc/init.d/下即可 若要自启则： chkconfig --list //查看chk管理的自启动项 chkconfig --add httpd 添加到chk管理里面 chkconfig --del httpd 将httpd移出chk管理 chkcofnig --level 35 httpd on init的345将开启 chkcofnig --level 345 httpd off /etc/rc.d/rc3.d和rc5.d里将有httpd 计划任务： 启动方式： 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件 cron：每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟 添加任务： 格式：分(0-59) 时 日 月 周(0-6) 命令 第一种方法： crontab -e //任何权限都可以运行这个命令，针对某个用户 [wyb@localhost spool]$ crontab -e //进入编辑，实际是写入到/var/spool/cron/username这个文件中 no crontab for wyb - using an empty one */1 * * * * date &gt;&gt; /tmp/date.txt //每一分钟都向date.txt写入 1 * * * * date &gt;&gt; /tmp/date1.txt //在第一分钟时将数据写入 ~ ~ ~ &quot;/tmp/crontab.T8sDqC&quot; 1L, 34C written crontab: installing new crontab [wyb@localhost spool]$ sudo ls /var/spool/cron/ wyb [wyb@localhost spool]$ sudo cat /var/spool/cron/wyb */1 * * * * date &gt;&gt; /tmp/date.txt 1 * * * * date &gt;&gt; /tmp/date1.txt [wyb@localhost spool]$ 第二种方法： 编辑/etc/crontab文件 //要具有root权限，针对系统任务 vim /etc/crontab会以root权限执行，不推荐使用 01 * * * * 用户名 命令 date &gt;&gt; /tmp/date2.txt在每个小时的第一分钟执行 查看用户任务： [wyb@localhost tmp]$ sudo cat /var/spool/cron/wyb //用户的计划任务 */1 * * * * date &gt;&gt; /tmp/date.txt [wyb@localhost tmp]$ sudo tail -5 /etc/crontab //系统计划任务 # | | | .------- month (1 - 12) OR jan,feb,mar,apr ...
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/AJAX%E4%B9%8BXHR%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -561,13 +351,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E5%88%9D%E8%AF%86/">AJAX初识</a></h2>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8BSUID%E5%90%8E%E9%97%A8/">Linux之USID后门</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-25</time>
+                <time>2016-04-18</time>
             </div>
 
             
@@ -578,7 +368,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
                     
                 
                 
@@ -588,7 +378,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/pentest">pentest</a>
                     
                 
                 
@@ -598,12 +388,212 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是AJAX AJAX全称是Asynchronous JavaScript and XML，即异步的JavaScript和XML AJAX不是新的编程语言，而是一种使用现有标准的新方法。 AJAX可在不重新加载整个页面的情况下与服务器交换数据从而更新部分网页 0x01 示例 &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;script&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari xmlhttp=new XMLHttpRequest(); } else {// code for IE6, IE5 xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); } xmlhttp.onreadystatechange=function(){ if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true); xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改该文本内容&lt;/h2&gt;&lt;/div&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;修改内容&lt;/button&gt; &lt;/body&gt; &lt;/html&gt; 当点击&rdquo;修改内容&rdquo;后，文本就会改变，但html页面源码没变，只向服务器请求了文本 0x02 关于XHR XMLHttpRequest是AJAX的基础，就是它与后台就行交互的 现在大部分浏览器都支持XMLHttpRequest对象(IE5和IE6使用ActiveXObject) //创建对象示例 var xmlhttp;
+        SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制： 为二进制文件添加s权限从而提升为root权限方法： 写sudoers添加用户 //最佳方案 vim /etc/passwd //将uid和gid改为0 vim /etc/shadow //密文覆盖 vim root .ssh/证书文件 .ssh这个文件夹和证书的权限要正确，要和原来一致 SUID:这个东西主要是留后门 在root权限下给usermod一个s权限： # which usermod //得到usermod的路径 /usr/sbin/usermod # chmod u+s /usr/sbin/usermod # ls -l /usr/sbin/usermod -rwsr-x---. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod usermod给其他人一个x权限： [root@localhost ~]# chmod o+x /usr/sbin/usermod [root@localhost ~]# ls -l /usr/sbin/usermod -rwsr-x--x. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod 切换到普通用户wyb： [wyb@localhost ~]$ id wyb uid=500(wyb) gid=500(wyb) groups=500(wyb) [wyb@localhost ~]$ usermod -g
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/AJAX%E5%88%9D%E8%AF%86/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Linux%E4%B9%8BSUID%E5%90%8E%E9%97%A8/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E7%94%A8%E6%88%B7%E7%BB%84/">Linux之用户组</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个 useradd xm 用户xm会默认加到xm组 useradd -g fans xm 将xm的所属组改为fans useradd -G fans xm 初始组为xm，有效组为fans useradd xiaoming usermod -g fans xiaoming 只有一个初始组，被修改为fans useradd xm usermod -G fans xm xm用户会有两个组，初始组为xm，又添加一个有效组fans usermod -G fans1 xm xm用户两个组，初始组为xm，有效组更改为fans1 用户创建的文件拥有者是初始组
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/">Linux之网络配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        第一种方法 分5步： 1. 启动网卡： $ ifconfig eth0 up/down 2. 配置ip： $ ifconfig eth0 192.168.22.231 netmask 255.255.255.0 3. 配置网关： $ route add default gw 192.168.22.1 4. 配DNS： $ vim /etc/resolv.conf $ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.cof 5. 重启网络使配置生效： 6. 用文件配置ip信息 $ /etc/sysconfig/network-scripts/ifcfg-eth0 ps:添加静态路由 route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3 //添加静态路由添加网络10.211.55.0，从eth0出去 第二种方法 分1步： 打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息: DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY= 打开ip转发 echo &quot;1&quot; &gt;&gt; /proc/sys/net/ipv4/ip_forward 或者vim /etc/sysctl.conf
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/%5B%E8%BD%AC%5D%E7%9F%AD/">[转]短</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/miscellanea">Miscellanea</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/miscellanea">miscellanea</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        短 俄罗斯某诗人 一天很短 短得来不及拥抱清晨 就已经手握黄昏 一年很短 短得来不及细品初春殷红窦绿 就要打点素裹秋霜 一生很短 短的来不及享用美好年华 就已经身处迟暮 总是经过的太快 领悟的太晚 我们要学会珍惜 珍惜人生路上的亲情、友情、同事情、同学情、朋友情 一旦擦身而过 也许永不邂逅
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/">Linux之权限(重点)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        主要有三种参数：rwx 对于文件来说：分别是读/写/执行 对于目录来说：r读目录结构；w操作目录结构；x进入目录 如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh 若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中 文件权限 chmod -x [root@localhost tmp]# ls -l total 0 -rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# chmod -x a.txt 去除ugo的x权限 [root@localhost tmp]# ls -l total 0 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# ls -l a.txt -rwxrw-rw-. 1 root root 9 Apr 16 20:42 a.txt [root@localhost tmp]# cat a.txt echo aaa [root@localhost tmp]# ./a.txt 直接执行了a.txt中的echo命令 aaa [root@localhost tmp]# chmod -R [root@localhost tmp]# ls -l a;ls -l a/a.txt total 0 -rw-r--r--.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -617,13 +607,13 @@
     
     <nav class="pagination" role="pagination">
         
-            <a href="http://wyb0.com/page/12/"><i class="fa fa-chevron-left"></i></a>
+            <a href="/page/12/"><i class="fa fa-chevron-left"></i></a>
         
 
         <span>&nbsp;13 / 15&nbsp;</span>
         
         
-            <a href="http://wyb0.com/page/14/"><i class="fa fa-chevron-right"></i></a>
+            <a href="/page/14/"><i class="fa fa-chevron-right"></i></a>
         
     </nav>
 

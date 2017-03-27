@@ -20,25 +20,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
   <!--<![endif]-->
 
-  <link rel="stylesheet" href="http://wyb0.com/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 
   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   
-  <link rel="shortcut icon" href="http://wyb0.com/img/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
 
   
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
 
   
-  <link rel="alternate" type="application/rss+xml" title="" href="http://wyb0.com/index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="" href="/index.xml" />
 
   
-  <link rel="stylesheet" href="http://wyb0.com/css/monokai-sublime.css" type="text/css">
-  <script src="http://wyb0.com/js/highlight.min.js"></script>
+  <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+  <script src="/js/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  <script src="http://wyb0.com/js/jquery.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
 
 </head>
 <body>
@@ -47,25 +47,25 @@
     
 <div class="head">
     <h1 class="logo" id="logo">
-        <a href="http://wyb0.com/"><img src='http://wyb0.com/img/logo.png' width='70px'></a>
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
         
             
                 <li>
-                    <a href="http://wyb0.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
             
                 </li>
         
             
                 <li>
-                    <a href="http://wyb0.com/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
             
                 </li>
         
             
                 <li>
-                    <a href="http://wyb0.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
             
                 </li>
         
@@ -82,13 +82,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/%E5%9C%A8vps%E4%B8%8A%E6%90%AD%E5%BB%BAShadowsocks/">在vps上搭建Shadowsocks</a></h2>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BANginx&#43;MySQL&#43;PHP/">Linux下搭建Nginx&#43;MySQL&#43;PHP</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-03-10</time>
+                <time>2016-06-17</time>
             </div>
 
             
@@ -99,7 +99,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
                     
                 
                 
@@ -109,7 +109,9 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">Server</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
                     
                 
                 
@@ -119,12 +121,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 Ubuntu 14.04.1 LTS 0x01 安装与配置 reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;,
+        安装环境为：CentOS-6.5-x86_64-minimal 一、准备工作 首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++ 二、安装mysql和php sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm 三、安装依赖 安装pcre、pcre-devel sudo yum install pcre pcre-devel 安装zlib、zlib-devel sudo yum install zlib zlib-devel 安装ssl sudo yum install openssl openssl-devel 四、安装Nginx 可在http://nginx.org/download/nginx-1.9.9.tar.gz 下载 [reber@WYB nginx-1.9.9]$ ./configure [reber@WYB nginx-1.9.9]$ make [reber@WYB nginx-1.9.9]$
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/%E5%9C%A8vps%E4%B8%8A%E6%90%AD%E5%BB%BAShadowsocks/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BANginx&#43;MySQL&#43;PHP/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -135,278 +137,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/">301重定向</a></h2>
+        <h2><a href="http://wyb0.com/posts/Python%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AE%89%E8%A3%85/">Python第三方模块的安装</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-02-07</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%87%8D%E5%AE%9A%E5%90%91">重定向</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 目的 由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2 0x01 开启rewrite模块 $ sudo a2enmod rewrite 0x02 根目录下新建.htaccess： Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名 0x03 修改配置文件 # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; 0x04 重启Apache $ sudo /etc/init.d/apache2 restart
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E9%83%A8%E7%BD%B2Gitlab/">Ubuntu下部署Gitlab</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-01-16</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/git">Git</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/git">git</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 前期准备 # 环境 Ubuntu 14.04 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client reber@ubuntu:~/Desktop$ sudo apt-get install git 0x01 安装 reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb 0x02 配置 reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb external_url 'http://192.168.188.160:80' ...... gitlab_rails['time_zone'] = 'Asia/Shanghai' gitlab_rails['gitlab_email_from'] = 'xxxxxx@163.com' ...... gitlab_rails['smtp_enable'] = true gitlab_rails['smtp_address'] = &quot;smtp.163.com&quot; gitlab_rails['smtp_port'] = 25 gitlab_rails['smtp_user_name'] = &quot;xxxxxx@163.com&quot; gitlab_rails['smtp_password'] = &quot;111111&quot; # 客户端授权密码 gitlab_rails['smtp_domain'] = &quot;163.com&quot; gitlab_rails['smtp_authentication'] = &quot;login&quot; gitlab_rails['smtp_enable_starttls_auto'] = true ......
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E9%83%A8%E7%BD%B2Gitlab/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%E5%88%9D%E8%AF%86Tornado/">初识Tornado</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-01-03</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/tornado">tornado</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 简介 Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django, 但Tornado更注重速度,能够处理海量的同时发生的流量。 0x01 示例 main.py代码如下： #!/usr/bin/env python # -*- coding: utf-8 -*- import tornado.ioloop import tornado.web class IndexHandler(tornado.web.RequestHandler): def get(self): #访问根时触发这个函数 name = self.get_argument('name','wyb') self.write('Hello,' + name) self.write('&lt;br /&gt;&lt;a href=&quot;/login&quot;&gt;login&lt;/a&gt;') class MyLoginHandler(tornado.web.RequestHandler): def get(self): self.render('login.html') #若用户请求/login页面则将login.html发送给客户端，客户会看的一个登陆表单 def post(self): #当用户点击提交按钮是触发这个函数 name = self.get_argument('name') #接收表单的name password = self.get_argument('password') #接收表单的password self.write(&quot;you name is:%s\nyou password is:%s&quot; % (name,password)) def get_app(): handlers = [ (r&quot;/&quot;,IndexHandler), #代表请求/的都让IndexHandler处理 (r&quot;/login&quot;,MyLoginHandler), #表示请求/login页面的让MyLoginHandler处理 ] app = tornado.web.Application(handlers=handlers)
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/%E5%88%9D%E8%AF%86Tornado/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%5B%E8%BD%AC%5DJS%E6%93%8D%E4%BD%9Ccookie%E6%96%B9%E6%B3%95%E7%9A%84%E5%B0%81%E8%A3%85/">[转]JS操作cookie方法的封装</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-12-27</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/javascript">JavaScript</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/javascript">javascript</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        原文链接：http://www.wyzu.cn/2015/0123/107167.html 0x00 实现功能 添加cookie 获取所有cookie 根据名字获取单个cookie的值 移除所有cookie 根据名字移除单个cookie 0x01 封装cookie.js源码 /* * 名称和值传送时必须是经过RUL编码的 * cookie绑定在指定的域名下，非本域无法共享cookie，但是可以是在主站共享cookie给子站 * cookie的名称不分大小写；同时建议将cookie URL编码 * 建议针对cookie设置expires、domain、 path；每个cookie小于4KB **/ (function(global){ function getCookiesObj() { //获得cookie对象 var cookies = {}; if (document.cookie) { var objs = document.cookie.split('; '); for (var i in objs) { var index = objs[i].indexOf('='), name = objs[i].substr(0,index), value = objs[i].substr(index+1,objs[i].length); cookies[name] = value; } } return cookies; } function set(sName,sValue,Opts) { //设置cookie // Opts expires,path,domain,secure
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/%5B%E8%BD%AC%5DJS%E6%93%8D%E4%BD%9Ccookie%E6%96%B9%E6%B3%95%E7%9A%84%E5%B0%81%E8%A3%85/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Python%E5%AE%9E%E7%8E%B0CDN%E7%9A%84%E5%88%A4%E6%96%AD/">Python实现CDN的判断</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-12-23</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是CDN CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。 0x01 判断方法 可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息 0x02 代码 首先安装dnspython这个第三方模块：pip install dnspython #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.netloc # print url rsv = dns.resolver.Resolver() # rsv.nameservers =
-    </p>
-
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Python%E5%AE%9E%E7%8E%B0CDN%E7%9A%84%E5%88%A4%E6%96%AD/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84openpyxl%E6%A8%A1%E5%9D%97/">Python的openpyxl模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-11-25</time>
+                <time>2016-06-15</time>
             </div>
 
             
@@ -439,13 +176,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 openpyxl模块 这个模块可以让你读写excel文件 0x01 读取数据 代码如下： #!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename='aa.xlsx') sheetnames = wb.get_sheet_names() #获得所有表名 print u&quot;存在表：%s&quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&quot;第一张表表名为：%s&quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &quot;表%s有%d行%d列&quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&quot;取部分数据：&quot; print ws['A1'].value,ws['B1'].value print ws['A2'].value,ws['B2'].value print ws.cell(row=1, column=2).value print u&quot;\n输出表%s的所有数据：&quot; % ws.title for x in range(1,rows+1): for
+        第三方模块安装方法 使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装 使用easy_install安装 在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName 使用pip安装 在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName 网站下载安装包 在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装
     </p>
 
-    
-    <footer>
-        <a href="http://wyb0.com/posts/Python%E7%9A%84openpyxl%E6%A8%A1%E5%9D%97/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
     
 </article>
 
@@ -455,13 +188,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E4%B8%8EPHP/">AJAX与PHP</a></h2>
+        <h2><a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/">Ubuntu下使用ShadowSocks</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-11-16</time>
+                <time>2016-06-13</time>
             </div>
 
             
@@ -472,7 +205,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
                     
                 
                 
@@ -482,7 +215,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
                     
                 
                 
@@ -492,13 +225,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 AJAX与PHP ajax.html代码如下： &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;meta charset=&quot;utf-8&quot;&gt; &lt;script&gt; function showHint(str) { var xmlhttp; if (str.length==0) { document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;; return; } if (window.XMLHttpRequest) { // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码 xmlhttp=new XMLHttpRequest(); //创建对象 } else { // IE6, IE5 浏览器执行代码 xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); } xmlhttp.onreadystatechange=function() { if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;./ajax.php?q=&quot;+str,true); xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;h3&gt;在输入框中尝试输入字母 a:&lt;/h3&gt; &lt;form action=&quot;&quot;&gt; 输入姓名: &lt;input type=&quot;text&quot; id=&quot;txt1&quot; onkeyup=&quot;showHint(this.value)&quot; /&gt; &lt;/form&gt; &lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; &lt;/body&gt; &lt;/html&gt; 上面的代码会完成以下的东西： 1.
+        环境： ubuntu14.4 安装shadowsocks-qt5 sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装) 配置客户端 配置火狐 访问YouTube
     </p>
 
-    
-    <footer>
-        <a href="http://wyb0.com/posts/AJAX%E4%B8%8EPHP/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
     
 </article>
 
@@ -508,13 +237,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E4%B9%8BXHR%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/">AJAX之XHR请求与响应</a></h2>
+        <h2><a href="http://wyb0.com/posts/Python%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/">Python编写规范</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-25</time>
+                <time>2016-06-12</time>
             </div>
 
             
@@ -525,7 +254,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
                     
                 
                 
@@ -535,7 +264,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
                     
                 
                 
@@ -545,12 +274,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 GET请求 &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;test&lt;/title&gt; &lt;script type=&quot;text/javascript&quot;&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) { //创建对象 xmlhttp = new XMLHttpRequest(); } else { xmlhttp = new ActiveXObjece(&quot;Microsoft.XMLHTTP&quot;); } // readyState改变时，就会触发onreadystatechange事件 // readyState存有XMLHttpRequest的状态，为0-4，4表示请求已完成，且响应已就绪 // status为200代表ok，为404代表未找到页面 xmlhttp.onreadystatechange=function() { if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { // xmlhttp.responseText获取来自服务器的响应 document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;2.html?t=&quot;+Math.random(),true); //GET请求，改变readyState // xmlhttp.open(&quot;GET&quot;,&quot;2.html?name=test&amp;age=23&quot;,true); //GET发送信息 xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;AJAX&lt;/h2&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;Request data&lt;/button&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;/div&gt; &lt;/body&gt; &lt;/html&gt;
+        一、代码编排 1.缩进：使用4个空格缩进 2.行长度：每行不要超过80个字符 3.空行：顶级定义之间空两行，如函数或类的定义，方法定义、类定义与第一个方法之间都应该空一行。 4.分号：行尾不要有分号，也不要用分号将两条命令放在一行,除非是：1.长的导入模块语句。2.注释里的URL.3.可以使用圆括号实现隐式行连接 二、文档编排 1.导入：模块注释-&gt;文档字符串-&gt;导入-&gt;模块全局变量-&gt;常量 导入顺序：标准库导入-&gt;第三方库导入-&gt;应用程序指定库导入 2.import:不要在一行中import多个库，一行中只导入一个 三、空格 1.不要在逗号、分号、冒号前加空格，但应在他们后面加(除了在行尾) 2.二元操作符(赋值、比较、布尔)两边都加空格 3.当&quot;=&quot;用于指示关键字参数或默认参数值是，不要再其两侧使用空格 4.&quot;,&quot;和&quot;#&quot;和&quot;=&quot;不需要对齐，因为空格会成为维护的负担 四、注释 总体原则，错误的注释不如没有注释。 注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。 1.块注释：在一段代码前增加的注释。在&quot;#&quot;后加一空格。段落之间以只有&quot;#&quot;的行间隔。 2.行注释，在一句代码后加注释。进来少使用. 3.绝不要描述代码. 假设阅读代码的人比你更懂Python, 他只是不知道你的代码要做什么. 五、文档描述 1.为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。 2.如果docstring要换行，参考如下例子 class SampleClass(object): &quot;&quot;&quot;Summary of class here. Longer class information.... Longer class information.... Attributes: likes_spam: A boolean indicating if we like SPAM or not. eggs: An integer count of the eggs we have laid. &quot;&quot;&quot; def __init__(self): &quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot; 六、命名规范 1.尽量单独使用小写字母‘l’，大写字母‘O’等容易混淆的字母。 2.模块名尽量短小，应该用小写加下划线的方式(如lower_with_under.py). 3.包命名尽量短小，使用全部小写的方式，不可以使用下划线。 4.类名使用大写字母开头的单词(如CapWords, 即Pascal风格) 5.函数命名使用全部小写的方式，可以使用下划线。 6.变量也用小写加下划线的方式，即this_is_a_variable=1 7.常量命名使用全部大写的方式，可以使用下划线。 8.类的属性（方法和变量）命名使用全部小写的方式，可以使用下划线。 9.类的方法第一个参数必须是self，而静态方法第一个参数必须是cls。 10.用单下划线(_)开头表示模块变量或函数是protected的(使用import * from时不会包含).
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/AJAX%E4%B9%8BXHR%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/Python%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -561,13 +290,13 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E5%88%9D%E8%AF%86/">AJAX初识</a></h2>
+        <h2><a href="http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">conky配置</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-25</time>
+                <time>2016-06-04</time>
             </div>
 
             
@@ -578,7 +307,7 @@
                 
                     <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
                     
                 
                 
@@ -588,7 +317,7 @@
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
                     
                 
                 
@@ -598,13 +327,288 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是AJAX AJAX全称是Asynchronous JavaScript and XML，即异步的JavaScript和XML AJAX不是新的编程语言，而是一种使用现有标准的新方法。 AJAX可在不重新加载整个页面的情况下与服务器交换数据从而更新部分网页 0x01 示例 &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;script&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari xmlhttp=new XMLHttpRequest(); } else {// code for IE6, IE5 xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); } xmlhttp.onreadystatechange=function(){ if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true); xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改该文本内容&lt;/h2&gt;&lt;/div&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;修改内容&lt;/button&gt; &lt;/body&gt; &lt;/html&gt; 当点击&rdquo;修改内容&rdquo;后，文本就会改变，但html页面源码没变，只向服务器请求了文本 0x02 关于XHR XMLHttpRequest是AJAX的基础，就是它与后台就行交互的 现在大部分浏览器都支持XMLHttpRequest对象(IE5和IE6使用ActiveXObject) //创建对象示例 var xmlhttp;
+        0x00 效果 使用软件conky可以在linux上看到系统的运行状态，效果如下： 0x01 安装与配置 先安装conky： sudo apt-get install conky 在/home/username/下创建文件.conkyrc 使conky开机自启 在/etc/profile最下面添加：/usr/bin/conky &amp; 0x03 配置文件.conkyrc内容如下 # set to yes if you want Conky to be forked in the background background no cpu_avg_samples 2 net_avg_samples 2 out_to_console no # X font when Xft is disabled, you can pick one with program xfontsel #font 7x12 #font 6x10 #font 7x13 #font 8x13 #font 7x12 #font *mintsmild.se* #font -*-*-*-*-*-*-34-*-*-*-*-*-*-* #font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1 # Use Xft?
     </p>
 
     
     <footer>
-        <a href="http://wyb0.com/posts/AJAX%E5%88%9D%E8%AF%86/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/RGB%E9%A2%9C%E8%89%B2%E5%AF%B9%E7%85%A7%E8%A1%A8/">RGB颜色对照表</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-04</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/miscellanea">miscellanea</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        RGB RGB颜色对照表 #FFFFFF #FFFFF0 #FFFFE0 #FFFF00 #FFFAFA #FFFAF0 #FFFACD #FFF8DC #FFF68F #FFF5EE #FFF0F5 #FFEFDB #FFEFD5 #FFEC8B #FFEBCD #FFE7BA #FFE4E1 #FFE4C4 #FFE4B5 #FFE1FF #FFDEAD #FFDAB9 #FFD700 #FFD39B #FFC1C1 #FFC125 #FFC0CB #FFBBFF #FFB90F #FFB6C1 #FFB5C5 #FFAEB9 #FFA54F #FFA500 #FFA07A #FF8C69 #FF8C00 #FF83FA #FF82AB #FF8247 #FF7F50 #FF7F24 #FF7F00 #FF7256 #FF6EB4 #FF6A6A #FF69B4 #FF6347 #FF4500 #FF4040 #FF3E96 #FF34B3 #FF3030 #FF1493 #FF00FF #FF0000 #FDF5E6 #FCFCFC #FAFAFA #FAFAD2 #FAF0E6 #FAEBD7 #FA8072 #F8F8FF #F7F7F7 #F5FFFA #F5F5F5 #F5F5DC
+    </p>
+
+    
+    <footer>
+        <a href="/posts/RGB%E9%A2%9C%E8%89%B2%E5%AF%B9%E7%85%A7%E8%A1%A8/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%B0%81%E8%A3%85MySQL%E7%B1%BB/">PHP之封装MySQL类</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-03</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        config.inc.php内容如下 &lt;?php return array( 'DB_HOST' =&gt; '192.168.188.134', 'DB_NAME' =&gt; 'scoreboard', 'DB_USER' =&gt; 'score', 'DB_PASS' =&gt; '123456', 'DB_CHARSET' =&gt; 'utf8', 'IS_LOG' =&gt; 1,//开启日志 'LOGFILEPATH' =&gt; '../log.txt'//日志路径 ); /* $database = require('./config.php'); echo $database['DB_TYPE']; //输出'DB_TYPE' */ ?&gt; 表设计如下 create database scoreboard; use scoreboard; create table users( id int not null auto_increment primary key, gid int not null, --组id username varchar(20) not null, password varchar(32) not null, sex varchar(2) not null, totalscore int --个人总积分 ); create table share( id int not null auto_increment primary key, uid int not null, content varchar(1024) not null, --分享内容 comment varchar(1024) not null, --点评 date varchar(15) not null --分享日期 ); create table score( id int not null auto_increment primary key, uid int not null, --用户id score int not null, --用户单次积分 ); grant all privileges on scoreboard.* to 'score'@'%' identified by '123456'; -- 或者只给特定权限 -- grant select,update,delete on scoreboard.* to 'score'@'%' identified by '123456'; flush privileges; 封装类如下 &lt;?php class mysql { private $logfilepath; private $is_log; private $hlog; private $conn; //构造函数 public function __construct() { $config = include_once(dirname(__FILE__).&quot;/../config/config.inc.php&quot;); $this-&gt;is_log = $config['IS_LOG']; $this-&gt;logfilepath = $config['LOGFILEPATH']; if ($this-&gt;is_log){ $handle = fopen($this-&gt;logfilepath,&quot;a+&quot;); $this-&gt;hlog = $handle; } $this-&gt;conn = $this-&gt;connect($config['DB_HOST'],$config['DB_USER'],$config['DB_PASS'],$config['DB_NAME'],$config['DB_CHARSET']); } //连接数据库 public function connect($dbhost, $dbuser, $dbpass, $dbname, $dbcharset) { $this-&gt;conn = @mysql_connect($dbhost,$dbuser,$dbpass); if (!$this-&gt;conn) { $msg = &quot;连接数据库失败：&quot;.mysql_error(); $this-&gt;write_log($msg); die($msg); } else { if (!@mysql_select_db($dbname)) { $msg = &quot;连接数据库成功，但选择数据库失败：&quot;.mysql_error(); $this-&gt;write_log($msg); die($msg); } else { $msg = &quot;连接数据库成功，且选择数据库成功&quot;; $this-&gt;write_log($msg); } } @mysql_query(&quot;set names &quot;.$dbcharset); } //执行语句 public function query($sql){ $result = @mysql_query($sql); if (!$result) { $this-&gt;write_log('mysql_query error:'.mysql_error()); } else { $this-&gt;write_log('执行语句：'.$sql.' 且执行成功'); } return $result; } //查询一条数据 public function select_one($tab,$column = &quot;*&quot;,$condition = '',$debug=False) //查询函数 { $condition = $condition ?
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8B%E5%B0%81%E8%A3%85MySQL%E7%B1%BB/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">PHP之MySQL常用函数</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        处理函数 mysql_connect(server,user,pwd,newlink,clientflag) 连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE mysql_select_db(database,connection) 选择数据库的函数，成功则返回true，失败则返回false mysql_query(query,connection) 执行一条查询，返回一个资源标识符(结果集)，如果查询执行不正确则返回FALSE mysql_num_rows(data)和mysql_num_fields(data) 函数分别返回结果集中行和列的数目(禁对SELECT语句有效),结果集从 mysql_query()的调用中得到 mysql_fetch_assoc(data) 从结果集中取得一行作为关联数组，若没有更多行则返回false mysql_fetch_row(data) 从结果集中取得一行作为索引数组，若没有更多行则返回false mysql_error(connection) 返回上一个MySQL函数的错误文本，如果没有出错则返回&rdquo;(空字符串) mysql_affected_rows(link_identifier) 返回前一次MySQL操作(增删改)所影响的记录行数,失败则返回-1 mysql_insert_id(connection) 返回上一步INSERT操作产生的 ID。如果上一查询没有产生AUTO_INCREMENT的ID，则mysql_insert_id()返回 0。 mysql_data_seek(data,row) 结果集data从mysql_query()的调用中得到,行指针移动到指定的行号，接着调用 mysql_fetch_row() 将返回那一行。如果成功则返回 true，失败则返回 false 例子 &lt;?php $server = &quot;127.0.0.1&quot;; $dbname = &quot;massage&quot;; $user = &quot;msg&quot;; $pass = &quot;123456&quot; $conn = mysql_connect($server,$user,$pass) or die('连接服务器失败:'.mysql_error()); mysql_query(&quot;set names 'utf8'&quot;);//设置数据库输出编码 mysql_select_db($dbname,$conn) or die(mysql_error($conn)); //选择数据库 $sql = &quot;select username,password from user&quot;; //构造sql语句 $result = mysql_query($sql); //执行sql语句，返回结果集 $num = mysql_num_rows($result);//返回执行结果的行数 echo &quot;&lt;br
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/MySQL%E8%AF%AD%E6%B3%95/">MySQL语法</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        Select语句的一般语法 1.SELECT [ALL|DISTINCT] &lt;目标列表达式&gt; [,&lt;目标列表达式&gt; ]... 2.FROM &lt;表名或视图名&gt; [,&lt;表名或视图名&gt; ]... 3.[ WHERE &lt;行条件表达式&gt; ] 4.[ GROUP BY &lt;列名1&gt; ,[列名2][,...][HAVING组条件表达式] ] 5.[ ORDER BY &lt;列名1&gt; ,[ASC|DESC][,...] ]; 上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5， 即先确定从哪个数据源查找， 然后确定过滤条件， 若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一布限制， 然后将符合条件的列查询出来， 最后对结果进行排序。 select name as '名字',password as '密码' form user; select * from message where id between 2 and 6; select * from message where title like '%留言_'; //%匹配任意个字符,_匹配一个字符 select * from message where uid in (2,3,4); //删除2、3、4共3条数据 连接查询 [&lt;表名1&gt;.][&lt;列名1&gt;] &lt;比较运算符&gt; [&lt;表名2&gt;.][&lt;列名2&gt;] [&lt;表名1&gt;.][&lt;列名1&gt;] BETWEEN [&lt;表名2&gt;.][&lt;列名2&gt;] AND [&lt;表名2&gt;.][&lt;列名3&gt;] select * from user,msg where user.id=msg.uid; select m.id,m.title '标题',m.ip,u.username '名字' from message as m,user as u where m.uid=u.id; 子查询 一个SELECT-FROM-WHERE语句成为一个查询块。 将一个查询块嵌套到另外一个查询块的WHERE子句或HAVING短句条件中的查询成为子查询或嵌套查询，它允许我们根据另一个查询的结果检索数据。 子查询的方法是由里向外处理，即每个子查询在其上一级查询之前查询，子查询的结果用于建立其副查询的查询条件。 select * from message where id in ( select id from users where username='admin' ); 集合查询 集合的并操作：使用UNION运算符经多个SELECT查询结果合并起来，形成一个完整的查询结果，系统合并时会自动去掉重复的元组。 注意：前后SELECT语句查询的列数要相同。 数据更新 插入数据 插入单个元组： INSERT INTO &lt;表名&gt; [(&lt;属性列1&gt;[,&lt;属性列2&gt;&hellip;])] VALUES (&lt;常量1&gt;[,&lt;常量2&gt;]&hellip;); 通过子查询向表中插入多条数据 INSERT INTO &lt;表名&gt; [(&lt;属性列1&gt;[,&lt;属性列2&gt;&hellip;])] SELECT [(&lt;属性列1&gt;[,&lt;属性列2&gt;&hellip;])] FROM &lt;表名&gt; [WHERE 子句] [GROUP BY 子句] [ORDER BY 子句]; 通过SELECT INTO语句创建新表并插入多条数据 SELECT &lt;列名1&gt;,&lt;列名2&gt;,&hellip;&lt;表达式1&gt; as &lt;别名1&gt;,&hellip;INTO &lt;表名&gt; FROM &lt;表名1&gt;，&lt;表名2&gt;,&hellip; [WHERE 条件表达式] [GROUP BY 子句] [ORDER BY 子句]; 修改数据 UPDATE &lt;表名&gt; SET &lt;列名1&gt; = &lt;表达式1&gt; [,&lt;列名2&gt; = &lt;表达式2&gt;]&hellip; [WHERE &lt;条件&gt;]; 删除数据 DELETE FROM &lt;表名&gt; [WHERE &lt;条件&gt;] SQL的数据控制功能 授权语句 GRENT &lt;权限1&gt;，[,&lt;权限2&gt;]...
+    </p>
+
+    
+    <footer>
+        <a href="/posts/MySQL%E8%AF%AD%E6%B3%95/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/">win/ubuntu双系统分区设置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-31</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/windows">windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        win10和ubuntu双系统分区设置 硬盘采用uefi格式 硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息 在硬盘末尾给ubuntu划分50G左右空间 ubuntu的/分区，格式为ext4，空间为40G ubuntu的/home分区，格式为ext4，空间为10G ubuntu的/boot分区，格式为ext4,空间为200M ubuntu的/swap分区，格式为swap，空间为200M ubuntu的引导分区为/boot &nbsp;
+    </p>
+
     
 </article>
 
@@ -617,13 +621,13 @@
     
     <nav class="pagination" role="pagination">
         
-            <a href="http://wyb0.com/page/9/"><i class="fa fa-chevron-left"></i></a>
+            <a href="/page/9/"><i class="fa fa-chevron-left"></i></a>
         
 
         <span>&nbsp;10 / 15&nbsp;</span>
         
         
-            <a href="http://wyb0.com/page/11/"><i class="fa fa-chevron-right"></i></a>
+            <a href="/page/11/"><i class="fa fa-chevron-right"></i></a>
         
     </nav>
 
