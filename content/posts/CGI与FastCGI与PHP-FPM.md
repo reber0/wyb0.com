@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["cgi"]
 title = "CGI与FastCGI与PHP-FPM"
-topics = ["Linux"]
+topics = ["PHP"]
 
 +++
 
