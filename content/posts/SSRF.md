@@ -55,12 +55,10 @@ http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png
 ```
 
 ### 0x05 通用的SSRF实例
-> ```
 * weblogin配置不当，天生ssrf漏洞
 * discuz x2.5/x3.0/x3.1/x3.2 ssrf漏洞
 * CVE-2016-1897/8 - FFMpeg
 * CVE-2016-3718 - ImageMagick
-```
 
 ### 0x06 附实例POC
 > ```python
@@ -103,3 +101,8 @@ for x in xrange(1,30):
     t = threading.Thread(target=get_title,args=(urllist,))
     t.start()
 ```
+
+### 0x07 防御
+* 限制协议为http或https
+* 禁止30x转跳
+* 过滤参数(只要出现内网ip直接干掉)
