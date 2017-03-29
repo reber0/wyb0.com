@@ -2,7 +2,7 @@
 date = "2016-10-12T10:24:38+08:00"
 description = ""
 draft = false
-tags = ["pentest"]
+tags = ["钓鱼"]
 title = "利用_blank属性钓鱼"
 topics = ["Pentest"]
 
