@@ -3,7 +3,7 @@ date = "2016-10-12T10:24:38+08:00"
 description = ""
 draft = false
 tags = ["pentest"]
-title = "关于_blank"
+title = "利用_blank属性钓鱼"
 topics = ["Pentest"]
 
 +++
