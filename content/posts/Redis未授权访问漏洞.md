@@ -2,7 +2,7 @@
 date = "2016-08-03T15:52:26+08:00"
 description = ""
 draft = false
-tags = ["越权"]
+tags = ["越权","redis"]
 title = "Redis未授权访问漏洞"
 topics = ["Pentest"]
 

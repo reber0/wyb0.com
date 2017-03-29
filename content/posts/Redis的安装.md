@@ -2,7 +2,7 @@
 date = "2016-08-03T00:00:48+08:00"
 description = ""
 draft = false
-tags = ["server"]
+tags = ["server","redis"]
 title = "Redis的安装"
 topics = ["Server"]
 
