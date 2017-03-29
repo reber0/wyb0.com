@@ -177,13 +177,12 @@
 
 <h3 id="0x05-通用的ssrf实例:fc51d19c5562745d631f5060bfb65579">0x05 通用的SSRF实例</h3>
 
-<blockquote>
-<pre><code>* weblogin配置不当，天生ssrf漏洞
-* discuz x2.5/x3.0/x3.1/x3.2 ssrf漏洞
-* CVE-2016-1897/8 - FFMpeg
-* CVE-2016-3718 - ImageMagick
-</code></pre>
-</blockquote>
+<ul>
+<li>weblogin配置不当，天生ssrf漏洞</li>
+<li>discuz x2.5/x3.0/x3.1/x3.2 ssrf漏洞</li>
+<li>CVE-2016-<sup>1897</sup>&frasl;<sub>8</sub> - FFMpeg</li>
+<li>CVE-2016-3718 - ImageMagick</li>
+</ul>
 
 <h3 id="0x06-附实例poc:fc51d19c5562745d631f5060bfb65579">0x06 附实例POC</h3>
 
@@ -228,6 +227,14 @@ for x in xrange(1,30):
     t.start()
 </code></pre>
 </blockquote>
+
+<h3 id="0x07-防御:fc51d19c5562745d631f5060bfb65579">0x07 防御</h3>
+
+<ul>
+<li>限制协议为http或https</li>
+<li>禁止30x转跳</li>
+<li>过滤参数(只要出现内网ip直接干掉)</li>
+</ul>
 
                 
                 <div style="padding:10px 1px;">

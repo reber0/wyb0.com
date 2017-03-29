@@ -80,13 +80,12 @@
 
 &lt;h3 id=&#34;0x05-通用的ssrf实例:fc51d19c5562745d631f5060bfb65579&#34;&gt;0x05 通用的SSRF实例&lt;/h3&gt;
 
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;* weblogin配置不当，天生ssrf漏洞
-* discuz x2.5/x3.0/x3.1/x3.2 ssrf漏洞
-* CVE-2016-1897/8 - FFMpeg
-* CVE-2016-3718 - ImageMagick
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;weblogin配置不当，天生ssrf漏洞&lt;/li&gt;
+&lt;li&gt;discuz x2.5/x3.0/x3.1/x3.2 ssrf漏洞&lt;/li&gt;
+&lt;li&gt;CVE-2016-&lt;sup&gt;1897&lt;/sup&gt;&amp;frasl;&lt;sub&gt;8&lt;/sub&gt; - FFMpeg&lt;/li&gt;
+&lt;li&gt;CVE-2016-3718 - ImageMagick&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h3 id=&#34;0x06-附实例poc:fc51d19c5562745d631f5060bfb65579&#34;&gt;0x06 附实例POC&lt;/h3&gt;
 
@@ -131,6 +130,14 @@ for x in xrange(1,30):
     t.start()
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x07-防御:fc51d19c5562745d631f5060bfb65579&#34;&gt;0x07 防御&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;限制协议为http或https&lt;/li&gt;
+&lt;li&gt;禁止30x转跳&lt;/li&gt;
+&lt;li&gt;过滤参数(只要出现内网ip直接干掉)&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
