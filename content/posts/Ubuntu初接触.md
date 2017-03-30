@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["linux"]
 title = "Ubuntu初接触(包括搭建LAMP)"
-topics = ["Linux"]
+topics = ["Linux", "Server"]
 
 +++
 
