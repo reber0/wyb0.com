@@ -43,4 +43,8 @@ $ msfconsole
 * 在msf中查看数据库连接状态
 ```
 msf > db_status
+#若出现错误：Module database cache not built yet, using slow search
+#则重新构建缓存，缓存构建通常需要5-10分钟左右。
+#构建完成后，退出Metasploit控制台，然后重新进入即可使用数据库缓存进行搜索模块
+msf > db_rebuild_cache
 ```
