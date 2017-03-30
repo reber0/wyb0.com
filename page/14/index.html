@@ -82,6 +82,59 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/">Linux之权限(重点)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        主要有三种参数：rwx 对于文件来说：分别是读/写/执行 对于目录来说：r读目录结构；w操作目录结构；x进入目录 如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh 若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中 文件权限 chmod -x [root@localhost tmp]# ls -l total 0 -rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# chmod -x a.txt 去除ugo的x权限 [root@localhost tmp]# ls -l total 0 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# ls -l a.txt -rwxrw-rw-. 1 root root 9 Apr 16 20:42 a.txt [root@localhost tmp]# cat a.txt echo aaa [root@localhost tmp]# ./a.txt 直接执行了a.txt中的echo命令 aaa [root@localhost tmp]# chmod -R [root@localhost tmp]# ls -l a;ls -l a/a.txt total 0 -rw-r--r--.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8Bvim/">Linux之vim</a></h2>
 
         
@@ -543,59 +596,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%E5%90%84%E7%A7%8D%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B%E6%B3%A8%E5%85%A5/">各种参数类型注入</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2015-12-20</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%B3%A8%E5%85%A5">注入</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        分类 根据注入时提交的变量参数类型，SQL注入点有不同的分类，不同的注入点，其注入时需要注意的事项也有所不同。按提交参数类型，SQL注入点主要分为下面3种：即数字型注入点、字符型注入点和搜索型注入点 数字型注入点 形如&rdquo;http://www.xxx.com/a.asp?ID=55&quot; ，这类注入的参数是&rdquo;数字&rdquo;，因此称为&rdquo;数字型注入点&rdquo;。 此类注入点提交的SQL语句，其原形大致为：select * from 表名 where 字段=55 当提交&rdquo;http://www.xxx.com/a.asp?ID=55 And [查询条件]&ldquo;时，向数据库提交的完整SQL语句为： select * from 表名 where 字段=55 and [查询条件] 字符型注入点 形如&rdquo;http://www.xxx.com/a.asp?Class=0123&quot;这类注入的参数是&quot;字符&quot;，称为&quot;字符型&quot;注入点。 此类注入点提交的 SQL 语句，其原形大致为： select * from 表名 where 字段=&lsquo;日期&rsquo; 当提交&rdquo;http://www.xxx.com/a.asp?Class=日期 And [查询条件]&ldquo;时，向数据库提交的SQL语句为： select * from 表名 where 字段=&lsquo;日期&rsquo; and [查询条件] 搜索型注入点 这是一类特殊的注入类型。 这类注入主要是指在进行数据搜索时没过滤搜索参数，一般在链接地址中有&rdquo;keyword=关键字&rdquo;，有的不显示的链接地址，而是直接通过搜索框表单提交。 此类注入点提交的 SQL 语句，其原形大致为： select * from 表名 where 字段 like &lsquo;%关键字%&rsquo; 当我们提交注入参数为&rdquo;keyword=&lsquo;and[查询条件] and &lsquo;%&rsquo;=&lsquo;,则向数据库提交的完整SQL语句为： select * from 表名 where 字段 like &lsquo;%&rsquo; and
-    </p>
-
-    
-    <footer>
-        <a href="/posts/%E5%90%84%E7%A7%8D%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B%E6%B3%A8%E5%85%A5/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -641,7 +641,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(57)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(58)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
@@ -820,7 +820,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">

