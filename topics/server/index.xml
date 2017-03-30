@@ -822,6 +822,111 @@ location ~ \.php$ {
     </item>
     
     <item>
+      <title>Ubuntu初接触(包括搭建LAMP)</title>
+      <link>http://wyb0.com/posts/Ubuntu%E5%88%9D%E6%8E%A5%E8%A7%A6/</link>
+      <pubDate>Sat, 07 May 2016 21:37:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Ubuntu%E5%88%9D%E6%8E%A5%E8%A7%A6/</guid>
+      <description>
+
+&lt;p&gt;我是在虚拟机中安装14.04.4版的ubuntu：
+下载地址：&lt;a href=&#34;http://mirrors.163.com/ubuntu-releases/14.04.4/ubuntu-14.04.4-desktop-amd64.iso&#34;&gt;http://mirrors.163.com/ubuntu-releases/14.04.4/ubuntu-14.04.4-desktop-amd64.iso&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;1-配源或选择最快的更新服务器:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;1.配源或选择最快的更新服务器&lt;/h2&gt;
+
+&lt;p&gt;选择最快的更新服务器:&lt;br /&gt;
+    System Settings &amp;ndash;&amp;gt; Software &amp;amp; Updates &amp;ndash;&amp;gt; Download from:other &amp;ndash;&amp;gt; Select Best Server &amp;ndash;&amp;gt; Choose Serve &amp;ndash;&amp;gt; Close&lt;/p&gt;
+
+&lt;p&gt;配源:&lt;br /&gt;
+    reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak&lt;br /&gt;
+    reber@ubuntu:~$ vim /etc/apt/sources.list&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;中科大源：
+deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+
+阿里源：
+deb http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe
+deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe
+deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe
+deb http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe
+deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe
+deb-src http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe
+deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe
+deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe
+deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe
+deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;reber@ubuntu:~$ sudo apt-get update&lt;/p&gt;
+
+&lt;h2 id=&#34;2-简单配置:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;2.简单配置&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo apt-get install open-vm-tools-desktop fuse
+$ sudo apt-get install vim
+$ sudo apt-get install nautilus-open-terminal  #注销,再次登陆即可任意地方右键打开终端
+$ vim /etc/default/apport   #更改enabled=0可解决开机总是提示有错误
+$ vim ~/.bashrc  #添加alias c=&#39;clear&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;3-安装输入法:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;3.安装输入法&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;apt-get -f install可解决依赖问题
+reber@ubuntu:~$ apt-get install ibus-sunpinyin   #安装后重启系统
+进入设置：system setting-&amp;gt;text entry-&amp;gt;添加sunpinyin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;4-配置apache-mysql-php:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;4.配置Apache/MySQL/PHP&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo apt-get install apache2
+sudo apt-get install mysql-client mysql-server
+sudo apt-get install php5
+sudo apt-get install php5-gd php5-mysql
+sudo apt-get install libapache2-mod-php5
+sudo apt-get install libapache2-mod-auth-mysql 
+sudo chmod 777 /var/www   #为了方便
+
+
+解决乱码问题：
+apache：sudo vim /etc/apache2/apache2.conf
+    最后添加AddDefaultCharset UTF-8
+mysql：编辑数据库配置文件
+    在[client]下面添加：
+        default-character-set=utf8
+    在[mysqld]在下面添加
+        character_set_server=utf8
+
+测试数据库连接：
+编辑mysql_test.php代码如下：
+&amp;lt;?php
+    $link = mysql_connect(&amp;quot;localhost&amp;quot;, &amp;quot;root&amp;quot;, &amp;quot;password&amp;quot;);
+    if(!$link)
+        die(&#39;Could not connect: &#39; . mysql_error());
+    else
+        echo &amp;quot;Mysql 配置正确!&amp;quot;;
+    mysql_close($link);
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;5-管理开机自启:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;5.管理开机自启&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;ubuntu管理软件自启一般用rcconf：sudo apt-get install rcconf
+ubuntu添加mysql自启可以在/etc/rc.local添加/etc/init.d/mysql start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;6-调时间:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;6.调时间&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
       <title>搭建DNS服务器</title>
       <link>http://wyb0.com/posts/%E6%90%AD%E5%BB%BADNS%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
       <pubDate>Tue, 14 Jul 2015 14:15:13 +0800</pubDate>
