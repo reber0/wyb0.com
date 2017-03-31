@@ -174,9 +174,13 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        连接数据库 查看数据库 创建数据库 一般将sql语句保存在文本中，然后复制运行 create database test; use test; create table users( id int not null auto_increment primary key, username varchar(20) not null, password varchar(32) not null ); create table msg( id int not null auto_increment primary key, uid int not null, title varchar(30) not null, content varchar(1024) not null, ip varchar(15) not null, date int(15) not null ); 插入数据 查看数据 删除数据 更新数据 更改数据库结构 &nbsp;
+        0x00 连接数据库 0x01 查看数据库 0x02 创建数据库 一般将sql语句保存在文本中，然后复制运行 create database test; use test; drop table if exists users; create table users( id int not null auto_increment primary key, username varchar(20) not null default 'xiaoming' comment '用户名', password varchar(32) not null default '123456' comment '密码' ); drop table if exists msg; create table msg( id int not null auto_increment primary key, uid int not null default '0' comment '用户id', title varchar(30) not
     </p>
 
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8BMySQL%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
     
 </article>
 

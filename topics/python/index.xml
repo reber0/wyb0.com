@@ -814,10 +814,11 @@ drop database if exists python;
 create database python;
 use python;
 
+drop table if exists msg;
 create table msg(
 id int not null auto_increment primary key,
-ip varchar(40) not null,
-domain varchar(100) not null
+ip varchar(40) not null default &#39;127.0.0.1&#39; comment &#39;ip地址&#39;,
+domain varchar(100) not null default &#39;www.xx.com&#39; comment &#39;域名&#39;
 );
 
 grant all privileges on python.* to &#39;python&#39;@&#39;%&#39; identified by &#39;123456&#39;;

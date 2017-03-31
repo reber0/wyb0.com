@@ -33,10 +33,11 @@ drop database if exists python;
 create database python;
 use python;
 
+drop table if exists msg;
 create table msg(
 id int not null auto_increment primary key,
-ip varchar(40) not null,
-domain varchar(100) not null
+ip varchar(40) not null default &#39;127.0.0.1&#39; comment &#39;ip地址&#39;,
+domain varchar(100) not null default &#39;www.xx.com&#39; comment &#39;域名&#39;
 );
 
 grant all privileges on python.* to &#39;python&#39;@&#39;%&#39; identified by &#39;123456&#39;;
@@ -270,8 +271,9 @@ information_schema的表columns中的列column_name记录了所有数据库的�
       <guid>http://wyb0.com/posts/PHP%E4%B9%8B%E5%B0%81%E8%A3%85MySQL%E7%B1%BB/</guid>
       <description>
 
-&lt;h2 id=&#34;config-inc-php内容如下:317ff1eff665d8a9829539f077e44501&#34;&gt;config.inc.php内容如下&lt;/h2&gt;
+&lt;h3 id=&#34;0x00-config-inc-php内容如下:317ff1eff665d8a9829539f077e44501&#34;&gt;0x00 config.inc.php内容如下&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php
 return array(
     &#39;DB_HOST&#39; =&amp;gt; &#39;192.168.188.134&#39;,
@@ -289,33 +291,38 @@ return array(
 
 ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;表设计如下:317ff1eff665d8a9829539f077e44501&#34;&gt;表设计如下&lt;/h2&gt;
+&lt;h3 id=&#34;0x01-表设计如下:317ff1eff665d8a9829539f077e44501&#34;&gt;0x01 表设计如下&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;create database scoreboard;
 use scoreboard;
 
+drop table if exists users;
 create table users(
 id int not null auto_increment primary key,
-gid int not null,                --组id
-username varchar(20) not null,
-password varchar(32) not null,
-sex varchar(2) not null,
-totalscore int  --个人总积分
+gid int not null default &#39;xiaoming&#39; comment &#39;组id&#39;,
+username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;,
+password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39;,
+sex varchar(2) not null default &#39;0&#39; comment &#39;性别&#39;,
+totalscore int not null default &#39;0&#39; comment &#39;个人总积分&#39;
 );
 
+drop table if exists share;
 create table share(
 id int not null auto_increment primary key,
 uid int not null,
-content varchar(1024) not null,  --分享内容
-comment varchar(1024) not null,   --点评
-date varchar(15) not null       --分享日期
+content varchar(1024) not null default &#39;content&#39; comment &#39;分享内容&#39;,
+comment varchar(1024) comment &#39;点评&#39;,
+date varchar(15) not null default &#39;20150101&#39; comment &#39;分享日期&#39;
 );
 
+drop table if exists score;
 create table score(
 id int not null auto_increment primary key,
-uid int not null,               --用户id
-score int not null,             --用户单次积分
+uid int not null default &#39;0&#39; comment &#39;用户id&#39;,
+score int not null default &#39;0&#39; comment &#39;用户单次积分&#39;,
 );
 
 grant all privileges on scoreboard.* to &#39;score&#39;@&#39;%&#39; identified by &#39;123456&#39;;
@@ -325,9 +332,11 @@ grant all privileges on scoreboard.* to &#39;score&#39;@&#39;%&#39; identified b
 
 flush privileges;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;封装类如下:317ff1eff665d8a9829539f077e44501&#34;&gt;封装类如下&lt;/h2&gt;
+&lt;h3 id=&#34;0x02-封装类如下:317ff1eff665d8a9829539f077e44501&#34;&gt;0x02 封装类如下&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;&amp;lt;?php
 
 class mysql {
@@ -569,6 +578,7 @@ class mysql {
 
 ?&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
 </description>
     </item>
     
@@ -777,42 +787,49 @@ min()&lt;/p&gt;
       <guid>http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/</guid>
       <description>
 
-&lt;h2 id=&#34;连接数据库:e48807970ba47940fe20d73596b3932d&#34;&gt;连接数据库&lt;/h2&gt;
+&lt;h3 id=&#34;0x00-连接数据库:e48807970ba47940fe20d73596b3932d&#34;&gt;0x00 连接数据库&lt;/h3&gt;
 
+&lt;blockquote&gt;
 
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/con_mysql.png&#34; alt=&#34;连接数据库.png&#34;&gt;
 &lt;/div&gt;
 
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;查看数据库:e48807970ba47940fe20d73596b3932d&#34;&gt;查看数据库&lt;/h2&gt;
+&lt;h3 id=&#34;0x01-查看数据库:e48807970ba47940fe20d73596b3932d&#34;&gt;0x01 查看数据库&lt;/h3&gt;
 
+&lt;blockquote&gt;
 
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/show_databases.png&#34; alt=&#34;查看数据库&#34;&gt;
 &lt;/div&gt;
 
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;创建数据库:e48807970ba47940fe20d73596b3932d&#34;&gt;创建数据库&lt;/h2&gt;
+&lt;h3 id=&#34;0x02-创建数据库:e48807970ba47940fe20d73596b3932d&#34;&gt;0x02 创建数据库&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;p&gt;一般将sql语句保存在文本中，然后复制运行&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;create database test;
 use test;
 
+drop table if exists users;
 create table users(
 id int not null auto_increment primary key,
-username varchar(20) not null,
-password varchar(32) not null
+username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;,
+password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39;
 );
 
+drop table if exists msg;
 create table msg(
 id int not null auto_increment primary key,
-uid int not null,
-title varchar(30) not null,
-content varchar(1024) not null,
-ip varchar(15) not null,
-date int(15) not null
+uid int not null default &#39;0&#39; comment &#39;用户id&#39;,
+title varchar(30) not null default &#39;title&#39; comment &#39;信息标题&#39;,
+content varchar(1024) not null default &#39;content&#39; comment &#39;信息内容&#39;,
+ip varchar(15) not null default &#39;127.0.0.1&#39; comment &#39;IP地址&#39;,
+date int(15) not null default &#39;20010101&#39; comment &#39;日期&#39;
 );
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -821,52 +838,63 @@ date int(15) not null
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/create_database_table.png&#34; alt=&#34;创建数据库&#34;&gt;
 &lt;/div&gt;
 
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;插入数据:e48807970ba47940fe20d73596b3932d&#34;&gt;插入数据&lt;/h2&gt;
+&lt;h3 id=&#34;0x03-插入数据:e48807970ba47940fe20d73596b3932d&#34;&gt;0x03 插入数据&lt;/h3&gt;
 
+&lt;blockquote&gt;
 
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_insert.png&#34; alt=&#34;插入数据&#34;&gt;
 &lt;/div&gt;
 
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;查看数据:e48807970ba47940fe20d73596b3932d&#34;&gt;查看数据&lt;/h2&gt;
+&lt;h3 id=&#34;0x04-查看数据:e48807970ba47940fe20d73596b3932d&#34;&gt;0x04 查看数据&lt;/h3&gt;
 
+&lt;blockquote&gt;
 
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_select.png&#34; alt=&#34;查看数据&#34;&gt;
 &lt;/div&gt;
 
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;删除数据:e48807970ba47940fe20d73596b3932d&#34;&gt;删除数据&lt;/h2&gt;
+&lt;h3 id=&#34;0x05-删除数据:e48807970ba47940fe20d73596b3932d&#34;&gt;0x05 删除数据&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;p&gt;
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_delete.png&#34; alt=&#34;删除数据&#34;&gt;
 &lt;/div&gt;
 &lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;更新数据:e48807970ba47940fe20d73596b3932d&#34;&gt;更新数据&lt;/h2&gt;
+&lt;h3 id=&#34;0x06-更新数据:e48807970ba47940fe20d73596b3932d&#34;&gt;0x06 更新数据&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;p&gt;
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_update.png&#34; alt=&#34;更新数据&#34;&gt;
 &lt;/div&gt;
 &lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;更改数据库结构:e48807970ba47940fe20d73596b3932d&#34;&gt;更改数据库结构&lt;/h2&gt;
+&lt;h3 id=&#34;0x07-更改数据库结构:e48807970ba47940fe20d73596b3932d&#34;&gt;0x07 更改数据库结构&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;p&gt;
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_alter.png&#34; alt=&#34;添加一列&#34;&gt;
 &lt;/div&gt;
 
-&lt;br /&gt;&amp;nbsp;
+&lt;br /&gt;&lt;br /&gt;
 
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_drop.png&#34; alt=&#34;删除一个表&#34;&gt;
 &lt;/div&gt;
 &lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
     </item>
     

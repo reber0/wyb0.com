@@ -400,7 +400,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 安装 下载MySQL-python-1.2.3.win-amd64-py2.7.exe然后安装 0x01 简单表设计如下 insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; create table msg( id int not null auto_increment primary key, ip varchar(40) not null, domain varchar(100) not null ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges; 0x02 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import MySQLdb class mysql(object): &quot;&quot;&quot;docstring for mysql&quot;&quot;&quot; def __init__(self, dbconfig): self.host
+        0x00 安装 下载MySQL-python-1.2.3.win-amd64-py2.7.exe然后安装 0x01 简单表设计如下 insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default '127.0.0.1' comment 'ip地址', domain varchar(100) not null default 'www.xx.com' comment '域名' ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges; 0x02 代码 #!/usr/bin/env python # -*- coding:
     </p>
 
     
