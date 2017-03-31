@@ -2,7 +2,7 @@
 date = "2016-08-18T10:38:41+08:00"
 description = ""
 draft = false
-tags = ["metasploit"]
+tags = ["msf"]
 title = "Ubuntu下安装Metasploit"
 topics = ["Pentest"]
 
