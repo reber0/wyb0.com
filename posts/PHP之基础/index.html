@@ -115,7 +115,7 @@
                 
                 
 
-<h2 id="php的作用:5ee88451c97d3863f0fa462d8a63e052">PHP的作用</h2>
+<h3 id="0x00-php的作用:5ee88451c97d3863f0fa462d8a63e052">0x00 PHP的作用</h3>
 
 <ol>
 <li>收集表单数据</li>
@@ -130,41 +130,51 @@
 <li>服务器端的其他相关操作</li>
 </ol>
 
-<h2 id="php代码嵌入位置:5ee88451c97d3863f0fa462d8a63e052">PHP代码嵌入位置</h2>
+<h3 id="0x01-php代码嵌入位置:5ee88451c97d3863f0fa462d8a63e052">0x01 PHP代码嵌入位置</h3>
 
-<p>可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&lt;?php起始符和终止符?&gt;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。</p>
+<blockquote>
+<pre><code class="language-php">可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&quot;&lt;?php&quot;起始符和终止符&quot;?&gt;&quot;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。
+</code></pre>
+</blockquote>
 
-<h2 id="解读开始和结束标记:5ee88451c97d3863f0fa462d8a63e052">解读开始和结束标记</h2>
+<h3 id="0x02-解读开始和结束标记:5ee88451c97d3863f0fa462d8a63e052">0x02 解读开始和结束标记</h3>
 
-<p>前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags</p>
+<blockquote>
+<pre><code class="language-bash">1. &lt;?php ?&gt;
+2. &lt;script language=&quot;php&quot;&gt;&lt;/script&gt;
+3. &lt;? ?&gt;
+4. &lt;% %&gt;
+//前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags
+</code></pre>
+</blockquote>
 
-<ol>
-<li><code>&lt;?php ?&gt;</code></li>
-<li><code>&lt;script language=&quot;php&quot;&gt;&lt;/script&gt;</code></li>
-<li><code>&lt;? ?&gt;</code></li>
-<li><code>&lt;% %&gt;</code></li>
-</ol>
+<h3 id="0x03-指令分割符:5ee88451c97d3863f0fa462d8a63e052">0x03 指令分割符</h3>
 
-<h2 id="指令分割符:5ee88451c97d3863f0fa462d8a63e052">指令分割符</h2>
-
+<blockquote>
 <p>php一段代码中除了最后一行不用分号，其他每句都要用分号结束，不过推荐每句都用分号结束</p>
+</blockquote>
 
-<h2 id="注释:5ee88451c97d3863f0fa462d8a63e052">注释</h2>
+<h3 id="0x04-注释:5ee88451c97d3863f0fa462d8a63e052">0x04 注释</h3>
 
-<ol>
-<li>若觉得代码不合适则可以注释，但不要急于删除</li>
-<li>注释的目的在于说明程序</li>
-<li>注释对调试和编写程序可以起到很好的帮助作用</li>
-<li>PHP注释符有：”/**/”、“//”、“#”</li>
-</ol>
+<blockquote>
+<pre><code class="language-php">1. 若觉得代码不合适则可以注释，但不要急于删除
+2. 注释的目的在于说明程序
+3. 注释对调试和编写程序可以起到很好的帮助作用
+4. PHP注释符有：&quot;/**/&quot;、&quot;//&quot;、&quot;#&quot;
+</code></pre>
+</blockquote>
 
-<h2 id="空白符:5ee88451c97d3863f0fa462d8a63e052">空白符</h2>
+<h3 id="0x05-空白符:5ee88451c97d3863f0fa462d8a63e052">0x05 空白符</h3>
 
+<blockquote>
 <p>空白符(空格、tab制表符、换行)会被php引擎忽略</p>
+</blockquote>
 
-<h2 id="变量的声明:5ee88451c97d3863f0fa462d8a63e052">变量的声明</h2>
+<h3 id="0x06-变量的声明:5ee88451c97d3863f0fa462d8a63e052">0x06 变量的声明</h3>
 
+<blockquote>
 <p>其中双引号中的变量可以被解析，单引号中的变量不能被解析</p>
+</blockquote>
 
 <ol>
 <li>变量名对大小写敏感</li>
@@ -173,17 +183,20 @@
 <li>变量名中间不能有空格</li>
 </ol>
 
-<h2 id="可变变量:5ee88451c97d3863f0fa462d8a63e052">可变变量</h2>
+<h3 id="0x07-可变变量:5ee88451c97d3863f0fa462d8a63e052">0x07 可变变量</h3>
 
+<blockquote>
 <pre><code class="language-php">&lt;?php
     $a = 'hello';
     $$a = 'world';  //此时$a的值hello就相当于$$a的键
     echo &quot;$a $hello&quot;; //输出hello world
 ?&gt;
 </code></pre>
+</blockquote>
 
-<h2 id="引用:5ee88451c97d3863f0fa462d8a63e052">引用</h2>
+<h3 id="0x08-引用:5ee88451c97d3863f0fa462d8a63e052">0x08 引用</h3>
 
+<blockquote>
 <pre><code class="language-php">&lt;?php
     $a = 123;
     $b = $a;
@@ -192,8 +205,9 @@
     $b = 111;  //此时$b和$c都是111
 ?&gt;
 </code></pre>
+</blockquote>
 
-<h2 id="变量类型:5ee88451c97d3863f0fa462d8a63e052">变量类型</h2>
+<h3 id="0x09-变量类型:5ee88451c97d3863f0fa462d8a63e052">0x09 变量类型</h3>
 
 <ol>
 <li>布尔型(boolean,true,false)</li>
@@ -207,20 +221,22 @@
 <li>伪类型(mixed,number,callback)</li>
 </ol>
 
-<h2 id="布尔类型:5ee88451c97d3863f0fa462d8a63e052">布尔类型</h2>
+<h3 id="0x0a-布尔类型:5ee88451c97d3863f0fa462d8a63e052">0x0A 布尔类型</h3>
 
+<blockquote>
 <p>以下会被认为是FALSE，其他所有值都被认为是TRUE(包括任何资源)</p>
+</blockquote>
 
 <ol>
 <li>布尔值FALSE</li>
 <li>整型值0(零)为假，-1和其他非零值都是TRUE</li>
 <li>浮点型0.0</li>
-<li>空白字符串和字符串&rdquo;0&rdquo;</li>
+<li>空白字符串和字符串“0”</li>
 <li>没有成员变量的数组</li>
 <li>没有单元的对象(仅适用于PHP4)</li>
 </ol>
 
-<h2 id="null类型:5ee88451c97d3863f0fa462d8a63e052">NULL类型</h2>
+<h3 id="0x0b-null类型:5ee88451c97d3863f0fa462d8a63e052">0x0B NULL类型</h3>
 
 <ol>
 <li>NULL不区分大小写</li>
@@ -231,7 +247,7 @@
 <li>被unset()函数销毁的变量为NULL</li>
 </ol>
 
-<h2 id="类型转换:5ee88451c97d3863f0fa462d8a63e052">类型转换</h2>
+<h3 id="0x0c-类型转换:5ee88451c97d3863f0fa462d8a63e052">0x0C 类型转换</h3>
 
 <ol>
 <li>自动类型转换
@@ -251,56 +267,39 @@
 </ol></li>
 </ol>
 
-<h2 id="运算符:5ee88451c97d3863f0fa462d8a63e052">运算符</h2>
+<h3 id="0x0d-运算符:5ee88451c97d3863f0fa462d8a63e052">0x0D 运算符</h3>
 
-<ol>
-<li>算数运算符：&rdquo;+&ldquo;、&rdquo;-&ldquo;、&rdquo;*&ldquo;、&rdquo;/&ldquo;、&rdquo;%&rdquo;</li>
-<li>赋值运算符：&rdquo;=&ldquo;、&rdquo;+=&ldquo;、&rdquo;-=&ldquo;、&rdquo;*=&ldquo;、&rdquo;/=&ldquo;、&rdquo;%=&rdquo;</li>
-<li>字符串运算符：&rdquo;.&ldquo;、&rdquo;.=&rdquo;</li>
-<li>递增/递减运算符：&rdquo;++$a&rdquo;、&rdquo;$a++(先赋值再++)&ldquo;、&rdquo;- -$a&rdquo;、&rdquo;$a- -&rdquo;</li>
-
-<li><p>比较运算符
-```</p>
-
-<ol>
-<li>==    等于</li>
-<li>===   全等(完全相同)</li>
-<li>！=    不等于</li>
-<li>&lt;&gt;    不等于</li>
-<li>！==   不全等(完全不同)</li>
-<li>&gt;     大于</li>
-<li>&lt;     小于</li>
-<li>&gt;=    大于或等于</li>
-<li>&lt;=    小于或等于
-```</li>
-</ol></li>
-
-<li><p>逻辑运算符
-```</p>
-
-<ol>
-<li>and  都为true则返回true</li>
-<li>or   至少有一个为true则返回true</li>
-<li>xor  有且仅有一个为true则返回true</li>
-<li>&amp;&amp;   都为true则返回true</li>
-<li>||   至少有一个为true则返回true</li>
-<li>！    不为true则返回true
-```</li>
-</ol></li>
-
-<li><p>数组运算符
-```</p>
-
-<ol>
-<li>+   联合但不覆盖重复的键</li>
-<li>==   拥有相同键/值对则返回true</li>
-<li>===  拥有相同键/值对，且顺序相同、类型相同则返回true</li>
-<li>！=   不等于则返回true</li>
-<li>&lt;&gt;   不等于则返回true</li>
-<li>!==  完全不同则返回true
-```</li>
-</ol></li>
-</ol>
+<blockquote>
+<pre><code>* 算数运算符：&quot;+&quot;、&quot;-&quot;、&quot;*&quot;、&quot;/&quot;、&quot;%&quot;
+* 赋值运算符：&quot;=&quot;、&quot;+=&quot;、&quot;-=&quot;、&quot;*=&quot;、&quot;/=&quot;、&quot;%=&quot;
+* 字符串运算符：&quot;.&quot;、&quot;.=&quot;
+* 递增/递减运算符：&quot;++$a&quot;、&quot;$a++(先赋值再++)&quot;、&quot;--$a&quot;、&quot;$a--&quot;
+* 比较运算符
+    * ==   等于
+    * ===  全等(完全相同)
+    * !=   不等于
+    * &lt;&gt;   不等于
+    * !==  不全等(完全不同)
+    * &gt;    大于
+    * &lt;    小于
+    * &gt;=   大于或等于
+    * &lt;=   小于或等于
+* 逻辑运算符
+    * and  都为true则返回true
+    * or   至少有一个为true则返回true
+    * xor  有且仅有一个为true则返回true
+    * &amp;&amp;   都为true则返回true
+    * ||   至少有一个为true则返回true
+    * !    不为true则返回true
+* 数组运算符
+    * +    联合但不覆盖重复的键
+    * ==   拥有相同键/值对则返回true
+    * ===  拥有相同键/值对，且顺序相同、类型相同则返回true
+    * !=   不等于则返回true
+    * &lt;&gt;   不等于则返回true
+    * !==  完全不同则返回true
+</code></pre>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">
