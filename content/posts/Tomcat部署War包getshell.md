@@ -2,7 +2,7 @@
 date = "2016-08-02T22:30:13+08:00"
 description = ""
 draft = false
-tags = ["pentest"]
+tags = ["getshell"]
 title = "Tomcat部署War包getshell"
 topics = ["Pentest"]
 

@@ -2,7 +2,7 @@
 date = "2016-08-12T08:39:35+08:00"
 description = ""
 draft = false
-tags = ["linux", "server"]
+tags = ["server"]
 title = "Linux下虚拟主机搭建多站点"
 topics = ["Server"]
 

@@ -2,7 +2,7 @@
 date = "2016-07-25T23:32:52+08:00"
 description = ""
 draft = false
-tags = ["pentest"]
+tags = ["反序列化"]
 title = "PHP反序列化漏洞"
 topics = ["Pentest"]
 

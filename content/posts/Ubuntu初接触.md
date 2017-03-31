@@ -2,7 +2,7 @@
 date = "2016-05-07T21:37:07+08:00"
 description = ""
 draft = false
-tags = ["linux"]
+tags = ["server"]
 title = "Ubuntu初接触(包括搭建LAMP)"
 topics = ["Linux", "Server"]
 

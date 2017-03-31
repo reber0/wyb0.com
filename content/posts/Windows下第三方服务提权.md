@@ -2,7 +2,7 @@
 date = "2016-08-07T23:38:58+08:00"
 description = ""
 draft = false
-tags = ["windows", "提权"]
+tags = ["提权"]
 title = "Windows下第三方服务提权"
 topics = ["Pentest"]
 

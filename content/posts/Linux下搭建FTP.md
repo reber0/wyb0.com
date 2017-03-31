@@ -2,7 +2,7 @@
 date = "2016-06-18T09:40:06+08:00"
 description = ""
 draft = false
-tags = ["linux","server"]
+tags = ["server"]
 title = "Linux下搭建FTP"
 topics = ["Server"]
 

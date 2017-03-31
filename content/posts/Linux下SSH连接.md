@@ -2,7 +2,7 @@
 date = "2016-08-10T11:46:13+08:00"
 description = ""
 draft = false
-tags = ["linux"]
+tags = ["ssh"]
 title = "Linux下SSH连接"
 topics = ["Linux"]
 

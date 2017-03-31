@@ -2,7 +2,7 @@
 date = "2016-08-11T21:17:21+08:00"
 description = ""
 draft = false
-tags = ["pentest"]
+tags = ["脑图"]
 title = "Web常见漏洞脑图"
 topics = ["Pentest"]
 

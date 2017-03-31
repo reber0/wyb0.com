@@ -2,7 +2,7 @@
 date = "2016-05-12T15:27:14+08:00"
 description = ""
 draft = false
-tags = ["工具"]
+tags = ["爆破"]
 title = "theHarvester+Hydra爆邮箱弱口令"
 topics = ["Pentest"]
 

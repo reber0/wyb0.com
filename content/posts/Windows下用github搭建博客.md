@@ -2,7 +2,7 @@
 date = "2016-05-10T09:24:07+08:00"
 description = ""
 draft = false
-tags = ["git", "windows"]
+tags = ["git"]
 title = "Windows下用github搭建博客"
 topics = ["Windows", "Git"]
 

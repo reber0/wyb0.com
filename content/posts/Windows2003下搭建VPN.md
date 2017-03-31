@@ -2,7 +2,7 @@
 date = "2016-07-07T10:39:50+08:00"
 description = ""
 draft = false
-tags = ["windows", "server"]
+tags = ["server"]
 title = "Windows2003下搭建VPN"
 topics = ["Windows", "Server"]
 
