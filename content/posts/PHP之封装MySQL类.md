@@ -8,8 +8,8 @@ topics = ["PHP", "MySQL"]
 
 +++
 
-## config.inc.php内容如下
-```
+### 0x00 config.inc.php内容如下
+> ```
 <?php
 return array(
     'DB_HOST' => '192.168.188.134',
@@ -28,32 +28,35 @@ return array(
 ?>
 ```
 
-## 表设计如下
-```
+### 0x01 表设计如下
+> ```
 create database scoreboard;
 use scoreboard;
 
+drop table if exists users;
 create table users(
 id int not null auto_increment primary key,
-gid int not null,                --组id
-username varchar(20) not null,
-password varchar(32) not null,
-sex varchar(2) not null,
-totalscore int  --个人总积分
+gid int not null default 'xiaoming' comment '组id',
+username varchar(20) not null default 'xiaoming' comment '用户名',
+password varchar(32) not null default '123456' comment '密码',
+sex varchar(2) not null default '0' comment '性别',
+totalscore int not null default '0' comment '个人总积分'
 );
 
+drop table if exists share;
 create table share(
 id int not null auto_increment primary key,
 uid int not null,
-content varchar(1024) not null,  --分享内容
-comment varchar(1024) not null,   --点评
-date varchar(15) not null       --分享日期
+content varchar(1024) not null default 'content' comment '分享内容',
+comment varchar(1024) comment '点评',
+date varchar(15) not null default '20150101' comment '分享日期'
 );
 
+drop table if exists score;
 create table score(
 id int not null auto_increment primary key,
-uid int not null,               --用户id
-score int not null,             --用户单次积分
+uid int not null default '0' comment '用户id',
+score int not null default '0' comment '用户单次积分',
 );
 
 grant all privileges on scoreboard.* to 'score'@'%' identified by '123456';
@@ -64,8 +67,8 @@ grant all privileges on scoreboard.* to 'score'@'%' identified by '123456';
 flush privileges;
 ```
 
-## 封装类如下
-```
+### 0x02 封装类如下
+> ```
 <?php
 
 class mysql {

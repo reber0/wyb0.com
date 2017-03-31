@@ -19,10 +19,11 @@ drop database if exists python;
 create database python;
 use python;
 
+drop table if exists msg;
 create table msg(
 id int not null auto_increment primary key,
-ip varchar(40) not null,
-domain varchar(100) not null
+ip varchar(40) not null default '127.0.0.1' comment 'ip地址',
+domain varchar(100) not null default 'www.xx.com' comment '域名'
 );
 
 grant all privileges on python.* to 'python'@'%' identified by '123456';
