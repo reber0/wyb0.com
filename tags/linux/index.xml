@@ -7,1116 +7,8 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Fri, 12 Aug 2016 08:39:35 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 20 Apr 2016 15:54:07 +0800</lastBuildDate>
     <atom:link href="http://wyb0.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
-    
-    <item>
-      <title>Linux下虚拟主机搭建多站点</title>
-      <link>http://wyb0.com/posts/Linux%E4%B8%8B%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BA%E5%A4%9A%E7%AB%99%E7%82%B9/</link>
-      <pubDate>Fri, 12 Aug 2016 08:39:35 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/Linux%E4%B8%8B%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BA%E5%A4%9A%E7%AB%99%E7%82%B9/</guid>
-      <description>
-
-&lt;p&gt;环境：CentOS-6.5-x86_64-minimal&lt;/p&gt;
-
-&lt;h3 id=&#34;0x00-搭建lamp:9a5e185975b471e9e09c3f973133f164&#34;&gt;0x00 搭建LAMP&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;安装Apache&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;yum install httpd
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;安装MySQL&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;yum install mysql mysql-server&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;设置数据库&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[reber@localhost conf]$ sudo mysql_secure_installation
-# 更新root密码：
-[reber@localhost conf]$ mysql -uroot –p
-mysql&amp;gt; use mysql;
-mysql&amp;gt; update user set password=password(&#39;123456&#39;) where user=&#39;root&#39;;
-mysql&amp;gt; flush privileges;  //不想重启mysql就使新密码生效就需要运行此命令刷新
-mysql&amp;gt; insert into mysql.user(Host,User,Password) values(&amp;quot;localhost&amp;quot;,&amp;quot;blog&amp;quot;,password(&amp;quot;123456&amp;quot;));
-# mysql&amp;gt; detele form mysql.user where User=&#39;blog&#39; and Host=&#39;localhost&#39;;  //这步可以删除用户
-mysql&amp;gt; flush privileges;  //刷新
-mysql&amp;gt; create database db_blog;
-Query OK, 1 row affected (0.00 sec)
-# 授权用户&amp;quot;blog&amp;quot;拥有db_blog数据库的所有权限
-mysql&amp;gt; grant all privileges on db_blog.* to blog@localhost identified by &#39;666666&#39;;
-mysql&amp;gt; flush privileges;  //刷新
-[reber@localhost conf]$ mysql –ublog –p  //此时就需要用666666登陆数据库db_blog
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;安装PHP&lt;br /&gt;
-yum install php php-mysql php-gd php-imap php-ldap php-mbstring php-odbc php-pear php-xml php-xmlrpc&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;验证AMP搭建成功&lt;br /&gt;
-[reber@localhost html]$ echo &amp;ldquo;&amp;lt;?php phpinfo();?&amp;gt;&amp;rdquo; &amp;gt;&amp;gt; index.php
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_test.png&#34; alt=&#34;测试lamp环境&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;0x01-设置虚拟主机:9a5e185975b471e9e09c3f973133f164&#34;&gt;0x01 设置虚拟主机&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;[reber@localhost html]$ sudo vim /etc/httpd/conf/httpd.conf
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_set_port.png&#34; alt=&#34;设置端口&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_set_virtualhost.png&#34; alt=&#34;设置虚拟主机&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_add_file.png&#34; alt=&#34;设置虚拟主机&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x02-修改本地windows的hosts文件-进行测试:9a5e185975b471e9e09c3f973133f164&#34;&gt;0x02 修改本地windows的hosts文件，进行测试&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_change_hosts.png&#34; alt=&#34;设置虚拟主机&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_visit_site.png&#34; alt=&#34;测试虚拟主机&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x03-搭建wordpress:9a5e185975b471e9e09c3f973133f164&#34;&gt;0x03 搭建WordPress&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;下载WordPress并设置&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;$ cd /var/www/blog
-$ sudo wget https://cn.wordpress.org/wordpress-4.5-zh_CN.tar.gz
-$ tar -zxvf wordpress-4.5-zh_CN.tar.gz
-$ chown –R  apache:apache  wordpress-4.5
-$ mv /var/www/blog/wordpress-4.5/* ../
-$ rm -rf wordpress-4.5
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;安装WordPress&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_install_wordpress1.png&#34; alt=&#34;安装WordPress1&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_install_wordpress2.png&#34; alt=&#34;安装WordPress2&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;0x04-登陆后台写博客:9a5e185975b471e9e09c3f973133f164&#34;&gt;0x04 登陆后台写博客&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_login_background.png&#34; alt=&#34;后台登陆&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/linux_virtual_host_add_article.png&#34; alt=&#34;添加文章&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Linux下SSH连接</title>
-      <link>http://wyb0.com/posts/Linux%E4%B8%8BSSH%E8%BF%9E%E6%8E%A5/</link>
-      <pubDate>Wed, 10 Aug 2016 11:46:13 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/Linux%E4%B8%8BSSH%E8%BF%9E%E6%8E%A5/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-ssh相关选项:e269c2bc9ccc66fa2c170f02752c5233&#34;&gt;0x00 SSH相关选项&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;-V 显示版本
--f 输入密码后进入后台模式
--N 不执行远程命令，用于端口转发
--D socket5代理
--L tcp转发
--C 使用数据压缩，网速快时会影响速度
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x01-ssh免密码登陆:e269c2bc9ccc66fa2c170f02752c5233&#34;&gt;0x01 SSH免密码登陆&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;A主机免密码登陆B主机：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;A主机运行：
-    ssh-keygen -t rsa
-    会生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub
-    将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中
-注：
-    要确保B主机~/.ssh/authorized_keys权限为600
-    要确保B主机~/.ssh/文件夹权限为700
-    要确保上述两个文件属主是当前用户
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_no_pwd_login_create_keys.png&#34; alt=&#34;A主机生成密钥对.png&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_no_pwd_login_write_pub_key_to_b.png&#34; alt=&#34;将A主机产生的公钥写入B主机.png&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_no_pwd_login_check_authorized_keys_permissions.png&#34; alt=&#34;检查B主机authorized_keys权限.png&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_no_pwd_login_a_login_b.png&#34; alt=&#34;A主机免密码登陆主机B.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x02-ssh反向连接:e269c2bc9ccc66fa2c170f02752c5233&#34;&gt;0x02 SSH反向连接&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;主机A要通过SSH连接主机B：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;B上先运行：
-ssh -NfR 8888:localhost:22 reber@A-IP
-输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_reverse_conn_b_run_command.png&#34; alt=&#34;主机B反向连接主机A.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;A主机运行：
-ssh root@127.0.0.1 -p 8888
-输入本机的root的密码即可登入主机B的root用户
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_reverse_conn_a_run_command.png&#34; alt=&#34;主机A连接主机B.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x03-ssh-socks5代理:e269c2bc9ccc66fa2c170f02752c5233&#34;&gt;0x03 SSH Socks5代理&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_socks5_proxy_set.png&#34; alt=&#34;设置ssh socks5.png&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_socks5_proxy_set_firefox.png&#34; alt=&#34;设置ssh socks5.png&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_socks5_proxy_firefox_internet.png&#34; alt=&#34;火狐通过代理可以上网.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>iptables简单配置DMZ</title>
-      <link>http://wyb0.com/posts/iptables%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AEDMZ/</link>
-      <pubDate>Tue, 05 Jul 2016 09:56:35 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/iptables%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AEDMZ/</guid>
-      <description>
-
-&lt;h2 id=&#34;要求:048f0b8adabe78f01c35e47696f601c8&#34;&gt;要求&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;内网可以访问外网&lt;/li&gt;
-&lt;li&gt;内网可以访问DMZ区&lt;/li&gt;
-&lt;li&gt;外网不能访问内网&lt;/li&gt;
-&lt;li&gt;外网能访问DMZ区的服务&lt;/li&gt;
-&lt;li&gt;DMZ区不能访问内网&lt;/li&gt;
-&lt;li&gt;DMZ区不能主动访问外网&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;拓扑:048f0b8adabe78f01c35e47696f601c8&#34;&gt;拓扑&lt;/h2&gt;
-
-&lt;blockquote&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_topology.png&#34; alt=&#34;iptables简单配置DMZ的拓扑.png&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;个主机ip信息:048f0b8adabe78f01c35e47696f601c8&#34;&gt;个主机IP信息&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;内网网段为：192.168.1.0/24&lt;br /&gt;
-DMZ区网段为：172.16.1.0/24
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_ip_info.png&#34; alt=&#34;iptables简单配置DMZ的ip信息.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;iptables的策略:048f0b8adabe78f01c35e47696f601c8&#34;&gt;iptables的策略&lt;/h2&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;新建iptables.sh,内容如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#!/bin/bash
-
-iptables –F #清空此表中的规则
-iptables –X #清空此表中的自定义规则
-iptables –Z #清空此表中的计数器为0
-iptables -P INPUT DROP
-iptables -P OUTPUT DROP
-iptables -P FORWARD DROP
-
-iptables -F -t nat
-iptables -X -t nat
-iptables -Z -t nat
-iptables -t nat -P PREROUTING ACCEPT
-iptables -t nat -P POSTROUTING ACCEPT
-iptables -t nat -P OUTPUT ACCEPT
-
-#添加必要的模块
-modprobe ip_nat_ftp
-modprobe iptable_nat
-modprobe ip_conntrack
-modprobe ip_conntrack_ftp
-#开启转发功能
-echo &amp;quot;1&amp;quot; &amp;gt; /proc/sys/net/ipv4/ip_forward
-#********************************************************************
-#PREROUTING：
-iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.16.1.1
-iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 21 -j DNAT --to-destination 172.16.1.1
-iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 10000:10100 -j DNAT --to-destination 172.16.1.1
-iptables -t nat -A PREROUTING -i eth2 -p tcp -d 172.16.1.1 --dport 80 -j DNAT --to-destination 172.16.1.1
-iptables -t nat -A PREROUTING -i eth2 -p tcp --dport 80 -j DNAT --to-destination 192.168.2.144
-#********************************************************************
-#FORWARD：
-iptables -A FORWARD -m state --state INVALID -j DROP
-iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -A FORWARD -i eth0 -o eth1 -m state --state NEW -j ACCEPT
-iptables -A FORWARD -i eth2 -o eth0 -m state --state NEW -j ACCEPT
-iptables -A FORWARD -i eth2 -o eth1 -m state --state NEW -j ACCEPT
-#********************************************************************
-#INPUT：
-iptables -A INPUT -m state --state INVALID -j DROP
-iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -i eth0 -p tcp –m multiport --dports 20,21 -j ACCEPT
-iptables -A INPUT -i eth2 -s 192.168.1.0/24 -j ACCEPT
-#********************************************************************
-#OUTPUT：
-iptables -A OUTPUT -m state --state INVALID -j DROP
-iptables -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -o eth1 -p tcp --dport 80 -m state --state NEW -j ACCEPT
-iptables -A OUTPUT -o eth1 -p tcp --dport 20 -m state --state NEW -j ACCEPT
-iptables -A OUTPUT -o eth1 -p tcp --dport 21 -m state --state NEW -j ACCEPT
-iptables -A OUTPUT -o eth1 -p tcp --dport 10000:10100 -m state --state NEW -j ACCEPT
-#********************************************************************
-#POSTROUTING：
-iptables -t nat -A POSTROUTING -o eth0 -s 192.168.1.0/24 -j SNAT --to-source 192.168.2.144
-iptables -t nat -A POSTROUTING -o eth0 -s 172.16.1.0/24 -j SNAT --to-source 192.168.2.144
-#********************************************************************
-service iptables save
-service iptables restart
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;测试:048f0b8adabe78f01c35e47696f601c8&#34;&gt;测试&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;内网可以访问外网
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_lan_to_internet.png&#34; alt=&#34;内网可以访问外网.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;内网可以访问DMZ
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_lan_to_dmz_www.png&#34; alt=&#34;内网可以访问DMZ的www.png&#34;&gt;
-&lt;/div&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_lan_to_dmz_ftp.png&#34; alt=&#34;内网可以访问DMZ的ftp.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;外网不能访问内网
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_internet_not_to_lan.png&#34; alt=&#34;外网不能访问内网.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;外网可以访问DMZ
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_internet_to_dmz_www.png&#34; alt=&#34;外网可以访问DMZ的www.png&#34;&gt;
-&lt;/div&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_internet_to_dmz_ftp.png&#34; alt=&#34;外网可以访问DMZ的ftp.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;DMZ不能访问内网
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_dmz_not_to_lan.png&#34; alt=&#34;DMZ不能访问内网.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;DMZ不能访问外网
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iptables_dmz_dmz_not_to_internet.png&#34; alt=&#34;DMZ不能访问外网.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Linux下搭建FTP</title>
-      <link>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BAFTP/</link>
-      <pubDate>Sat, 18 Jun 2016 09:40:06 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BAFTP/</guid>
-      <description>
-
-&lt;pre&gt;&lt;code&gt;安装环境为：CentOS-6.5-x86_64-minimal
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;安装:0321999c3409190821365412ef440ce9&#34;&gt;安装&lt;/h2&gt;
-
-&lt;p&gt;yum install vsftpd&lt;/p&gt;
-
-&lt;h2 id=&#34;配置:0321999c3409190821365412ef440ce9&#34;&gt;配置&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;备份&lt;br /&gt;
-cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;编辑配置文件&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;vim /etc/vsftpd/vsftpd.conf
-anonymous_enable=NO #设定不允许匿名访问
-local_enable=YES    #设定本地用户可以访问
-chroot_list_enable=YES  #使用户不能离开主目录
-xferlog_file=/var/log/vsftpd.log    #设定vsftpd的服务日志
-ascii_upload_enable=YES
-ascii_download_enable=YES   #设定支持ASCII
-pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证
-# 并在尾部追加：
-guest_enable=YES    #设定启用虚拟用户功能。
-guest_username=ftp  #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了
-guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;新增chroot_list并将ftp用户输入进去&lt;br /&gt;
-touch /etc/vsftpd/chroot_list&lt;br /&gt;
-echo ftp &amp;gt;&amp;gt; /etc/vsftpd/chroot_list&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;安装Berkeley DB工具用来对虚拟用户认证配置管理：&lt;br /&gt;
-yum install db4 db4-utils&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;创建用户账户文件&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;vim /etc/vsftpd/vuser_passwd.txt
-user1   #奇数行是用户名
-123456  #偶数行是密码
-user2   #奇数行是用户名
-666666  #偶数行是密码
-user3   #奇数行是用户名
-user3   #偶数行是密码
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;用Berkeley DB工具生成认证文件&lt;br /&gt;
-db_load -T -t hash -f /etc/vsftpd/vuser_passwd.txt   /etc/vsftpd/vuser_passwd.db&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;编辑/etc/pam.d/vsftpd，注释掉所有原来内容，添加如下内容：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;auth required pam_userdb.so db=/etc/vsftpd/vuser_passwd
-account required pam_userdb.so db=/etc/vsftpd/vuser_passwd
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;针对每个用户增加个性化配置文件:0321999c3409190821365412ef440ce9&#34;&gt;针对每个用户增加个性化配置文件&lt;/h2&gt;
-
-&lt;p&gt;配置后user1登陆后所在目录就是/var/ftphome了，而user2、user3登陆后还是在默认的/var/ftp/&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mkdir /etc/vsftpd/vuser_conf/
-vim /etc/vsftpd/vuser_conf/user1
-local_root=/var/ftphome/   #此目录位置可以修改
-write_enable=YES #可写
-anon_umask=022 #掩码
-anon_world_readable_only=NO
-anon_upload_enable=YES
-anon_mkdir_write_enable=YES
-anon_other_write_enable=YES
-创建目录并修改权限：
-mkdir /var/ftphome
-chmod 777 /var/ftphome
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;启动服务:0321999c3409190821365412ef440ce9&#34;&gt;启动服务&lt;/h2&gt;
-
-&lt;p&gt;service vsftpd start&lt;br /&gt;
-此时就可以用用户名登陆ftp了(只能终端登录)&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Linux下搭建Tomcat&#43;MySQL&#43;JSP</title>
-      <link>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BATomcat&#43;MySQL&#43;JSP/</link>
-      <pubDate>Fri, 17 Jun 2016 23:08:05 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BATomcat&#43;MySQL&#43;JSP/</guid>
-      <description>
-
-&lt;pre&gt;&lt;code&gt;安装环境为：CentOS-6.5-x86_64-minimal
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;安装mysql:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;安装mysql&lt;/h2&gt;
-
-&lt;p&gt;sudo yum install mysql mysql-server mysql-devel&lt;/p&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/install_mysql.png&#34; alt=&#34;安装mysql.png&#34;&gt;
-&lt;/div&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/creat_db_tomcat.png&#34; alt=&#34;创建数据库tomcat.png&#34;&gt;
-&lt;/div&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/grant_db_tomcat.png&#34; alt=&#34;将数据库tomcat分配给用户tomcat.png&#34;&gt;
-&lt;/div&gt;
-
-
-&lt;h2 id=&#34;安装jdk和tomcat:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;安装jdk和tomcat&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;创建安装jdk和tomcat的文件夹
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mkdir_java_tomcat.png&#34; alt=&#34;创建安装jdk和tomcat的文件夹.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;下载安装包并解压安装&lt;br /&gt;
-jdk包可在&lt;a href=&#34;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&#34;&gt;http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html&lt;/a&gt; 下载&lt;br /&gt;
-tomcat包可在&lt;a href=&#34;http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz&#34;&gt;http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz&lt;/a&gt; 下载
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/download_tomcat.png&#34; alt=&#34;下载tomcat安装包.png&#34;&gt;
-&lt;/div&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/cp_jdk_tomcat_to_opt.png&#34; alt=&#34;复制解压后的安装包到/opt下对应目录.png&#34;&gt;
-&lt;/div&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/add_java_env.png&#34; alt=&#34;为java添加环境变量.png&#34;&gt;
-&lt;/div&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/java_version.png&#34; alt=&#34;验证jdk是否设置成功.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;简单配置tomcat:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;简单配置tomcat&lt;/h2&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/config_tomcat.png&#34; alt=&#34;简单配置tomcat1.png&#34;&gt;
-&lt;/div&gt;
-
-
-&lt;h2 id=&#34;启动tomcat:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;启动tomcat&lt;/h2&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/start_tomcat.png&#34; alt=&#34;启动tomcat.png&#34;&gt;
-&lt;/div&gt;
-
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/see_tomcat_index.png&#34; alt=&#34;访问tomcat主页.png&#34;&gt;
-&lt;/div&gt;
-
-
-&lt;h2 id=&#34;连接数据库:fbf0d4a2271391a40d84f5a22404d870&#34;&gt;连接数据库&lt;/h2&gt;
-
-&lt;p&gt;驱动可在&lt;a href=&#34;http://dev.mysql.com/downloads/connector/j/&#34;&gt;http://dev.mysql.com/downloads/connector/j/&lt;/a&gt; 下载
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcat_copy_mysql_driver.png&#34; alt=&#34;复制数据库驱动.png&#34;&gt;
-&lt;/div&gt;
-
-[reber@WYB ~]$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-jsp&#34;&gt;&amp;lt;%@page contentType=&amp;quot;text/html;charset=utf-8&amp;quot; import=&amp;quot;java.sql.*&amp;quot; %&amp;gt;
-&amp;lt;%
-    String driver = &amp;quot;com.mysql.jdbc.Driver&amp;quot;; 
-    String url = &amp;quot;jdbc:mysql://localhost:3306/tomcat&amp;quot;; //数据库web
-    String user = &amp;quot;tomcat&amp;quot;; 
-    String password = &amp;quot;123456&amp;quot;; 
-    try { 
-        Class.forName(driver); 
-        Connection conn = DriverManager.getConnection(url, user, password);
-
-        if(!conn.isClosed()) 
-            out.println(&amp;quot;数据库连接成功！&amp;quot;); 
-        conn.close(); 
-    } 
-    catch(ClassNotFoundException e) { 
-        out.println(&amp;quot;找不到驱动程序&amp;quot;); 
-        e.printStackTrace(); 
-    } 
-    catch(SQLException e) { 
-        e.printStackTrace(); 
-    } 
-%&amp;gt;
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcat_conn_mysql.png&#34; alt=&#34;连接数据库.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Linux下搭建Nginx&#43;MySQL&#43;PHP</title>
-      <link>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BANginx&#43;MySQL&#43;PHP/</link>
-      <pubDate>Fri, 17 Jun 2016 22:41:50 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/Linux%E4%B8%8B%E6%90%AD%E5%BB%BANginx&#43;MySQL&#43;PHP/</guid>
-      <description>
-
-&lt;pre&gt;&lt;code&gt;安装环境为：CentOS-6.5-x86_64-minimal
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;一-准备工作:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;一、准备工作&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;首先执行：
-    sudo yum groupinstall &amp;quot;Development tools&amp;quot;
-安装make：
-    yum -y install gcc automake autoconf libtool make
-安装g++：
-    yum install gcc gcc-c++
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;二-安装mysql和php:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;二、安装mysql和php&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;sudo yum install mysql mysql-server mysql-devel
-sudo yum install php php-devel
-sudo yum install php-gd php-mysql php-fpm
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;三-安装依赖:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;三、安装依赖&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;安装pcre、pcre-devel&lt;br /&gt;
-sudo yum install pcre pcre-devel&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;安装zlib、zlib-devel&lt;br /&gt;
-sudo yum install zlib zlib-devel&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;安装ssl&lt;br /&gt;
-sudo yum install openssl openssl-devel&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;四-安装nginx:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;四、安装Nginx&lt;/h2&gt;
-
-&lt;p&gt;可在&lt;a href=&#34;http://nginx.org/download/nginx-1.9.9.tar.gz&#34;&gt;http://nginx.org/download/nginx-1.9.9.tar.gz&lt;/a&gt; 下载
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/download_nginx.png&#34; alt=&#34;下载nginx安装包&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;[reber@WYB nginx-1.9.9]$ ./configure
-[reber@WYB nginx-1.9.9]$ make
-[reber@WYB nginx-1.9.9]$ sudo make install
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;五-启动与关闭nginx:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;五、启动与关闭nginx&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# 开启服务：
-[reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
-# 关闭服务：
-[reber@WYB nginx-1.9.9]$ killall nginx
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/visit_nginx.png&#34; alt=&#34;访问nginx.png&#34;&gt;
-&lt;/div&gt;
-
-
-&lt;h2 id=&#34;六-配置nginx支持php:f660d74f18fcdbfba7b9b088a66c02c3&#34;&gt;六、配置nginx支持php&lt;/h2&gt;
-
-&lt;p&gt;[reber@WYB nginx-1.9.9]$ killall nginx&lt;br /&gt;
-[reber@WYB nginx-1.9.9]$ vim /usr/local/nginx/conf/nginx.conf&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;location / {
-    root   html;
-    index  index.html index.htm index.php;
-}
-
-location ~ \.php$ {
-    root           html;
-    fastcgi_pass   127.0.0.1:9000;
-    fastcgi_index  index.php;
-    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-    include        fastcgi_params;
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;[reber@WYB nginx-1.9.9]$ sudo service php-fpm start
-[reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/visit_nginx_phpinfo.png&#34; alt=&#34;访问nginx的phpinfo.php.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Ubuntu下使用ShadowSocks</title>
-      <link>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/</link>
-      <pubDate>Mon, 13 Jun 2016 09:14:45 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/</guid>
-      <description>
-
-&lt;h4 id=&#34;环境:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;环境：&lt;/h4&gt;
-
-&lt;p&gt;ubuntu14.4&lt;/p&gt;
-
-&lt;h2 id=&#34;安装shadowsocks-qt5:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;安装shadowsocks-qt5&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源）
-sudo apt-get update （更新你的软件库）
-sudo apt-get install shadowsocks-qt5 (正式安装)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;配置客户端:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;配置客户端&lt;/h2&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_open_client.png&#34; alt=&#34;打开shadowsocks客户端&#34;&gt;
-&lt;/div&gt;
-
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_add_config.png&#34; alt=&#34;shadowsocks添加配置&#34;&gt;
-&lt;/div&gt;
-
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_config.png&#34; alt=&#34;配置shadowsocks&#34;&gt;
-&lt;/div&gt;
-
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_connection.png&#34; alt=&#34;连接shadowsocks&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;h2 id=&#34;配置火狐:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;配置火狐&lt;/h2&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/firfox_config_agent.png&#34; alt=&#34;火狐配置代理&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;h2 id=&#34;访问youtube:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;访问YouTube&lt;/h2&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_go_youtube.png&#34; alt=&#34;访问YouTube&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>conky配置</title>
-      <link>http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</link>
-      <pubDate>Sat, 04 Jun 2016 20:26:21 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-效果:646d257b96363a28a302cc3ac52c48c7&#34;&gt;0x00 效果&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;使用软件conky可以在linux上看到系统的运行状态，效果如下：
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/Conky.png&#34; alt=&#34;conky效果图&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x01-安装与配置:646d257b96363a28a302cc3ac52c48c7&#34;&gt;0x01 安装与配置&lt;/h3&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;先安装conky：&lt;br /&gt;
-sudo apt-get install conky&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;在/home/username/下创建文件.conkyrc&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;使conky开机自启&lt;br /&gt;
-在/etc/profile最下面添加：/usr/bin/conky &amp;amp;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&#34;0x03-配置文件-conkyrc内容如下:646d257b96363a28a302cc3ac52c48c7&#34;&gt;0x03 配置文件.conkyrc内容如下&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;# set to yes if you want Conky to be forked in the background
-background no
-cpu_avg_samples 2
-net_avg_samples 2
-out_to_console no
-# X font when Xft is disabled, you can pick one with program xfontsel
-#font 7x12
-#font 6x10
-#font 7x13
-#font 8x13
-#font 7x12
-#font *mintsmild.se*
-#font -*-*-*-*-*-*-34-*-*-*-*-*-*-*
-#font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1
-# Use Xft?
-use_xft yes
-# Xft font when Xft is enabled
-xftfont Sans:size=11  
-own_window_argb_visual yes
-#own_window_colour hotpink
-# Text alpha when using Xft
-xftalpha 0.8
-# on_bottom yes
-# mail spool
-mail_spool $MAIL
-# Update interval in seconds
-update_interval 1
-# Create own window instead of using desktop (required in nautilus)
-own_window yes
-own_window_transparent yes
-own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
-#own_window_type override
-own_window_type normal
-# Use double buffering (reduces flicker, may not work for everyone)
-double_buffer yes
-# Minimum size of text area
-minimum_size 260 5
-maximum_width 400
-# Draw shades?
-draw_shades no
-# Draw outlines?
-draw_outline no
-# Draw borders around text
-draw_borders no
-# Stippled borders?
-stippled_borders no
-# border margins
-border_margin 4
-# border width
-border_width 1
-# Default colors and also border colors
-default_color white
-default_shade_color white
-default_outline_color white
-# Text alignment, other possible values are commented
-#alignment top_left
-#minimum_size 10 10
-gap_x 10
-gap_y 35
-alignment top_right
-#alignment bottom_left
-#alignment bottom_right
-# Gap between borders of screen and text
-# Add spaces to keep things from moving about?  This only affects
-# certain objects.
-use_spacer none
-# Subtract file system buffers from used memory?
-no_buffers yes
-# set to yes if you want all text to be in uppercase
-uppercase no
-# none, xmms, bmp, audacious, infopipe (default is none)
-# xmms_player bmp
-
-
-TEXT
-${color red}SYSTEM ${hr 1}
-#Time:$alignr${time %Y.%m.%d}$alignc   ${time %H:%M:%S}$alignr   Week:${time %w}
-Hostname: $alignr$nodename
-Kernel: $alignr$kernel
-Machine:$alignr$machine
-Uptime: $alignr$uptime
-Temp: ${alignr}${acpitemp} °C
-Battery:$alignr${battery BAT0}
-#Battery:$alignr${battery_percent BAT0}%  
-###############
-${color green}NETWORK ${hr 1}
-IP:${addr eth0}
-GateWay:$gw_ip
-Down ${downspeed eth0} /s ${alignr}Up ${upspeed eth0} /s
-#${downspeedgraph eth0 25,107} ${alignr}${upspeedgraph eth0 25,107}
-Total ${totaldown eth0} ${alignr}Total ${totalup eth0}
-#############
-${color #9932CC}MEMORY ${hr 1}
-Ram ${alignr}$mem / $memmax ($memperc%)
-${membar 4}
-swap ${alignr}$swap / $swapmax ($swapperc%)
-${swapbar 4}
-Highest MEM $alignr MEM%
-${top_mem name 1}$alignr ${top_mem mem 1}
-${top_mem name 2}$alignr ${top_mem mem 2}
-${top_mem name 3}$alignr ${top_mem mem 3}
-##############
-${color #ffd700}CPU ${hr 1}
-Frequency: ${alignr}${freq dyn} MHz
-Processes: ${alignr}$processes ($running_processes running)
-Load: ${alignr}$loadavg
-CPU1 ${alignr}${cpu cpu1}%
-${cpubar 4 cpu1}
-CPU2 ${alignr}${cpu cpu2}%
-${cpubar 4 cpu2}
-Highest CPU $alignr CPU%
-${top name 1}$alignr${top cpu 1}
-${top name 2}$alignr${top cpu 2}
-${top name 3}$alignr${top cpu 3}
-##############
-${color grey}FILE SYSTEM ${hr 1}
-Disk I/O:$diskio
-Root: ${alignr}${fs_free /} / ${fs_size /}
-${fs_bar 4 /}
-Home: ${alignr}${fs_free /home} / ${fs_size /home}
-${fs_bar 4 /home}
-#############
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>win/ubuntu双系统分区设置</title>
-      <link>http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/</link>
-      <pubDate>Tue, 31 May 2016 23:35:06 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/</guid>
-      <description>
-
-&lt;h2 id=&#34;win10和ubuntu双系统分区设置:3e030af796631eb52143202ed95ab205&#34;&gt;win10和ubuntu双系统分区设置&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;硬盘采用uefi格式&lt;/li&gt;
-&lt;li&gt;硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息&lt;/li&gt;
-&lt;li&gt;在硬盘末尾给ubuntu划分50G左右空间&lt;/li&gt;
-&lt;li&gt;ubuntu的/分区，格式为ext4，空间为40G&lt;/li&gt;
-&lt;li&gt;ubuntu的/home分区，格式为ext4，空间为10G&lt;/li&gt;
-&lt;li&gt;ubuntu的/boot分区，格式为ext4,空间为200M&lt;/li&gt;
-&lt;li&gt;ubuntu的/swap分区，格式为swap，空间为200M&lt;/li&gt;
-&lt;li&gt;ubuntu的引导分区为/boot&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/hard_disk_partition1.png&#34; alt=&#34;双系统磁盘分区&#34;&gt;
-&lt;/div&gt;
-
-&amp;nbsp;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/hard_disk_partition2.png&#34; alt=&#34;双系统磁盘分区&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Ubuntu初接触(包括搭建LAMP)</title>
-      <link>http://wyb0.com/posts/Ubuntu%E5%88%9D%E6%8E%A5%E8%A7%A6/</link>
-      <pubDate>Sat, 07 May 2016 21:37:07 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/Ubuntu%E5%88%9D%E6%8E%A5%E8%A7%A6/</guid>
-      <description>
-
-&lt;p&gt;我是在虚拟机中安装14.04.4版的ubuntu：
-下载地址：&lt;a href=&#34;http://mirrors.163.com/ubuntu-releases/14.04.4/ubuntu-14.04.4-desktop-amd64.iso&#34;&gt;http://mirrors.163.com/ubuntu-releases/14.04.4/ubuntu-14.04.4-desktop-amd64.iso&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;1-配源或选择最快的更新服务器:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;1.配源或选择最快的更新服务器&lt;/h2&gt;
-
-&lt;p&gt;选择最快的更新服务器:&lt;br /&gt;
-    System Settings &amp;ndash;&amp;gt; Software &amp;amp; Updates &amp;ndash;&amp;gt; Download from:other &amp;ndash;&amp;gt; Select Best Server &amp;ndash;&amp;gt; Choose Serve &amp;ndash;&amp;gt; Close&lt;/p&gt;
-
-&lt;p&gt;配源:&lt;br /&gt;
-    reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak&lt;br /&gt;
-    reber@ubuntu:~$ vim /etc/apt/sources.list&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;中科大源：
-deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
-deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
-deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
-deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
-deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
-deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
-deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
-deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
-deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
-deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
-
-阿里源：
-deb http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe
-deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe
-deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe
-deb http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe
-deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe
-deb-src http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe
-deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe
-deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe
-deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe
-deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;reber@ubuntu:~$ sudo apt-get update&lt;/p&gt;
-
-&lt;h2 id=&#34;2-简单配置:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;2.简单配置&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;$ sudo apt-get install open-vm-tools-desktop fuse
-$ sudo apt-get install vim
-$ sudo apt-get install nautilus-open-terminal  #注销,再次登陆即可任意地方右键打开终端
-$ vim /etc/default/apport   #更改enabled=0可解决开机总是提示有错误
-$ vim ~/.bashrc  #添加alias c=&#39;clear&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;3-安装输入法:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;3.安装输入法&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;apt-get -f install可解决依赖问题
-reber@ubuntu:~$ apt-get install ibus-sunpinyin   #安装后重启系统
-进入设置：system setting-&amp;gt;text entry-&amp;gt;添加sunpinyin
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;4-配置apache-mysql-php:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;4.配置Apache/MySQL/PHP&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;sudo apt-get install apache2
-sudo apt-get install mysql-client mysql-server
-sudo apt-get install php5
-sudo apt-get install php5-gd php5-mysql
-sudo apt-get install libapache2-mod-php5
-sudo apt-get install libapache2-mod-auth-mysql 
-sudo chmod 777 /var/www   #为了方便
-
-
-解决乱码问题：
-apache：sudo vim /etc/apache2/apache2.conf
-    最后添加AddDefaultCharset UTF-8
-mysql：编辑数据库配置文件
-    在[client]下面添加：
-        default-character-set=utf8
-    在[mysqld]在下面添加
-        character_set_server=utf8
-
-测试数据库连接：
-编辑mysql_test.php代码如下：
-&amp;lt;?php
-    $link = mysql_connect(&amp;quot;localhost&amp;quot;, &amp;quot;root&amp;quot;, &amp;quot;password&amp;quot;);
-    if(!$link)
-        die(&#39;Could not connect: &#39; . mysql_error());
-    else
-        echo &amp;quot;Mysql 配置正确!&amp;quot;;
-    mysql_close($link);
-?&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;5-管理开机自启:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;5.管理开机自启&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;ubuntu管理软件自启一般用rcconf：sudo apt-get install rcconf
-ubuntu添加mysql自启可以在/etc/rc.local添加/etc/init.d/mysql start
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;6-调时间:1636a7d87e0e53b76e78b5e173fae0b5&#34;&gt;6.调时间&lt;/h2&gt;
-</description>
-    </item>
     
     <item>
       <title>Linux之文本处理软件awk</title>
@@ -2041,6 +933,733 @@ wget-1.12-5.el6_6.1.x86_64
 wget url也能下载，文件名为全名
 Linux下的env可查看环境变量
 &lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之基础命令</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Tue, 19 Apr 2016 10:03:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-ls-显示文件:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x00 ls：显示文件&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ls
+a  a.txt
+[wyb@localhost tmp]$ ls -l
+total 4
+drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a
+-rw-r--r--. 1 wyb root    0 Apr 17 18:23 a.txt
+[wyb@localhost tmp]$ ls -a
+.  ..  a  a.txt  .esd-500  .ICE-unix
+[wyb@localhost tmp]$ ls -al
+total 20
+drwxrwxrwt.  5 root root 4096 Apr 17 18:23 .
+dr-xr-xr-x. 22 root root 4096 Apr 17 16:31 ..
+drwxr-xr-x.  2 wyb  root 4096 Apr 17 18:23 a
+-rw-r--r--.  1 wyb  root    0 Apr 17 18:23 a.txt
+drwx------.  2 wyb  wyb  4096 Apr 10 19:15 .esd-500
+drwxrwxrwt.  2 root root 4096 Apr 17 16:31 .ICE-unix
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-pwd-查看当前工作路径:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x02 pwd：查看当前工作路径&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ pwd  
+/home/wyb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-cd-切换目录:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x03 cd：切换目录&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ ls
+Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
+[wyb@localhost ~]$ cd Desktop/     //相对路径
+[wyb@localhost Desktop]$ cd /tmp/a    //绝对路径
+[wyb@localhost a]$ pwd
+/tmp/a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-mkdir-新建文件夹:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x04 mkdir：新建文件夹&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ls
+a  a.txt
+[wyb@localhost tmp]$ mkdir bbb
+[wyb@localhost tmp]$ ls
+a  a.txt  bbb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x05-touch-vim-新建文件:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x05 touch/vim：新建文件&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ls
+a  a.txt  bbb
+[wyb@localhost tmp]$ touch bbb.txt
+[wyb@localhost tmp]$ ls
+a  a.txt  bbb  bbb.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x06-rm-删除文件:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x06 rm：删除文件&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ls
+a  a.txt  bbb  bbb.txt  c.txt
+[wyb@localhost tmp]$ rm c.txt   //删除文件c.txt
+[wyb@localhost tmp]$ ls
+a  a.txt  bbb  bbb.txt
+[wyb@localhost tmp]$ rm a   //删除文件夹a，结果不能删除
+rm: cannot remove `a&#39;: Is a directory
+[wyb@localhost tmp]$ rm -r a   //加上-r才能删除文件夹
+[wyb@localhost tmp]$ ls
+a.txt  bbb  bbb.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x07-ifconfig-查看网卡的信息:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x07 ifconfig：查看网卡的信息&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ifconfig
+eth0    Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10  
+        inet addr:192.168.63.131  Bcast:192.168.63.255  Mask:255.255.255.0
+        inet6 addr: fe80::20c:29ff:fe56:b410/64 Scope:Link
+        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+        RX packets:67099 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:34939 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000 
+        RX bytes:94042525 (89.6 MiB)  TX bytes:1995748 (1.9 MiB)
+
+lo      Link encap:Local Loopback  
+        inet addr:127.0.0.1  Mask:255.0.0.0
+        inet6 addr: ::1/128 Scope:Host
+        UP LOOPBACK RUNNING  MTU:16436  Metric:1
+        RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:0 
+        RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x08-netstat-查找网络连接信息:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x08 netstat：查找网络连接信息&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;netstat -l   //listen状态的
+netstat -an  //显示所有的连接信息，且以ip地址代替名称
+netstat -t   //显示tcp连接信息
+netstat -u   //显示udp连接信息
+LISTENING   //监听端口状态
+ESTABLSHED  //建立连接
+CLOSE_WAIT  //对方主动断开连接，此时我方就会变为这个状态，我方要调用close()
+TIME_WAIT   //我方主动调用close(),对方收到后变为CLOSE_WAIT
+[root@localhost ~]# netstat -l -n
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address               Foreign Address远程         State      
+tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN  所有ip均可连接22
+tcp        0      0 127.0.0.1:631               0.0.0.0:*                   LISTEN
+tcp        0      0 127.0.0.1:25                0.0.0.0:*                   LISTEN  只有127.0.0.1连接25端口
+tcp        0      0 :::22                       :::*                        LISTEN      
+tcp        0      0 ::1:631                     :::*                        LISTEN  
+Active UNIX domain sockets (only servers)
+Proto RefCnt Flags       Type       State         I-Node Path
+unix  2      [ ACC ]     STREAM     LISTENING     14229  public/cleanup
+unix  2      [ ACC ]     STREAM     LISTENING     14236  private/tlsmgr
+unix  2      [ ACC ]     STREAM     LISTENING     14240  private/rewrite
+unix  2      [ ACC ]     STREAM     LISTENING     14244  private/bounce
+unix  2      [ ACC ]     STREAM     LISTENING     14248  private/defer
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x09-nslookup-查看dns信息:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x09 nslookup：查看DNS信息&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;nslookup 查看ip和域名的相互映射
+nslookup www.baidu.com   //返回一些信息
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0a-ping:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0A ping&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;ping -c 3 www.baidu.com   //指定ping百度3次
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0b-last-查看近期的登陆信息:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0B last：查看近期的登陆信息&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[root@localhost ~]# last
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0c-find-查找文件:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0C find：查找文件&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;which vim   //查看可执行文件的位置
+*which是通过 PATH环境变量到该路径内查找可执行文件，所以基本的功能是寻找可执行文件* 
+
+whereis、locate也可查找文件,它们是使用数据库来搜索数据
+
+find . -name 1.txt  //查找当前文件夹及子目录下的1.txt、
+find . -name *.txt  //使用通配符
+find /bin -perm 755 //返回的都是755权限的文件  
+find /bin -perm 4755  //返回有gid(即s权限)的文件    2是gid
+[wyb@localhost tmp]$ sudo find / -name *.log    //根目录下查找名字以log结尾的文件
+/var/spool/plymouth/boot.log
+/var/log/wpa_supplicant.log
+/var/log/dracut.log
+/var/log/vmware-tools-upgrader.log
+[wyb@localhost ~]$ find /bin -perm 755 | xargs ls -al   //前一个命令的输出作为后一个命令的输入
+-rwxr-xr-x. 1 root root    123 Feb 21  2013 /bin/alsaunmute
+-rwxr-xr-x. 1 root root  27776 Jun 22  2012 /bin/arch
+-rwxr-xr-x. 1 root root  26264 Jun 22  2012 /bin/basename
+-rwxr-xr-x. 1 root root 938768 Feb 21  2013 /bin/bash
+-rwxr-xr-x. 1 root root  48568 Jun 22  2012 /bin/cat
+-rwxr-xr-x. 1 root root  55472 Jun 22  2012 /bin/chgrp
+-rwxr-xr-x. 1 root root  52472 Jun 22  2012 /bin/chmod
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0d-grep:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0D grep&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;//可以遍历查询mkr文件夹下含有字符串&amp;quot;reber&amp;quot;的文件及字符串所在行
+reber@WYB:~$ grep -Rn &amp;quot;reber&amp;quot; mkdir   
+mkr/cc:3:reber
+mkr/a/a.txt:3:reber
+mkr/a/b.txt:16:reber
+mkr/b/xx:8:reber
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0e-cat-nl:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0E cat/nl&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;前者显示
+后者显示的同时有行号
+[wyb@localhost tmp]$ cat &amp;gt; a.txt  //创建文件同时写入数据
+this is a.txt
+^C
+[wyb@localhost tmp]$ cat &amp;gt; b.txt
+this is b.txt
+^C
+[wyb@localhost tmp]$ cat a.txt b.txt &amp;gt; c.txt   //合并文件
+[wyb@localhost tmp]$ cat c.txt 
+this is a.txt
+this is b.txt
+[wyb@localhost tmp]$ cat -n c.txt   //获取文件内容切添加行号
+ 1  this is a.txt
+ 2  this is b.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x0f-head:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0F head&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ head /etc/passwd   //默认显示前10行
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+uucp:x:10:14:uucp:/var/spool/uucp:/sbin/nologin
+
+[wyb@localhost tmp]$ head -n 4 /etc/passwd  //设置显示前4行
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+
+[wyb@localhost tmp]$ head -c 100 d.txt //显示前100个字节
+     1  this is a.txt
+     2  this is b.txt
+this is add content
+     1  this is a.txt
+     2  this is b.[wyb@localhost tmp]$ 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x10-tail:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x10 tail&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ tail -f a.txt  //实时显示文件后10行
+this is a.txt
+111111
+aaaaaa
+^C
+
+[wyb@localhost tmp]$ tail -n 3 d.txt //显示文件后3行
+     1  this is a.txt
+     2  this is b.txt
+this is add content
+
+[wyb@localhost tmp]$ tail -c 100 d.txt //显示后100个字节
+  2     this is b.txt
+this is add content
+     1  this is a.txt
+     2  this is b.txt
+this is add content
+[wyb@localhost tmp]$ 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x11-scp:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x11 scp&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;向远程服务器put文件和文件夹，默认就是22端口
+scp -P 22 ./aa.txt reber@123.206.78.220:/home/reber
+scp -r ./bb reber@123.206.78.220:/home/reber
+
+从服务器下载文件和文件夹
+scp -P 2222 ubuntu@123.22.38.215:/home/reber/a.txt D:/a.txt
+scp -P 2222 ubuntu@123.22.38.215:/home/reber/test D:/test/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x12-磁盘:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x12 磁盘&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;fdisk /dev/sdb
+sudo mkfs.ext3 /dev/sdb1
+mount -t ext3 -o rw /dev/sdb1 /home/aaa  //-o指定权限
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x13-finger:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x13 finger&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;finger可以查看用户登录情况
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x14-时间同步:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x14 时间同步&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;ntpdate time.nist.gov //需要root权限
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之服务和计划任务</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</link>
+      <pubDate>Tue, 19 Apr 2016 10:03:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</guid>
+      <description>
+
+&lt;h2 id=&#34;服务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;服务：&lt;/h2&gt;
+
+&lt;p&gt;在后台运行的软件就叫服务
+参数：
+start
+stop
+restart&lt;/p&gt;
+
+&lt;p&gt;apache启动后默认降权&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;service httpd start实际调用的是/etc/init.d/httpd这个shell脚本
+而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d
+[wyb@localhost ~]$ ls -al /etc/init.d
+lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&amp;gt; rc.d/init.d
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;添加服务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;添加服务：&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;将脚本放在/etc/init.d/下即可
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;若要自启则:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;若要自启则：&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;chkconfig --list   //查看chk管理的自启动项
+chkconfig --add httpd   添加到chk管理里面
+chkconfig --del httpd   将httpd移出chk管理
+chkcofnig --level 35 httpd on  init的345将开启
+chkcofnig --level 345 httpd off
+/etc/rc.d/rc3.d和rc5.d里将有httpd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;计划任务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;计划任务：&lt;/h2&gt;
+
+&lt;p&gt;启动方式：
+系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件&lt;/p&gt;
+
+&lt;p&gt;cron：每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟&lt;/p&gt;
+
+&lt;h4 id=&#34;添加任务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;添加任务：&lt;/h4&gt;
+
+&lt;p&gt;格式：分(0-59) 时 日 月 周(0-6) 命令&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;第一种方法：
+crontab -e  //任何权限都可以运行这个命令，针对某个用户
+
+[wyb@localhost spool]$ crontab -e   //进入编辑，实际是写入到/var/spool/cron/username这个文件中
+no crontab for wyb - using an empty one
+*/1 * * * * date &amp;gt;&amp;gt; /tmp/date.txt   //每一分钟都向date.txt写入
+1 * * * * date &amp;gt;&amp;gt; /tmp/date1.txt        //在第一分钟时将数据写入
+~
+~
+~
+&amp;quot;/tmp/crontab.T8sDqC&amp;quot; 1L, 34C written
+crontab: installing new crontab
+[wyb@localhost spool]$ sudo ls /var/spool/cron/
+wyb
+[wyb@localhost spool]$ sudo cat /var/spool/cron/wyb
+*/1 * * * * date &amp;gt;&amp;gt; /tmp/date.txt
+1 * * * * date &amp;gt;&amp;gt; /tmp/date1.txt
+[wyb@localhost spool]$ 
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;第二种方法：
+编辑/etc/crontab文件    //要具有root权限，针对系统任务
+vim /etc/crontab会以root权限执行，不推荐使用
+01 * * * *　用户名　命令 date &amp;gt;&amp;gt; /tmp/date2.txt在每个小时的第一分钟执行
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;查看用户任务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;查看用户任务：&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ sudo cat /var/spool/cron/wyb   //用户的计划任务
+*/1 * * * * date &amp;gt;&amp;gt; /tmp/date.txt
+[wyb@localhost tmp]$ sudo tail -5 /etc/crontab   //系统计划任务
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+*/1 * * * * wyb date &amp;gt;&amp;gt; /tmp/wyb.txt
+[wyb@localhost tmp]$ crontab -l   //只能显示普通用户定义的任务
+*/1 * * * * date &amp;gt;&amp;gt; /tmp/date.txt
+[wyb@localhost tmp]$ crontab -r   //移除用户所有计划任务，不能移除系统定的计划任务，即不能移除在/etc/crontab中的任务
+[wyb@localhost tmp]$ crontab -l
+no crontab for wyb
+[wyb@localhost tmp]$ sudo tail -3 /etc/crontab 
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+*/1 * * * * wyb date &amp;gt;&amp;gt; /tmp/wyb.txt
+[wyb@localhost tmp]$ 
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之用户组</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E7%94%A8%E6%88%B7%E7%BB%84/</link>
+      <pubDate>Sun, 17 Apr 2016 20:48:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E7%94%A8%E6%88%B7%E7%BB%84/</guid>
+      <description>&lt;p&gt;初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个
+&lt;br/&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;useradd xm   用户xm会默认加到xm组
+useradd -g fans xm  将xm的所属组改为fans
+useradd -G fans xm  初始组为xm，有效组为fans
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;useradd xiaoming
+usermod -g fans xiaoming  只有一个初始组，被修改为fans
+useradd xm
+usermod -G fans xm    xm用户会有两个组，初始组为xm，又添加一个有效组fans
+usermod -G fans1 xm    xm用户两个组，初始组为xm，有效组更改为fans1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;用户创建的文件拥有者是初始组
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之网络配置</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Sun, 17 Apr 2016 17:58:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</guid>
+      <description>
+
+&lt;h2 id=&#34;第一种方法:851392bd99614cbfb4963ab526596f8a&#34;&gt;第一种方法&lt;/h2&gt;
+
+&lt;h3 id=&#34;分5步:851392bd99614cbfb4963ab526596f8a&#34;&gt;分5步：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;1. 启动网卡：  
+$ ifconfig eth0 up/down
+2. 配置ip：  
+$ ifconfig eth0 192.168.22.231 netmask 255.255.255.0
+3. 配置网关：
+$ route add default gw 192.168.22.1
+4. 配DNS：  
+$ vim /etc/resolv.conf  
+$ echo &amp;quot;nameserver 114.114.114.114&amp;quot; &amp;gt; /etc/resolv.cof
+5. 重启网络使配置生效：  
+6. 用文件配置ip信息
+$ /etc/sysconfig/network-scripts/ifcfg-eth0
+
+ps:添加静态路由
+route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3
+//添加静态路由添加网络10.211.55.0，从eth0出去
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;第二种方法:851392bd99614cbfb4963ab526596f8a&#34;&gt;第二种方法&lt;/h2&gt;
+
+&lt;h3 id=&#34;分1步:851392bd99614cbfb4963ab526596f8a&#34;&gt;分1步：&lt;/h3&gt;
+
+&lt;p&gt;打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;DEVICE=ethl
+ONBOOT=yes
+BOOTPROTO=static
+IPADDR=
+NETMASK=
+GATEWAY=
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;打开ip转发:851392bd99614cbfb4963ab526596f8a&#34;&gt;打开ip转发&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;echo &amp;quot;1&amp;quot; &amp;gt;&amp;gt; /proc/sys/net/ipv4/ip_forward
+或者vim /etc/sysctl.conf
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之权限(重点)</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/</link>
+      <pubDate>Sun, 17 Apr 2016 10:03:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/</guid>
+      <description>
+
+&lt;p&gt;主要有三种参数：rwx
+对于文件来说：分别是读/写/执行&lt;br /&gt;
+对于目录来说：r读目录结构；w操作目录结构；x进入目录&lt;br /&gt;
+如：drwxr&amp;ndash;r&amp;ndash; 3 root root 4096 Jun 25 08:35 .ssh&lt;br /&gt;
+若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中&lt;/p&gt;
+
+&lt;h2 id=&#34;文件权限:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;文件权限&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h3 id=&#34;chmod-x:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;chmod -x&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;[root@localhost tmp]# ls -l
+total 0
+-rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt
+[root@localhost tmp]# chmod -x a.txt   去除ugo的x权限
+[root@localhost tmp]# ls -l
+total 0
+-rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt
+[root@localhost tmp]# ls -l a.txt 
+-rwxrw-rw-. 1 root root 9 Apr 16 20:42 a.txt
+[root@localhost tmp]# cat a.txt 
+echo aaa
+[root@localhost tmp]# ./a.txt    直接执行了a.txt中的echo命令
+aaa
+[root@localhost tmp]# 
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;h3 id=&#34;chmod-r:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;chmod -R&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;[root@localhost tmp]# ls -l a;ls -l a/a.txt 
+total 0
+-rw-r--r--. 1 root root 0 Apr 16 20:35 a.txt
+-rw-r--r--. 1 root root 0 Apr 16 20:35 a/a.txt
+[root@localhost tmp]# chmod -R o+x a  遍历更改a文件夹及a下所有文件的权限
+[root@localhost tmp]# ls -l a;ls -l a/a.txt 
+total 0
+-rw-r--r-x. 1 root root 0 Apr 16 20:35 a.txt
+-rw-r--r-x. 1 root root 0 Apr 16 20:35 a/a.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;h3 id=&#34;chmod-7-a-txt:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;chmod 7 a.txt&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;[root@localhost tmp]# ll a.txt 
+-rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt
+[root@localhost tmp]# chmod 7 a.txt    //只更改其他人的权限，ug赋为0
+[root@localhost tmp]# ll a.txt 
+-------rwx. 1 root root 0 Apr 16 20:32 a.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;文件夹权限:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;文件夹权限：&lt;/h2&gt;
+
+&lt;p&gt;可读是指能看到里面的文件&lt;br/&gt;
+可写是指能在里面删除、增加文件&lt;br/&gt;
+文件夹可执行是指能cd进去&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;h3 id=&#34;不能进入没有x权限的文件夹:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;不能进入没有x权限的文件夹：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost Desktop]$ ls -l
+total 4
+dr--------. 2 wyb wyb 4096 Apr 17 01:25 aa
+[wyb@localhost Desktop]$ cd aa/
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;h3 id=&#34;不能删除有777权限的文件:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;不能删除有777权限的文件：&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost Desktop]$ ls -l;ls -l aa/a.txt 
+total 4
+dr-xr-xr-x. 2 wyb wyb 4096 Apr 17 01:25 aa
+-rwxrwxrwx. 1 wyb wyb 0 Apr 17 01:25 aa/a.txt
+[wyb@localhost Desktop]$ rm aa/a.txt 
+rm: cannot remove `aa/a.txt&#39;: Permission denied  //因为没有aa的x权限，所以不能删除aa下的文件
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;chown:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;chown：&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;普通用户不能将自己的文件改变成其他的拥有者。其操作权限一般为管理员。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//将aaa.txt的所属由xiao改变为fans组，属主为xiaofang
+xiao$ chown xiaofang:fans aaa.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;一般用visudo添加sudo:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;一般用visudo添加sudo&lt;/h4&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之vim</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8Bvim/</link>
+      <pubDate>Fri, 15 Apr 2016 21:03:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8Bvim/</guid>
+      <description>
+
+&lt;h3 id=&#34;vim的安装及配置:f90366760980ccb4eafda2e647a35758&#34;&gt;Vim的安装及配置：&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;安装vim&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;yum install vim
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;配置文件的位置&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;在目录 /etc/ 下面，有个名为vimrc的 文件，
+这是系统中公共的vim配置文件，对所有用户都有效。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;设置语法高亮显示&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;1) 打开vimrc，添加以下语句来使得语法高亮显示：
+    syntax on
+2) 如果此时语法还是没有高亮显示，那么在/etc目录下的profile文件中添加以下语句：
+    export TERM=xterm-color
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;设置Windows风格的C/C++自动缩进（添加以下set语句到vimrc中）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;1）设置Tab为4个空格
+    set tabstop=4 # 设定tab长度为4
+    set softtabstop=4 # 使按退格键时可以一次删除4个空格
+    set shiftwidth=4 # 表示每一级缩进的长度，一般设置成跟softtabstop一样
+    set expandtab/noexpandtab # 缩进用空格/制表符表示
+2）自动缩进
+    set autoindent/noautoindent # 设置每行的缩进值与上一行相等/不相等
+3）使用 C/C++ 语言的自动缩进方式
+    set cindent
+4）在左侧显示文本的行号
+    set nu
+5）搜索设置
+    set incsearch # 输入搜索内容时就显示搜索结果
+    set hlsearch # 搜索时高亮显示被找到的文本
+6）如果没有下列语句，就加上吧
+    if &amp;amp;term==&amp;quot;xterm&amp;quot;
+        set t_Co=8
+        set t_Sb=^[[4%dm
+        set t_Sf=^[[3%dm
+    endif
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;vim编辑器的三种模式:f90366760980ccb4eafda2e647a35758&#34;&gt;Vim编辑器的三种模式&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;命令行模式&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;$vim 文件名 #直接进入命令行模式
+Ctrl+ZZ# 可保存文件
+
+5dd/4yy# 剪切5行/复制4行
+p      # 粘贴到当前行后面
+u      # 一直点的话会一直撤销，直到回复到文件最初状态
+
+gg/G   # 光标移动到首行/末行
+H/M/L  # 光标移动到屏幕显示的首行/中间/末行
+0/$    # 光标移动到行首/行尾
+w/b    # 光标跳到下一个/上一个单词
+
+o      # 在下一行插入
+Ctrl+g # 显示文本的信息
+
+dt%      # 删除所有内容直到遇到 %
+d0/d$或D # 删除从光标到行首/行尾的字符
+3dw      # 删除3个单词
+
+v+方向键       # 可以从当前光标向各方向选择字符或行
+4+向下的方向键 # 光标向下移动4行
+
+/和？# 向下和向上搜索
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;末行模式&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;:wq  # 推出并保存
+:wq! # 强制退出并保存
+:num # 跳到第n行
+:$   # 移动到最后一行
+:/aaaa #向下搜aaaa这个字符串  n可以定位到下一个匹配的字符，N向上
+:?aaaa #向上搜索
+:%s/set/ddd/g #将字符串set全部替换为ddd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;插入模式&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;在命令行模式直接点击i即可进入
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
 </description>
     </item>
     

@@ -416,6 +416,230 @@ Proxifier：Proxifier Portable Edition v3.29
     </item>
     
     <item>
+      <title>Ubuntu下使用ShadowSocks</title>
+      <link>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/</link>
+      <pubDate>Mon, 13 Jun 2016 09:14:45 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/</guid>
+      <description>
+
+&lt;h4 id=&#34;环境:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;环境：&lt;/h4&gt;
+
+&lt;p&gt;ubuntu14.4&lt;/p&gt;
+
+&lt;h2 id=&#34;安装shadowsocks-qt5:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;安装shadowsocks-qt5&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源）
+sudo apt-get update （更新你的软件库）
+sudo apt-get install shadowsocks-qt5 (正式安装)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;配置客户端:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;配置客户端&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_open_client.png&#34; alt=&#34;打开shadowsocks客户端&#34;&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_add_config.png&#34; alt=&#34;shadowsocks添加配置&#34;&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_config.png&#34; alt=&#34;配置shadowsocks&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_connection.png&#34; alt=&#34;连接shadowsocks&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;配置火狐:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;配置火狐&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/firfox_config_agent.png&#34; alt=&#34;火狐配置代理&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;访问youtube:2a2e8e594b671aec2bafdb3321025e68&#34;&gt;访问YouTube&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ss_go_youtube.png&#34; alt=&#34;访问YouTube&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>conky配置</title>
+      <link>http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Sat, 04 Jun 2016 20:26:21 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-效果:646d257b96363a28a302cc3ac52c48c7&#34;&gt;0x00 效果&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;使用软件conky可以在linux上看到系统的运行状态，效果如下：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/Conky.png&#34; alt=&#34;conky效果图&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-安装与配置:646d257b96363a28a302cc3ac52c48c7&#34;&gt;0x01 安装与配置&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;先安装conky：&lt;br /&gt;
+sudo apt-get install conky&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在/home/username/下创建文件.conkyrc&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使conky开机自启&lt;br /&gt;
+在/etc/profile最下面添加：/usr/bin/conky &amp;amp;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;0x03-配置文件-conkyrc内容如下:646d257b96363a28a302cc3ac52c48c7&#34;&gt;0x03 配置文件.conkyrc内容如下&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# set to yes if you want Conky to be forked in the background
+background no
+cpu_avg_samples 2
+net_avg_samples 2
+out_to_console no
+# X font when Xft is disabled, you can pick one with program xfontsel
+#font 7x12
+#font 6x10
+#font 7x13
+#font 8x13
+#font 7x12
+#font *mintsmild.se*
+#font -*-*-*-*-*-*-34-*-*-*-*-*-*-*
+#font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1
+# Use Xft?
+use_xft yes
+# Xft font when Xft is enabled
+xftfont Sans:size=11  
+own_window_argb_visual yes
+#own_window_colour hotpink
+# Text alpha when using Xft
+xftalpha 0.8
+# on_bottom yes
+# mail spool
+mail_spool $MAIL
+# Update interval in seconds
+update_interval 1
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_type override
+own_window_type normal
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+# Minimum size of text area
+minimum_size 260 5
+maximum_width 400
+# Draw shades?
+draw_shades no
+# Draw outlines?
+draw_outline no
+# Draw borders around text
+draw_borders no
+# Stippled borders?
+stippled_borders no
+# border margins
+border_margin 4
+# border width
+border_width 1
+# Default colors and also border colors
+default_color white
+default_shade_color white
+default_outline_color white
+# Text alignment, other possible values are commented
+#alignment top_left
+#minimum_size 10 10
+gap_x 10
+gap_y 35
+alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+# Gap between borders of screen and text
+# Add spaces to keep things from moving about?  This only affects
+# certain objects.
+use_spacer none
+# Subtract file system buffers from used memory?
+no_buffers yes
+# set to yes if you want all text to be in uppercase
+uppercase no
+# none, xmms, bmp, audacious, infopipe (default is none)
+# xmms_player bmp
+
+
+TEXT
+${color red}SYSTEM ${hr 1}
+#Time:$alignr${time %Y.%m.%d}$alignc   ${time %H:%M:%S}$alignr   Week:${time %w}
+Hostname: $alignr$nodename
+Kernel: $alignr$kernel
+Machine:$alignr$machine
+Uptime: $alignr$uptime
+Temp: ${alignr}${acpitemp} °C
+Battery:$alignr${battery BAT0}
+#Battery:$alignr${battery_percent BAT0}%  
+###############
+${color green}NETWORK ${hr 1}
+IP:${addr eth0}
+GateWay:$gw_ip
+Down ${downspeed eth0} /s ${alignr}Up ${upspeed eth0} /s
+#${downspeedgraph eth0 25,107} ${alignr}${upspeedgraph eth0 25,107}
+Total ${totaldown eth0} ${alignr}Total ${totalup eth0}
+#############
+${color #9932CC}MEMORY ${hr 1}
+Ram ${alignr}$mem / $memmax ($memperc%)
+${membar 4}
+swap ${alignr}$swap / $swapmax ($swapperc%)
+${swapbar 4}
+Highest MEM $alignr MEM%
+${top_mem name 1}$alignr ${top_mem mem 1}
+${top_mem name 2}$alignr ${top_mem mem 2}
+${top_mem name 3}$alignr ${top_mem mem 3}
+##############
+${color #ffd700}CPU ${hr 1}
+Frequency: ${alignr}${freq dyn} MHz
+Processes: ${alignr}$processes ($running_processes running)
+Load: ${alignr}$loadavg
+CPU1 ${alignr}${cpu cpu1}%
+${cpubar 4 cpu1}
+CPU2 ${alignr}${cpu cpu2}%
+${cpubar 4 cpu2}
+Highest CPU $alignr CPU%
+${top name 1}$alignr${top cpu 1}
+${top name 2}$alignr${top cpu 2}
+${top name 3}$alignr${top cpu 3}
+##############
+${color grey}FILE SYSTEM ${hr 1}
+Disk I/O:$diskio
+Root: ${alignr}${fs_free /} / ${fs_size /}
+${fs_bar 4 /}
+Home: ${alignr}${fs_free /home} / ${fs_size /home}
+${fs_bar 4 /home}
+#############
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Ubuntu下安装sublime text 3</title>
       <link>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85sublime_text3/</link>
       <pubDate>Sun, 08 May 2016 00:04:42 +0800</pubDate>
@@ -511,6 +735,326 @@ Exec=bash -c &amp;quot;LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /op
 &lt;blockquote&gt;
 &lt;p&gt;|Anaconda|ConvertToUTF8|Emmet|&lt;/p&gt;
 &lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之文本处理软件awk</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/</link>
+      <pubDate>Wed, 20 Apr 2016 15:54:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/</guid>
+      <description>
+
+&lt;p&gt;&lt;center&gt;
+awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &amp;ldquo;{ }&amp;rdquo; 中的语句。
+&lt;/center&gt;&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;xiaosan sadasdw jiaozuo
+234wer  asdfasd asdas
+1111    aaaa    cccc
+2222    aaaa    degd
+1111    aaaa    cccc
+3333    aaaa    dfger
+21asd   sdfsd   sadasd
+dwqx    asds    sasdfcv
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;要求：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1.里面有重复数据，使用命令去重
+2.提取出用户名和密码 每一行前面加上id数字，递增。
+3.只提取出密码作为爆破字典
+4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名
+5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;去重:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39;
+[wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同
+aosan sadasdw jiaozuo
+234wer  asdfasd asdas
+1111    aaaa    cccc
+2222    aaaa    degd
+3333    aaaa    dfger
+21asd   sdfsd   sadasd
+dwqx    asds    sasdfcv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;去重-添加id:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重、添加id：&lt;/h2&gt;
+
+&lt;p&gt;一般字典不需要id、user、pass等标示符，这里只是为了便于观看&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;id:&amp;quot;NR&amp;quot;\tuser:&amp;quot;$1&amp;quot;\tpass:&amp;quot;$2&amp;quot;\taddress:&amp;quot;$3}&#39; | column -t  //最后一个命令可以将列对齐
+id:1    user:aosan      pass:sadasdw    address:jiaozuo
+id:2    user:234wer     pass:asdfasd    address:asdas
+id:3    user:1111       pass:aaaa       address:cccc
+id:4    user:2222       pass:aaaa       address:degd
+id:5    user:3333       pass:aaaa       address:dfger
+id:6    user:21asd      pass:sdfsd      address:sadasd
+id:7    user:dwqx       pass:asds       address:sasdfcv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;去重-添加id-添加公司前缀:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重、添加id、添加公司前缀：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;id:&amp;quot;NR&amp;quot;\tuser:uv_&amp;quot;$1&amp;quot;\tpass:&amp;quot;$2&amp;quot;\taddress:&amp;quot;$3}&#39;
+id:1    user:uv_aosan   pass:sadasdw    address:jiaozuo
+id:2    user:uv_234wer  pass:asdfasd    address:asdas
+id:3    user:uv_1111    pass:aaaa       address:cccc
+id:4    user:uv_2222    pass:aaaa       address:degd
+id:5    user:uv_3333    pass:aaaa       address:dfger
+id:6    user:uv_21asd   pass:sdfsd      address:sadasd
+id:7    user:uv_dwqx    pass:asds       address:sasdfcv
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;去重然后输出密码:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重然后输出密码：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;pass:&amp;quot;$2}&#39;
+pass:sadasdw
+pass:asdfasd
+pass:aaaa
+pass:aaaa
+pass:aaaa
+pass:sdfsd
+pass:asds
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;输出密码-得到密码出现次数:42bebd4d9e7287de331693a6d85c474f&#34;&gt;输出密码、得到密码出现次数：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;下面的&#39;a[$1]++&#39;是按第一列来去重的,若有两条数据只有第一列重复则成功，可以用$0按行来去重
+[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print $2}&#39; | awk &#39;{a[$1]++} END {for (j in a) print a[j],j}&#39;
+1 sadasdw
+1 sdfsd
+1 asdfasd
+1 asds
+3 aaaa
+
+uniq 只能去除挨着的重复数据，所以先sort升序排序，然后uniq -c统计重复，再sort -r降序排序
+cat test.txt | awk &#39;{print $2}&#39; | sed &#39;1d&#39; |sort | uniq -c |sort -r
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;其他:42bebd4d9e7287de331693a6d85c474f&#34;&gt;其他：&lt;/h2&gt;
+
+&lt;h4 id=&#34;对-a-1-的解释如下:42bebd4d9e7287de331693a6d85c474f&#34;&gt;对&amp;rsquo;!a[$1]++&amp;lsquo;的解释如下：&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;a[e54r56wer]为空，!a[e54r56wer]为真，可以输出，然后++&lt;/li&gt;
+&lt;li&gt;若再来一个a[e54r56wer]，因为上一步已经++，此时值为1，!a[e54r56wer]为假，不输出，再++&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;对for输出数组的解释如下:42bebd4d9e7287de331693a6d85c474f&#34;&gt;对for输出数组的解释如下：&lt;/h4&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;awk &amp;lsquo;{a[$1]++} END {for (j in a) print a[j],j}&amp;rsquo; test.txt&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;在遍历完文件后，通过END把后面的句子连起来&lt;/li&gt;
+&lt;li&gt;for (j in a) 是指打印数组a的下标，并定义下标为变量j&lt;/li&gt;
+&lt;li&gt;最后print a[j],j就是打印数组下标和数组，这样就相同的$1排重并计数&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Linux之安装ettercap</title>
+      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/</link>
+      <pubDate>Tue, 19 Apr 2016 20:03:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/</guid>
+      <description>
+
+&lt;blockquote&gt;
+&lt;p&gt;操作系统：CentOS&lt;br /&gt;
+首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了&lt;br /&gt;
+执行：sudo yum groupinstall &amp;ldquo;Development tools&amp;rdquo;    &lt;em&gt;源码安装软件就需要安装这个&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;一-下载解压:34c81a6ef52c6fc9b50ea74b9a01b394&#34;&gt;一、下载解压&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;可用wget下载&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;二-查看需要的依赖项:34c81a6ef52c6fc9b50ea74b9a01b394&#34;&gt;二、查看需要的依赖项&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ettercap-0.8.2]$ vim INSTALL
+
+ #### Bundled libraries  
+ Ettercap now bundles the following libraries with the source distribution:  
+   libnet 1.1.6  
+   curl 7.41.0  
+   luajit 2.0.3  
+   check 0.9.14  
+[wyb@localhost ettercap-0.8.2]$ cd bundled_deps/  
+[wyb@localhost bundled_deps]$ ls  
+check  curl  libnet  luajit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;三-安装依赖包:34c81a6ef52c6fc9b50ea74b9a01b394&#34;&gt;三、安装依赖包&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;安装check&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost check]$ cd check-0.9.14
+[wyb@localhost check-0.9.14]$ ls
+[wyb@localhost check-0.9.14]$ ./configure 
+[wyb@localhost check-0.9.14]$ make
+[wyb@localhost check-0.9.14]$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装curl&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost check-0.9.14]$ cd ..
+[wyb@localhost curl-7.41.0]$ cd curl/
+[wyb@localhost curl-7.41.0]$ cd curl-7.41.0
+[wyb@localhost curl-7.41.0]$ make
+[wyb@localhost curl-7.41.0]$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装libnet&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost curl-7.41.0]$ cd ../../libnet/
+[wyb@localhost libnet]$ tar -zxvf libnet-1.1.6.tar.gz
+[wyb@localhost libnet]$ cd libnet-1.1.6
+[wyb@localhost libnet-1.1.6]$ ./configure 
+[wyb@localhost libnet-1.1.6]$ make
+[wyb@localhost libnet-1.1.6]$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装luajit&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost luajit]$ tar -zxvf LuaJIT-2.0.3.tar.gz 
+[wyb@localhost luajit]$ make
+[wyb@localhost luajit]$ sudo make install
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;安装ettercap&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[wyb@localhost ettercap-0.8.2]$ cd ettercap-0.8.2 
+[wyb@localhost ettercap-0.8.2]$ mkdir build                   
+[wyb@localhost ettercap-0.8.2]$ cd build  
+[wyb@localhost build]$ cmake ../    *cmake ettercap时提示未安装cmake*  
+-bash: cmake: command not found  
+[wyb@localhost build]$ sudo yum install cmake   *安装cmake*  
+[wyb@localhost build]$ cmake ../    *提示未安装curses*  
+-- The C compiler identification is GNU 4.4.7  
+-- Check for working C compiler: /usr/bin/cc  
+-- Check for working C compiler: /usr/bin/cc -- works  
+.....  
+.....  
+CMake Error at /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:108 (message):  
+  Could NOT find Curses (missing: CURSES_LIBRARY CURSES_INCLUDE_PATH)  
+.....  
+.....  
+[wyb@localhost build]$ yum search curses    *查找curses*  
+Loaded plugins: fastestmirror, refresh-packagekit, security  
+Determining fastest mirrors  
+ * base: mirrors.yun-idc.com  
+ * extras: mirrors.opencas.cn  
+ * updates: mirrors.btte.net
+============================= N/S Matched: curses   ==============================  
+ncurses.x86_64 : Ncurses support utilities  
+ncurses-devel.i686 : Development files for the ncurses library  
+ncurses-devel.x86_64 : Development files for the ncurses library  
+ncurses-libs.x86_64 : Ncurses libraries  
+ncurses-libs.i686 : Ncurses libraries  
+ncurses-static.x86_64 : Static libraries for the ncurses library  
+ocaml-curses.x86_64 : OCaml bindings for ncurses    
+ocaml-curses-devel.x86_64 : Development files for ocaml-curses  
+ncurses-base.x86_64 : Descriptions of common terminals  
+ncurses-term.x86_64 : Terminal descriptions  
+  Name and summary matches only, use &amp;quot;search all&amp;quot; for everything.  
+[wyb@localhost build]$ sudo yum install ncurses ncurses-devel   *安装ncurses开发包*  
+[wyb@localhost build]$ rm -rf *     *清除上次cmake产生的文件*  
+[wyb@localhost build]$ cmake ../    *出错，缺少依赖包GTK*  
+-- The C compiler identification is GNU 4.4.7  
+-- Check for working C compiler: /usr/bin/cc  
+......  
+......  
+CMake Error at /usr/share/cmake/Modules/FindGTK2.cmake:429 (message):  
+  Could not find GTK2 include directory  
+....  
+....  
+[wyb@localhost build]$ yum search gtk  
+Loaded plugins: fastestmirror, refresh-packagekit, security  
+Loading mirror speeds from cached hostfile  
+ * base: mirrors.yun-idc.com  
+.....  
+.....  
+gtk2.x86_64 : The GIMP ToolKit (GTK+), a library for creating GUIs for X  
+gtk2.i686 : The GIMP ToolKit (GTK+), a library for creating GUIs for X  
+gtk2-devel.i686 : Development files for GTK+   
+.... 
+....  
+[wyb@localhost build]$ sudo yum install gtk2 gtk2-devel *安装gtk及开发包* 
+[wyb@localhost build]$ rm -rf *     *清除上次cmake产生的文件*  
+[wyb@localhost build]$ cmake ../    *缺少依赖包OpenSSL*  
+-- The C compiler identification is GNU 4.4.7  
+-- Check for working C compiler: /usr/bin/cc  
+-- Check for working C compiler: /usr/bin/cc -- works  
+-- Detecting C compiler ABI info  
+-- Detecting C compiler ABI info - done  
+-- Check if the system is big endian  
+.....  
+.....  
+CMake Error at /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake:108 (message):  
+  Could NOT find OpenSSL, try to set the path to OpenSSL root folder in the  
+  system variable OPENSSL_ROOT_DIR (missing: OPENSSL_LIBRARIES OPENSSL_INCLUDE_DIR)    
+.....  
+.....  
+[wyb@localhost build]$ yum search openssl   *查找openssl*  
+[wyb@localhost build]$ sudo yum install openssl openssl-devel   *安装openss及其开发包*  
+[wyb@localhost build]$ rm -rf *     *清除上次cmake产生的文件*  
+[wyb@localhost build]$ cmake ../    *依赖libpcap*  
+......  
+......  
+-- Looking for inet_aton  
+-- Looking for inet_aton - found  
+CMake Error at cmake/Modules/EttercapLibCheck.cmake:191 (message):  
+  libpcap not found!  
+....  
+....  
+[wyb@localhost build]$ yum search libpcap   *查找libpcap*  
+Loaded plugins: fastestmirror, refresh-packagekit, security  
+Loading mirror speeds from cached hostfile  
+ * base: mirrors.yun-idc.com   
+ * extras: mirrors.opencas.cn  
+ * updates: mirrors.btte.net  
+============================= N/S Matched: libpcap =============================  
+libpcap-devel.i686 : Libraries and header files for the libpcap library  
+libpcap-devel.x86_64 : Libraries and header files for the libpcap library  
+libpcap.x86_64 : A system-independent interface for user-level packet capture  
+libpcap.i686 : A system-independent interface for user-level packet capture  
+  Name and summary matches only, use &amp;quot;search all&amp;quot; for everything.  
+[wyb@localhost build]$ sudo yum install libpcap-devel   *安装libpcap-devel*  
+[wyb@localhost build]$ rm -rf *     *清除上次cmake产生的文件*  
+[wyb@localhost build]$ cmake ../    *cmake成功*  
+[wyb@localhost build]$ make *make*  
+....  
+....  
+Linking C executable etterlog  
+[100%] Built target etterlog  
+Scanning dependencies of target man  
+[100%] Built target man  
+[wyb@localhost build]$ sudo make install    *make install*  
+.....  
+.....   
+-- Installing: /usr/local/share/man/man8/ettercap_curses.8  
+-- Installing: /usr/local/share/man/man8/ettercap-pkexec.8  
+-- Installing: /usr/local/share/man/man5/etter.conf.5  
+[wyb@localhost build]$ cd  
+[wyb@localhost ~]$ ettercap -v  *查看版本且能查看，证明安装成功*  
+ettercap 0.8.2 copyright 2001-2015 Ettercap Development Team  
+ettercap 0.8.2  
+[wyb@localhost ~]$
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
     </item>
     
