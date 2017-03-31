@@ -2,7 +2,7 @@
 date = "2016-07-05T09:56:35+08:00"
 description = ""
 draft = false
-tags = ["iptables"]
+tags = ["dmz"]
 title = "iptables简单配置DMZ"
 topics = ["Linux"]
 
