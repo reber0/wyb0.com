@@ -1,0 +1,14 @@
+<li>
+    <div class="pure-u-16-24">
+        <a target="_blank" href="{{ .Permalink }}">{{ .Title }}</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            {{ with .Site.Params.DateFormat }}
+                {{ $.Date.Format "2006-01-02 15:04" }}
+            {{ else }}
+                {{ .Date.Format "02 Jan 2006, 15:04" }}
+            {{ end }}
+        </time>
+    </div>
+</li>
