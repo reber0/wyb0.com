@@ -3,7 +3,7 @@ date = "2017-04-14T14:43:52+08:00"
 description = ""
 draft = false
 tags = ["ssrf"]
-title = "一个检测WebLogic是否存在SSRF的脚本"
+title = "检测WebLogic是否存在SSRF"
 topics = ["Python","Pentest"]
 
 +++
