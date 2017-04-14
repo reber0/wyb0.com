@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Php - Reber's Blog</title>
+  <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
+  <meta name="description" content="">
+  <meta name="author" content="reber">
+
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="" href="/index.xml" />
+
+  
+  <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+  <script src="/js/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+    
+    <div class="main">
+        <div class="left">
+            <h2 style="padding:0px 0px 15px 0px;">-- Php --</h2>
+            <div class="content">
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/">PHP安全配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-09-01</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 PHP的配置 PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题 0x01 远程文件包含 涉及配置项 allow_url_include 配置为On时允许进行远程文件包含 allow_url_fopen 配置为On时允许使用函数fopen、file_put_contents 配置方案 alllow_url_include = Off allow_url_fopen = Off 0x02 关闭错误回显 涉及配置项 display_errors 配置为On时会显示错误信息 配置方案 display_errors = Off log_errors = On error_log = /var/log/php_error.log 0x03 隐藏php版本 涉及配置项 expose_php 为Off时会隐藏php版本 配置方案 expose_php = Off 0x04 魔术引号 涉及配置项 magic_quotes_gpc 过滤get、post、cookie的单引号、双引号、反斜杠、空字符，但不过滤$_SERVER magic_quotes_runtime 对文件或数据库中取出的数据进行过滤，可防止二次注入 配置方案 做逻辑判断时需要去掉反斜杠，所以用全局过滤框架做过滤吧 0x05 安全模式 涉及配置项 safe_mode 开启后安全系数提升，但会限制函数使用权限和操作目录文件权限等 配置方案 在安全模式下可以使用safe_mode_include_dir = /var/www/common来排除某些文件 0x06 目录权限控制 涉及配置项 open_basedir 开启后可将用户访问范围限定，可防止跨站，但会影响性能 配置方案 open_basedir = /var/www/web1/:/var/www/web2/ (后面的斜杠不能少) 0x07
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/CGI%E4%B8%8EFastCGI%E4%B8%8EPHP-FPM/">CGI与FastCGI与PHP-FPM</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/cgi">cgi</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x01 CGI协议 中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议 0x02 FastCGI 服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低 fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等 0x03 FastCGI工作流程 一般情况下，FastCGI的整个工作流程是这样的： Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module) FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待WebServer的连接。 当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。 Web server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。 FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。在CGI模式中，php-cgi在此便退出了。 0x04 PHP-FPM php-fpm就是fastcgi的实现，是一个php fastcgi进程管理器 php-fpm在php5.2之后默认添加 千万不要把fastcgi端口对公网暴露
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%B0%81%E8%A3%85MySQL%E7%B1%BB/">PHP之封装MySQL类</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-03</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 config.inc.php内容如下 &lt;?php return array( 'DB_HOST' =&gt; '192.168.188.134', 'DB_NAME' =&gt; 'scoreboard', 'DB_USER' =&gt; 'score', 'DB_PASS' =&gt; '123456', 'DB_CHARSET' =&gt; 'utf8', 'IS_LOG' =&gt; 1,//开启日志 'LOGFILEPATH' =&gt; '../log.txt'//日志路径 ); /* $database = require('./config.php'); echo $database['DB_TYPE']; //输出'DB_TYPE' */ ?&gt; 0x01 表设计如下 create database scoreboard; use scoreboard; drop table if exists users; create table users( id int not null auto_increment primary key, gid int not null default 'xiaoming' comment '组id', username varchar(20) not null default 'xiaoming' comment '用户名', password varchar(32) not null default '123456' comment '密码', sex varchar(2) not null default '0' comment '性别', totalscore int not null default '0' comment '个人总积分' ); drop table if exists share; create table share( id int not null auto_increment primary key, uid int not null, content varchar(1024) not null default 'content' comment '分享内容', comment varchar(1024) comment '点评', date varchar(15) not null default '20150101' comment '分享日期' ); drop table if exists score; create table score( id int not null auto_increment primary key, uid int not null default '0' comment '用户id', score int not null default '0' comment '用户单次积分', ); grant all privileges on scoreboard.* to 'score'@'%' identified by '123456'; -- 或者只给特定权限 -- grant select,update,delete on scoreboard.* to 'score'@'%' identified by '123456'; flush privileges; 0x02 封装类如下 &lt;?php class mysql { private $logfilepath; private $is_log; private $hlog; private $conn; //构造函数 public function __construct() { $config = include_once(dirname(__FILE__).&quot;/../config/config.inc.php&quot;); $this-&gt;is_log = $config['IS_LOG']; $this-&gt;logfilepath = $config['LOGFILEPATH']; if ($this-&gt;is_log){ $handle = fopen($this-&gt;logfilepath,&quot;a+&quot;); $this-&gt;hlog = $handle; } $this-&gt;conn = $this-&gt;connect($config['DB_HOST'],$config['DB_USER'],$config['DB_PASS'],$config['DB_NAME'],$config['DB_CHARSET']); } //连接数据库 public function connect($dbhost, $dbuser, $dbpass, $dbname, $dbcharset) { $this-&gt;conn = @mysql_connect($dbhost,$dbuser,$dbpass); if (!$this-&gt;conn) { $msg = &quot;连接数据库失败：&quot;.mysql_error(); $this-&gt;write_log($msg); die($msg); } else { if (!@mysql_select_db($dbname)) { $msg = &quot;连接数据库成功，但选择数据库失败：&quot;.mysql_error(); $this-&gt;write_log($msg); die($msg); } else { $msg = &quot;连接数据库成功，且选择数据库成功&quot;; $this-&gt;write_log($msg); } } @mysql_query(&quot;set names &quot;.$dbcharset); } //执行语句 public function query($sql){ $result = @mysql_query($sql); if (!$result) { $this-&gt;write_log('mysql_query error:'.mysql_error()); } else { $this-&gt;write_log('执行语句：'.$sql.' 且执行成功'); } return $result; } //查询一条数据 public function select_one($tab,$column = &quot;*&quot;,$condition = '',$debug=False) //查询函数 { $condition = $condition ?
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8B%E5%B0%81%E8%A3%85MySQL%E7%B1%BB/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">PHP之MySQL常用函数</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        处理函数 mysql_connect(server,user,pwd,newlink,clientflag) 连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE mysql_select_db(database,connection) 选择数据库的函数，成功则返回true，失败则返回false mysql_query(query,connection) 执行一条查询，返回一个资源标识符(结果集)，如果查询执行不正确则返回FALSE mysql_num_rows(data)和mysql_num_fields(data) 函数分别返回结果集中行和列的数目(禁对SELECT语句有效),结果集从 mysql_query()的调用中得到 mysql_fetch_assoc(data) 从结果集中取得一行作为关联数组，若没有更多行则返回false mysql_fetch_row(data) 从结果集中取得一行作为索引数组，若没有更多行则返回false mysql_error(connection) 返回上一个MySQL函数的错误文本，如果没有出错则返回&rdquo;(空字符串) mysql_affected_rows(link_identifier) 返回前一次MySQL操作(增删改)所影响的记录行数,失败则返回-1 mysql_insert_id(connection) 返回上一步INSERT操作产生的 ID。如果上一查询没有产生AUTO_INCREMENT的ID，则mysql_insert_id()返回 0。 mysql_data_seek(data,row) 结果集data从mysql_query()的调用中得到,行指针移动到指定的行号，接着调用 mysql_fetch_row() 将返回那一行。如果成功则返回 true，失败则返回 false 例子 &lt;?php $server = &quot;127.0.0.1&quot;; $dbname = &quot;massage&quot;; $user = &quot;msg&quot;; $pass = &quot;123456&quot; $conn = mysql_connect($server,$user,$pass) or die('连接服务器失败:'.mysql_error()); mysql_query(&quot;set names 'utf8'&quot;);//设置数据库输出编码 mysql_select_db($dbname,$conn) or die(mysql_error($conn)); //选择数据库 $sql = &quot;select username,password from user&quot;; //构造sql语句 $result = mysql_query($sql); //执行sql语句，返回结果集 $num = mysql_num_rows($result);//返回执行结果的行数 echo &quot;&lt;br
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8BMySQL%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8BMySQL%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/">PHP之MySQL简单操作</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-29</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 连接数据库 0x01 查看数据库 0x02 创建数据库 一般将sql语句保存在文本中，然后复制运行 create database test; use test; drop table if exists users; create table users( id int not null auto_increment primary key, username varchar(20) not null default 'xiaoming' comment '用户名', password varchar(32) not null default '123456' comment '密码' ); drop table if exists msg; create table msg( id int not null auto_increment primary key, uid int not null default '0' comment '用户id', title varchar(30) not
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8BMySQL%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD/">PHP之上传与下载</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-24</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        上传 客户端设置 客户端使用form表单上传文件，在form表单中必须指明enctype和method属性的值 &lt;html&gt; &lt;head&gt; &lt;title&gt;post&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;form action=&quot;xx.php&quot; mothod=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt; &lt;input type=&quot;file&quot; value=&quot;myfile&quot; /&gt;&lt;br /&gt; &lt;input type=&quot;submit&quot; value=&quot;提交&quot; /&gt; &lt;/form&gt; &lt;/body&gt; &lt;/html&gt; 服务端设置 php.ini: file_uploads = On //默认允许HTTP文件上传，此选项不能设置为OFF upload_tmp_dir= //文件上传时存放文件的临时目录 upload_max_filesize = 20M //设定单个文件上传的大小，必须小于post_max_size post_max_size = 19M //允许POST表单的数据最大大小 $_FILES: $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_file']['size'] //文件大小 $_FILES['upload_file']['tmp_name'] //临时文件名 $_FILES['upload_file']['error'] //上传文件时的错误信息 $_FILES['upload_file']['type'] //上传文件的类型 //type是上传文件时原始信息里的content_type,即MIME,有image/gig、text/html等 //error一般有5中类型： //0 上传成功 //1 文件大小超过了upload_max_filesize //2 文件大小超过了表单总MAX_FILE_SIZE设定的值 //3 只有部分被上传 //4 没有上传任何文件 服务端上传步骤 1. 判断uploads这个文件夹存在 2. 判断error的值 3. 判断文件后缀是否合法 4.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8B%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/">PHP之目录与文件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-22</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        1.目录的操作 &lt;?php $path = &quot;/var/www/html/php/dir.php&quot;; echo dirname($path).&quot;&lt;br /&gt;&quot;; //返回上级路径 echo basename($path).&quot;&lt;br /&gt;&quot;; //返回文件名部分 print_r(pathinfo($path)); //返回包含path信息的数组 echo &quot;&lt;br /&gt;&lt;br /&gt;&quot;; //readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动 $path = &quot;D:/phpStudy/WWW/php&quot;; $dh = opendir($path); while (false !== ($filename=readdir($dh))) { echo $filename.&quot;&lt;br /&gt;&quot;; } rewinddir($dh); //指针复位 echo readdir($dh); closedir($dh); mkdir(&quot;./aaa&quot;);//创建文件夹aaa rmdir(&quot;./aaa&quot;);//删除文件夹aaa file_put_contents(&quot;aa.php&quot;, &quot;&quot;);//创建文件aa.php unlink(&quot;./aa.php&quot;);//删除文件aa.php ?&gt; 2.文件的读写 fopen(filename,mode)和fclose(filename,mode) 例子： &lt;?php $file = fopen(&quot;test.txt&quot;,&quot;r&quot;); $file = fopen(&quot;/home/test/test.txt&quot;,&quot;r&quot;); $file = fopen(&quot;/home/test/test.gif&quot;,&quot;wb&quot;); $file = fopen(&quot;http://www.example.com/&quot;,&quot;r&quot;); $file = fopen(&quot;ftp://user:password@example.com/test.txt&quot;,&quot;w&quot;); ?&gt; 读取内容 fread(h_file,length) //读取打开文件的length个字节，返回读取的字符串 fgets(h_file,length) //读取一行返回length个字节，不加length时默认1024个字节，失败返回false fgetc(h_file) //逐字读取 file_get_content()和file_put_content() file_get_content($filename)可以得到文件中的所有内容 file_put_content($filename, $str)可以将字符串覆盖写入文件中 file_put_content($filename, $str, FILE_APPEND)可以将字符串追加到文件中 filetype() filetype($filename)可以得到文件的类型 3.查看文件夹下的文件信息 &lt;?php $path = &quot;./&quot;; $filelist=array(&quot;filesystem.php&quot;);//要过滤掉的文件 //浏览指定目录下的文件，并使用表格输出 //path目录信息的过滤，判断path存在，并且是否是个目录 if(!file_exists($path) || !is_dir($path)){ die($path.&quot;目录无效！&quot;); } //2.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8B%E7%9B%AE%E5%BD%95%E4%B8%8E%E6%96%87%E4%BB%B6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/">PHP之字符串</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-21</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        特点 字符串可以使用数组的处理函数操作，但并不是真正的数组 双引号中的变量用{}括起来，因为字符串中若遇到$符号，解析器会尽可能多的获取后面的字符以组成一个合法的变量名 &lt;?php $lamp = array('os' =&gt; 'Linux', 'webserver' =&gt; 'Apache', 'db' =&gt; 'Mysql', 'language' =&gt; 'PHP'); echo &quot;A OS is $lamp[os].&quot;; // ok echo &quot;A OS is $lamp['os'].&quot;; // false echo &quot;A OS is {$lamp['os']}.&quot;; //ok echo &quot;A OS is {$lamp[os]}.&quot;; // ok echo &quot;This square is $square-&gt;width meters broad.&quot;; //ok echo &quot;This square is $square-&gt;width meters broad.&quot;; //ok echo &quot;This square is $square-&gt;width meters broad.&quot;; //ok ?&gt; 常用字符串输出函数 函数名 功能描述 echo 输出字符串 print() 输出一个或多个字符串 die() 输出一条消息，并退出当前脚本 printf() 输出格式化字符串 sprintf() 把格式化字符串写入到一个变量中 函数echo() 输出一个或多个字符串 void echo(string arg1 [,string &hellip;]) 函数print() 功能和echo()一样，它有返回值，若成功则返回1,否则返回0 函数die() 该函数是exit()函数的别名 若参数为字符串，则函数会在推出前输出它 若参数为整数(0~254)，则值会被用作推出状态 函数printf() 输出格式化的字符串，和C语言中同名的函数用法一样 第一个参数为必选项，是规定的字符串及如何格式化其中的变量 可以有多个可选参数，是规定插入到第一个参数的格式化字符串中对应%符号处的参数 函数sprintf() 用法和Printf()类似，但他并不是输出字符串，而是格式化的字符串以返回值的形式写入到一个变量中 常用字符串格式化函数 ltrim()：从字符串左删除空格或其他预定义字符串 rtrim()：从字符串的末端开始删除空白字符串或其它预定义字符 trim()：从字符串的两端删除空白字符和其他预定字符 strtolower()：把字符串转换为小写 strtoupper()：把字符串转换为大写 ucfirst()：把字符串中的首字符转为大写 ucwords():把字符串中每个单词的首自负转换为大写 nl2br()：在字符串的每个新行之前插入HTML换行符 htmlentities()：把字符转换为HTML实体 htmlspecialchars()：把一些预定义的字符转换为HTML实体 Stripslashes()：删除由addcslashes()函数添加的反斜杠 number_format()：能过千位分组来格式化数字 strip_tags()：剥去HTML,XML以及PHP的标签 strrev()：反转字符串 str_pad()：把字符串填充为新的长度 md5()：将一个字符串进行MD5计算 过滤字符 ltrim()、rtrim()、trim() 第一个参数为待处理字符串，为必选项 第二个参数是可选项，用于指定希望取出的字符，默认为： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rdquo;&ldquo;：空格 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ldquo;\0&rdquo;：NULL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ldquo;\t&rdquo;：制表符 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ldquo;\n&rdquo;：新行 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ldquo;\r&rdquo;：回车 &lt;?php $str = &quot;123 This is a test ...&quot;; //测试的字符串 echo ltrim($str,&quot;0..9&quot;); //过滤左侧的数字，输出This is a test ...
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">PHP之面向对象</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-20</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        面向对象 面向对象概念 面向对象是达到了软件工程的三个目标：重用性、灵活性和扩展性，使其编程的代码更加简洁、更易于维护、并且具有更强的可重用性。 类和对象的关系 在面向对象的编程语言中，类是一个对立的程序单位，而对象的抽象就是类。类描述了一组有相同特性(属性)和相同行为(方法)的对象。开发时要先抽象类再用该类去创建对象。而我们的程序中直接使用的是对象而不是类。 什么是类 在面向对象的编程语言中，类是一个对立的程序单位，是具有相同属性和服务的一组对象的集合。它为属于该类的所有对象提供了同意的抽象描述，其内部包括成员属性和服务的方法两个部分。 什么是对象 在客观世界里，所有的事物都是由对象和对象之间的联系组成的。对象是系统中用来描述客观事物的一个实体，它是构成系统的一个基本单位，一个对象由一组属性和有权对这些属性进行操作的一组服务的封装体。 类的声明 类名和变量名还有函数名的命名规则类似，都遵循PHP中定义名称的命名规则。 若类名由多个单词组成，习惯上每个单词的首字母要大写 类中成员可分为属性和方法 属性为静态描述，方法为动态描述 在类中声明成员属性时，变量前面一定要有关键字，如：public、private、static等 若不需要有特定意义的修饰，则使用var关键字 格式： [一些修饰类的关键字] class 类名 { 类中成员; } Class Person { 成员属性： 姓名、性别、年龄、身高、体重、电话、住址等 成员方法： 说话、学习、走路、吃饭、开车、使用手机等 } 例子： &lt;?php class Person { var $name; var $age; var $sex; function say() { echo &quot;人在说话&quot;; } function run() { echo &quot;人在走路&quot;; } } ?&gt; 实例化对象 格式： $变量名 = new 类名称([参数列表]); $变量名 = new 类名称; 例子： &lt;?php class Phone { // ...
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8B%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/PHP%E4%B9%8B%E6%95%B0%E7%BB%84/">PHP之数组</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-18</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        分类 索引数组 索引值从0开始，依次递增 关联数组 以字符串为索引，键和值对是无序组合，每个键都是唯一的 数组的定义 两种方法： 直接为数组元素赋值即可声明数组 使用array()函数声明数组 &lt;?php // 1.直接为数组元素赋值即可声明数组 $contact_index[0] = 1; $contact_index[1] = &quot;高某&quot;; $contact_index[2] = &quot;A公司&quot;; $contact_index[3] = &quot;北京市&quot;; $contact_index[] = &quot;gao@a.com&quot;; var_dump($contact_index); $contact_key[&quot;ID&quot;] = &quot;2&quot;; $contact_key[&quot;姓名&quot;] = &quot;峰某&quot;; $contact_key[&quot;公司&quot;] = &quot;B公司&quot;; $contact_key[&quot;邮箱&quot;] = &quot;feng@b.com&quot;; var_dump($contact_key); // 2.使用array()函数声明数组 $contact_key_array = array( &quot;ID&quot; =&gt; 1; &quot;姓名&quot; =&gt; &quot;峰某&quot;; &quot;公司&quot; =&gt; &quot;B公司&quot;; &quot;邮箱&quot; =&gt; &quot;feng@b.com&quot;; ); var_dump($contact_key_array); ?&gt; 数组的遍历 for语句遍历数组 foreach语句遍历数组 &lt;?php // for语句遍历索引数组 $cars=array(&quot;Volvo&quot;,&quot;BMW&quot;,&quot;SAAB&quot;); $arrlength=count($cars); for($x=0; $x &lt; $arrlength; $x++) { echo $cars[$x]; echo &quot;&lt;br&gt;&quot;; } // foreach语句遍历关联数组 $age=array(&quot;Bill&quot;=&gt;&quot;35&quot;, &quot;Steve&quot;=&gt;&quot;37&quot;, &quot;Peter&quot;=&gt;&quot;43&quot;); foreach($age as $x =&gt; $x_value) { echo &quot;Key=&quot; .
+    </p>
+
+    
+    <footer>
+        <a href="/posts/PHP%E4%B9%8B%E6%95%B0%E7%BB%84/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+
+                
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <i class="fa fa-chevron-left"></i>
+        
+
+        <span>&nbsp;1 / 2&nbsp;</span>
+        
+        
+            <a href="/topics/php/page/2/"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
+
+
+            </div>
+        </div>
+        <div class="right">
+            <div>
+                <br>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Categories</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(21)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(59)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(31)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(9)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
+        
+    </ul>
+
+
+</div>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/burpsuite" title="burpsuite">burpsuite</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/msf" title="msf">msf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nessus" title="nessus">nessus</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nmap" title="nmap">nmap</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>29</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python%e6%a8%a1%e5%9d%97" title="python模块">python模块</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlmap" title="sqlmap">sqlmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh" title="ssh">ssh</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%8f%90%e6%9d%83" title="提权">提权</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%b3%a8%e5%85%a5" title="注入">注入</a>
+                <sup>9</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%b6%8a%e6%9d%83" title="越权">越权</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%bd%af%e4%bb%b6" title="软件">软件</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+                
+<div style="padding-bottom:20px;">
+    <h2 class="asidetitle">Links</h2>
+    <div style="padding:5px 0px 10px 10px;">
+        <a href="http://www.test404.com/">Test404's Blog</a>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        &copy; 2016-2017 Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript">
+          var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1261003390'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261003390%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+    <div class="social">
+        
+        
+            <a href="https://github.com/reber-9" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+        
+        &nbsp;&nbsp;
+        
+            <a href="http://weibo.com/u/5819760166" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+        
+        &nbsp;&nbsp;
+        <a href="http://wyb0.com/index.xml" target="_blank"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </div>
+</div>
+</div>
+
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var alist = $('#tags p');
+        alist.each(function () {
+            var t = $(this);
+            var a = t.find('a');
+            var sup = parseInt(t.find('sup').text());
+            t.find('sup').hide();
+
+            if (0<sup && sup<6) {
+                a.addClass("text8");
+            } else if (5<sup && sup<11) {
+                a.addClass("text7");
+            } else if (10<sup && sup<16) {
+                a.addClass("text6");
+            } else if (15<sup && sup<21) {
+                a.addClass("text5");
+            } else if (20<sup && sup<26) {
+                a.addClass("text4");
+            } else if (25<sup && sup<31) {
+                a.addClass("text3");
+            } else if (30<sup && sup<36) {
+                a.addClass("text2");
+            } else {
+                a.addClass("text1");
+            }
+
+        });
+    });
+    </script>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); 
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
+</body>
+</html>

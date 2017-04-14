@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux - Reber's Blog</title>
+  <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
+  <meta name="description" content="">
+  <meta name="author" content="reber">
+
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="" href="/index.xml" />
+
+  
+  <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+  <script src="/js/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+    
+    <div class="main">
+        <div class="left">
+            <h2 style="padding:0px 0px 15px 0px;">-- Linux --</h2>
+            <div class="content">
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/">Linux之文本处理软件awk</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-20</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E8%BD%AF%E4%BB%B6">软件</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。 若有一个需要重新格式化的字典test.txt(用户名、密码、地址)： xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 aaaa cccc 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv 要求： 1.里面有重复数据，使用命令去重 2.提取出用户名和密码 每一行前面加上id数字，递增。 3.只提取出密码作为爆破字典 4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名 5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数 去重： [wyb@localhost ~]$ cat test.txt | awk '!a[$1]++' [wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同 aosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 3333 aaaa dfger 21asd sdfsd sadasd dwqx
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/">Linux之文本处理</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-20</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        这里介绍3种方式： ==&gt;awk ==&gt;grep ==&gt;sed awk处理文本(最常用)： 作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化 awk命令格式：awk [F filed-separator] &lsquo;commands&rsquo; input-fiel(s) 参数-F：可以添加任意的分割符，比较重要 awk工作流程是这样的： 读入有&rsquo;\n&rsquo;换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&rdquo;空白键&rdquo; 或 &ldquo;[tab]键&rdquo;。 1. 入门示例： [wyb@localhost temp]$ head -n 5 /etc/passwd root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin adm:x:3:4:adm:/var/adm:/sbin/nologin lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{print $1}' //输出第1列，域分隔符为： root bin daemon adm lp [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{pri nt &quot;id:&quot;$1&quot;\tshell:&quot;$7}' //输出第1、7列且给予列名 id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' 'BEGIN {print &quot;====begin=====&quot;} {print &quot;id:&quot;$1&quot;\tshell:&quot;$7} END {print &quot;====end====&quot;}' ====begin===== id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin ====end==== [wyb@localhost temp]$ awk -F: '/root/' /etc/passwd //搜索含有root关键字的所有行 root:x:0:0:root:/root:/bin/bash operator:x:11:0:operator:/root:/sbin/nologin [wyb@localhost temp]$ awk -F: '/root/{print $7}' /etc/passwd //匹配root并输出对应shell /bin/bash /sbin/nologin [wyb@localhost temp]$ awk -F: '/^root/' /etc/passwd //匹配以root开头的行 root:x:0:0:root:/root:/bin/bash 2.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/">Linux之tar</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-19</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        tar主要参数： -c 创建一个新的压缩文件 -x 解压 -t 查看压缩文件的内容 -f 指定档案文件的名字 -v 显示过程信息 -r 增加文件到指定的包 -C 指定解压后的路径 -z 使用gzip -j 使用bzip2 -Z 使用compress tar示例： [wyb@localhost temp]$ ls aaa [wyb@localhost temp]$ tar -cvf 1.tar aaa/ *打包不压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -zcvf 1.tar.gz aaa/ *打包且以gzip压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -jcvf 1.tar.bz2 aaa/ *打包且以bzip2压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]tar -zxvf aa.tar.gz /home/aaa --exclude=dir //排除目录 [wyb@localhost temp]$ ls -l total 24 -rw-r--r--.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/">Linux之安装ettercap</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-19</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E8%BD%AF%E4%BB%B6">软件</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        操作系统：CentOS 首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了 执行：sudo yum groupinstall &ldquo;Development tools&rdquo; 源码安装软件就需要安装这个 一、下载解压 可用wget下载 二、查看需要的依赖项 [wyb@localhost ettercap-0.8.2]$ vim INSTALL #### Bundled libraries Ettercap now bundles the following libraries with the source distribution: libnet 1.1.6 curl 7.41.0 luajit 2.0.3 check 0.9.14 [wyb@localhost ettercap-0.8.2]$ cd bundled_deps/ [wyb@localhost bundled_deps]$ ls check curl libnet luajit 三、安装依赖包 安装check [wyb@localhost check]$ cd check-0.9.14 [wyb@localhost check-0.9.14]$ ls [wyb@localhost check-0.9.14]$ ./configure [wyb@localhost check-0.9.14]$ make [wyb@localhost check-0.9.14]$ sudo make install 安装curl [wyb@localhost check-0.9.14]$ cd ..
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E5%AE%89%E8%A3%85ettercap/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85/">Linux之软件的安装</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-19</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        Linux上的软件安装可以分为三种方式： 1. yum安装 yum基于RPM包管理，一次性安装所有依赖包，提供了查找、安装、删除一个、一组 至全部软件包的命令，配置文件在/etc/yum.repos.d/下 主要命令： yum install gcc g++ yum remove wget yum list installed //显示已经安装过的软件 yum list //显示所有可以安装的包 [wyb@localhost ~]$ wget -h //验证有没有安装wget -bash: /usr/bin/wget: No such file or directory [wyb@localhost ~]$ sudo yum search wget //通过yum查找wget，看有没有这个软件包 Loaded plugins: fastestmirror, refresh-packagekit, security Loading mirror speeds from cached hostfile * base: mirrors.yun-idc.com * extras: mirrors.pubyun.com * updates: mirrors.yun-idc.com ============================== N/S Matched: wget =============================== wget.x86_64 : A utility for retrieving files using the HTTP or FTP protocols Name and summary matches only, use &quot;search all&quot; for everything.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">Linux之基础命令</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-19</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 ls：显示文件 [wyb@localhost tmp]$ ls a a.txt [wyb@localhost tmp]$ ls -l total 4 drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--. 1 wyb root 0 Apr 17 18:23 a.txt [wyb@localhost tmp]$ ls -a . .. a a.txt .esd-500 .ICE-unix [wyb@localhost tmp]$ ls -al total 20 drwxrwxrwt. 5 root root 4096 Apr 17 18:23 . dr-xr-xr-x. 22 root root 4096 Apr 17 16:31 .. drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/">Linux之服务和计划任务</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-19</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        服务： 在后台运行的软件就叫服务 参数： start stop restart apache启动后默认降权 service httpd start实际调用的是/etc/init.d/httpd这个shell脚本 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d [wyb@localhost ~]$ ls -al /etc/init.d lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&gt; rc.d/init.d 添加服务： 将脚本放在/etc/init.d/下即可 若要自启则： chkconfig --list //查看chk管理的自启动项 chkconfig --add httpd 添加到chk管理里面 chkconfig --del httpd 将httpd移出chk管理 chkcofnig --level 35 httpd on init的345将开启 chkcofnig --level 345 httpd off /etc/rc.d/rc3.d和rc5.d里将有httpd 计划任务： 启动方式： 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件 cron：每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟 添加任务： 格式：分(0-59) 时 日 月 周(0-6) 命令 第一种方法： crontab -e //任何权限都可以运行这个命令，针对某个用户 [wyb@localhost spool]$ crontab -e //进入编辑，实际是写入到/var/spool/cron/username这个文件中 no crontab for wyb - using an empty one */1 * * * * date &gt;&gt; /tmp/date.txt //每一分钟都向date.txt写入 1 * * * * date &gt;&gt; /tmp/date1.txt //在第一分钟时将数据写入 ~ ~ ~ &quot;/tmp/crontab.T8sDqC&quot; 1L, 34C written crontab: installing new crontab [wyb@localhost spool]$ sudo ls /var/spool/cron/ wyb [wyb@localhost spool]$ sudo cat /var/spool/cron/wyb */1 * * * * date &gt;&gt; /tmp/date.txt 1 * * * * date &gt;&gt; /tmp/date1.txt [wyb@localhost spool]$ 第二种方法： 编辑/etc/crontab文件 //要具有root权限，针对系统任务 vim /etc/crontab会以root权限执行，不推荐使用 01 * * * * 用户名 命令 date &gt;&gt; /tmp/date2.txt在每个小时的第一分钟执行 查看用户任务： [wyb@localhost tmp]$ sudo cat /var/spool/cron/wyb //用户的计划任务 */1 * * * * date &gt;&gt; /tmp/date.txt [wyb@localhost tmp]$ sudo tail -5 /etc/crontab //系统计划任务 # | | | .------- month (1 - 12) OR jan,feb,mar,apr ...
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E7%94%A8%E6%88%B7%E7%BB%84/">Linux之用户组</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个 useradd xm 用户xm会默认加到xm组 useradd -g fans xm 将xm的所属组改为fans useradd -G fans xm 初始组为xm，有效组为fans useradd xiaoming usermod -g fans xiaoming 只有一个初始组，被修改为fans useradd xm usermod -G fans xm xm用户会有两个组，初始组为xm，又添加一个有效组fans usermod -G fans1 xm xm用户两个组，初始组为xm，有效组更改为fans1 用户创建的文件拥有者是初始组
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/">Linux之网络配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        第一种方法 分5步： 1. 启动网卡： $ ifconfig eth0 up/down 2. 配置ip： $ ifconfig eth0 192.168.22.231 netmask 255.255.255.0 3. 配置网关： $ route add default gw 192.168.22.1 4. 配DNS： $ vim /etc/resolv.conf $ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.cof 5. 重启网络使配置生效： 6. 用文件配置ip信息 $ /etc/sysconfig/network-scripts/ifcfg-eth0 ps:添加静态路由 route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3 //添加静态路由添加网络10.211.55.0，从eth0出去 第二种方法 分1步： 打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息: DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY= 打开ip转发 echo &quot;1&quot; &gt;&gt; /proc/sys/net/ipv4/ip_forward 或者vim /etc/sysctl.conf
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/">Linux之权限(重点)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        主要有三种参数：rwx 对于文件来说：分别是读/写/执行 对于目录来说：r读目录结构；w操作目录结构；x进入目录 如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh 若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中 文件权限 chmod -x [root@localhost tmp]# ls -l total 0 -rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# chmod -x a.txt 去除ugo的x权限 [root@localhost tmp]# ls -l total 0 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# ls -l a.txt -rwxrw-rw-. 1 root root 9 Apr 16 20:42 a.txt [root@localhost tmp]# cat a.txt echo aaa [root@localhost tmp]# ./a.txt 直接执行了a.txt中的echo命令 aaa [root@localhost tmp]# chmod -R [root@localhost tmp]# ls -l a;ls -l a/a.txt total 0 -rw-r--r--.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+
+                
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <i class="fa fa-chevron-left"></i>
+        
+
+        <span>&nbsp;1 / 2&nbsp;</span>
+        
+        
+            <a href="/tags/linux/page/2/"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
+
+
+            </div>
+        </div>
+        <div class="right">
+            <div>
+                <br>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Categories</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(21)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(59)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(31)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(9)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
+        
+    </ul>
+
+
+</div>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/burpsuite" title="burpsuite">burpsuite</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/msf" title="msf">msf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nessus" title="nessus">nessus</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nmap" title="nmap">nmap</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>29</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python%e6%a8%a1%e5%9d%97" title="python模块">python模块</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlmap" title="sqlmap">sqlmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh" title="ssh">ssh</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%8f%90%e6%9d%83" title="提权">提权</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%b3%a8%e5%85%a5" title="注入">注入</a>
+                <sup>9</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%b6%8a%e6%9d%83" title="越权">越权</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%bd%af%e4%bb%b6" title="软件">软件</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+                
+<div style="padding-bottom:20px;">
+    <h2 class="asidetitle">Links</h2>
+    <div style="padding:5px 0px 10px 10px;">
+        <a href="http://www.test404.com/">Test404's Blog</a>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        &copy; 2016-2017 Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript">
+          var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1261003390'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261003390%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+    <div class="social">
+        
+        
+            <a href="https://github.com/reber-9" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+        
+        &nbsp;&nbsp;
+        
+            <a href="http://weibo.com/u/5819760166" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+        
+        &nbsp;&nbsp;
+        <a href="http://wyb0.com/index.xml" target="_blank"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </div>
+</div>
+</div>
+
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var alist = $('#tags p');
+        alist.each(function () {
+            var t = $(this);
+            var a = t.find('a');
+            var sup = parseInt(t.find('sup').text());
+            t.find('sup').hide();
+
+            if (0<sup && sup<6) {
+                a.addClass("text8");
+            } else if (5<sup && sup<11) {
+                a.addClass("text7");
+            } else if (10<sup && sup<16) {
+                a.addClass("text6");
+            } else if (15<sup && sup<21) {
+                a.addClass("text5");
+            } else if (20<sup && sup<26) {
+                a.addClass("text4");
+            } else if (25<sup && sup<31) {
+                a.addClass("text3");
+            } else if (30<sup && sup<36) {
+                a.addClass("text2");
+            } else {
+                a.addClass("text1");
+            }
+
+        });
+    });
+    </script>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); 
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
+</body>
+</html>

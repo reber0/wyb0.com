@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python - Reber's Blog</title>
+  <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
+  <meta name="description" content="">
+  <meta name="author" content="reber">
+
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="" href="/index.xml" />
+
+  
+  <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+  <script src="/js/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+    
+    <div class="main">
+        <div class="left">
+            <h2 style="padding:0px 0px 15px 0px;">-- Python --</h2>
+            <div class="content">
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84logging%E6%A8%A1%E5%9D%97/">Python的logging模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-25</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python%E6%A8%A1%E5%9D%97">python模块</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        使用流程 创建一个logger 创建一个handler，用于写入日志文件 定义handler的输出格式 将handler添加到logger 记录日志 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- import logging class MyLog(object): &quot;&quot;&quot;docstring for MyLog&quot;&quot;&quot; def __init__(self, logfile, loglevel, logger): super(MyLog, self).__init__() # 创建一个logger self.logger = logging.getLogger(logger) self.logger.setLevel(logging.DEBUG) # 创建一个用于写入日志文件的handler fh = logging.FileHandler(logfile) fh.setLevel(logging.DEBUG) # 只要是写入文件的等级都为DEBUG，也可以设置为loglevel formatterf = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') fh.setFormatter(formatterf) # 创建一个用于输出到控制台的handler ch = logging.StreamHandler() ch.setLevel(loglevel) formatterc = logging.Formatter('%(asctime)s - %(message)s') ch.setFormatter(formatterc) # 将handler添加到logger self.logger.addHandler(fh) self.logger.addHandler(ch) def debug(self,msg):
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Python%E7%9A%84logging%E6%A8%A1%E5%9D%97/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AE%89%E8%A3%85/">Python第三方模块的安装</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-15</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python%E6%A8%A1%E5%9D%97">python模块</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        第三方模块安装方法 使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装 使用easy_install安装 在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName 使用pip安装 在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName 网站下载安装包 在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/">Python编写规范</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-12</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        一、代码编排 1.缩进：使用4个空格缩进 2.行长度：每行不要超过80个字符 3.空行：顶级定义之间空两行，如函数或类的定义，方法定义、类定义与第一个方法之间都应该空一行。 4.分号：行尾不要有分号，也不要用分号将两条命令放在一行,除非是：1.长的导入模块语句。2.注释里的URL.3.可以使用圆括号实现隐式行连接 二、文档编排 1.导入：模块注释-&gt;文档字符串-&gt;导入-&gt;模块全局变量-&gt;常量 导入顺序：标准库导入-&gt;第三方库导入-&gt;应用程序指定库导入 2.import:不要在一行中import多个库，一行中只导入一个 三、空格 1.不要在逗号、分号、冒号前加空格，但应在他们后面加(除了在行尾) 2.二元操作符(赋值、比较、布尔)两边都加空格 3.当&quot;=&quot;用于指示关键字参数或默认参数值是，不要再其两侧使用空格 4.&quot;,&quot;和&quot;#&quot;和&quot;=&quot;不需要对齐，因为空格会成为维护的负担 四、注释 总体原则，错误的注释不如没有注释。 注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。 1.块注释：在一段代码前增加的注释。在&quot;#&quot;后加一空格。段落之间以只有&quot;#&quot;的行间隔。 2.行注释，在一句代码后加注释。进来少使用. 3.绝不要描述代码. 假设阅读代码的人比你更懂Python, 他只是不知道你的代码要做什么. 五、文档描述 1.为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。 2.如果docstring要换行，参考如下例子 class SampleClass(object): &quot;&quot;&quot;Summary of class here. Longer class information.... Longer class information.... Attributes: likes_spam: A boolean indicating if we like SPAM or not. eggs: An integer count of the eggs we have laid. &quot;&quot;&quot; def __init__(self): &quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot; 六、命名规范 1.尽量单独使用小写字母‘l’，大写字母‘O’等容易混淆的字母。 2.模块名尽量短小，应该用小写加下划线的方式(如lower_with_under.py). 3.包命名尽量短小，使用全部小写的方式，不可以使用下划线。 4.类名使用大写字母开头的单词(如CapWords, 即Pascal风格) 5.函数命名使用全部小写的方式，可以使用下划线。 6.变量也用小写加下划线的方式，即this_is_a_variable=1 7.常量命名使用全部大写的方式，可以使用下划线。 8.类的属性（方法和变量）命名使用全部小写的方式，可以使用下划线。 9.类的方法第一个参数必须是self，而静态方法第一个参数必须是cls。 10.用单下划线(_)开头表示模块变量或函数是protected的(使用import * from时不会包含).
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Python%E7%BC%96%E5%86%99%E8%A7%84%E8%8C%83/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84%E6%AD%A3%E5%88%99/">Python的正则</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-02-05</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%AD%A3%E5%88%99">正则</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        正则表达式 正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串 原子字符 元字符 修饰符 re模块 由于Pyton的字符串本身也用\转义，强烈建议使用r前缀 函数match() 这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None 函数search() 这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None 函数findall()和finditer() re.findall()将以列表的形式返回所有能匹配到的字符 re.finditer()将以迭代器的形式返回所有能匹配到的字符 函数sub() 这个函数会对字符串进行匹配，然后替换，可以指定替换次数 函数split() 这个函数会以正则来分割字符串，以列表样式返回 函数compile() 这个函数可以编译正则，提高匹配速度 提取子串 根据正则可以匹配字符然后提取出来，用括号表示要提取的分组 贪婪匹配 正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&rdquo;？&rdquo;来抑制贪婪匹配
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84%E7%BA%BF%E7%A8%8B/">Python的线程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-02-03</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。 单线程 #!/usr/bin/env python # -*- coding: utf-8 -*- from time import time,ctime,sleep def music(arg): for x in range(2): print &quot;I'm listening to %s. %s&quot; % (arg,ctime()) sleep(1) def movie(arg): for x in range(2): print &quot;I'm watching %s. %s&quot; % (arg,ctime()) sleep(5) if __name__ == '__main__': start = int(time()) music(u'我') movie(u'可是') print &quot;All over time:%s&quot; % ctime() print &quot;Used time:%d&quot; % int(time()-start) 多线程 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep INDEX = 0 def http_get(sites): global INDEX while INDEX &lt; len(sites): url = sites[INDEX] INDEX += 1 resp = requests.get(url, timeout=3) resp.encoding = resp.apparent_encoding title = re.search(r'&lt;title&gt;(.*?)&lt;/title&gt;', resp.text).group(1) print &quot;URL:%-30sTitle:%s&quot; % (url, title) sites = [ &quot;http://www.baidu.com&quot;, &quot;http://www.qq.com&quot;, &quot;http://www.github.com&quot;, &quot;http://www.jingyingba.com&quot;, ] if __name__ == '__main__': start = int(time()) threads = [] for i in range(0, 3): t = threading.Thread(target=http_get, args=(sites,)) threads.append(t) for t in threads: #t.setDaemon(True) #设为守护线程,主线程结束后不管子线程是否完成,立即结束 t.start() for t in threads: t.join() #主线程阻塞，等待子线程完成 print &quot;Used time:%d&quot; % int(time() - start) 线程同步 使用多线程时若线程共用一个资源则可能导致线程竞争问题，可以通过互斥锁和队列来解决 线程竞争 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep num = 0 def test(): global num sleep(1) num = num+1 msg = 'Number: ' + str(num) print msg if __name__ == '__main__': start = int(time()) threads = [] for i in range(0, 20): t = threading.Thread(target=test) threads.append(t) for t in threads: t.setDaemon(True) t.start() for t in threads: t.join() print &quot;Used time:%d&quot; % int(time() - start) 互斥锁 #!/usr/bin/env python # -*- coding: utf-8 -*- &quot;&quot;&quot; 使用步骤： 1.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Python%E7%9A%84%E7%BA%BF%E7%A8%8B/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84IO%E6%93%8D%E4%BD%9C/">Python的IO操作</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-01-31</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        文件的操作 文件读写 r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入 #!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.txt&quot;,&quot;r&quot;) data = f.read() print &quot;File name: &quot;,f.name print &quot;File open moudle: &quot;,f.mode print &quot;File is close ?&quot;,f.closed print &quot;File content: &quot;,data finally: f.close() with open(&quot;test.txt&quot;,&quot;a+&quot;) as f: #自动调用close() data = &quot;\nYes,I know.&quot; f.write(data) print u&quot;写入内容：%s&quot; % data with open(&quot;test.txt&quot;,&quot;r&quot;) as f: #readlines()一次读取一行，返回一个列表，也可以用read(size)读取指定大小 line = f.readlines() print line 指针移动 #!/usr/bin/env python # -*- coding: utf-8 -*- try:
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Python%E7%9A%84IO%E6%93%8D%E4%BD%9C/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">Python的面向对象</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-01-25</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        面向对象 面向对象是为了解决系统的可维护性，可扩展性，可重用性 三个基本特征：封装、继承、多态 封装：对一类事物，将其相同特点和功能提取出来，所共有的特点叫做属性，共有的功能就叫做方法，将属性和方法组合在一起就叫做封装。 如：人具有姓名、年龄、性别，这些就是属性，人可以说话、可以走、可以跑，这些就是方法，封装起来就是一个类，而类的实例化就是对象 继承：继承可以使得子类具有父类的属性和方法，不需要再次编写相同的代码，子类可以对继承的代码进行重写，也可以追加新的属性和方法。 如：有一个类People，教师就可以继承自People，可以添加自己的属性，如：工资、职工号，也可以添加自己的方法，如：备课、写教案 多态：首先，多态必有继承，没有继承就没有多态，继承后一个父类的引用变量可以指向其任意一个子类对象。 如：有一个People类，它的子类可以有学生、老师、工人，有多种形态，这就是多态 类的实例 注意：类中每个方法后面都要写self，self就是当前对象指针 示例一 #!/usr/bin/env python # -*- coding:utf-8 -*- # 声明一个People类 class People(object): &quot;&quot;&quot;docstring for People&quot;&quot;&quot; def __init__(self, name, age): super(People, self).__init__() self.name = name self.age = age def running(self): print &quot;%s is running&quot; % self.name def print_base_msg(self): print &quot;Name:%s Age:%d&quot; % (self.name,self.age) # 继承自People类 class Teacher(People): &quot;&quot;&quot;docstring for Teacher&quot;&quot;&quot; def __init__(self, name, age, salary): super(Teacher, self).__init__(name, age) self.name = name
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Python%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">Python的函数式编程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-01-21</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        函数式编程 首先说一下高阶函数，能将函数作为参数来接收的函数就可以称为高阶函数，如下： def add(x,y,f): return f(x) + f(y) print add(7,-3,abs) #abs是求绝对值的函数，这里返回的值为10 将函数作为参数传入，这样的函数就是高阶函数，而函数式编程就是指这种抽象程度很高的编程范式。 函数式编程的一个特点就是可以将函数作为参数，还允许返回一个函数。 纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。 允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。 高阶函数 map()函数 map接收两个参数，一个是函数，一个是列表(list)，map将函数依次作用到list的每个元素，然后返回新的list def f(x): return x*x print map(f,[1,2,3,4]) #返回[1,4,9,16] print map(str,[1,2,3,4]) # 返回['1','2','3','4'] reduce()函数 reduce接收参数和map一样(但传入的函数必须接收两个参数)，reduce会对list的每个元素反复调用函数，然后返回最终值 def f(x,y): return x*y print reduce(f,[1,2,3,4]) #1*2*3*4，返回24 filter()函数 filter也接收函数和list，函数会对list的每个元素进行判断然后返回True或False，为True的组成新list返回 def f(x): return x &gt; 3 print filter(f,[1,2,3,4,5]) #返回[4,5] sorted()函数 Python内置的函数sorted()可以对list进行排序 sorted([34,2,345,3]) #返回[2,3,34,345] sorted也是一个高阶函数，当然也可以接收函数和参数。通常规定，对于两个元素x和y，若认为x &lt; y则返回-1，若认为x == y则返回0，若认为x &gt; y则返回1，从而进行正向排序 def s(s1,s2): u1 = s1.lower() u2 = s2.lower() if u1
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Python%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/Python%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">Python的数据类型</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-01-19</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 特点及差别 常见4种数据类型：list、tuple、dict、set list即列表，它内部是有序的，可以添加、更新、删除元素 tuple是元组，它的内部也是有序的，但一般不可更新、删除，即内部元素不可变 dict即字典，它的内部无序，key不可变、不可重复，key值可更新，可删除键值对 set可用作求交集、并集等，它的内部无序，key不可变、不可重复，可添加和删除 0x01 操作示例 #!/usr/bin/env python # -*- coding: utf-8 -*- ####################################### print '-----list-----' L = [] #这样就可以声明一个list了 n = 1 while n &lt;= 9: L.append(n) #添加 n = n + 2 print L #[1,3,5,7,9] L[len(L)-1] = 11 #更新 print L #[1,3,5,7,11] L.pop() #删除,和L.pop(-1)一样 L.pop(-2) print L #[1,3,7] L.insert(1,'jack') for x in range(len(L)): print L[x], #逗号可抑制换行，结果为 1 jack 3 7 print '\n-----list-----\n' ####################################### print '-----tuple-----'
+    </p>
+
+    
+    <footer>
+        <a href="/posts/Python%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+
+                
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <a href="/tags/python/page/2/"><i class="fa fa-chevron-left"></i></a>
+        
+
+        <span>&nbsp;3 / 3&nbsp;</span>
+        
+        
+            <i class="fa fa-chevron-right"></i>
+        
+    </nav>
+
+
+            </div>
+        </div>
+        <div class="right">
+            <div>
+                <br>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Categories</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(21)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(59)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(31)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(9)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
+        
+    </ul>
+
+
+</div>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/burpsuite" title="burpsuite">burpsuite</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/msf" title="msf">msf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nessus" title="nessus">nessus</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nmap" title="nmap">nmap</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>29</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python%e6%a8%a1%e5%9d%97" title="python模块">python模块</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlmap" title="sqlmap">sqlmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh" title="ssh">ssh</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%8f%90%e6%9d%83" title="提权">提权</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%b3%a8%e5%85%a5" title="注入">注入</a>
+                <sup>9</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%b6%8a%e6%9d%83" title="越权">越权</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%bd%af%e4%bb%b6" title="软件">软件</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+                
+<div style="padding-bottom:20px;">
+    <h2 class="asidetitle">Links</h2>
+    <div style="padding:5px 0px 10px 10px;">
+        <a href="http://www.test404.com/">Test404's Blog</a>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        &copy; 2016-2017 Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript">
+          var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1261003390'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261003390%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+    <div class="social">
+        
+        
+            <a href="https://github.com/reber-9" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+        
+        &nbsp;&nbsp;
+        
+            <a href="http://weibo.com/u/5819760166" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+        
+        &nbsp;&nbsp;
+        <a href="http://wyb0.com/index.xml" target="_blank"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </div>
+</div>
+</div>
+
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var alist = $('#tags p');
+        alist.each(function () {
+            var t = $(this);
+            var a = t.find('a');
+            var sup = parseInt(t.find('sup').text());
+            t.find('sup').hide();
+
+            if (0<sup && sup<6) {
+                a.addClass("text8");
+            } else if (5<sup && sup<11) {
+                a.addClass("text7");
+            } else if (10<sup && sup<16) {
+                a.addClass("text6");
+            } else if (15<sup && sup<21) {
+                a.addClass("text5");
+            } else if (20<sup && sup<26) {
+                a.addClass("text4");
+            } else if (25<sup && sup<31) {
+                a.addClass("text3");
+            } else if (30<sup && sup<36) {
+                a.addClass("text2");
+            } else {
+                a.addClass("text1");
+            }
+
+        });
+    });
+    </script>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); 
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
+</body>
+</html>

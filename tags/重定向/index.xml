@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>重定向 on </title>
+    <link>http://wyb0.com/tags/%E9%87%8D%E5%AE%9A%E5%90%91/</link>
+    <description>Recent content in 重定向 on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 07 Feb 2017 10:49:38 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/%E9%87%8D%E5%AE%9A%E5%90%91/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>301重定向</title>
+      <link>http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/</link>
+      <pubDate>Tue, 07 Feb 2017 10:49:38 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-目的:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x00 目的&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向
+我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上，
+修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301
+
+服务器环境：Ubuntu 14.04.5、Apache2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-开启rewrite模块:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x01 开启rewrite模块&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo a2enmod rewrite
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-根目录下新建-htaccess:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x02 根目录下新建.htaccess：&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Options +FollowSymLinks
+RewriteEngine on
+RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301]  # 这里换上新域名
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-修改配置文件:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x03 修改配置文件&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# AllowOverride None 改为AllowOverride All
+
+$ sudo vim /etc/apache2/apache2.conf
+&amp;lt;Directory /var/www/&amp;gt;
+    Options FollowSymLinks
+    AllowOverride All
+    Require all granted
+&amp;lt;/Directory&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-重启apache:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x04 重启Apache&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;$ sudo /etc/init.d/apache2 restart
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

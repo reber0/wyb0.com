@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on </title>
+    <link>http://wyb0.com/topics/windows/</link>
+    <description>Recent content in Windows on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Sun, 24 Jul 2016 21:33:59 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/topics/windows/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Windows下用Proxifier实现全局代理</title>
+      <link>http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8Proxifier%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Sun, 24 Jul 2016 21:33:59 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8Proxifier%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E4%BB%A3%E7%90%86/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-环境:37d530142c476a688f9dc94b5cc12b88&#34;&gt;0x00 环境&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在windows下用Shadowsocks和Proxifier实现全局代理：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;System：Windows10 Pro x64
+Shadowsocks：Shadowsocks v2.5.2.0 
+Proxifier：Proxifier Portable Edition v3.29
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-配置shadowsocks:37d530142c476a688f9dc94b5cc12b88&#34;&gt;0x01 配置Shadowsocks&lt;/h3&gt;
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_set_shadowsocks.png&#34; alt=&#34;Windows下实现全局代理-设置shadowsocks.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-配置proxifier:37d530142c476a688f9dc94b5cc12b88&#34;&gt;0x02 配置Proxifier&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Proxifier添加代理服务
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_add_proxy_servers1.png&#34; alt=&#34;Windows下实现全局代理-添加代理服务1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_add_proxy_servers2.png&#34; alt=&#34;Windows下实现全局代理-添加代理服务2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_check_proxy.png&#34; alt=&#34;Windows下实现全局代理-检测添加的代理.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Proxifier添加规则
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_set_rules1.png&#34; alt=&#34;Windows下实现全局代理-设置规则1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_set_rules2.png&#34; alt=&#34;Windows下实现全局代理-设置规则2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_add_rules1.png&#34; alt=&#34;Windows下实现全局代理-添加规则1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_proxifier_add_rules2.png&#34; alt=&#34;Windows下实现全局代理-添加规则2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;测试全局代理设置成功与否
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_test1.png&#34; alt=&#34;Windows下实现全局代理-测试全局代理是否设置成功1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/global_agent_test2.png&#34; alt=&#34;Windows下实现全局代理-测试全局代理是否设置成功2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows2003下搭建VPN</title>
+      <link>http://wyb0.com/posts/Windows2003%E4%B8%8B%E6%90%AD%E5%BB%BAVPN/</link>
+      <pubDate>Thu, 07 Jul 2016 10:39:50 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows2003%E4%B8%8B%E6%90%AD%E5%BB%BAVPN/</guid>
+      <description>
+
+&lt;h2 id=&#34;环境及要求:d76ceae1c8e263f317e3bbf595bf328d&#34;&gt;环境及要求&lt;/h2&gt;
+
+&lt;p&gt;Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器&lt;/p&gt;
+
+&lt;h2 id=&#34;安装服务:d76ceae1c8e263f317e3bbf595bf328d&#34;&gt;安装服务&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_install_service1.png&#34; alt=&#34;安装vpn服务1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_install_service2.png&#34; alt=&#34;安装vpn服务2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_close_firewall.png&#34; alt=&#34;关闭防火墙.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;配置并启用路由和远程访问:d76ceae1c8e263f317e3bbf595bf328d&#34;&gt;配置并启用路由和远程访问&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_config_and_start_routing_remote_access1.png&#34; alt=&#34;配置并启用路由和远程访问1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_config_and_start_routing_remote_access2.png&#34; alt=&#34;配置并启用路由和远程访问2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_config_and_start_routing_remote_access3.png&#34; alt=&#34;配置并启用路由和远程访问3.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_config_and_start_routing_remote_access4.png&#34; alt=&#34;配置并启用路由和远程访问4.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_config_and_start_routing_remote_access5.png&#34; alt=&#34;配置并启用路由和远程访问5.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;新增路由协议:d76ceae1c8e263f317e3bbf595bf328d&#34;&gt;新增路由协议&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_add_routing_protocol1.png&#34; alt=&#34;新增路由协议1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_add_routing_protocol2.png&#34; alt=&#34;新增路由协议2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;新增接口:d76ceae1c8e263f317e3bbf595bf328d&#34;&gt;新增接口&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_add_interface1.png&#34; alt=&#34;新增接口1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_add_interface2.png&#34; alt=&#34;新增接口2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_add_interface3.png&#34; alt=&#34;新增接口3.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;新增vpn用户:d76ceae1c8e263f317e3bbf595bf328d&#34;&gt;新增VPN用户&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_add_vpn_users1.png&#34; alt=&#34;新增VPN用户1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_add_vpn_users2.png&#34; alt=&#34;新增VPN用户2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_add_vpn_users3.png&#34; alt=&#34;新增VPN用户3.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_add_vpn_users4.png&#34; alt=&#34;新增VPN用户4.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;尝试连接vpn:d76ceae1c8e263f317e3bbf595bf328d&#34;&gt;尝试连接VPN&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_try_connect_vpn1.png&#34; alt=&#34;尝试连接VPN1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_try_connect_vpn2.png&#34; alt=&#34;尝试连接VPN2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/build_vpn_try_connect_vpn3.png&#34; alt=&#34;尝试连接VPN3.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows2003下搭建IIS&#43;asp</title>
+      <link>http://wyb0.com/posts/Windows2003%E4%B8%8B%E6%90%AD%E5%BB%BAIIS&#43;asp/</link>
+      <pubDate>Sat, 18 Jun 2016 20:39:50 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows2003%E4%B8%8B%E6%90%AD%E5%BB%BAIIS&#43;asp/</guid>
+      <description>
+
+&lt;h2 id=&#34;添加组件:8da193f00cbd279e83d9c38c120bcc72&#34;&gt;添加组件&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/add_component1.png&#34; alt=&#34;添加组件1.png&#34;&gt;
+&lt;/div&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/add_component2.png&#34; alt=&#34;添加组件2.png&#34;&gt;
+&lt;/div&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/add_component3.png&#34; alt=&#34;添加组件3.png&#34;&gt;
+&lt;/div&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/add_component4.png&#34; alt=&#34;添加组件4.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;开启iis:8da193f00cbd279e83d9c38c120bcc72&#34;&gt;开启iis&lt;/h2&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/start_iis1.png&#34; alt=&#34;开启iis1.png&#34;&gt;
+&lt;/div&gt;
+
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/start_iis2.png&#34; alt=&#34;开启iis2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/visit_iis_index.png&#34; alt=&#34;开启iis2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;添加web服务扩展:8da193f00cbd279e83d9c38c120bcc72&#34;&gt;添加Web服务扩展&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/add_ext.png&#34; alt=&#34;添加扩展.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;运行asp:8da193f00cbd279e83d9c38c120bcc72&#34;&gt;运行asp&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/add_iis_asp.png&#34; alt=&#34;添加asp文件.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/visit_iis_asp.png&#34; alt=&#34;访问asp文件.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&#34;权限:8da193f00cbd279e83d9c38c120bcc72&#34;&gt;权限&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/iis_perm.png&#34; alt=&#34;注意文件权限.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>win/ubuntu双系统分区设置</title>
+      <link>http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/</link>
+      <pubDate>Tue, 31 May 2016 23:35:06 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/win&#43;ubuntu%E5%88%86%E5%8C%BA/</guid>
+      <description>
+
+&lt;h2 id=&#34;win10和ubuntu双系统分区设置:3e030af796631eb52143202ed95ab205&#34;&gt;win10和ubuntu双系统分区设置&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;硬盘采用uefi格式&lt;/li&gt;
+&lt;li&gt;硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息&lt;/li&gt;
+&lt;li&gt;在硬盘末尾给ubuntu划分50G左右空间&lt;/li&gt;
+&lt;li&gt;ubuntu的/分区，格式为ext4，空间为40G&lt;/li&gt;
+&lt;li&gt;ubuntu的/home分区，格式为ext4，空间为10G&lt;/li&gt;
+&lt;li&gt;ubuntu的/boot分区，格式为ext4,空间为200M&lt;/li&gt;
+&lt;li&gt;ubuntu的/swap分区，格式为swap，空间为200M&lt;/li&gt;
+&lt;li&gt;ubuntu的引导分区为/boot&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/hard_disk_partition1.png&#34; alt=&#34;双系统磁盘分区&#34;&gt;
+&lt;/div&gt;
+
+&amp;nbsp;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/hard_disk_partition2.png&#34; alt=&#34;双系统磁盘分区&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows下向github推送博客</title>
+      <link>http://wyb0.com/posts/Windows%E4%B8%8B%E5%90%91github%E6%8E%A8%E9%80%81%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Tue, 10 May 2016 15:22:20 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows%E4%B8%8B%E5%90%91github%E6%8E%A8%E9%80%81%E5%8D%9A%E5%AE%A2/</guid>
+      <description>
+
+&lt;h2 id=&#34;开启本地服务:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;开启本地服务&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_open_git.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_create_file.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;编辑md文档:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;编辑md文档&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_edit_md.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_visit_effect.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;推送md文档:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;推送md文档&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_push_md.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;推送html:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;推送html&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_md_to_html.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_add_html.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;查看推送是否成功:3ae6a2dd9c72816236f233578f4c27fc&#34;&gt;查看推送是否成功&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_add_visit_result.png&#34; alt=&#34;.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Windows下用github搭建博客</title>
+      <link>http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Tue, 10 May 2016 09:24:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Windows%E4%B8%8B%E7%94%A8github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <description>
+
+&lt;h2 id=&#34;首先在github上新建仓库:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;首先在github上新建仓库&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_new_repository1.png&#34; alt=&#34;在github上新建仓库1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_new_repository2.png&#34; alt=&#34;在github上新建仓库2.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;本地新建仓库:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;本地新建仓库&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;下载安装hugo
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_install_hugo.png&#34; alt=&#34;本地安装hugo.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;为hugo添加环境变量
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_hugo_add_env.png&#34; alt=&#34;为hugo添加环境变量.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;下载安装github客户端
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_install_github.png&#34; alt=&#34;安装github客户端.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;新建仓库
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_local_new_repository.png&#34; alt=&#34;新建仓库.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;下载主题&lt;br /&gt;
+可以在&lt;a href=&#34;https://github.com/spf13/hugoThemes&#34;&gt;https://github.com/spf13/hugoThemes&lt;/a&gt; 下载你喜欢的主题&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_download_theme.png&#34; alt=&#34;下载博客主题.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;使用主题并查看效果
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_use_theme_and_start_server.png&#34; alt=&#34;使用主题并启动服务.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_view_blog.png&#34; alt=&#34;本地查看博客效果.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;本地环境配置:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;本地环境配置&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;本地生成秘钥
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_local_create_key.png&#34; alt=&#34;本地生成key.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;在github保存秘钥
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_github_add_key1.png&#34; alt=&#34;向github添加key1.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_github_add_key2.png&#34; alt=&#34;向github添加key2.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_github_add_key3.png&#34; alt=&#34;向github添加key3.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;测试公钥是否添加成功
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_check_add_key.png&#34; alt=&#34;查看公钥是否添加成功.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;设置本地用户名和邮箱
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_local_set_username_email.png&#34; alt=&#34;设置本地用户名和邮箱.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;配置config-toml:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;配置config.toml&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# 将reber-9全部替换为你github的账户名，另外你也可以进行一些基本的设置
+baseurl = &amp;quot;http://reber-9.github.io&amp;quot;
+languageCode = &amp;quot;en-us&amp;quot;
+title = &amp;quot;reber-9&#39;s Blog&amp;quot;
+theme = &amp;quot;beautifulhugo&amp;quot;
+pygmentsUseClasses = false
+#disqusShortname = &amp;quot;XXX&amp;quot;
+#googleAnalytics = &amp;quot;XXX&amp;quot;
+
+[Params]
+  logo = &amp;quot;img/avatar-icon.png&amp;quot;
+  subtitle = &amp;quot;This is my personal blog&amp;quot;
+
+[Author]
+  name = &amp;quot;Some Person&amp;quot;
+  email = &amp;quot;123123123@163.com&amp;quot;
+  github = &amp;quot;reber-9&amp;quot;
+
+[[menu.main]]
+    name = &amp;quot;Blog&amp;quot;
+    url = &amp;quot;/&amp;quot;
+    weight = 1
+
+[[menu.main]]
+    name = &amp;quot;About&amp;quot;
+    url = &amp;quot;/page/about/&amp;quot;
+    weight = 2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;同步本地和远程仓库:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;同步本地和远程仓库&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;用hugo将markdown文档生成html
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_md_to_html.png&#34; alt=&#34;用hugo将markdown文档生成html.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;初始化本地仓库并与远程仓库建立联系
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_init.png&#34; alt=&#34;初始化本地仓库并与远程仓库建立联系.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;添加生成的html、为本次push做注释、推送
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_add_html.png&#34; alt=&#34;添加生成的html.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_add_annotation.png&#34; alt=&#34;为本次push做注释.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/win_github_blog_push_html.png&#34; alt=&#34;推送生成的html.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;访问博客:0bb7d6b4abea6e6ec98a6a38703ee58e&#34;&gt;访问博客&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;直接访问&lt;a href=&#34;http://reber-9.github.io&#34;&gt;http://reber-9.github.io&lt;/a&gt; 即可&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

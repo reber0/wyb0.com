@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ssh on </title>
+    <link>http://wyb0.com/tags/ssh/</link>
+    <description>Recent content in Ssh on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Wed, 10 Aug 2016 11:46:13 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Linux下SSH连接</title>
+      <link>http://wyb0.com/posts/Linux%E4%B8%8BSSH%E8%BF%9E%E6%8E%A5/</link>
+      <pubDate>Wed, 10 Aug 2016 11:46:13 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/Linux%E4%B8%8BSSH%E8%BF%9E%E6%8E%A5/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-ssh相关选项:e269c2bc9ccc66fa2c170f02752c5233&#34;&gt;0x00 SSH相关选项&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;-V 显示版本
+-f 输入密码后进入后台模式
+-N 不执行远程命令，用于端口转发
+-D socket5代理
+-L tcp转发
+-C 使用数据压缩，网速快时会影响速度
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-ssh免密码登陆:e269c2bc9ccc66fa2c170f02752c5233&#34;&gt;0x01 SSH免密码登陆&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A主机免密码登陆B主机：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;A主机运行：
+    ssh-keygen -t rsa
+    会生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub
+    将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中
+注：
+    要确保B主机~/.ssh/authorized_keys权限为600
+    要确保B主机~/.ssh/文件夹权限为700
+    要确保上述两个文件属主是当前用户
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_no_pwd_login_create_keys.png&#34; alt=&#34;A主机生成密钥对.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_no_pwd_login_write_pub_key_to_b.png&#34; alt=&#34;将A主机产生的公钥写入B主机.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_no_pwd_login_check_authorized_keys_permissions.png&#34; alt=&#34;检查B主机authorized_keys权限.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_no_pwd_login_a_login_b.png&#34; alt=&#34;A主机免密码登陆主机B.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-ssh反向连接:e269c2bc9ccc66fa2c170f02752c5233&#34;&gt;0x02 SSH反向连接&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;主机A要通过SSH连接主机B：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;B上先运行：
+ssh -NfR 8888:localhost:22 reber@A-IP
+输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_reverse_conn_b_run_command.png&#34; alt=&#34;主机B反向连接主机A.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;A主机运行：
+ssh root@127.0.0.1 -p 8888
+输入本机的root的密码即可登入主机B的root用户
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_reverse_conn_a_run_command.png&#34; alt=&#34;主机A连接主机B.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-ssh-socks5代理:e269c2bc9ccc66fa2c170f02752c5233&#34;&gt;0x03 SSH Socks5代理&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_socks5_proxy_set.png&#34; alt=&#34;设置ssh socks5.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_socks5_proxy_set_firefox.png&#34; alt=&#34;设置ssh socks5.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/ssh_socks5_proxy_firefox_internet.png&#34; alt=&#34;火狐通过代理可以上网.png&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

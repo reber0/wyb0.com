@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tornado on </title>
+    <link>http://wyb0.com/tags/tornado/</link>
+    <description>Recent content in Tornado on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
+    <lastBuildDate>Tue, 03 Jan 2017 18:43:27 +0800</lastBuildDate>
+    <atom:link href="http://wyb0.com/tags/tornado/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>初识Tornado</title>
+      <link>http://wyb0.com/posts/%E5%88%9D%E8%AF%86Tornado/</link>
+      <pubDate>Tue, 03 Jan 2017 18:43:27 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/%E5%88%9D%E8%AF%86Tornado/</guid>
+      <description>
+
+&lt;blockquote&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/anime/anime003.jpg&#34; alt=&#34;命运石之门&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x00-简介:0785bb1a286a1008e1b91348220a27f6&#34;&gt;0x00 简介&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的
+连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django,
+但Tornado更注重速度,能够处理海量的同时发生的流量。 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-示例:0785bb1a286a1008e1b91348220a27f6&#34;&gt;0x01 示例&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;main.py代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import tornado.ioloop
+import tornado.web
+
+class IndexHandler(tornado.web.RequestHandler):
+    def get(self):   #访问根时触发这个函数
+        name = self.get_argument(&#39;name&#39;,&#39;wyb&#39;)
+        self.write(&#39;Hello,&#39; + name)
+        self.write(&#39;&amp;lt;br /&amp;gt;&amp;lt;a href=&amp;quot;/login&amp;quot;&amp;gt;login&amp;lt;/a&amp;gt;&#39;)
+
+class MyLoginHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render(&#39;login.html&#39;)  
+#若用户请求/login页面则将login.html发送给客户端，客户会看的一个登陆表单
+
+    def post(self):   #当用户点击提交按钮是触发这个函数
+        name = self.get_argument(&#39;name&#39;)   #接收表单的name
+        password = self.get_argument(&#39;password&#39;)   #接收表单的password
+        self.write(&amp;quot;you name is:%s\nyou password is:%s&amp;quot; % (name,password))
+
+
+def get_app():
+    handlers = [
+        (r&amp;quot;/&amp;quot;,IndexHandler),    #代表请求/的都让IndexHandler处理
+        (r&amp;quot;/login&amp;quot;,MyLoginHandler),    #表示请求/login页面的让MyLoginHandler处理
+    ]
+    app = tornado.web.Application(handlers=handlers)
+    return app
+
+if __name__ == &#39;__main__&#39;:
+    app = get_app()
+    app.listen(8888)
+    tornado.ioloop.IOLoop.instance().start()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;login.html代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+    &amp;lt;title&amp;gt;form&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+    &amp;lt;form action=&amp;quot;/login&amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;
+        Name: &amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;name&amp;quot;&amp;gt;&amp;lt;br /&amp;gt;
+        Password: &amp;lt;input type=&amp;quot;password&amp;quot; name=&amp;quot;password&amp;quot;&amp;gt;&amp;lt;br /&amp;gt;
+        &amp;lt;input type=&amp;quot;submit&amp;quot; name=&amp;quot;submit&amp;quot; value=&amp;quot;login&amp;quot;&amp;gt;
+    &amp;lt;/form&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x03-结果如下:0785bb1a286a1008e1b91348220a27f6&#34;&gt;0x03 结果如下&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tornado_test1.png&#34; alt=&#34;初识tornado1&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tornado_test2.png&#34; alt=&#34;初识tornado2&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tornado_test3.png&#34; alt=&#34;初识tornado3&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
