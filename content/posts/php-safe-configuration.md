@@ -66,7 +66,8 @@ topics = ["PHP"]
     * disable_functions
         * 禁止某些命令执行函数和文件操作函数的使用
 * 配置方案
-    * disable_functions = system,passthru,exec,shell_exec,popen,pcntl_exec,proc_open,chdir,chroot,getcwd,readdir,mkdir,copy,file_get_contents,
+    * disable_functions = system,passthru,exec,shell_exec,popen,pcntl_exec,
+    proc_open,chdir,chroot,getcwd,readdir,mkdir,copy,file_get_contents,
 
 ### 0x08 注册全局变量
 * 涉及配置项
