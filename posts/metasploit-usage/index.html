@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nessus的安装 - Reber's Blog</title>
+  <title>Metasploit的简单使用 - Reber's Blog</title>
   <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
   <meta name="description" content="">
   <meta name="author" content="reber">
@@ -78,14 +78,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Nessus的安装</h2>
+                <h2>Metasploit的简单使用</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-05-11</time>
+                        <time>2016-08-23</time>
                     </div>
 
                     
@@ -95,8 +95,6 @@
                         
                         
                             <i class="fa fa-folder fa-fw"></i>
-                            
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>&nbsp;&#47;
                             
                                 <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
                             
@@ -108,7 +106,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/nessus">nessus</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/msf">msf</a>
                             
                         
                         
@@ -117,97 +115,95 @@
                 
                 
 
-<h2 id="下载nessus的deb安装包:b8870ed39472d90288c5a3de5521f366">下载Nessus的deb安装包:</h2>
+<h3 id="0x00-启动:092b65b0a629f9551f81b62ae7ea7ed8">0x00 启动</h3>
 
-<p>去【<a href="http://www.tenable.com/products/nessus/select-your-operating-system">这里</a>】，选择家庭版，然后下载对应的安装包
+<blockquote>
 
 <div class="pure-u-1">
-  <img class="pure-img" src="/img/post/Nessus_Home.png" alt="选择家庭版的nessus">
+  <img class="pure-img" src="/img/post/msf_start.png" alt="启动msf">
+</div>
+
+</blockquote>
+
+<h3 id="0x01-metasploit的工作平台:092b65b0a629f9551f81b62ae7ea7ed8">0x01 Metasploit的工作平台</h3>
+
+<blockquote>
+<p>在msf里的工作平台可以保存历史的一些操作信息
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/msf_workspace_h.png" alt="msf工作平台的帮助信息">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/msf_workspace.png" alt="创建新的工作平台">
 </div>
 </p>
+</blockquote>
 
+<h3 id="0x02-使用db-nmap扫描主机:092b65b0a629f9551f81b62ae7ea7ed8">0x02 使用db_nmap扫描主机</h3>
 
+<blockquote>
+<p>
 <div class="pure-u-1">
-  <img class="pure-img" src="/img/post/select_nessus_deb.png" alt="选择适合kali的deb安装包">
+  <img class="pure-img" src="/img/post/msf_nmap_lanou3g_ip.png" alt="扫描lanou3g的ip信息">
 </div>
 
+<br /><br /></p>
 
-<h2 id="本地安装nessus:b8870ed39472d90288c5a3de5521f366">本地安装nessus:</h2>
-
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/install_nessus.png" alt="通过本地deb包安装nessus">
-</div>
-
-
-<h2 id="执行后续安装步骤:b8870ed39472d90288c5a3de5521f366">执行后续安装步骤:</h2>
-
-<ol>
-<li><p>启动nessus
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/start_nessus.png" alt="启动nessus">
-</div>
-</p></li>
-
-<li><p>web访问nessus服务
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/web_nessus.png" alt="通过web访问https://localhost:8834">
-</div>
-</p></li>
-
-<li><p>设置账户和密码
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/setaccount.png" alt="设置nessus登陆帐号和密码">
-</div>
-
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/code.png" alt="被要求输入code">
-</div>
-</p></li>
-
-<li><p>申请code，可以在【<a href="http://www.tenable.com/products/nessus-home">这里</a>】申请
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/register_code.png" alt="申请一个code">
-</div>
-</p></li>
-
-<li><p>去邮箱查找code
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/get_code.png" alt="去邮箱查看code">
-</div>
-</p></li>
-
-<li><p>将code填入，然后等待插件的下载
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/input_code.png" alt="输入code">
-</div>
-
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/wait_download.png" alt="等插件的下载安装">
-</div>
-</p></li>
-</ol>
-
-<h2 id="登陆nessus:b8870ed39472d90288c5a3de5521f366">登陆Nessus:</h2>
+<h4 id="扫描后的结果会保留在工作平台中-可以用hosts和services进行查看:092b65b0a629f9551f81b62ae7ea7ed8">扫描后的结果会保留在工作平台中，可以用hosts和services进行查看：</h4>
 
 <p>
 <div class="pure-u-1">
-  <img class="pure-img" src="/img/post/sign_in_nessus1.png" alt="登陆nessus1">
+  <img class="pure-img" src="/img/post/msf_hosts.png" alt="查看主机列表">
 </div>
 
+<br /><br />
 
 <div class="pure-u-1">
-  <img class="pure-img" src="/img/post/sign_in_nessus2.png" alt="登陆nessus2">
+  <img class="pure-img" src="/img/post/msf_services.png" alt="查看服务">
 </div>
 </p>
+</blockquote>
+
+<h3 id="0x03-使用msf的模块进行弱口令爆破:092b65b0a629f9551f81b62ae7ea7ed8">0x03 使用msf的模块进行弱口令爆破</h3>
+
+<blockquote>
+<h4 id="注-这里针对ftp服务进行弱口令测试:092b65b0a629f9551f81b62ae7ea7ed8">注：这里针对ftp服务进行弱口令测试</h4>
+
+<p>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/msf_services_p_21.png" alt="查看都有那个主机开启了21端口">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/msf_search_module.png" alt="查找用于ftp爆破的模块">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/msf_use_module_and_set.png" alt="使用模块并设置参数">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/msf_use_show_options.png" alt="查看设置的参数">
+</div>
+
+<br /><br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/msf_start_attack_ftp.png" alt="开始攻击">
+</div>
+</p>
+
+<h4 id="使用vulns可以查看结果-msf-auxiliary-ftp-login-vulns:092b65b0a629f9551f81b62ae7ea7ed8">使用vulns可以查看结果：msf auxiliary(ftp_login) &gt; vulns</h4>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">
@@ -223,13 +219,13 @@
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/Nmap%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/Python%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%A8%A1%E5%9D%97/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/Nmap%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/">Nmap思维导图</a>
+      <a href="http://wyb0.com/posts/Python%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%A8%A1%E5%9D%97/">Python的一些小模块</a>
     </nav>
     
   </div>
@@ -239,13 +235,13 @@
   <div class="pure-u-10-24">
     
     <nav class="next">
-      <a href="http://wyb0.com/posts/blasting-email/">爆破邮箱</a>
+      <a href="http://wyb0.com/posts/Python%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">Python的异常处理</a>
     </nav>
     
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
     
-    <a href="http://wyb0.com/posts/blasting-email/"><i class="fa fa-chevron-right"></i></a>
+    <a href="http://wyb0.com/posts/Python%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>

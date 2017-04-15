@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQL注入之判断数据库类型 - Reber's Blog</title>
+  <title>Nessus的安装 - Reber's Blog</title>
   <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
   <meta name="description" content="">
   <meta name="author" content="reber">
@@ -78,14 +78,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>SQL注入之判断数据库类型</h2>
+                <h2>Nessus的安装</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-06-19</time>
+                        <time>2016-05-11</time>
                     </div>
 
                     
@@ -95,6 +95,8 @@
                         
                         
                             <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>&nbsp;&#47;
                             
                                 <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
                             
@@ -106,7 +108,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%B3%A8%E5%85%A5">注入</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/nessus">nessus</a>
                             
                         
                         
@@ -115,29 +117,97 @@
                 
                 
 
-<h3 id="0x01-扫描端口:229dd86888239a2888195c125e6a18c9">0x01 扫描端口</h3>
+<h2 id="下载nessus的deb安装包:e865bcf5ef6b9c2212c7b5558acbf0d9">下载Nessus的deb安装包:</h2>
 
-<h3 id="0x02-指纹信息:229dd86888239a2888195c125e6a18c9">0x02 指纹信息</h3>
+<p>去【<a href="http://www.tenable.com/products/nessus/select-your-operating-system">这里</a>】，选择家庭版，然后下载对应的安装包
 
-<h3 id="0x03-在url后面直接判断:229dd86888239a2888195c125e6a18c9">0x03 在URL后面直接判断</h3>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/Nessus_Home.png" alt="选择家庭版的nessus">
+</div>
+</p>
 
-<blockquote>
-<pre><code>Access:
-    and (select count(*) from MSysAccessObjects)&gt;0 返回正常说明是access
-    and exists(select count(*) from 表)
-SQLserver:
-    and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql
-MySQL:
-    and length(user())&gt;0    返回正常说明是MySQL
-</code></pre>
-</blockquote>
 
-<h3 id="0x04-其他方法:229dd86888239a2888195c125e6a18c9">0x04 其他方法</h3>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/select_nessus_deb.png" alt="选择适合kali的deb安装包">
+</div>
 
-<blockquote>
-<pre><code>在mssql中可以调用substring。oracle则只可调用substr
-</code></pre>
-</blockquote>
+
+<h2 id="本地安装nessus:e865bcf5ef6b9c2212c7b5558acbf0d9">本地安装nessus:</h2>
+
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/install_nessus.png" alt="通过本地deb包安装nessus">
+</div>
+
+
+<h2 id="执行后续安装步骤:e865bcf5ef6b9c2212c7b5558acbf0d9">执行后续安装步骤:</h2>
+
+<ol>
+<li><p>启动nessus
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/start_nessus.png" alt="启动nessus">
+</div>
+</p></li>
+
+<li><p>web访问nessus服务
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/web_nessus.png" alt="通过web访问https://localhost:8834">
+</div>
+</p></li>
+
+<li><p>设置账户和密码
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/setaccount.png" alt="设置nessus登陆帐号和密码">
+</div>
+
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/code.png" alt="被要求输入code">
+</div>
+</p></li>
+
+<li><p>申请code，可以在【<a href="http://www.tenable.com/products/nessus-home">这里</a>】申请
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/register_code.png" alt="申请一个code">
+</div>
+</p></li>
+
+<li><p>去邮箱查找code
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/get_code.png" alt="去邮箱查看code">
+</div>
+</p></li>
+
+<li><p>将code填入，然后等待插件的下载
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/input_code.png" alt="输入code">
+</div>
+
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/wait_download.png" alt="等插件的下载安装">
+</div>
+</p></li>
+</ol>
+
+<h2 id="登陆nessus:e865bcf5ef6b9c2212c7b5558acbf0d9">登陆Nessus:</h2>
+
+<p>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/sign_in_nessus1.png" alt="登陆nessus1">
+</div>
+
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/sign_in_nessus2.png" alt="登陆nessus2">
+</div>
+</p>
 
                 
                 <div style="padding:10px 1px;">
@@ -153,13 +223,13 @@ MySQL:
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/MySQL%E7%9A%84information_schema%E5%BA%93/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/nmap-mind-mapping/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/MySQL%E7%9A%84information_schema%E5%BA%93/">MySQL的information_schema库</a>
+      <a href="http://wyb0.com/posts/nmap-mind-mapping/">Nmap思维导图</a>
     </nav>
     
   </div>
@@ -169,13 +239,13 @@ MySQL:
   <div class="pure-u-10-24">
     
     <nav class="next">
-      <a href="http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BMySQL%E5%87%BD%E6%95%B0%E5%88%A9%E7%94%A8/">SQL注入之MySQL函数利用</a>
+      <a href="http://wyb0.com/posts/blasting-email/">爆破邮箱</a>
     </nav>
     
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
     
-    <a href="http://wyb0.com/posts/SQL%E6%B3%A8%E5%85%A5%E4%B9%8BMySQL%E5%87%BD%E6%95%B0%E5%88%A9%E7%94%A8/"><i class="fa fa-chevron-right"></i></a>
+    <a href="http://wyb0.com/posts/blasting-email/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>
