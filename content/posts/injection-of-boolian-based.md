@@ -2,7 +2,7 @@
 date = "2016-06-22T23:32:34+08:00"
 description = ""
 draft = false
-tags = ["注入"]
+tags = ["injection"]
 title = "SQL注入之布尔型注入"
 topics = ["Pentest"]
 

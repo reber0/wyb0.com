@@ -2,7 +2,7 @@
 date = "2016-08-16T15:10:44+08:00"
 description = ""
 draft = false
-tags = ["python", "python模块"]
+tags = ["python", "module"]
 title = "Python的optparse模块"
 topics = ["Python"]
 

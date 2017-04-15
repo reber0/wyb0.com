@@ -2,7 +2,7 @@
 date = "2015-12-20T20:08:47+08:00"
 description = ""
 draft = false
-tags = ["注入"]
+tags = ["injection"]
 title = "各种参数类型注入"
 topics = ["Pentest"]
 

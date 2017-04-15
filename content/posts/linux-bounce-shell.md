@@ -2,7 +2,7 @@
 date = "2016-08-06T08:36:53+08:00"
 description = ""
 draft = false
-tags = ["提权"]
+tags = ["elevate privileges"]
 title = "Linux下反弹shell"
 topics = ["Pentest"]
 

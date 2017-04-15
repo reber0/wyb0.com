@@ -2,7 +2,7 @@
 date = "2016-05-08T00:04:42+08:00"
 description = ""
 draft = false
-tags = ["软件"]
+tags = ["software"]
 title = "Ubuntu下安装sublime text 3"
 topics = ["Linux"]
 

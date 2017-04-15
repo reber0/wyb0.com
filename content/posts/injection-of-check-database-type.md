@@ -2,7 +2,7 @@
 date = "2016-06-19T22:15:52+08:00"
 description = ""
 draft = false
-tags = ["注入"]
+tags = ["injection"]
 title = "SQL注入之判断数据库类型"
 topics = ["Pentest"]
 

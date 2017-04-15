@@ -2,7 +2,7 @@
 date = "2017-04-15T18:49:37+08:00"
 description = ""
 draft = false
-tags = ["python","python模块"]
+tags = ["python","module"]
 title = "下载大文件时显示进度条"
 topics = ["Python"]
 

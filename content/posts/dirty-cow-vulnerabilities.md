@@ -2,7 +2,7 @@
 date = "2016-10-22T00:10:46+08:00"
 description = ""
 draft = false
-tags = ["提权"]
+tags = ["elevate privileges"]
 title = "脏牛漏洞"
 topics = ["Pentest"]
 
