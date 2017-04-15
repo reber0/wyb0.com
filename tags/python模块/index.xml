@@ -894,8 +894,9 @@ if __name__ == &#39;__main__&#39;:
       <guid>http://wyb0.com/posts/python-module-requests/</guid>
       <description>
 
-&lt;h2 id=&#34;无参数的get请求:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;无参数的get请求&lt;/h2&gt;
+&lt;h3 id=&#34;0x00-无参数的get请求:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;0x00 无参数的get请求&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;import requests
 
 resp = requests.get(&#39;http://www.baidu.com&#39;,timeout=1) #设置超时，超时后抛出timeout错误
@@ -908,9 +909,11 @@ print resp.content #一般用来输出pdf、图片等，可得到原网页设定
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/requests_text.png&#34; alt=&#34;requests得到html源码.png&#34;&gt;
 &lt;/div&gt;
 
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;有参数的get请求:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;有参数的get请求&lt;/h2&gt;
+&lt;h3 id=&#34;0x01-有参数的get请求:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;0x01 有参数的get请求&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;import requests
 
 url = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39;
@@ -930,9 +933,11 @@ print resp.cookies #得到cookie
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/requests_get_params.png&#34; alt=&#34;有参数的get请求.png&#34;&gt;
 &lt;/div&gt;
 
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;post请求:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;POST请求&lt;/h2&gt;
+&lt;h3 id=&#34;0x02-post请求:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;0x02 POST请求&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;import requests
 url1 = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39;
 url2 = &#39;http://10.10.10.10:8080/Lab2.0/student.action&#39;
@@ -958,9 +963,21 @@ print resp.text
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/requests_post.png&#34; alt=&#34;post登陆后带cookie访问页面.png&#34;&gt;
 &lt;/div&gt;
 
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;使用session:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;使用Session&lt;/h2&gt;
+&lt;h3 id=&#34;0x03-ssl证书:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;0x03 SSL证书&lt;/h3&gt;
 
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import requests
+url = &#39;https://www.aa.com&#39;
+requests.get(url)   #出错，因为是https，验证了证书
+requests.get(url,verify=False) #正常，因为忽略了证书验证
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x04-使用session:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;0x04 使用Session&lt;/h3&gt;
+
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;import requests
 url = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39;
 proxy = {
@@ -978,20 +995,22 @@ resp = s.get(&#39;http://10.10.10.10:8080/Lab2.0/student.action&#39;)
 print resp.text
 &lt;/code&gt;&lt;/pre&gt;
 
-
+&lt;p&gt;
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/requests_proxies.png&#34; alt=&#34;post登陆后带cookie访问页面.png&#34;&gt;
 &lt;/div&gt;
 
-
+&lt;br /&gt;&lt;br /&gt;
 
 &lt;div class=&#34;pure-u-1&#34;&gt;
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/requests_post.png&#34; alt=&#34;post登陆后带cookie访问页面.png&#34;&gt;
 &lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
 
+&lt;h3 id=&#34;0x05-上传与下载:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;0x05 上传与下载&lt;/h3&gt;
 
-&lt;h2 id=&#34;上传与下载:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;上传与下载&lt;/h2&gt;
-
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -1015,14 +1034,17 @@ import requests
 url = &#39;http://nginx.org/download/nginx-1.9.9.tar.gz&#39;
 
 resp = requests.get(url)
+#resp = requests.get(url,stream=True) #下载视频时要设置stream为True
 with open(&amp;quot;a.tar.gz&amp;quot;,&amp;quot;wb&amp;quot;) as f:
     f.write(resp.content)
 
 urllib.urlretrieve(url, &amp;quot;b.tar.gz&amp;quot;) #只能下载http的
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
 
-&lt;h2 id=&#34;重定向:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;重定向&lt;/h2&gt;
+&lt;h3 id=&#34;0x06-重定向:0ed0f578c1f6cf072915b92ae1a58a44&#34;&gt;0x06 重定向&lt;/h3&gt;
 
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; import requests
 &amp;gt;&amp;gt;&amp;gt; r = requests.get(&#39;http://github.com&#39;) #默认跳转
 &amp;gt;&amp;gt;&amp;gt; r.url
@@ -1039,6 +1061,7 @@ u&#39;http://github.com/&#39; #可以看到没有跳转，还是http
 &amp;gt;&amp;gt;&amp;gt; r.history
 []
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
 </description>
     </item>
     

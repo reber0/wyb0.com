@@ -117,8 +117,9 @@
                 
                 
 
-<h2 id="无参数的get请求:0ed0f578c1f6cf072915b92ae1a58a44">无参数的get请求</h2>
+<h3 id="0x00-无参数的get请求:0ed0f578c1f6cf072915b92ae1a58a44">0x00 无参数的get请求</h3>
 
+<blockquote>
 <pre><code>import requests
 
 resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误
@@ -131,9 +132,11 @@ print resp.content #一般用来输出pdf、图片等，可得到原网页设定
   <img class="pure-img" src="/img/post/requests_text.png" alt="requests得到html源码.png">
 </div>
 
+</blockquote>
 
-<h2 id="有参数的get请求:0ed0f578c1f6cf072915b92ae1a58a44">有参数的get请求</h2>
+<h3 id="0x01-有参数的get请求:0ed0f578c1f6cf072915b92ae1a58a44">0x01 有参数的get请求</h3>
 
+<blockquote>
 <pre><code>import requests
 
 url = 'http://10.10.10.10:8080/Lab2.0/Login.action'
@@ -153,9 +156,11 @@ print resp.cookies #得到cookie
   <img class="pure-img" src="/img/post/requests_get_params.png" alt="有参数的get请求.png">
 </div>
 
+</blockquote>
 
-<h2 id="post请求:0ed0f578c1f6cf072915b92ae1a58a44">POST请求</h2>
+<h3 id="0x02-post请求:0ed0f578c1f6cf072915b92ae1a58a44">0x02 POST请求</h3>
 
+<blockquote>
 <pre><code>import requests
 url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action'
 url2 = 'http://10.10.10.10:8080/Lab2.0/student.action'
@@ -181,9 +186,21 @@ print resp.text
   <img class="pure-img" src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面.png">
 </div>
 
+</blockquote>
 
-<h2 id="使用session:0ed0f578c1f6cf072915b92ae1a58a44">使用Session</h2>
+<h3 id="0x03-ssl证书:0ed0f578c1f6cf072915b92ae1a58a44">0x03 SSL证书</h3>
 
+<blockquote>
+<pre><code class="language-python">import requests
+url = 'https://www.aa.com'
+requests.get(url)   #出错，因为是https，验证了证书
+requests.get(url,verify=False) #正常，因为忽略了证书验证
+</code></pre>
+</blockquote>
+
+<h3 id="0x04-使用session:0ed0f578c1f6cf072915b92ae1a58a44">0x04 使用Session</h3>
+
+<blockquote>
 <pre><code>import requests
 url = 'http://10.10.10.10:8080/Lab2.0/Login.action'
 proxy = {
@@ -201,20 +218,22 @@ resp = s.get('http://10.10.10.10:8080/Lab2.0/student.action')
 print resp.text
 </code></pre>
 
-
+<p>
 <div class="pure-u-1">
   <img class="pure-img" src="/img/post/requests_proxies.png" alt="post登陆后带cookie访问页面.png">
 </div>
 
-
+<br /><br />
 
 <div class="pure-u-1">
   <img class="pure-img" src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面.png">
 </div>
+</p>
+</blockquote>
 
+<h3 id="0x05-上传与下载:0ed0f578c1f6cf072915b92ae1a58a44">0x05 上传与下载</h3>
 
-<h2 id="上传与下载:0ed0f578c1f6cf072915b92ae1a58a44">上传与下载</h2>
-
+<blockquote>
 <pre><code>#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -238,14 +257,17 @@ import requests
 url = 'http://nginx.org/download/nginx-1.9.9.tar.gz'
 
 resp = requests.get(url)
+#resp = requests.get(url,stream=True) #下载视频时要设置stream为True
 with open(&quot;a.tar.gz&quot;,&quot;wb&quot;) as f:
     f.write(resp.content)
 
 urllib.urlretrieve(url, &quot;b.tar.gz&quot;) #只能下载http的
 </code></pre>
+</blockquote>
 
-<h2 id="重定向:0ed0f578c1f6cf072915b92ae1a58a44">重定向</h2>
+<h3 id="0x06-重定向:0ed0f578c1f6cf072915b92ae1a58a44">0x06 重定向</h3>
 
+<blockquote>
 <pre><code>&gt;&gt;&gt; import requests
 &gt;&gt;&gt; r = requests.get('http://github.com') #默认跳转
 &gt;&gt;&gt; r.url
@@ -262,6 +284,7 @@ u'http://github.com/' #可以看到没有跳转，还是http
 &gt;&gt;&gt; r.history
 []
 </code></pre>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">
