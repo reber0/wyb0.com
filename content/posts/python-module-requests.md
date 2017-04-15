@@ -8,8 +8,8 @@ topics = ["Python"]
 
 +++
 
-## 无参数的get请求
-```
+### 0x00 无参数的get请求
+> ```
 import requests
 
 resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误
@@ -18,8 +18,8 @@ print resp.content #一般用来输出pdf、图片等，可得到原网页设定
 ```
 {{% fluid_img src="/img/post/requests_text.png" alt="requests得到html源码.png" %}}
 
-## 有参数的get请求
-```
+### 0x01 有参数的get请求
+> ```
 import requests
 
 url = 'http://10.10.10.10:8080/Lab2.0/Login.action'
@@ -35,8 +35,8 @@ print resp.cookies #得到cookie
 ```
 {{% fluid_img src="/img/post/requests_get_params.png" alt="有参数的get请求.png" %}}
 
-## POST请求
-```
+### 0x02 POST请求
+> ```
 import requests
 url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action'
 url2 = 'http://10.10.10.10:8080/Lab2.0/student.action'
@@ -58,8 +58,16 @@ print resp.text
 ```
 {{% fluid_img src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面.png" %}}
 
-## 使用Session
+### 0x03 SSL证书
+> ```python
+import requests
+url = 'https://www.aa.com'
+requests.get(url)   #出错，因为是https，验证了证书
+requests.get(url,verify=False) #正常，因为忽略了证书验证
 ```
+
+### 0x04 使用Session
+> ```
 import requests
 url = 'http://10.10.10.10:8080/Lab2.0/Login.action'
 proxy = {
@@ -77,11 +85,11 @@ resp = s.get('http://10.10.10.10:8080/Lab2.0/student.action')
 print resp.text
 ```
 {{% fluid_img src="/img/post/requests_proxies.png" alt="post登陆后带cookie访问页面.png" %}}
-
+<br /><br />
 {{% fluid_img src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面.png" %}}
 
-## 上传与下载
-```
+### 0x05 上传与下载
+> ```
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -94,7 +102,7 @@ upload_url = "http://123.206.78.220/u.php"
 requests.post(upload_url, files=file)
 ```
 
-```
+> ```
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -106,14 +114,15 @@ import requests
 url = 'http://nginx.org/download/nginx-1.9.9.tar.gz'
 
 resp = requests.get(url)
+#resp = requests.get(url,stream=True) #下载视频时要设置stream为True
 with open("a.tar.gz","wb") as f:
     f.write(resp.content)
 
 urllib.urlretrieve(url, "b.tar.gz") #只能下载http的
 ```
 
-## 重定向
-```
+### 0x06 重定向
+> ```
 >>> import requests
 >>> r = requests.get('http://github.com') #默认跳转
 >>> r.url
