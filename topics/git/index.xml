@@ -12,10 +12,10 @@
     
     <item>
       <title>Ubuntu下部署Gitlab</title>
-      <link>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E9%83%A8%E7%BD%B2Gitlab/</link>
+      <link>http://wyb0.com/posts/ubuntu-set-up-gitlab/</link>
       <pubDate>Mon, 16 Jan 2017 20:18:05 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Ubuntu%E4%B8%8B%E9%83%A8%E7%BD%B2Gitlab/</guid>
+      <guid>http://wyb0.com/posts/ubuntu-set-up-gitlab/</guid>
       <description>
 
 &lt;blockquote&gt;
@@ -26,7 +26,7 @@
 
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x00-前期准备:494850219ecf06d189faf35fa14c5742&#34;&gt;0x00 前期准备&lt;/h3&gt;
+&lt;h3 id=&#34;0x00-前期准备:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x00 前期准备&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;# 环境 Ubuntu 14.04
@@ -36,7 +36,7 @@ reber@ubuntu:~/Desktop$ sudo apt-get install git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x01-安装:494850219ecf06d189faf35fa14c5742&#34;&gt;0x01 安装&lt;/h3&gt;
+&lt;h3 id=&#34;0x01-安装:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x01 安装&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb
@@ -44,7 +44,7 @@ reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x02-配置:494850219ecf06d189faf35fa14c5742&#34;&gt;0x02 配置&lt;/h3&gt;
+&lt;h3 id=&#34;0x02-配置:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x02 配置&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb
@@ -86,7 +86,7 @@ tcp        0      0 0.0.0.0:22          0.0.0.0:*            LISTEN
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x03-访问web页面:494850219ecf06d189faf35fa14c5742&#34;&gt;0x03 访问web页面&lt;/h3&gt;
+&lt;h3 id=&#34;0x03-访问web页面:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x03 访问web页面&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;有时出现502，可以刷新网页或者再次reconfigure&lt;/li&gt;
@@ -104,7 +104,7 @@ tcp        0      0 0.0.0.0:22          0.0.0.0:*            LISTEN
 Admin Area &amp;ndash;&amp;gt; Users &amp;ndash;&amp;gt; Edit 然后保存&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;0x04-添加401认证:494850219ecf06d189faf35fa14c5742&#34;&gt;0x04 添加401认证&lt;/h3&gt;
+&lt;h3 id=&#34;0x04-添加401认证:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x04 添加401认证&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;# 401认证是nginx的，如果gitlab出现漏洞，也需要过401才行
@@ -140,7 +140,7 @@ reber@ubuntu:/var/opt/gitlab$ sudo gitlab-ctl restart nginx
 
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x05-汉化:494850219ecf06d189faf35fa14c5742&#34;&gt;0x05 汉化&lt;/h3&gt;
+&lt;h3 id=&#34;0x05-汉化:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x05 汉化&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;# 首先检查版本
@@ -155,7 +155,7 @@ reber@ubuntu:~/Desktop/gitlab$ sudo patch -d /opt/gitlab/embedded/service/gitlab
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x06-添加ssh公钥:494850219ecf06d189faf35fa14c5742&#34;&gt;0x06 添加ssh公钥&lt;/h3&gt;
+&lt;h3 id=&#34;0x06-添加ssh公钥:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x06 添加ssh公钥&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;本机生成秘钥
@@ -184,7 +184,7 @@ $ ssh -T git@192.168.188.160
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x07-推送自己的代码:494850219ecf06d189faf35fa14c5742&#34;&gt;0x07 推送自己的代码&lt;/h3&gt;
+&lt;h3 id=&#34;0x07-推送自己的代码:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x07 推送自己的代码&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;# 首先clone项目
@@ -230,7 +230,7 @@ Deleted branch 163 (was d5df55a).
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x08-结果:494850219ecf06d189faf35fa14c5742&#34;&gt;0x08 结果&lt;/h3&gt;
+&lt;h3 id=&#34;0x08-结果:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x08 结果&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;
@@ -246,7 +246,7 @@ Deleted branch 163 (was d5df55a).
 &lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x09-备份与还原:494850219ecf06d189faf35fa14c5742&#34;&gt;0x09 备份与还原&lt;/h3&gt;
+&lt;h3 id=&#34;0x09-备份与还原:2c00bdbbba3f3b03c9fb3c86a2b9779b&#34;&gt;0x09 备份与还原&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;注意：若要迁移，则新服务器上的Gitlab的版本必须与创建备份时的Gitlab版本号相同&lt;/p&gt;
@@ -728,13 +728,13 @@ reber@ubuntu:~/Downloads$ haroopad aaa.md&lt;/li&gt;
     
     <item>
       <title>Git的用法</title>
-      <link>http://wyb0.com/posts/Git%E7%9A%84%E7%94%A8%E6%B3%95/</link>
+      <link>http://wyb0.com/posts/git-usage/</link>
       <pubDate>Thu, 05 May 2016 10:30:32 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Git%E7%9A%84%E7%94%A8%E6%B3%95/</guid>
+      <guid>http://wyb0.com/posts/git-usage/</guid>
       <description>
 
-&lt;h3 id=&#34;0x00-创建仓库:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x00 创建仓库&lt;/h3&gt;
+&lt;h3 id=&#34;0x00-创建仓库:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x00 创建仓库&lt;/h3&gt;
 
 &lt;blockquote&gt;
 
@@ -744,7 +744,7 @@ reber@ubuntu:~/Downloads$ haroopad aaa.md&lt;/li&gt;
 
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x01-克隆:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x01 克隆&lt;/h3&gt;
+&lt;h3 id=&#34;0x01-克隆:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x01 克隆&lt;/h3&gt;
 
 &lt;blockquote&gt;
 
@@ -754,7 +754,7 @@ reber@ubuntu:~/Downloads$ haroopad aaa.md&lt;/li&gt;
 
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x02-仓库连接到远程服务器:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x02 仓库连接到远程服务器&lt;/h3&gt;
+&lt;h3 id=&#34;0x02-仓库连接到远程服务器:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x02 仓库连接到远程服务器&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;# 若没有克隆现有仓库则可以连接远程仓库：
@@ -762,7 +762,7 @@ git remote add origin git@github.com:reber-9/reber-9.com.git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x03-gitignore文件:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x03 .gitignore文件&lt;/h3&gt;
+&lt;h3 id=&#34;0x03-gitignore文件:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x03 .gitignore文件&lt;/h3&gt;
 
 &lt;blockquote&gt;
 
@@ -772,7 +772,7 @@ git remote add origin git@github.com:reber-9/reber-9.com.git
 
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x04-添加和提交和推送:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x04 添加和提交和推送&lt;/h3&gt;
+&lt;h3 id=&#34;0x04-添加和提交和推送:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x04 添加和提交和推送&lt;/h3&gt;
 
 &lt;blockquote&gt;
 
@@ -782,7 +782,7 @@ git remote add origin git@github.com:reber-9/reber-9.com.git
 
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x05-分支:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x05 分支&lt;/h3&gt;
+&lt;h3 id=&#34;0x05-分支:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x05 分支&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;切换分支后，分支的更改不会影响原来分支，&lt;/li&gt;
@@ -795,7 +795,7 @@ git remote add origin git@github.com:reber-9/reber-9.com.git
 &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;0x06-更新和合并:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x06 更新和合并&lt;/h3&gt;
+&lt;h3 id=&#34;0x06-更新和合并:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x06 更新和合并&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;git pull 可以同步github上的数据到本地
@@ -803,14 +803,14 @@ git merge test 可以将test分支的改动合并到当前分支
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x07-查看状态:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x07 查看状态&lt;/h3&gt;
+&lt;h3 id=&#34;0x07-查看状态:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x07 查看状态&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;git status
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x08-撤回:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x08 撤回&lt;/h3&gt;
+&lt;h3 id=&#34;0x08-撤回:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x08 撤回&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;git reset HEAD  # 上一次add的文件全部撤销
@@ -822,7 +822,7 @@ git revert HEAD # 若push后,可撤销前一次 commit
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x09-多用户:c5dff9c6c3fd42decf12e57d9d0b3d1e&#34;&gt;0x09 多用户&lt;/h3&gt;
+&lt;h3 id=&#34;0x09-多用户:4b413fdebfe42d43590394b35a48620b&#34;&gt;0x09 多用户&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;如果有多个用户时可进行如下设置&lt;/p&gt;

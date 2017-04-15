@@ -12,13 +12,13 @@
     
     <item>
       <title>文件包含漏洞</title>
-      <link>http://wyb0.com/posts/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/</link>
+      <link>http://wyb0.com/posts/file-include-vulnerabilities/</link>
       <pubDate>Tue, 26 Jul 2016 09:24:22 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E/</guid>
+      <guid>http://wyb0.com/posts/file-include-vulnerabilities/</guid>
       <description>
 
-&lt;h3 id=&#34;0x00-文件包含:3c128ca1dd688c4024244425e76a7502&#34;&gt;0x00 文件包含&lt;/h3&gt;
+&lt;h3 id=&#34;0x00-文件包含:c2c3b21f0f1167d1fc29c58d3ff7516b&#34;&gt;0x00 文件包含&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;  程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，
@@ -31,7 +31,7 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x01-常见文件包含函数:3c128ca1dd688c4024244425e76a7502&#34;&gt;0x01 常见文件包含函数&lt;/h3&gt;
+&lt;h3 id=&#34;0x01-常见文件包含函数:c2c3b21f0f1167d1fc29c58d3ff7516b&#34;&gt;0x01 常见文件包含函数&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;include()：执行到include时才包含文件，找不到被包含文件时只会产生警告，脚本将继续执行
@@ -40,7 +40,7 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x02-利用条件:3c128ca1dd688c4024244425e76a7502&#34;&gt;0x02 利用条件&lt;/h3&gt;
+&lt;h3 id=&#34;0x02-利用条件:c2c3b21f0f1167d1fc29c58d3ff7516b&#34;&gt;0x02 利用条件&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;程序用include()等文件包含函数通过动态变量的范式引入需要包含的文件&lt;/li&gt;
@@ -53,7 +53,7 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x03-漏洞危害:3c128ca1dd688c4024244425e76a7502&#34;&gt;0x03 漏洞危害&lt;/h3&gt;
+&lt;h3 id=&#34;0x03-漏洞危害:c2c3b21f0f1167d1fc29c58d3ff7516b&#34;&gt;0x03 漏洞危害&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;执行任意代码
@@ -62,7 +62,7 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x04-漏洞分类:3c128ca1dd688c4024244425e76a7502&#34;&gt;0x04 漏洞分类&lt;/h3&gt;
+&lt;h3 id=&#34;0x04-漏洞分类:c2c3b21f0f1167d1fc29c58d3ff7516b&#34;&gt;0x04 漏洞分类&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码
@@ -77,14 +77,14 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x05-漏洞挖掘:3c128ca1dd688c4024244425e76a7502&#34;&gt;0x05 漏洞挖掘&lt;/h3&gt;
+&lt;h3 id=&#34;0x05-漏洞挖掘:c2c3b21f0f1167d1fc29c58d3ff7516b&#34;&gt;0x05 漏洞挖掘&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;上AWVS吧，骚年...
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x06-本地包含:3c128ca1dd688c4024244425e76a7502&#34;&gt;0x06 本地包含&lt;/h3&gt;
+&lt;h3 id=&#34;0x06-本地包含:c2c3b21f0f1167d1fc29c58d3ff7516b&#34;&gt;0x06 本地包含&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;示例一&lt;/li&gt;
@@ -311,7 +311,7 @@ index.php?page=/etc/httpd/conf/httpd.conf
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x07-远程包含:3c128ca1dd688c4024244425e76a7502&#34;&gt;0x07 远程包含&lt;/h3&gt;
+&lt;h3 id=&#34;0x07-远程包含:c2c3b21f0f1167d1fc29c58d3ff7516b&#34;&gt;0x07 远程包含&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;注：远程的文件名不能为php可解析的扩展名，allow_url_fopen和allow_url_include为On是必须的
@@ -323,7 +323,7 @@ index.php?page=/etc/httpd/conf/httpd.conf
 若在a.txt写入&amp;lt;?php fputs(fopen(&amp;ldquo;shell.php&amp;rdquo;,&amp;ldquo;w&amp;rdquo;),&amp;rdquo;&amp;lt;?php @eval($_POST[xxx]); ?&amp;gt;&amp;ldquo;) ?&amp;gt;，可直接写shell&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x08-漏洞防御:3c128ca1dd688c4024244425e76a7502&#34;&gt;0x08 漏洞防御&lt;/h3&gt;
+&lt;h3 id=&#34;0x08-漏洞防御:c2c3b21f0f1167d1fc29c58d3ff7516b&#34;&gt;0x08 漏洞防御&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;PHP中使用open_basedir配置，将访问限制在指定区域

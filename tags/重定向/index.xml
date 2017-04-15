@@ -12,13 +12,13 @@
     
     <item>
       <title>301重定向</title>
-      <link>http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/</link>
+      <link>http://wyb0.com/posts/301-redirect/</link>
       <pubDate>Tue, 07 Feb 2017 10:49:38 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/301%E9%87%8D%E5%AE%9A%E5%90%91/</guid>
+      <guid>http://wyb0.com/posts/301-redirect/</guid>
       <description>
 
-&lt;h3 id=&#34;0x00-目的:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x00 目的&lt;/h3&gt;
+&lt;h3 id=&#34;0x00-目的:f68ab9b693c03a46b923f356015810f8&#34;&gt;0x00 目的&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向
@@ -29,14 +29,14 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x01-开启rewrite模块:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x01 开启rewrite模块&lt;/h3&gt;
+&lt;h3 id=&#34;0x01-开启rewrite模块:f68ab9b693c03a46b923f356015810f8&#34;&gt;0x01 开启rewrite模块&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;$ sudo a2enmod rewrite
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x02-根目录下新建-htaccess:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x02 根目录下新建.htaccess：&lt;/h3&gt;
+&lt;h3 id=&#34;0x02-根目录下新建-htaccess:f68ab9b693c03a46b923f356015810f8&#34;&gt;0x02 根目录下新建.htaccess：&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;Options +FollowSymLinks
@@ -45,7 +45,7 @@ RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301]  # 这里换上新域名
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x03-修改配置文件:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x03 修改配置文件&lt;/h3&gt;
+&lt;h3 id=&#34;0x03-修改配置文件:f68ab9b693c03a46b923f356015810f8&#34;&gt;0x03 修改配置文件&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;# AllowOverride None 改为AllowOverride All
@@ -59,7 +59,7 @@ $ sudo vim /etc/apache2/apache2.conf
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x04-重启apache:99e8fd2eb54bb3794e155e5fb3350b16&#34;&gt;0x04 重启Apache&lt;/h3&gt;
+&lt;h3 id=&#34;0x04-重启apache:f68ab9b693c03a46b923f356015810f8&#34;&gt;0x04 重启Apache&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;$ sudo /etc/init.d/apache2 restart
