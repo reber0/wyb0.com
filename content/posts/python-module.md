@@ -8,7 +8,7 @@ topics = ["Python"]
 
 +++
 
-## Python的模块
+### 0x00 Python的模块
 * 在python中，任何一个python文件都可以看作一个模块
 * 不同包下有相同模块名并不会冲突，且包下必须有文件\_\_init\_\_.py
 * from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数)
@@ -17,7 +17,7 @@ topics = ["Python"]
 * sys.path.append('D:/xx/xx/xx/code')可以添加搜索路径
 * 使用if \_\_name\_\_ == '\_\_main\_\_':
 
-## 实例
+### 0x01 实例
 * 文件结构如下
 {{% fluid_img src="/img/post/python_module_file_tree.png" alt="模块目录结构.png" %}}
 
