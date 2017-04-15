@@ -7,8 +7,55 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Tue, 03 Jan 2017 18:43:27 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 15 Apr 2017 18:49:37 +0800</lastBuildDate>
     <atom:link href="http://wyb0.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>下载大文件时显示进度条</title>
+      <link>http://wyb0.com/posts/python-module-tqdm/</link>
+      <pubDate>Sat, 15 Apr 2017 18:49:37 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/python-module-tqdm/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-作用:9abec5d792acd822401093e6d9bba107&#34;&gt;0x00 作用&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在下载大文件时以进度条的形式显示下载进度，如下图所示：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tqdm_progress_bar.png&#34; alt=&#34;下载进度条&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-代码:9abec5d792acd822401093e6d9bba107&#34;&gt;0x01 代码&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import requests
+from tqdm import tqdm
+
+def get_vedio(url,name):
+    resp = requests.get(url=url,stream=True)
+    content_size = int(resp.headers[&#39;Content-Length&#39;])/1024
+    with open(name, &amp;quot;wb&amp;quot;) as f:
+        print &amp;quot;total: &amp;quot;,content_size,&#39;k&#39;
+        for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit=&#39;k&#39;):
+            f.write(data)
+        print &amp;quot;done &amp;quot;+name
+
+
+if __name__ == &#39;__main__&#39;:
+    url = &amp;quot;http://127.0.0.1/Video.mp4&amp;quot;
+    name = url.split(&#39;/&#39;)[-1]
+    get_vedio(url,name)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>初识Tornado</title>
@@ -2257,95 +2304,6 @@ action：有3种类型
     action=&#39;store_true&#39;使用参数时将布尔值true存储到dest指定的变量中
     action=&#39;store_false&#39;使用参数时将布尔值false存储到dest指定的变量中
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Python的scapy模块简单使用</title>
-      <link>http://wyb0.com/posts/python-module-scapy/</link>
-      <pubDate>Thu, 11 Aug 2016 23:26:39 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/python-module-scapy/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-简单尝试:d4647a9c285d416dc3807f7ddc4e1729&#34;&gt;0x00 简单尝试&lt;/h3&gt;
-
-&lt;blockquote&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/scapy_establish_the_packet.png&#34; alt=&#34;尝试构造数据包&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x01-生成一组数据包:d4647a9c285d416dc3807f7ddc4e1729&#34;&gt;0x01 生成一组数据包&lt;/h3&gt;
-
-&lt;blockquote&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/scapy_create_a_set_of_packet.png&#34; alt=&#34;生成一组数据包&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x02-发送数据包:d4647a9c285d416dc3807f7ddc4e1729&#34;&gt;0x02 发送数据包&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;send发送数据包
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/scapy_send_send_packet.png&#34; alt=&#34;用send发送数据包&#34;&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-&lt;li&gt;sr1发送数据包
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/scapy_sr1_send_packet.png&#34; alt=&#34;用sr1发送数据包&#34;&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-&lt;li&gt;sr发送数据包
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/scapy_sr_send_packet.png&#34; alt=&#34;用sr1发送数据包&#34;&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;0x03-发送syn数据包:d4647a9c285d416dc3807f7ddc4e1729&#34;&gt;0x03 发送SYN数据包&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/scapy_sr1_send_syn_packet.png&#34; alt=&#34;用sr1发送syn数据包&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/scapy_sr_send_syn_packet.png&#34; alt=&#34;用sr发送syn数据包&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x04-得到tcp内容:d4647a9c285d416dc3807f7ddc4e1729&#34;&gt;0x04 得到TCP内容&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/scapy_get_tcp_content.png&#34; alt=&#34;得到tcp内容&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x05-syn-scans:d4647a9c285d416dc3807f7ddc4e1729&#34;&gt;0x05 SYN Scans&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/scapy_syn_scan.png&#34; alt=&#34;syn扫描&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
 &lt;/blockquote&gt;
 </description>
     </item>

@@ -82,6 +82,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/php-mysql-common-function/">PHP之MySQL常用函数</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/mysql">MySQL</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+        处理函数 mysql_connect(server,user,pwd,newlink,clientflag) 连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE mysql_select_db(database,connection) 选择数据库的函数，成功则返回true，失败则返回false mysql_query(query,connection) 执行一条查询，返回一个资源标识符(结果集)，如果查询执行不正确则返回FALSE mysql_num_rows(data)和mysql_num_fields(data) 函数分别返回结果集中行和列的数目(禁对SELECT语句有效),结果集从 mysql_query()的调用中得到 mysql_fetch_assoc(data) 从结果集中取得一行作为关联数组，若没有更多行则返回false mysql_fetch_row(data) 从结果集中取得一行作为索引数组，若没有更多行则返回false mysql_error(connection) 返回上一个MySQL函数的错误文本，如果没有出错则返回&rdquo;(空字符串) mysql_affected_rows(link_identifier) 返回前一次MySQL操作(增删改)所影响的记录行数,失败则返回-1 mysql_insert_id(connection) 返回上一步INSERT操作产生的 ID。如果上一查询没有产生AUTO_INCREMENT的ID，则mysql_insert_id()返回 0。 mysql_data_seek(data,row) 结果集data从mysql_query()的调用中得到,行指针移动到指定的行号，接着调用 mysql_fetch_row() 将返回那一行。如果成功则返回 true，失败则返回 false 例子 &lt;?php $server = &quot;127.0.0.1&quot;; $dbname = &quot;massage&quot;; $user = &quot;msg&quot;; $pass = &quot;123456&quot; $conn = mysql_connect($server,$user,$pass) or die('连接服务器失败:'.mysql_error()); mysql_query(&quot;set names 'utf8'&quot;);//设置数据库输出编码 mysql_select_db($dbname,$conn) or die(mysql_error($conn)); //选择数据库 $sql = &quot;select username,password from user&quot;; //构造sql语句 $result = mysql_query($sql); //执行sql语句，返回结果集 $num = mysql_num_rows($result);//返回执行结果的行数 echo &quot;&lt;br
+    </p>
+
+    
+    <footer>
+        <a href="/posts/php-mysql-common-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/mysql-syntax/">MySQL语法</a></h2>
 
         
@@ -559,59 +616,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/php-basis/">PHP之基础</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-15</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 PHP的作用 收集表单数据 生成动态网页 字符串处理 动态输出图片 处理服务器端文件系统 编写数据库支持的网页 会话跟踪控制 处理XML文件 支持大量的网络协议 服务器端的其他相关操作 0x01 PHP代码嵌入位置 可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&quot;&lt;?php&quot;起始符和终止符&quot;?&gt;&quot;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。 0x02 解读开始和结束标记 1. &lt;?php ?&gt; 2. &lt;script language=&quot;php&quot;&gt;&lt;/script&gt; 3. &lt;? ?&gt; 4. &lt;% %&gt; //前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags 0x03 指令分割符 php一段代码中除了最后一行不用分号，其他每句都要用分号结束，推荐每句都用分号结束 0x04 注释 1. 若觉得代码不合适则可以注释，但不要急于删除 2. 注释的目的在于说明程序 3. 注释对调试和编写程序可以起到很好的帮助作用 4. PHP注释符有：&quot;/**/&quot;、&quot;//&quot;、&quot;#&quot; 0x05 空白符 空白符(空格、tab制表符、换行)会被php引擎忽略 0x06 变量的声明 其中双引号中的变量可以被解析，单引号中的变量不能被解析 变量名对大小写敏感 变量名开头是字母或下划线 后面跟任意数量的数字、字母、下划线 变量名中间不能有空格 0x07 可变变量 &lt;?php $a = 'hello'; $$a = 'world'; //此时$a的值hello就相当于$$a的键 echo &quot;$a $hello&quot;; //输出hello world ?&gt; 0x08 引用 &lt;?php $a = 123; $b = $a; $a = 456; //此时$a为456,$b为123 $c = &amp;$b; $b = 111; //此时$b和$c都是111 ?&gt; 0x09 变量类型 布尔型(boolean,true,false) 整型(integer) 浮点型(float和double) 字符串(string) 数组(array) 对象(object) 资源类型(resource) NULL类型 伪类型(mixed,number,callback) 0x0A 布尔类型 以下会被认为是FALSE，其他所有值都被认为是TRUE(包括任何资源) 布尔值FALSE 整型值0(零)为假，-1和其他非零值都是TRUE 浮点型0.0 空白字符串和字符串“0” 没有成员变量的数组 没有单元的对象(仅适用于PHP4) 0x0B NULL类型 NULL不区分大小写 NULL类型唯一可能的值就是NULL NULL不代表空格、不代表零、不代表空字符串，而是表示一个变量的值为空 将变量直接赋值为NULL则为NULL 声明的变量尚未被赋值则为NULL 被unset()函数销毁的变量为NULL 0x0C 类型转换 自动类型转换 有布尔值参与运算，则TRUE转换为整型1,FALSE为0,然后再运算 有NULL值参与的运算，NULL值转换为整型0,再参与运算 整型和float型参与运算则先把interger型转换为float型再运算 字符串和数字型数据参与运算时，字符串先转换为数字再参与运算 强制类型转换 变量前添加(int)、(float)、(string)、(bool)等 用函数intval()、floatval()、strval() 用函数settype() 0x0D 运算符 * 算数运算符：&quot;+&quot;、&quot;-&quot;、&quot;*&quot;、&quot;/&quot;、&quot;%&quot; * 赋值运算符：&quot;=&quot;、&quot;+=&quot;、&quot;-=&quot;、&quot;*=&quot;、&quot;/=&quot;、&quot;%=&quot; * 字符串运算符：&quot;.&quot;、&quot;.=&quot; * 递增/递减运算符：&quot;++$a&quot;、&quot;$a++(先赋值再++)&quot;、&quot;--$a&quot;、&quot;$a--&quot; * 比较运算符 * == 等于 * === 全等(完全相同) * != 不等于 * &lt;&gt; 不等于 * !== 不全等(完全不同) * &gt; 大于 * &lt; 小于 * &gt;= 大于或等于 * &lt;= 小于或等于 * 逻辑运算符 * and 都为true则返回true * or 至少有一个为true则返回true * xor 有且仅有一个为true则返回true * &amp;&amp; 都为true则返回true * || 至少有一个为true则返回true * !
-    </p>
-
-    
-    <footer>
-        <a href="/posts/php-basis/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -661,7 +665,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(31)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(32)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(9)</a></li>
         
@@ -786,12 +790,12 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>29</sup>
+                <sup>30</sup>
             </p>
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python%e6%a8%a1%e5%9d%97" title="python模块">python模块</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">

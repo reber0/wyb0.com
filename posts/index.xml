@@ -7,8 +7,55 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Fri, 14 Apr 2017 14:43:52 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 15 Apr 2017 18:49:37 +0800</lastBuildDate>
     <atom:link href="http://wyb0.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>下载大文件时显示进度条</title>
+      <link>http://wyb0.com/posts/python-module-tqdm/</link>
+      <pubDate>Sat, 15 Apr 2017 18:49:37 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/python-module-tqdm/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-作用:9abec5d792acd822401093e6d9bba107&#34;&gt;0x00 作用&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;在下载大文件时以进度条的形式显示下载进度，如下图所示：
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/tqdm_progress_bar.png&#34; alt=&#34;下载进度条&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-代码:9abec5d792acd822401093e6d9bba107&#34;&gt;0x01 代码&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import requests
+from tqdm import tqdm
+
+def get_vedio(url,name):
+    resp = requests.get(url=url,stream=True)
+    content_size = int(resp.headers[&#39;Content-Length&#39;])/1024
+    with open(name, &amp;quot;wb&amp;quot;) as f:
+        print &amp;quot;total: &amp;quot;,content_size,&#39;k&#39;
+        for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit=&#39;k&#39;):
+            f.write(data)
+        print &amp;quot;done &amp;quot;+name
+
+
+if __name__ == &#39;__main__&#39;:
+    url = &amp;quot;http://127.0.0.1/Video.mp4&amp;quot;
+    name = url.split(&#39;/&#39;)[-1]
+    get_vedio(url,name)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>检测WebLogic是否存在SSRF</title>
@@ -1987,100 +2034,6 @@ You have to wait for the threads to finish.
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/code_execution_assert.png&#34; alt=&#34;函数assert()&#34;&gt;
 &lt;/div&gt;
 &lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>利用_blank属性钓鱼</title>
-      <link>http://wyb0.com/posts/use-_blank-attribute-to-fish/</link>
-      <pubDate>Wed, 12 Oct 2016 10:24:38 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/use-_blank-attribute-to-fish/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-blank:29306ac85f3fd4f12e12cf5c4d476649&#34;&gt;0x00 _blank&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;_blank是html中的标签属性，如&lt;code&gt;&amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber-9.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt;&lt;/code&gt;, 但若点击HELLO打开的网页1.php中有如下代码：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;script&amp;gt;
-if(window.opener){
-  window.opener.location  = &amp;quot;http://xss.reber-9.com/fish.html&amp;quot;;
-}
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;则原网页将转跳到&lt;a href=&#34;http://xss.reber-9.com/fish.html&#34;&gt;http://xss.reber-9.com/fish.html&lt;/a&gt; ，这就会造成钓鱼&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x01-简单模板:29306ac85f3fd4f12e12cf5c4d476649&#34;&gt;0x01 简单模板&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;a.html内容如下：&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-    &amp;lt;title&amp;gt;Document&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-    &amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber-9.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;http://xss.reber-9.com/1.php&lt;/code&gt;中1.php内容如下：&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-    &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt;
-    &amp;lt;script&amp;gt;
-        if(window.opener){
-            window.opener.location = &amp;quot;http://xss.reber-9.com/fish.html&amp;quot;;
-        }
-    &amp;lt;/script&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-    &amp;lt;p&amp;gt;hello&amp;lt;/p&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;1.php同级下有个钓鱼模板fish.html，内容如下：&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-    &amp;lt;title&amp;gt;fish&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-    &amp;lt;h2&amp;gt;This is fishing template!&amp;lt;/h2&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;点击a.html中的HELLO则会出现下面的情况，也就导致了钓鱼：&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/blank.gif&#34; alt=&#34;blank钓鱼&#34;&gt;
-&lt;/div&gt;
-
 &lt;/blockquote&gt;
 </description>
     </item>
