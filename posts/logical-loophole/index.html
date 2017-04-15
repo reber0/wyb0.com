@@ -126,53 +126,103 @@
 <h3 id="0x01-密码找回漏洞:284c45d8a980c76ad7967d7a865eaeb6">0x01 密码找回漏洞</h3>
 
 <ul>
-<li>测试流程</li>
+<li><p>测试流程</p>
+
+<ul>
+<li>先尝试正确的密码找回流程，记录不同找回方式的所有数据包</li>
+<li>分析数据包，找到有效数据部分</li>
+<li>推测数据构造方法</li>
+<li>构造数据包验证猜测</li>
+</ul></li>
+
+<li><p>分类</p>
+
+<ul>
+<li>邮箱找回</li>
 </ul>
 
 <blockquote>
-<pre><code>* 先尝试正确的密码找回流程，记录不同找回方式的所有数据包
-* 分析数据包，找到有效数据部分
-* 推测数据构造方法
-* 构造数据包验证猜测
+<pre><code>一般是点击邮件中的链接后会转跳到修改密码的页面，需要分析链接的token构造，可以考虑是时间戳md5、用户名或邮箱和随机字符串md5等，一般是类似如下链接：
+http://domain/findpwd.php?u=xiaoming&amp;token=MTIzQHFxLmNvbQ==
+http://domain/findpwd.php?id=374&amp;token=2ad64bf14c714dbce88c7993663da7da
+当构造相应链接时就可以重置任意用户的密码
 </code></pre>
 </blockquote>
 
 <ul>
-<li>分类</li>
+<li>手机短信找回</li>
 </ul>
 
 <blockquote>
-<pre><code>* 邮箱找回
-    一般是点击邮件中的链接后会转跳到修密码的页面，这就需要分析链接的token构造了，
-    可以考虑是时间戳md5、用户名或邮箱和随机字符串md5等，一般是类似如下链接：
-    http://domain/findpwd.php?u=xiaoming&amp;token=MTIzQHFxLmNvbQ==
-    http://domain/findpwd.php?id=374&amp;token=2ad64bf14c714dbce88c7993663da7da
-    当构造相应链接时就可以重置任意用户的密码
-* 手机短信找回
-    短信找回一般就是4位或6位验证码，暴力猜测吧
-* 找回逻辑错误
-    若恶意用户A用15123333333找回密码，此时收到验证码但不使用
-    此时恶意用户A再用受害者B的手机号找回密码
-    用户A在B的验证表单填入自己收到的验证码，发送
-    此时跳转的修改密码页面修改的就是用户B的密码
-* 直接修改密码
-    在修改密码时跳过选择找回方式，直接访问修改密码的页面进行修改
-* 本地验证
-    随意输入一个验证码，开Burp抓包，forward，抓返回包，返回包里可能有一个flag字段，
-    若flag的值为1则跳转到修改密码页面，所以只要修改返回包即可
-* 服务端将验证码返回给浏览器
-    在点击获取验证码时，服务器会将验证码发送给浏览器，抓包即可
-* 验证码直接出现在url中
-    当点击获取验证码时发出的请求链接中直接有code
-* 密保问题找回
-    回答密保问题，有时一些答案就在html源码里
+<pre><code>短信找回一般就是4位或6位验证码，暴力猜测吧
 </code></pre>
 </blockquote>
 
+<ul>
+<li>找回逻辑错误</li>
+</ul>
+
+<blockquote>
+<pre><code>若恶意用户A用15123333333找回密码，此时收到验证码但不使用
+此时恶意用户A再用受害者B的手机号找回密码
+用户A在B的验证表单填入自己收到的验证码，发送
+此时跳转的修改密码页面修改的就是用户B的密码
+</code></pre>
+</blockquote>
+
+<ul>
+<li>直接修改密码</li>
+</ul>
+
+<blockquote>
+<pre><code>在修改密码时跳过选择找回方式，直接访问修改密码的页面进行修改
+</code></pre>
+</blockquote>
+
+<ul>
+<li>本地验证</li>
+</ul>
+
+<blockquote>
+<pre><code>随意输入一个验证码，开Burp抓包，forward，抓返回包，返回包里可能有一个flag字段，
+若flag的值为1则跳转到修改密码页面，所以只要修改返回包即可
+</code></pre>
+</blockquote>
+
+<ul>
+<li>服务端将验证码返回给浏览器</li>
+</ul>
+
+<blockquote>
+<pre><code>在点击获取验证码时，服务器会将验证码发送给浏览器，抓包即可
+</code></pre>
+</blockquote>
+
+<ul>
+<li>验证码直接出现在url中</li>
+</ul>
+
+<blockquote>
+<pre><code>当点击获取验证码时发出的请求链接中直接有code
+</code></pre>
+</blockquote>
+
+<ul>
+<li>密保问题找回</li>
+</ul>
+
+<blockquote>
+<pre><code>回答密保问题，有时一些答案就在html源码里
+</code></pre>
+</blockquote></li>
+</ul>
+
 <h3 id="0x02-多线程条件竞争漏洞:284c45d8a980c76ad7967d7a865eaeb6">0x02 多线程条件竞争漏洞</h3>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多线程条件竞争漏洞是一种服务端的漏洞，服务端是并发处理用户请求的,<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若并发处理不当或相关操作逻辑设计有缺陷时就会产生一些安全问题。</p>
+<blockquote>
+<p>多线程条件竞争漏洞是一种服务端的漏洞，服务端是并发处理用户请求的,<br />
+若并发处理不当或相关操作逻辑设计有缺陷时就会产生一些安全问题。</p>
+</blockquote>
 
 <ul>
 <li>文件上传</li>
