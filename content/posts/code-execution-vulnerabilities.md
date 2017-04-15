@@ -161,4 +161,4 @@ callback函数：preg_replace + /e模式
 * 若必须使用preg_replace的e修饰符，则必用单引号包裹正则匹配出的对象
 
 <br />
-下一篇：http://wyb0.com/posts/代码执行漏洞2/
+下一篇：http://wyb0.com/posts/code-execution-vulnerabilities-2/
