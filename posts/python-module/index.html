@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python的编码问题 - Reber's Blog</title>
+  <title>Python的模块 - Reber's Blog</title>
   <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
   <meta name="description" content="">
   <meta name="author" content="reber">
@@ -78,14 +78,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Python的编码问题</h2>
+                <h2>Python的模块</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-06-29</time>
+                        <time>2016-08-31</time>
                     </div>
 
                     
@@ -106,7 +106,9 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python%E6%A8%A1%E5%9D%97">python模块</a>
                             
                         
                         
@@ -115,82 +117,244 @@
                 
                 
 
-<h2 id="几个编码函数:ad9892e057f87c48c3f81918723997bb">几个编码函数</h2>
+<h2 id="python的模块:5a1036be3e628083b7c123a3b506bc67">Python的模块</h2>
 
 <ul>
-<li>chr(x)
-可以将0-255之间的数字转化为ASCII表中的字符</li>
-<li>ord(x)
-可以ASCII表中的字符转化为0-255之间的数字</li>
-<li>hex(x)
-将整数转化为十六进制字符串</li>
-<li>oct(x)
-将整数转化为八进制字符串</li>
+<li>在python中，任何一个python文件都可以看作一个模块</li>
+<li>不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py</li>
+<li>from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数)</li>
+<li>from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test</li>
+<li>import导入模块时会从sys.path输出的结果路径中查找模块然后导入</li>
+<li>sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径</li>
+<li>使用if __name__ == &lsquo;__main__&lsquo;:</li>
 </ul>
 
-<h2 id="在py文件开头:ad9892e057f87c48c3f81918723997bb">在py文件开头</h2>
+<h2 id="实例:5a1036be3e628083b7c123a3b506bc67">实例</h2>
 
-<p>使用：</p>
+<ul>
+<li><p>文件结构如下
 
-<pre><code class="language-python">#!/usr/bin/env python
-#-*- coding: UTF-8 -*-
-或：
-#coding=utf8
-</code></pre>
-
-<h2 id="永久编码-推荐:ad9892e057f87c48c3f81918723997bb">永久编码(推荐)</h2>
-
-<p>
 <div class="pure-u-1">
-  <img class="pure-img" src="/img/post/unicode_encode_error.png" alt="python编码出错.png">
+  <img class="pure-img" src="/img/post/python_module_file_tree.png" alt="模块目录结构.png">
 </div>
+</p></li>
 
-可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：</p>
+<li><p>测试文件test.py</p></li>
+</ul>
 
-<pre><code class="language-python">#coding=utf8
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-# 此方法修改了python环境，设置系统默认编码，永久有效
-</code></pre>
-
-<h2 id="编码转换:ad9892e057f87c48c3f81918723997bb">编码转换</h2>
-
-<p>python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode</p>
-
-<pre><code># coding: UTF-8
-
-&quot;&quot;&quot;从gbk编码的文件中读出数据，重新编码为utf8然后存储&quot;&quot;&quot;
-
-f = open('test.txt')  # gbk编码
-s = f.read()
-
-u = s.decode('gbk') # 将gbk解码为unicode
-# 通常要判断其编码方式是否为unicode
-# isinstance(s, unicode)可以用来判断是否为unicode 
-# 这里已知是GBK编码，解码成unicode
-s = u.encode('utf8')  # 将unicode编码为utf8
-
-f.write(s)
-f.close()
-</code></pre>
-
-<h2 id="网页的编码:ad9892e057f87c48c3f81918723997bb">网页的编码</h2>
-
+<blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
-#-*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 
-import requests
+from package1 import * #导入包package1下的所有模块
+import package2.module3 #导入包package2下的module3模块
+import package2.module4 as s #导入包package2下的module4模块并重命名为s
 
-resp = requests.get('http://soft.nyist.edu.cn/')
-print resp.apparent_encoding #UTF-8-SIG
-resp.encoding = resp.apparent_encoding #获取原网页的编码格式，并赋给resp.encoding
-html = resp.text #以resp.encoding的格式解码为unicode
-# print html.encode('gb18030') #转码为gbk不能正常输出html源码
-print type(html) #&lt;type 'unicode'&gt;
-title = html.lower().split('&lt;title&gt;')[1].split('&lt;/title')[0]
-print title #南阳理工学院
+a = module1.Class1() #创建一个对象
+a.test() #调用类中的方法
+
+b = module2.Class2()
+b.test()
+
+c = package2.module3.Class3()
+c.test()
+
+d = s.Class4()
+d.test()
 </code></pre>
+</blockquote>
+
+<ul>
+<li><p>包package1</p>
+
+<ul>
+<li><strong>init</strong>.py</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-python">#这个文件可以为空
+
+
+__all__ = ['module1', 'module2'] #有这一句才能使用import *导入所有模块
+</code></pre>
+</blockquote>
+
+<ul>
+<li>module1.py</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+'this is test moudle'
+
+
+__author__ = 'reber'
+
+
+import sys
+
+
+class Class1(object):
+    &quot;&quot;&quot;docstring for Class1&quot;&quot;&quot;
+    def __init__(self):
+        super(Class1, self).__init__()
+
+
+    def test(self):
+        print &quot;package1 -&gt; module1.py -&gt; Class1 -&gt; test()&quot;
+
+
+    def main(self):
+        print &quot;this is module1.py main()&quot;
+
+
+if __name__ == '__main__':
+    sub11 = Class1()
+    sub11.test()
+    sub11.main()
+</code></pre>
+</blockquote>
+
+<ul>
+<li>module2.py</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+'this is test moudle'
+
+
+__author__ = 'reber'
+
+
+import sys
+
+
+class Class2(object):
+    &quot;&quot;&quot;docstring for Class1&quot;&quot;&quot;
+    def __init__(self):
+        super(Class2, self).__init__()
+
+
+    def test(self):
+        print &quot;package1 -&gt; module2.py -&gt; Class2 -&gt; test()&quot;
+
+
+    def main(self):
+        print &quot;this is module2.py main()&quot;
+
+
+if __name__ == '__main__':
+    sub11 = Class2()
+    sub11.test()
+    sub11.main()
+</code></pre>
+</blockquote></li>
+
+<li><p>包package2</p>
+
+<ul>
+<li><strong>init</strong>.py</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-python">
+
+__all__ = ['module3', 'module4']
+</code></pre>
+</blockquote>
+
+<ul>
+<li>module3.py</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+'this is test moudle'
+
+
+__author__ = 'reber'
+
+
+import sys
+
+
+class Class3(object):
+    &quot;&quot;&quot;docstring for Class1&quot;&quot;&quot;
+    def __init__(self):
+        super(Class3, self).__init__()
+
+
+    def test(self):
+        print &quot;package2 -&gt; module3.py -&gt; Class3 -&gt; test()&quot;
+
+
+    def main(self):
+        print &quot;this is module3.py main()&quot;
+
+
+if __name__ == '__main__':
+    sub11 = Class3()
+    sub11.test()
+    sub11.main()
+</code></pre>
+</blockquote>
+
+<ul>
+<li>module4.py</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+'this is test moudle'
+
+
+__author__ = 'reber'
+
+
+import sys
+
+
+class Class4(object):
+    &quot;&quot;&quot;docstring for Class4&quot;&quot;&quot;
+    def __init__(self):
+        super(Class4, self).__init__()
+
+
+    def test(self):
+        print &quot;package2 -&gt; module4.py -&gt; Class4 -&gt; test()&quot;
+
+
+    def main(self):
+        print &quot;this is module4.py main()&quot;
+
+
+if __name__ == '__main__':
+    sub11 = Class4()
+    sub11.test()
+    sub11.main()
+</code></pre>
+</blockquote></li>
+
+<li><p>执行python test.py结果
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/python_module_test_result.png" alt="导入模块测试结果.png">
+</div>
+</p></li>
+</ul>
 
                 
                 <div style="padding:10px 1px;">
@@ -206,13 +370,13 @@ print title #南阳理工学院
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/sqlmapapi%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/Python%E5%AE%9E%E7%8E%B0%E5%AF%86%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/sqlmapapi%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">sqlmapapi的简单使用</a>
+      <a href="http://wyb0.com/posts/Python%E5%AE%9E%E7%8E%B0%E5%AF%86%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8/">Python实现密码生成器</a>
     </nav>
     
   </div>
@@ -222,13 +386,13 @@ print title #南阳理工学院
   <div class="pure-u-10-24">
     
     <nav class="next">
-      <a href="http://wyb0.com/posts/SSRF/">SSRF</a>
+      <a href="http://wyb0.com/posts/PHP%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/">PHP安全配置</a>
     </nav>
     
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
     
-    <a href="http://wyb0.com/posts/SSRF/"><i class="fa fa-chevron-right"></i></a>
+    <a href="http://wyb0.com/posts/PHP%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>

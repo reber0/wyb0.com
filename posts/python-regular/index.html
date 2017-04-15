@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python编写规范 - Reber's Blog</title>
+  <title>Python的正则 - Reber's Blog</title>
   <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
   <meta name="description" content="">
   <meta name="author" content="reber">
@@ -78,14 +78,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Python编写规范</h2>
+                <h2>Python的正则</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-06-12</time>
+                        <time>2016-02-05</time>
                     </div>
 
                     
@@ -106,7 +106,9 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%AD%A3%E5%88%99">正则</a>
                             
                         
                         
@@ -115,102 +117,120 @@
                 
                 
 
-<h2 id="一-代码编排:ff8eac59965609d89ed811966cb65edc">一、代码编排</h2>
+<h2 id="正则表达式:6a31e08383caa9c66a89fdb2912667c1">正则表达式</h2>
 
-<pre><code>1.缩进：使用4个空格缩进
-2.行长度：每行不要超过80个字符
-3.空行：顶级定义之间空两行，如函数或类的定义，方法定义、类定义与第一个方法之间都应该空一行。
-4.分号：行尾不要有分号，也不要用分号将两条命令放在一行,除非是：1.长的导入模块语句。2.注释里的URL.3.可以使用圆括号实现隐式行连接
-</code></pre>
+<blockquote>
+<p>正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串</p>
+</blockquote>
 
-<h2 id="二-文档编排:ff8eac59965609d89ed811966cb65edc">二、文档编排</h2>
+<h2 id="原子字符:6a31e08383caa9c66a89fdb2912667c1">原子字符</h2>
 
-<pre><code>1.导入：模块注释-&gt;文档字符串-&gt;导入-&gt;模块全局变量-&gt;常量
-        导入顺序：标准库导入-&gt;第三方库导入-&gt;应用程序指定库导入
-2.import:不要在一行中import多个库，一行中只导入一个
-</code></pre>
+<blockquote>
 
-<h2 id="三-空格:ff8eac59965609d89ed811966cb65edc">三、空格</h2>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_atomic_character.png" alt="正则的原子字符">
+</div>
 
-<pre><code>1.不要在逗号、分号、冒号前加空格，但应在他们后面加(除了在行尾)
-2.二元操作符(赋值、比较、布尔)两边都加空格
-3.当&quot;=&quot;用于指示关键字参数或默认参数值是，不要再其两侧使用空格
-4.&quot;,&quot;和&quot;#&quot;和&quot;=&quot;不需要对齐，因为空格会成为维护的负担
-</code></pre>
+</blockquote>
 
-<h2 id="四-注释:ff8eac59965609d89ed811966cb65edc">四、注释</h2>
+<h2 id="元字符:6a31e08383caa9c66a89fdb2912667c1">元字符</h2>
 
-<pre><code>总体原则，错误的注释不如没有注释。
-注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。
-1.块注释：在一段代码前增加的注释。在&quot;#&quot;后加一空格。段落之间以只有&quot;#&quot;的行间隔。
-2.行注释，在一句代码后加注释。进来少使用.
-3.绝不要描述代码. 假设阅读代码的人比你更懂Python, 他只是不知道你的代码要做什么.
-</code></pre>
+<blockquote>
 
-<h2 id="五-文档描述:ff8eac59965609d89ed811966cb65edc">五、文档描述</h2>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_metacharacters.png" alt="正则的元字符">
+</div>
 
-<pre><code>1.为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。
-2.如果docstring要换行，参考如下例子
-class SampleClass(object):
-    &quot;&quot;&quot;Summary of class here.
+</blockquote>
 
-    Longer class information....
-    Longer class information....
+<h2 id="修饰符:6a31e08383caa9c66a89fdb2912667c1">修饰符</h2>
 
-    Attributes:
-    likes_spam: A boolean indicating if we like SPAM or not.
-    eggs: An integer count of the eggs we have laid.
-    &quot;&quot;&quot;
+<blockquote>
 
-    def __init__(self):
-        &quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot;
-</code></pre>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_modifier.png" alt="正则的修饰符">
+</div>
 
-<h2 id="六-命名规范:ff8eac59965609d89ed811966cb65edc">六、命名规范</h2>
+</blockquote>
 
-<pre><code>1.尽量单独使用小写字母‘l’，大写字母‘O’等容易混淆的字母。
-2.模块名尽量短小，应该用小写加下划线的方式(如lower_with_under.py).
-3.包命名尽量短小，使用全部小写的方式，不可以使用下划线。
-4.类名使用大写字母开头的单词(如CapWords, 即Pascal风格)
-5.函数命名使用全部小写的方式，可以使用下划线。
-6.变量也用小写加下划线的方式，即this_is_a_variable=1
-7.常量命名使用全部大写的方式，可以使用下划线。
-8.类的属性（方法和变量）命名使用全部小写的方式，可以使用下划线。
-9.类的方法第一个参数必须是self，而静态方法第一个参数必须是cls。
-10.用单下划线(_)开头表示模块变量或函数是protected的(使用import * from时不会包含).
-11.用双下划线(__)开头的实例变量或方法表示类内私有.
-</code></pre>
+<h2 id="re模块:6a31e08383caa9c66a89fdb2912667c1">re模块</h2>
 
-<h2 id="七-main-即使是一个打算被用作脚本的文件-也应该是可导入的:ff8eac59965609d89ed811966cb65edc">七、Main：即使是一个打算被用作脚本的文件, 也应该是可导入的.</h2>
+<blockquote>
+<p>由于Pyton的字符串本身也用\转义，强烈建议使用r前缀</p>
+</blockquote>
 
-<pre><code>并且简单的导入不应该导致这个脚本的主功能(main functionality)被执行
-代码应该在执行主程序前总是检查 if __name__ == '__main__'
-    def main():
-        ...
+<ul>
+<li><p>函数match()<br />
+这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None
 
-    if __name__ == '__main__':
-        main()
-</code></pre>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_re_match.png" alt="re模块的match函数">
+</div>
+</p></li>
 
-<h2 id="八-字符串:ff8eac59965609d89ed811966cb65edc">八、字符串：</h2>
+<li><p>函数search()<br />
+这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None
 
-<pre><code>避免在循环中用+和+=来累加字符串，可以将每个子串加入列表，然后再循环结束后使用.join连接列表
-    items = ['&lt;table&gt;']
-    for last_name, first_name in employee_list:
-        items.append('&lt;tr&gt;&lt;td&gt;%s, %s&lt;/td&gt;&lt;/tr&gt;' % (last_name, first_name))
-    items.append('&lt;/table&gt;')
-    employee_table = ''.join(items)
-同一文件中保持使用字符串引号的一致性
-多行字符串使用三重&quot;双&quot;引号，不过通常使用括号隐式连接
-</code></pre>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_re_search.png" alt="re模块的match函数">
+</div>
+</p></li>
 
-<h2 id="九-其他:ff8eac59965609d89ed811966cb65edc">九、其他</h2>
+<li><p>函数findall()和finditer()<br />
+re.findall()将以列表的形式返回所有能匹配到的字符<br />
+re.finditer()将以迭代器的形式返回所有能匹配到的字符
 
-<pre><code>括号：宁缺毋滥的使用括号
-类：若一个类不继承自其它类，就显式的从object继承,即使是嵌套类
-语句：通常每个语句独占一行，try/except一定不放在一行
-文件和sockets：在文件和sockets结束时，显式的关闭它，推荐with语句管理文件
-</code></pre>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_re_findall_finditer.png" alt="re的findall和finditer">
+</div>
+</p></li>
+
+<li><p>函数sub()<br />
+这个函数会对字符串进行匹配，然后替换，可以指定替换次数
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_re_sub.png" alt="re的sub函数">
+</div>
+</p></li>
+
+<li><p>函数split()<br />
+这个函数会以正则来分割字符串，以列表样式返回
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_re_split.png" alt="re的split函数">
+</div>
+</p></li>
+
+<li><p>函数compile()<br />
+这个函数可以编译正则，提高匹配速度
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_re_compile.png" alt="re的compile函数">
+</div>
+</p></li>
+</ul>
+
+<h2 id="提取子串:6a31e08383caa9c66a89fdb2912667c1">提取子串</h2>
+
+<blockquote>
+<p>根据正则可以匹配字符然后提取出来，用括号表示要提取的分组
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_re_get_substr.png" alt="提取子串">
+</div>
+</p>
+</blockquote>
+
+<h2 id="贪婪匹配:6a31e08383caa9c66a89fdb2912667c1">贪婪匹配</h2>
+
+<blockquote>
+<p>正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&rdquo;？&rdquo;来抑制贪婪匹配
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/regular_re_not_greed_match%20.png" alt="非贪婪匹配">
+</div>
+</p>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">
@@ -226,13 +246,13 @@ class SampleClass(object):
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/python-thread/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/conky%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">conky配置</a>
+      <a href="http://wyb0.com/posts/python-thread/">Python的线程</a>
     </nav>
     
   </div>
@@ -242,13 +262,13 @@ class SampleClass(object):
   <div class="pure-u-10-24">
     
     <nav class="next">
-      <a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/">Ubuntu下使用ShadowSocks</a>
+      <a href="http://wyb0.com/posts/2016%E8%AE%A1%E5%88%92/">2016计划</a>
     </nav>
     
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
     
-    <a href="http://wyb0.com/posts/Ubuntu%E4%B8%8B%E4%BD%BF%E7%94%A8ShadowSocks/"><i class="fa fa-chevron-right"></i></a>
+    <a href="http://wyb0.com/posts/2016%E8%AE%A1%E5%88%92/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>

@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python的线程 - Reber's Blog</title>
+  <title>Python的编码问题 - Reber's Blog</title>
   <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
   <meta name="description" content="">
   <meta name="author" content="reber">
@@ -78,14 +78,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Python的线程</h2>
+                <h2>Python的编码问题</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-02-03</time>
+                        <time>2016-06-29</time>
                     </div>
 
                     
@@ -115,329 +115,82 @@
                 
                 
 
-<p>Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。</p>
-
-<h2 id="单线程:d9089b1f26aa05f067c3e67af7b471a1">单线程</h2>
-
-<blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from time import time,ctime,sleep
-
-def music(arg):
-    for x in range(2):
-        print &quot;I'm listening to %s. %s&quot; % (arg,ctime())
-        sleep(1)
-def movie(arg):
-    for x in range(2):
-        print &quot;I'm watching %s. %s&quot; % (arg,ctime())
-        sleep(5)
-
-if __name__ == '__main__':
-    start = int(time())
-    music(u'我')
-    movie(u'可是')
-    print &quot;All over time:%s&quot; % ctime()
-    print &quot;Used time:%d&quot; % int(time()-start)
-</code></pre>
-
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/thread_single.png" alt="单线程">
-</div>
-
-</blockquote>
-
-<h2 id="多线程:d9089b1f26aa05f067c3e67af7b471a1">多线程</h2>
-
-<blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import re
-import requests
-import threading
-from time import time,ctime,sleep
-
-
-INDEX = 0
-
-def http_get(sites):
-    global INDEX
-    while INDEX &lt; len(sites):
-        url = sites[INDEX]
-        INDEX += 1
-        resp = requests.get(url, timeout=3)
-        resp.encoding = resp.apparent_encoding
-        title = re.search(r'&lt;title&gt;(.*?)&lt;/title&gt;', resp.text).group(1)
-        print &quot;URL:%-30sTitle:%s&quot; % (url, title)
-
-sites = [
-    &quot;http://www.baidu.com&quot;,
-    &quot;http://www.qq.com&quot;,
-    &quot;http://www.github.com&quot;,
-    &quot;http://www.jingyingba.com&quot;,
-]
-
-if __name__ == '__main__':
-    start = int(time())
-    
-    threads = []
-    for i in range(0, 3):
-        t = threading.Thread(target=http_get, args=(sites,))
-        threads.append(t)
-    for t in threads:
-        #t.setDaemon(True) #设为守护线程,主线程结束后不管子线程是否完成,立即结束
-        t.start()
-    for t in threads:
-        t.join() #主线程阻塞，等待子线程完成
-        
-    print &quot;Used time:%d&quot; % int(time() - start)
-</code></pre>
-
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/thread_multithreading.png" alt="多线程">
-</div>
-
-</blockquote>
-
-<h2 id="线程同步:d9089b1f26aa05f067c3e67af7b471a1">线程同步</h2>
-
-<blockquote>
-<p>使用多线程时若线程共用一个资源则可能导致线程竞争问题，可以通过互斥锁和队列来解决</p>
-</blockquote>
+<h2 id="几个编码函数:f657310bb056d13bf1eb44fe4ff66fbb">几个编码函数</h2>
 
 <ul>
-<li>线程竞争</li>
+<li>chr(x)
+可以将0-255之间的数字转化为ASCII表中的字符</li>
+<li>ord(x)
+可以ASCII表中的字符转化为0-255之间的数字</li>
+<li>hex(x)
+将整数转化为十六进制字符串</li>
+<li>oct(x)
+将整数转化为八进制字符串</li>
 </ul>
 
-<blockquote>
+<h2 id="在py文件开头:f657310bb056d13bf1eb44fe4ff66fbb">在py文件开头</h2>
+
+<p>使用：</p>
+
 <pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import re
-import requests
-import threading
-from time import time,ctime,sleep
-
-num = 0
-
-def test():
-    global num
-    sleep(1)
-    num = num+1
-    msg = 'Number: ' + str(num)
-    print msg
-
-if __name__ == '__main__':
-    start = int(time())
-    
-    threads = []
-    for i in range(0, 20):
-        t = threading.Thread(target=test)
-        threads.append(t)
-    for t in threads:
-        t.setDaemon(True)
-        t.start()
-    for t in threads:
-        t.join()
-        
-    print &quot;Used time:%d&quot; % int(time() - start)
+#-*- coding: UTF-8 -*-
+或：
+#coding=utf8
 </code></pre>
+
+<h2 id="永久编码-推荐:f657310bb056d13bf1eb44fe4ff66fbb">永久编码(推荐)</h2>
 
 <p>
 <div class="pure-u-1">
-  <img class="pure-img" src="/img/post/thread_compete1.png" alt="线程竞争1">
+  <img class="pure-img" src="/img/post/unicode_encode_error.png" alt="python编码出错.png">
 </div>
 
-<br /><br />
+可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：</p>
 
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/thread_compete2.png" alt="线程竞争2">
-</div>
-</p>
-</blockquote>
-
-<ul>
-<li>互斥锁</li>
-</ul>
-
-<blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-&quot;&quot;&quot;
-使用步骤：
-1. 创建互斥锁 mutex = threading.Lock()
-2. 锁定 mutex.acquire([timeout])
-3. 释放 mutex.release()
-&quot;&quot;&quot;
-
-import re
-import requests
-import threading
-from time import time,ctime,sleep
-
-num = 0
-mutex = threading.Lock()
-
-def test():
-    global num
-    sleep(0.5)
-
-    mutex.acquire() #这里存在线程竞争，设置互斥锁
-    num = num+1
-    mutex.release()
-
-    msg = 'set num to '+str(num)
-    mutex.acquire() #输出有可能错乱，还是线程竞争问题
-    print msg
-    mutex.release()
-
-if __name__ == '__main__':
-    start = int(time())
-
-    threads = []
-    for i in range(0, 20):
-        t = threading.Thread(target=test)
-        threads.append(t)
-    for t in threads:
-        t.setDaemon(True)
-        t.start()
-    for t in threads:
-        t.join()
-
-    print &quot;Total use time %d&quot; % int(time() - start)
+<pre><code class="language-python">#coding=utf8
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+# 此方法修改了python环境，设置系统默认编码，永久有效
 </code></pre>
 
+<h2 id="编码转换:f657310bb056d13bf1eb44fe4ff66fbb">编码转换</h2>
 
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/thread_mutex.png" alt="互斥锁同步">
-</div>
+<p>python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode</p>
 
-</blockquote>
+<pre><code># coding: UTF-8
 
-<ul>
-<li>队列(推荐)</li>
-</ul>
+&quot;&quot;&quot;从gbk编码的文件中读出数据，重新编码为utf8然后存储&quot;&quot;&quot;
 
-<blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+f = open('test.txt')  # gbk编码
+s = f.read()
 
-import re
-import random
-import Queue
-import requests
-import threading
-from time import time,ctime,sleep
+u = s.decode('gbk') # 将gbk解码为unicode
+# 通常要判断其编码方式是否为unicode
+# isinstance(s, unicode)可以用来判断是否为unicode 
+# 这里已知是GBK编码，解码成unicode
+s = u.encode('utf8')  # 将unicode编码为utf8
 
-queue = Queue.Queue()
-
-for i in xrange(1,20+1):
-    queue.put(i) #put一次队列里的任务数就加1
-
-def test(queue):
-    while not queue.empty():
-        sleep(random.random()) #随机生成的一个实数，它在(0,1)范围内
-        i = queue.get()
-        print i
-        queue.task_done()
-
-if __name__ == '__main__':
-    start = int(time())
-
-    threads = []
-    for x in range(0, 20):
-        t = threading.Thread(target=test, args=(queue,))
-        threads.append(t)
-    for t in threads:
-        t.setDaemon(True)
-        t.start()
-    queue.join() #等待队列里的任务数为0，即队列为空任务完成
-
-    print &quot;Total use time %d&quot; % int(time() - start)
+f.write(s)
+f.close()
 </code></pre>
 
+<h2 id="网页的编码:f657310bb056d13bf1eb44fe4ff66fbb">网页的编码</h2>
 
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/thread_queue.png" alt="队列解决线程竞争问题">
-</div>
-
-</blockquote>
-
-<h2 id="多线程与类与队列:d9089b1f26aa05f067c3e67af7b471a1">多线程与类与队列</h2>
-
-<blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#-*- coding:utf-8 -*-
 
-&quot;&quot;&quot;
-使用步骤：
-1. 继承线程类 threading.Thread
-2. 重写线程类的__init__方法
-3. 重写线程类的run方法
-4. 继承类每实例化一次就创建一个线程
-
-__init__方法一般接收外部参数并存放到实例变量
-实例化对象调用start()方法后运行了run()方法
-&quot;&quot;&quot;
-
-import re
-import random
-import Queue
 import requests
-import threading
-from time import time,ctime,sleep
 
-hosts = [
-    &quot;http://www.baidu.com&quot;,
-    &quot;http://www.qq.com&quot;,
-    &quot;http://www.github.com&quot;,
-    &quot;http://www.jingyingba.com&quot;
-]
-
-queue = Queue.Queue()
-
-class ThreadTest(threading.Thread):
-    &quot;docstring for ThreadTest&quot;
-    def __init__(self, queue):
-        threading.Thread.__init__(self)
-        self.queue = queue
-
-    def run(self):
-        while not self.queue.empty():
-            host = self.queue.get()
-            resp = requests.get(host)
-            resp.encoding = resp.apparent_encoding
-            title = re.search(r'&lt;title&gt;(.*?)&lt;/title&gt;',resp.text,re.I).group(1)
-            print &quot;URL:%-30sTitle:%s&quot; % (host, title)
-            self.queue.task_done()
-
-def main():
-    for host in hosts:
-        queue.put(host)
-
-    for x in xrange(1,4):
-        t = ThreadTest(queue)
-        t.setDaemon(True)
-        t.start()
-    queue.join()
-
-if __name__ == '__main__':
-    start = time()
-    main()
-    print &quot;Total use time %d&quot; % int(time() - start)
+resp = requests.get('http://soft.nyist.edu.cn/')
+print resp.apparent_encoding #UTF-8-SIG
+resp.encoding = resp.apparent_encoding #获取原网页的编码格式，并赋给resp.encoding
+html = resp.text #以resp.encoding的格式解码为unicode
+# print html.encode('gb18030') #转码为gbk不能正常输出html源码
+print type(html) #&lt;type 'unicode'&gt;
+title = html.lower().split('&lt;title&gt;')[1].split('&lt;/title')[0]
+print title #南阳理工学院
 </code></pre>
-
-<p>
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/thread_multithreading_queue_class.png" alt="使用多线程和类和队列">
-</div>
-</p>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">
@@ -453,13 +206,13 @@ if __name__ == '__main__':
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/Python%E7%9A%84IO%E6%93%8D%E4%BD%9C/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/sqlmapapi%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/Python%E7%9A%84IO%E6%93%8D%E4%BD%9C/">Python的IO操作</a>
+      <a href="http://wyb0.com/posts/sqlmapapi%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">sqlmapapi的简单使用</a>
     </nav>
     
   </div>
@@ -469,13 +222,13 @@ if __name__ == '__main__':
   <div class="pure-u-10-24">
     
     <nav class="next">
-      <a href="http://wyb0.com/posts/Python%E7%9A%84%E6%AD%A3%E5%88%99/">Python的正则</a>
+      <a href="http://wyb0.com/posts/SSRF/">SSRF</a>
     </nav>
     
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
     
-    <a href="http://wyb0.com/posts/Python%E7%9A%84%E6%AD%A3%E5%88%99/"><i class="fa fa-chevron-right"></i></a>
+    <a href="http://wyb0.com/posts/SSRF/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>
