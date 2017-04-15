@@ -740,10 +740,10 @@ Exec=bash -c &amp;quot;LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /op
     
     <item>
       <title>Linux之文本处理软件awk</title>
-      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/</link>
+      <link>http://wyb0.com/posts/linux-text-processing-software-awk/</link>
       <pubDate>Wed, 20 Apr 2016 15:54:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/</guid>
+      <guid>http://wyb0.com/posts/linux-text-processing-software-awk/</guid>
       <description>
 
 &lt;p&gt;&lt;center&gt;
@@ -773,7 +773,7 @@ dwqx    asds    sasdfcv
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;去重:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重：&lt;/h2&gt;
+&lt;h2 id=&#34;去重:82cb9728d4bd305553ce02dec4025c54&#34;&gt;去重：&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39;
 [wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同
@@ -786,7 +786,7 @@ aosan sadasdw jiaozuo
 dwqx    asds    sasdfcv
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;去重-添加id:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重、添加id：&lt;/h2&gt;
+&lt;h2 id=&#34;去重-添加id:82cb9728d4bd305553ce02dec4025c54&#34;&gt;去重、添加id：&lt;/h2&gt;
 
 &lt;p&gt;一般字典不需要id、user、pass等标示符，这里只是为了便于观看&lt;/p&gt;
 
@@ -800,7 +800,7 @@ id:6    user:21asd      pass:sdfsd      address:sadasd
 id:7    user:dwqx       pass:asds       address:sasdfcv
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;去重-添加id-添加公司前缀:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重、添加id、添加公司前缀：&lt;/h2&gt;
+&lt;h2 id=&#34;去重-添加id-添加公司前缀:82cb9728d4bd305553ce02dec4025c54&#34;&gt;去重、添加id、添加公司前缀：&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;id:&amp;quot;NR&amp;quot;\tuser:uv_&amp;quot;$1&amp;quot;\tpass:&amp;quot;$2&amp;quot;\taddress:&amp;quot;$3}&#39;
 id:1    user:uv_aosan   pass:sadasdw    address:jiaozuo
@@ -812,7 +812,7 @@ id:6    user:uv_21asd   pass:sdfsd      address:sadasd
 id:7    user:uv_dwqx    pass:asds       address:sasdfcv
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;去重然后输出密码:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重然后输出密码：&lt;/h2&gt;
+&lt;h2 id=&#34;去重然后输出密码:82cb9728d4bd305553ce02dec4025c54&#34;&gt;去重然后输出密码：&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;pass:&amp;quot;$2}&#39;
 pass:sadasdw
@@ -824,7 +824,7 @@ pass:sdfsd
 pass:asds
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;输出密码-得到密码出现次数:42bebd4d9e7287de331693a6d85c474f&#34;&gt;输出密码、得到密码出现次数：&lt;/h2&gt;
+&lt;h2 id=&#34;输出密码-得到密码出现次数:82cb9728d4bd305553ce02dec4025c54&#34;&gt;输出密码、得到密码出现次数：&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;下面的&#39;a[$1]++&#39;是按第一列来去重的,若有两条数据只有第一列重复则成功，可以用$0按行来去重
 [wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print $2}&#39; | awk &#39;{a[$1]++} END {for (j in a) print a[j],j}&#39;
@@ -838,16 +838,16 @@ uniq 只能去除挨着的重复数据，所以先sort升序排序，然后uniq 
 cat test.txt | awk &#39;{print $2}&#39; | sed &#39;1d&#39; |sort | uniq -c |sort -r
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;其他:42bebd4d9e7287de331693a6d85c474f&#34;&gt;其他：&lt;/h2&gt;
+&lt;h2 id=&#34;其他:82cb9728d4bd305553ce02dec4025c54&#34;&gt;其他：&lt;/h2&gt;
 
-&lt;h4 id=&#34;对-a-1-的解释如下:42bebd4d9e7287de331693a6d85c474f&#34;&gt;对&amp;rsquo;!a[$1]++&amp;lsquo;的解释如下：&lt;/h4&gt;
+&lt;h4 id=&#34;对-a-1-的解释如下:82cb9728d4bd305553ce02dec4025c54&#34;&gt;对&amp;rsquo;!a[$1]++&amp;lsquo;的解释如下：&lt;/h4&gt;
 
 &lt;ul&gt;
 &lt;li&gt;a[e54r56wer]为空，!a[e54r56wer]为真，可以输出，然后++&lt;/li&gt;
 &lt;li&gt;若再来一个a[e54r56wer]，因为上一步已经++，此时值为1，!a[e54r56wer]为假，不输出，再++&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;对for输出数组的解释如下:42bebd4d9e7287de331693a6d85c474f&#34;&gt;对for输出数组的解释如下：&lt;/h4&gt;
+&lt;h4 id=&#34;对for输出数组的解释如下:82cb9728d4bd305553ce02dec4025c54&#34;&gt;对for输出数组的解释如下：&lt;/h4&gt;
 
 &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;awk &amp;lsquo;{a[$1]++} END {for (j in a) print a[j],j}&amp;rsquo; test.txt&lt;/p&gt;
 

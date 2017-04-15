@@ -12,10 +12,10 @@
     
     <item>
       <title>Linux之文本处理软件awk</title>
-      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/</link>
+      <link>http://wyb0.com/posts/linux-text-processing-software-awk/</link>
       <pubDate>Wed, 20 Apr 2016 15:54:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E8%BD%AF%E4%BB%B6awk/</guid>
+      <guid>http://wyb0.com/posts/linux-text-processing-software-awk/</guid>
       <description>
 
 &lt;p&gt;&lt;center&gt;
@@ -45,7 +45,7 @@ dwqx    asds    sasdfcv
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;去重:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重：&lt;/h2&gt;
+&lt;h2 id=&#34;去重:82cb9728d4bd305553ce02dec4025c54&#34;&gt;去重：&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39;
 [wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同
@@ -58,7 +58,7 @@ aosan sadasdw jiaozuo
 dwqx    asds    sasdfcv
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;去重-添加id:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重、添加id：&lt;/h2&gt;
+&lt;h2 id=&#34;去重-添加id:82cb9728d4bd305553ce02dec4025c54&#34;&gt;去重、添加id：&lt;/h2&gt;
 
 &lt;p&gt;一般字典不需要id、user、pass等标示符，这里只是为了便于观看&lt;/p&gt;
 
@@ -72,7 +72,7 @@ id:6    user:21asd      pass:sdfsd      address:sadasd
 id:7    user:dwqx       pass:asds       address:sasdfcv
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;去重-添加id-添加公司前缀:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重、添加id、添加公司前缀：&lt;/h2&gt;
+&lt;h2 id=&#34;去重-添加id-添加公司前缀:82cb9728d4bd305553ce02dec4025c54&#34;&gt;去重、添加id、添加公司前缀：&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;id:&amp;quot;NR&amp;quot;\tuser:uv_&amp;quot;$1&amp;quot;\tpass:&amp;quot;$2&amp;quot;\taddress:&amp;quot;$3}&#39;
 id:1    user:uv_aosan   pass:sadasdw    address:jiaozuo
@@ -84,7 +84,7 @@ id:6    user:uv_21asd   pass:sdfsd      address:sadasd
 id:7    user:uv_dwqx    pass:asds       address:sasdfcv
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;去重然后输出密码:42bebd4d9e7287de331693a6d85c474f&#34;&gt;去重然后输出密码：&lt;/h2&gt;
+&lt;h2 id=&#34;去重然后输出密码:82cb9728d4bd305553ce02dec4025c54&#34;&gt;去重然后输出密码：&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &amp;quot;pass:&amp;quot;$2}&#39;
 pass:sadasdw
@@ -96,7 +96,7 @@ pass:sdfsd
 pass:asds
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;输出密码-得到密码出现次数:42bebd4d9e7287de331693a6d85c474f&#34;&gt;输出密码、得到密码出现次数：&lt;/h2&gt;
+&lt;h2 id=&#34;输出密码-得到密码出现次数:82cb9728d4bd305553ce02dec4025c54&#34;&gt;输出密码、得到密码出现次数：&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;下面的&#39;a[$1]++&#39;是按第一列来去重的,若有两条数据只有第一列重复则成功，可以用$0按行来去重
 [wyb@localhost ~]$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print $2}&#39; | awk &#39;{a[$1]++} END {for (j in a) print a[j],j}&#39;
@@ -110,16 +110,16 @@ uniq 只能去除挨着的重复数据，所以先sort升序排序，然后uniq 
 cat test.txt | awk &#39;{print $2}&#39; | sed &#39;1d&#39; |sort | uniq -c |sort -r
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;其他:42bebd4d9e7287de331693a6d85c474f&#34;&gt;其他：&lt;/h2&gt;
+&lt;h2 id=&#34;其他:82cb9728d4bd305553ce02dec4025c54&#34;&gt;其他：&lt;/h2&gt;
 
-&lt;h4 id=&#34;对-a-1-的解释如下:42bebd4d9e7287de331693a6d85c474f&#34;&gt;对&amp;rsquo;!a[$1]++&amp;lsquo;的解释如下：&lt;/h4&gt;
+&lt;h4 id=&#34;对-a-1-的解释如下:82cb9728d4bd305553ce02dec4025c54&#34;&gt;对&amp;rsquo;!a[$1]++&amp;lsquo;的解释如下：&lt;/h4&gt;
 
 &lt;ul&gt;
 &lt;li&gt;a[e54r56wer]为空，!a[e54r56wer]为真，可以输出，然后++&lt;/li&gt;
 &lt;li&gt;若再来一个a[e54r56wer]，因为上一步已经++，此时值为1，!a[e54r56wer]为假，不输出，再++&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&#34;对for输出数组的解释如下:42bebd4d9e7287de331693a6d85c474f&#34;&gt;对for输出数组的解释如下：&lt;/h4&gt;
+&lt;h4 id=&#34;对for输出数组的解释如下:82cb9728d4bd305553ce02dec4025c54&#34;&gt;对for输出数组的解释如下：&lt;/h4&gt;
 
 &lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;awk &amp;lsquo;{a[$1]++} END {for (j in a) print a[j],j}&amp;rsquo; test.txt&lt;/p&gt;
 
@@ -133,10 +133,10 @@ cat test.txt | awk &#39;{print $2}&#39; | sed &#39;1d&#39; |sort | uniq -c |sort
     
     <item>
       <title>Linux之文本处理</title>
-      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/</link>
+      <link>http://wyb0.com/posts/linux-text-processing/</link>
       <pubDate>Wed, 20 Apr 2016 07:58:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86/</guid>
+      <guid>http://wyb0.com/posts/linux-text-processing/</guid>
       <description>
 
 &lt;p&gt;这里介绍3种方式：&lt;/p&gt;
@@ -146,7 +146,7 @@ cat test.txt | awk &#39;{print $2}&#39; | sed &#39;1d&#39; |sort | uniq -c |sort
 ==&amp;gt;sed
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;awk处理文本-最常用:007bb002f88c52764f350befc73a2d85&#34;&gt;awk处理文本(&lt;em&gt;最常用&lt;/em&gt;)：&lt;/h2&gt;
+&lt;h2 id=&#34;awk处理文本-最常用:41aa65d1606d0ccf42df40ed1832e8e7&#34;&gt;awk处理文本(&lt;em&gt;最常用&lt;/em&gt;)：&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化&lt;br /&gt;&lt;/li&gt;
@@ -156,7 +156,7 @@ awk工作流程是这样的：&lt;br /&gt;&lt;/li&gt;
 &lt;li&gt;读入有&amp;rsquo;\n&amp;rsquo;换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&amp;rdquo;空白键&amp;rdquo; 或 &amp;ldquo;[tab]键&amp;rdquo;。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;1-入门示例:007bb002f88c52764f350befc73a2d85&#34;&gt;1. 入门示例：&lt;/h3&gt;
+&lt;h3 id=&#34;1-入门示例:41aa65d1606d0ccf42df40ed1832e8e7&#34;&gt;1. 入门示例：&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost temp]$ head -n 5 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
@@ -195,7 +195,7 @@ operator:x:11:0:operator:/root:/sbin/nologin
 root:x:0:0:root:/root:/bin/bash
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;2-内置变量:007bb002f88c52764f350befc73a2d85&#34;&gt;2. 内置变量：&lt;/h3&gt;
+&lt;h3 id=&#34;2-内置变量:41aa65d1606d0ccf42df40ed1832e8e7&#34;&gt;2. 内置变量：&lt;/h3&gt;
 
 &lt;table&gt;
     &lt;tr&gt;
@@ -229,9 +229,9 @@ filename:a.txt,linenumber:8,columns:1,linecontent:8     marry   j8jkf78
 filename:a.txt,linenumber:9,columns:1,linecontent:9     candy   kd89943
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;3-awk编程:007bb002f88c52764f350befc73a2d85&#34;&gt;3. awk编程：&lt;/h3&gt;
+&lt;h3 id=&#34;3-awk编程:41aa65d1606d0ccf42df40ed1832e8e7&#34;&gt;3. awk编程：&lt;/h3&gt;
 
-&lt;h5 id=&#34;3-1-变量和赋值:007bb002f88c52764f350befc73a2d85&#34;&gt;3.1 变量和赋值：&lt;/h5&gt;
+&lt;h5 id=&#34;3-1-变量和赋值:41aa65d1606d0ccf42df40ed1832e8e7&#34;&gt;3.1 变量和赋值：&lt;/h5&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F &#39;:&#39;  &#39;BEGIN {count=0} {count++; print &amp;quot;username:&amp;quot;$1} END {print &amp;quot;count:&amp;quot;count}&#39;
 username:root
@@ -247,14 +247,14 @@ count:5
 [wyb@localhost ~]$ 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h5 id=&#34;3-2条件语句:007bb002f88c52764f350befc73a2d85&#34;&gt;3.2条件语句：&lt;/h5&gt;
+&lt;h5 id=&#34;3-2条件语句:41aa65d1606d0ccf42df40ed1832e8e7&#34;&gt;3.2条件语句：&lt;/h5&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ head -n 6 /etc/passwd | awk -F &#39;:&#39; &#39;{if($1==&amp;quot;root&amp;quot;) print &amp;quot;root bash is:&amp;quot;$7}&#39;
 root bash is:/bin/bash
 [wyb@localhost ~]$ 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;grep处理文本:007bb002f88c52764f350befc73a2d85&#34;&gt;Grep处理文本：&lt;/h2&gt;
+&lt;h2 id=&#34;grep处理文本:41aa65d1606d0ccf42df40ed1832e8e7&#34;&gt;Grep处理文本：&lt;/h2&gt;
 
 &lt;p&gt;匹配到时输出一行
 常用参数：nrABC
@@ -302,7 +302,7 @@ wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
 [wyb@localhost temp]$ 
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;sed处理文本:007bb002f88c52764f350befc73a2d85&#34;&gt;sed处理文本&lt;/h2&gt;
+&lt;h2 id=&#34;sed处理文本:41aa65d1606d0ccf42df40ed1832e8e7&#34;&gt;sed处理文本&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;处理大文本很好用，上几十万、上百万行的数据&lt;/li&gt;
@@ -773,15 +773,15 @@ ettercap 0.8.2
     
     <item>
       <title>Linux之软件的安装</title>
-      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+      <link>http://wyb0.com/posts/linux-software-installation/</link>
       <pubDate>Tue, 19 Apr 2016 19:07:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+      <guid>http://wyb0.com/posts/linux-software-installation/</guid>
       <description>
 
-&lt;h2 id=&#34;linux上的软件安装可以分为三种方式:a4a12853ebd68cb8d1fcfe2f45847cf1&#34;&gt;Linux上的软件安装可以分为三种方式：&lt;/h2&gt;
+&lt;h2 id=&#34;linux上的软件安装可以分为三种方式:6f56884fa7aa3a710d475f797cec45e2&#34;&gt;Linux上的软件安装可以分为三种方式：&lt;/h2&gt;
 
-&lt;h3 id=&#34;1-yum安装:a4a12853ebd68cb8d1fcfe2f45847cf1&#34;&gt;1. yum安装&lt;/h3&gt;
+&lt;h3 id=&#34;1-yum安装:6f56884fa7aa3a710d475f797cec45e2&#34;&gt;1. yum安装&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;yum基于RPM包管理，一次性安装所有依赖包，提供了查找、安装、删除一个、一组
 至全部软件包的命令，配置文件在/etc/yum.repos.d/下
@@ -840,12 +840,12 @@ Resolving Dependencies
 --&amp;gt; Finished Dependency Resolution
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;2-rpm安装:a4a12853ebd68cb8d1fcfe2f45847cf1&#34;&gt;2. rpm安装&lt;/h3&gt;
+&lt;h3 id=&#34;2-rpm安装:6f56884fa7aa3a710d475f797cec45e2&#34;&gt;2. rpm安装&lt;/h3&gt;
 
 &lt;p&gt;分为：二进制包和源代码包&lt;br /&gt;
 二进制包可直接安装，源码包会由rpm自动编译、安装，安装包常以src、rpm做为后缀&lt;/p&gt;
 
-&lt;h4 id=&#34;主要参数:a4a12853ebd68cb8d1fcfe2f45847cf1&#34;&gt;主要参数：&lt;/h4&gt;
+&lt;h4 id=&#34;主要参数:6f56884fa7aa3a710d475f797cec45e2&#34;&gt;主要参数：&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;-ivh *.rpm  安装并显示安装进度
 -Uvh *.rpm  升级软件包
@@ -858,7 +858,7 @@ Resolving Dependencies
 -e 软件名    移除软件包
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;用rpm安装软件:a4a12853ebd68cb8d1fcfe2f45847cf1&#34;&gt;用rpm安装软件：&lt;/h4&gt;
+&lt;h4 id=&#34;用rpm安装软件:6f56884fa7aa3a710d475f797cec45e2&#34;&gt;用rpm安装软件：&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ wget http://192.168.1.7/wget-1.12-5.el6_6.1.x86_64.rpm   //使用wget下载软件
 --2016-04-18 04:31:27--  http://192.168.1.7/wget-1.12-5.el6_6.1.x86_64.rpm
@@ -872,7 +872,7 @@ Saving to: 鈝get-1.12-5.el6_6.1.x86_64.rpm?
 2016-04-18 04:31:27 (1006 KB/s) - 鈝get-1.12-5.el6_6.1.x86_64.rpm鈙aved [494884/494884]
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h6 id=&#34;先yum-remove-wget卸载wget-然后用rpm安装软件:a4a12853ebd68cb8d1fcfe2f45847cf1&#34;&gt;先yum remove wget卸载wget，然后用rpm安装软件&lt;/h6&gt;
+&lt;h6 id=&#34;先yum-remove-wget卸载wget-然后用rpm安装软件:6f56884fa7aa3a710d475f797cec45e2&#34;&gt;先yum remove wget卸载wget，然后用rpm安装软件&lt;/h6&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ ls
 wget-1.12-5.el6_6.1.x86_64.rpm
@@ -909,7 +909,7 @@ wget-1.12-5.el6_6.1.x86_64
 -bash: /usr/bin/wget: No such file or directory
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;3-源码安装:a4a12853ebd68cb8d1fcfe2f45847cf1&#34;&gt;3. 源码安装&lt;/h3&gt;
+&lt;h3 id=&#34;3-源码安装:6f56884fa7aa3a710d475f797cec45e2&#34;&gt;3. 源码安装&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;sudo yum groupinstall &amp;quot;Development tools&amp;quot;  //如果你源码安装软件就需要安装这个
 &lt;/code&gt;&lt;/pre&gt;
@@ -927,7 +927,7 @@ wget-1.12-5.el6_6.1.x86_64
 
 &lt;p&gt;&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;ps:a4a12853ebd68cb8d1fcfe2f45847cf1&#34;&gt;PS:&lt;/h3&gt;
+&lt;h3 id=&#34;ps:6f56884fa7aa3a710d475f797cec45e2&#34;&gt;PS:&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;curl -o wget.rpm url可以访问网页，它同时还保存了文件，文件名为wget.rpm
 wget url也能下载，文件名为全名
@@ -938,13 +938,13 @@ Linux下的env可查看环境变量
     
     <item>
       <title>Linux之基础命令</title>
-      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</link>
+      <link>http://wyb0.com/posts/linux-basic-command/</link>
       <pubDate>Tue, 19 Apr 2016 10:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</guid>
+      <guid>http://wyb0.com/posts/linux-basic-command/</guid>
       <description>
 
-&lt;h3 id=&#34;0x00-ls-显示文件:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x00 ls：显示文件&lt;/h3&gt;
+&lt;h3 id=&#34;0x00-ls-显示文件:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x00 ls：显示文件&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ls
@@ -966,7 +966,7 @@ drwxrwxrwt.  2 root root 4096 Apr 17 16:31 .ICE-unix
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x02-pwd-查看当前工作路径:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x02 pwd：查看当前工作路径&lt;/h3&gt;
+&lt;h3 id=&#34;0x02-pwd-查看当前工作路径:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x02 pwd：查看当前工作路径&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ pwd  
@@ -974,7 +974,7 @@ drwxrwxrwt.  2 root root 4096 Apr 17 16:31 .ICE-unix
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x03-cd-切换目录:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x03 cd：切换目录&lt;/h3&gt;
+&lt;h3 id=&#34;0x03-cd-切换目录:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x03 cd：切换目录&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[wyb@localhost ~]$ ls
@@ -986,7 +986,7 @@ Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x04-mkdir-新建文件夹:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x04 mkdir：新建文件夹&lt;/h3&gt;
+&lt;h3 id=&#34;0x04-mkdir-新建文件夹:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x04 mkdir：新建文件夹&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ls
@@ -997,7 +997,7 @@ a  a.txt  bbb
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x05-touch-vim-新建文件:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x05 touch/vim：新建文件&lt;/h3&gt;
+&lt;h3 id=&#34;0x05-touch-vim-新建文件:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x05 touch/vim：新建文件&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ls
@@ -1008,7 +1008,7 @@ a  a.txt  bbb  bbb.txt
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x06-rm-删除文件:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x06 rm：删除文件&lt;/h3&gt;
+&lt;h3 id=&#34;0x06-rm-删除文件:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x06 rm：删除文件&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ls
@@ -1024,7 +1024,7 @@ a.txt  bbb  bbb.txt
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x07-ifconfig-查看网卡的信息:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x07 ifconfig：查看网卡的信息&lt;/h3&gt;
+&lt;h3 id=&#34;0x07-ifconfig-查看网卡的信息:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x07 ifconfig：查看网卡的信息&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ ifconfig
@@ -1048,7 +1048,7 @@ lo      Link encap:Local Loopback
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x08-netstat-查找网络连接信息:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x08 netstat：查找网络连接信息&lt;/h3&gt;
+&lt;h3 id=&#34;0x08-netstat-查找网络连接信息:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x08 netstat：查找网络连接信息&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;netstat -l   //listen状态的
@@ -1077,7 +1077,7 @@ unix  2      [ ACC ]     STREAM     LISTENING     14248  private/defer
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x09-nslookup-查看dns信息:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x09 nslookup：查看DNS信息&lt;/h3&gt;
+&lt;h3 id=&#34;0x09-nslookup-查看dns信息:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x09 nslookup：查看DNS信息&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;nslookup 查看ip和域名的相互映射
@@ -1085,21 +1085,21 @@ nslookup www.baidu.com   //返回一些信息
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x0a-ping:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0A ping&lt;/h3&gt;
+&lt;h3 id=&#34;0x0a-ping:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x0A ping&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;ping -c 3 www.baidu.com   //指定ping百度3次
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x0b-last-查看近期的登陆信息:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0B last：查看近期的登陆信息&lt;/h3&gt;
+&lt;h3 id=&#34;0x0b-last-查看近期的登陆信息:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x0B last：查看近期的登陆信息&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[root@localhost ~]# last
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x0c-find-查找文件:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0C find：查找文件&lt;/h3&gt;
+&lt;h3 id=&#34;0x0c-find-查找文件:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x0C find：查找文件&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;which vim   //查看可执行文件的位置
@@ -1127,7 +1127,7 @@ find /bin -perm 4755  //返回有gid(即s权限)的文件    2是gid
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x0d-grep:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0D grep&lt;/h3&gt;
+&lt;h3 id=&#34;0x0d-grep:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x0D grep&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;//可以遍历查询mkr文件夹下含有字符串&amp;quot;reber&amp;quot;的文件及字符串所在行
@@ -1139,7 +1139,7 @@ mkr/b/xx:8:reber
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x0e-cat-nl:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0E cat/nl&lt;/h3&gt;
+&lt;h3 id=&#34;0x0e-cat-nl:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x0E cat/nl&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;前者显示
@@ -1160,7 +1160,7 @@ this is b.txt
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x0f-head:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x0F head&lt;/h3&gt;
+&lt;h3 id=&#34;0x0f-head:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x0F head&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ head /etc/passwd   //默认显示前10行
@@ -1190,7 +1190,7 @@ this is add content
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x10-tail:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x10 tail&lt;/h3&gt;
+&lt;h3 id=&#34;0x10-tail:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x10 tail&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ tail -f a.txt  //实时显示文件后10行
@@ -1214,7 +1214,7 @@ this is add content
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x11-scp:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x11 scp&lt;/h3&gt;
+&lt;h3 id=&#34;0x11-scp:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x11 scp&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;向远程服务器put文件和文件夹，默认就是22端口
@@ -1227,7 +1227,7 @@ scp -P 2222 ubuntu@123.22.38.215:/home/reber/test D:/test/
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x12-磁盘:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x12 磁盘&lt;/h3&gt;
+&lt;h3 id=&#34;0x12-磁盘:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x12 磁盘&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;fdisk /dev/sdb
@@ -1236,14 +1236,14 @@ mount -t ext3 -o rw /dev/sdb1 /home/aaa  //-o指定权限
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x13-finger:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x13 finger&lt;/h3&gt;
+&lt;h3 id=&#34;0x13-finger:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x13 finger&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;finger可以查看用户登录情况
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/blockquote&gt;
 
-&lt;h3 id=&#34;0x14-时间同步:7da9dbf8777ccc2cea242e9f38bae41b&#34;&gt;0x14 时间同步&lt;/h3&gt;
+&lt;h3 id=&#34;0x14-时间同步:21b2668fb5ccdace1a704ef1fc5c2ed0&#34;&gt;0x14 时间同步&lt;/h3&gt;
 
 &lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;ntpdate time.nist.gov //需要root权限
@@ -1254,13 +1254,13 @@ mount -t ext3 -o rw /dev/sdb1 /home/aaa  //-o指定权限
     
     <item>
       <title>Linux之服务和计划任务</title>
-      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</link>
+      <link>http://wyb0.com/posts/linux-service-and-planning-tasks/</link>
       <pubDate>Tue, 19 Apr 2016 10:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</guid>
+      <guid>http://wyb0.com/posts/linux-service-and-planning-tasks/</guid>
       <description>
 
-&lt;h2 id=&#34;服务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;服务：&lt;/h2&gt;
+&lt;h2 id=&#34;服务:644df5cd1dfd501e2750a3124a977820&#34;&gt;服务：&lt;/h2&gt;
 
 &lt;p&gt;在后台运行的软件就叫服务
 参数：
@@ -1276,12 +1276,12 @@ restart&lt;/p&gt;
 lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&amp;gt; rc.d/init.d
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;添加服务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;添加服务：&lt;/h4&gt;
+&lt;h4 id=&#34;添加服务:644df5cd1dfd501e2750a3124a977820&#34;&gt;添加服务：&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;将脚本放在/etc/init.d/下即可
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;若要自启则:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;若要自启则：&lt;/h4&gt;
+&lt;h4 id=&#34;若要自启则:644df5cd1dfd501e2750a3124a977820&#34;&gt;若要自启则：&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;chkconfig --list   //查看chk管理的自启动项
 chkconfig --add httpd   添加到chk管理里面
@@ -1293,14 +1293,14 @@ chkcofnig --level 345 httpd off
 
 &lt;hr /&gt;
 
-&lt;h2 id=&#34;计划任务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;计划任务：&lt;/h2&gt;
+&lt;h2 id=&#34;计划任务:644df5cd1dfd501e2750a3124a977820&#34;&gt;计划任务：&lt;/h2&gt;
 
 &lt;p&gt;启动方式：
 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件&lt;/p&gt;
 
 &lt;p&gt;cron：每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟&lt;/p&gt;
 
-&lt;h4 id=&#34;添加任务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;添加任务：&lt;/h4&gt;
+&lt;h4 id=&#34;添加任务:644df5cd1dfd501e2750a3124a977820&#34;&gt;添加任务：&lt;/h4&gt;
 
 &lt;p&gt;格式：分(0-59) 时 日 月 周(0-6) 命令&lt;/p&gt;
 
@@ -1331,7 +1331,7 @@ vim /etc/crontab会以root权限执行，不推荐使用
 01 * * * *　用户名　命令 date &amp;gt;&amp;gt; /tmp/date2.txt在每个小时的第一分钟执行
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;查看用户任务:27cc3293dbbe0ce67591fd2340661c04&#34;&gt;查看用户任务：&lt;/h4&gt;
+&lt;h4 id=&#34;查看用户任务:644df5cd1dfd501e2750a3124a977820&#34;&gt;查看用户任务：&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost tmp]$ sudo cat /var/spool/cron/wyb   //用户的计划任务
 */1 * * * * date &amp;gt;&amp;gt; /tmp/date.txt
@@ -1387,15 +1387,15 @@ usermod -G fans1 xm    xm用户两个组，初始组为xm，有效组更改为fa
     
     <item>
       <title>Linux之网络配置</title>
-      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</link>
+      <link>http://wyb0.com/posts/linux-network-configuration/</link>
       <pubDate>Sun, 17 Apr 2016 17:58:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</guid>
+      <guid>http://wyb0.com/posts/linux-network-configuration/</guid>
       <description>
 
-&lt;h2 id=&#34;第一种方法:851392bd99614cbfb4963ab526596f8a&#34;&gt;第一种方法&lt;/h2&gt;
+&lt;h2 id=&#34;第一种方法:73541a4387943c0c56a4988ab81ab165&#34;&gt;第一种方法&lt;/h2&gt;
 
-&lt;h3 id=&#34;分5步:851392bd99614cbfb4963ab526596f8a&#34;&gt;分5步：&lt;/h3&gt;
+&lt;h3 id=&#34;分5步:73541a4387943c0c56a4988ab81ab165&#34;&gt;分5步：&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;1. 启动网卡：  
 $ ifconfig eth0 up/down
@@ -1415,9 +1415,9 @@ route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3
 //添加静态路由添加网络10.211.55.0，从eth0出去
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;第二种方法:851392bd99614cbfb4963ab526596f8a&#34;&gt;第二种方法&lt;/h2&gt;
+&lt;h2 id=&#34;第二种方法:73541a4387943c0c56a4988ab81ab165&#34;&gt;第二种方法&lt;/h2&gt;
 
-&lt;h3 id=&#34;分1步:851392bd99614cbfb4963ab526596f8a&#34;&gt;分1步：&lt;/h3&gt;
+&lt;h3 id=&#34;分1步:73541a4387943c0c56a4988ab81ab165&#34;&gt;分1步：&lt;/h3&gt;
 
 &lt;p&gt;打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:&lt;/p&gt;
 
@@ -1429,7 +1429,7 @@ NETMASK=
 GATEWAY=
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;打开ip转发:851392bd99614cbfb4963ab526596f8a&#34;&gt;打开ip转发&lt;/h2&gt;
+&lt;h2 id=&#34;打开ip转发:73541a4387943c0c56a4988ab81ab165&#34;&gt;打开ip转发&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;echo &amp;quot;1&amp;quot; &amp;gt;&amp;gt; /proc/sys/net/ipv4/ip_forward
 或者vim /etc/sysctl.conf
@@ -1439,10 +1439,10 @@ GATEWAY=
     
     <item>
       <title>Linux之权限(重点)</title>
-      <link>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/</link>
+      <link>http://wyb0.com/posts/linux-permission-settings/</link>
       <pubDate>Sun, 17 Apr 2016 10:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Linux%E4%B9%8B%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE%28%E9%87%8D%E7%82%B9%29/</guid>
+      <guid>http://wyb0.com/posts/linux-permission-settings/</guid>
       <description>
 
 &lt;p&gt;主要有三种参数：rwx
@@ -1451,10 +1451,10 @@ GATEWAY=
 如：drwxr&amp;ndash;r&amp;ndash; 3 root root 4096 Jun 25 08:35 .ssh&lt;br /&gt;
 若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中&lt;/p&gt;
 
-&lt;h2 id=&#34;文件权限:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;文件权限&lt;/h2&gt;
+&lt;h2 id=&#34;文件权限:60896f2886244ae9e28f443be765d95d&#34;&gt;文件权限&lt;/h2&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;h3 id=&#34;chmod-x:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;chmod -x&lt;/h3&gt;
+&lt;li&gt;&lt;h3 id=&#34;chmod-x:60896f2886244ae9e28f443be765d95d&#34;&gt;chmod -x&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;[root@localhost tmp]# ls -l
 total 0
@@ -1472,7 +1472,7 @@ aaa
 [root@localhost tmp]# 
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;h3 id=&#34;chmod-r:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;chmod -R&lt;/h3&gt;
+&lt;li&gt;&lt;h3 id=&#34;chmod-r:60896f2886244ae9e28f443be765d95d&#34;&gt;chmod -R&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;[root@localhost tmp]# ls -l a;ls -l a/a.txt 
 total 0
@@ -1485,7 +1485,7 @@ total 0
 -rw-r--r-x. 1 root root 0 Apr 16 20:35 a/a.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;h3 id=&#34;chmod-7-a-txt:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;chmod 7 a.txt&lt;/h3&gt;
+&lt;li&gt;&lt;h3 id=&#34;chmod-7-a-txt:60896f2886244ae9e28f443be765d95d&#34;&gt;chmod 7 a.txt&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;[root@localhost tmp]# ll a.txt 
 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt
@@ -1495,14 +1495,14 @@ total 0
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;文件夹权限:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;文件夹权限：&lt;/h2&gt;
+&lt;h2 id=&#34;文件夹权限:60896f2886244ae9e28f443be765d95d&#34;&gt;文件夹权限：&lt;/h2&gt;
 
 &lt;p&gt;可读是指能看到里面的文件&lt;br/&gt;
 可写是指能在里面删除、增加文件&lt;br/&gt;
 文件夹可执行是指能cd进去&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;h3 id=&#34;不能进入没有x权限的文件夹:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;不能进入没有x权限的文件夹：&lt;/h3&gt;
+&lt;li&gt;&lt;h3 id=&#34;不能进入没有x权限的文件夹:60896f2886244ae9e28f443be765d95d&#34;&gt;不能进入没有x权限的文件夹：&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost Desktop]$ ls -l
 total 4
@@ -1510,7 +1510,7 @@ dr--------. 2 wyb wyb 4096 Apr 17 01:25 aa
 [wyb@localhost Desktop]$ cd aa/
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;h3 id=&#34;不能删除有777权限的文件:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;不能删除有777权限的文件：&lt;/h3&gt;
+&lt;li&gt;&lt;h3 id=&#34;不能删除有777权限的文件:60896f2886244ae9e28f443be765d95d&#34;&gt;不能删除有777权限的文件：&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;[wyb@localhost Desktop]$ ls -l;ls -l aa/a.txt 
 total 4
@@ -1521,7 +1521,7 @@ rm: cannot remove `aa/a.txt&#39;: Permission denied  //因为没有aa的x权限�
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;chown:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;chown：&lt;/h2&gt;
+&lt;h2 id=&#34;chown:60896f2886244ae9e28f443be765d95d&#34;&gt;chown：&lt;/h2&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;普通用户不能将自己的文件改变成其他的拥有者。其操作权限一般为管理员。&lt;/p&gt;
@@ -1531,7 +1531,7 @@ xiao$ chown xiaofang:fans aaa.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h4 id=&#34;一般用visudo添加sudo:ce2bda472c73d9deb0e0f7a74459c9a1&#34;&gt;一般用visudo添加sudo&lt;/h4&gt;
+&lt;h4 id=&#34;一般用visudo添加sudo:60896f2886244ae9e28f443be765d95d&#34;&gt;一般用visudo添加sudo&lt;/h4&gt;
 </description>
     </item>
     

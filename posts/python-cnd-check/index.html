@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python实现CDN的判断 - Reber's Blog</title>
+  <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
+  <meta name="description" content="利用python来识别网站是否使用了cdn以及使用了那种cdn">
+  <meta name="author" content="reber">
+
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="" href="/index.xml" />
+
+  
+  <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+  <script src="/js/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>Python实现CDN的判断</h2>
+            </div>
+            <div class="content">
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 0px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>2016-12-23</time>
+                    </div>
+
+                    
+
+                    <div style="padding:2px 5px 5px 0px;">
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+                
+
+<blockquote>
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/anime/anime002.jpg" alt="银魂">
+</div>
+
+</blockquote>
+
+<h3 id="0x00-什么是cdn:46839201dd3d7ca552ff68a9feb5a581">0x00 什么是CDN</h3>
+
+<blockquote>
+<pre><code>CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容，
+运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的
+缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点，
+你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。
+</code></pre>
+</blockquote>
+
+<h3 id="0x01-判断方法:46839201dd3d7ca552ff68a9feb5a581">0x01 判断方法</h3>
+
+<ul>
+<li>可以查询CNAME记录，每个cdn厂商都有特有的特征串</li>
+<li>查看http返回头的头部信息</li>
+</ul>
+
+<h3 id="0x02-代码:46839201dd3d7ca552ff68a9feb5a581">0x02 代码</h3>
+
+<blockquote>
+<p>首先安装dnspython这个第三方模块：pip install dnspython</p>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+import dns.resolver
+import urllib2
+import urlparse
+
+class CdnCheck(object):
+    def __init__(self, url):
+        super(CdnCheck, self).__init__()
+        self.cdninfo()
+        self.url = url
+        self.cnames = []
+        self.headers = []
+
+    def get_cnames(self): # get all cname
+        furl = urlparse.urlparse(self.url)
+        url = furl.netloc
+        # print url
+
+        rsv = dns.resolver.Resolver()
+        # rsv.nameservers = ['114.114.114.114']
+        try:
+            answer = dns.resolver.query(url,'CNAME')
+        except Exception as e:
+            self.cnames = None
+            # print &quot;ERROR: %s&quot; % e
+        else:
+            cname = [_.to_text() for _ in answer][0]
+            self.cnames.append(cname)
+            self.get_cname(cname)
+
+    def get_cname(self,cname): # get cname
+        try:
+            answer = dns.resolver.query(cname,'CNAME')
+            cname = [_.to_text() for _ in answer][0]
+            self.cnames.append(cname)
+            self.get_cname(cname)
+        except dns.resolver.NoAnswer:
+            pass
+
+    def get_headers(self): # get header
+        try:
+            resp = urllib2.urlopen(self.url)
+        except Exception as e:
+            self.headers = None
+            # print &quot;ERROR: %s&quot; % e
+        else:
+            headers = str(resp.headers).lower()
+            self.headers = headers
+
+    def matched(self, context, *args): # Matching string 
+        if not isinstance(context, basestring):
+            context = str(context)
+
+        func = lambda x, y: y in x
+        # if any(func(context, pattern) for pattern in args):
+        #     return True
+        # else:
+        #     return False
+        for pattern in args:
+            if func(context,pattern):
+                return pattern
+        return False
+
+    def check(self):
+        flag = None
+        self.get_cnames()
+        self.get_headers()
+        if self.cnames:
+            # print self.cnames
+            flag = self.matched(self.cnames,*self.cdn['cname'])
+            if flag:
+                return {'Status':True, 'CDN':self.cdn['cname'].get(flag)}
+        if not flag and self.headers:
+            flag = self.matched(self.headers,*self.cdn['headers'])
+            if flag:
+                return {'Status':True, 'CDN':'unknown'}
+        return {'Status':False, 'CNAME':self.cnames, 'Headers':self.headers}
+
+    def cdninfo(self):
+        self.cdn = {
+            'headers': set([
+                'via',
+                'x-via',
+                'by-360wzb',
+                'by-anquanbao',
+                'cc_cache',
+                'cdn cache server',
+                'cf-ray',
+                'chinacache',
+                'verycdn'
+                'webcache',
+                'x-cacheable',
+                'x-fastly',
+                'yunjiasu',
+            ]),
+            'cname': {
+                'tbcache.com':u'taobao', # 应该是淘宝自己的。。。。
+                'tcdn.qq.com':u'tcdn.qq.com', # 应该是腾讯的。。。
+                '00cdn.com':u'XYcdn', # 星域cdn
+                '21cvcdn.com':u'21Vianet', # 世纪互联
+                '21okglb.cn':u'21Vianet', # 世纪互联
+                '21speedcdn.com':u'21Vianet', # 世纪互联
+                '21vianet.com.cn':u'21Vianet', # 世纪互联
+                '21vokglb.cn':u'21Vianet', # 世纪互联
+                '360wzb.com':u'360', # 360网站卫士
+                '51cdn.com':u'ChinaCache', # 网宿科技
+                'acadn.com':u'Dnion', # 帝联科技
+                'aicdn.com':u'UPYUN', # 又拍云
+                'akadns.net':u'Akamai', # Akamai
+                'akamai-staging.net':u'Akamai', # Akamai
+                'akamai.com':u'Akamai', # Akamai
+                'akamai.net':u'Akamai', # Akamai
+                'akamaitech.net':u'Akamai', # 易通锐进
+                'akamaized.net':u'Akamai', # Akamai
+                'alicloudlayer.com':u'ALiyun', # 阿里云
+                'alikunlun.com':u'ALiyun', # 阿里云
+                'aliyun-inc.com':u'ALiyun', # 阿里云
+                'aliyuncs.com':u'ALiyun', # 阿里云
+                'amazonaws.com':u'Amazon Cloudfront', # 亚马逊
+                'anankecdn.com.br':u'Ananke', # Ananke
+                'aodianyun.com':u'VOD', # 奥点云
+                'aqb.so':u'AnQuanBao', # 安全宝
+                'awsdns':u'KeyCDN', # KeyCDN
+                'azioncdn.net':u'Azion', # Azion
+                'azureedge.net':u'Azure CDN', # Microsoft Azure
+                'bdydns.com':u'Baiduyun', # 百度云
+                'bitgravity.com':u'Tata Communications', # 待定
+                'cachecn.com':u'CnKuai', # 快网
+                'cachefly.net':u'Cachefly', # Cachefly
+                'ccgslb.com':u'ChinaCache', # 蓝汛科技
+                'ccgslb.net':u'ChinaCache', # 蓝汛科技
+                'cdn-cdn.net':u'', # 待定
+                'cdn.cloudflare.net':u'CloudFlare', # CloudFlare
+                'cdn.dnsv1.com':u'Tengxunyun', # 腾讯云
+                'cdn.ngenix.net':u'', # 待定
+                'cdn20.com':u'ChinaCache', # 网宿科技
+                'cdn77.net':u'CDN77', # CDN77
+                'cdn77.org':u'CDN77', # CDN77
+                'cdnetworks.net':u'CDNetworks', # 同兴万点
+                'cdnify.io':u'CDNify', # CDNify
+                'cdnnetworks.com':u'CDNetworks', # 同兴万点
+                'cdnsun.net':u'CDNsun', # CDNsun
+                'cdntip.com':u'QCloud', # 腾讯云
+                'cdnudns.com':u'PowerLeader', # 宝腾互联
+                'cdnvideo.ru':u'CDNvideo', # CDNvideo
+                'cdnzz.net':u'SuZhi', # 速致
+                'chinacache.net':u'ChinaCache', # 蓝汛科技
+                'chinaidns.net':u'LineFuture', # 澜景网络
+                'chinanetcenter.com':u'ChinaCache', # 网宿科技
+                'cloudcdn.net':u'CnKuai', # 快网
+                'cloudfront.net':u'Amazon Cloudfront', # Amazon
+                'customcdn.cn':u'ChinaCache', # 网宿科技
+                'customcdn.com':u'ChinaCache', # 网宿科技
+                'dnion.com':u'Dnion', # 帝联科技
+                'dnspao.com':u'', # 待定
+                'edgecastcdn.net':u'EdgeCast', # EdgeCast
+                'edgesuite.net':u'Akamai', # Akamai
+                'ewcache.com':u'Dnion', # 帝联科技
+                'fastcache.com':u'FastCache', # 速网科技
+                'fastcdn.cn':u'Dnion', # 帝联科技
+                'fastly.net':u'Fastly', # Fastly
+                'fastweb.com':u'CnKuai', # 快网
+                'fastwebcdn.com':u'CnKuai', # 快网
+                'footprint.net':u'Level3', # Level3
+                'fpbns.net':u'Level3', # Level3
+                'fwcdn.com':u'CnKuai', # 快网
+                'fwdns.net':u'CnKuai', # 快网
+                'globalcdn.cn':u'Dnion', # 帝联科技
+                'hacdn.net':u'CnKuai', # 快网
+                'hadns.net':u'CnKuai', # 快网
+                'hichina.com':u'WWW', # 万网
+                'hichina.net':u'WWW', # 万网
+                'hwcdn.net':u'Highwinds', # Highwinds
+                'incapdns.net':u'Incapsula', # Incapsula
+                'internapcdn.net':u'Internap', # Internap
+                'jiashule.com':u'Jiasule', # 加速乐
+                'kunlun.com':u'ALiyun', # 阿里云
+                'kunlunar.com':u'ALiyun', # 阿里云
+                'kunlunca.com':u'ALiyun', # 阿里云
+                'kxcdn.com':u'KeyCDN', # KeyCDN
+                'lswcdn.net':u'Leaseweb', # Leaseweb
+                'lxcdn.com':u'ChinaCache', # 网宿科技
+                'lxdns.com':u'ChinaCache', # 网宿科技
+                'mwcloudcdn.com':u'QUANTIL', # QUANTIL
+                'netdna-cdn.com':u'MaxCDN', # MaxCDN
+                'okcdn.com':u'21Vianet', # 世纪互联
+                'okglb.com':u'21Vianet', # 世纪互联
+                'ourwebcdn.net':u'ChinaCache', # 网宿科技
+                'ourwebpic.com':u'ChinaCache', # 网宿科技
+                'presscdn.com':u'Presscdn', # Presscdn
+                'qingcdn.com':u'', # 待定
+                'qiniudns.com':u'QiNiu', # 七牛云
+                'skyparkcdn.net':u'', # 待定
+                'speedcdns.com':u'QUANTIL', # QUANTIL
+                'sprycdn.com':u'PowerLeader', # 宝腾互联
+                'tlgslb.com':u'Dnion', # 帝联科技
+                'txcdn.cn':u'CDNetworks', # 同兴万点
+                'txnetworks.cn':u'CDNetworks', # 同兴万点
+                'ucloud.cn':u'UCloud', # UCloud
+                'unicache.com':u'LineFuture', # 澜景网络
+                'verygslb.com':u'VeryCloud', # 云端网络
+                'vo.llnwd.net':u'Limelight', # Limelight
+                'wscdns.com':u'ChinaNetCenter', # 网宿科技
+                'wscloudcdn.com':u'ChinaNetCenter', # 网宿科技
+                'xgslb.net':u'Webluker', # WebLuker
+                'ytcdn.net':u'Akamai', # Akamai
+                'yunjiasu-cdn':u'Baiduyun', # 百度云加速
+            }
+        }
+
+
+if __name__ == '__main__':
+    # url = &quot;http://www.reber-9.com&quot;
+    url = sys.argv[1]
+    cdn = CdnCheck(url)
+    print cdn.check()
+</code></pre>
+</blockquote>
+
+<h3 id="0x03-结果:46839201dd3d7ca552ff68a9feb5a581">0x03 结果</h3>
+
+<blockquote>
+<pre><code>结果如下：
+C:\Users\WYB_9\Desktop&gt;python check_cdn.py http://www.reber-9.com
+{'Status': True, 'CDN': u'Baiduyun'}
+
+C:\Users\WYB_9\Desktop&gt;python check_cdn.py http://v.ifeng.com
+{'Status': True, 'CDN': u'ChinaCache'}
+</code></pre>
+</blockquote>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="http://wyb0.com/posts/python-module-openpyxl/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="http://wyb0.com/posts/python-module-openpyxl/">Python的openpyxl模块</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="http://wyb0.com/posts/js-package-cookie-function/">[转]JS操作cookie方法的封装</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="http://wyb0.com/posts/js-package-cookie-function/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+            </div>
+        </div>
+        <div class="right">
+            <div>
+                <br>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Categories</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(1)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(21)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(59)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(31)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(9)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
+        
+    </ul>
+
+
+</div>
+                
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/burpsuite" title="burpsuite">burpsuite</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/msf" title="msf">msf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nessus" title="nessus">nessus</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nmap" title="nmap">nmap</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>29</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python%e6%a8%a1%e5%9d%97" title="python模块">python模块</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlmap" title="sqlmap">sqlmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh" title="ssh">ssh</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%8f%90%e6%9d%83" title="提权">提权</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%b3%a8%e5%85%a5" title="注入">注入</a>
+                <sup>9</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%b6%8a%e6%9d%83" title="越权">越权</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%bd%af%e4%bb%b6" title="软件">软件</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+                
+<div style="padding-bottom:20px;">
+    <h2 class="asidetitle">Links</h2>
+    <div style="padding:5px 0px 10px 10px;">
+        <a href="http://www.test404.com/">Test404's Blog</a>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        &copy; 2016-2017 Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript">
+          var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1261003390'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261003390%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+    <div class="social">
+        
+        
+            <a href="https://github.com/reber-9" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+        
+        &nbsp;&nbsp;
+        
+            <a href="http://weibo.com/u/5819760166" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+        
+        &nbsp;&nbsp;
+        <a href="http://wyb0.com/index.xml" target="_blank"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </div>
+</div>
+</div>
+
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var alist = $('#tags p');
+        alist.each(function () {
+            var t = $(this);
+            var a = t.find('a');
+            var sup = parseInt(t.find('sup').text());
+            t.find('sup').hide();
+
+            if (0<sup && sup<6) {
+                a.addClass("text8");
+            } else if (5<sup && sup<11) {
+                a.addClass("text7");
+            } else if (10<sup && sup<16) {
+                a.addClass("text6");
+            } else if (15<sup && sup<21) {
+                a.addClass("text5");
+            } else if (20<sup && sup<26) {
+                a.addClass("text4");
+            } else if (25<sup && sup<31) {
+                a.addClass("text3");
+            } else if (30<sup && sup<36) {
+                a.addClass("text2");
+            } else {
+                a.addClass("text1");
+            }
+
+        });
+    });
+    </script>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); 
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
+</body>
+</html>
+
