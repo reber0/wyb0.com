@@ -147,6 +147,105 @@ if __name__ == &#39;__main__&#39;:
     </item>
     
     <item>
+      <title>Python的pycurl模块</title>
+      <link>http://wyb0.com/posts/python-module-pycurl/</link>
+      <pubDate>Tue, 21 Mar 2017 23:18:50 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/python-module-pycurl/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-关于curl:46b9206b28e9bd86a84e3bbeef60e037&#34;&gt;0x00 关于cURL&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。
+
+利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-pycurl常见方法:46b9206b28e9bd86a84e3bbeef60e037&#34;&gt;0x01 pycurl常见方法&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;创建curl对象&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;c = pycurl.Curl()    #创建一个curl对象 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;设置请求&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;c.setopt(pycurl.URL,&amp;quot;http://www.baidu.com&amp;quot;)      #指定请求的URL
+c.setopt(pycurl.CONNECTTIMEOUT, 5)    #连接的等待时间，设置为0则不等待
+c.setopt(pycurl.TIMEOUT, 5)           #请求超时时间
+c.setopt(pycurl.USERAGENT,&amp;quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&amp;quot;)    #配置User-Agent
+
+c.setopt(pycurl.NOPROGRESS, 0)        #是否屏蔽下载进度条，非0则屏蔽
+c.setopt(pycurl.MAXREDIRS, 5)         #指定HTTP重定向的最大数
+c.setopt(pycurl.FORBID_REUSE, 1)      #完成交互后强制断开连接，不重用
+c.setopt(pycurl.FRESH_CONNECT,1)      #强制获取新的连接，即替代缓存中的连接
+c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒
+
+c.setopt(pycurl.HEADERFUNCTION, getheader)   #将返回的HTTP HEADER定向到回调函数getheader
+c.setopt(pycurl.WRITEFUNCTION, getbody)      #将返回的内容定向到回调函数getbody
+c.setopt(pycurl.WRITEHEADER, fileobj)        #将返回的HTTP HEADER定向到fileobj文件对象
+c.setopt(pycurl.WRITEDATA, fileobj)          #将返回的HTML内容定向到fileobj文件对象
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;部分返回信息&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;c.getinfo(pycurl.HTTP_CODE)         #返回的HTTP状态码
+c.getinfo(pycurl.HEADER_SIZE)       #HTTP头部大小
+c.getinfo(pycurl.TOTAL_TIME)        #传输结束所消耗的总时间
+c.getinfo(pycurl.NAMELOOKUP_TIME)   #DNS解析所消耗的时间
+c.getinfo(pycurl.CONNECT_TIME)      #建立连接所消耗的时间
+c.getinfo(pycurl.PRETRANSFER_TIME)  #从建立连接到准备传输所消耗的时间
+c.getinfo(pycurl.STARTTRANSFER_TIME)#从建立连接到传输开始消耗的时间
+c.getinfo(pycurl.REDIRECT_TIME)     #重定向所消耗的时间
+c.getinfo(pycurl.SIZE_UPLOAD)       #上传数据包大小
+c.getinfo(pycurl.SIZE_DOWNLOAD)     #下载数据包大小
+c.getinfo(pycurl.SPEED_DOWNLOAD)    #平均下载速度
+c.getinfo(pycurl.SPEED_UPLOAD)      #平均上传速度
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-简单使用:46b9206b28e9bd86a84e3bbeef60e037&#34;&gt;0x02 简单使用&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import pycurl
+import StringIO
+
+buf = StringIO.StringIO()
+c = pycurl.Curl()
+c.setopt(pycurl.URL, &amp;quot;http://127.0.0.1/site/range/sqli/sqli1.php&amp;quot;)
+c.setopt(pycurl.TIMEOUT, 15)
+c.setopt(pycurl.USERAGENT,&amp;quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&amp;quot;)
+c.setopt(pycurl.WRITEFUNCTION, buf.write) #将返回的内容定向到回调函数write
+
+c.perform()
+status_code = c.getinfo(pycurl.HTTP_CODE)       #返回的HTTP状态码
+content_size = c.getinfo(pycurl.SIZE_DOWNLOAD)  #返回的数据的大小
+content =buf.getvalue()
+print status_code
+print content_size
+print content
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
       <title>初识Tornado</title>
       <link>http://wyb0.com/posts/tornado-basis/</link>
       <pubDate>Tue, 03 Jan 2017 18:43:27 +0800</pubDate>
@@ -2363,52 +2462,6 @@ if __name__ == &#39;__main__&#39;:
   &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/bruter_mysql.png&#34; alt=&#34;爆破MySQL.png&#34;&gt;
 &lt;/div&gt;
 &lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Python的异常处理</title>
-      <link>http://wyb0.com/posts/python-exception-handling/</link>
-      <pubDate>Fri, 26 Aug 2016 10:40:44 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/python-exception-handling/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-python异常处理:b24fa3cb9539cf96d8ad474455d93893&#34;&gt;0x00 Python异常处理&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-try:
-    try: # 可嵌套
-        str(&amp;quot;aaaaa&amp;quot;)
-        # int(&amp;quot;aaaaa&amp;quot;)
-        # print a
-        # print 1/0
-    except (TypeError, IndexError, ValueError): #捕获多种异常
-        print &amp;quot;TypeErrorZero or DivisionError or ValueError&amp;quot;
-    except ZeroDivisionError as aa: #捕获除零错误
-        print aa #输出详细错误信息
-    except:
-        print u&amp;quot;发生其他异常则执行这里&amp;quot;
-    else:
-        print u&amp;quot;上面没有出错才输出这里&amp;quot;
-        a = [1,2,3]
-        print a[4] #这里出错，会向上抛出错误，最终输出this is error
-    finally:
-        print u&amp;quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&amp;quot;
-except Exception as e: #可捕获所有异常类型
-    print &amp;quot;this is error&amp;quot;
-    print e
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/python_exception_handling.png&#34; alt=&#34;python的异常处理.png&#34;&gt;
-&lt;/div&gt;
-
 &lt;/blockquote&gt;
 </description>
     </item>
