@@ -230,6 +230,10 @@ buf = StringIO.StringIO()
 c = pycurl.Curl()
 c.setopt(pycurl.URL, &amp;quot;http://127.0.0.1/site/range/sqli/sqli1.php&amp;quot;)
 c.setopt(pycurl.TIMEOUT, 15)
+c.setopt(pycurl.FOLLOWLOCATION, 1) #允许跟踪来源
+c.setopt(pycurl.MAXREDIRS, 5)
+c.setopt(pycurl.SSL_VERIFYPEER, 0)
+c.setopt(pycurl.SSL_VERIFYHOST, 0)
 c.setopt(pycurl.USERAGENT,&amp;quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&amp;quot;)
 c.setopt(pycurl.WRITEFUNCTION, buf.write) #将返回的内容定向到回调函数write
 
