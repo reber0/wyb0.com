@@ -7,8 +7,85 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Thu, 23 Jun 2016 15:32:34 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 24 Jun 2016 10:25:11 +0800</lastBuildDate>
     <atom:link href="http://wyb0.com/tags/injection/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>SQL注入之宽字节注入</title>
+      <link>http://wyb0.com/posts/injection-of-wide-byte/</link>
+      <pubDate>Fri, 24 Jun 2016 10:25:11 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/injection-of-wide-byte/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x00-应用场景:fbb6bfdfe53ff8325858f2be24ae74f4&#34;&gt;0x00 应用场景&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被&amp;quot;\&amp;quot;转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x01-测试代码:fbb6bfdfe53ff8325858f2be24ae74f4&#34;&gt;0x01 测试代码&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+    $conn = mysql_connect(&#39;localhost&#39;,&#39;root&#39;,&#39;root&#39;);
+    mysql_select_db(&#39;messages&#39;,$conn);
+
+    if (isset($_GET[&#39;id&#39;])) {
+        $id = addslashes($_GET[&#39;id&#39;]); //转义id
+        $sql = &amp;quot;select * from msg where id=&#39;$id&#39;;&amp;quot;;
+        echo $sql.&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;
+
+        $result = mysql_query($sql);
+        $rows = @mysql_fetch_assoc($result);
+        if ($rows) {
+            echo &#39;&amp;lt;table align=&amp;quot;left&amp;quot; border=&amp;quot;1&amp;quot;&amp;gt;&#39;;
+            foreach ($rows as $key =&amp;gt; $value) {
+                echo &#39;&amp;lt;tr align=&amp;quot;lift&amp;quot; height=&amp;quot;30&amp;quot;&amp;gt;&#39;;
+                echo &#39;&amp;lt;td&amp;gt;&#39;.$key.&#39;----&#39;.$value.&#39;&amp;lt;/td&amp;gt;&#39;;
+                echo &#39;&amp;lt;/tr&amp;gt;&#39;;            
+            }
+            echo &#39;&amp;lt;/table&amp;gt;&#39;;
+        } else {
+            echo mysql_error();
+        }
+    } else {
+        echo &amp;quot;please input id.&amp;quot;;
+    }
+?&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/injection_of_wide_byte_addslashes.png&#34; alt=&#34;单引号被转义&#34;&gt;
+&lt;/div&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;0x02-宽字节注入原理:fbb6bfdfe53ff8325858f2be24ae74f4&#34;&gt;0x02 宽字节注入原理&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code class=&#34;language-ini&#34;&gt;当MySQL使用的是GBK编码时，0xbf5c会被当做一个字符(双字节字符)，其中5c是&amp;quot;\&amp;quot;
+
+当注入语句为http://127.0.0.1/test.php?id=2%bf&#39;时
+在数据库中bf会和转义符&amp;quot;\&amp;quot;形成一个双字节字符&amp;quot;縗&amp;quot;，从而单引号逃逸
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/injection_of_wide_byte_bf.png&#34; alt=&#34;转义符被bf吃掉&#34;&gt;
+&lt;/div&gt;
+
+&lt;br /&gt;&lt;/br /&gt;
+
+&lt;div class=&#34;pure-u-1&#34;&gt;
+  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/injection_of_wide_byte_user.png&#34; alt=&#34;单引号逃逸后查询user&#34;&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>SQL注入之防御</title>
