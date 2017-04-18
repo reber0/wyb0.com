@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Linux之用户组 - Reber's Blog</title>
+  <title>Linux之用户和用户组 - Reber's Blog</title>
   <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
   <meta name="description" content="">
   <meta name="author" content="reber">
@@ -78,7 +78,7 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Linux之用户组</h2>
+                <h2>Linux之用户和用户组</h2>
             </div>
             <div class="content">
                 
@@ -113,15 +113,39 @@
                     </div>
                 </div>
                 
-                <p>初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个
-<br/></p>
+                
+
+<h3 id="0x01-新建用户:d76bf96121c220988446d9d9ca2e9061">0x01 新建用户</h3>
+
+<blockquote>
+<p>环境：Ubuntu 14.04.4</p>
+</blockquote>
+
+<ul>
+<li><p>Step1：添加新用户<br />
+useradd -r -m -s /bin/bash 用户名</p></li>
+
+<li><p>Step2:配置新用户密码<br />
+passwd 用户名</p></li>
+
+<li><p>Step3：给新添加的用户增加root权限<br />
+visudo<br />
+然后添加：<br />
+用户名 ALL=(ALL:ALL) ALL</p></li>
+
+<li><p>ctrl+o 保存   ctrl+x 退出</p></li>
+</ul>
+
+<h3 id="0x01-用户组:d76bf96121c220988446d9d9ca2e9061">0x01 用户组</h3>
+
+<blockquote>
+<pre><code>初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个
+</code></pre>
 
 <pre><code>useradd xm   用户xm会默认加到xm组
 useradd -g fans xm  将xm的所属组改为fans
 useradd -G fans xm  初始组为xm，有效组为fans
 </code></pre>
-
-<p><br/></p>
 
 <pre><code>useradd xiaoming
 usermod -g fans xiaoming  只有一个初始组，被修改为fans
@@ -130,10 +154,9 @@ usermod -G fans xm    xm用户会有两个组，初始组为xm，又添加一个
 usermod -G fans1 xm    xm用户两个组，初始组为xm，有效组更改为fans1
 </code></pre>
 
-<p><br/></p>
-
 <pre><code>用户创建的文件拥有者是初始组
 </code></pre>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">

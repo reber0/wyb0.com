@@ -1356,20 +1356,44 @@ no crontab for wyb
     </item>
     
     <item>
-      <title>Linux之用户组</title>
-      <link>http://wyb0.com/posts/linux-user-group/</link>
+      <title>Linux之用户和用户组</title>
+      <link>http://wyb0.com/posts/linux-user/</link>
       <pubDate>Sun, 17 Apr 2016 20:48:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-user-group/</guid>
-      <description>&lt;p&gt;初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个
-&lt;br/&gt;&lt;/p&gt;
+      <guid>http://wyb0.com/posts/linux-user/</guid>
+      <description>
+
+&lt;h3 id=&#34;0x01-新建用户:d76bf96121c220988446d9d9ca2e9061&#34;&gt;0x01 新建用户&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;环境：Ubuntu 14.04.4&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Step1：添加新用户&lt;br /&gt;
+useradd -r -m -s /bin/bash 用户名&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Step2:配置新用户密码&lt;br /&gt;
+passwd 用户名&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Step3：给新添加的用户增加root权限&lt;br /&gt;
+visudo&lt;br /&gt;
+然后添加：&lt;br /&gt;
+用户名 ALL=(ALL:ALL) ALL&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;ctrl+o 保存   ctrl+x 退出&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;0x01-用户组:d76bf96121c220988446d9d9ca2e9061&#34;&gt;0x01 用户组&lt;/h3&gt;
+
+&lt;blockquote&gt;
+&lt;pre&gt;&lt;code&gt;初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;pre&gt;&lt;code&gt;useradd xm   用户xm会默认加到xm组
 useradd -g fans xm  将xm的所属组改为fans
 useradd -G fans xm  初始组为xm，有效组为fans
 &lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;useradd xiaoming
 usermod -g fans xiaoming  只有一个初始组，被修改为fans
@@ -1378,10 +1402,9 @@ usermod -G fans xm    xm用户会有两个组，初始组为xm，又添加一个
 usermod -G fans1 xm    xm用户两个组，初始组为xm，有效组更改为fans1
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;br/&gt;&lt;/p&gt;
-
 &lt;pre&gt;&lt;code&gt;用户创建的文件拥有者是初始组
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
 </description>
     </item>
     
