@@ -119,9 +119,9 @@ reber@ubuntu:~/Desktop/gitlab$ sudo patch -d /opt/gitlab/embedded/service/gitlab
 
 ### 0x06 添加ssh公钥
 > ```
-本机生成秘钥
-$ ssh-keygen -t rsa -C "514581887@qq.com"
-$ cat /home/reber/.ssh/id_rsa.pub
+首先用邮箱514581887@qq.com注册一个用户，用户名为55555
+$ ssh-keygen -t rsa -C "514581887@qq.com" #在本机生成秘钥对
+$ cat /home/reber/.ssh/id_rsa.pub #查看公钥
 然后使用用户55555登录Web页面，添加上面文件id_rsa.pub中的公钥
 #注释：上面添加的公钥存储在服务端的/var/opt/gitlab/.ssh/authorized_keys中
 
@@ -129,7 +129,7 @@ $ cat /home/reber/.ssh/id_rsa.pub
 $ cd ~/.ssh
 $ vim config
   Host 192.168.188.160 #gitlab服务器的ip
-  User reber
+  User 55555
   Port 2222 # gitlab服务器的ssh端口
   IdentityFile /home/reber/.ssh/id_rsa # 本地私钥文件id_rsa的路径
 
