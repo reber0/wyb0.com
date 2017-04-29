@@ -293,9 +293,8 @@ callback函数：preg_replace + /e模式
 /e修正符使preg_replace()将replacement参数当作PHP 代码(在适当的逆向引用替换完之后)</p>
 
 <pre><code class="language-php">&lt;?php
-    $data = $GET_['data'];
-    // echo $data;
-    preg_replace('/&lt;data&gt;(.*)&lt;\/data&gt;/e','$ret = &quot;\\1&quot;',$data);
+    $data = $_GET['data'];
+    $ret = preg_replace('/&lt;data&gt;(.*?)&lt;\/data&gt;/e','$ret = &quot;\\1&quot;',$data);
     echo $ret;
 ?&gt;
 </code></pre>
