@@ -130,9 +130,8 @@ callback函数：preg_replace + /e模式
 
 > ```php
 <?php
-    $data = $GET_['data'];
-    // echo $data;
-    preg_replace('/<data>(.*)<\/data>/e','$ret = "\\1"',$data);
+    $data = $_GET['data'];
+    $ret = preg_replace('/<data>(.*)<\/data>/e','$ret = "\\1"',$data);
     echo $ret;
 ?>
 ```
