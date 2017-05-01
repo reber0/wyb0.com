@@ -829,23 +829,23 @@ git revert HEAD # 若push后,可撤销前一次 commit
 &lt;blockquote&gt;
 &lt;p&gt;如果有多个用户时可进行如下设置&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;$ ssh-keygen -t rsa -b 2048 -t github -C &amp;quot;123456@qq.com&amp;quot;
-$ ssh-keygen -t rsa -b 2048 -t gitlab -C &amp;quot;456789@qq.com&amp;quot;
+&lt;pre&gt;&lt;code&gt;$ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C &amp;quot;123456@qq.com&amp;quot;
+$ ssh-keygen -t rsa -b 2048 -f id_rsa_gitlub -C &amp;quot;456789@qq.com&amp;quot;
 $ vim config
     Host github.com
     HostName github.com
     User user2
     Port 22
-    IdentityFile ~/.ssh/github
+    IdentityFile ~/.ssh/id_rsa_github
 
     Host 123.12.12.123
     HostName mygitlab.com
     User user1
     Port 2222
-    IdentityFile ~/.ssh/gitlab
+    IdentityFile ~/.ssh/id_rsa_gitlub
 $ ls
-    config  github.pub  gitlab.pub  id_rsa.pub
-    github  gitlab      id_rsa      known_hosts
+    config  id_rsa_github.pub  id_rsa_gitlub.pub  id_rsa.pub
+    id_rsa_github  id_rsa_gitlub      id_rsa      known_hosts
 
 # 可以新建项目后在项目里执行下面两条命令配置局部用户名和邮箱
 # 会在.git/config写入用户名和邮箱
