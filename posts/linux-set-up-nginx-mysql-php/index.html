@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -118,7 +100,7 @@
 <pre><code>安装环境为：CentOS-6.5-x86_64-minimal
 </code></pre>
 
-<h2 id="一-准备工作:2b4371c8051fe3df6b5e8684b70b536f">一、准备工作</h2>
+<h2 id="一-准备工作">一、准备工作</h2>
 
 <pre><code>首先执行：
     sudo yum groupinstall &quot;Development tools&quot;
@@ -128,14 +110,14 @@
     yum install gcc gcc-c++
 </code></pre>
 
-<h2 id="二-安装mysql和php:2b4371c8051fe3df6b5e8684b70b536f">二、安装mysql和php</h2>
+<h2 id="二-安装mysql和php">二、安装mysql和php</h2>
 
 <pre><code class="language-sh">sudo yum install mysql mysql-server mysql-devel
 sudo yum install php php-devel
 sudo yum install php-gd php-mysql php-fpm
 </code></pre>
 
-<h2 id="三-安装依赖:2b4371c8051fe3df6b5e8684b70b536f">三、安装依赖</h2>
+<h2 id="三-安装依赖">三、安装依赖</h2>
 
 <ol>
 <li><p>安装pcre、pcre-devel<br />
@@ -148,7 +130,7 @@ sudo yum install zlib zlib-devel</p></li>
 sudo yum install openssl openssl-devel</p></li>
 </ol>
 
-<h2 id="四-安装nginx:2b4371c8051fe3df6b5e8684b70b536f">四、安装Nginx</h2>
+<h2 id="四-安装nginx">四、安装Nginx</h2>
 
 <p>可在<a href="http://nginx.org/download/nginx-1.9.9.tar.gz">http://nginx.org/download/nginx-1.9.9.tar.gz</a> 下载
 
@@ -162,7 +144,7 @@ sudo yum install openssl openssl-devel</p></li>
 [reber@WYB nginx-1.9.9]$ sudo make install
 </code></pre>
 
-<h2 id="五-启动与关闭nginx:2b4371c8051fe3df6b5e8684b70b536f">五、启动与关闭nginx</h2>
+<h2 id="五-启动与关闭nginx">五、启动与关闭nginx</h2>
 
 <pre><code class="language-sh"># 开启服务：
 [reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
@@ -176,7 +158,7 @@ sudo yum install openssl openssl-devel</p></li>
 </div>
 
 
-<h2 id="六-配置nginx支持php:2b4371c8051fe3df6b5e8684b70b536f">六、配置nginx支持php</h2>
+<h2 id="六-配置nginx支持php">六、配置nginx支持php</h2>
 
 <p>[reber@WYB nginx-1.9.9]$ killall nginx<br />
 [reber@WYB nginx-1.9.9]$ vim /usr/local/nginx/conf/nginx.conf</p>
@@ -199,11 +181,11 @@ location ~ \.php$ {
 [reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
 </code></pre>
 
-<p>
+
 <div class="pure-u-1">
   <img class="pure-img" src="/img/post/visit_nginx_phpinfo.png" alt="访问nginx的phpinfo.php.png">
 </div>
-</p>
+
 
                 
                 <div style="padding:10px 1px;">

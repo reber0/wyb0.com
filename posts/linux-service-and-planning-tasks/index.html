@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -115,7 +97,7 @@
                 
                 
 
-<h2 id="服务:644df5cd1dfd501e2750a3124a977820">服务：</h2>
+<h2 id="服务">服务：</h2>
 
 <p>在后台运行的软件就叫服务
 参数：
@@ -131,12 +113,12 @@ restart</p>
 lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&gt; rc.d/init.d
 </code></pre>
 
-<h4 id="添加服务:644df5cd1dfd501e2750a3124a977820">添加服务：</h4>
+<h4 id="添加服务">添加服务：</h4>
 
 <pre><code>将脚本放在/etc/init.d/下即可
 </code></pre>
 
-<h4 id="若要自启则:644df5cd1dfd501e2750a3124a977820">若要自启则：</h4>
+<h4 id="若要自启则">若要自启则：</h4>
 
 <pre><code>chkconfig --list   //查看chk管理的自启动项
 chkconfig --add httpd   添加到chk管理里面
@@ -148,14 +130,14 @@ chkcofnig --level 345 httpd off
 
 <hr />
 
-<h2 id="计划任务:644df5cd1dfd501e2750a3124a977820">计划任务：</h2>
+<h2 id="计划任务">计划任务：</h2>
 
 <p>启动方式：
 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件</p>
 
 <p>cron：每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟</p>
 
-<h4 id="添加任务:644df5cd1dfd501e2750a3124a977820">添加任务：</h4>
+<h4 id="添加任务">添加任务：</h4>
 
 <p>格式：分(0-59) 时 日 月 周(0-6) 命令</p>
 
@@ -186,7 +168,7 @@ vim /etc/crontab会以root权限执行，不推荐使用
 01 * * * *　用户名　命令 date &gt;&gt; /tmp/date2.txt在每个小时的第一分钟执行
 </code></pre>
 
-<h4 id="查看用户任务:644df5cd1dfd501e2750a3124a977820">查看用户任务：</h4>
+<h4 id="查看用户任务">查看用户任务：</h4>
 
 <pre><code>[wyb@localhost tmp]$ sudo cat /var/spool/cron/wyb   //用户的计划任务
 */1 * * * * date &gt;&gt; /tmp/date.txt

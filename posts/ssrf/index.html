@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -115,21 +97,21 @@
                 
                 
 
-<h3 id="0x00-什么是ssrf:e350aaf393e64a9f3cbcc4deb4663519">0x00 什么是SSRF</h3>
+<h3 id="0x00-什么是ssrf">0x00 什么是SSRF</h3>
 
 <blockquote>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，<font color="FF0000">它将一个可以发起网络请求的服务当作跳板来攻击其他服务</font>，SSRF的攻击目标一般是<font color="FF0000">内网</font>。<br />
 &nbsp;&nbsp;&nbsp;&nbsp;当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。</p>
 </blockquote>
 
-<h3 id="0x01-ssrf的危害:e350aaf393e64a9f3cbcc4deb4663519">0x01 SSRF的危害</h3>
+<h3 id="0x01-ssrf的危害">0x01 SSRF的危害</h3>
 
 <blockquote>
 <p>可以扫描内部网络<br />
 可以构造数据攻击内部主机</p>
 </blockquote>
 
-<h3 id="0x02-漏洞挖掘:e350aaf393e64a9f3cbcc4deb4663519">0x02 漏洞挖掘</h3>
+<h3 id="0x02-漏洞挖掘">0x02 漏洞挖掘</h3>
 
 <blockquote>
 <p>其实只要能对外发起网络请求就有可能存在SSRF漏洞。</p>
@@ -147,7 +129,7 @@
 </code></pre>
 </blockquote>
 
-<h3 id="0x03-漏洞验证:e350aaf393e64a9f3cbcc4deb4663519">0x03 漏洞验证</h3>
+<h3 id="0x03-漏洞验证">0x03 漏洞验证</h3>
 
 <blockquote>
 <pre><code>http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png
@@ -158,7 +140,7 @@
 </code></pre>
 </blockquote>
 
-<h3 id="0x04-绕过过滤:e350aaf393e64a9f3cbcc4deb4663519">0x04 绕过过滤</h3>
+<h3 id="0x04-绕过过滤">0x04 绕过过滤</h3>
 
 <blockquote>
 <p>有时漏洞利用时会遇到IP限制，可用如下方法绕过：</p>
@@ -175,7 +157,7 @@
 </code></pre>
 </blockquote>
 
-<h3 id="0x05-通用的ssrf实例:e350aaf393e64a9f3cbcc4deb4663519">0x05 通用的SSRF实例</h3>
+<h3 id="0x05-通用的ssrf实例">0x05 通用的SSRF实例</h3>
 
 <ul>
 <li>weblogin配置不当，天生ssrf漏洞</li>
@@ -184,7 +166,7 @@
 <li>CVE-2016-3718 - ImageMagick</li>
 </ul>
 
-<h3 id="0x06-附实例poc:e350aaf393e64a9f3cbcc4deb4663519">0x06 附实例POC</h3>
+<h3 id="0x06-附实例poc">0x06 附实例POC</h3>
 
 <blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
@@ -228,7 +210,7 @@ for x in xrange(1,30):
 </code></pre>
 </blockquote>
 
-<h3 id="0x07-防御:e350aaf393e64a9f3cbcc4deb4663519">0x07 防御</h3>
+<h3 id="0x07-防御">0x07 防御</h3>
 
 <ul>
 <li>限制协议为http或https</li>

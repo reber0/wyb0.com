@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -121,7 +103,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 Ubuntu 14.04.1 LTS 0x01 安装与配置 reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;,
+        0x00 环境  Ubuntu 14.04.1 LTS
+ 0x01 安装与配置  reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;, # &quot;40002&quot;: &quot;lilei&quot;, # &quot;40003&quot;: &quot;mike&quot; #} &quot;timeout&quot;:300, # 超时时间（秒） &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式 # 若Linux内核在3.
     </p>
 
     
@@ -174,7 +157,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Tmux的快捷键前缀 Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c 0x01 会话 0x02 窗口和窗格
+         0x00 Tmux的快捷键前缀  Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c
+ 0x01 会话   0x02 窗口和窗格   
     </p>
 
     
@@ -223,7 +207,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 SSH相关选项 -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，用于端口转发 -D socket5代理 -L tcp转发 -C 使用数据压缩，网速快时会影响速度 0x01 SSH免密码登陆 A主机免密码登陆B主机： A主机运行： ssh-keygen -t rsa 会生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub 将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中 注： 要确保B主机~/.ssh/authorized_keys权限为600 要确保B主机~/.ssh/文件夹权限为700 要确保上述两个文件属主是当前用户 0x02 SSH反向连接 主机A要通过SSH连接主机B： B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定 A主机运行： ssh root@127.0.0.1 -p 8888 输入本机的root的密码即可登入主机B的root用户 0x03 SSH Socks5代理
+         0x00 SSH相关选项  -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，用于端口转发 -D socket5代理 -L tcp转发 -C 使用数据压缩，网速快时会影响速度   0x01 SSH免密码登陆  A主机免密码登陆B主机：
+A主机运行： ssh-keygen -t rsa 会生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub 将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中 注： 要确保B主机~/.ssh/authorized_keys权限为600 要确保B主机~/.ssh/文件夹权限为700 要确保上述两个文件属主是当前用户   0x02 SSH反向连接  主机A要通过SSH连接主机B：
+B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定  A主机运行： ssh root@127.0.0.1 -p 8888 输入本机的root的密码即可登入主机B的root用户   0x03 SSH Socks5代理   
     </p>
 
     
@@ -272,7 +258,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        要求 内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网 拓扑 个主机IP信息 内网网段为：192.168.1.0/24 DMZ区网段为：172.16.1.0/24 iptables的策略 新建iptables.sh,内容如下： #!/bin/bash iptables –F #清空此表中的规则 iptables –X #清空此表中的自定义规则 iptables –Z #清空此表中的计数器为0 iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP iptables -F -t nat iptables -X -t nat iptables -Z -t nat iptables -t nat -P PREROUTING ACCEPT iptables -t nat -P POSTROUTING ACCEPT iptables -t nat -P OUTPUT ACCEPT #添加必要的模块 modprobe ip_nat_ftp modprobe iptable_nat
+        要求  内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网  拓扑   个主机IP信息  内网网段为：192.168.1.0/24
+DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如下：
+#!/bin/bash iptables –F #清空此表中的规则 iptables –X #清空此表中的自定义规则 iptables –Z #清空此表中的计数器为0 iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP iptables -F -t nat iptables -X -t nat iptables -Z -t nat iptables -t nat -P PREROUTING ACCEPT iptables -t nat -P POSTROUTING ACCEPT iptables -t nat -P OUTPUT ACCEPT #添加必要的模块 modprobe ip_nat_ftp modprobe iptable_nat modprobe ip_conntrack modprobe ip_conntrack_ftp #开启转发功能 echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward #******************************************************************** #PREROUTING： iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.
     </p>
 
     
@@ -325,7 +313,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境： ubuntu14.4 安装shadowsocks-qt5 sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装) 配置客户端 配置火狐 访问YouTube
+         环境： ubuntu14.4
+安装shadowsocks-qt5 sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装)  配置客户端 配置火狐 访问YouTube 
     </p>
 
     
@@ -374,7 +363,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 效果 使用软件conky可以在linux上看到系统的运行状态，效果如下： 0x01 安装与配置 先安装conky： sudo apt-get install conky 在/home/username/下创建文件.conkyrc 使conky开机自启 在/etc/profile最下面添加：/usr/bin/conky &amp; 0x03 配置文件.conkyrc内容如下 # set to yes if you want Conky to be forked in the background background no cpu_avg_samples 2 net_avg_samples 2 out_to_console no # X font when Xft is disabled, you can pick one with program xfontsel #font 7x12 #font 6x10 #font 7x13 #font 8x13 #font 7x12 #font *mintsmild.se* #font -*-*-*-*-*-*-34-*-*-*-*-*-*-* #font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1 # Use Xft?
+        0x00 效果  使用软件conky可以在linux上看到系统的运行状态，效果如下：  0x01 安装与配置  先安装conky：
+sudo apt-get install conky
+ 在/home/username/下创建文件.conkyrc
+ 使conky开机自启
+在/etc/profile最下面添加：/usr/bin/conky &amp;
+  0x03 配置文件.conkyrc内容如下  # set to yes if you want Conky to be forked in the background background no cpu_avg_samples 2 net_avg_samples 2 out_to_console no # X font when Xft is disabled, you can pick one with program xfontsel #font 7x12 #font 6x10 #font 7x13 #font 8x13 #font 7x12 #font *mintsmild.
     </p>
 
     
@@ -429,7 +423,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        win10和ubuntu双系统分区设置 硬盘采用uefi格式 硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息 在硬盘末尾给ubuntu划分50G左右空间 ubuntu的/分区，格式为ext4，空间为40G ubuntu的/home分区，格式为ext4，空间为10G ubuntu的/boot分区，格式为ext4,空间为200M ubuntu的/swap分区，格式为swap，空间为200M ubuntu的引导分区为/boot &nbsp;
+         win10和ubuntu双系统分区设置  硬盘采用uefi格式 硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息 在硬盘末尾给ubuntu划分50G左右空间 ubuntu的/分区，格式为ext4，空间为40G ubuntu的/home分区，格式为ext4，空间为10G ubuntu的/boot分区，格式为ext4,空间为200M ubuntu的/swap分区，格式为swap，空间为200M ubuntu的引导分区为/boot  &nbsp; 
     </p>
 
     
@@ -480,7 +474,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        下载Nessus的deb安装包: 去【这里】，选择家庭版，然后下载对应的安装包 本地安装nessus: 执行后续安装步骤: 启动nessus web访问nessus服务 设置账户和密码 申请code，可以在【这里】申请 去邮箱查找code 将code填入，然后等待插件的下载 登陆Nessus:
+         下载Nessus的deb安装包: 去【这里】，选择家庭版，然后下载对应的安装包 本地安装nessus: 执行后续安装步骤:  启动nessus  web访问nessus服务  设置账户和密码  申请code，可以在【这里】申请  去邮箱查找code  将code填入，然后等待插件的下载   登陆Nessus: 
     </p>
 
     
@@ -529,7 +523,15 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境： ubuntu14.4 安装 添加Sublime Text 3的仓库 sudo add-apt-repository ppa:webupd8team/sublime-text-3 更新软件库 sudo apt-get update 安装Sublime Text 3 sudo apt-get install sublime-text-installer 解决不能输入中文的问题 新建sublime_imfix.c(位于～目录)，写入如下内容 #include &lt;gtk/gtkimcontext.h&gt; void gtk_im_context_set_client_window (GtkIMContext *context,GdkWindow *window) { GtkIMContextClass *klass; g_return_if_fail (GTK_IS_IM_CONTEXT (context)); klass = GTK_IM_CONTEXT_GET_CLASS (context); if (klass-&gt;set_client_window) klass-&gt;set_client_window (context, window); g_object_set_data(G_OBJECT(context),&quot;window&quot;,window); if(!GDK_IS_WINDOW (window)) return; int width = gdk_window_get_width(window); int height = gdk_window_get_height(window); if(width != 0 &amp;&amp; height !=0) gtk_im_context_focus_in(context); } 将上一步的代码编译成共享库libsublime-imfix.so cd ~ sudo apt-get install
+        环境： ubuntu14.4
+安装  添加Sublime Text 3的仓库
+sudo add-apt-repository ppa:webupd8team/sublime-text-3
+ 更新软件库
+sudo apt-get update
+ 安装Sublime Text 3
+sudo apt-get install sublime-text-installer
+  解决不能输入中文的问题  新建sublime_imfix.c(位于～目录)，写入如下内容
+#include &lt;gtk/gtkimcontext.h&gt; void gtk_im_context_set_client_window (GtkIMContext *context,GdkWindow *window) { GtkIMContextClass *klass; g_return_if_fail (GTK_IS_IM_CONTEXT (context)); klass = GTK_IM_CONTEXT_GET_CLASS (context); if (klass-&gt;set_client_window) klass-&gt;set_client_window (context, window); g_object_set_data(G_OBJECT(context),&quot;window&quot;,window); if(!GDK_IS_WINDOW (window)) return; int width = gdk_window_get_width(window); int height = gdk_window_get_height(window); if(width != 0 &amp;&amp; height !=0) gtk_im_context_focus_in(context); }  将上一步的代码编译成共享库libsublime-imfix.
     </p>
 
     
@@ -584,7 +586,13 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 我是在虚拟机中安装14.04.4版的Ubuntu 下载Ubuntu14.04.4 0x01 配源或选择最快的更新服务器 选择最快的更新服务器: System Settings &ndash;&gt; Software &amp; Updates &ndash;&gt; Download from:other &ndash;&gt; Select Best Server &ndash;&gt; Choose Serve &ndash;&gt; Close 配源: reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak reber@ubuntu:~$ vim /etc/apt/sources.list 中科大源： deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse 阿里源： deb http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe 升级 reber@ubuntu:~$ sudo apt-get update reber@ubuntu:~$ sudo apt-get upgrade 0x02 简单配置 $ sudo apt-get install open-vm-tools-desktop fuse $ sudo apt-get install vim $ sudo apt-get install nautilus-open-terminal #注销,再次登陆即可任意地方右键打开终端 $ vim /etc/default/apport #更改enabled=0可解决开机总是提示有错误 $ vim ~/.bashrc #添加alias c='clear' 0x03 安装输入法 apt-get -f install可解决依赖问题 reber@ubuntu:~$ apt-get install ibus-sunpinyin #安装后重启系统 进入设置：system setting-&gt;text entry-&gt;添加sunpinyin 0x04 配置Apache/MySQL/PHP 安装 sudo apt-get install apache2 sudo apt-get install mysql-client mysql-server sudo apt-get install php5 sudo apt-get install php5-gd php5-mysql sudo apt-get install libapache2-mod-php5 sudo apt-get install libapache2-mod-auth-mysql sudo chmod 777 /var/www #为了方便 解决乱码问题 查看编码： mysql&gt; show variables like 'char%'; apache： sudo vim /etc/apache2/apache2.conf 最后添加AddDefaultCharset UTF-8 mysql： 编辑数据库配置文件 在[client]下面添加：default-character-set=utf8 在[mysqld]在下面添加character_set_server=utf8 测试数据库连接 &lt;?php $link = mysql_connect(&quot;localhost&quot;, &quot;root&quot;, &quot;password&quot;); if(!$link) die('Could not connect: ' .
+        0x00 环境  我是在虚拟机中安装14.04.4版的Ubuntu 下载Ubuntu14.04.4
+ 0x01 配源或选择最快的更新服务器  选择最快的更新服务器:
+System Settings &ndash;&gt; Software &amp; Updates &ndash;&gt; Download from:other &ndash;&gt; Select Best Server &ndash;&gt; Choose Serve &ndash;&gt; Close
+ 配源:
+reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak
+reber@ubuntu:~$ vim /etc/apt/sources.list
+   中科大源： deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb http://debian.
     </p>
 
     

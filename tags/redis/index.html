@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -123,7 +105,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Redis的未授权访问 若Redis服务器对公网开放，且未启用认证，则攻击者可以未授权访问服务器。 若Redis以root身份运行，黑客可以给root账户写入SSH公钥文件，通过SSH登录受害服务器。 0x01 向Redis服务器上传SSH公钥 0x02 通过计划任务反弹shell
+         0x00 Redis的未授权访问  若Redis服务器对公网开放，且未启用认证，则攻击者可以未授权访问服务器。 若Redis以root身份运行，黑客可以给root账户写入SSH公钥文件，通过SSH登录受害服务器。   0x01 向Redis服务器上传SSH公钥   0x02 通过计划任务反弹shell   
     </p>
 
     
@@ -174,7 +156,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于Redis Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。 0x01 安装 可在http://download.redis.io/releases/ 下载 $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install 0x02 产生的可执行文件 redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写) 0x03 配置文件 $ vim /opt/redis-3.2.3/redis.conf daemonize yes # 当值为yes时可以后台运行 bind 127.0.0.1 # 绑定ip，配置后只接受来自该ip的请求 port 6379 # 监听端口 timeout 300 # 客户端连接超时时间，单位为秒 loglevel notice # 日志等级分为4级，debug、verbose、notice、warning logfile &quot;/var/log/redis.log&quot; # 日志文件位置 databases 16 # 数据库数量 sava 900 1 #
+        0x00 关于Redis  Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。   0x01 安装  可在http://download.redis.io/releases/ 下载
+$ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install   0x02 产生的可执行文件  redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写)   0x03 配置文件  $ vim /opt/redis-3.2.3/redis.conf daemonize yes # 当值为yes时可以后台运行 bind 127.0.0.1 # 绑定ip，配置后只接受来自该ip的请求 port 6379 # 监听端口 timeout 300 # 客户端连接超时时间，单位为秒 loglevel notice # 日志等级分为4级，debug、verbose、notice、warning logfile &quot;/var/log/redis.
     </p>
 
     

@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -115,7 +97,7 @@
                 
                 
 
-<h3 id="0x00-代码执行:e5133e9592c5866433386f4a7b297c84">0x00 代码执行</h3>
+<h3 id="0x00-代码执行">0x00 代码执行</h3>
 
 <blockquote>
 <pre><code>当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，
@@ -123,7 +105,7 @@
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-相关函数:e5133e9592c5866433386f4a7b297c84">0x01 相关函数</h3>
+<h3 id="0x01-相关函数">0x01 相关函数</h3>
 
 <blockquote>
 <pre><code>PHP：eval assert
@@ -133,7 +115,7 @@ Java：没有类似函数，但采用的反射机制和各种基于反射机制�
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-phpcms中的string2array函数:e5133e9592c5866433386f4a7b297c84">0x02 phpcms中的string2array函数</h3>
+<h3 id="0x02-phpcms中的string2array函数">0x02 phpcms中的string2array函数</h3>
 
 <blockquote>
 <p>这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组</p>
@@ -161,7 +143,7 @@ Java：没有类似函数，但采用的反射机制和各种基于反射机制�
 </code></pre>
 </blockquote>
 
-<h3 id="0x03-漏洞危害:e5133e9592c5866433386f4a7b297c84">0x03 漏洞危害</h3>
+<h3 id="0x03-漏洞危害">0x03 漏洞危害</h3>
 
 <blockquote>
 <pre><code>执行代码
@@ -170,7 +152,7 @@ Java：没有类似函数，但采用的反射机制和各种基于反射机制�
 </code></pre>
 </blockquote>
 
-<h3 id="0x04-漏洞分类-也是利用点:e5133e9592c5866433386f4a7b297c84">0x04 漏洞分类(也是利用点)</h3>
+<h3 id="0x04-漏洞分类-也是利用点">0x04 漏洞分类(也是利用点)</h3>
 
 <blockquote>
 <pre><code>执行代码的函数：eval、assert
@@ -179,7 +161,7 @@ callback函数：preg_replace + /e模式
 </code></pre>
 </blockquote>
 
-<h3 id="0x05-漏洞挖掘:e5133e9592c5866433386f4a7b297c84">0x05 漏洞挖掘</h3>
+<h3 id="0x05-漏洞挖掘">0x05 漏洞挖掘</h3>
 
 <blockquote>
 <pre><code>框架找漏洞，如ThinkPHP：
@@ -194,7 +176,7 @@ callback函数：preg_replace + /e模式
 </code></pre>
 </blockquote>
 
-<h3 id="0x06-搭建环境实验:e5133e9592c5866433386f4a7b297c84">0x06 搭建环境实验</h3>
+<h3 id="0x06-搭建环境实验">0x06 搭建环境实验</h3>
 
 <ul>
 <li>示例一</li>
@@ -306,7 +288,7 @@ callback函数：preg_replace + /e模式
 
 </blockquote>
 
-<h3 id="0x07-具体操作:e5133e9592c5866433386f4a7b297c84">0x07 具体操作</h3>
+<h3 id="0x07-具体操作">0x07 具体操作</h3>
 
 <blockquote>
 <pre><code># 一般找CMS相应版本漏洞，如ThinkPHP2.1
@@ -323,7 +305,7 @@ callback函数：preg_replace + /e模式
 </code></pre>
 </blockquote>
 
-<h3 id="0x08-漏洞防御:e5133e9592c5866433386f4a7b297c84">0x08 漏洞防御</h3>
+<h3 id="0x08-漏洞防御">0x08 漏洞防御</h3>
 
 <ul>
 <li>使用json保存数组，当读取时就不需要使用eval了</li>

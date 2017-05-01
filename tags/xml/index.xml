@@ -8,7 +8,9 @@
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
     <lastBuildDate>Wed, 25 May 2016 13:59:59 +0800</lastBuildDate>
-    <atom:link href="http://wyb0.com/tags/xml/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://wyb0.com/tags/xml/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>XML基础</title>
@@ -16,144 +18,10 @@
       <pubDate>Wed, 25 May 2016 13:59:59 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/xml-basis/</guid>
-      <description>
-
-&lt;h2 id=&#34;xml简介:07321f34ad713d948a3a9651af1b3c1a&#34;&gt;XML简介：&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;xml的设计宗旨是传输数据，而并非显示数据&lt;/li&gt;
-&lt;li&gt;xms是不作为的，它被设计用来结构化、存储以及传输信息&lt;/li&gt;
-&lt;li&gt;xml只是纯文本，独立于软硬件和应用程序&lt;/li&gt;
-&lt;li&gt;xml可供任何软硬设备读取数据&lt;/li&gt;
-&lt;li&gt;xml可以自定义标签&lt;/li&gt;
-&lt;li&gt;xml具有自我描述性&lt;/li&gt;
-&lt;li&gt;xml是对html的补充&lt;/li&gt;
-&lt;li&gt;xml常用于简化数据的存储和共享&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;例子：John给George的便签&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
-&amp;lt;note&amp;gt;   //根元素
-  &amp;lt;to&amp;gt;George&amp;lt;/to&amp;gt;
-  &amp;lt;from&amp;gt;John&amp;lt;/from&amp;gt;
-  &amp;lt;heading&amp;gt;Reminder&amp;lt;/heading&amp;gt;
-  &amp;lt;body&amp;gt;Don&#39;t forget the meeting!&amp;lt;/body&amp;gt;
-&amp;lt;/note&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;xml树结构:07321f34ad713d948a3a9651af1b3c1a&#34;&gt;XML树结构：&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;必须有根节点&lt;/li&gt;
-&lt;li&gt;根节点可以有子节点&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;格式：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;root&amp;gt;
-  &amp;lt;child&amp;gt;
-    &amp;lt;subchild&amp;gt;.....&amp;lt;/subchild&amp;gt;
-  &amp;lt;/child&amp;gt;
-&amp;lt;/root&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;例子：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;books&amp;gt;
-  &amp;lt;book&amp;gt;
-    &amp;lt;name&amp;gt;Python黑帽子&amp;lt;/name&amp;gt;
-    &amp;lt;date&amp;gt;2015&amp;lt;/date&amp;gt;
-    &amp;lt;price&amp;gt;37￥&amp;lt;/price&amp;gt;
-    &amp;lt;description&amp;gt;
-      用python写一些程序
-    &amp;lt;/description&amp;gt;
-  &amp;lt;/book&amp;gt;
-  &amp;lt;book&amp;gt;
-    &amp;lt;name&amp;gt;Web安全深度剖析&amp;lt;/name&amp;gt;
-    &amp;lt;date&amp;gt;2014&amp;lt;/date&amp;gt;
-    &amp;lt;price&amp;gt;39￥&amp;lt;/price&amp;gt;
-    &amp;lt;description&amp;gt;
-      讲述web渗透的基础知识
-    &amp;lt;/description&amp;gt;
-  &amp;lt;/book&amp;gt;
-  &amp;lt;book&amp;gt;
-    &amp;lt;name&amp;gt;白帽子讲web安全&amp;lt;/name&amp;gt;
-    &amp;lt;date&amp;gt;2013&amp;lt;/date&amp;gt;
-    &amp;lt;price&amp;gt;44￥&amp;lt;/price&amp;gt;
-    &amp;lt;description&amp;gt;
-        道哥力作
-    &amp;lt;/description&amp;gt;
-  &amp;lt;/book&amp;gt;
-&amp;lt;/books&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;xml语法规则:07321f34ad713d948a3a9651af1b3c1a&#34;&gt;XML语法规则：&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;所有元素必有闭合标签&lt;/li&gt;
-&lt;li&gt;标签对大小写敏感&lt;/li&gt;
-&lt;li&gt;必须正确的嵌套&lt;/li&gt;
-&lt;li&gt;XML必须有根元素&lt;/li&gt;
-&lt;li&gt;XML的属性值必须加引号(能用子元素的就用子元素代替属性)&lt;/li&gt;
-&lt;li&gt;实体引用&lt;br /&gt;
-&lt;code&gt;&amp;amp;lt;   &amp;lt;   小于&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;&amp;amp;gt;   &amp;gt;   大于&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;&amp;amp;amp;  &amp;amp;   和号&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;&amp;amp;apos;     &#39;   单引号&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;&amp;amp;quot;     &amp;quot;   引号&lt;/code&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;注释&lt;br /&gt;
-&lt;code&gt;&amp;lt;!--   --&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;空格会被保留&lt;/li&gt;
-&lt;li&gt;XML以LF存储换行&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;xml属性:07321f34ad713d948a3a9651af1b3c1a&#34;&gt;XML属性：&lt;/h2&gt;
-
-&lt;p&gt;对于xml要尽量避免使用属性&lt;br /&gt;
-下面两种xml文档包含信息相同，但是推荐第二种&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;note date=&amp;quot;08/08/2008&amp;quot;&amp;gt;
-&amp;lt;to&amp;gt;George&amp;lt;/to&amp;gt;
-&amp;lt;from&amp;gt;John&amp;lt;/from&amp;gt;
-&amp;lt;heading&amp;gt;Reminder&amp;lt;/heading&amp;gt;
-&amp;lt;body&amp;gt;Don&#39;t forget the meeting!&amp;lt;/body&amp;gt;
-&amp;lt;/note&amp;gt; 
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;note&amp;gt;
-  &amp;lt;date&amp;gt;
-    &amp;lt;day&amp;gt;08&amp;lt;/day&amp;gt;
-    &amp;lt;month&amp;gt;08&amp;lt;/month&amp;gt;
-    &amp;lt;year&amp;gt;2008&amp;lt;/year&amp;gt;
-  &amp;lt;/date&amp;gt;
-&amp;lt;to&amp;gt;George&amp;lt;/to&amp;gt;
-&amp;lt;from&amp;gt;John&amp;lt;/from&amp;gt;
-&amp;lt;heading&amp;gt;Reminder&amp;lt;/heading&amp;gt;
-&amp;lt;body&amp;gt;Don&#39;t forget the meeting!&amp;lt;/body&amp;gt;
-&amp;lt;/note&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;针对元数据的xml属性:07321f34ad713d948a3a9651af1b3c1a&#34;&gt;针对元数据的XML属性：&lt;/h2&gt;
-
-&lt;p&gt;下面的ID仅仅是一个标识符，用于标识不同的便签。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;messages&amp;gt;
-  &amp;lt;note id=&amp;quot;501&amp;quot;&amp;gt;
-    &amp;lt;to&amp;gt;George&amp;lt;/to&amp;gt;
-    &amp;lt;from&amp;gt;John&amp;lt;/from&amp;gt;
-    &amp;lt;heading&amp;gt;Reminder&amp;lt;/heading&amp;gt;
-    &amp;lt;body&amp;gt;Don&#39;t forget the meeting!&amp;lt;/body&amp;gt;
-  &amp;lt;/note&amp;gt;
-  &amp;lt;note id=&amp;quot;502&amp;quot;&amp;gt;
-    &amp;lt;to&amp;gt;John&amp;lt;/to&amp;gt;
-    &amp;lt;from&amp;gt;George&amp;lt;/from&amp;gt;
-    &amp;lt;heading&amp;gt;Re: Reminder&amp;lt;/heading&amp;gt;
-    &amp;lt;body&amp;gt;I will not&amp;lt;/body&amp;gt;
-  &amp;lt;/note&amp;gt; 
-&amp;lt;/messages&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <description>XML简介：  xml的设计宗旨是传输数据，而并非显示数据 xms是不作为的，它被设计用来结构化、存储以及传输信息 xml只是纯文本，独立于软硬件和应用程序 xml可供任何软硬设备读取数据 xml可以自定义标签 xml具有自我描述性 xml是对html的补充 xml常用于简化数据的存储和共享  例子：John给George的便签
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;note&amp;gt; //根元素 &amp;lt;to&amp;gt;George&amp;lt;/to&amp;gt; &amp;lt;from&amp;gt;John&amp;lt;/from&amp;gt; &amp;lt;heading&amp;gt;Reminder&amp;lt;/heading&amp;gt; &amp;lt;body&amp;gt;Don&#39;t forget the meeting!&amp;lt;/body&amp;gt; &amp;lt;/note&amp;gt;  XML树结构：  必须有根节点 根节点可以有子节点  格式：
+&amp;lt;root&amp;gt; &amp;lt;child&amp;gt; &amp;lt;subchild&amp;gt;.....&amp;lt;/subchild&amp;gt; &amp;lt;/child&amp;gt; &amp;lt;/root&amp;gt;  例子：
+&amp;lt;books&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;Python黑帽子&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2015&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;37￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt; 用python写一些程序 &amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;Web安全深度剖析&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2014&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;39￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt; 讲述web渗透的基础知识 &amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;白帽子讲web安全&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2013&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;44￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt; 道哥力作 &amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;/books&amp;gt;  XML语法规则：  所有元素必有闭合标签 标签对大小写敏感 必须正确的嵌套 XML必须有根元素 XML的属性值必须加引号(能用子元素的就用子元素代替属性) 实体引用</description>
     </item>
     
   </channel>

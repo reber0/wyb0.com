@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="generator" content="Hugo 0.21-DEV" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reber's Blog - 漏洞挖掘|渗透测试|python|php </title>
@@ -50,24 +51,6 @@
         <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
-        
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
         
     </ul>
 </div>
@@ -119,7 +102,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 含义 sql注入是将代码插入(拼接)到应用(用户)的输入参数中， 之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击， 总结起来就是攻击者将恶意代码拼接到sql语句并加以执行从而得到数据的过程。 0x01 成因 SQl语句未对用户参数进行严格过滤 0x02 可引发注入的地方 其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入 常见的如下，按出现频率排序： 1. GET 2. POST 3. X-Forwarded-For 4. Cookie 5. User-Agent 0x03 注入分类 根据语法(较权威)： 1. 可联合查询注入: 只要页面有显示位即可使用，且注入速度很快 2. 报错型注入: 没有显示位但用echo &quot;mysql_error()&quot;输出了错误信息，速度很快，但是语句较复杂 3. 布尔型注入: 一次一个字节，速度慢，但只要有注入就能用 4. 基于时间延迟注入: 超级慢，比布尔型注入慢几倍，但是通用性较强 5. 可多语句查询: 只有SQL Server可以使用 根据类型： 1. 整形 2. 字符串型 3. 搜索型 0x04 查找注入点 在URL中： 1. and 1=1/and 1=2(整型) 2. 随即输入(整型) 3. -1/+1 回显上下页面(整型) 4. 单引号(字符型/整型) 5. and sleep(5) (判断页面返回时间) 在http头： 1. X-Forwarded-For 2.
+        0x00 含义  sql注入是将代码插入(拼接)到应用(用户)的输入参数中， 之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击， 总结起来就是攻击者将恶意代码拼接到sql语句并加以执行从而得到数据的过程。   0x01 成因  SQl语句未对用户参数进行严格过滤   0x02 可引发注入的地方  其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入 常见的如下，按出现频率排序： 1. GET 2. POST 3. X-Forwarded-For 4. Cookie 5. User-Agent   0x03 注入分类  根据语法(较权威)： 1. 可联合查询注入: 只要页面有显示位即可使用，且注入速度很快 2. 报错型注入: 没有显示位但用echo &quot;mysql_error()&quot;输出了错误信息，速度很快，但是语句较复杂 3. 布尔型注入: 一次一个字节，速度慢，但只要有注入就能用 4. 基于时间延迟注入: 超级慢，比布尔型注入慢几倍，但是通用性较强 5. 可多语句查询: 只有SQL Server可以使用 根据类型： 1. 整形 2. 字符串型 3. 搜索型   0x04 查找注入点  在URL中： 1. and 1=1/and 1=2(整型) 2.
     </p>
 
     
@@ -172,7 +155,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        针对单台服务器的渗透流程
+         针对单台服务器的渗透流程 
     </p>
 
     
@@ -223,7 +206,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        添加组件 开启iis 添加Web服务扩展 运行asp 权限
+         添加组件 开启iis 添加Web服务扩展 运行asp 权限 
     </p>
 
     
@@ -272,7 +255,17 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal 安装 yum install vsftpd 配置 备份 cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak 编辑配置文件 vim /etc/vsftpd/vsftpd.conf anonymous_enable=NO #设定不允许匿名访问 local_enable=YES #设定本地用户可以访问 chroot_list_enable=YES #使用户不能离开主目录 xferlog_file=/var/log/vsftpd.log #设定vsftpd的服务日志 ascii_upload_enable=YES ascii_download_enable=YES #设定支持ASCII pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证 # 并在尾部追加： guest_enable=YES #设定启用虚拟用户功能。 guest_username=ftp #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了 guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同 新增chroot_list并将ftp用户输入进去 touch /etc/vsftpd/chroot_list echo ftp &gt;&gt; /etc/vsftpd/chroot_list 安装Berkeley DB工具用来对虚拟用户认证配置管理： yum install db4 db4-utils 创建用户账户文件 vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行是密码 user2 #奇数行是用户名 666666 #偶数行是密码 user3 #奇数行是用户名 user3 #偶数行是密码 用Berkeley DB工具生成认证文件 db_load -T -t hash -f /etc/vsftpd/vuser_passwd.txt
+        安装环境为：CentOS-6.5-x86_64-minimal  安装 yum install vsftpd
+配置  备份
+cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
+ 编辑配置文件
+vim /etc/vsftpd/vsftpd.conf anonymous_enable=NO #设定不允许匿名访问 local_enable=YES #设定本地用户可以访问 chroot_list_enable=YES #使用户不能离开主目录 xferlog_file=/var/log/vsftpd.log #设定vsftpd的服务日志 ascii_upload_enable=YES ascii_download_enable=YES #设定支持ASCII pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证 # 并在尾部追加： guest_enable=YES #设定启用虚拟用户功能。 guest_username=ftp #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了 guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同  新增chroot_list并将ftp用户输入进去
+touch /etc/vsftpd/chroot_list
+echo ftp &gt;&gt; /etc/vsftpd/chroot_list
+ 安装Berkeley DB工具用来对虚拟用户认证配置管理：
+yum install db4 db4-utils
+ 创建用户账户文件
+vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行是密码 user2 #奇数行是用户名 666666 #偶数行是密码 user3 #奇数行是用户名 user3 #偶数行是密码  用Berkeley DB工具生成认证文件
     </p>
 
     
@@ -325,7 +318,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal 安装mysql sudo yum install mysql mysql-server mysql-devel 安装jdk和tomcat 创建安装jdk和tomcat的文件夹 下载安装包并解压安装 jdk包可在http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 下载 tomcat包可在http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz 下载 简单配置tomcat 启动tomcat 连接数据库 驱动可在http://dev.mysql.com/downloads/connector/j/ 下载 [reber@WYB ~]$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp &lt;%@page contentType=&quot;text/html;charset=utf-8&quot; import=&quot;java.sql.*&quot; %&gt; &lt;% String driver = &quot;com.mysql.jdbc.Driver&quot;; String url = &quot;jdbc:mysql://localhost:3306/tomcat&quot;; //数据库web String user = &quot;tomcat&quot;; String password = &quot;123456&quot;; try { Class.forName(driver); Connection conn = DriverManager.getConnection(url, user, password); if(!conn.isClosed()) out.println(&quot;数据库连接成功！&quot;); conn.close(); } catch(ClassNotFoundException e) { out.println(&quot;找不到驱动程序&quot;); e.printStackTrace(); } catch(SQLException e) { e.printStackTrace(); }
+        安装环境为：CentOS-6.5-x86_64-minimal  安装mysql sudo yum install mysql mysql-server mysql-devel
+安装jdk和tomcat  创建安装jdk和tomcat的文件夹  下载安装包并解压安装
+jdk包可在http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 下载
+tomcat包可在http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz 下载   简单配置tomcat 启动tomcat 连接数据库 驱动可在http://dev.mysql.com/downloads/connector/j/ 下载 [reber@WYB ~]$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
+&lt;%@page contentType=&quot;text/html;charset=utf-8&quot; import=&quot;java.sql.*&quot; %&gt; &lt;% String driver = &quot;com.mysql.jdbc.Driver&quot;; String url = &quot;jdbc:mysql://localhost:3306/tomcat&quot;; //数据库web String user = &quot;tomcat&quot;; String password = &quot;123456&quot;; try { Class.forName(driver); Connection conn = DriverManager.
     </p>
 
     
@@ -378,7 +375,13 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal 一、准备工作 首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++ 二、安装mysql和php sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm 三、安装依赖 安装pcre、pcre-devel sudo yum install pcre pcre-devel 安装zlib、zlib-devel sudo yum install zlib zlib-devel 安装ssl sudo yum install openssl openssl-devel 四、安装Nginx 可在http://nginx.org/download/nginx-1.9.9.tar.gz 下载 [reber@WYB nginx-1.9.9]$ ./configure [reber@WYB nginx-1.9.9]$ make [reber@WYB nginx-1.9.9]$
+        安装环境为：CentOS-6.5-x86_64-minimal  一、准备工作 首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++  二、安装mysql和php sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm  三、安装依赖  安装pcre、pcre-devel
+sudo yum install pcre pcre-devel
+ 安装zlib、zlib-devel
+sudo yum install zlib zlib-devel
+ 安装ssl
+sudo yum install openssl openssl-devel
+  四、安装Nginx 可在http://nginx.org/download/nginx-1.9.9.tar.gz 下载 [reber@WYB nginx-1.
     </p>
 
     
@@ -433,7 +436,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        第三方模块安装方法 使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装 使用easy_install安装 在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName 使用pip安装 在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName 网站下载安装包 在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装
+         第三方模块安装方法  使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装  使用easy_install安装  在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName   使用pip安装  在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName   网站下载安装包  在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装
+ 
     </p>
 
     
@@ -482,7 +486,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境： ubuntu14.4 安装shadowsocks-qt5 sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装) 配置客户端 配置火狐 访问YouTube
+         环境： ubuntu14.4
+安装shadowsocks-qt5 sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装)  配置客户端 配置火狐 访问YouTube 
     </p>
 
     
@@ -531,7 +536,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        一、代码编排 1.缩进：使用4个空格缩进 2.行长度：每行不要超过80个字符 3.空行：顶级定义之间空两行，如函数或类的定义，方法定义、类定义与第一个方法之间都应该空一行。 4.分号：行尾不要有分号，也不要用分号将两条命令放在一行,除非是：1.长的导入模块语句。2.注释里的URL.3.可以使用圆括号实现隐式行连接 二、文档编排 1.导入：模块注释-&gt;文档字符串-&gt;导入-&gt;模块全局变量-&gt;常量 导入顺序：标准库导入-&gt;第三方库导入-&gt;应用程序指定库导入 2.import:不要在一行中import多个库，一行中只导入一个 三、空格 1.不要在逗号、分号、冒号前加空格，但应在他们后面加(除了在行尾) 2.二元操作符(赋值、比较、布尔)两边都加空格 3.当&quot;=&quot;用于指示关键字参数或默认参数值是，不要再其两侧使用空格 4.&quot;,&quot;和&quot;#&quot;和&quot;=&quot;不需要对齐，因为空格会成为维护的负担 四、注释 总体原则，错误的注释不如没有注释。 注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。 1.块注释：在一段代码前增加的注释。在&quot;#&quot;后加一空格。段落之间以只有&quot;#&quot;的行间隔。 2.行注释，在一句代码后加注释。进来少使用. 3.绝不要描述代码. 假设阅读代码的人比你更懂Python, 他只是不知道你的代码要做什么. 五、文档描述 1.为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。 2.如果docstring要换行，参考如下例子 class SampleClass(object): &quot;&quot;&quot;Summary of class here. Longer class information.... Longer class information.... Attributes: likes_spam: A boolean indicating if we like SPAM or not. eggs: An integer count of the eggs we have laid. &quot;&quot;&quot; def __init__(self): &quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot; 六、命名规范 1.尽量单独使用小写字母‘l’，大写字母‘O’等容易混淆的字母。 2.模块名尽量短小，应该用小写加下划线的方式(如lower_with_under.py). 3.包命名尽量短小，使用全部小写的方式，不可以使用下划线。 4.类名使用大写字母开头的单词(如CapWords, 即Pascal风格) 5.函数命名使用全部小写的方式，可以使用下划线。 6.变量也用小写加下划线的方式，即this_is_a_variable=1 7.常量命名使用全部大写的方式，可以使用下划线。 8.类的属性（方法和变量）命名使用全部小写的方式，可以使用下划线。 9.类的方法第一个参数必须是self，而静态方法第一个参数必须是cls。 10.用单下划线(_)开头表示模块变量或函数是protected的(使用import * from时不会包含).
+        一、代码编排 1.缩进：使用4个空格缩进 2.行长度：每行不要超过80个字符 3.空行：顶级定义之间空两行，如函数或类的定义，方法定义、类定义与第一个方法之间都应该空一行。 4.分号：行尾不要有分号，也不要用分号将两条命令放在一行,除非是：1.长的导入模块语句。2.注释里的URL.3.可以使用圆括号实现隐式行连接  二、文档编排 1.导入：模块注释-&gt;文档字符串-&gt;导入-&gt;模块全局变量-&gt;常量 导入顺序：标准库导入-&gt;第三方库导入-&gt;应用程序指定库导入 2.import:不要在一行中import多个库，一行中只导入一个  三、空格 1.不要在逗号、分号、冒号前加空格，但应在他们后面加(除了在行尾) 2.二元操作符(赋值、比较、布尔)两边都加空格 3.当&quot;=&quot;用于指示关键字参数或默认参数值是，不要再其两侧使用空格 4.&quot;,&quot;和&quot;#&quot;和&quot;=&quot;不需要对齐，因为空格会成为维护的负担  四、注释 总体原则，错误的注释不如没有注释。 注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。 1.块注释：在一段代码前增加的注释。在&quot;#&quot;后加一空格。段落之间以只有&quot;#&quot;的行间隔。 2.行注释，在一句代码后加注释。进来少使用. 3.绝不要描述代码. 假设阅读代码的人比你更懂Python, 他只是不知道你的代码要做什么.  五、文档描述 1.为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。 2.如果docstring要换行，参考如下例子 class SampleClass(object): &quot;&quot;&quot;Summary of class here. Longer class information.... Longer class information.... Attributes: likes_spam: A boolean indicating if we like SPAM or not. eggs: An integer count of the eggs we have laid. &quot;&quot;&quot; def __init__(self): &quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot;  六、命名规范 1.
     </p>
 
     
@@ -584,7 +589,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 效果 使用软件conky可以在linux上看到系统的运行状态，效果如下： 0x01 安装与配置 先安装conky： sudo apt-get install conky 在/home/username/下创建文件.conkyrc 使conky开机自启 在/etc/profile最下面添加：/usr/bin/conky &amp; 0x03 配置文件.conkyrc内容如下 # set to yes if you want Conky to be forked in the background background no cpu_avg_samples 2 net_avg_samples 2 out_to_console no # X font when Xft is disabled, you can pick one with program xfontsel #font 7x12 #font 6x10 #font 7x13 #font 8x13 #font 7x12 #font *mintsmild.se* #font -*-*-*-*-*-*-34-*-*-*-*-*-*-* #font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1 # Use Xft?
+        0x00 效果  使用软件conky可以在linux上看到系统的运行状态，效果如下：  0x01 安装与配置  先安装conky：
+sudo apt-get install conky
+ 在/home/username/下创建文件.conkyrc
+ 使conky开机自启
+在/etc/profile最下面添加：/usr/bin/conky &amp;
+  0x03 配置文件.conkyrc内容如下  # set to yes if you want Conky to be forked in the background background no cpu_avg_samples 2 net_avg_samples 2 out_to_console no # X font when Xft is disabled, you can pick one with program xfontsel #font 7x12 #font 6x10 #font 7x13 #font 8x13 #font 7x12 #font *mintsmild.
     </p>
 
     

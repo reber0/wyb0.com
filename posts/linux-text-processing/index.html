@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -122,7 +104,7 @@
 ==&gt;sed
 </code></pre>
 
-<h2 id="awk处理文本-最常用:41aa65d1606d0ccf42df40ed1832e8e7">awk处理文本(<em>最常用</em>)：</h2>
+<h2 id="awk处理文本-最常用">awk处理文本(<em>最常用</em>)：</h2>
 
 <ul>
 <li>作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化<br /></li>
@@ -132,7 +114,7 @@ awk工作流程是这样的：<br /></li>
 <li>读入有&rsquo;\n&rsquo;换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&rdquo;空白键&rdquo; 或 &ldquo;[tab]键&rdquo;。</li>
 </ul>
 
-<h3 id="1-入门示例:41aa65d1606d0ccf42df40ed1832e8e7">1. 入门示例：</h3>
+<h3 id="1-入门示例">1. 入门示例：</h3>
 
 <pre><code>[wyb@localhost temp]$ head -n 5 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
@@ -171,7 +153,7 @@ operator:x:11:0:operator:/root:/sbin/nologin
 root:x:0:0:root:/root:/bin/bash
 </code></pre>
 
-<h3 id="2-内置变量:41aa65d1606d0ccf42df40ed1832e8e7">2. 内置变量：</h3>
+<h3 id="2-内置变量">2. 内置变量：</h3>
 
 <table>
     <tr>
@@ -205,9 +187,9 @@ filename:a.txt,linenumber:8,columns:1,linecontent:8     marry   j8jkf78
 filename:a.txt,linenumber:9,columns:1,linecontent:9     candy   kd89943
 </code></pre>
 
-<h3 id="3-awk编程:41aa65d1606d0ccf42df40ed1832e8e7">3. awk编程：</h3>
+<h3 id="3-awk编程">3. awk编程：</h3>
 
-<h5 id="3-1-变量和赋值:41aa65d1606d0ccf42df40ed1832e8e7">3.1 变量和赋值：</h5>
+<h5 id="3-1-变量和赋值">3.1 变量和赋值：</h5>
 
 <pre><code>[wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':'  'BEGIN {count=0} {count++; print &quot;username:&quot;$1} END {print &quot;count:&quot;count}'
 username:root
@@ -223,14 +205,14 @@ count:5
 [wyb@localhost ~]$ 
 </code></pre>
 
-<h5 id="3-2条件语句:41aa65d1606d0ccf42df40ed1832e8e7">3.2条件语句：</h5>
+<h5 id="3-2条件语句">3.2条件语句：</h5>
 
 <pre><code>[wyb@localhost ~]$ head -n 6 /etc/passwd | awk -F ':' '{if($1==&quot;root&quot;) print &quot;root bash is:&quot;$7}'
 root bash is:/bin/bash
 [wyb@localhost ~]$ 
 </code></pre>
 
-<h2 id="grep处理文本:41aa65d1606d0ccf42df40ed1832e8e7">Grep处理文本：</h2>
+<h2 id="grep处理文本">Grep处理文本：</h2>
 
 <p>匹配到时输出一行
 常用参数：nrABC
@@ -278,15 +260,14 @@ wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
 [wyb@localhost temp]$ 
 </code></pre>
 
-<h2 id="sed处理文本:41aa65d1606d0ccf42df40ed1832e8e7">sed处理文本</h2>
+<h2 id="sed处理文本">sed处理文本</h2>
 
 <ul>
 <li>处理大文本很好用，上几十万、上百万行的数据</li>
 <li>sed主要以行为单位，可以将数据行进行替换、删除、新增、选取等</li>
 <li>sed语法 参数 动作 文件</li>
 <li>-n只把匹配到的输出</li>
-
-<li><p>主要参数是：</p>
+<li>主要参数是：
 
 <ul>
 <li>a 在下面插入数据</li>
@@ -296,10 +277,12 @@ wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
 <li>c 替换字符串，后面可跟字符串，字符串替换n1到n2之间的行<br/>
 s 替换字符串，通常搭配正则</li>
 </ul></li>
+</ul>
 
-<li><p>字符的删除</p>
-
-<pre><code>[wyb@localhost aa]$ nl a.txt | sed '3,8d'   //不输出3-8行
+<ol>
+<li>字符的删除
+<code>
+[wyb@localhost aa]$ nl a.txt | sed '3,8d'   //不输出3-8行
      1  1     root      12sf34s56
      2  2     admin     ksdjfiweurf
      9  9     candy     kd89943
@@ -315,11 +298,10 @@ s 替换字符串，通常搭配正则</li>
      7  7     lola      er8f7734
      8  8     marry     j8jkf78
      9  9     candy     kd89943
-</code></pre></li>
-
-<li><p>a插入字符</p>
-
-<pre><code>[wyb@localhost aa]$ nl a.txt | sed '2a aaaaaa' | head -n 5  //在第二行下面插入一行字符串aaaaaa
+</code></li>
+<li>a插入字符
+<code>
+[wyb@localhost aa]$ nl a.txt | sed '2a aaaaaa' | head -n 5  //在第二行下面插入一行字符串aaaaaa
      1  1     root      12sf34s56
      2  2     admin     ksdjfiweurf
 aaaaaa
@@ -342,11 +324,10 @@ ccccc
 dddddd
      2  2     admin     ksdjfiweurf
      3  3     dome      skd89453
-</code></pre></li>
-
-<li><p>p输出字符</p>
-
-<pre><code>[wyb@localhost aa]$ nl a.txt | sed '2,5p'
+</code></li>
+<li>p输出字符
+<code>
+[wyb@localhost aa]$ nl a.txt | sed '2,5p'
      1  1     root      12sf34s56
      2  2     admin     ksdjfiweurf
      2  2     admin     ksdjfiweurf
@@ -370,11 +351,10 @@ dddddd
 [wyb@localhost bbb]$ nl /etc/passwd | sed -n '/root/{s/root/111111/;p}'查找root，然后将行中的第一个root替换为abcdefg  -n代表不输出所有的
      1  111111:x:0:0:root:/root:/bin/bash
     11  operator:x:11:0:operator:/111111:/sbin/nologin
-</code></pre></li>
-
-<li><p>c和s替换字符</p>
-
-<pre><code>[wyb@localhost aa]$ nl a.txt | sed '2,5c aaaaaa'    //将第2-5行替换
+</code></li>
+<li>c和s替换字符
+<code>
+[wyb@localhost aa]$ nl a.txt | sed '2,5c aaaaaa'    //将第2-5行替换
      1  1     root      12sf34s56
 aaaaaa
      6  6     canki     sdkj834
@@ -390,7 +370,7 @@ aaaaaa
      3  daemon:x:2:2:daemon:/sbin:/sbin/nologin
 [wyb@localhost aa]$ nl /etc/passwd | sed -n '1,5{s/root/1111/g;p;q}'前五行查找root，然后将整行的root替换为1111,查找到一个就退出
      1  1111:x:0:0:1111:/1111:/bin/bash
-</code></pre></li>
+</code></li>
 
 <li><p>实例</p>
 
@@ -411,13 +391,11 @@ eth0      Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10
           inet addr:192.168.63.131  
 [wyb@localhost aa]$ 
 
-
 [wyb@localhost aa]$ nl /etc/passwd | sed '3,$d'
      1  root:x:0:0:root:/root:/bin/bash
      2  bin:x:1:1:bin:/bin:/sbin/nologin
 [wyb@localhost aa]$ nl /etc/passwd | sed '3,$d' | sed -n 's/bash/buleshell/p'
      1  root:x:0:0:root:/root:/bin/buleshell
-
 
 [wyb@localhost aa]$ nl /etc/passwd | sed -e '3,$d' -e 's/bash/buleshell/p'
      1  root:x:0:0:root:/root:/bin/buleshell
@@ -436,7 +414,7 @@ eth0      Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10
      1  root:x:0:0:root:/root:/bin/buleshell
      2  bin:x:1:1:bin:/bin:/sbin/nologin
 </code></pre></li>
-</ul>
+</ol>
 
                 
                 <div style="padding:10px 1px;">

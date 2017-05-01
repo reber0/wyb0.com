@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -115,7 +97,7 @@
                 
                 
 
-<h3 id="0x00-目的:f68ab9b693c03a46b923f356015810f8">0x00 目的</h3>
+<h3 id="0x00-目的">0x00 目的</h3>
 
 <blockquote>
 <pre><code>由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向
@@ -126,14 +108,14 @@
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-开启rewrite模块:f68ab9b693c03a46b923f356015810f8">0x01 开启rewrite模块</h3>
+<h3 id="0x01-开启rewrite模块">0x01 开启rewrite模块</h3>
 
 <blockquote>
 <pre><code>$ sudo a2enmod rewrite
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-根目录下新建-htaccess:f68ab9b693c03a46b923f356015810f8">0x02 根目录下新建.htaccess：</h3>
+<h3 id="0x02-根目录下新建-htaccess">0x02 根目录下新建.htaccess：</h3>
 
 <blockquote>
 <pre><code>Options +FollowSymLinks
@@ -142,7 +124,7 @@ RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301]  # 这里换上新域名
 </code></pre>
 </blockquote>
 
-<h3 id="0x03-修改配置文件:f68ab9b693c03a46b923f356015810f8">0x03 修改配置文件</h3>
+<h3 id="0x03-修改配置文件">0x03 修改配置文件</h3>
 
 <blockquote>
 <pre><code># AllowOverride None 改为AllowOverride All
@@ -156,7 +138,7 @@ $ sudo vim /etc/apache2/apache2.conf
 </code></pre>
 </blockquote>
 
-<h3 id="0x04-重启apache:f68ab9b693c03a46b923f356015810f8">0x04 重启Apache</h3>
+<h3 id="0x04-重启apache">0x04 重启Apache</h3>
 
 <blockquote>
 <pre><code>$ sudo /etc/init.d/apache2 restart

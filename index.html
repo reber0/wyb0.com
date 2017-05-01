@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="generator" content="Hugo 0.21-DEV" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reber's Blog - 漏洞挖掘|渗透测试|python|php </title>
@@ -50,24 +51,6 @@
         <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
-        
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
         
     </ul>
 </div>
@@ -121,7 +104,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers['Content-Length'])/1024 with open(name, &quot;wb&quot;) as f: print &quot;total: &quot;,content_size,'k' for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit='k'): f.write(data) print &quot;done &quot;+name if __name__ == '__main__': url = &quot;http://127.0.0.1/Video.mp4&quot; name = url.split('/')[-1] get_vedio(url,name)
+         0x00 作用  在下载大文件时以进度条的形式显示下载进度，如下图所示：  0x01 代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers['Content-Length'])/1024 with open(name, &quot;wb&quot;) as f: print &quot;total: &quot;,content_size,'k' for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit='k'): f.write(data) print &quot;done &quot;+name if __name__ == '__main__': url = &quot;http://127.0.0.1/Video.mp4&quot; name = url.split('/')[-1] get_vedio(url,name)   
     </p>
 
     
@@ -172,7 +155,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 检测脚本如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import sys import Queue import requests import threading from requests.packages.urllib3.exceptions import InsecureRequestWarning requests.packages.urllib3.disable_warnings(InsecureRequestWarning) queue = Queue.Queue() mutex = threading.Lock() class Weblogic_SSRF_Check(threading.Thread): &quot;&quot;&quot;docstring for Weblogic_SSRF_Check&quot;&quot;&quot; def __init__(self, queue): threading.Thread.__init__(self) self.queue = queue def check(self,domain,ip): payload = &quot;uddiexplorer/SearchPublicRegistries.jsp?operator={ip}&amp;rdoSearch=name&amp;txtSearchname=sdf&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search&quot;.format(ip=ip) url = domain + payload try: html = requests.get(url=url, timeout=15, verify=False).content m = re.search('weblogic.uddi.client.structures.exception.XML_SoapException',html) if m: mutex.acquire() with open('ssrf.txt','a+') as f: print &quot;%s
+        0x00 检测脚本如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import re import sys import Queue import requests import threading from requests.packages.urllib3.exceptions import InsecureRequestWarning requests.packages.urllib3.disable_warnings(InsecureRequestWarning) queue = Queue.Queue() mutex = threading.Lock() class Weblogic_SSRF_Check(threading.Thread): &quot;&quot;&quot;docstring for Weblogic_SSRF_Check&quot;&quot;&quot; def __init__(self, queue): threading.Thread.__init__(self) self.queue = queue def check(self,domain,ip): payload = &quot;uddiexplorer/SearchPublicRegistries.jsp?operator={ip}&amp;rdoSearch=name&amp;txtSearchname=sdf&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search&quot;.format(ip=ip) url = domain + payload try: html = requests.get(url=url, timeout=15, verify=False).content m = re.search('weblogic.uddi.client.structures.exception.XML_SoapException',html) if m: mutex.acquire() with open('ssrf.txt','a+') as f: print &quot;%s has weblogic ssrf.
     </p>
 
     
@@ -225,7 +208,15 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 浏览器解析 浏览器收到服务器发来的HTML内容，会从头解析，遇到&lt;script&gt;&lt;/script&gt;时， 会调用js脚本解析器来解析并执行脚本，然后继续解析其他的HTML内容， 对于需要触发才能执行的事件，当事件触发时脚本解析器才会解析其中的脚本， 在这之前它是HTML的一部分 0x01 一些编码 URL编码 %+字符的ASCII编码对应的两位十六进制，如&quot;/&quot;的url编码为&quot;%2F&quot; HTML编码 实体编码 &amp;开头分号结尾，如 &quot;&lt;&quot; 的编码是 &quot;&amp;lt;&quot; 字符编码 样式为&quot;&amp;#数值;&quot;，数值可为10进制、16进制ASCII编码或unicode字符编码 如&quot;&lt;&quot;可编码为&quot;&amp;#060;&quot;和&quot;&amp;#x3c;&quot;，但是必须在属性值里面 JS编码 1、两个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\x3c&quot; 2、三个八进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\074&quot; 3、四个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\u003c&quot; 4、对于一些控制字符，使用特殊的C类型的转义风格（例如\n和\r） CSS编码 反斜线(\)后跟1~6位的16进制数字，如&quot;e&quot;为&quot;\65&quot;或&quot;65&quot;或&quot;00065&quot; 0x02 编码与解码顺序 解码时先解码最外层，编码时先编码最内层 如&lt;td onclick=&quot;openUrl(add.do?userName='{$value}');&quot;&gt;11&lt;/td&gt;， 首先value出现在url中，而url在js中，而js又是html一部分，所以 解码顺序为：html解码-&gt;js解码-&gt;url解码 编码顺序为：url编码-&gt;js编码-&gt;html编码 0x03 利用 八进制 &lt;p id=&quot;test&quot;&gt;&lt;/p&gt; &lt;script type=&quot;text/javascript&quot;&gt; var test = &quot;\74\151\155\147\40\163\162\143\75\170\40\157\156\145\162\162\157\162\75\141\154\145\162\164\50\61\51\76&quot;; var p = document.getElementById('test'); #这里会进行js解码 p.innerHTML = test; &lt;/script&gt; 十进制和十六进制 &lt;img src=x onerror=&quot;\u0061\u006c\u0065\u0072\u0074(1)&quot;&gt; &lt;img src=x onerror=&quot;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;&quot;&gt; javascript协议 &lt;a href=&quot;javascript:alert(1)&quot;&gt;xxx&lt;/a&gt; data协议 &lt;a href=&quot;data:text/html,&lt;script&gt;alert(1)&lt;/script&gt;&quot;&gt;xxxxxx&lt;/a&gt; &lt;a href=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&quot;&gt;111&lt;/a&gt; &lt;meta
+        0x00 浏览器解析  浏览器收到服务器发来的HTML内容，会从头解析，遇到&lt;script&gt;&lt;/script&gt;时， 会调用js脚本解析器来解析并执行脚本，然后继续解析其他的HTML内容， 对于需要触发才能执行的事件，当事件触发时脚本解析器才会解析其中的脚本， 在这之前它是HTML的一部分   0x01 一些编码  URL编码
+%+字符的ASCII编码对应的两位十六进制，如&quot;/&quot;的url编码为&quot;%2F&quot;  HTML编码
+ 实体编码
+&amp;开头分号结尾，如 &quot;&lt;&quot; 的编码是 &quot;&amp;lt;&quot;  字符编码
+样式为&quot;&amp;#数值;&quot;，数值可为10进制、16进制ASCII编码或unicode字符编码 如&quot;&lt;&quot;可编码为&quot;&amp;#060;&quot;和&quot;&amp;#x3c;&quot;，但是必须在属性值里面   JS编码
+1、两个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\x3c&quot; 2、三个八进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\074&quot; 3、四个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\u003c&quot; 4、对于一些控制字符，使用特殊的C类型的转义风格（例如\n和\r）  CSS编码
+反斜线(\)后跟1~6位的16进制数字，如&quot;e&quot;为&quot;\65&quot;或&quot;65&quot;或&quot;00065&quot;   0x02 编码与解码顺序  解码时先解码最外层，编码时先编码最内层
+如&lt;td onclick=&quot;openUrl(add.do?userName='{$value}');&quot;&gt;11&lt;/td&gt;， 首先value出现在url中，而url在js中，而js又是html一部分，所以 解码顺序为：html解码-&gt;js解码-&gt;url解码 编码顺序为：url编码-&gt;js编码-&gt;html编码   0x03 利用  八进制
+&lt;p id=&quot;test&quot;&gt;&lt;/p&gt; &lt;script type=&quot;text/javascript&quot;&gt; var test = &quot;\74\151\155\147\40\163\162\143\75\170\40\157\156\145\162\162\157\162\75\141\154\145\162\164\50\61\51\76&quot;; var p = document.getElementById('test'); #这里会进行js解码 p.
     </p>
 
     
@@ -278,7 +269,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于cURL cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。 利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。 0x01 pycurl常见方法 创建curl对象 c = pycurl.Curl() #创建一个curl对象 设置请求 c.setopt(pycurl.URL,&quot;http://www.baidu.com&quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象 部分返回信息 c.getinfo(pycurl.HTTP_CODE) #返回的HTTP状态码 c.getinfo(pycurl.HEADER_SIZE) #HTTP头部大小 c.getinfo(pycurl.TOTAL_TIME) #传输结束所消耗的总时间 c.getinfo(pycurl.NAMELOOKUP_TIME) #DNS解析所消耗的时间 c.getinfo(pycurl.CONNECT_TIME) #建立连接所消耗的时间
+        0x00 关于cURL  cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。 利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。   0x01 pycurl常见方法  创建curl对象   c = pycurl.Curl() #创建一个curl对象    设置请求   c.setopt(pycurl.URL,&quot;http://www.baidu.com&quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象    部分返回信息   c.
     </p>
 
     
@@ -331,7 +322,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 Ubuntu 14.04.1 LTS 0x01 安装与配置 reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;,
+        0x00 环境  Ubuntu 14.04.1 LTS
+ 0x01 安装与配置  reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;, # &quot;40002&quot;: &quot;lilei&quot;, # &quot;40003&quot;: &quot;mike&quot; #} &quot;timeout&quot;:300, # 超时时间（秒） &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式 # 若Linux内核在3.
     </p>
 
     
@@ -384,7 +376,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 目的 由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2 0x01 开启rewrite模块 $ sudo a2enmod rewrite 0x02 根目录下新建.htaccess： Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名 0x03 修改配置文件 # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt; 0x04 重启Apache $ sudo /etc/init.d/apache2 restart
+         0x00 目的  由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2   0x01 开启rewrite模块  $ sudo a2enmod rewrite   0x02 根目录下新建.htaccess：  Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名   0x03 修改配置文件  # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt;   0x04 重启Apache  $ sudo /etc/init.d/apache2 restart   
     </p>
 
     
@@ -433,7 +425,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 前期准备 # 环境 Ubuntu 14.04 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client reber@ubuntu:~/Desktop$ sudo apt-get install git 0x01 安装 reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb 0x02 配置 reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb external_url 'http://192.168.188.160:80' ...... gitlab_rails['time_zone'] = 'Asia/Shanghai' gitlab_rails['gitlab_email_from'] = 'xxxxxx@163.com' ...... gitlab_rails['smtp_enable'] = true gitlab_rails['smtp_address'] = &quot;smtp.163.com&quot; gitlab_rails['smtp_port'] = 25 gitlab_rails['smtp_user_name'] = &quot;xxxxxx@163.com&quot; gitlab_rails['smtp_password'] = &quot;111111&quot; # 客户端授权密码 gitlab_rails['smtp_domain'] = &quot;163.com&quot; gitlab_rails['smtp_authentication'] = &quot;login&quot; gitlab_rails['smtp_enable_starttls_auto'] = true ......
+        0x00 前期准备  # 环境 Ubuntu 14.04 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client reber@ubuntu:~/Desktop$ sudo apt-get install git   0x01 安装  reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb   0x02 配置  reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb external_url 'http://192.168.188.160:80' ...... gitlab_rails['time_zone'] = 'Asia/Shanghai' gitlab_rails['gitlab_email_from'] = 'xxxxxx@163.com' ...... gitlab_rails['smtp_enable'] = true gitlab_rails['smtp_address'] = &quot;smtp.163.com&quot; gitlab_rails['smtp_port'] = 25 gitlab_rails['smtp_user_name'] = &quot;xxxxxx@163.com&quot; gitlab_rails['smtp_password'] = &quot;111111&quot; # 客户端授权密码 gitlab_rails['smtp_domain'] = &quot;163.
     </p>
 
     
@@ -488,7 +480,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 简介 Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django, 但Tornado更注重速度,能够处理海量的同时发生的流量。 0x01 示例 main.py代码如下： #!/usr/bin/env python # -*- coding: utf-8 -*- import tornado.ioloop import tornado.web class IndexHandler(tornado.web.RequestHandler): def get(self): #访问根时触发这个函数 name = self.get_argument('name','wyb') self.write('Hello,' + name) self.write('&lt;br /&gt;&lt;a href=&quot;/login&quot;&gt;login&lt;/a&gt;') class MyLoginHandler(tornado.web.RequestHandler): def get(self): self.render('login.html') #若用户请求/login页面则将login.html发送给客户端，客户会看的一个登陆表单 def post(self): #当用户点击提交按钮是触发这个函数 name = self.get_argument('name') #接收表单的name password = self.get_argument('password') #接收表单的password self.write(&quot;you name is:%s\nyou password is:%s&quot; % (name,password)) def get_app(): handlers = [ (r&quot;/&quot;,IndexHandler), #代表请求/的都让IndexHandler处理 (r&quot;/login&quot;,MyLoginHandler), #表示请求/login页面的让MyLoginHandler处理 ] app = tornado.web.Application(handlers=handlers)
+        0x00 简介  Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django, 但Tornado更注重速度,能够处理海量的同时发生的流量。   0x01 示例  main.py代码如下：
+#!/usr/bin/env python # -*- coding: utf-8 -*- import tornado.ioloop import tornado.web class IndexHandler(tornado.web.RequestHandler): def get(self): #访问根时触发这个函数 name = self.get_argument('name','wyb') self.write('Hello,' + name) self.write('&lt;br /&gt;&lt;a href=&quot;/login&quot;&gt;login&lt;/a&gt;') class MyLoginHandler(tornado.web.RequestHandler): def get(self): self.render('login.html') #若用户请求/login页面则将login.html发送给客户端，客户会看的一个登陆表单 def post(self): #当用户点击提交按钮是触发这个函数 name = self.get_argument('name') #接收表单的name password = self.get_argument('password') #接收表单的password self.write(&quot;you name is:%s\nyou password is:%s&quot; % (name,password)) def get_app(): handlers = [ (r&quot;/&quot;,IndexHandler), #代表请求/的都让IndexHandler处理 (r&quot;/login&quot;,MyLoginHandler), #表示请求/login页面的让MyLoginHandler处理 ] app = tornado.
     </p>
 
     
@@ -541,7 +534,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        原文链接：http://www.wyzu.cn/2015/0123/107167.html 0x00 实现功能 添加cookie 获取所有cookie 根据名字获取单个cookie的值 移除所有cookie 根据名字移除单个cookie 0x01 封装cookie.js源码 /* * 名称和值传送时必须是经过RUL编码的 * cookie绑定在指定的域名下，非本域无法共享cookie，但是可以是在主站共享cookie给子站 * cookie的名称不分大小写；同时建议将cookie URL编码 * 建议针对cookie设置expires、domain、 path；每个cookie小于4KB **/ (function(global){ function getCookiesObj() { //获得cookie对象 var cookies = {}; if (document.cookie) { var objs = document.cookie.split('; '); for (var i in objs) { var index = objs[i].indexOf('='), name = objs[i].substr(0,index), value = objs[i].substr(index+1,objs[i].length); cookies[name] = value; } } return cookies; } function set(sName,sValue,Opts) { //设置cookie // Opts expires,path,domain,secure
+        原文链接：http://www.wyzu.cn/2015/0123/107167.html
+0x00 实现功能  添加cookie 获取所有cookie 根据名字获取单个cookie的值 移除所有cookie 根据名字移除单个cookie  0x01 封装cookie.js源码  /* * 名称和值传送时必须是经过RUL编码的 * cookie绑定在指定的域名下，非本域无法共享cookie，但是可以是在主站共享cookie给子站 * cookie的名称不分大小写；同时建议将cookie URL编码 * 建议针对cookie设置expires、domain、 path；每个cookie小于4KB **/ (function(global){ function getCookiesObj() { //获得cookie对象 var cookies = {}; if (document.cookie) { var objs = document.cookie.split('; '); for (var i in objs) { var index = objs[i].indexOf('='), name = objs[i].substr(0,index), value = objs[i].substr(index+1,objs[i].length); cookies[name] = value; } } return cookies; } function set(sName,sValue,Opts) { //设置cookie // Opts expires,path,domain,secure if (sName &amp;&amp; sValue) { var cookie = encodeURIComponent(sName)+'='+encodeURIComponent(sValue); if (Opts) { if (Opts.
     </p>
 
     
@@ -596,7 +590,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是CDN CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。 0x01 判断方法 可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息 0x02 代码 首先安装dnspython这个第三方模块：pip install dnspython #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.netloc # print url rsv = dns.resolver.Resolver() # rsv.nameservers =
+        0x00 什么是CDN  CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。   0x01 判断方法  可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息  0x02 代码  首先安装dnspython这个第三方模块：pip install dnspython
+#!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.
     </p>
 
     

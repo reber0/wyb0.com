@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -115,14 +97,14 @@
                 
                 
 
-<h3 id="0x00-前提:63b66c740d181b5f761fe95e9bd8be2c">0x00 前提</h3>
+<h3 id="0x00-前提">0x00 前提</h3>
 
 <blockquote>
 <pre><code>要用联合查询进行注入则：页面必须有显示位
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-联合查询:63b66c740d181b5f761fe95e9bd8be2c">0x01 联合查询</h3>
+<h3 id="0x01-联合查询">0x01 联合查询</h3>
 
 <blockquote>
 <pre><code>union可合并两个或多个select语句的结果集，
@@ -130,7 +112,7 @@
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-注入步骤:63b66c740d181b5f761fe95e9bd8be2c">0x02 注入步骤</h3>
+<h3 id="0x02-注入步骤">0x02 注入步骤</h3>
 
 <ul>
 <li>找注入点且得到闭合字符</li>
@@ -143,7 +125,7 @@
 <li>得到列值</li>
 </ul>
 
-<h4 id="1-找到注入点得到闭合字符:63b66c740d181b5f761fe95e9bd8be2c">1. 找到注入点得到闭合字符</h4>
+<h4 id="1-找到注入点得到闭合字符">1. 找到注入点得到闭合字符</h4>
 
 <blockquote>
 <p>
@@ -159,7 +141,7 @@
 </p>
 </blockquote>
 
-<h4 id="2-判断数据库类型:63b66c740d181b5f761fe95e9bd8be2c">2. 判断数据库类型</h4>
+<h4 id="2-判断数据库类型">2. 判断数据库类型</h4>
 
 <blockquote>
 
@@ -169,7 +151,7 @@
 
 </blockquote>
 
-<h4 id="3-猜解列数-得到显示位:63b66c740d181b5f761fe95e9bd8be2c">3. 猜解列数，得到显示位</h4>
+<h4 id="3-猜解列数-得到显示位">3. 猜解列数，得到显示位</h4>
 
 <blockquote>
 <p>
@@ -185,7 +167,7 @@
 </p>
 </blockquote>
 
-<h4 id="4-得到基本信息-数据库名-版本-数据库版本等:63b66c740d181b5f761fe95e9bd8be2c">4. 得到基本信息(数据库名、版本、数据库版本等)</h4>
+<h4 id="4-得到基本信息-数据库名-版本-数据库版本等">4. 得到基本信息(数据库名、版本、数据库版本等)</h4>
 
 <blockquote>
 
@@ -195,7 +177,7 @@
 
 </blockquote>
 
-<h4 id="5-得到数据库:63b66c740d181b5f761fe95e9bd8be2c">5. 得到数据库</h4>
+<h4 id="5-得到数据库">5. 得到数据库</h4>
 
 <blockquote>
 <p>
@@ -211,34 +193,34 @@
 </p>
 </blockquote>
 
-<h4 id="6-得到security数据库的表名:63b66c740d181b5f761fe95e9bd8be2c">6. 得到security数据库的表名</h4>
+<h4 id="6-得到security数据库的表名">6. 得到security数据库的表名</h4>
 
 <blockquote>
-<p>
+
 <div class="pure-u-1">
   <img class="pure-img" src="/img/post/sqli1_get_table_name.png" alt="得到security数据库的表名">
 </div>
-</p>
+
 </blockquote>
 
-<h4 id="7-猜解列名:63b66c740d181b5f761fe95e9bd8be2c">7. 猜解列名</h4>
+<h4 id="7-猜解列名">7. 猜解列名</h4>
 
 <blockquote>
-<p>
+
 <div class="pure-u-1">
   <img class="pure-img" src="/img/post/sqli1_get_column_name.png" alt="得到表列名">
 </div>
-</p>
+
 </blockquote>
 
-<h4 id="8-猜解数据:63b66c740d181b5f761fe95e9bd8be2c">8. 猜解数据</h4>
+<h4 id="8-猜解数据">8. 猜解数据</h4>
 
 <blockquote>
-<p>
+
 <div class="pure-u-1">
   <img class="pure-img" src="/img/post/sqli1_get_column_value.png" alt="同时得到用户名和密码">
 </div>
-</p>
+
 </blockquote>
 
                 

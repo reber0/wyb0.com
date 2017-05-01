@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -117,21 +99,21 @@
 
 <p><center><h2>MSSQL和MySQL提权</h2></center></p>
 
-<h2 id="mssql提权:8630331b284514675820d26a98874acc">MSSQL提权</h2>
+<h2 id="mssql提权">MSSQL提权</h2>
 
 <blockquote>
 <p>MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权<br />
 提权条件：数据库账号是DBA权限</p>
 </blockquote>
 
-<h4 id="关于xp-cmdshell:8630331b284514675820d26a98874acc">关于xp_cmdshell</h4>
+<h4 id="关于xp-cmdshell">关于xp_cmdshell</h4>
 
 <ul>
 <li>得到数据库连接信息，连接数据库后执行EXEC xp_cmdshell &lsquo;net user&rsquo;;</li>
 <li>有sql注入时也可以直接在url上使用xp_cmdshell，因为mssql可以多语句执行，例如?id=1;EXEC xp_cmdshell &lsquo;net user&rsquo;;--</li>
 </ul>
 
-<h4 id="连接数据库:8630331b284514675820d26a98874acc">连接数据库</h4>
+<h4 id="连接数据库">连接数据库</h4>
 
 <blockquote>
 <p>
@@ -147,7 +129,7 @@
 </p>
 </blockquote>
 
-<h4 id="执行系统命令:8630331b284514675820d26a98874acc">执行系统命令</h4>
+<h4 id="执行系统命令">执行系统命令</h4>
 
 <blockquote>
 <p>
@@ -169,7 +151,7 @@
 </p>
 </blockquote>
 
-<h4 id="添加用户:8630331b284514675820d26a98874acc">添加用户</h4>
+<h4 id="添加用户">添加用户</h4>
 
 <blockquote>
 <p>
@@ -185,7 +167,7 @@
 </p>
 </blockquote>
 
-<h4 id="远程连接:8630331b284514675820d26a98874acc">远程连接</h4>
+<h4 id="远程连接">远程连接</h4>
 
 <blockquote>
 <p>
@@ -209,20 +191,20 @@
 
 <p><br /><br /></p>
 
-<h2 id="mysql提权:8630331b284514675820d26a98874acc">MySQL提权</h2>
+<h2 id="mysql提权">MySQL提权</h2>
 
 <blockquote>
 <p>环境：web应用服务器权限较低<br />
 提权条件：MySQL是system权限</p>
 </blockquote>
 
-<h4 id="关于udf:8630331b284514675820d26a98874acc">关于UDF</h4>
+<h4 id="关于udf">关于UDF</h4>
 
 <blockquote>
 <p>MySQL提权可以用UDF和Mof。UDF就是User defined Function，即用户定义函数，可以通过创建存储方法来定义函数，从而调用系统命令。</p>
 </blockquote>
 
-<h4 id="udf提权过程:8630331b284514675820d26a98874acc">UDF提权过程</h4>
+<h4 id="udf提权过程">UDF提权过程</h4>
 
 <ul>
 <li>导入udf.dll到服务器指定目录<br />
@@ -239,7 +221,7 @@ select shell(&lsquo;cmd&rsquo;,&lsquo;whoami&rsquo;);</li>
 drop function shell;</li>
 </ul>
 
-<h4 id="查看基本信息:8630331b284514675820d26a98874acc">查看基本信息</h4>
+<h4 id="查看基本信息">查看基本信息</h4>
 
 <blockquote>
 <p>
@@ -261,7 +243,7 @@ drop function shell;</li>
 </p>
 </blockquote>
 
-<h4 id="上传udf提权:8630331b284514675820d26a98874acc">上传udf提权</h4>
+<h4 id="上传udf提权">上传udf提权</h4>
 
 <blockquote>
 <p>
@@ -289,7 +271,7 @@ drop function shell;</li>
 </p>
 </blockquote>
 
-<h4 id="添加用户-1:8630331b284514675820d26a98874acc">添加用户</h4>
+<h4 id="添加用户-1">添加用户</h4>
 
 <blockquote>
 <p>
@@ -317,14 +299,14 @@ drop function shell;</li>
 </p>
 </blockquote>
 
-<h4 id="远程连接-1:8630331b284514675820d26a98874acc">远程连接</h4>
+<h4 id="远程连接-1">远程连接</h4>
 
 <blockquote>
-<p>
+
 <div class="pure-u-1">
   <img class="pure-img" src="/img/post/privilge_escalation_win_shell_remote_connection.png" alt="Windows下第三方服务提权-远程3389连接">
 </div>
-</p>
+
 </blockquote>
 
                 

@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -115,13 +97,13 @@
                 
                 
 
-<h3 id="0x01-cgi协议:7b73b9bd5201efa83815469420a16279">0x01 CGI协议</h3>
+<h3 id="0x01-cgi协议">0x01 CGI协议</h3>
 
 <blockquote>
 <p>中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议</p>
 </blockquote>
 
-<h2 id="0x02-fastcgi:7b73b9bd5201efa83815469420a16279">0x02 FastCGI</h2>
+<h2 id="0x02-fastcgi">0x02 FastCGI</h2>
 
 <blockquote>
 <p>服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低</p>
@@ -129,7 +111,7 @@
 <p>fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等</p>
 </blockquote>
 
-<h3 id="0x03-fastcgi工作流程:7b73b9bd5201efa83815469420a16279">0x03 FastCGI工作流程</h3>
+<h3 id="0x03-fastcgi工作流程">0x03 FastCGI工作流程</h3>
 
 <blockquote>
 <p>一般情况下，FastCGI的整个工作流程是这样的：</p>
@@ -142,7 +124,7 @@
 <li>FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。在CGI模式中，php-cgi在此便退出了。</li>
 </ol>
 
-<h3 id="0x04-php-fpm:7b73b9bd5201efa83815469420a16279">0x04 PHP-FPM</h3>
+<h3 id="0x04-php-fpm">0x04 PHP-FPM</h3>
 
 <ul>
 <li>php-fpm就是fastcgi的实现，是一个php fastcgi进程管理器</li>

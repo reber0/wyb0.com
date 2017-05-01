@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -125,7 +107,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 代码 多线程爆破加密的zip压缩包 #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import optparse import zipfile import threading import Queue queue = Queue.Queue() lock = threading.Lock() result = '' def load_pwd(filename): for line in open(filename,'r'): if line: queue.put(line.strip()) def bruter(zipname,queue): global result zFile = zipfile.ZipFile(zipname) while not queue.empty(): password = queue.get() try: zFile.extractall(pwd=password) # 解压 lock.acquire() print &quot;[Ok] password is: %s&quot; % password lock.release() result = password except: lock.acquire() print
+        0x00 代码  多线程爆破加密的zip压缩包
+#!/usr/bin/env python # -*- coding: utf-8 -*- import sys import optparse import zipfile import threading import Queue queue = Queue.Queue() lock = threading.Lock() result = '' def load_pwd(filename): for line in open(filename,'r'): if line: queue.put(line.strip()) def bruter(zipname,queue): global result zFile = zipfile.ZipFile(zipname) while not queue.empty(): password = queue.get() try: zFile.extractall(pwd=password) # 解压 lock.acquire() print &quot;[Ok] password is: %s&quot; % password lock.release() result = password except: lock.
     </p>
 
     
@@ -182,7 +165,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        参考：https://github.com/lijiejie/subDomainsBrute 帮助信息 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &quot;&quot;&quot;docstring for SubDomain&quot;&quot;&quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + '.txt' if not outfile else outfile self.f = open('./output/'+outfile,'a+') self.ip_list = [] def _scan(self): while not self.queue.empty(): self.ip_list = [] ips = None sub_domain = self.queue.get() + '.' + self.target for _ in range(3): try: answers = self.rsv.query(sub_domain) if answers: for answer in answers: if answer.address not in self.ip_list: self.ip_list.append(answer.address) except dns.resolver.NoNameservers, e: break except Exception, e: pass if len(self.ip_list)&gt;0: ips = ','.join(self.ip_list) msg = sub_domain.ljust(30) + ips + '\n' lock.acquire() print msg self.f.write(msg) lock.release() self.queue.task_done() def run(self): self._scan() def get_target(domain_list): targets = [] for line in open(domain_list,'r'): if line: targets.append(line.strip()) return targets def get_sub_queue(sub_file): #得到所有子域名的queue for line in open(sub_file,'r'): if line: queue.put(line.strip()) def main(): parser = optparse.OptionParser() parser.add_option('-u', '--url', dest='url', type='string', help='Get a single top-level domain names.') parser.add_option('-l', '--list', dest='domain_list', type='string', help='Top-level domain name list.') parser.add_option('-f', '--file', dest='sub_file', default='sub.txt', type='string', help='Dict file used to brute sub names') parser.add_option('-t', '--threads', dest='threads_num', default=60, type='int', help='Number of threads.
+        参考：https://github.com/lijiejie/subDomainsBrute
+帮助信息   代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &quot;&quot;&quot;docstring for SubDomain&quot;&quot;&quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + '.txt' if not outfile else outfile self.f = open('./output/'+outfile,'a+') self.ip_list = [] def _scan(self): while not self.queue.empty(): self.
     </p>
 
     
@@ -239,7 +223,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        接收变量的php脚本如下 //代码仅供测试 &lt;?php $name = @$_POST['uname']; $pass = @$_POST['upass']; if (empty($name) or empty($pass)){ header(&quot;location:http://127.0.0.1:921/test/test/index.html&quot;); exit(); } else { if ($name === 'admin' and $pass === '123456'){ header(&quot;location:http://127.0.0.1:921/test/test/sucess.html&quot;); } else { header(&quot;location:http://127.0.0.1:921/test/test/error.html&quot;); exit(); } } ?&gt; 爆破表单的python脚本如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = []
+        接收变量的php脚本如下  //代码仅供测试 &lt;?php $name = @$_POST['uname']; $pass = @$_POST['upass']; if (empty($name) or empty($pass)){ header(&quot;location:http://127.0.0.1:921/test/test/index.html&quot;); exit(); } else { if ($name === 'admin' and $pass === '123456'){ header(&quot;location:http://127.0.0.1:921/test/test/sucess.html&quot;); } else { header(&quot;location:http://127.0.0.1:921/test/test/error.html&quot;); exit(); } } ?&gt;   爆破表单的python脚本如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = [] class FormBlast(threading.
     </p>
 
     
@@ -296,7 +280,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- 'this script can bruter ftp/ssh/mysql' __author__ = 'reber' import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') ch.setFormatter(formatter) logger.addHandler(ch) def
+        脚本  #!/usr/bin/env python # -*- coding: utf-8 -*- 'this script can bruter ftp/ssh/mysql' __author__ = 'reber' import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') ch.setFormatter(formatter) logger.
     </p>
 
     
@@ -349,7 +333,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 软件 使用theHarvester搜集邮箱 使用dnsenum得到邮箱服务器域名 使用nmap查看端口开启情况 使用Hydra进行弱口令猜解 0x01 设置Shadowsocks为全局模式: 0x02 得到邮箱 可在[theHarvester]下载theHarvester，得到邮箱后做成字典user.txt 0x03 得到邮箱服务器域名 0x04 nmap确认端口开启 0x05 Hydra爆密码 0x06 尝试登陆
+         0x00 软件  使用theHarvester搜集邮箱 使用dnsenum得到邮箱服务器域名 使用nmap查看端口开启情况 使用Hydra进行弱口令猜解   0x01 设置Shadowsocks为全局模式:   0x02 得到邮箱  可在[theHarvester]下载theHarvester，得到邮箱后做成字典user.txt  0x03 得到邮箱服务器域名   0x04 nmap确认端口开启   0x05 Hydra爆密码   0x06 尝试登陆   
     </p>
 
     

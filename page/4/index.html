@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="generator" content="Hugo 0.21-DEV" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reber's Blog - 漏洞挖掘|渗透测试|python|php </title>
@@ -50,24 +51,6 @@
         <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
-        
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
         
     </ul>
 </div>
@@ -123,7 +106,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- 'this script can bruter ftp/ssh/mysql' __author__ = 'reber' import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') ch.setFormatter(formatter) logger.addHandler(ch) def
+        脚本  #!/usr/bin/env python # -*- coding: utf-8 -*- 'this script can bruter ftp/ssh/mysql' __author__ = 'reber' import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') ch.setFormatter(formatter) logger.
     </p>
 
     
@@ -176,7 +159,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Python异常处理 #!/usr/bin/env python # -*- coding: utf-8 -*- try: try: # 可嵌套 str(&quot;aaaaa&quot;) # int(&quot;aaaaa&quot;) # print a # print 1/0 except (TypeError, IndexError, ValueError): #捕获多种异常 print &quot;TypeErrorZero or DivisionError or ValueError&quot; except ZeroDivisionError as aa: #捕获除零错误 print aa #输出详细错误信息 except: print u&quot;发生其他异常则执行这里&quot; else: print u&quot;上面没有出错才输出这里&quot; a = [1,2,3] print a[4] #这里出错，会向上抛出错误，最终输出this is error finally: print u&quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&quot; except Exception as e: #可捕获所有异常类型 print &quot;this is error&quot; print e
+         0x00 Python异常处理  #!/usr/bin/env python # -*- coding: utf-8 -*- try: try: # 可嵌套 str(&quot;aaaaa&quot;) # int(&quot;aaaaa&quot;) # print a # print 1/0 except (TypeError, IndexError, ValueError): #捕获多种异常 print &quot;TypeErrorZero or DivisionError or ValueError&quot; except ZeroDivisionError as aa: #捕获除零错误 print aa #输出详细错误信息 except: print u&quot;发生其他异常则执行这里&quot; else: print u&quot;上面没有出错才输出这里&quot; a = [1,2,3] print a[4] #这里出错，会向上抛出错误，最终输出this is error finally: print u&quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&quot; except Exception as e: #可捕获所有异常类型 print &quot;this is error&quot; print e   
     </p>
 
     
@@ -225,7 +208,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 启动 0x01 Metasploit的工作平台 在msf里的工作平台可以保存历史的一些操作信息 0x02 使用db_nmap扫描主机 扫描后的结果会保留在工作平台中，可以用hosts和services进行查看： 0x03 使用msf的模块进行弱口令爆破 注：这里针对ftp服务进行弱口令测试 使用vulns可以查看结果：msf auxiliary(ftp_login) &gt; vulns
+         0x00 启动   0x01 Metasploit的工作平台  在msf里的工作平台可以保存历史的一些操作信息  0x02 使用db_nmap扫描主机  扫描后的结果会保留在工作平台中，可以用hosts和services进行查看：  0x03 使用msf的模块进行弱口令爆破  注：这里针对ftp服务进行弱口令测试 使用vulns可以查看结果：msf auxiliary(ftp_login) &gt; vulns  
     </p>
 
     
@@ -276,7 +259,10 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 colorama 这个模块可以输出带有颜色的字符 #!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.CYAN,content='debug',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.YELLOW,content='warning',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.RED,content='error',g_color=colorama.Fore.RESET) 0x01 pyfiglet 可以输出字体的图片效果 from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&quot;xtty&quot;) #font可以控制输出的类型 0x02 chardet 这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码 #!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&quot;https://tower.im/users/sign_in&quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.decode(code['encoding']).encode('gbk') print chardet.detect(str1) start = str1.find('&lt;title&gt;') stop = str1.find('&lt;/title') print
+        0x00 colorama  这个模块可以输出带有颜色的字符
+#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.CYAN,content='debug',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.YELLOW,content='warning',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.RED,content='error',g_color=colorama.Fore.RESET)   0x01 pyfiglet  可以输出字体的图片效果
+from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&quot;xtty&quot;) #font可以控制输出的类型   0x02 chardet  这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
+#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&quot;https://tower.im/users/sign_in&quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.
     </p>
 
     
@@ -329,7 +315,14 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 安装Metasploit 下载msfinstall脚本 $ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall 修改文件权限 $ chmod 755 msfinstall 安装(时间较久) $ ./msfinstall 0x01 连接数据库 首先启动postgresql数据库 $ /etc/init.d/postgresql start #service postgresql start也可以 初始化MSF数据库(关键步骤) $ msfdb init 运行msfconsole $ msfconsole 在msf中查看数据库连接状态 msf &gt; db_status #若出现错误：Module database cache not built yet, using slow search #则重新构建缓存，缓存构建通常需要5-10分钟左右。 #构建完成后，退出Metasploit控制台，然后重新进入即可使用数据库缓存进行搜索模块 msf &gt; db_rebuild_cache
+         0x00 安装Metasploit  下载msfinstall脚本
+$ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall  修改文件权限
+$ chmod 755 msfinstall  安装(时间较久)
+$ ./msfinstall   0x01 连接数据库  首先启动postgresql数据库
+$ /etc/init.d/postgresql start #service postgresql start也可以  初始化MSF数据库(关键步骤)
+$ msfdb init  运行msfconsole
+$ msfconsole  在msf中查看数据库连接状态
+msf &gt; db_status #若出现错误：Module database cache not built yet, using slow search #则重新构建缓存，缓存构建通常需要5-10分钟左右。 #构建完成后，退出Metasploit控制台，然后重新进入即可使用数据库缓存进行搜索模块 msf &gt; db_rebuild_cache   
     </p>
 
     
@@ -380,7 +373,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于optparse模块 python2.3之后添加的模块optparse是专门用来处理命令行选项的 import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] domaion', version='%prog 1.2') parser.add_option('-b', '--bug', dest='isbug', default=False, action='store_true', help='Whether open the debug mode, default is false') parser.add_option('-u', '--url', dest='url', default=None, action='store', type='string', help='target url') parser.add_option('-n','--number', dest='num', default=10, type='int', help='the number, default is 10') (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message 0x01 说明 在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action='store'，可以不用写 action='store_true'使用参数时将布尔值true存储到dest指定的变量中 action='store_false'使用参数时将布尔值false存储到dest指定的变量中
+         0x00 关于optparse模块  python2.3之后添加的模块optparse是专门用来处理命令行选项的
+import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] domaion', version='%prog 1.2') parser.add_option('-b', '--bug', dest='isbug', default=False, action='store_true', help='Whether open the debug mode, default is false') parser.add_option('-u', '--url', dest='url', default=None, action='store', type='string', help='target url') parser.add_option('-n','--number', dest='num', default=10, type='int', help='the number, default is 10') (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message   0x01 说明  在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action='store'，可以不用写 action='store_true'使用参数时将布尔值true存储到dest指定的变量中 action='store_false'使用参数时将布尔值false存储到dest指定的变量中   
     </p>
 
     
@@ -429,7 +423,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境设置 Windows Phone手机和电脑处于同一无线环境下： 0x01 BurpSuite设置 0x02 抓HTTP包 0x03 抓HTTPS包 挂burpsuite的代理下载证书 把证书上传到你自己的服务器上(也可以本地搭建网站)，然后手机访问证书 安卓手机修改证书后缀为crt，证书可以放在网站上，也可以直接拖到手机上，然后安装 抓https数据包
+         0x00 环境设置  Windows Phone手机和电脑处于同一无线环境下：  0x01 BurpSuite设置   0x02 抓HTTP包   0x03 抓HTTPS包  挂burpsuite的代理下载证书  把证书上传到你自己的服务器上(也可以本地搭建网站)，然后手机访问证书
+安卓手机修改证书后缀为crt，证书可以放在网站上，也可以直接拖到手机上，然后安装  抓https数据包   
     </p>
 
     
@@ -478,7 +473,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境：CentOS-6.5-x86_64-minimal 0x00 搭建LAMP 安装Apache yum install httpd 安装MySQL yum install mysql mysql-server 设置数据库 [reber@localhost conf]$ sudo mysql_secure_installation # 更新root密码： [reber@localhost conf]$ mysql -uroot –p mysql&gt; use mysql; mysql&gt; update user set password=password('123456') where user='root'; mysql&gt; flush privileges; //不想重启mysql就使新密码生效就需要运行此命令刷新 mysql&gt; insert into mysql.user(Host,User,Password) values(&quot;localhost&quot;,&quot;blog&quot;,password(&quot;123456&quot;)); # mysql&gt; detele form mysql.user where User='blog' and Host='localhost'; //这步可以删除用户 mysql&gt; flush privileges; //刷新 mysql&gt; create database db_blog; Query OK, 1 row affected (0.00 sec) # 授权用户&quot;blog&quot;拥有db_blog数据库的所有权限
+        环境：CentOS-6.5-x86_64-minimal
+0x00 搭建LAMP  安装Apache
+yum install httpd  安装MySQL
+ yum install mysql mysql-server 设置数据库
+[reber@localhost conf]$ sudo mysql_secure_installation # 更新root密码： [reber@localhost conf]$ mysql -uroot –p mysql&gt; use mysql; mysql&gt; update user set password=password('123456') where user='root'; mysql&gt; flush privileges; //不想重启mysql就使新密码生效就需要运行此命令刷新 mysql&gt; insert into mysql.user(Host,User,Password) values(&quot;localhost&quot;,&quot;blog&quot;,password(&quot;123456&quot;)); # mysql&gt; detele form mysql.user where User='blog' and Host='localhost'; //这步可以删除用户 mysql&gt; flush privileges; //刷新 mysql&gt; create database db_blog; Query OK, 1 row affected (0.
     </p>
 
     
@@ -533,7 +532,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 简单尝试 0x01 生成一组数据包 0x02 发送数据包 send发送数据包 sr1发送数据包 sr发送数据包 0x03 发送SYN数据包 0x04 得到TCP内容 0x05 SYN Scans
+         0x00 简单尝试   0x01 生成一组数据包   0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包   0x04 得到TCP内容   0x05 SYN Scans   
     </p>
 
     
@@ -582,7 +581,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        Web常见漏洞
+         Web常见漏洞 
     </p>
 
     

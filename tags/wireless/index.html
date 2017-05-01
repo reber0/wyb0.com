@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -121,7 +103,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        场景 攻击主机和被攻击主机在一个无线下面 开始攻击 1. 打开ettercap 2. 查看host列表 在软件的图形化界面点击sniff，选择unified sniffing选择网卡，然后单击hosts选项，选择scan for host，然后选择host list 3. 选定攻击目标 选择192.168.1.116的IP地址，点击Add to Target 1,然后选择网关的IP地址192.168.1.1，点击Add to Target 2 4. 开始攻击 ettercap选择&rdquo;mitm&rdquo;—&rdquo;arp poisoning&rdquo;—&rdquo;Sniff remote connections&rdquo;— &ldquo;确定&rdquo;，然后再在被攻击端查看arp，可知攻击已经成功 5. ettercap持续监听目标 软件上开始监听，被攻击端用浏览器登录路由器 6. 得到Cookie 点击主界面的&rdquo;View&rdquo; — &ldquo;connetcions&rdquo; 可以查看被攻击主机的一些网络链接 7. 用cookie登陆被入侵账户 打开火狐浏览器，通过firebug插件添加截获到的cookie从而登陆账户
+         场景 攻击主机和被攻击主机在一个无线下面
+开始攻击 1. 打开ettercap   2. 查看host列表  在软件的图形化界面点击sniff，选择unified sniffing选择网卡，然后单击hosts选项，选择scan for host，然后选择host list  3. 选定攻击目标  选择192.168.1.116的IP地址，点击Add to Target 1,然后选择网关的IP地址192.168.1.1，点击Add to Target 2  4. 开始攻击  ettercap选择&rdquo;mitm&rdquo;—&rdquo;arp poisoning&rdquo;—&rdquo;Sniff remote connections&rdquo;— &ldquo;确定&rdquo;，然后再在被攻击端查看arp，可知攻击已经成功  5. ettercap持续监听目标  软件上开始监听，被攻击端用浏览器登录路由器  6. 得到Cookie  点击主界面的&rdquo;View&rdquo; — &ldquo;connetcions&rdquo; 可以查看被攻击主机的一些网络链接  7. 用cookie登陆被入侵账户  打开火狐浏览器，通过firebug插件添加截获到的cookie从而登陆账户  
     </p>
 
     
@@ -170,7 +153,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        网络拓扑及信息 其中ip等信息如下： 攻击WPA保护下的802.11网络 1. 查看无线网卡并将其设置为监听模式 2. 打开kismet，进行基本设置 3. 选择名字为111111的AP为目标 4. 查看kismet抓包信息 kismet生成的nettxt文件的部分信息如下： Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:21 2015 Last : Mon Nov 16 13:10:23 2015 Type : infrastructure BSSID : D8:42:AC:C9:5C:1D SSID 1 Type : Probe Response SSID : &quot;111111&quot; First : Mon Nov 16 12:46:30 2015 Last : Mon Nov 16 13:10:22 2015 Max Rate : 54.0 Packets : 249 Encryption : WPA+PSK Encryption : WPA+AES-CCM Channel : 5 Frequency : 0 - 979 packets, 83.75% Frequency : 2432 - 9 packets, 0.77% Frequency : 2437 - 61 packets, 5.22% Frequency : 2442 - 77 packets, 6.59% Frequency : 2447 - 42 packets, 3.59% Frequency : 2452 - 1 packets, 0.09% Max Seen : 1000 LLC : 249 Data : 920 Crypt : 341 Fragments : 0 Retries : 0 Total : 1169 Datasize : 146798 Last BSSTS : 0 Seen By : aaa (wlan0mon) fae5a030-8c1c-11e5-a78b-0403b30d2c03 1169 packets Mon Nov 16 13:10:23 2015 Client 3: MAC DC:C7:93:C5:05:58 Manuf : WP First : Mon Nov 16 12:47:01 2015 Last : Mon Nov 16 13:09:55 2015 Type : To Distribution MAC : 68:DF:DD:42:6A:F2 Channel : 0 Frequency : 0 - 149 packets, 99.33% Frequency : 2447 - 1 packets, 0.67% Max Seen : 1000 LLC : 0 Data : 150 Crypt : 22 Fragments : 0 Retries : 0 Total : 150 Datasize : 10740 Seen By : aaa (wlan0) fae5a030-8c1c-11e5-a78b-0403b30d2c03 150 packets Mon Nov 16 13:09:55 2015 筛选出的有用信息如下： BSSID : D8:42:AC:C9:5C:1D SSID : &quot;111111&quot; Encryption : WPA+PSK Encryption : WPA+AES-CCM Channel : 5 Client 3: MAC DC:C7:93:C5:05:58 5.
+        网络拓扑及信息 其中ip等信息如下： 攻击WPA保护下的802.11网络 1. 查看无线网卡并将其设置为监听模式   2. 打开kismet，进行基本设置   3. 选择名字为111111的AP为目标   4. 查看kismet抓包信息  kismet生成的nettxt文件的部分信息如下：
+Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:21 2015 Last : Mon Nov 16 13:10:23 2015 Type : infrastructure BSSID : D8:42:AC:C9:5C:1D SSID 1 Type : Probe Response SSID : &quot;111111&quot; First : Mon Nov 16 12:46:30 2015 Last : Mon Nov 16 13:10:22 2015 Max Rate : 54.
     </p>
 
     

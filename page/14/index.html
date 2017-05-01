@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="generator" content="Hugo 0.21-DEV" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reber's Blog - 漏洞挖掘|渗透测试|python|php </title>
@@ -50,24 +51,6 @@
         <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
-        
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
         
     </ul>
 </div>
@@ -119,7 +102,10 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制： 为二进制文件添加s权限从而提升为root权限方法： 写sudoers添加用户 //最佳方案 vim /etc/passwd //将uid和gid改为0 vim /etc/shadow //密文覆盖 vim root .ssh/证书文件 .ssh这个文件夹和证书的权限要正确，要和原来一致 SUID:这个东西主要是留后门 在root权限下给usermod一个s权限： # which usermod //得到usermod的路径 /usr/sbin/usermod # chmod u+s /usr/sbin/usermod # ls -l /usr/sbin/usermod -rwsr-x---. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod usermod给其他人一个x权限： [root@localhost ~]# chmod o+x /usr/sbin/usermod [root@localhost ~]# ls -l /usr/sbin/usermod -rwsr-x--x. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod 切换到普通用户wyb： [wyb@localhost ~]$ id wyb uid=500(wyb) gid=500(wyb) groups=500(wyb) [wyb@localhost ~]$ usermod -g
+        SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制：
+为二进制文件添加s权限从而提升为root权限方法：  写sudoers添加用户 //最佳方案
+ vim /etc/passwd //将uid和gid改为0 vim /etc/shadow //密文覆盖
+ vim root .ssh/证书文件 .ssh这个文件夹和证书的权限要正确，要和原来一致  SUID:这个东西主要是留后门 在root权限下给usermod一个s权限： # which usermod //得到usermod的路径 /usr/sbin/usermod # chmod u+s /usr/sbin/usermod # ls -l /usr/sbin/usermod -rwsr-x---. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  usermod给其他人一个x权限： [root@localhost ~]# chmod o+x /usr/sbin/usermod [root@localhost ~]# ls -l /usr/sbin/usermod -rwsr-x--x. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  切换到普通用户wyb：  [wyb@localhost ~]$ id wyb uid=500(wyb) gid=500(wyb) groups=500(wyb) [wyb@localhost ~]$ usermod -g root wyb [wyb@localhost ~]$ id wyb uid=500(wyb) gid=0(root) groups=0(root) [wyb@localhost ~]$ exit  验证： 重新用wyb连接，此时即为root权限 [wyb@localhost ~]$ cd /root //若能切换到此目录即证明确实获得了root权限 [wyb@localhost root]$ ls anaconda-ks.
     </p>
 
     
@@ -172,7 +158,17 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x01 新建用户 环境：Ubuntu 14.04.4 Step1：添加新用户 useradd -r -m -s /bin/bash 用户名 Step2:配置新用户密码 passwd 用户名 Step3：给新添加的用户增加root权限 visudo 然后添加： 用户名 ALL=(ALL:ALL) ALL ctrl+o 保存 ctrl+x 退出 0x01 用户组 初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个 useradd xm 用户xm会默认加到xm组 useradd -g fans xm 将xm的所属组改为fans useradd -G fans xm 初始组为xm，有效组为fans useradd xiaoming usermod -g fans xiaoming 只有一个初始组，被修改为fans useradd xm usermod -G fans xm xm用户会有两个组，初始组为xm，又添加一个有效组fans usermod -G fans1 xm xm用户两个组，初始组为xm，有效组更改为fans1 用户创建的文件拥有者是初始组
+         0x01 新建用户  环境：Ubuntu 14.04.4
+  Step1：添加新用户
+useradd -r -m -s /bin/bash 用户名
+ Step2:配置新用户密码
+passwd 用户名
+ Step3：给新添加的用户增加root权限
+visudo
+然后添加：
+用户名 ALL=(ALL:ALL) ALL
+ ctrl+o 保存 ctrl+x 退出
+  0x01 用户组  初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个  useradd xm 用户xm会默认加到xm组 useradd -g fans xm 将xm的所属组改为fans useradd -G fans xm 初始组为xm，有效组为fans  useradd xiaoming usermod -g fans xiaoming 只有一个初始组，被修改为fans useradd xm usermod -G fans xm xm用户会有两个组，初始组为xm，又添加一个有效组fans usermod -G fans1 xm xm用户两个组，初始组为xm，有效组更改为fans1  用户创建的文件拥有者是初始组   
     </p>
 
     
@@ -221,7 +217,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        第一种方法 分5步： 1. 启动网卡： $ ifconfig eth0 up/down 2. 配置ip： $ ifconfig eth0 192.168.22.231 netmask 255.255.255.0 3. 配置网关： $ route add default gw 192.168.22.1 4. 配DNS： $ vim /etc/resolv.conf $ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.cof 5. 重启网络使配置生效： 6. 用文件配置ip信息 $ /etc/sysconfig/network-scripts/ifcfg-eth0 ps:添加静态路由 route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3 //添加静态路由添加网络10.211.55.0，从eth0出去 第二种方法 分1步： 打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息: DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY= 打开ip转发 echo &quot;1&quot; &gt;&gt; /proc/sys/net/ipv4/ip_forward 或者vim /etc/sysctl.conf
+         第一种方法 分5步： 1. 启动网卡： $ ifconfig eth0 up/down 2. 配置ip： $ ifconfig eth0 192.168.22.231 netmask 255.255.255.0 3. 配置网关： $ route add default gw 192.168.22.1 4. 配DNS： $ vim /etc/resolv.conf $ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.cof 5. 重启网络使配置生效： 6. 用文件配置ip信息 $ /etc/sysconfig/network-scripts/ifcfg-eth0 ps:添加静态路由 route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3 //添加静态路由添加网络10.211.55.0，从eth0出去  第二种方法 分1步： 打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:
+DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  打开ip转发 echo &quot;1&quot; &gt;&gt; /proc/sys/net/ipv4/ip_forward 或者vim /etc/sysctl.conf  
     </p>
 
     
@@ -270,7 +267,13 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        短 俄罗斯某诗人 一天很短 短得来不及拥抱清晨 就已经手握黄昏 一年很短 短得来不及细品初春殷红窦绿 就要打点素裹秋霜 一生很短 短的来不及享用美好年华 就已经身处迟暮 总是经过的太快 领悟的太晚 我们要学会珍惜 珍惜人生路上的亲情、友情、同事情、同学情、朋友情 一旦擦身而过 也许永不邂逅
+        短 俄罗斯某诗人
+
+
+一天很短 短得来不及拥抱清晨 就已经手握黄昏 
+一年很短 短得来不及细品初春殷红窦绿 就要打点素裹秋霜 
+一生很短 短的来不及享用美好年华 就已经身处迟暮 
+总是经过的太快 领悟的太晚 我们要学会珍惜 珍惜人生路上的亲情、友情、同事情、同学情、朋友情 一旦擦身而过 也许永不邂逅
     </p>
 
     
@@ -319,7 +322,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        主要有三种参数：rwx 对于文件来说：分别是读/写/执行 对于目录来说：r读目录结构；w操作目录结构；x进入目录 如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh 若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中 文件权限 chmod -x [root@localhost tmp]# ls -l total 0 -rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# chmod -x a.txt 去除ugo的x权限 [root@localhost tmp]# ls -l total 0 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# ls -l a.txt -rwxrw-rw-. 1 root root 9 Apr 16 20:42 a.txt [root@localhost tmp]# cat a.txt echo aaa [root@localhost tmp]# ./a.txt 直接执行了a.txt中的echo命令 aaa [root@localhost tmp]# chmod -R [root@localhost tmp]# ls -l a;ls -l a/a.txt total 0 -rw-r--r--.
+        主要有三种参数：rwx 对于文件来说：分别是读/写/执行
+对于目录来说：r读目录结构；w操作目录结构；x进入目录
+如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh
+若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中
+文件权限  chmod -x [root@localhost tmp]# ls -l total 0 -rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# chmod -x a.txt 去除ugo的x权限 [root@localhost tmp]# ls -l total 0 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# ls -l a.txt -rwxrw-rw-. 1 root root 9 Apr 16 20:42 a.txt [root@localhost tmp]# cat a.
     </p>
 
     
@@ -372,7 +379,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        Vim的安装及配置： 安装vim yum install vim 配置文件的位置 在目录 /etc/ 下面，有个名为vimrc的 文件， 这是系统中公共的vim配置文件，对所有用户都有效。 设置语法高亮显示 1) 打开vimrc，添加以下语句来使得语法高亮显示： syntax on 2) 如果此时语法还是没有高亮显示，那么在/etc目录下的profile文件中添加以下语句： export TERM=xterm-color 设置Windows风格的C/C++自动缩进（添加以下set语句到vimrc中） 1）设置Tab为4个空格 set tabstop=4 # 设定tab长度为4 set softtabstop=4 # 使按退格键时可以一次删除4个空格 set shiftwidth=4 # 表示每一级缩进的长度，一般设置成跟softtabstop一样 set expandtab/noexpandtab # 缩进用空格/制表符表示 2）自动缩进 set autoindent/noautoindent # 设置每行的缩进值与上一行相等/不相等 3）使用 C/C++ 语言的自动缩进方式 set cindent 4）在左侧显示文本的行号 set nu 5）搜索设置 set incsearch # 输入搜索内容时就显示搜索结果 set hlsearch # 搜索时高亮显示被找到的文本 6）如果没有下列语句，就加上吧 if &amp;term==&quot;xterm&quot; set t_Co=8 set t_Sb=^[[4%dm set t_Sf=^[[3%dm endif Vim编辑器的三种模式 命令行模式 $vim 文件名 #直接进入命令行模式 Ctrl+ZZ# 可保存文件 5dd/4yy# 剪切5行/复制4行 p # 粘贴到当前行后面 u # 一直点的话会一直撤销，直到回复到文件最初状态 gg/G # 光标移动到首行/末行 H/M/L # 光标移动到屏幕显示的首行/中间/末行 0/$ # 光标移动到行首/行尾 w/b # 光标跳到下一个/上一个单词 o # 在下一行插入 Ctrl+g # 显示文本的信息 dt% # 删除所有内容直到遇到 % d0/d$或D # 删除从光标到行首/行尾的字符 3dw # 删除3个单词 v+方向键 # 可以从当前光标向各方向选择字符或行 4+向下的方向键 # 光标向下移动4行 /和？# 向下和向上搜索 末行模式 :wq # 推出并保存 :wq!
+        Vim的安装及配置：  安装vim   yum install vim    配置文件的位置   在目录 /etc/ 下面，有个名为vimrc的 文件， 这是系统中公共的vim配置文件，对所有用户都有效。    设置语法高亮显示   1) 打开vimrc，添加以下语句来使得语法高亮显示： syntax on 2) 如果此时语法还是没有高亮显示，那么在/etc目录下的profile文件中添加以下语句： export TERM=xterm-color    设置Windows风格的C/C++自动缩进（添加以下set语句到vimrc中）   1）设置Tab为4个空格 set tabstop=4 # 设定tab长度为4 set softtabstop=4 # 使按退格键时可以一次删除4个空格 set shiftwidth=4 # 表示每一级缩进的长度，一般设置成跟softtabstop一样 set expandtab/noexpandtab # 缩进用空格/制表符表示 2）自动缩进 set autoindent/noautoindent # 设置每行的缩进值与上一行相等/不相等 3）使用 C/C++ 语言的自动缩进方式 set cindent 4）在左侧显示文本的行号 set nu 5）搜索设置 set incsearch # 输入搜索内容时就显示搜索结果 set hlsearch # 搜索时高亮显示被找到的文本 6）如果没有下列语句，就加上吧 if &amp;term==&quot;xterm&quot; set t_Co=8 set t_Sb=^[[4%dm set t_Sf=^[[3%dm endif   Vim编辑器的三种模式  命令行模式   $vim 文件名 #直接进入命令行模式 Ctrl+ZZ# 可保存文件 5dd/4yy# 剪切5行/复制4行 p # 粘贴到当前行后面 u # 一直点的话会一直撤销，直到回复到文件最初状态 gg/G # 光标移动到首行/末行 H/M/L # 光标移动到屏幕显示的首行/中间/末行 0/$ # 光标移动到行首/行尾 w/b # 光标跳到下一个/上一个单词 o # 在下一行插入 Ctrl+g # 显示文本的信息 dt% # 删除所有内容直到遇到 % d0/d$或D # 删除从光标到行首/行尾的字符 3dw # 删除3个单词 v+方向键 # 可以从当前光标向各方向选择字符或行 4+向下的方向键 # 光标向下移动4行 /和？# 向下和向上搜索    末行模式   :wq # 推出并保存 :wq!
     </p>
 
     
@@ -425,7 +432,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        标题 列表 引用 图片和链接 粗体与斜体 表格 代码块 行内代码块：使用两个Esc按键下的符号`将代码包裹起来即可 代码块：在代码左侧加4个空格即可(tab键缩进也行) 线 字体、字号和颜色设置
+         标题 列表 引用 图片和链接 粗体与斜体 表格 代码块 行内代码块：使用两个Esc按键下的符号`将代码包裹起来即可
+代码块：在代码左侧加4个空格即可(tab键缩进也行) 线 字体、字号和颜色设置 
     </p>
 
     
@@ -474,7 +482,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        4月到10月好好参加培训
+         4月到10月好好参加培训 
     </p>
 
     
@@ -525,7 +533,16 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        正则表达式 正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串 原子字符 元字符 修饰符 re模块 由于Pyton的字符串本身也用\转义，强烈建议使用r前缀 函数match() 这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None 函数search() 这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None 函数findall()和finditer() re.findall()将以列表的形式返回所有能匹配到的字符 re.finditer()将以迭代器的形式返回所有能匹配到的字符 函数sub() 这个函数会对字符串进行匹配，然后替换，可以指定替换次数 函数split() 这个函数会以正则来分割字符串，以列表样式返回 函数compile() 这个函数可以编译正则，提高匹配速度 提取子串 根据正则可以匹配字符然后提取出来，用括号表示要提取的分组 贪婪匹配 正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&rdquo;？&rdquo;来抑制贪婪匹配
+         正则表达式  正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串
+ 原子字符   元字符   修饰符   re模块  由于Pyton的字符串本身也用\转义，强烈建议使用r前缀
+  函数match()
+这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None  函数search()
+这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None  函数findall()和finditer()
+re.findall()将以列表的形式返回所有能匹配到的字符
+re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数sub()
+这个函数会对字符串进行匹配，然后替换，可以指定替换次数  函数split()
+这个函数会以正则来分割字符串，以列表样式返回  函数compile()
+这个函数可以编译正则，提高匹配速度   提取子串  根据正则可以匹配字符然后提取出来，用括号表示要提取的分组  贪婪匹配  正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&rdquo;？&rdquo;来抑制贪婪匹配  
     </p>
 
     
@@ -576,7 +593,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。 单线程 #!/usr/bin/env python # -*- coding: utf-8 -*- from time import time,ctime,sleep def music(arg): for x in range(2): print &quot;I'm listening to %s. %s&quot; % (arg,ctime()) sleep(1) def movie(arg): for x in range(2): print &quot;I'm watching %s. %s&quot; % (arg,ctime()) sleep(5) if __name__ == '__main__': start = int(time()) music(u'我') movie(u'可是') print &quot;All over time:%s&quot; % ctime() print &quot;Used time:%d&quot; % int(time()-start) 多线程 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep INDEX = 0 def http_get(sites): global INDEX while INDEX &lt; len(sites): url = sites[INDEX] INDEX += 1 resp = requests.get(url, timeout=3) resp.encoding = resp.apparent_encoding title = re.search(r'&lt;title&gt;(.*?)&lt;/title&gt;', resp.text).group(1) print &quot;URL:%-30sTitle:%s&quot; % (url, title) sites = [ &quot;http://www.baidu.com&quot;, &quot;http://www.qq.com&quot;, &quot;http://www.github.com&quot;, &quot;http://www.jingyingba.com&quot;, ] if __name__ == '__main__': start = int(time()) threads = [] for i in range(0, 3): t = threading.Thread(target=http_get, args=(sites,)) threads.append(t) for t in threads: #t.setDaemon(True) #设为守护线程,主线程结束后不管子线程是否完成,立即结束 t.start() for t in threads: t.join() #主线程阻塞，等待子线程完成 print &quot;Used time:%d&quot; % int(time() - start) 线程同步 使用多线程时若线程共用一个资源则可能导致线程竞争问题，可以通过互斥锁和队列来解决 线程竞争 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep num = 0 def test(): global num sleep(1) num = num+1 msg = 'Number: ' + str(num) print msg if __name__ == '__main__': start = int(time()) threads = [] for i in range(0, 20): t = threading.Thread(target=test) threads.append(t) for t in threads: t.setDaemon(True) t.start() for t in threads: t.join() print &quot;Used time:%d&quot; % int(time() - start) 互斥锁 #!/usr/bin/env python # -*- coding: utf-8 -*- &quot;&quot;&quot; 使用步骤： 1.
+        Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。
+单线程  #!/usr/bin/env python # -*- coding: utf-8 -*- from time import time,ctime,sleep def music(arg): for x in range(2): print &quot;I'm listening to %s. %s&quot; % (arg,ctime()) sleep(1) def movie(arg): for x in range(2): print &quot;I'm watching %s. %s&quot; % (arg,ctime()) sleep(5) if __name__ == '__main__': start = int(time()) music(u'我') movie(u'可是') print &quot;All over time:%s&quot; % ctime() print &quot;Used time:%d&quot; % int(time()-start)   多线程  #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep INDEX = 0 def http_get(sites): global INDEX while INDEX &lt; len(sites): url = sites[INDEX] INDEX += 1 resp = requests.
     </p>
 
     

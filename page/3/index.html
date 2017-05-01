@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="generator" content="Hugo 0.21-DEV" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reber's Blog - 漏洞挖掘|渗透测试|python|php </title>
@@ -50,24 +51,6 @@
         <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
-        
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
         
     </ul>
 </div>
@@ -119,7 +102,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        帮助信息 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- 'This is a proxy' __author__ = 'xxx' import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s) text = b''.join([x if 0x20 &lt;= ord(x) &lt; 0x7F else b'.' for x in s]) result.append(b&quot;%04X %-*s %s&quot; % (i,length*(digits+1),hexa,text)) print b'\n'.join(result) def receive_from (connection): buffer = &quot;&quot; #我们设置了1秒的超时，这取决于目标的情况，可能需要调整 connection.settimeout(1) try: #持续从缓存中读取数据直到没有数据或者超时 while True: data = connection.recv(4096) if not data: break buffer += data except: pass return buffer #对目标是远程主机的请求进行修改 def request_handler (buffer): #执行包修改 return buffer #对目标是本地主机的响应进行修改 def response_handler (buffer): #执行包修改 return buffer def proxy_handler (client_socket,remote_host,remote_port,receive_first): #连接远程主机 remote_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM) remote_socket.connect((remote_host,remote_port)) #如果必要从远程主机接收数据 if receive_first: remote_buffer = receive_from(remote_socket) if len(remote_buffer): print &quot;\n[==&gt;] Received %d bytes from remote.&quot; % len(remote_buffer) # hexdump(remote_buffer) #发送给我们的相应处理 remote_buffer = response_handler(remote_buffer) #若我们有数据传递给本地客户端，发送它 if len(remote_buffer): print &quot;[&lt;==] Sending %d bytes to localhost.\n&quot; % len(remote_buffer) client_socket.send(remote_buffer) #现在我们从本地循环读取数据，发送给远程主机和本地主机 while True: #从本地读取数据 local_buffer = receive_from(client_socket) if len(local_buffer): print &quot;\n[==&gt;] Received %d bytes from localhost.&quot; % len(local_buffer) # hexdump(local_buffer) #发送给我们的本地请求 local_buffer = request_handler(local_buffer) #发送给远程主机 remote_socket.send(local_buffer) print &quot;[==&gt;] Sent to remote.&quot; #接收响应的数据 remote_buffer = receive_from(remote_socket) if len(remote_buffer): print &quot;\n[&lt;==] Received %d bytes from remote.&quot; % len(remote_buffer) # hexdump(remote_buffer) #发送数据到响应处理函数 remote_buffer = response_handler(remote_buffer) #将响应发送给本地socket client_socket.send(remote_buffer) print &quot;[==&gt;] Sent to localhost.&quot; #若两边都没有数据，关闭连接 if not len(local_buffer) or not len(remote_buffer): client_socket.close() remote_socket.close() print &quot;[*] No more data.
+        帮助信息   代码如下  #!/usr/bin/env python # -*- coding: utf-8 -*- 'This is a proxy' __author__ = 'xxx' import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s) text = b''.
     </p>
 
     
@@ -176,7 +159,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 安装 下载MySQL-python-1.2.3.win-amd64-py2.7.exe然后安装 0x01 简单表设计如下 insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default '127.0.0.1' comment 'ip地址', domain varchar(100) not null default 'www.xx.com' comment '域名' ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges; 0x02 代码 #!/usr/bin/env python # -*- coding:
+        0x00 安装  下载MySQL-python-1.2.3.win-amd64-py2.7.exe然后安装
+ 0x01 简单表设计如下  insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default '127.0.0.1' comment 'ip地址', domain varchar(100) not null default 'www.xx.com' comment '域名' ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges;   0x02 代码  #!
     </p>
 
     
@@ -233,7 +217,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        参考：https://github.com/lijiejie/subDomainsBrute 帮助信息 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &quot;&quot;&quot;docstring for SubDomain&quot;&quot;&quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + '.txt' if not outfile else outfile self.f = open('./output/'+outfile,'a+') self.ip_list = [] def _scan(self): while not self.queue.empty(): self.ip_list = [] ips = None sub_domain = self.queue.get() + '.' + self.target for _ in range(3): try: answers = self.rsv.query(sub_domain) if answers: for answer in answers: if answer.address not in self.ip_list: self.ip_list.append(answer.address) except dns.resolver.NoNameservers, e: break except Exception, e: pass if len(self.ip_list)&gt;0: ips = ','.join(self.ip_list) msg = sub_domain.ljust(30) + ips + '\n' lock.acquire() print msg self.f.write(msg) lock.release() self.queue.task_done() def run(self): self._scan() def get_target(domain_list): targets = [] for line in open(domain_list,'r'): if line: targets.append(line.strip()) return targets def get_sub_queue(sub_file): #得到所有子域名的queue for line in open(sub_file,'r'): if line: queue.put(line.strip()) def main(): parser = optparse.OptionParser() parser.add_option('-u', '--url', dest='url', type='string', help='Get a single top-level domain names.') parser.add_option('-l', '--list', dest='domain_list', type='string', help='Top-level domain name list.') parser.add_option('-f', '--file', dest='sub_file', default='sub.txt', type='string', help='Dict file used to brute sub names') parser.add_option('-t', '--threads', dest='threads_num', default=60, type='int', help='Number of threads.
+        参考：https://github.com/lijiejie/subDomainsBrute
+帮助信息   代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &quot;&quot;&quot;docstring for SubDomain&quot;&quot;&quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + '.txt' if not outfile else outfile self.f = open('./output/'+outfile,'a+') self.ip_list = [] def _scan(self): while not self.queue.empty(): self.
     </p>
 
     
@@ -286,7 +271,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Tmux的快捷键前缀 Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c 0x01 会话 0x02 窗口和窗格
+         0x00 Tmux的快捷键前缀  Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c
+ 0x01 会话   0x02 窗口和窗格   
     </p>
 
     
@@ -337,7 +323,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于Pocsuite Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。 0x01 简单介绍 安装 使用pip install pocsuite即可安装 常用参数 -u 指定一个目标url -f 指定一个存放目标url的文件 -r 指定一个存放poc的文件夹 &ndash;report 导出结果到html文件 &ndash;cookie 携带cookie &ndash;referer 修改referer &ndash;user-agent 修改UA 模式 执行一个poc有两种模式 --verify 漏洞验证模式(只是验证，不能更改服务器的东西) --attack 漏洞利用模式 示例 pocsuite -u &ldquo;http://www.xxxx.com&quot; -r poc_path/poc_name.py &ndash;atack poc编写 可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类) 此时示例(对目标进行常见服务的测试，加载一类多个poc脚本) pocsuite -u &ldquo;http://www.xxxx.com&quot; -r poc_path/server/ &ndash;verify poc的命名规范 漏洞ID_版本号_漏洞类型(其中不能有大写字母，所有符号要改为&rdquo;_&rdquo;),大致如下： _xxxx_struct2_2016_s2_016_code_execution.py _xxxx_dedecms_20130715_sql_inj.py poc的编写流程 导入pocsuite API模块 创建TestPOC类 填写POC信息 编写_berify()方法 编写_attack()方法 注册类 0x02 实例 #!/usr/bin/env python # -*- coding: utf-8 -*-
+        0x00 关于Pocsuite  Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。
+ 0x01 简单介绍  安装  使用pip install pocsuite即可安装   常用参数  -u 指定一个目标url -f 指定一个存放目标url的文件 -r 指定一个存放poc的文件夹 &ndash;report 导出结果到html文件 &ndash;cookie 携带cookie &ndash;referer 修改referer &ndash;user-agent 修改UA  模式  执行一个poc有两种模式  --verify 漏洞验证模式(只是验证，不能更改服务器的东西) --attack 漏洞利用模式  示例  pocsuite -u &ldquo;http://www.xxxx.com&quot; -r poc_path/poc_name.py &ndash;atack   poc编写
+ 可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类) 此时示例(对目标进行常见服务的测试，加载一类多个poc脚本)  pocsuite -u &ldquo;http://www.xxxx.com&quot; -r poc_path/server/ &ndash;verify   poc的命名规范
     </p>
 
     
@@ -394,7 +382,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        接收变量的php脚本如下 //代码仅供测试 &lt;?php $name = @$_POST['uname']; $pass = @$_POST['upass']; if (empty($name) or empty($pass)){ header(&quot;location:http://127.0.0.1:921/test/test/index.html&quot;); exit(); } else { if ($name === 'admin' and $pass === '123456'){ header(&quot;location:http://127.0.0.1:921/test/test/sucess.html&quot;); } else { header(&quot;location:http://127.0.0.1:921/test/test/error.html&quot;); exit(); } } ?&gt; 爆破表单的python脚本如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = []
+        接收变量的php脚本如下  //代码仅供测试 &lt;?php $name = @$_POST['uname']; $pass = @$_POST['upass']; if (empty($name) or empty($pass)){ header(&quot;location:http://127.0.0.1:921/test/test/index.html&quot;); exit(); } else { if ($name === 'admin' and $pass === '123456'){ header(&quot;location:http://127.0.0.1:921/test/test/sucess.html&quot;); } else { header(&quot;location:http://127.0.0.1:921/test/test/error.html&quot;); exit(); } } ?&gt;   爆破表单的python脚本如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = [] class FormBlast(threading.
     </p>
 
     
@@ -447,7 +435,10 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Package Control 安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件 代码安装 ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号) import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read()) 手动安装 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text 使用方法 Ctrl+Shift+P调出菜单然后选择相应操作 Preferences -&gt; Package Control也可调出 选择Install Package后可以输入想安装的插件名搜索安装 0x01 Emmet 前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 0x02 Anaconda 可以自动补全并提示语法，还可跳转到定义、使用等 效果如下： 0x03 Git 在编辑器就可以执行git命令，有github的开发者必备 0x04 GitGutter 在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率 0x05 Markdown Preview 可以在本地预览文件 0x06 DocBlokr 这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释 0x07 AutoFileName 快捷输入文件名 0x08 Theme-Flatland和Theme-SoDaReloaded 两个很不错的主题插件，安装好之后：首选项
+        0x00 Package Control  安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件
+  代码安装
+ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)   import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())    手动安装
+ 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text  使用方法  Ctrl+Shift+P调出菜单然后选择相应操作  Preferences -&gt; Package Control也可调出  选择Install Package后可以输入想安装的插件名搜索安装    0x01 Emmet  前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装)
     </p>
 
     
@@ -500,13 +491,10 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 PHP的配置 PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题 0x01 远程文件包含 涉及配置项 allow_url_include 配置为On时允许进行远程文件包含 allow_url_fopen 配置为On时允许使用函数fopen、file_put_contents 配置方案 alllow_url_include = Off allow_url_fopen = Off 0x02 关闭错误回显 涉及配置项 display_errors 配置为On时会显示错误信息 配置方案 display_errors = Off log_errors = On error_log = /var/log/php_error.log 0x03 隐藏php版本 涉及配置项 expose_php 为Off时会隐藏php版本 配置方案 expose_php = Off 0x04 魔术引号 涉及配置项 magic_quotes_gpc 过滤get、post、cookie的单引号、双引号、反斜杠、空字符，但不过滤$_SERVER magic_quotes_runtime 对文件或数据库中取出的数据进行过滤，可防止二次注入 配置方案 做逻辑判断时需要去掉反斜杠，所以用全局过滤框架做过滤吧 0x05 安全模式 涉及配置项 safe_mode 开启后安全系数提升，但会限制函数使用权限和操作目录文件权限等 配置方案 在安全模式下可以使用safe_mode_include_dir = /var/www/common来排除某些文件 0x06 目录权限控制 涉及配置项 open_basedir 开启后可将用户访问范围限定，可防止跨站，但会影响性能 配置方案 open_basedir = /var/www/web1/:/var/www/web2/ (后面的斜杠不能少) 0x07
+         0x00 PHP的配置  PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题
+ 0x01 远程文件包含  涉及配置项  allow_url_include  配置为On时允许进行远程文件包含  allow_url_fopen  配置为On时允许使用函数fopen、file_put_contents   配置方案  alllow_url_include = Off allow_url_fopen = Off   0x02 关闭错误回显  涉及配置项  display_errors  配置为On时会显示错误信息   配置方案  display_errors = Off log_errors = On error_log = /var/log/php_error.log   0x03 隐藏php版本  涉及配置项  expose_php  为Off时会隐藏php版本   配置方案  expose_php = Off   0x04 魔术引号  涉及配置项  magic_quotes_gpc  过滤get、post、cookie的单引号、双引号、反斜杠、空字符，但不过滤$_SERVER  magic_quotes_runtime  对文件或数据库中取出的数据进行过滤，可防止二次注入   配置方案  做逻辑判断时需要去掉反斜杠，所以用全局过滤框架做过滤吧   0x05 安全模式  涉及配置项  safe_mode  开启后安全系数提升，但会限制函数使用权限和操作目录文件权限等   配置方案  在安全模式下可以使用safe_mode_include_dir = /var/www/common来排除某些文件   0x06 目录权限控制  涉及配置项  open_basedir  开启后可将用户访问范围限定，可防止跨站，但会影响性能   配置方案  open_basedir = /var/www/web1/:/var/www/web2/ (后面的斜杠不能少)   0x07 禁止函数  涉及配置项  disable_functions  禁止某些命令执行函数和文件操作函数的使用   配置方案  disable_functions = system,passthru,exec,shell_exec,popen,pcntl_exec, proc_open,chdir,chroot,getcwd,readdir,mkdir,copy,file_get_contents,   0x08 注册全局变量  涉及配置项  register_globals  值为On是会开启全局注册变量功能   配置方案  register_globals = Off   
     </p>
 
-    
-    <footer>
-        <a href="/posts/php-safe-configuration/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
     
 </article>
 
@@ -555,7 +543,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Python的模块 在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径 使用if __name__ == &lsquo;__main__&lsquo;: 0x01 实例 文件结构如下 测试文件test.py #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.test() 包package1 init.py #这个文件可以为空 __all__ = ['module1', 'module2'] #有这一句才能使用import
+        0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径 使用if __name__ == &lsquo;__main__&lsquo;:  0x01 实例  文件结构如下  测试文件test.py
+   #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.
     </p>
 
     
@@ -608,7 +597,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        简介 有时候需要在网上注册许多账号，如果每个账户密码都一样的话，若被别人得知一个密码则所有账户就都沦陷了，若密码不一样则可能会忘记，在这里就用脚本写一个生成密码的工具，只需输入域名和账户名就可以根据key生成不一样的密码，也可以把域名和账户名写入文件，这样你用户名也可以不用记了。。。 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import sys import os import optparse import json import msvcrt def get_md5(string): md5 = hashlib.md5() md5.update(string) s = md5.hexdigest() return s def get_domain(): if os.path.exists('account.txt'): data = {} with open('account.txt', 'r') as f: lines = f.readlines() for line in lines: line = line.split('*') data[line[0]] = line[1].strip() else: pass return data def get_pass(): pwd = [] while True: nchar
+        简介  有时候需要在网上注册许多账号，如果每个账户密码都一样的话，若被别人得知一个密码则所有账户就都沦陷了，若密码不一样则可能会忘记，在这里就用脚本写一个生成密码的工具，只需输入域名和账户名就可以根据key生成不一样的密码，也可以把域名和账户名写入文件，这样你用户名也可以不用记了。。。
+ 代码如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import sys import os import optparse import json import msvcrt def get_md5(string): md5 = hashlib.md5() md5.update(string) s = md5.hexdigest() return s def get_domain(): if os.path.exists('account.txt'): data = {} with open('account.txt', 'r') as f: lines = f.readlines() for line in lines: line = line.split('*') data[line[0]] = line[1].strip() else: pass return data def get_pass(): pwd = [] while True: nchar = msvcrt.
     </p>
 
     

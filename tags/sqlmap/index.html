@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -121,7 +103,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import threading import requests import json from time import sleep class Sqli(threading.Thread): &quot;&quot;&quot;docstring for AutoSqli&quot;&quot;&quot; def __init__(self, server, target, data='', referer='', cookie=''): threading.Thread.__init__(self) self.server = server[0:-1] if server[-1]=='/' else server self.target = target self.data = data self.referer = referer self.cookie = cookie self.taskid = '' self.data def new_task(self): url = &quot;{}/task/new&quot;.format(self.server) self.taskid = json.loads(requests.get(url).text)['taskid'] if len(self.taskid)&gt;0: print &quot;Create new task,taskid is: %s&quot;
+        代码如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import threading import requests import json from time import sleep class Sqli(threading.Thread): &quot;&quot;&quot;docstring for AutoSqli&quot;&quot;&quot; def __init__(self, server, target, data='', referer='', cookie=''): threading.Thread.__init__(self) self.server = server[0:-1] if server[-1]=='/' else server self.target = target self.data = data self.referer = referer self.cookie = cookie self.taskid = '' self.data def new_task(self): url = &quot;{}/task/new&quot;.format(self.server) self.taskid = json.loads(requests.get(url).text)['taskid'] if len(self.taskid)&gt;0: print &quot;Create new task,taskid is: %s&quot; % self.
     </p>
 
     
@@ -174,7 +156,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        关于sqlmapapi.py 当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量 用于交互的方法 在sqlmap/lib/utils/api.py中: # 用户方法 @get(&quot;/task/new&quot;) Create new task ID. @get(&quot;/task/&lt;taskid&gt;/delete&quot;) Delete own task ID. # 管理函数 @get(&quot;/admin/&lt;taskid&gt;/list&quot;) List task pull. @get(&quot;/admin/&lt;taskid&gt;/flush&quot;) Flush task spool (delete all tasks). # 核心交互函数 @get(&quot;/option/&lt;taskid&gt;/list&quot;) List options for a certain task ID @post(&quot;/option/&lt;taskid&gt;/get&quot;) Get the value of an option (command line switch) for a certain task ID @post(&quot;/option/&lt;taskid&gt;/set&quot;) Set an option (command line switch) for a certain task ID @post(&quot;/scan/&lt;taskid&gt;/start&quot;) Launch a scan @get(&quot;/scan/&lt;taskid&gt;/stop&quot;) Kill a scan @get(&quot;/scan/&lt;taskid&gt;/status&quot;) Return status of a scan @get(&quot;/scan/&lt;taskid&gt;/data&quot;) Retrieve the data of a scan @get(&quot;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&quot;) Retrieve a subset of log messages @get(&quot;/scan/&lt;taskid&gt;/log&quot;) Retrieve the log messages @get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system sqlmapapi.py参数如下 它的-s参数可以启动一个服务(返回一个Admin Id)，只要将url给它就行了： 简单使用 1.
+        关于sqlmapapi.py 当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量
+用于交互的方法 在sqlmap/lib/utils/api.py中:
+# 用户方法 @get(&quot;/task/new&quot;) Create new task ID. @get(&quot;/task/&lt;taskid&gt;/delete&quot;) Delete own task ID. # 管理函数 @get(&quot;/admin/&lt;taskid&gt;/list&quot;) List task pull. @get(&quot;/admin/&lt;taskid&gt;/flush&quot;) Flush task spool (delete all tasks). # 核心交互函数 @get(&quot;/option/&lt;taskid&gt;/list&quot;) List options for a certain task ID @post(&quot;/option/&lt;taskid&gt;/get&quot;) Get the value of an option (command line switch) for a certain task ID @post(&quot;/option/&lt;taskid&gt;/set&quot;) Set an option (command line switch) for a certain task ID @post(&quot;/scan/&lt;taskid&gt;/start&quot;) Launch a scan @get(&quot;/scan/&lt;taskid&gt;/stop&quot;) Kill a scan @get(&quot;/scan/&lt;taskid&gt;/status&quot;) Return status of a scan @get(&quot;/scan/&lt;taskid&gt;/data&quot;) Retrieve the data of a scan @get(&quot;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&quot;) Retrieve a subset of log messages @get(&quot;/scan/&lt;taskid&gt;/log&quot;) Retrieve the log messages @get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system  sqlmapapi.
     </p>
 
     

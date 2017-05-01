@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -123,7 +105,7 @@
 
 </blockquote>
 
-<h3 id="0x00-前期准备:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x00 前期准备</h3>
+<h3 id="0x00-前期准备">0x00 前期准备</h3>
 
 <blockquote>
 <pre><code># 环境 Ubuntu 14.04
@@ -133,7 +115,7 @@ reber@ubuntu:~/Desktop$ sudo apt-get install git
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-安装:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x01 安装</h3>
+<h3 id="0x01-安装">0x01 安装</h3>
 
 <blockquote>
 <pre><code>reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb
@@ -141,7 +123,7 @@ reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-配置:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x02 配置</h3>
+<h3 id="0x02-配置">0x02 配置</h3>
 
 <blockquote>
 <pre><code>reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb
@@ -183,7 +165,7 @@ tcp        0      0 0.0.0.0:22          0.0.0.0:*            LISTEN
 </code></pre>
 </blockquote>
 
-<h3 id="0x03-访问web页面:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x03 访问web页面</h3>
+<h3 id="0x03-访问web页面">0x03 访问web页面</h3>
 
 <ul>
 <li>有时出现502，可以刷新网页或者再次reconfigure</li>
@@ -201,7 +183,7 @@ tcp        0      0 0.0.0.0:22          0.0.0.0:*            LISTEN
 Admin Area &ndash;&gt; Users &ndash;&gt; Edit 然后保存</li>
 </ul>
 
-<h3 id="0x04-添加401认证:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x04 添加401认证</h3>
+<h3 id="0x04-添加401认证">0x04 添加401认证</h3>
 
 <blockquote>
 <pre><code># 401认证是nginx的，如果gitlab出现漏洞，也需要过401才行
@@ -237,7 +219,7 @@ reber@ubuntu:/var/opt/gitlab$ sudo gitlab-ctl restart nginx
 
 </blockquote>
 
-<h3 id="0x05-汉化:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x05 汉化</h3>
+<h3 id="0x05-汉化">0x05 汉化</h3>
 
 <blockquote>
 <pre><code># 首先检查版本
@@ -252,7 +234,7 @@ reber@ubuntu:~/Desktop/gitlab$ sudo patch -d /opt/gitlab/embedded/service/gitlab
 </code></pre>
 </blockquote>
 
-<h3 id="0x06-添加ssh公钥:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x06 添加ssh公钥</h3>
+<h3 id="0x06-添加ssh公钥">0x06 添加ssh公钥</h3>
 
 <blockquote>
 <pre><code>首先用邮箱514581887@qq.com注册一个用户，用户名为55555
@@ -282,7 +264,7 @@ $ ssh -T git@192.168.188.160
 </code></pre>
 </blockquote>
 
-<h3 id="0x07-推送自己的代码:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x07 推送自己的代码</h3>
+<h3 id="0x07-推送自己的代码">0x07 推送自己的代码</h3>
 
 <blockquote>
 <pre><code># 首先clone项目
@@ -328,7 +310,7 @@ Deleted branch 163 (was d5df55a).
 </code></pre>
 </blockquote>
 
-<h3 id="0x08-结果:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x08 结果</h3>
+<h3 id="0x08-结果">0x08 结果</h3>
 
 <blockquote>
 <p>
@@ -344,7 +326,7 @@ Deleted branch 163 (was d5df55a).
 </p>
 </blockquote>
 
-<h3 id="0x09-备份与还原:2c00bdbbba3f3b03c9fb3c86a2b9779b">0x09 备份与还原</h3>
+<h3 id="0x09-备份与还原">0x09 备份与还原</h3>
 
 <blockquote>
 <p>注意：若要迁移，则新服务器上的Gitlab的版本必须与创建备份时的Gitlab版本号相同</p>

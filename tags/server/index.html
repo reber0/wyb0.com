@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -121,7 +103,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 Ubuntu 14.04.1 LTS 0x01 安装与配置 reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;,
+        0x00 环境  Ubuntu 14.04.1 LTS
+ 0x01 安装与配置  reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;, # &quot;40002&quot;: &quot;lilei&quot;, # &quot;40003&quot;: &quot;mike&quot; #} &quot;timeout&quot;:300, # 超时时间（秒） &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式 # 若Linux内核在3.
     </p>
 
     
@@ -174,7 +157,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境：CentOS-6.5-x86_64-minimal 0x00 搭建LAMP 安装Apache yum install httpd 安装MySQL yum install mysql mysql-server 设置数据库 [reber@localhost conf]$ sudo mysql_secure_installation # 更新root密码： [reber@localhost conf]$ mysql -uroot –p mysql&gt; use mysql; mysql&gt; update user set password=password('123456') where user='root'; mysql&gt; flush privileges; //不想重启mysql就使新密码生效就需要运行此命令刷新 mysql&gt; insert into mysql.user(Host,User,Password) values(&quot;localhost&quot;,&quot;blog&quot;,password(&quot;123456&quot;)); # mysql&gt; detele form mysql.user where User='blog' and Host='localhost'; //这步可以删除用户 mysql&gt; flush privileges; //刷新 mysql&gt; create database db_blog; Query OK, 1 row affected (0.00 sec) # 授权用户&quot;blog&quot;拥有db_blog数据库的所有权限
+        环境：CentOS-6.5-x86_64-minimal
+0x00 搭建LAMP  安装Apache
+yum install httpd  安装MySQL
+ yum install mysql mysql-server 设置数据库
+[reber@localhost conf]$ sudo mysql_secure_installation # 更新root密码： [reber@localhost conf]$ mysql -uroot –p mysql&gt; use mysql; mysql&gt; update user set password=password('123456') where user='root'; mysql&gt; flush privileges; //不想重启mysql就使新密码生效就需要运行此命令刷新 mysql&gt; insert into mysql.user(Host,User,Password) values(&quot;localhost&quot;,&quot;blog&quot;,password(&quot;123456&quot;)); # mysql&gt; detele form mysql.user where User='blog' and Host='localhost'; //这步可以删除用户 mysql&gt; flush privileges; //刷新 mysql&gt; create database db_blog; Query OK, 1 row affected (0.
     </p>
 
     
@@ -229,7 +216,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于Redis Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。 0x01 安装 可在http://download.redis.io/releases/ 下载 $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install 0x02 产生的可执行文件 redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写) 0x03 配置文件 $ vim /opt/redis-3.2.3/redis.conf daemonize yes # 当值为yes时可以后台运行 bind 127.0.0.1 # 绑定ip，配置后只接受来自该ip的请求 port 6379 # 监听端口 timeout 300 # 客户端连接超时时间，单位为秒 loglevel notice # 日志等级分为4级，debug、verbose、notice、warning logfile &quot;/var/log/redis.log&quot; # 日志文件位置 databases 16 # 数据库数量 sava 900 1 #
+        0x00 关于Redis  Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。   0x01 安装  可在http://download.redis.io/releases/ 下载
+$ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install   0x02 产生的可执行文件  redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写)   0x03 配置文件  $ vim /opt/redis-3.2.3/redis.conf daemonize yes # 当值为yes时可以后台运行 bind 127.0.0.1 # 绑定ip，配置后只接受来自该ip的请求 port 6379 # 监听端口 timeout 300 # 客户端连接超时时间，单位为秒 loglevel notice # 日志等级分为4级，debug、verbose、notice、warning logfile &quot;/var/log/redis.
     </p>
 
     
@@ -284,7 +272,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境及要求 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器 安装服务 配置并启用路由和远程访问 新增路由协议 新增接口 新增VPN用户 尝试连接VPN
+         环境及要求 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器
+安装服务 配置并启用路由和远程访问 新增路由协议 新增接口 新增VPN用户 尝试连接VPN 
     </p>
 
     
@@ -335,7 +324,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        添加组件 开启iis 添加Web服务扩展 运行asp 权限
+         添加组件 开启iis 添加Web服务扩展 运行asp 权限 
     </p>
 
     
@@ -384,7 +373,17 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal 安装 yum install vsftpd 配置 备份 cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak 编辑配置文件 vim /etc/vsftpd/vsftpd.conf anonymous_enable=NO #设定不允许匿名访问 local_enable=YES #设定本地用户可以访问 chroot_list_enable=YES #使用户不能离开主目录 xferlog_file=/var/log/vsftpd.log #设定vsftpd的服务日志 ascii_upload_enable=YES ascii_download_enable=YES #设定支持ASCII pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证 # 并在尾部追加： guest_enable=YES #设定启用虚拟用户功能。 guest_username=ftp #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了 guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同 新增chroot_list并将ftp用户输入进去 touch /etc/vsftpd/chroot_list echo ftp &gt;&gt; /etc/vsftpd/chroot_list 安装Berkeley DB工具用来对虚拟用户认证配置管理： yum install db4 db4-utils 创建用户账户文件 vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行是密码 user2 #奇数行是用户名 666666 #偶数行是密码 user3 #奇数行是用户名 user3 #偶数行是密码 用Berkeley DB工具生成认证文件 db_load -T -t hash -f /etc/vsftpd/vuser_passwd.txt
+        安装环境为：CentOS-6.5-x86_64-minimal  安装 yum install vsftpd
+配置  备份
+cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
+ 编辑配置文件
+vim /etc/vsftpd/vsftpd.conf anonymous_enable=NO #设定不允许匿名访问 local_enable=YES #设定本地用户可以访问 chroot_list_enable=YES #使用户不能离开主目录 xferlog_file=/var/log/vsftpd.log #设定vsftpd的服务日志 ascii_upload_enable=YES ascii_download_enable=YES #设定支持ASCII pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证 # 并在尾部追加： guest_enable=YES #设定启用虚拟用户功能。 guest_username=ftp #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了 guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同  新增chroot_list并将ftp用户输入进去
+touch /etc/vsftpd/chroot_list
+echo ftp &gt;&gt; /etc/vsftpd/chroot_list
+ 安装Berkeley DB工具用来对虚拟用户认证配置管理：
+yum install db4 db4-utils
+ 创建用户账户文件
+vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行是密码 user2 #奇数行是用户名 666666 #偶数行是密码 user3 #奇数行是用户名 user3 #偶数行是密码  用Berkeley DB工具生成认证文件
     </p>
 
     
@@ -437,7 +436,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal 安装mysql sudo yum install mysql mysql-server mysql-devel 安装jdk和tomcat 创建安装jdk和tomcat的文件夹 下载安装包并解压安装 jdk包可在http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 下载 tomcat包可在http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz 下载 简单配置tomcat 启动tomcat 连接数据库 驱动可在http://dev.mysql.com/downloads/connector/j/ 下载 [reber@WYB ~]$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp &lt;%@page contentType=&quot;text/html;charset=utf-8&quot; import=&quot;java.sql.*&quot; %&gt; &lt;% String driver = &quot;com.mysql.jdbc.Driver&quot;; String url = &quot;jdbc:mysql://localhost:3306/tomcat&quot;; //数据库web String user = &quot;tomcat&quot;; String password = &quot;123456&quot;; try { Class.forName(driver); Connection conn = DriverManager.getConnection(url, user, password); if(!conn.isClosed()) out.println(&quot;数据库连接成功！&quot;); conn.close(); } catch(ClassNotFoundException e) { out.println(&quot;找不到驱动程序&quot;); e.printStackTrace(); } catch(SQLException e) { e.printStackTrace(); }
+        安装环境为：CentOS-6.5-x86_64-minimal  安装mysql sudo yum install mysql mysql-server mysql-devel
+安装jdk和tomcat  创建安装jdk和tomcat的文件夹  下载安装包并解压安装
+jdk包可在http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 下载
+tomcat包可在http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz 下载   简单配置tomcat 启动tomcat 连接数据库 驱动可在http://dev.mysql.com/downloads/connector/j/ 下载 [reber@WYB ~]$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
+&lt;%@page contentType=&quot;text/html;charset=utf-8&quot; import=&quot;java.sql.*&quot; %&gt; &lt;% String driver = &quot;com.mysql.jdbc.Driver&quot;; String url = &quot;jdbc:mysql://localhost:3306/tomcat&quot;; //数据库web String user = &quot;tomcat&quot;; String password = &quot;123456&quot;; try { Class.forName(driver); Connection conn = DriverManager.
     </p>
 
     
@@ -490,7 +493,13 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal 一、准备工作 首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++ 二、安装mysql和php sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm 三、安装依赖 安装pcre、pcre-devel sudo yum install pcre pcre-devel 安装zlib、zlib-devel sudo yum install zlib zlib-devel 安装ssl sudo yum install openssl openssl-devel 四、安装Nginx 可在http://nginx.org/download/nginx-1.9.9.tar.gz 下载 [reber@WYB nginx-1.9.9]$ ./configure [reber@WYB nginx-1.9.9]$ make [reber@WYB nginx-1.9.9]$
+        安装环境为：CentOS-6.5-x86_64-minimal  一、准备工作 首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++  二、安装mysql和php sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm  三、安装依赖  安装pcre、pcre-devel
+sudo yum install pcre pcre-devel
+ 安装zlib、zlib-devel
+sudo yum install zlib zlib-devel
+ 安装ssl
+sudo yum install openssl openssl-devel
+  四、安装Nginx 可在http://nginx.org/download/nginx-1.9.9.tar.gz 下载 [reber@WYB nginx-1.
     </p>
 
     
@@ -545,7 +554,13 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 我是在虚拟机中安装14.04.4版的Ubuntu 下载Ubuntu14.04.4 0x01 配源或选择最快的更新服务器 选择最快的更新服务器: System Settings &ndash;&gt; Software &amp; Updates &ndash;&gt; Download from:other &ndash;&gt; Select Best Server &ndash;&gt; Choose Serve &ndash;&gt; Close 配源: reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak reber@ubuntu:~$ vim /etc/apt/sources.list 中科大源： deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse 阿里源： deb http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe 升级 reber@ubuntu:~$ sudo apt-get update reber@ubuntu:~$ sudo apt-get upgrade 0x02 简单配置 $ sudo apt-get install open-vm-tools-desktop fuse $ sudo apt-get install vim $ sudo apt-get install nautilus-open-terminal #注销,再次登陆即可任意地方右键打开终端 $ vim /etc/default/apport #更改enabled=0可解决开机总是提示有错误 $ vim ~/.bashrc #添加alias c='clear' 0x03 安装输入法 apt-get -f install可解决依赖问题 reber@ubuntu:~$ apt-get install ibus-sunpinyin #安装后重启系统 进入设置：system setting-&gt;text entry-&gt;添加sunpinyin 0x04 配置Apache/MySQL/PHP 安装 sudo apt-get install apache2 sudo apt-get install mysql-client mysql-server sudo apt-get install php5 sudo apt-get install php5-gd php5-mysql sudo apt-get install libapache2-mod-php5 sudo apt-get install libapache2-mod-auth-mysql sudo chmod 777 /var/www #为了方便 解决乱码问题 查看编码： mysql&gt; show variables like 'char%'; apache： sudo vim /etc/apache2/apache2.conf 最后添加AddDefaultCharset UTF-8 mysql： 编辑数据库配置文件 在[client]下面添加：default-character-set=utf8 在[mysqld]在下面添加character_set_server=utf8 测试数据库连接 &lt;?php $link = mysql_connect(&quot;localhost&quot;, &quot;root&quot;, &quot;password&quot;); if(!$link) die('Could not connect: ' .
+        0x00 环境  我是在虚拟机中安装14.04.4版的Ubuntu 下载Ubuntu14.04.4
+ 0x01 配源或选择最快的更新服务器  选择最快的更新服务器:
+System Settings &ndash;&gt; Software &amp; Updates &ndash;&gt; Download from:other &ndash;&gt; Select Best Server &ndash;&gt; Choose Serve &ndash;&gt; Close
+ 配源:
+reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak
+reber@ubuntu:~$ vim /etc/apt/sources.list
+   中科大源： deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb http://debian.
     </p>
 
     
@@ -598,7 +613,13 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境 虚拟机rhel-server-6.2 搭建流程 安装DNS服务器 配置DNS主配置文件 配置DNS正反向解析区域数据文件 启动DNS服务器进行测试 安装DNS服务 挂载光盘 用mount -o,loop /dev/cdrom /mnt/cdrom命令挂载光盘 配置yum源，安装BIND(用命令yum install bind*安装) 安装结果如下： 进行配置 vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc1921.zones中定义区域 配置正反向解析文件 分别配置wyb.cn.hosts和wyb.cn.rev 验证 用service named start命令启动DNS 用nslookup命令进行验证，先查看当前采用那台DNS解析，测试反向资源记录以及正反向解析
+         环境  虚拟机rhel-server-6.2
+ 搭建流程  安装DNS服务器 配置DNS主配置文件 配置DNS正反向解析区域数据文件 启动DNS服务器进行测试  安装DNS服务  挂载光盘
+用mount -o,loop /dev/cdrom /mnt/cdrom命令挂载光盘
+ 配置yum源，安装BIND(用命令yum install bind*安装) 安装结果如下：  进行配置
+vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc1921.zones中定义区域  配置正反向解析文件
+分别配置wyb.cn.hosts和wyb.cn.rev   验证  用service named start命令启动DNS
+用nslookup命令进行验证，先查看当前采用那台DNS解析，测试反向资源记录以及正反向解析  
     </p>
 
     

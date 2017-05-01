@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta name="generator" content="Hugo 0.21-DEV" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reber's Blog - 漏洞挖掘|渗透测试|python|php </title>
@@ -50,24 +51,6 @@
         <a href="/"><img src='/img/logo.png' width='70px'></a>
     </h1>
     <ul class="nav">
-        
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
         
     </ul>
 </div>
@@ -119,7 +102,15 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境： ubuntu14.4 安装 添加Sublime Text 3的仓库 sudo add-apt-repository ppa:webupd8team/sublime-text-3 更新软件库 sudo apt-get update 安装Sublime Text 3 sudo apt-get install sublime-text-installer 解决不能输入中文的问题 新建sublime_imfix.c(位于～目录)，写入如下内容 #include &lt;gtk/gtkimcontext.h&gt; void gtk_im_context_set_client_window (GtkIMContext *context,GdkWindow *window) { GtkIMContextClass *klass; g_return_if_fail (GTK_IS_IM_CONTEXT (context)); klass = GTK_IM_CONTEXT_GET_CLASS (context); if (klass-&gt;set_client_window) klass-&gt;set_client_window (context, window); g_object_set_data(G_OBJECT(context),&quot;window&quot;,window); if(!GDK_IS_WINDOW (window)) return; int width = gdk_window_get_width(window); int height = gdk_window_get_height(window); if(width != 0 &amp;&amp; height !=0) gtk_im_context_focus_in(context); } 将上一步的代码编译成共享库libsublime-imfix.so cd ~ sudo apt-get install
+        环境： ubuntu14.4
+安装  添加Sublime Text 3的仓库
+sudo add-apt-repository ppa:webupd8team/sublime-text-3
+ 更新软件库
+sudo apt-get update
+ 安装Sublime Text 3
+sudo apt-get install sublime-text-installer
+  解决不能输入中文的问题  新建sublime_imfix.c(位于～目录)，写入如下内容
+#include &lt;gtk/gtkimcontext.h&gt; void gtk_im_context_set_client_window (GtkIMContext *context,GdkWindow *window) { GtkIMContextClass *klass; g_return_if_fail (GTK_IS_IM_CONTEXT (context)); klass = GTK_IM_CONTEXT_GET_CLASS (context); if (klass-&gt;set_client_window) klass-&gt;set_client_window (context, window); g_object_set_data(G_OBJECT(context),&quot;window&quot;,window); if(!GDK_IS_WINDOW (window)) return; int width = gdk_window_get_width(window); int height = gdk_window_get_height(window); if(width != 0 &amp;&amp; height !=0) gtk_im_context_focus_in(context); }  将上一步的代码编译成共享库libsublime-imfix.
     </p>
 
     
@@ -174,7 +165,13 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境 我是在虚拟机中安装14.04.4版的Ubuntu 下载Ubuntu14.04.4 0x01 配源或选择最快的更新服务器 选择最快的更新服务器: System Settings &ndash;&gt; Software &amp; Updates &ndash;&gt; Download from:other &ndash;&gt; Select Best Server &ndash;&gt; Choose Serve &ndash;&gt; Close 配源: reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak reber@ubuntu:~$ vim /etc/apt/sources.list 中科大源： deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse 阿里源： deb http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe deb http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe deb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe 升级 reber@ubuntu:~$ sudo apt-get update reber@ubuntu:~$ sudo apt-get upgrade 0x02 简单配置 $ sudo apt-get install open-vm-tools-desktop fuse $ sudo apt-get install vim $ sudo apt-get install nautilus-open-terminal #注销,再次登陆即可任意地方右键打开终端 $ vim /etc/default/apport #更改enabled=0可解决开机总是提示有错误 $ vim ~/.bashrc #添加alias c='clear' 0x03 安装输入法 apt-get -f install可解决依赖问题 reber@ubuntu:~$ apt-get install ibus-sunpinyin #安装后重启系统 进入设置：system setting-&gt;text entry-&gt;添加sunpinyin 0x04 配置Apache/MySQL/PHP 安装 sudo apt-get install apache2 sudo apt-get install mysql-client mysql-server sudo apt-get install php5 sudo apt-get install php5-gd php5-mysql sudo apt-get install libapache2-mod-php5 sudo apt-get install libapache2-mod-auth-mysql sudo chmod 777 /var/www #为了方便 解决乱码问题 查看编码： mysql&gt; show variables like 'char%'; apache： sudo vim /etc/apache2/apache2.conf 最后添加AddDefaultCharset UTF-8 mysql： 编辑数据库配置文件 在[client]下面添加：default-character-set=utf8 在[mysqld]在下面添加character_set_server=utf8 测试数据库连接 &lt;?php $link = mysql_connect(&quot;localhost&quot;, &quot;root&quot;, &quot;password&quot;); if(!$link) die('Could not connect: ' .
+        0x00 环境  我是在虚拟机中安装14.04.4版的Ubuntu 下载Ubuntu14.04.4
+ 0x01 配源或选择最快的更新服务器  选择最快的更新服务器:
+System Settings &ndash;&gt; Software &amp; Updates &ndash;&gt; Download from:other &ndash;&gt; Select Best Server &ndash;&gt; Choose Serve &ndash;&gt; Close
+ 配源:
+reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak
+reber@ubuntu:~$ vim /etc/apt/sources.list
+   中科大源： deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb http://debian.
     </p>
 
     
@@ -227,7 +224,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 创建仓库 0x01 克隆 0x02 仓库连接到远程服务器 # 若没有克隆现有仓库则可以连接远程仓库： git remote add origin git@github.com:reber-9/reber-9.com.git 0x03 .gitignore文件 0x04 添加和提交和推送 0x05 分支 切换分支后，分支的更改不会影响原来分支， 切换分支后，分支更改后需要add，然后commit git checkout -b test可以创建分支同时切换 0x06 更新和合并 git pull 可以同步github上的数据到本地 git merge test 可以将test分支的改动合并到当前分支 0x07 查看状态 git status 0x08 撤回 git reset HEAD # 上一次add的文件全部撤销 git log查看commit的id git reset --hard commit_id # 若未push,可回到上个commit处 git revert HEAD # 若push后,可撤销前一次 commit 0x09 多用户 如果有多个用户时可进行如下设置 $ ssh-keygen -t rsa -b 2048 -f id_rsa_github
+        0x00 创建仓库   0x01 克隆   0x02 仓库连接到远程服务器  # 若没有克隆现有仓库则可以连接远程仓库： git remote add origin git@github.com:reber-9/reber-9.com.git   0x03 .gitignore文件   0x04 添加和提交和推送   0x05 分支  切换分支后，分支的更改不会影响原来分支， 切换分支后，分支更改后需要add，然后commit git checkout -b test可以创建分支同时切换   0x06 更新和合并  git pull 可以同步github上的数据到本地 git merge test 可以将test分支的改动合并到当前分支   0x07 查看状态  git status   0x08 撤回  git reset HEAD # 上一次add的文件全部撤销 git log查看commit的id git reset --hard commit_id # 若未push,可回到上个commit处 git revert HEAD # 若push后,可撤销前一次 commit   0x09 多用户  如果有多个用户时可进行如下设置
     </p>
 
     
@@ -282,7 +279,10 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。 若有一个需要重新格式化的字典test.txt(用户名、密码、地址)： xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 aaaa cccc 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv 要求： 1.里面有重复数据，使用命令去重 2.提取出用户名和密码 每一行前面加上id数字，递增。 3.只提取出密码作为爆破字典 4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名 5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数 去重： [wyb@localhost ~]$ cat test.txt | awk '!a[$1]++' [wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同 aosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 3333 aaaa dfger 21asd sdfsd sadasd dwqx
+        awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。 
+ 若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：
+xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 aaaa cccc 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv  要求：
+1.里面有重复数据，使用命令去重 2.提取出用户名和密码 每一行前面加上id数字，递增。 3.只提取出密码作为爆破字典 4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名 5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数   去重： [wyb@localhost ~]$ cat test.txt | awk '!a[$1]++' [wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同 aosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv  去重、添加id： 一般字典不需要id、user、pass等标示符，这里只是为了便于观看
     </p>
 
     
@@ -335,7 +335,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        这里介绍3种方式： ==&gt;awk ==&gt;grep ==&gt;sed awk处理文本(最常用)： 作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化 awk命令格式：awk [F filed-separator] &lsquo;commands&rsquo; input-fiel(s) 参数-F：可以添加任意的分割符，比较重要 awk工作流程是这样的： 读入有&rsquo;\n&rsquo;换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&rdquo;空白键&rdquo; 或 &ldquo;[tab]键&rdquo;。 1. 入门示例： [wyb@localhost temp]$ head -n 5 /etc/passwd root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin adm:x:3:4:adm:/var/adm:/sbin/nologin lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{print $1}' //输出第1列，域分隔符为： root bin daemon adm lp [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{pri nt &quot;id:&quot;$1&quot;\tshell:&quot;$7}' //输出第1、7列且给予列名 id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' 'BEGIN {print &quot;====begin=====&quot;} {print &quot;id:&quot;$1&quot;\tshell:&quot;$7} END {print &quot;====end====&quot;}' ====begin===== id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin ====end==== [wyb@localhost temp]$ awk -F: '/root/' /etc/passwd //搜索含有root关键字的所有行 root:x:0:0:root:/root:/bin/bash operator:x:11:0:operator:/root:/sbin/nologin [wyb@localhost temp]$ awk -F: '/root/{print $7}' /etc/passwd //匹配root并输出对应shell /bin/bash /sbin/nologin [wyb@localhost temp]$ awk -F: '/^root/' /etc/passwd //匹配以root开头的行 root:x:0:0:root:/root:/bin/bash 2.
+        这里介绍3种方式：
+==&gt;awk ==&gt;grep ==&gt;sed  awk处理文本(最常用)：  作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化
+ awk命令格式：awk [F filed-separator] &lsquo;commands&rsquo; input-fiel(s)
+ 参数-F：可以添加任意的分割符，比较重要
+awk工作流程是这样的：
+ 读入有&rsquo;\n&rsquo;换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&rdquo;空白键&rdquo; 或 &ldquo;[tab]键&rdquo;。  1. 入门示例： [wyb@localhost temp]$ head -n 5 /etc/passwd root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin adm:x:3:4:adm:/var/adm:/sbin/nologin lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{print $1}' //输出第1列，域分隔符为： root bin daemon adm lp [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{pri nt &quot;id:&quot;$1&quot;\tshell:&quot;$7}' //输出第1、7列且给予列名 id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' 'BEGIN {print &quot;====begin=====&quot;} {print &quot;id:&quot;$1&quot;\tshell:&quot;$7} END {print &quot;====end====&quot;}' ====begin===== id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin ====end==== [wyb@localhost temp]$ awk -F: '/root/' /etc/passwd //搜索含有root关键字的所有行 root:x:0:0:root:/root:/bin/bash operator:x:11:0:operator:/root:/sbin/nologin [wyb@localhost temp]$ awk -F: '/root/{print $7}' /etc/passwd //匹配root并输出对应shell /bin/bash /sbin/nologin [wyb@localhost temp]$ awk -F: '/^root/' /etc/passwd //匹配以root开头的行 root:x:0:0:root:/root:/bin/bash  2.
     </p>
 
     
@@ -388,7 +393,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        tar主要参数： -c 创建一个新的压缩文件 -x 解压 -t 查看压缩文件的内容 -f 指定档案文件的名字 -v 显示过程信息 -r 增加文件到指定的包 -C 指定解压后的路径 -z 使用gzip -j 使用bzip2 -Z 使用compress tar示例： [wyb@localhost temp]$ ls aaa [wyb@localhost temp]$ tar -cvf 1.tar aaa/ *打包不压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -zcvf 1.tar.gz aaa/ *打包且以gzip压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -jcvf 1.tar.bz2 aaa/ *打包且以bzip2压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]tar -zxvf aa.tar.gz /home/aaa --exclude=dir //排除目录 [wyb@localhost temp]$ ls -l total 24 -rw-r--r--.
+        tar主要参数： -c 创建一个新的压缩文件 -x 解压 -t 查看压缩文件的内容 -f 指定档案文件的名字 -v 显示过程信息 -r 增加文件到指定的包 -C 指定解压后的路径 -z 使用gzip -j 使用bzip2 -Z 使用compress  tar示例： [wyb@localhost temp]$ ls aaa [wyb@localhost temp]$ tar -cvf 1.tar aaa/ *打包不压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -zcvf 1.tar.gz aaa/ *打包且以gzip压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -jcvf 1.tar.bz2 aaa/ *打包且以bzip2压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]tar -zxvf aa.tar.gz /home/aaa --exclude=dir //排除目录 [wyb@localhost temp]$ ls -l total 24 -rw-r--r--.
     </p>
 
     
@@ -445,7 +450,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        操作系统：CentOS 首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了 执行：sudo yum groupinstall &ldquo;Development tools&rdquo; 源码安装软件就需要安装这个 一、下载解压 可用wget下载 二、查看需要的依赖项 [wyb@localhost ettercap-0.8.2]$ vim INSTALL #### Bundled libraries Ettercap now bundles the following libraries with the source distribution: libnet 1.1.6 curl 7.41.0 luajit 2.0.3 check 0.9.14 [wyb@localhost ettercap-0.8.2]$ cd bundled_deps/ [wyb@localhost bundled_deps]$ ls check curl libnet luajit 三、安装依赖包 安装check [wyb@localhost check]$ cd check-0.9.14 [wyb@localhost check-0.9.14]$ ls [wyb@localhost check-0.9.14]$ ./configure [wyb@localhost check-0.9.14]$ make [wyb@localhost check-0.9.14]$ sudo make install 安装curl [wyb@localhost check-0.9.14]$ cd ..
+        操作系统：CentOS
+首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了
+执行：sudo yum groupinstall &ldquo;Development tools&rdquo; 源码安装软件就需要安装这个
+ 一、下载解压  可用wget下载
+ 二、查看需要的依赖项  [wyb@localhost ettercap-0.8.2]$ vim INSTALL #### Bundled libraries Ettercap now bundles the following libraries with the source distribution: libnet 1.1.6 curl 7.41.0 luajit 2.0.3 check 0.9.14 [wyb@localhost ettercap-0.8.2]$ cd bundled_deps/ [wyb@localhost bundled_deps]$ ls check curl libnet luajit   三、安装依赖包  安装check
+[wyb@localhost check]$ cd check-0.9.14 [wyb@localhost check-0.9.14]$ ls [wyb@localhost check-0.9.14]$ ./configure [wyb@localhost check-0.9.14]$ make [wyb@localhost check-0.
     </p>
 
     
@@ -498,7 +508,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        Linux上的软件安装可以分为三种方式： 1. yum安装 yum基于RPM包管理，一次性安装所有依赖包，提供了查找、安装、删除一个、一组 至全部软件包的命令，配置文件在/etc/yum.repos.d/下 主要命令： yum install gcc g++ yum remove wget yum list installed //显示已经安装过的软件 yum list //显示所有可以安装的包 [wyb@localhost ~]$ wget -h //验证有没有安装wget -bash: /usr/bin/wget: No such file or directory [wyb@localhost ~]$ sudo yum search wget //通过yum查找wget，看有没有这个软件包 Loaded plugins: fastestmirror, refresh-packagekit, security Loading mirror speeds from cached hostfile * base: mirrors.yun-idc.com * extras: mirrors.pubyun.com * updates: mirrors.yun-idc.com ============================== N/S Matched: wget =============================== wget.x86_64 : A utility for retrieving files using the HTTP or FTP protocols Name and summary matches only, use &quot;search all&quot; for everything.
+        Linux上的软件安装可以分为三种方式： 1. yum安装 yum基于RPM包管理，一次性安装所有依赖包，提供了查找、安装、删除一个、一组 至全部软件包的命令，配置文件在/etc/yum.repos.d/下 主要命令： yum install gcc g++ yum remove wget yum list installed //显示已经安装过的软件 yum list //显示所有可以安装的包  
+[wyb@localhost ~]$ wget -h //验证有没有安装wget -bash: /usr/bin/wget: No such file or directory [wyb@localhost ~]$ sudo yum search wget //通过yum查找wget，看有没有这个软件包 Loaded plugins: fastestmirror, refresh-packagekit, security Loading mirror speeds from cached hostfile * base: mirrors.yun-idc.com * extras: mirrors.pubyun.com * updates: mirrors.yun-idc.com ============================== N/S Matched: wget =============================== wget.x86_64 : A utility for retrieving files using the HTTP or FTP protocols Name and summary matches only, use &quot;search all&quot; for everything.
     </p>
 
     
@@ -551,7 +562,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 ls：显示文件 [wyb@localhost tmp]$ ls a a.txt [wyb@localhost tmp]$ ls -l total 4 drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--. 1 wyb root 0 Apr 17 18:23 a.txt [wyb@localhost tmp]$ ls -a . .. a a.txt .esd-500 .ICE-unix [wyb@localhost tmp]$ ls -al total 20 drwxrwxrwt. 5 root root 4096 Apr 17 18:23 . dr-xr-xr-x. 22 root root 4096 Apr 17 16:31 .. drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--.
+        0x00 ls：显示文件  [wyb@localhost tmp]$ ls a a.txt [wyb@localhost tmp]$ ls -l total 4 drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--. 1 wyb root 0 Apr 17 18:23 a.txt [wyb@localhost tmp]$ ls -a . .. a a.txt .esd-500 .ICE-unix [wyb@localhost tmp]$ ls -al total 20 drwxrwxrwt. 5 root root 4096 Apr 17 18:23 . dr-xr-xr-x. 22 root root 4096 Apr 17 16:31 .. drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--.
     </p>
 
     
@@ -604,7 +615,12 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
-        服务： 在后台运行的软件就叫服务 参数： start stop restart apache启动后默认降权 service httpd start实际调用的是/etc/init.d/httpd这个shell脚本 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d [wyb@localhost ~]$ ls -al /etc/init.d lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&gt; rc.d/init.d 添加服务： 将脚本放在/etc/init.d/下即可 若要自启则： chkconfig --list //查看chk管理的自启动项 chkconfig --add httpd 添加到chk管理里面 chkconfig --del httpd 将httpd移出chk管理 chkcofnig --level 35 httpd on init的345将开启 chkcofnig --level 345 httpd off /etc/rc.d/rc3.d和rc5.d里将有httpd 计划任务： 启动方式： 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件 cron：每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟 添加任务： 格式：分(0-59) 时 日 月 周(0-6) 命令 第一种方法： crontab -e //任何权限都可以运行这个命令，针对某个用户 [wyb@localhost spool]$ crontab -e //进入编辑，实际是写入到/var/spool/cron/username这个文件中 no crontab for wyb - using an empty one */1 * * * * date &gt;&gt; /tmp/date.txt //每一分钟都向date.txt写入 1 * * * * date &gt;&gt; /tmp/date1.txt //在第一分钟时将数据写入 ~ ~ ~ &quot;/tmp/crontab.T8sDqC&quot; 1L, 34C written crontab: installing new crontab [wyb@localhost spool]$ sudo ls /var/spool/cron/ wyb [wyb@localhost spool]$ sudo cat /var/spool/cron/wyb */1 * * * * date &gt;&gt; /tmp/date.txt 1 * * * * date &gt;&gt; /tmp/date1.txt [wyb@localhost spool]$ 第二种方法： 编辑/etc/crontab文件 //要具有root权限，针对系统任务 vim /etc/crontab会以root权限执行，不推荐使用 01 * * * * 用户名 命令 date &gt;&gt; /tmp/date2.txt在每个小时的第一分钟执行 查看用户任务： [wyb@localhost tmp]$ sudo cat /var/spool/cron/wyb //用户的计划任务 */1 * * * * date &gt;&gt; /tmp/date.txt [wyb@localhost tmp]$ sudo tail -5 /etc/crontab //系统计划任务 # | | | .------- month (1 - 12) OR jan,feb,mar,apr ...
+        服务： 在后台运行的软件就叫服务 参数： start stop restart
+apache启动后默认降权
+service httpd start实际调用的是/etc/init.d/httpd这个shell脚本 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d [wyb@localhost ~]$ ls -al /etc/init.d lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&gt; rc.d/init.d  添加服务： 将脚本放在/etc/init.d/下即可  若要自启则： chkconfig --list //查看chk管理的自启动项 chkconfig --add httpd 添加到chk管理里面 chkconfig --del httpd 将httpd移出chk管理 chkcofnig --level 35 httpd on init的345将开启 chkcofnig --level 345 httpd off /etc/rc.d/rc3.d和rc5.d里将有httpd  计划任务： 启动方式： 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件
+cron：每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟
+添加任务： 格式：分(0-59) 时 日 月 周(0-6) 命令
+第一种方法： crontab -e //任何权限都可以运行这个命令，针对某个用户 [wyb@localhost spool]$ crontab -e //进入编辑，实际是写入到/var/spool/cron/username这个文件中 no crontab for wyb - using an empty one */1 * * * * date &gt;&gt; /tmp/date.
     </p>
 
     

@@ -53,24 +53,6 @@
     </h1>
     <ul class="nav">
         
-            
-                <li>
-                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
-            
-                </li>
-        
-            
-                <li>
-                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
-            
-                </li>
-        
     </ul>
 </div>
 
@@ -115,14 +97,14 @@
                 
                 
 
-<h3 id="0x00-应用场景:fbb6bfdfe53ff8325858f2be24ae74f4">0x00 应用场景</h3>
+<h3 id="0x00-应用场景">0x00 应用场景</h3>
 
 <blockquote>
 <pre><code>在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被&quot;\&quot;转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-测试代码:fbb6bfdfe53ff8325858f2be24ae74f4">0x01 测试代码</h3>
+<h3 id="0x01-测试代码">0x01 测试代码</h3>
 
 <blockquote>
 <pre><code>&lt;?php
@@ -160,7 +142,7 @@
 
 </blockquote>
 
-<h3 id="0x02-宽字节注入原理:fbb6bfdfe53ff8325858f2be24ae74f4">0x02 宽字节注入原理</h3>
+<h3 id="0x02-宽字节注入原理">0x02 宽字节注入原理</h3>
 
 <blockquote>
 <pre><code class="language-ini">当MySQL使用的是GBK编码时，0xbf5c会被当做一个字符(双字节字符)，其中5c是&quot;\&quot;
