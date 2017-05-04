@@ -119,7 +119,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         面向对象  面向对象概念  面向对象是达到了软件工程的三个目标：重用性、灵活性和扩展性，使其编程的代码更加简洁、更易于维护、并且具有更强的可重用性。  类和对象的关系  在面向对象的编程语言中，类是一个对立的程序单位，而对象的抽象就是类。类描述了一组有相同特性(属性)和相同行为(方法)的对象。开发时要先抽象类再用该类去创建对象。而我们的程序中直接使用的是对象而不是类。  什么是类  在面向对象的编程语言中，类是一个对立的程序单位，是具有相同属性和服务的一组对象的集合。它为属于该类的所有对象提供了同意的抽象描述，其内部包括成员属性和服务的方法两个部分。  什么是对象  在客观世界里，所有的事物都是由对象和对象之间的联系组成的。对象是系统中用来描述客观事物的一个实体，它是构成系统的一个基本单位，一个对象由一组属性和有权对这些属性进行操作的一组服务的封装体。   类的声明  类名和变量名还有函数名的命名规则类似，都遵循PHP中定义名称的命名规则。 若类名由多个单词组成，习惯上每个单词的首字母要大写 类中成员可分为属性和方法 属性为静态描述，方法为动态描述 在类中声明成员属性时，变量前面一定要有关键字，如：public、private、static等 若不需要有特定意义的修饰，则使用var关键字  格式： [一些修饰类的关键字] class 类名 { 类中成员; } Class Person { 成员属性： 姓名、性别、年龄、身高、体重、电话、住址等 成员方法： 说话、学习、走路、吃饭、开车、使用手机等 } 例子： &lt;?php class Person { var $name; var $age; var $sex; function say() { echo &quot;人在说话&quot;; } function run() { echo &quot;人在走路&quot;; } } ?&gt;  实例化对象 格式： $变量名 = new 类名称([参数列表]); $变量名 = new 类名称; 例子： &lt;?
     </p>
 
@@ -172,7 +172,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         分类  索引数组 索引值从0开始，依次递增 关联数组 以字符串为索引，键和值对是无序组合，每个键都是唯一的  数组的定义 两种方法：
  直接为数组元素赋值即可声明数组 使用array()函数声明数组
 &lt;?php // 1.直接为数组元素赋值即可声明数组 $contact_index[0] = 1; $contact_index[1] = &quot;高某&quot;; $contact_index[2] = &quot;A公司&quot;; $contact_index[3] = &quot;北京市&quot;; $contact_index[] = &quot;gao@a.com&quot;; var_dump($contact_index); $contact_key[&quot;ID&quot;] = &quot;2&quot;; $contact_key[&quot;姓名&quot;] = &quot;峰某&quot;; $contact_key[&quot;公司&quot;] = &quot;B公司&quot;; $contact_key[&quot;邮箱&quot;] = &quot;feng@b.com&quot;; var_dump($contact_key); // 2.使用array()函数声明数组 $contact_key_array = array( &quot;ID&quot; =&gt; 1; &quot;姓名&quot; =&gt; &quot;峰某&quot;; &quot;公司&quot; =&gt; &quot;B公司&quot;; &quot;邮箱&quot; =&gt; &quot;feng@b.com&quot;; ); var_dump($contact_key_array); ?&gt;   数组的遍历  for语句遍历数组 foreach语句遍历数组
@@ -227,7 +227,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 PHP的作用  收集表单数据 生成动态网页 字符串处理 动态输出图片 处理服务器端文件系统 编写数据库支持的网页 会话跟踪控制 处理XML文件 支持大量的网络协议 服务器端的其他相关操作  0x01 PHP代码嵌入位置  可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&quot;&lt;?php&quot;起始符和终止符&quot;?&gt;&quot;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。   0x02 解读开始和结束标记  1. &lt;?php ?&gt; 2. &lt;script language=&quot;php&quot;&gt;&lt;/script&gt; 3. &lt;? ?&gt; 4. &lt;% %&gt; //前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags   0x03 指令分割符  php一段代码中除了最后一行不用分号，其他每句都要用分号结束，推荐每句都用分号结束
  0x04 注释  1. 若觉得代码不合适则可以注释，但不要急于删除 2. 注释的目的在于说明程序 3. 注释对调试和编写程序可以起到很好的帮助作用 4. PHP注释符有：&quot;/**/&quot;、&quot;//&quot;、&quot;#&quot;   0x05 空白符  空白符(空格、tab制表符、换行)会被php引擎忽略
  0x06 变量的声明  其中双引号中的变量可以被解析，单引号中的变量不能被解析
@@ -283,7 +283,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          0x00 软件  使用theHarvester搜集邮箱 使用dnsenum得到邮箱服务器域名 使用nmap查看端口开启情况 使用Hydra进行弱口令猜解   0x01 设置Shadowsocks为全局模式:   0x02 得到邮箱  可在[theHarvester]下载theHarvester，得到邮箱后做成字典user.txt  0x03 得到邮箱服务器域名   0x04 nmap确认端口开启   0x05 Hydra爆密码   0x06 尝试登陆   
     </p>
 
@@ -334,7 +334,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          下载Nessus的deb安装包: 去【这里】，选择家庭版，然后下载对应的安装包 本地安装nessus: 执行后续安装步骤:  启动nessus  web访问nessus服务  设置账户和密码  申请code，可以在【这里】申请  去邮箱查找code  将code填入，然后等待插件的下载   登陆Nessus: 
     </p>
 
@@ -383,7 +383,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          nmap思维导图如下： 
     </p>
 
@@ -434,7 +434,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          开启本地服务   编辑md文档   推送md文档   推送html   查看推送是否成功   
     </p>
 
@@ -485,7 +485,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         首先在github上新建仓库   本地新建仓库  下载安装hugo  为hugo添加环境变量  下载安装github客户端  新建仓库  下载主题
 可以在https://github.com/spf13/hugoThemes 下载你喜欢的主题
  使用主题并查看效果   本地环境配置  本地生成秘钥  在github保存秘钥  测试公钥是否添加成功  设置本地用户名和邮箱   配置config.toml  # 将reber-9全部替换为你github的账户名，另外你也可以进行一些基本的设置 baseurl = &quot;http://reber-9.github.io&quot; languageCode = &quot;en-us&quot; title = &quot;reber-9's Blog&quot; theme = &quot;beautifulhugo&quot; pygmentsUseClasses = false #disqusShortname = &quot;XXX&quot; #googleAnalytics = &quot;XXX&quot; [Params] logo = &quot;img/avatar-icon.
@@ -540,7 +540,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 环境  Ubuntu14.4
  0x01 安装hugo和git 0x02 生成密钥，将密钥添加到github  $ cd ~ $ ssh-keygen -t rsa -b 2048 -C &quot;123456@qq.com&quot; $ cd ~/.ssh/ $ cat id_rsa.pub # 将公钥添加到 github   0x03 配置本地用户和邮箱  git config --global user.name &quot;reber-9&quot; git config --global user.email &quot;123456@qq.com&quot;   0x04 验证密钥是否添加成功  ssh -T git@github.com
  0x05 克隆远程工程  git clone https://github.com/reber-9/reber-9.com.git
@@ -597,7 +597,7 @@ echo &ldquo;reber-9.com&rdquo; &gt;&gt; static/CNAME
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         环境： ubuntu14.4
 安装hugo  在https://github.com/spf13/hugo/releases 下载hugo的deb安装包 安装hugo
 reber@ubuntu:~/Downloads$ sudo dpkg -i hug_015_amd64 安装hugo 生成站点

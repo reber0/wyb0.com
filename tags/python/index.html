@@ -122,7 +122,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          0x00 作用  在下载大文件时以进度条的形式显示下载进度，如下图所示：  0x01 代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers['Content-Length'])/1024 with open(name, &quot;wb&quot;) as f: print &quot;total: &quot;,content_size,'k' for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit='k'): f.write(data) print &quot;done &quot;+name if __name__ == '__main__': url = &quot;http://127.0.0.1/Video.mp4&quot; name = url.split('/')[-1] get_vedio(url,name)   
     </p>
 
@@ -173,7 +173,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 简介  Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django, 但Tornado更注重速度,能够处理海量的同时发生的流量。   0x01 示例  main.py代码如下：
 #!/usr/bin/env python # -*- coding: utf-8 -*- import tornado.ioloop import tornado.web class IndexHandler(tornado.web.RequestHandler): def get(self): #访问根时触发这个函数 name = self.get_argument('name','wyb') self.write('Hello,' + name) self.write('&lt;br /&gt;&lt;a href=&quot;/login&quot;&gt;login&lt;/a&gt;') class MyLoginHandler(tornado.web.RequestHandler): def get(self): self.render('login.html') #若用户请求/login页面则将login.html发送给客户端，客户会看的一个登陆表单 def post(self): #当用户点击提交按钮是触发这个函数 name = self.get_argument('name') #接收表单的name password = self.get_argument('password') #接收表单的password self.write(&quot;you name is:%s\nyou password is:%s&quot; % (name,password)) def get_app(): handlers = [ (r&quot;/&quot;,IndexHandler), #代表请求/的都让IndexHandler处理 (r&quot;/login&quot;,MyLoginHandler), #表示请求/login页面的让MyLoginHandler处理 ] app = tornado.
     </p>
@@ -229,7 +229,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 什么是CDN  CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。   0x01 判断方法  可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息  0x02 代码  首先安装dnspython这个第三方模块：pip install dnspython
 #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.
     </p>
@@ -285,7 +285,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 openpyxl模块  这个模块可以让你读写excel文件   0x01 读取数据  代码如下：
 #!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename='aa.xlsx') sheetnames = wb.get_sheet_names() #获得所有表名 print u&quot;存在表：%s&quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&quot;第一张表表名为：%s&quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &quot;表%s有%d行%d列&quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&quot;取部分数据：&quot; print ws['A1'].value,ws['B1'].value print ws['A2'].value,ws['B2'].value print ws.cell(row=1, column=2).
     </p>
@@ -343,7 +343,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 代码  多线程爆破加密的zip压缩包
 #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import optparse import zipfile import threading import Queue queue = Queue.Queue() lock = threading.Lock() result = '' def load_pwd(filename): for line in open(filename,'r'): if line: queue.put(line.strip()) def bruter(zipname,queue): global result zFile = zipfile.ZipFile(zipname) while not queue.empty(): password = queue.get() try: zFile.extractall(pwd=password) # 解压 lock.acquire() print &quot;[Ok] password is: %s&quot; % password lock.release() result = password except: lock.
     </p>
@@ -397,7 +397,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         帮助信息   代码如下  #!/usr/bin/env python # -*- coding: utf-8 -*- 'This is a proxy' __author__ = 'xxx' import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s) text = b''.
     </p>
 
@@ -454,7 +454,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 安装  下载MySQL-python-1.2.3.win-amd64-py2.7.exe然后安装
  0x01 简单表设计如下  insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default '127.0.0.1' comment 'ip地址', domain varchar(100) not null default 'www.xx.com' comment '域名' ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges;   0x02 代码  #!
     </p>
@@ -512,7 +512,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         参考：https://github.com/lijiejie/subDomainsBrute
 帮助信息   代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &quot;&quot;&quot;docstring for SubDomain&quot;&quot;&quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + '.txt' if not outfile else outfile self.f = open('./output/'+outfile,'a+') self.ip_list = [] def _scan(self): while not self.queue.empty(): self.
     </p>
@@ -570,7 +570,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         接收变量的php脚本如下  //代码仅供测试 &lt;?php $name = @$_POST['uname']; $pass = @$_POST['upass']; if (empty($name) or empty($pass)){ header(&quot;location:http://127.0.0.1:921/test/test/index.html&quot;); exit(); } else { if ($name === 'admin' and $pass === '123456'){ header(&quot;location:http://127.0.0.1:921/test/test/sucess.html&quot;); } else { header(&quot;location:http://127.0.0.1:921/test/test/error.html&quot;); exit(); } } ?&gt;   爆破表单的python脚本如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = [] class FormBlast(threading.
     </p>
 
@@ -625,7 +625,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径 使用if __name__ == &lsquo;__main__&lsquo;:  0x01 实例  文件结构如下  测试文件test.py
    #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.
     </p>

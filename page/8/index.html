@@ -121,7 +121,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         关于cmd模块  使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
  cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  用cmd模块简单实现shell命令  #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot; def __init__(self): Cmd.__init__(self) os.chdir(&quot;C:/Users/WYB_9/Desktop&quot;) hostName = socket.gethostname() self.prompt = &quot;reber@&quot; + hostName + &quot; &quot; + os.path.abspath('.') + &quot;\n$ &quot; def help_dir(self): print &quot;dir [path]&quot; def do_dir(self, arg): if not arg: print &quot;\n&quot;.
     </p>
@@ -175,7 +175,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          场景 攻击主机和被攻击主机在一个无线下面
 开始攻击 1. 打开ettercap   2. 查看host列表  在软件的图形化界面点击sniff，选择unified sniffing选择网卡，然后单击hosts选项，选择scan for host，然后选择host list  3. 选定攻击目标  选择192.168.1.116的IP地址，点击Add to Target 1,然后选择网关的IP地址192.168.1.1，点击Add to Target 2  4. 开始攻击  ettercap选择&rdquo;mitm&rdquo;—&rdquo;arp poisoning&rdquo;—&rdquo;Sniff remote connections&rdquo;— &ldquo;确定&rdquo;，然后再在被攻击端查看arp，可知攻击已经成功  5. ettercap持续监听目标  软件上开始监听，被攻击端用浏览器登录路由器  6. 得到Cookie  点击主界面的&rdquo;View&rdquo; — &ldquo;connetcions&rdquo; 可以查看被攻击主机的一些网络链接  7. 用cookie登陆被入侵账户  打开火狐浏览器，通过firebug插件添加截获到的cookie从而登陆账户  
     </p>
@@ -225,7 +225,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         网络拓扑及信息 其中ip等信息如下： 攻击WPA保护下的802.11网络 1. 查看无线网卡并将其设置为监听模式   2. 打开kismet，进行基本设置   3. 选择名字为111111的AP为目标   4. 查看kismet抓包信息  kismet生成的nettxt文件的部分信息如下：
 Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:21 2015 Last : Mon Nov 16 13:10:23 2015 Type : infrastructure BSSID : D8:42:AC:C9:5C:1D SSID 1 Type : Probe Response SSID : &quot;111111&quot; First : Mon Nov 16 12:46:30 2015 Last : Mon Nov 16 13:10:22 2015 Max Rate : 54.
     </p>
@@ -281,7 +281,7 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          环境及要求 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器
 安装服务 配置并启用路由和远程访问 新增路由协议 新增接口 新增VPN用户 尝试连接VPN 
     </p>
@@ -331,7 +331,7 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         要求  内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网  拓扑   个主机IP信息  内网网段为：192.168.1.0/24
 DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如下：
 #!/bin/bash iptables –F #清空此表中的规则 iptables –X #清空此表中的自定义规则 iptables –Z #清空此表中的计数器为0 iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP iptables -F -t nat iptables -X -t nat iptables -Z -t nat iptables -t nat -P PREROUTING ACCEPT iptables -t nat -P POSTROUTING ACCEPT iptables -t nat -P OUTPUT ACCEPT #添加必要的模块 modprobe ip_nat_ftp modprobe iptable_nat modprobe ip_conntrack modprobe ip_conntrack_ftp #开启转发功能 echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward #******************************************************************** #PREROUTING： iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.
@@ -386,7 +386,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         解码IP头 Windows上运行时要以管理员身份运行
 代码可以解码IP头统计通信信息并保存到文本，同时统计数量
 #!/usr/bin/env python #-*- coding:utf-8 -*- import socket import os import sys import time import struct from ctypes import * host = &quot;10.22.114.114&quot; tcp_num = 0 udp_num = 0 icmp_num = 0 class IP(Structure): _fields_ = [ (&quot;ihl&quot;, c_ubyte,4), (&quot;version&quot;, c_ubyte,4), (&quot;tos&quot;, c_ubyte), (&quot;len&quot;, c_ushort), (&quot;id&quot;, c_ushort), (&quot;offset&quot;, c_ushort), (&quot;ttl&quot;, c_ubyte), (&quot;protocol_num&quot;,c_ubyte), (&quot;sum&quot;, c_ushort), (&quot;src&quot;, c_ulong), (&quot;dst&quot;, c_ulong) ] def __new__ (self,socket_buffer=None): return self.from_buffer_copy(socket_buffer) def __init__ (self,socket_buffer=None): self.
@@ -443,7 +443,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 无参数的get请求  import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串   0x01 有参数的get请求  import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } payload = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=payload,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie   0x02 POST请求  import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.
     </p>
 
@@ -496,7 +496,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 什么是SSRF  &nbsp;&nbsp;&nbsp;&nbsp;SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，它将一个可以发起网络请求的服务当作跳板来攻击其他服务，SSRF的攻击目标一般是内网。
 &nbsp;&nbsp;&nbsp;&nbsp;当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。
  0x01 SSRF的危害  可以扫描内部网络
@@ -555,7 +555,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         几个编码函数  chr(x) 可以将0-255之间的数字转化为ASCII表中的字符 ord(x) 可以ASCII表中的字符转化为0-255之间的数字 hex(x) 将整数转化为十六进制字符串 oct(x) 将整数转化为八进制字符串  在py文件开头 使用：
 #!/usr/bin/env python #-*- coding: UTF-8 -*- 或： #coding=utf8  永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
 #coding=utf8 import sys reload(sys) sys.setdefaultencoding('utf8') # 此方法修改了python环境，设置系统默认编码，永久有效  编码转换 python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
@@ -611,7 +611,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         关于sqlmapapi.py 当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量
 用于交互的方法 在sqlmap/lib/utils/api.py中:
 # 用户方法 @get(&quot;/task/new&quot;) Create new task ID. @get(&quot;/task/&lt;taskid&gt;/delete&quot;) Delete own task ID. # 管理函数 @get(&quot;/admin/&lt;taskid&gt;/list&quot;) List task pull. @get(&quot;/admin/&lt;taskid&gt;/flush&quot;) Flush task spool (delete all tasks). # 核心交互函数 @get(&quot;/option/&lt;taskid&gt;/list&quot;) List options for a certain task ID @post(&quot;/option/&lt;taskid&gt;/get&quot;) Get the value of an option (command line switch) for a certain task ID @post(&quot;/option/&lt;taskid&gt;/set&quot;) Set an option (command line switch) for a certain task ID @post(&quot;/scan/&lt;taskid&gt;/start&quot;) Launch a scan @get(&quot;/scan/&lt;taskid&gt;/stop&quot;) Kill a scan @get(&quot;/scan/&lt;taskid&gt;/status&quot;) Return status of a scan @get(&quot;/scan/&lt;taskid&gt;/data&quot;) Retrieve the data of a scan @get(&quot;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&quot;) Retrieve a subset of log messages @get(&quot;/scan/&lt;taskid&gt;/log&quot;) Retrieve the log messages @get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system  sqlmapapi.

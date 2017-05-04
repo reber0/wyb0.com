@@ -122,7 +122,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         使用流程  创建一个logger 创建一个handler，用于写入日志文件 定义handler的输出格式 将handler添加到logger 记录日志  示例  #!/usr/bin/env python # -*- coding: utf-8 -*- import logging class MyLog(object): &quot;&quot;&quot;docstring for MyLog&quot;&quot;&quot; def __init__(self, logfile, loglevel, logger): super(MyLog, self).__init__() # 创建一个logger self.logger = logging.getLogger(logger) self.logger.setLevel(logging.DEBUG) # 创建一个用于写入日志文件的handler fh = logging.FileHandler(logfile) fh.setLevel(logging.DEBUG) # 只要是写入文件的等级都为DEBUG，也可以设置为loglevel formatterf = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') fh.setFormatter(formatterf) # 创建一个用于输出到控制台的handler ch = logging.StreamHandler() ch.setLevel(loglevel) formatterc = logging.Formatter('%(asctime)s - %(message)s') ch.setFormatter(formatterc) # 将handler添加到logger self.
     </p>
 
@@ -177,7 +177,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          第三方模块安装方法  使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装  使用easy_install安装  在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName   使用pip安装  在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName   网站下载安装包  在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装
  
     </p>

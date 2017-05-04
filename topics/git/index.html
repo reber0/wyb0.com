@@ -120,7 +120,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 前期准备  # 环境 Ubuntu 14.04 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client reber@ubuntu:~/Desktop$ sudo apt-get install git   0x01 安装  reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb   0x02 配置  reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb external_url 'http://192.168.188.160:80' ...... gitlab_rails['time_zone'] = 'Asia/Shanghai' gitlab_rails['gitlab_email_from'] = 'xxxxxx@163.com' ...... gitlab_rails['smtp_enable'] = true gitlab_rails['smtp_address'] = &quot;smtp.163.com&quot; gitlab_rails['smtp_port'] = 25 gitlab_rails['smtp_user_name'] = &quot;xxxxxx@163.com&quot; gitlab_rails['smtp_password'] = &quot;111111&quot; # 客户端授权密码 gitlab_rails['smtp_domain'] = &quot;163.
     </p>
 
@@ -175,7 +175,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          开启本地服务   编辑md文档   推送md文档   推送html   查看推送是否成功   
     </p>
 
@@ -226,7 +226,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         首先在github上新建仓库   本地新建仓库  下载安装hugo  为hugo添加环境变量  下载安装github客户端  新建仓库  下载主题
 可以在https://github.com/spf13/hugoThemes 下载你喜欢的主题
  使用主题并查看效果   本地环境配置  本地生成秘钥  在github保存秘钥  测试公钥是否添加成功  设置本地用户名和邮箱   配置config.toml  # 将reber-9全部替换为你github的账户名，另外你也可以进行一些基本的设置 baseurl = &quot;http://reber-9.github.io&quot; languageCode = &quot;en-us&quot; title = &quot;reber-9's Blog&quot; theme = &quot;beautifulhugo&quot; pygmentsUseClasses = false #disqusShortname = &quot;XXX&quot; #googleAnalytics = &quot;XXX&quot; [Params] logo = &quot;img/avatar-icon.
@@ -281,7 +281,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 环境  Ubuntu14.4
  0x01 安装hugo和git 0x02 生成密钥，将密钥添加到github  $ cd ~ $ ssh-keygen -t rsa -b 2048 -C &quot;123456@qq.com&quot; $ cd ~/.ssh/ $ cat id_rsa.pub # 将公钥添加到 github   0x03 配置本地用户和邮箱  git config --global user.name &quot;reber-9&quot; git config --global user.email &quot;123456@qq.com&quot;   0x04 验证密钥是否添加成功  ssh -T git@github.com
  0x05 克隆远程工程  git clone https://github.com/reber-9/reber-9.com.git
@@ -338,7 +338,7 @@ echo &ldquo;reber-9.com&rdquo; &gt;&gt; static/CNAME
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         环境： ubuntu14.4
 安装hugo  在https://github.com/spf13/hugo/releases 下载hugo的deb安装包 安装hugo
 reber@ubuntu:~/Downloads$ sudo dpkg -i hug_015_amd64 安装hugo 生成站点
@@ -404,7 +404,7 @@ reber@ubuntu:~$ ssh-keygen -t rsa -C &ldquo;your github email address&rdquo; 重
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 创建仓库   0x01 克隆   0x02 仓库连接到远程服务器  # 若没有克隆现有仓库则可以连接远程仓库： git remote add origin git@github.com:reber-9/reber-9.com.git   0x03 .gitignore文件   0x04 添加和提交和推送   0x05 分支  切换分支后，分支的更改不会影响原来分支， 切换分支后，分支更改后需要add，然后commit git checkout -b test可以创建分支同时切换   0x06 更新和合并  git pull 可以同步github上的数据到本地 git merge test 可以将test分支的改动合并到当前分支   0x07 查看状态  git status   0x08 撤回  git reset HEAD # 上一次add的文件全部撤销 git log查看commit的id git reset --hard commit_id # 若未push,可回到上个commit处 git revert HEAD # 若push后,可撤销前一次 commit   0x09 多用户  如果有多个用户时可进行如下设置
     </p>
 

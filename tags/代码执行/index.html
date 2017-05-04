@@ -120,7 +120,7 @@
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          接着上一篇：http://wyb0.com/posts/code-execution-vulnerabilities/
 0x00 函数create_function()  php中的函数create_function()可以创建一个匿名函数，其函数原型如下：
 string create_function ( string $args , string $code ) 其中$args是函数的参数，$code是函数的内容  若对提交的code未过滤或过滤不当则可能会导致代码执行漏洞
@@ -174,7 +174,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
     </header>
 
     
-    <p style="max-height:130px;overflow:hidden;line-height:1.6;position: relative;word-wrap: break-word !important;z-index:1;">
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 代码执行  当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时， 没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。   0x01 相关函数  PHP：eval assert Python：exec asp：&lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&gt; Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能   0x02 phpcms中的string2array函数  这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组
 array( //这个是字符串形式的数组，它并不是数组，而是字符串 'upload_maxsize' =&gt; '2048', 'upload_allowext' =&gt; 'jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf', 'watermark_enable' =&gt; '1', 'watermark_minwidth' =&gt; '300', 'watermark_minheight' =&gt; '300', 'watermark_img' =&gt; '/statics/img/water/mark.png', 'watermark_pct' =&gt; '85', 'watermark_quality' =&gt; '80', 'watermark_pos' =&gt; '9', )  function string2array($data) { //这个函数可以将字符串$data转化为数组 if($data == '') return array(); @eval(&quot;\$array = $data;&quot;); return $array; }   0x03 漏洞危害  执行代码 让网站写shell 甚至控制服务器   0x04 漏洞分类(也是利用点)  执行代码的函数：eval、assert callback函数：preg_replace + /e模式 反序列化：unserialize()(反序列化函数)   0x05 漏洞挖掘  框架找漏洞，如ThinkPHP： inurl:index.
     </p>
