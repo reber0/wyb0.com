@@ -64,7 +64,7 @@ $ sudo easy_install pip
 ```
 
 ### 0x09 安装go2shell
-> 下载安装包然后安装
+> 下载安装包然后安装，安装好后把图标拖到Dock，然后把Dock中的图标拖到finder
 
 ### 0x0A Google导入BurpSuite证书
 > ```
