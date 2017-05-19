@@ -82,6 +82,62 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-encode-setting/">Python的编码问题</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-29</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        几个编码函数  chr(x) 可以将0-255之间的数字转化为ASCII表中的字符 ord(x) 可以ASCII表中的字符转化为0-255之间的数字 hex(x) 将整数转化为十六进制字符串 oct(x) 将整数转化为八进制字符串  在py文件开头 使用：
+#!/usr/bin/env python #-*- coding: UTF-8 -*- 或： #coding=utf8  永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
+#coding=utf8 import sys reload(sys) sys.setdefaultencoding('utf8') # 此方法修改了python环境，设置系统默认编码，永久有效  编码转换 python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
+# coding: UTF-8 &quot;&quot;&quot;从gbk编码的文件中读出数据，重新编码为utf8然后存储&quot;&quot;&quot; f = open('test.txt') # gbk编码 s = f.read() u = s.decode('gbk') # 将gbk解码为unicode # 通常要判断其编码方式是否为unicode # isinstance(s, unicode)可以用来判断是否为unicode # 这里已知是GBK编码，解码成unicode s = u.encode('utf8') # 将unicode编码为utf8 f.write(s) f.close()  网页的编码 #!
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-encode-setting/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/sqlmapapi-usage/">sqlmapapi的简单使用</a></h2>
 
         
@@ -573,55 +629,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/injection-of-check-database-type/">SQL注入之判断数据库类型</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-19</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x01 扫描端口 0x02 指纹信息 0x03 在URL后面直接判断  Access: and (select count(*) from MSysAccessObjects)&gt;0 返回正常说明是access and exists(select count(*) from 表) SQLserver: and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql MySQL: and length(user())&gt;0 返回正常说明是MySQL   0x04 其他方法  在mssql中可以调用substring。oracle则只可调用substr   
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -665,7 +672,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/mysql" title="mysql">mysql(6)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(10)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(11)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(61)</a></li>
         
@@ -756,7 +763,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">
