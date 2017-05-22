@@ -24,6 +24,11 @@ $ chmod 755 msfinstall
 $ ./msfinstall
 ```
 
+* 更新exp
+```
+$ msfupdate
+```
+
 ### 0x01 连接数据库
 * 首先启动postgresql数据库
 ```
