@@ -53,8 +53,10 @@ $ brew install java
 # 下载安装包安装后，将MAMP的mysql添加到环境变量
 $ ln -s /Applications/MAMP/Library/bin/mysql /usr/local/bin/mysql
 
-# 复制文件，然后进行配置
-$ cp /Applications/MAMP/Library/support-files/my-small.cnf /Applications/MAMP/conf/my.cnf
+# 配置数据库
+左上角，File -> Edit Template -> MySQL my.cnf
+在[client]下面添加：default-character-set=utf8
+在[mysqld]在下面添加character_set_server=utf8
 ```
 
 ### 0x08 pip安装
