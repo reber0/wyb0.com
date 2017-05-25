@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["mysql"]
 title = "MySQL的information_schema库"
-topics = ["MySQL"]
+topics = ["Database"]
 
 +++
 

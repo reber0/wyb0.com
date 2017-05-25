@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["php", "mysql"]
 title = "MySQL语法"
-topics = ["MySQL"]
+topics = ["Database"]
 
 +++
 

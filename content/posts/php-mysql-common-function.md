@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["mysql", "php"]
 title = "PHP之MySQL常用函数"
-topics = ["PHP", "MySQL"]
+topics = ["PHP", "Database"]
 
 +++
 
