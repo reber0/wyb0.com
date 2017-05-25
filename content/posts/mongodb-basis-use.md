@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["mongodb"]
 title = "MongoDB的基本使用"
-topics = ["database"]
+topics = ["Database"]
 
 +++
 
