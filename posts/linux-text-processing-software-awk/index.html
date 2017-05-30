@@ -116,9 +116,11 @@
                 
                 
 
-<p><center>
-awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。
-</center><br/><br/></p>
+<h3 id="0x00-awk">0x00 awk</h3>
+
+<blockquote>
+<p>awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。</p>
+</blockquote>
 
 <ul>
 <li><p>若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：</p>
@@ -143,11 +145,12 @@ dwqx    asds    sasdfcv
 </code></pre></li>
 </ul>
 
-<h2 id="去重">去重：</h2>
+<h3 id="0x01-去重">0x01 去重</h3>
 
-<pre><code>[wyb@localhost ~]$ cat test.txt | awk '!a[$1]++'
-[wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同
-aosan sadasdw jiaozuo
+<blockquote>
+<pre><code>$ cat test.txt | awk '!a[$1]++'
+$ cat test.txt | uniq #作用和上面命令相同
+xiaosan sadasdw jiaozuo
 234wer  asdfasd asdas
 1111    aaaa    cccc
 2222    aaaa    degd
@@ -155,12 +158,14 @@ aosan sadasdw jiaozuo
 21asd   sdfsd   sadasd
 dwqx    asds    sasdfcv
 </code></pre>
+</blockquote>
 
-<h2 id="去重-添加id">去重、添加id：</h2>
+<h3 id="0x02-去重-添加id">0x02 去重、添加id</h3>
 
-<p>一般字典不需要id、user、pass等标示符，这里只是为了便于观看</p>
+<blockquote>
+<pre><code>一般字典不需要id、user、pass等标示符，这里只是为了便于观看
 
-<pre><code>[wyb@localhost ~]$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print &quot;id:&quot;NR&quot;\tuser:&quot;$1&quot;\tpass:&quot;$2&quot;\taddress:&quot;$3}' | column -t  //最后一个命令可以将列对齐
+$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print &quot;id:&quot;NR&quot;\tuser:&quot;$1&quot;\tpass:&quot;$2&quot;\taddress:&quot;$3}' | column -t  #最后一个命令可以将列对齐
 id:1    user:aosan      pass:sadasdw    address:jiaozuo
 id:2    user:234wer     pass:asdfasd    address:asdas
 id:3    user:1111       pass:aaaa       address:cccc
@@ -169,10 +174,12 @@ id:5    user:3333       pass:aaaa       address:dfger
 id:6    user:21asd      pass:sdfsd      address:sadasd
 id:7    user:dwqx       pass:asds       address:sasdfcv
 </code></pre>
+</blockquote>
 
-<h2 id="去重-添加id-添加公司前缀">去重、添加id、添加公司前缀：</h2>
+<h3 id="0x03-去重-添加id-添加公司前缀">0x03 去重、添加id、添加公司前缀</h3>
 
-<pre><code>[wyb@localhost ~]$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print &quot;id:&quot;NR&quot;\tuser:uv_&quot;$1&quot;\tpass:&quot;$2&quot;\taddress:&quot;$3}'
+<blockquote>
+<pre><code>$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print &quot;id:&quot;NR&quot;\tuser:uv_&quot;$1&quot;\tpass:&quot;$2&quot;\taddress:&quot;$3}'
 id:1    user:uv_aosan   pass:sadasdw    address:jiaozuo
 id:2    user:uv_234wer  pass:asdfasd    address:asdas
 id:3    user:uv_1111    pass:aaaa       address:cccc
@@ -181,10 +188,12 @@ id:5    user:uv_3333    pass:aaaa       address:dfger
 id:6    user:uv_21asd   pass:sdfsd      address:sadasd
 id:7    user:uv_dwqx    pass:asds       address:sasdfcv
 </code></pre>
+</blockquote>
 
-<h2 id="去重然后输出密码">去重然后输出密码：</h2>
+<h3 id="0x04-去重然后输出密码">0x04 去重然后输出密码</h3>
 
-<pre><code>[wyb@localhost ~]$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print &quot;pass:&quot;$2}'
+<blockquote>
+<pre><code>$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print &quot;pass:&quot;$2}'
 pass:sadasdw
 pass:asdfasd
 pass:aaaa
@@ -193,11 +202,13 @@ pass:aaaa
 pass:sdfsd
 pass:asds
 </code></pre>
+</blockquote>
 
-<h2 id="输出密码-得到密码出现次数">输出密码、得到密码出现次数：</h2>
+<h3 id="0x05-输出密码-得到密码出现次数">0x05 输出密码、得到密码出现次数</h3>
 
+<blockquote>
 <pre><code>下面的'a[$1]++'是按第一列来去重的,若有两条数据只有第一列重复则成功，可以用$0按行来去重
-[wyb@localhost ~]$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print $2}' | awk '{a[$1]++} END {for (j in a) print a[j],j}'
+$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print $2}' | awk '{a[$1]++} END {for (j in a) print a[j],j}'
 1 sadasdw
 1 sdfsd
 1 asdfasd
@@ -207,24 +218,29 @@ pass:asds
 uniq 只能去除挨着的重复数据，所以先sort升序排序，然后uniq -c统计重复，再sort -r降序排序
 cat test.txt | awk '{print $2}' | sed '1d' |sort | uniq -c |sort -r
 </code></pre>
+</blockquote>
 
-<h2 id="其他">其他：</h2>
+<h3 id="0x06-其他">0x06 其他：</h3>
 
-<h4 id="对-a-1-的解释如下">对&rsquo;!a[$1]++&lsquo;的解释如下：</h4>
+<ul>
+<li><p>对!a[$1]++的解释如下：</p>
 
 <ul>
 <li>a[e54r56wer]为空，!a[e54r56wer]为真，可以输出，然后++</li>
 <li>若再来一个a[e54r56wer]，因为上一步已经++，此时值为1，!a[e54r56wer]为假，不输出，再++</li>
-</ul>
+</ul></li>
 
-<h4 id="对for输出数组的解释如下">对for输出数组的解释如下：</h4>
+<li><p>对for输出数组的解释如下：</p>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;awk &lsquo;{a[$1]++} END {for (j in a) print a[j],j}&rsquo; test.txt</p>
+<blockquote>
+<p>awk &lsquo;{a[$1]++} END {for (j in a) print a[j],j}&rsquo; test.txt</p>
+</blockquote>
 
 <ul>
 <li>在遍历完文件后，通过END把后面的句子连起来</li>
 <li>for (j in a) 是指打印数组a的下标，并定义下标为变量j</li>
 <li>最后print a[j],j就是打印数组下标和数组，这样就相同的$1排重并计数</li>
+</ul></li>
 </ul>
 
                 

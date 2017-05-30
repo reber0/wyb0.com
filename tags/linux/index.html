@@ -175,10 +175,10 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。 
- 若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：
+        0x00 awk  awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。
+  若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：
 xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 aaaa cccc 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv  要求：
-1.里面有重复数据，使用命令去重 2.提取出用户名和密码 每一行前面加上id数字，递增。 3.只提取出密码作为爆破字典 4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名 5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数   去重： [wyb@localhost ~]$ cat test.txt | awk '!a[$1]++' [wyb@localhost ~]$ cat test.txt | uniq //作用和上面命令相同 aosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv  去重、添加id： 一般字典不需要id、user、pass等标示符，这里只是为了便于观看
+1.里面有重复数据，使用命令去重 2.提取出用户名和密码 每一行前面加上id数字，递增。 3.只提取出密码作为爆破字典 4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名 5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数   0x01 去重  $ cat test.txt | awk '!a[$1]++' $ cat test.txt | uniq #作用和上面命令相同 xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv   0x02 去重、添加id  一般字典不需要id、user、pass等标示符，这里只是为了便于观看 $ cat test.
     </p>
 
     
