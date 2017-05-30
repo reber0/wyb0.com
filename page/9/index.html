@@ -82,6 +82,61 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module-requests/">Python的requests模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 无参数的get请求  import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串   0x01 有参数的get请求  import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } payload = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=payload,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie   0x02 POST请求  import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module-requests/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/ssrf/">SSRF</a></h2>
 
         
@@ -584,55 +639,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/injection-of-union-select/">SQL注入之联合查询</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-21</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 前提  要用联合查询进行注入则：页面必须有显示位   0x01 联合查询  union可合并两个或多个select语句的结果集， 前提是两个select必有相同列、且各列的数据类型也相同   0x02 注入步骤  找注入点且得到闭合字符 判断数据库类型 猜解列数，得到显示位 得到基本信息(如：数据库名、数据库版本、当前数据库名等) 得到数据库名 得到表名 得到列名 得到列值  1. 找到注入点得到闭合字符   2. 判断数据库类型   3. 猜解列数，得到显示位   4. 得到基本信息(数据库名、版本、数据库版本等)   5. 得到数据库   6. 得到security数据库的表名   7. 猜解列名   8. 猜解数据   
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -666,7 +672,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(7)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(8)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
@@ -848,6 +854,11 @@
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/sqlmap" title="sqlmap">sqlmap</a>
                 <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
