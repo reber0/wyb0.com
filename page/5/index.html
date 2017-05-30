@@ -82,6 +82,58 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module-optparse/">Python的optparse模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-16</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 关于optparse模块  python2.3之后添加的模块optparse是专门用来处理命令行选项的
+import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] domaion', version='%prog 1.2') parser.add_option('-b', '--bug', dest='isbug', default=False, action='store_true', help='Whether open the debug mode, default is false') parser.add_option('-u', '--url', dest='url', default=None, action='store', type='string', help='target url') parser.add_option('-n','--number', dest='num', default=10, type='int', help='the number, default is 10') (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message   0x01 说明  在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action='store'，可以不用写 action='store_true'使用参数时将布尔值true存储到dest指定的变量中 action='store_false'使用参数时将布尔值false存储到dest指定的变量中   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/burpsuite-intercept-packets-of-phone/">BurpSuite抓手机包</a></h2>
 
         
@@ -561,56 +613,6 @@ CREATE FUNCTION shell RETURNS STRING SONAME &lsquo;udf.
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/windows-use-system-vulnerabilities-elevate-privileges/">Windows下系统漏洞提权</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-08-07</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/elevate-privileges">elevate privileges</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         提权是在已经getshell但是权限不大的前提下做的
-0x00 查看基本信息   0x01 使用cmd执行命令  尝试使用cmd执行命令  找可写目录  尝试上传cmd.exe  写一个aspx马  上传cmd.exe  再次尝试使用cmd执行命令   0x02 权限提升  查看未安装补丁  上传exp提权   0x03 添加用户  添加远程连接用户   0x04 使用3389远程连接   
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -644,7 +646,7 @@ CREATE FUNCTION shell RETURNS STRING SONAME &lsquo;udf.
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(8)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(9)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
@@ -830,7 +832,7 @@ CREATE FUNCTION shell RETURNS STRING SONAME &lsquo;udf.
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">

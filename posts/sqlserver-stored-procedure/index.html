@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python的异常处理 - Reber's Blog</title>
+    <title>SQLServer存储过程 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -77,14 +77,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Python的异常处理</h2>
+                <h2>SQLServer存储过程</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-08-26</time>
+                        <time>2017-05-30</time>
                     </div>
 
                     
@@ -95,7 +95,7 @@
                         
                             <i class="fa fa-folder fa-fw"></i>
                             
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
                             
                         
                         
@@ -105,7 +105,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/sqlserver">sqlserver</a>
                             
                         
                         
@@ -114,40 +114,86 @@
                 
                 
 
-<h3 id="0x00-python异常处理">0x00 Python异常处理</h3>
+<h3 id="0x00-数据表结构">0x00 数据表结构</h3>
 
 <blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+<pre><code>CREATE DATABASE student;
 
-try:
-    try: # 可嵌套
-        str(&quot;aaaaa&quot;)
-        # int(&quot;aaaaa&quot;)
-        # print a
-        # print 1/0
-    except (TypeError, IndexError, ValueError): #捕获多种异常
-        print &quot;TypeErrorZero or DivisionError or ValueError&quot;
-    except ZeroDivisionError as aa: #捕获除零错误
-        print aa #输出详细错误信息
-    except:
-        print u&quot;发生其他异常则执行这里&quot;
-    else:
-        print u&quot;上面没有出错才输出这里&quot;
-        a = [1,2,3]
-        print a[4] #这里出错，会向上抛出错误，最终输出this is error
-    finally:
-        print u&quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&quot;
-except Exception as e: #可捕获所有异常类型
-    print &quot;this is error&quot;
-    print e
+CREATE TABLE info
+(
+    id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    name VARCHAR(20) NOT NULL DEFAULT 'xiaoming',
+    sex INT NOT NULL DEFAULT 1,
+    age INT NOT NULL DEFAULT 0,
+    hight INT NOT NULL DEFAULT 0
+)
+
+INSERT INTO info(name,sex,age,hight) VALUES('xiaohong',0,23,165);
+INSERT INTO info(name,sex,age,hight) VALUES('xiaogang',1,24,175);
+INSERT INTO info(name,sex,age,hight) VALUES('xiaoliu',1,21,160);
+INSERT INTO info(name,sex,age,hight) VALUES('xiaozhang',1,19,165);
+INSERT INTO info(name,sex,age,hight) VALUES('xiaoli',1,23,170);
+INSERT INTO info(name,sex,age,hight) VALUES('xiaohua',0,23,160);
+INSERT INTO info(name,sex,age,hight) VALUES('xiaoming',1,21,165);
+INSERT INTO info(name,sex,age,hight) VALUES('xiaowang',1,23,166);
+INSERT INTO info(name,sex,age,hight) VALUES('xiaojuan',0,21,159);
 </code></pre>
+</blockquote>
 
+<h3 id="0x01-存储过程">0x01 存储过程</h3>
 
-<div class="pure-u-1">
-  <img class="pure-img" src="/img/post/python_exception_handling.png" alt="python的异常处理.png">
-</div>
+<blockquote>
+<pre><code>--如果存在名为get_student_msg(相当于函数)的存储过程则删除
+IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p')
+    DROP PROCEDURE get_student_msg
 
+CREATE PROCEDURE get_student_msg --创建存储过程
+    @name VARCHAR(20) --声明全局变量
+AS
+    BEGIN
+        SELECT * from info
+        WHERE name=@name
+    END
+GO
+
+--创建好存储过程后在其他地方直接使用函数并传参就行了
+EXEC get_student_msg 'xiaoli'
+</code></pre>
+</blockquote>
+
+<h3 id="0x02-使用游标的存储过程">0x02 使用游标的存储过程</h3>
+
+<blockquote>
+<pre><code>-- 使用DECLARE声明局部变量，一般在函数和存储过程中使用
+DECLARE @name VARCHAR(20)
+DECLARE @sex INT
+DECLARE @age INT
+DECLARE @hight INT
+
+DECLARE stu_cursor CURSOR FOR --定义游标，后面跟sql语句
+SELECT name,sex,age,hight --使用游标的对象(根据需要写select语句)
+FROM dbo.info
+WHERE age IN (23,24)
+
+OPEN stu_cursor --打开游标
+
+--将游标向下移1行，获取的数据放入之前定义的变量中
+FETCH NEXT FROM stu_cursor INTO @name,@sex,@age,@hight
+
+WHILE (@@FETCH_STATUS = 0) --判断是否成功获取数据
+    BEGIN
+        PRINT '名字: '+@name
+        PRINT '性别: '+STR(@sex)
+        PRINT '年龄: '+STR(@age)
+        PRINT '身高: '+STR(@hight)
+        PRINT ''
+
+        FETCH NEXT FROM stu_cursor INTO @name,@sex,@age,@hight
+    END
+
+CLOSE stu_cursor --关闭游标
+DEALLOCATE stu_cursor --删除游标
+</code></pre>
 </blockquote>
 
                 
@@ -164,13 +210,13 @@ except Exception as e: #可捕获所有异常类型
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/metasploit-usage/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/sqlserver-bisis-use/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/metasploit-usage/">Metasploit的简单使用</a>
+      <a href="http://wyb0.com/posts/sqlserver-bisis-use/">SQLServer的基本使用</a>
     </nav>
     
   </div>
@@ -179,14 +225,8 @@ except Exception as e: #可捕获所有异常类型
   </div>
   <div class="pure-u-10-24">
     
-    <nav class="next">
-      <a href="http://wyb0.com/posts/python-multi-threaded-weak-password-blasting/">Python实现多线程弱口令爆破</a>
-    </nav>
-    
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
-    
-    <a href="http://wyb0.com/posts/python-multi-threaded-weak-password-blasting/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>
