@@ -177,7 +177,9 @@ WHERE age IN (23,24)
 
 OPEN stu_cursor --打开游标
 
---将游标向下移1行，获取的数据放入之前定义的变量中
+--将游标向下移1行，并把下一行作为当前行(递归)
+--游标刚打开时可以理解为指向第一行之前，所以这里就是把游标指向第一行
+--然后获取游标指向行的数据
 FETCH NEXT FROM stu_cursor INTO @name,@sex,@age,@hight
 
 WHILE (@@FETCH_STATUS = 0) --判断是否成功获取数据
@@ -188,6 +190,7 @@ WHILE (@@FETCH_STATUS = 0) --判断是否成功获取数据
         PRINT '身高: '+STR(@hight)
         PRINT ''
 
+        --游标指向下一行(第二行)，然后取出这一行的数据
         FETCH NEXT FROM stu_cursor INTO @name,@sex,@age,@hight
     END
 
