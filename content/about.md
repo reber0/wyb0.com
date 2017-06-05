@@ -21,10 +21,10 @@ sidemenu = "true"
 
 > ## About this site
 * 本博客站点创建于2016年4月11日
-#### Topics：Pentest是关于渗透测试的文章
-#### Topics：Linux是关于linux的学习
-#### Topics：PHP是关于PHP的学习
-#### Topics：Python是关于Python的学习
-#### Topics：Server是关于服务搭建的文章
-#### Topics：Miscellanea是生活随笔
-#### Topics：Plan是制定计划
+#### Categories：Pentest是关于渗透测试的文章
+#### Categories：Linux是关于linux的学习
+#### Categories：PHP是关于PHP的学习
+#### Categories：Python是关于Python的学习
+#### Categories：Server是关于服务搭建的文章
+#### Categories：Miscellanea是生活随笔
+#### Categories：Plan是制定计划
