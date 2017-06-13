@@ -123,3 +123,23 @@ WriteResult({ "nRemoved" : 1 })
 $ mongodump 会备份到当前的dump文件夹中
 $ mongorestore 会把dump中的数据导入到mongo
 ```
+
+### 0x05 python连接MongoDB
+> ```
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import pymongo
+
+#创建连接
+client = pymongo.MongoClient("localhost", 27017)
+
+#连接数据库
+db = client["test"]
+
+#选择集合(相当于mysql中的选择表)
+collection = db["msg"]
+
+#输出集合的第一条数据
+print collection.find_one()
+```
