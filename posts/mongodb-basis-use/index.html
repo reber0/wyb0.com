@@ -240,6 +240,28 @@ $ mongorestore 会把dump中的数据导入到mongo
 </code></pre>
 </blockquote>
 
+<h3 id="0x05-python连接mongodb">0x05 python连接MongoDB</h3>
+
+<blockquote>
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import pymongo
+
+#创建连接
+client = pymongo.MongoClient(&quot;localhost&quot;, 27017)
+
+#连接数据库
+db = client[&quot;test&quot;]
+
+#选择集合(相当于mysql中的选择表)
+collection = db[&quot;msg&quot;]
+
+#输出集合的第一条数据
+print collection.find_one()
+</code></pre>
+</blockquote>
+
                 
                 <div style="padding:10px 1px;">
                     <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
