@@ -979,7 +979,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
 使用(int)或settype()等将数字等进行强制转换
 对邮箱、日期等也进行检查
  使用预编译语句绑定变量(一般为防御SQL注入的最佳方式)
-&amp;lt;?php //预编译 $mysqli = new mysqli(&amp;quot;localhost&amp;quot;,&amp;quot;root&amp;quot;,&amp;quot;123456&amp;quot;,&amp;quot;share&amp;quot;); $mysqli-&amp;gt;query(&amp;quot;set names utf8&amp;quot;); $sql = &amp;quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&amp;quot;; $s = $mysqli-&amp;gt;prepare($sql); //绑定参数 $name = &amp;quot;Tom&amp;quot;; $sex = &amp;quot;M&amp;quot;; $age = 23; $s-&amp;gt;bind_param(&amp;quot;sssi&amp;quot;,$name,$sex,$age); //执行 $result = $s-&amp;gt;execute(); var_dump($result); $s-&amp;gt;close(); ?</description>
+&amp;lt;?php //预编译 $mysqli = new mysqli(&amp;quot;localhost&amp;quot;,&amp;quot;root&amp;quot;,&amp;quot;123456&amp;quot;,&amp;quot;share&amp;quot;); $mysqli-&amp;gt;query(&amp;quot;set names utf8&amp;quot;); $sql = &amp;quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&amp;quot;; $s = $mysqli-&amp;gt;prepare($sql); //绑定参数 $name = &amp;quot;Tom&amp;quot;; $sex = &amp;quot;M&amp;quot;; $age = 23; $s-&amp;gt;bind_param(&amp;quot;ssi&amp;quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&amp;gt;execute(); var_dump($result); $s-&amp;gt;close(); ?</description>
     </item>
     
     <item>
