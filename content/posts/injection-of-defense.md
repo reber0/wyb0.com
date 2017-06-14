@@ -46,7 +46,7 @@ topics = ["Pentest"]
         $name = "Tom";
         $sex = "M";
         $age = 23;
-        $s->bind_param("sssi",$name,$sex,$age);
+        $s->bind_param("ssi",$name,$sex,$age);//ssi的意思是字符、字符、整型
         //执行
         $result = $s->execute();
         var_dump($result);
