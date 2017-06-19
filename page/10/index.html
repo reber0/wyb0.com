@@ -82,6 +82,59 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/injection-of-boolian-based/">SQL注入之布尔型注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-22</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 特点  当页面存在注入，但是没有显示位，且没有用echo &quot;mysql_error()&quot;输出错误信息时可以用， 它一次只能猜测一个字节，速度慢，但是只要存在注入就能用   0x01 利用方式  用and连接前后语句：www.xxx.com/aa.php?id=1 and (注入语句) --+ 根据返回页面是否相同来得到数据   0x02 注入步骤  找注入点、猜闭合字符 猜解列数、尝试得到显示位 猜数据库名 猜表名 猜列名 猜列值  找到注入点，判断闭合字符   尝试猜解列数，得到显示位   得到数据库名  最终得到第五个数据库名为security   得到表名  最终依次猜的表名为users   得到列名  同理最终得到第2列列名为username，第3列列名为password   得到列值  依次得到为admin4，同理可得其他数据   0x04 附上python脚本  #!
+    </p>
+
+    
+    <footer>
+        <a href="/posts/injection-of-boolian-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/injection-of-error-based/">SQL注入之报错型注入</a></h2>
 
         
@@ -554,63 +607,6 @@ vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-set-up-tomcat-mysql-jsp/">Linux下搭建Tomcat&#43;MySQL&#43;JSP</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-17</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal  安装mysql sudo yum install mysql mysql-server mysql-devel
-安装jdk和tomcat  创建安装jdk和tomcat的文件夹  下载安装包并解压安装
-jdk包可在http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 下载
-tomcat包可在http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz 下载   简单配置tomcat 启动tomcat 连接数据库 驱动可在http://dev.mysql.com/downloads/connector/j/ 下载 [reber@WYB ~]$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
-&lt;%@page contentType=&quot;text/html;charset=utf-8&quot; import=&quot;java.sql.*&quot; %&gt; &lt;% String driver = &quot;com.mysql.jdbc.Driver&quot;; String url = &quot;jdbc:mysql://localhost:3306/tomcat&quot;; //数据库web String user = &quot;tomcat&quot;; String password = &quot;123456&quot;; try { Class.forName(driver); Connection conn = DriverManager.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-set-up-tomcat-mysql-jsp/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -644,7 +640,7 @@ tomcat包可在http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(9)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(10)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
@@ -810,7 +806,7 @@ tomcat包可在http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
-                <sup>2</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">

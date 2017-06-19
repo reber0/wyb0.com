@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP之面向对象 - Reber's Blog</title>
+    <title>Redis的使用 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -77,14 +77,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>PHP之面向对象</h2>
+                <h2>Redis的使用</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-05-20</time>
+                        <time>2016-08-03</time>
                     </div>
 
                     
@@ -95,7 +95,7 @@
                         
                             <i class="fa fa-folder fa-fw"></i>
                             
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
                             
                         
                         
@@ -105,7 +105,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/redis">redis</a>
                             
                         
                         
@@ -114,146 +114,196 @@
                 
                 
 
-<h2 id="面向对象">面向对象</h2>
+<h3 id="0x00-连接redis">0x00 连接Redis</h3>
 
-<ol>
-<li>面向对象概念
+<blockquote>
+<pre><code class="language-cs"># 客户端连接
+$ redis-cli
 
-<ul>
-<li>面向对象是达到了软件工程的三个目标：重用性、灵活性和扩展性，使其编程的代码更加简洁、更易于维护、并且具有更强的可重用性。</li>
-</ul></li>
-<li>类和对象的关系
+# 连接远程redis
+$ redis-cli -h host -p port -a password
 
-<ul>
-<li>在面向对象的编程语言中，类是一个对立的程序单位，而对象的抽象就是类。类描述了一组有相同特性(属性)和相同行为(方法)的对象。开发时要先抽象类再用该类去创建对象。而我们的程序中直接使用的是对象而不是类。</li>
-</ul></li>
-<li>什么是类
+# 查看所有键值
+127.0.0.1:6379&gt; keys *
 
-<ul>
-<li>在面向对象的编程语言中，类是一个对立的程序单位，是具有相同属性和服务的一组对象的集合。它为属于该类的所有对象提供了同意的抽象描述，其内部包括成员属性和服务的方法两个部分。</li>
-</ul></li>
-<li>什么是对象
+# 选择数据库
+127.0.0.1:6379&gt; select 0 #可以选择0～15
 
-<ul>
-<li>在客观世界里，所有的事物都是由对象和对象之间的联系组成的。对象是系统中用来描述客观事物的一个实体，它是构成系统的一个基本单位，一个对象由一组属性和有权对这些属性进行操作的一组服务的封装体。</li>
-</ul></li>
-</ol>
+# 获取redis安装目录
+127.0.0.1:6379&gt; config get dir
+1) &quot;dir&quot;
+2) &quot;/var/lib/redis&quot;
 
-<h2 id="类的声明">类的声明</h2>
-
-<ol>
-<li>类名和变量名还有函数名的命名规则类似，都遵循PHP中定义名称的命名规则。</li>
-<li>若类名由多个单词组成，习惯上每个单词的首字母要大写</li>
-<li>类中成员可分为属性和方法</li>
-<li>属性为静态描述，方法为动态描述</li>
-<li>在类中声明成员属性时，变量前面一定要有关键字，如：public、private、static等</li>
-<li>若不需要有特定意义的修饰，则使用var关键字</li>
-</ol>
-
-<pre><code class="language-php">格式：
-[一些修饰类的关键字] class 类名 {
-    类中成员;
-}
-
-Class Person {
-成员属性：
-    姓名、性别、年龄、身高、体重、电话、住址等
-成员方法：
-    说话、学习、走路、吃饭、开车、使用手机等
-}
-
-例子：
-&lt;?php
-    class Person {
-        var $name;
-        var $age;
-        var $sex;
-        function say() {
-            echo &quot;人在说话&quot;;
-        }
-        function run() {
-            echo &quot;人在走路&quot;;
-        }
-    }
-?&gt;
+# 备份(恢复数据时只需要将备份文件放在redis安装目录即可)
+127.0.0.1:6379&gt; save
+OK
+127.0.0.1:6379&gt; exit
 </code></pre>
+</blockquote>
 
-<h2 id="实例化对象">实例化对象</h2>
-
-<pre><code class="language-php">格式：
-$变量名 = new 类名称([参数列表]);
-$变量名 = new 类名称;
-
-例子：
-&lt;?php
-    class Phone {
-    // ...
-    }
-    class Person {
-    // ...
-    }
-    $person1 = new Person();
-    $person2 = new Person();
-    $person3 = new Person;
-    $phone1 = new Phone();
-    $phton2 = new Phone();
-    $phton3 = new Phone;
-?&gt;
-</code></pre>
-
-<h2 id="对象中成员的访问">对象中成员的访问</h2>
-
-<pre><code class="language-php">&lt;?php
-    /**
-    *声明一个人类Person，其中包含三个成员属性和两个成员方法
-    */
-    class Person
-    {
-        var $name;
-        var $age;
-        var $sex;
-        
-        function say() {
-            echo &quot;我的名字：&quot;.$this-&gt;name.&quot;,性别：&quot;.$this-&gt;sex.&quot;，年龄：&quot;.$this-&gt;age.&quot;。&lt;br /&gt;\n&quot;;
-        }
-        function run() {
-            echo $this-&gt;name.&quot;在走路&lt;br /&gt;\n&quot;;
-        }
-    }
-    
-    $xiaoming = new Person();
-    $wyb = new Person();
-    
-    $xiaoming-&gt;name = &quot;小明&quot;;
-    $xiaoming-&gt;sex = &quot;男&quot;;
-    $xiaoming-&gt;age = 16;
-    
-    $wyb-&gt;name = &quot;wyb&quot;;
-    $wyb-&gt;sex = &quot;男&quot;;
-    $wyb-&gt;age = 18;
-    
-    $xiaoming-&gt;say();
-    $wyb-&gt;run();
-?&gt;
-</code></pre>
-
-<h2 id="构造方法和析构方法">构造方法和析构方法</h2>
+<h3 id="0x01-数据类型">0x01 数据类型</h3>
 
 <ul>
-<li>构造方法和析构方法是对象中两个特殊的方法</li>
-<li>构造方法是对象创建完成后第一个被对象自动调用的方法</li>
-<li>析构方法是对象在销毁之前最后一个被对象自动调用的方法</li>
-<li>通常用构造方法完成一些对象的初始化工作，用析构方法完成一些对象在销毁前的清理工作</li>
+<li>String(字符串)
+
+<ul>
+<li>string是redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。</li>
+<li>string类型是二进制安全的。意思是redis的string可以包含任何数据。比如jpg图片或者序列化的对象 。</li>
+<li>string类型是Redis最基本的数据类型，一个键最大能存储512MB。</li>
+</ul></li>
+<li>Hash(哈希)
+
+<ul>
+<li>Redis hash 是一个键名对集合。</li>
+<li>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。</li>
+</ul></li>
+<li>List(列表)
+
+<ul>
+<li>Redis 列表是简单的字符串列表，按照插入顺序排序。</li>
+<li>可以添加一个元素到列表的头部（左边）或者尾部（右边）。</li>
+</ul></li>
+<li>Set(集合)
+
+<ul>
+<li>Redis的Set是string类型的无序集合。</li>
+<li>集合内元素是唯一的，后者会覆盖前者。</li>
+<li>集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。</li>
+</ul></li>
+<li>zset(有序集合)
+
+<ul>
+<li>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。</li>
+<li>zset每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。</li>
+<li>zset的成员是唯一的,但分数(score)却可以重复。</li>
+</ul></li>
 </ul>
 
-<pre><code class="language-php">function _ _construct([参数列表]) {
-    //方法体，通常用来对成员属性进行初始化赋值
-}
+<h3 id="0x02-string">0x02 String</h3>
 
-function _ _destruct([参数列表]) {
-    //方法体，通常用来完成一些在对象销毁前的清理工作
-}
+<blockquote>
+<pre><code class="language-cs"># 添加键值对
+127.0.0.1:6379&gt; set name &quot;xiaoming&quot;
+# 获取键值
+127.0.0.1:6379&gt; get name
+# 删除键值对
+127.0.0.1:6379&gt; del name
 </code></pre>
+</blockquote>
+
+<h3 id="0x03-hash">0x03 Hash</h3>
+
+<blockquote>
+<pre><code class="language-cs"># Hash中一个key对应多个值
+127.0.0.1:6379&gt; hmset student1 name &quot;xiaohong&quot; age &quot;18&quot;
+OK
+127.0.0.1:6379&gt; hmset student2 name &quot;xiaoliu&quot; age &quot;23&quot;
+OK
+127.0.0.1:6379&gt; hgetall student1
+1) &quot;name&quot;
+2) &quot;xiaohong&quot;
+3) &quot;age&quot;
+4) &quot;18&quot;
+127.0.0.1:6379&gt; hgetall student2
+1) &quot;name&quot;
+2) &quot;xiaoliu&quot;
+3) &quot;age&quot;
+4) &quot;23&quot;
+</code></pre>
+</blockquote>
+
+<h3 id="0x04-list">0x04 List</h3>
+
+<blockquote>
+<pre><code class="language-cs">127.0.0.1:6379&gt; lpush list1 &quot;python&quot;
+(integer) 1
+127.0.0.1:6379&gt; lpush list1 &quot;php&quot;
+(integer) 2
+127.0.0.1:6379&gt; lpush list1 &quot;asp&quot;
+(integer) 3
+127.0.0.1:6379&gt; lpush list1 &quot;jsp&quot;
+(integer) 4
+127.0.0.1:6379&gt; rpush list2 &quot;aaaa&quot;
+(integer) 1
+127.0.0.1:6379&gt; rpush list1 &quot;aaaa&quot;
+(integer) 5
+127.0.0.1:6379&gt; lrange list1 0 10
+1) &quot;jsp&quot;
+2) &quot;asp&quot;
+3) &quot;php&quot;
+4) &quot;python&quot;
+5) &quot;aaaa&quot;
+127.0.0.1:6379&gt; lindex list1 3
+&quot;python&quot;
+127.0.0.1:6379&gt; llen list1
+(integer) 5
+127.0.0.1:6379&gt; lpop list1
+&quot;jsp&quot;
+127.0.0.1:6379&gt; rpop list1
+&quot;aaaa&quot;
+</code></pre>
+</blockquote>
+
+<h3 id="0x05-set">0x05 Set</h3>
+
+<blockquote>
+<pre><code class="language-cs">127.0.0.1:6379&gt; sadd set1 &quot;333&quot;
+(integer) 1
+127.0.0.1:6379&gt; sadd set1 &quot;222&quot;
+(integer) 1
+127.0.0.1:6379&gt; sadd set1 &quot;111&quot;
+(integer) 1
+127.0.0.1:6379&gt; sadd set1 &quot;111&quot;
+(integer) 0
+127.0.0.1:6379&gt; sadd set1 &quot;000&quot;
+(integer) 1
+127.0.0.1:6379&gt; smembers set1
+1) &quot;000&quot;
+2) &quot;222&quot;
+3) &quot;333&quot;
+4) &quot;111&quot;
+</code></pre>
+</blockquote>
+
+<h3 id="0x06-zset">0x06 zset</h3>
+
+<blockquote>
+<pre><code class="language-cs">127.0.0.1:6379&gt; zadd zset1 2 &quot;222&quot;
+(integer) 1
+127.0.0.1:6379&gt; zadd zset1 1 &quot;111&quot;
+(integer) 1
+127.0.0.1:6379&gt; zadd zset1 3 &quot;333&quot;
+(integer) 1
+127.0.0.1:6379&gt; zadd zset1 3 &quot;333&quot;
+(integer) 0
+127.0.0.1:6379&gt; zadd zset1 0 &quot;000&quot;
+(integer) 1
+127.0.0.1:6379&gt; zrange zset1 0 10
+1) &quot;000&quot;
+2) &quot;111&quot;
+3) &quot;222&quot;
+4) &quot;333&quot;
+127.0.0.1:6379&gt; zadd zset1 0 &quot;555&quot;
+(integer) 1
+127.0.0.1:6379&gt; zrange zset1 0 10
+1) &quot;000&quot;
+2) &quot;555&quot;
+3) &quot;111&quot;
+4) &quot;222&quot;
+5) &quot;333&quot;
+127.0.0.1:6379&gt; zrange zset1 0 10 withscores
+ 1) &quot;000&quot;
+ 2) &quot;0&quot;
+ 3) &quot;555&quot;
+ 4) &quot;0&quot;
+ 5) &quot;111&quot;
+ 6) &quot;1&quot;
+ 7) &quot;222&quot;
+ 8) &quot;2&quot;
+ 9) &quot;333&quot;
+10) &quot;3&quot;
+</code></pre>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">
@@ -269,13 +319,13 @@ function _ _destruct([参数列表]) {
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/php-array/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/redis-install/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/php-array/">PHP之数组</a>
+      <a href="http://wyb0.com/posts/redis-install/">Redis的安装</a>
     </nav>
     
   </div>
@@ -285,13 +335,13 @@ function _ _destruct([参数列表]) {
   <div class="pure-u-10-24">
     
     <nav class="next">
-      <a href="http://wyb0.com/posts/php-string/">PHP之字符串</a>
+      <a href="http://wyb0.com/posts/redis-unauthorized-access/">Redis未授权访问漏洞</a>
     </nav>
     
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
     
-    <a href="http://wyb0.com/posts/php-string/"><i class="fa fa-chevron-right"></i></a>
+    <a href="http://wyb0.com/posts/redis-unauthorized-access/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>

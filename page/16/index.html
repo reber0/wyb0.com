@@ -82,6 +82,73 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/various-parameter-types-injected/">各种参数类型注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2015-12-20</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        分类  根据注入时提交的变量参数类型，SQL注入点有不同的分类，不同的注入点，其注入时需要注意的事项也有所不同。按提交参数类型，SQL注入点主要分为下面3种：即数字型注入点、字符型注入点和搜索型注入点
+ 数字型注入点  形如&rdquo;http://www.xxx.com/a.asp?ID=55&quot; ，这类注入的参数是&rdquo;数字&rdquo;，因此称为&rdquo;数字型注入点&rdquo;。 此类注入点提交的SQL语句，其原形大致为：select * from 表名 where 字段=55
+当提交&rdquo;http://www.xxx.com/a.asp?ID=55 And [查询条件]&ldquo;时，向数据库提交的完整SQL语句为：
+select * from 表名 where 字段=55 and [查询条件]
+ 字符型注入点  形如&rdquo;http://www.xxx.com/a.asp?Class=0123&quot;这类注入的参数是&quot;字符&quot;，称为&quot;字符型&quot;注入点。
+此类注入点提交的 SQL 语句，其原形大致为：
+select * from 表名 where 字段=&lsquo;日期&rsquo;
+当提交&rdquo;http://www.xxx.com/a.asp?Class=日期 And [查询条件]&ldquo;时，向数据库提交的SQL语句为：
+select * from 表名 where 字段=&lsquo;日期&rsquo; and [查询条件]
+ 搜索型注入点  这是一类特殊的注入类型。
+这类注入主要是指在进行数据搜索时没过滤搜索参数，一般在链接地址中有&rdquo;keyword=关键字&rdquo;，有的不显示的链接地址，而是直接通过搜索框表单提交。
+此类注入点提交的 SQL 语句，其原形大致为：
+select * from 表名 where 字段 like &lsquo;%关键字%&rsquo;
+当我们提交注入参数为&rdquo;keyword=&lsquo;and[查询条件] and &lsquo;%&rsquo;=&lsquo;,则向数据库提交的完整SQL语句为：
+select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &lsquo;%&rsquo;=&lsquo;%&rsquo;
+    </p>
+
+    
+    <footer>
+        <a href="/posts/various-parameter-types-injected/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/cookie-injection-of-asp/">ASP简单Cookie注入</a></h2>
 
         
@@ -383,7 +450,7 @@ vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(9)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(10)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
         
@@ -549,7 +616,7 @@ vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
-                <sup>2</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">

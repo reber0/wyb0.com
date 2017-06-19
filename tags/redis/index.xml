@@ -22,6 +22,15 @@
     </item>
     
     <item>
+      <title>Redis的使用</title>
+      <link>http://wyb0.com/posts/redis-bisis-use/</link>
+      <pubDate>Wed, 03 Aug 2016 11:02:20 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/redis-bisis-use/</guid>
+      <description>0x00 连接Redis  # 客户端连接 $ redis-cli # 连接远程redis $ redis-cli -h host -p port -a password # 查看所有键值 127.0.0.1:6379&amp;gt; keys * # 选择数据库 127.0.0.1:6379&amp;gt; select 0 #可以选择0～15 # 获取redis安装目录 127.0.0.1:6379&amp;gt; config get dir 1) &amp;quot;dir&amp;quot; 2) &amp;quot;/var/lib/redis&amp;quot; # 备份(恢复数据时只需要将备份文件放在redis安装目录即可) 127.0.0.1:6379&amp;gt; save OK 127.0.0.1:6379&amp;gt; exit   0x01 数据类型  String(字符串)  string是redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。 string类型是二进制安全的。意思是redis的string可以包含任何数据。比如jpg图片或者序列化的对象 。 string类型是Redis最基本的数据类型，一个键最大能存储512MB。  Hash(哈希)  Redis hash 是一个键名对集合。 Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。  List(列表)  Redis 列表是简单的字符串列表，按照插入顺序排序。 可以添加一个元素到列表的头部（左边）或者尾部（右边）。  Set(集合)  Redis的Set是string类型的无序集合。 集合内元素是唯一的，后者会覆盖前者。 集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。  zset(有序集合)  Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。 zset每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。 zset的成员是唯一的,但分数(score)却可以重复。   0x02 String  # 添加键值对 127.</description>
+    </item>
+    
+    <item>
       <title>Redis的安装</title>
       <link>http://wyb0.com/posts/redis-install/</link>
       <pubDate>Wed, 03 Aug 2016 00:00:48 +0800</pubDate>
