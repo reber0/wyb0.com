@@ -457,9 +457,9 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 安装  下载MySQL-python-1.2.3.win-amd64-py2.7.exe然后安装
-注：还是用pymysql吧，py3不支持MySQLdb了。。。
- 0x01 简单表设计如下  insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default '127.0.0.1' comment 'ip地址', domain varchar(100) not null default 'www.xx.com' comment '域名' ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges;   0x02 代码  #!
+        0x00 安装  有两种，一个是MySQLdb，一个是pymysql
+  下载MySQL-python-1.2.3.win-amd64-py2.7.exe然后安装
+ sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)  0x01 简单表设计如下  insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default '127.0.0.1' comment 'ip地址', domain varchar(100) not null default 'www.xx.com' comment '域名' ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges;   0x02 MySQLdb封装代码  #!
     </p>
 
     

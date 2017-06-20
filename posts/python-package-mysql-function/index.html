@@ -121,9 +121,13 @@
 <h3 id="0x00-安装">0x00 安装</h3>
 
 <blockquote>
-<p>下载<a href="http://www.codegood.com/archives/129">MySQL-python-1.2.3.win-amd64-py2.7.exe</a>然后安装<br />
-注：还是用pymysql吧，py3不支持MySQLdb了。。。</p>
+<p>有两种，一个是MySQLdb，一个是pymysql</p>
 </blockquote>
+
+<ul>
+<li>下载<a href="http://www.codegood.com/archives/129">MySQL-python-1.2.3.win-amd64-py2.7.exe</a>然后安装<br /></li>
+<li>sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)</li>
+</ul>
 
 <h3 id="0x01-简单表设计如下">0x01 简单表设计如下</h3>
 
@@ -146,7 +150,7 @@ flush privileges;
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-代码">0x02 代码</h3>
+<h3 id="0x02-mysqldb封装代码">0x02 MySQLdb封装代码</h3>
 
 <blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
@@ -284,6 +288,59 @@ if __name__ == '__main__':
     # print db.delete('msg', 'id&gt;3')
 
     db.close()
+</code></pre>
+</blockquote>
+
+<h3 id="0x03-pymysql封装代码">0x03 pymysql封装代码</h3>
+
+<blockquote>
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import pymysql
+import contextlib
+
+mysql_info = {
+    'host': '192.168.188.134',
+    'port': 3306,
+    'user': 'root',
+    'password': 'root',
+    'db': 'msg',
+    'charset': 'utf8',
+    'cursorclass': pymysql.cursors.DictCursor,
+}
+
+class MySQLX(object):
+    @contextlib.contextmanager
+    def init(self):
+        dbconn = pymysql.connect(**mysql_info)
+        cursor = dbconn.cursor()
+
+        try:
+            yield cursor #这里就是with返回的
+        finally:
+            dbconn.commit()
+            cursor.close()
+            dbconn.close()
+
+    def query(self, sql,arg=''):
+        try:
+            with self.init() as cursor:
+                if arg:
+                    cursor.execute(sql,arg) #返回受影响行数
+                else:
+                    cursor.execute(sql)
+                result = cursor.fetchall() #返回数据格式是[{},{}]
+                # result = cursor.fetchone() #返回数据格式是{}
+                return result
+        except Exception, e:
+            print sql,str(e)
+
+if __name__ == '__main__':
+    sqlconn = MySQLX()
+    sql = &quot;select ip,domain from `mag` where id=%s&quot;
+    result = sqlconn.query(sql,&quot;2&quot;)
+    print result
 </code></pre>
 </blockquote>
 
