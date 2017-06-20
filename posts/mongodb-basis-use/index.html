@@ -119,16 +119,16 @@
 <blockquote>
 <pre><code>$ mongo
 
-创建数据库，创建数据库后只有插入一条数据才能保存数据库
+#创建数据库，创建数据库后只有插入一条数据才能保存数据库
 &gt; use test
 
-查看所有数据库
+#查看所有数据库
 &gt; show dbs
 
-查看当前数据库
+#查看当前数据库
 &gt; db
 
-删除数据库
+#删除数据库
 &gt;use test
 switched to db test
 &gt;db.dropDatabase()
@@ -139,7 +139,7 @@ switched to db test
 <h3 id="0x01-创建用户">0x01 创建用户</h3>
 
 <blockquote>
-<pre><code>创建管理员用户
+<pre><code>#创建管理员用户
 &gt; use admin
 switched to db admin
 &gt; db.createUser({user:&quot;root&quot;,pwd:&quot;root123&quot;,roles:[&quot;userAdminAnyDatabase&quot;]})
@@ -147,10 +147,10 @@ Successfully added user: { &quot;user&quot; : &quot;root&quot;, &quot;roles&quot
 &gt; db.auth(&quot;root&quot;,&quot;root123&quot;)
 1
 
-这个例子创建了一个名为 root 的用户管理员。创建完了这个用户之后，我们应该马上以该用户的身份登录：
-db.auth() 方法返回 1 表示登录成功。接下来我们为指定的数据库创建访问所需的账号。
+#这个例子创建了一个名为 root 的用户管理员。创建完了这个用户之后，我们应该马上以该用户的身份登录：
+#db.auth() 方法返回 1 表示登录成功。接下来我们为指定的数据库创建访问所需的账号。
 
-创建数据库用户
+#创建数据库用户
 &gt; use test
 switched to db test
 &gt; db.createUser({user:&quot;test&quot;,pwd:&quot;test123&quot;,roles:[&quot;readWrite&quot;]})
@@ -163,19 +163,19 @@ Successfully added user: { &quot;user&quot; : &quot;test&quot;, &quot;roles&quot
 <h3 id="0x02-集合">0x02 集合</h3>
 
 <blockquote>
-<pre><code>创建集合
+<pre><code>#创建集合
 &gt; use test
 &gt; db.createCollection(&quot;msg&quot;)
 { &quot;ok&quot; : 1 }
 &gt; db.createCollection(&quot;book&quot;)
 { &quot;ok&quot; : 1 }
 
-查看集合
+#查看集合
 &gt; show collections
 msg
 book
 
-删除集合
+#删除集合
 &gt; db.book.drop()
 true
 &gt; show collections
@@ -186,7 +186,7 @@ msg
 <h3 id="0x03-文档">0x03 文档</h3>
 
 <blockquote>
-<pre><code>插入文档,若student这个集合不存在时会自动创建集合student
+<pre><code>#插入文档,若student这个集合不存在时会自动创建集合student
 &gt; db.student.insert({&quot;name&quot;:&quot;xiaoming&quot;,&quot;sex&quot;:1})
 WriteResult({ &quot;nInserted&quot; : 1 })
 &gt; db.student.insert({
@@ -194,7 +194,7 @@ WriteResult({ &quot;nInserted&quot; : 1 })
 ... sex:0
 ... })
 
-查询文档
+#查询文档
 &gt; db.student.find()
 { &quot;_id&quot; : ObjectId(&quot;59267f1c7e72bcd757917260&quot;), &quot;name&quot; : &quot;xiaoming&quot;, &quot;sex&quot; : 1 }
 { &quot;_id&quot; : ObjectId(&quot;59267f397e72bcd757917261&quot;), &quot;name&quot; : &quot;xiaohong&quot;, &quot;sex&quot; : 0 }
@@ -209,14 +209,15 @@ WriteResult({ &quot;nInserted&quot; : 1 })
         &quot;name&quot; : &quot;xiaohong&quot;,
         &quot;sex&quot; : 0
 }
+&gt; db.student.find({age:32}).pretty()   相当于查询age=32的
 &gt; db.student.find({sex:0,age:32}).pretty()   相当于sex=0 and age=32
 
-更新文档，相当于set age=23 where name='xiaohong'
+#更新文档，相当于set age=23 where name='xiaohong'
 &gt; db.student.update({name:'xiaohong'},{$set:{age:23}})
 WriteResult({ &quot;nMatched&quot; : 1, &quot;nUpserted&quot; : 0, &quot;nModified&quot; : 1 })
 
-删除文档
-&gt; db.student.remove({name:'xiaojuan’})  删除所有名字为xiaojuan的这条数据
+#删除文档
+&gt; db.student.remove({name:'xiaojuan'})  删除所有名字为xiaojuan的这条数据
 WriteResult({ &quot;nRemoved&quot; : 1 })
 &gt; db.student.remove({sex:1},1)  只删除一条性别为1的数据
 WriteResult({ &quot;nRemoved&quot; : 1 })
@@ -226,7 +227,7 @@ WriteResult({ &quot;nRemoved&quot; : 1 })
 <h3 id="0x04-其他">0x04 其他</h3>
 
 <blockquote>
-<pre><code>排序
+<pre><code>#排序
 &gt; db.student.find()
 { &quot;_id&quot; : ObjectId(&quot;592681367e72bcd757917262&quot;), &quot;name&quot; : &quot;xiaohong&quot;, &quot;sex&quot; : 0, &quot;age&quot; : 30 }
 { &quot;_id&quot; : ObjectId(&quot;5926814d7e72bcd757917264&quot;), &quot;name&quot; : &quot;xiaohua&quot;, &quot;sex&quot; : 1, &quot;age&quot; : 24 }
@@ -234,7 +235,7 @@ WriteResult({ &quot;nRemoved&quot; : 1 })
 { &quot;_id&quot; : ObjectId(&quot;5926814d7e72bcd757917264&quot;), &quot;name&quot; : &quot;xiaohua&quot;, &quot;sex&quot; : 1, &quot;age&quot; : 24 }
 { &quot;_id&quot; : ObjectId(&quot;592681367e72bcd757917262&quot;), &quot;name&quot; : &quot;xiaohong&quot;, &quot;sex&quot; : 0, &quot;age&quot; : 30 }
 
-备份与还原
+#备份与还原
 $ mongodump 会备份到当前的dump文件夹中
 $ mongorestore 会把dump中的数据导入到mongo
 </code></pre>
