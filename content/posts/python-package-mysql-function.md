@@ -9,8 +9,10 @@ topics = ["Python", "Database"]
 +++
 
 ### 0x00 安装
-> 下载[MySQL-python-1.2.3.win-amd64-py2.7.exe](http://www.codegood.com/archives/129)然后安装  
-> 注：还是用pymysql吧，py3不支持MySQLdb了。。。
+> 有两种，一个是MySQLdb，一个是pymysql
+
+* 下载[MySQL-python-1.2.3.win-amd64-py2.7.exe](http://www.codegood.com/archives/129)然后安装  
+* sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)
 
 ### 0x01 简单表设计如下
 > ```
@@ -31,7 +33,7 @@ grant all privileges on python.* to 'python'@'%' identified by '123456';
 flush privileges;
 ```
 
-### 0x02 代码
+### 0x02 MySQLdb封装代码
 > ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -168,4 +170,55 @@ if __name__ == '__main__':
     # print db.delete('msg', 'id>3')
 
     db.close()
+```
+
+### 0x03 pymysql封装代码
+> ```
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import pymysql
+import contextlib
+
+mysql_info = {
+    'host': '192.168.188.134',
+    'port': 3306,
+    'user': 'root',
+    'password': 'root',
+    'db': 'msg',
+    'charset': 'utf8',
+    'cursorclass': pymysql.cursors.DictCursor,
+}
+
+class MySQLX(object):
+    @contextlib.contextmanager
+    def init(self):
+        dbconn = pymysql.connect(**mysql_info)
+        cursor = dbconn.cursor()
+
+        try:
+            yield cursor #这里就是with返回的
+        finally:
+            dbconn.commit()
+            cursor.close()
+            dbconn.close()
+
+    def query(self, sql,arg=''):
+        try:
+            with self.init() as cursor:
+                if arg:
+                    cursor.execute(sql,arg) #返回受影响行数
+                else:
+                    cursor.execute(sql)
+                result = cursor.fetchall() #返回数据格式是[{},{}]
+                # result = cursor.fetchone() #返回数据格式是{}
+                return result
+        except Exception, e:
+            print sql,str(e)
+
+if __name__ == '__main__':
+    sqlconn = MySQLX()
+    sql = "select ip,domain from `mag` where id=%s"
+    result = sqlconn.query(sql,"2")
+    print result
 ```
