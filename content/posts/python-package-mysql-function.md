@@ -9,7 +9,8 @@ topics = ["Python", "Database"]
 +++
 
 ### 0x00 安装
-> 下载[MySQL-python-1.2.3.win-amd64-py2.7.exe](http://www.codegood.com/archives/129)然后安装
+> 下载[MySQL-python-1.2.3.win-amd64-py2.7.exe](http://www.codegood.com/archives/129)然后安装  
+> 注：还是用pymysql吧，py3不支持MySQLdb了。。。
 
 ### 0x01 简单表设计如下
 > ```
