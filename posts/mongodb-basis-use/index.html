@@ -114,7 +114,46 @@
                 
                 
 
-<h3 id="0x00-数据库">0x00 数据库</h3>
+<h3 id="0x00-配置">0x00 配置</h3>
+
+<blockquote>
+<p>MongoDb版本：version v3.4.4</p>
+
+<pre><code>#配置文件如下
+$ sudo vim /etc/mongod.conf
+storage:
+  dbPath: /var/lib/mongodb
+  journal:
+    enabled: true
+
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+
+net:
+  port: 27017
+  bindIp: 127.0.0.1
+
+processManagement:
+  fork: true
+
+#MongoDB默认不需要密码,这里设置为enabled则访问时需要密码
+security:
+  authorization: enabled
+</code></pre>
+
+<pre><code class="language-bash">#配置文件启动
+$ sudo mongod --config /etc/mongod.conf
+
+#关闭
+$ mongo
+&gt; use admin
+&gt; db.shutdownServer()
+</code></pre>
+</blockquote>
+
+<h3 id="0x01-数据库">0x01 数据库</h3>
 
 <blockquote>
 <pre><code>$ mongo
@@ -136,14 +175,37 @@ switched to db test
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-创建用户">0x01 创建用户</h3>
+<h3 id="0x02-创建用户">0x02 创建用户</h3>
 
 <blockquote>
 <pre><code>#创建管理员用户
 &gt; use admin
 switched to db admin
-&gt; db.createUser({user:&quot;root&quot;,pwd:&quot;root123&quot;,roles:[&quot;userAdminAnyDatabase&quot;]})
-Successfully added user: { &quot;user&quot; : &quot;root&quot;, &quot;roles&quot; : [ &quot;userAdminAnyDatabase&quot; ] }
+&gt; db.createUser({
+... user:&quot;root&quot;,
+... pwd:&quot;root123&quot;,
+... roles:[
+... {&quot;role&quot;:&quot;userAdminAnyDatabase&quot;,&quot;db&quot;:&quot;admin&quot;},
+... {&quot;role&quot;:&quot;dbOwner&quot;,&quot;db&quot;:&quot;admin&quot;},
+... {&quot;role&quot;:&quot;clusterAdmin&quot;,&quot;db&quot;:&quot;admin&quot;}]
+... })
+Successfully added user: {
+        &quot;user&quot; : &quot;root&quot;,
+        &quot;roles&quot; : [
+                {
+                        &quot;role&quot; : &quot;userAdminAnyDatabase&quot;,
+                        &quot;db&quot; : &quot;admin&quot;
+                },
+                {
+                        &quot;role&quot; : &quot;dbOwner&quot;,
+                        &quot;db&quot; : &quot;admin&quot;
+                },
+                {
+                        &quot;role&quot; : &quot;clusterAdmin&quot;,
+                        &quot;db&quot; : &quot;admin&quot;
+                }
+        ]
+}
 &gt; db.auth(&quot;root&quot;,&quot;root123&quot;)
 1
 
@@ -155,12 +217,21 @@ Successfully added user: { &quot;user&quot; : &quot;root&quot;, &quot;roles&quot
 switched to db test
 &gt; db.createUser({user:&quot;test&quot;,pwd:&quot;test123&quot;,roles:[&quot;readWrite&quot;]})
 Successfully added user: { &quot;user&quot; : &quot;test&quot;, &quot;roles&quot; : [ &quot;readWrite&quot; ] }
-&gt; db.auth(&quot;test”,&quot;test123&quot;)
+&gt; db.auth(&quot;test&quot;,&quot;test123&quot;)
+1
+&gt; exit
+bye
+</code></pre>
+
+<pre><code>$ mongo
+&gt; use admin
+#退出后再次进入mongo就需要验证才能操作
+&gt; db.auth('root','root123')
 1
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-集合">0x02 集合</h3>
+<h3 id="0x03-集合">0x03 集合</h3>
 
 <blockquote>
 <pre><code>#创建集合
@@ -183,7 +254,7 @@ msg
 </code></pre>
 </blockquote>
 
-<h3 id="0x03-文档">0x03 文档</h3>
+<h3 id="0x04-文档">0x04 文档</h3>
 
 <blockquote>
 <pre><code>#插入文档,若student这个集合不存在时会自动创建集合student
@@ -224,7 +295,7 @@ WriteResult({ &quot;nRemoved&quot; : 1 })
 </code></pre>
 </blockquote>
 
-<h3 id="0x04-其他">0x04 其他</h3>
+<h3 id="0x05-其他">0x05 其他</h3>
 
 <blockquote>
 <pre><code>#排序
@@ -241,7 +312,7 @@ $ mongorestore 会把dump中的数据导入到mongo
 </code></pre>
 </blockquote>
 
-<h3 id="0x05-python连接mongodb">0x05 python连接MongoDB</h3>
+<h3 id="0x06-python连接mongodb">0x06 python连接MongoDB</h3>
 
 <blockquote>
 <pre><code>#!/usr/bin/env python
@@ -260,6 +331,19 @@ collection = db[&quot;msg&quot;]
 
 #输出集合的第一条数据
 print collection.find_one()
+</code></pre>
+</blockquote>
+
+<h3 id="0x07-遇到的问题">0x07 遇到的问题</h3>
+
+<blockquote>
+<pre><code>#非正常停止后再次启动可能会遇到：
+about to fork child process, waiting until server is ready for connections.
+forked process: 2221
+ERROR: child process failed, exited with error number 1
+
+解决方案，使用sudo权限：
+$ sudo mongod --config /etc/mongod.conf
 </code></pre>
 </blockquote>
 
