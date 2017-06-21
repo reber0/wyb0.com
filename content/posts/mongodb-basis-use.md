@@ -8,7 +8,43 @@ topics = ["Database"]
 
 +++
 
-### 0x00 数据库
+### 0x00 配置
+> MongoDb版本：version v3.4.4
+> ```
+#配置文件如下
+$ sudo vim /etc/mongod.conf
+storage:
+  dbPath: /var/lib/mongodb
+  journal:
+    enabled: true
+
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+
+net:
+  port: 27017
+  bindIp: 127.0.0.1
+
+processManagement:
+  fork: true
+
+#MongoDB默认不需要密码,这里设置为enabled则访问时需要密码
+security:
+  authorization: enabled
+```
+> ```bash
+#配置文件启动
+$ sudo mongod --config /etc/mongod.conf
+
+#关闭
+$ mongo
+> use admin
+> db.shutdownServer()
+```
+
+### 0x01 数据库
 > ```
 $ mongo
 
@@ -28,13 +64,36 @@ switched to db test
 { "dropped" :  "test", "ok" : 1 }
 ```
 
-### 0x01 创建用户
+### 0x02 创建用户
 > ```
 #创建管理员用户
 > use admin
 switched to db admin
-> db.createUser({user:"root",pwd:"root123",roles:["userAdminAnyDatabase"]})
-Successfully added user: { "user" : "root", "roles" : [ "userAdminAnyDatabase" ] }
+> db.createUser({
+... user:"root",
+... pwd:"root123",
+... roles:[
+... {"role":"userAdminAnyDatabase","db":"admin"},
+... {"role":"dbOwner","db":"admin"},
+... {"role":"clusterAdmin","db":"admin"}]
+... })
+Successfully added user: {
+        "user" : "root",
+        "roles" : [
+                {
+                        "role" : "userAdminAnyDatabase",
+                        "db" : "admin"
+                },
+                {
+                        "role" : "dbOwner",
+                        "db" : "admin"
+                },
+                {
+                        "role" : "clusterAdmin",
+                        "db" : "admin"
+                }
+        ]
+}
 > db.auth("root","root123")
 1
 
@@ -46,11 +105,20 @@ Successfully added user: { "user" : "root", "roles" : [ "userAdminAnyDatabase" ]
 switched to db test
 > db.createUser({user:"test",pwd:"test123",roles:["readWrite"]})
 Successfully added user: { "user" : "test", "roles" : [ "readWrite" ] }
-> db.auth("test”,"test123")
+> db.auth("test","test123")
+1
+> exit
+bye
+```
+> ```
+$ mongo
+> use admin
+#退出后再次进入mongo就需要验证才能操作
+> db.auth('root','root123')
 1
 ```
 
-### 0x02 集合
+### 0x03 集合
 > ```
 #创建集合
 > use test
@@ -71,7 +139,7 @@ true
 msg
 ```
 
-### 0x03 文档
+### 0x04 文档
 > ```
 #插入文档,若student这个集合不存在时会自动创建集合student
 > db.student.insert({"name":"xiaoming","sex":1})
@@ -110,7 +178,7 @@ WriteResult({ "nRemoved" : 1 })
 WriteResult({ "nRemoved" : 1 })
 ```
 
-### 0x04 其他
+### 0x05 其他
 > ```
 #排序
 > db.student.find()
@@ -125,7 +193,7 @@ $ mongodump 会备份到当前的dump文件夹中
 $ mongorestore 会把dump中的数据导入到mongo
 ```
 
-### 0x05 python连接MongoDB
+### 0x06 python连接MongoDB
 > ```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -143,4 +211,15 @@ collection = db["msg"]
 
 #输出集合的第一条数据
 print collection.find_one()
+```
+
+### 0x07 遇到的问题
+> ```
+#非正常停止后再次启动可能会遇到：
+about to fork child process, waiting until server is ready for connections.
+forked process: 2221
+ERROR: child process failed, exited with error number 1
+
+解决方案，使用sudo权限：
+$ sudo mongod --config /etc/mongod.conf
 ```
