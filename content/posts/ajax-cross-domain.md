@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["ajax"]
 title = "AJAX之跨域"
-topics = ["AJAX"]
+topics = ["JavaScript"]
 
 +++
 

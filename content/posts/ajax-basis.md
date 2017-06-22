@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["ajax"]
 title = "AJAX初识"
-topics = ["AJAX"]
+topics = ["JavaScript"]
 
 +++
 

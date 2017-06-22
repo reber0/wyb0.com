@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["ajax"]
 title = "AJAX之XHR请求与响应"
-topics = ["AJAX"]
+topics = ["JavaScript"]
 
 +++
 
