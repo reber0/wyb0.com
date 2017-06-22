@@ -12,7 +12,7 @@ topics = ["AJAX"]
 > 当使用AJAX请求其他域名下的数据时会出现拒绝访问的情况，这是出于安全考虑，AJAX只能访问本地的资源，而不能跨域访问。
 
 > 当使用[AJAX与PHP](http://wyb.com/posts/ajax-and-php/)中的代码请求其他域的数据时会出现下面的情况
-{{% fluid_img src="/img/post/11.png" alt="ajax跨域请求" %}}
+{{% fluid_img src="/img/post/ajax_cross_domain.png" alt="ajax跨域请求" %}}
 
 > 至于解决方案的话这里说三种：JSONP、jQuery、CORS。
 
@@ -70,7 +70,7 @@ topics = ["AJAX"]
     echo $callback.'({'.'"name":"'.$name.'","sex":'.$sex.',"age":'.$age.'})';
 ?>
 ```
-{{% fluid_img src="/img/post/22.png" alt="ajax跨域请求" %}}
+{{% fluid_img src="/img/post/ajax_cross_domain_jsonp.png" alt="ajax跨域请求" %}}
 <br><br>
 我们看到调用的url中传递了一个name参数，告诉远端服务器获取name为xiaoliu的信息，而callback参数则告诉服务器，我的本地回调函数叫做callback_func，所以请把查询结果传入这个函数中。
 
@@ -115,7 +115,7 @@ topics = ["AJAX"]
 </body>
 </html>
 ```
-{{% fluid_img src="/img/post/33.png" alt="ajax跨域请求" %}}
+{{% fluid_img src="/img/post/ajax_cross_domain_jquery.png" alt="ajax跨域请求" %}}
 
 ### 0x03 CORS
 > 简单来说就是在请求的文件中加入header，指定可以访问资源的域名  
