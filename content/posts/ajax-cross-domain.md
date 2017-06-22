@@ -11,7 +11,7 @@ topics = ["JavaScript"]
 ### 0x00 简介 
 > 当使用AJAX请求其他域名下的数据时会出现拒绝访问的情况，这是出于安全考虑，AJAX只能访问本地的资源，而不能跨域访问。
 
-> 当使用[AJAX与PHP](http://wyb.com/posts/ajax-and-php/)中的代码请求其他域的数据时会出现下面的情况
+> 当使用[AJAX与PHP](http://wyb0.com/posts/ajax-and-php/)中的代码请求其他域的数据时会出现下面的情况
 {{% fluid_img src="/img/post/ajax_cross_domain.png" alt="ajax跨域请求" %}}
 
 > 至于解决方案的话这里说三种：JSONP、jQuery、CORS。
@@ -120,5 +120,5 @@ topics = ["JavaScript"]
 ### 0x03 CORS
 > 简单来说就是在请求的文件中加入header，指定可以访问资源的域名  
 在php中就是```header("Access-Control-Allow-Origin:*");``` 这里的*代表允许所有  
-加入后使用[AJAX与PHP](http://wyb.com/posts/ajax-and-php/)中的代码就能跨域访问
+加入后使用[AJAX与PHP](http://wyb0.com/posts/ajax-and-php/)中的代码就能跨域访问
 
