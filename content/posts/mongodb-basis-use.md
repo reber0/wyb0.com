@@ -221,6 +221,9 @@ client = pymongo.MongoClient("localhost", 27017)
 #连接数据库
 db = client["test"]
 
+#如果有密码的话要先验证下
+#db.authenticate('username','password')
+
 #选择集合(相当于mysql中的选择表)
 collection = db["msg"]
 
