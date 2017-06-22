@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Tue, 30 May 2017 13:16:18 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 08 Jun 2017 11:20:15 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SSI注入</title>
+      <link>http://wyb0.com/posts/ssi-injection/</link>
+      <pubDate>Thu, 08 Jun 2017 11:20:15 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/ssi-injection/</guid>
+      <description> 0x00 SSI  SSI (Server Side Includes)是HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。
+在很多场景中，用户输入的内容可以显示在页面中，一个存在反射XSS漏洞的页面，如果输入的payload不是xss代码而是ssi的标签，服务器又开启了ssi支持的话就会存在SSI漏洞
+若注入点在url中则可能需要进行url编码
+ 0x01 payload  &amp;quot;--&amp;gt;&#39;--&amp;gt;`--&amp;gt;&amp;lt;!--#set var=&amp;quot;a&amp;quot; value=&amp;quot;123&amp;quot;--&amp;gt;&amp;lt;!--#set var=&amp;quot;b&amp;quot; value=&amp;quot;654&amp;quot;--&amp;gt;&amp;lt;!--#echo var=&amp;quot;a&amp;quot;--&amp;gt;&amp;lt;!--#echo var=&amp;quot;b&amp;quot;--&amp;gt; &amp;lt;!--#echo var=&amp;quot;DATE_LOCAL&amp;quot; --&amp;gt; &amp;lt;!--#exec cmd=&amp;quot;dir&amp;quot; --&amp;gt;   0x02 示例  Referer被输出到了页面中     url中的数据被输出到页面中(有时候url中的payload需要url编码)    </description>
+    </item>
     
     <item>
       <title>SQLServer存储过程</title>

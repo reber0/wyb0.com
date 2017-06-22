@@ -82,6 +82,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/vps-set-up-shadowsocks/">在vps上搭建Shadowsocks</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-03-10</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">Server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 环境  Ubuntu 14.04.1 LTS
+ 0x01 安装与配置  reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;, # &quot;40002&quot;: &quot;lilei&quot;, # &quot;40003&quot;: &quot;mike&quot; #} &quot;timeout&quot;:300, # 超时时间（秒） &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式 # 若Linux内核在3.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/vps-set-up-shadowsocks/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/301-redirect/">301重定向</a></h2>
 
         
@@ -566,61 +620,6 @@ AJAX可在不重新加载整个页面的情况下与服务器交换数据从而�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/dirty-cow-vulnerabilities/">脏牛漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-22</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/elevate-privileges">elevate privileges</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 测试环境  我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
-CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux [reber123@WYB ~]$ id uid=502(reber123) gid=502(reber123) groups=502(reber123)   0x01 创建文件  查看文件权限信息，可以看到属主为root，且只读，权限为0404
-[reber123@WYB ~]$ ls -al test -r-----r-- 1 root root 19 Oct 21 00:02 test [reber123@WYB ~]$ cat test this is not a test [reber123@WYB ~]$   0x02 编译、执行poc  POC保存为a.c，编译为aaa
-    </p>
-
-    
-    <footer>
-        <a href="/posts/dirty-cow-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -666,7 +665,7 @@ CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 S
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(11)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(61)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(62)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
@@ -745,7 +744,7 @@ CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 S
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">

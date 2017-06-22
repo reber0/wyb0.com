@@ -83,6 +83,58 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/ssi-injection/">SSI注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-06-08</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 SSI  SSI (Server Side Includes)是HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。
+在很多场景中，用户输入的内容可以显示在页面中，一个存在反射XSS漏洞的页面，如果输入的payload不是xss代码而是ssi的标签，服务器又开启了ssi支持的话就会存在SSI漏洞
+若注入点在url中则可能需要进行url编码
+ 0x01 payload  &quot;--&gt;'--&gt;`--&gt;&lt;!--#set var=&quot;a&quot; value=&quot;123&quot;--&gt;&lt;!--#set var=&quot;b&quot; value=&quot;654&quot;--&gt;&lt;!--#echo var=&quot;a&quot;--&gt;&lt;!--#echo var=&quot;b&quot;--&gt; &lt;!--#echo var=&quot;DATE_LOCAL&quot; --&gt; &lt;!--#exec cmd=&quot;dir&quot; --&gt;   0x02 示例  Referer被输出到了页面中     url中的数据被输出到页面中(有时候url中的payload需要url编码)    
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/injection-of-wide-byte/">SQL注入之宽字节注入</a></h2>
 
         
@@ -576,64 +628,22 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/cookie-injection-of-asp/">ASP简单Cookie注入</a></h2>
 
+                
+
+    
+    
+    <nav class="pagination" role="pagination">
         
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2015-12-04</time>
-            </div>
+            <i class="fa fa-chevron-left"></i>
+        
 
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         Cookie注入的使用  三大Web提交方式
- GET：直接在浏览器上面访问地址
- POST：提交表单(会员注册、文件上传等)
- COOKIE：访问网站下面自带的身份验证的值  Cookie注入利用时机
-当用普通注入时，采用and 1=1时出现错误提示(如下图)，普通的注入就没办法了，可以尝试大小写，编码等绕过，若过滤严谨，无法绕过，这时就可以采用cookie注入。  利用方法
- 可以利用注入中转 可以利用sqlmap   用注入中转进行Cookie注入  目标：http://localhost:81/2/shownews.asp?id=183
- 打开注入中转这个工具，填入相应参数，然后点击生成ASP，将生成的asp文件(jmCook.asp)放入你自己搭建的网站内后即可进行注入  提交localhost:81/jmCook.asp?jmdcw=183 order by猜测字段数
- 提交localhost:81/jmCook.asp?jmdcw=183 UNION SELECT 1,2,3,4 from XXX猜测表名  猜测内容   用sqlmap进行Cookie注入  sqlmap验证存在Cookie注入  猜表名  猜列名  猜字段内容   
-    </p>
-
-    
-</article>
-
-
-                
-
-                
+        <span>&nbsp;1 / 2&nbsp;</span>
+        
+        
+            <a href="/tags/injection/page/2/"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
 
 
             </div>
@@ -663,7 +673,7 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(11)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(61)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(62)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
@@ -742,7 +752,7 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">

