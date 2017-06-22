@@ -114,7 +114,79 @@
                 
                 
 
-<h3 id="0x00-配置">0x00 配置</h3>
+<h3 id="0x00-角色和权限">0x00 角色和权限</h3>
+
+<blockquote>
+<p>Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：</p>
+</blockquote>
+
+<ul>
+<li>数据库用户角色：read,readWrite</li>
+<li>数据库管理角色：dbAdmin,dbOwner,userAdmin</li>
+<li>集群管理角色：clusterAdmin,clusterManager,clusterMonitor,hostManager</li>
+<li>备份和恢复角色：backup,restore</li>
+<li>所有数据库角色：readAnyDatabase,readWriteAnyDatabase,userAdminAnyDatabase,dbAdminAnyDatabase</li>
+<li>超级用户角色：root</li>
+<li>内部角色：__system</li>
+</ul>
+
+<h3 id="0x01-创建用户">0x01 创建用户</h3>
+
+<blockquote>
+<pre><code>#创建管理员用户
+&gt; use admin
+switched to db admin
+&gt; db.createUser({
+... user:&quot;root&quot;,
+... pwd:&quot;root123&quot;,
+... roles:[{&quot;role&quot;:&quot;root&quot;,&quot;db&quot;:&quot;admin&quot;}]
+... })
+Successfully added user: {
+        &quot;user&quot; : &quot;root&quot;,
+        &quot;roles&quot; : [
+                {
+                        &quot;role&quot; : &quot;root&quot;,
+                        &quot;db&quot; : &quot;admin&quot;
+                }
+        ]
+}
+&gt; db.auth(&quot;root&quot;,&quot;root123&quot;)
+1
+
+#这个例子创建了一个名为 root 的用户管理员。创建完了这个用户之后，我们应该马上以该用户的身份登录：
+#db.auth() 方法返回 1 表示登录成功。接下来我们为指定的数据库创建访问所需的账号。
+
+#创建数据库用户
+&gt; use test
+switched to db test
+&gt; db.createUser({
+... user:&quot;test&quot;,
+... pwd:&quot;test123&quot;,
+... roles:[
+... {&quot;role&quot;:&quot;readWrite&quot;,&quot;db&quot;:&quot;test&quot;},
+... {&quot;role&quot;:&quot;dbOwner&quot;,&quot;db&quot;:&quot;test&quot;}]
+... })
+Successfully added user: {
+        &quot;user&quot; : &quot;test&quot;,
+        &quot;roles&quot; : [
+                {
+                        &quot;role&quot; : &quot;readWrite&quot;,
+                        &quot;db&quot; : &quot;test&quot;
+                },
+                {
+                        &quot;role&quot; : &quot;dbOwner&quot;,
+                        &quot;db&quot; : &quot;test&quot;
+                }
+        ]
+}
+&gt; db.auth(&quot;test&quot;,&quot;test123&quot;)
+1
+&gt; exit
+bye
+</code></pre>
+</blockquote>
+
+<h3 id="0x02-配置">0x02 配置</h3>
 
 <blockquote>
 <p>MongoDb版本：version v3.4.4</p>
@@ -143,17 +215,20 @@ security:
   authorization: enabled
 </code></pre>
 
-<pre><code class="language-bash">#配置文件启动
+<pre><code class="language-bash">#启动服务(通过配置文件)
 $ sudo mongod --config /etc/mongod.conf
 
-#关闭
+#关闭服务(需要进入数据库)
 $ mongo
 &gt; use admin
+#此时就需要验证后才能进行操作
+&gt; db.auth('root','root123')
+1
 &gt; db.shutdownServer()
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-数据库">0x01 数据库</h3>
+<h3 id="0x03-数据库">0x03 数据库</h3>
 
 <blockquote>
 <pre><code>$ mongo
@@ -175,63 +250,7 @@ switched to db test
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-创建用户">0x02 创建用户</h3>
-
-<blockquote>
-<pre><code>#创建管理员用户
-&gt; use admin
-switched to db admin
-&gt; db.createUser({
-... user:&quot;root&quot;,
-... pwd:&quot;root123&quot;,
-... roles:[
-... {&quot;role&quot;:&quot;userAdminAnyDatabase&quot;,&quot;db&quot;:&quot;admin&quot;},
-... {&quot;role&quot;:&quot;dbOwner&quot;,&quot;db&quot;:&quot;admin&quot;},
-... {&quot;role&quot;:&quot;clusterAdmin&quot;,&quot;db&quot;:&quot;admin&quot;}]
-... })
-Successfully added user: {
-        &quot;user&quot; : &quot;root&quot;,
-        &quot;roles&quot; : [
-                {
-                        &quot;role&quot; : &quot;userAdminAnyDatabase&quot;,
-                        &quot;db&quot; : &quot;admin&quot;
-                },
-                {
-                        &quot;role&quot; : &quot;dbOwner&quot;,
-                        &quot;db&quot; : &quot;admin&quot;
-                },
-                {
-                        &quot;role&quot; : &quot;clusterAdmin&quot;,
-                        &quot;db&quot; : &quot;admin&quot;
-                }
-        ]
-}
-&gt; db.auth(&quot;root&quot;,&quot;root123&quot;)
-1
-
-#这个例子创建了一个名为 root 的用户管理员。创建完了这个用户之后，我们应该马上以该用户的身份登录：
-#db.auth() 方法返回 1 表示登录成功。接下来我们为指定的数据库创建访问所需的账号。
-
-#创建数据库用户
-&gt; use test
-switched to db test
-&gt; db.createUser({user:&quot;test&quot;,pwd:&quot;test123&quot;,roles:[&quot;readWrite&quot;]})
-Successfully added user: { &quot;user&quot; : &quot;test&quot;, &quot;roles&quot; : [ &quot;readWrite&quot; ] }
-&gt; db.auth(&quot;test&quot;,&quot;test123&quot;)
-1
-&gt; exit
-bye
-</code></pre>
-
-<pre><code>$ mongo
-&gt; use admin
-#退出后再次进入mongo就需要验证才能操作
-&gt; db.auth('root','root123')
-1
-</code></pre>
-</blockquote>
-
-<h3 id="0x03-集合">0x03 集合</h3>
+<h3 id="0x04-集合">0x04 集合</h3>
 
 <blockquote>
 <pre><code>#创建集合
@@ -254,7 +273,7 @@ msg
 </code></pre>
 </blockquote>
 
-<h3 id="0x04-文档">0x04 文档</h3>
+<h3 id="0x05-文档">0x05 文档</h3>
 
 <blockquote>
 <pre><code>#插入文档,若student这个集合不存在时会自动创建集合student
@@ -295,7 +314,7 @@ WriteResult({ &quot;nRemoved&quot; : 1 })
 </code></pre>
 </blockquote>
 
-<h3 id="0x05-其他">0x05 其他</h3>
+<h3 id="0x06-其他">0x06 其他</h3>
 
 <blockquote>
 <pre><code>#排序
@@ -312,7 +331,7 @@ $ mongorestore 会把dump中的数据导入到mongo
 </code></pre>
 </blockquote>
 
-<h3 id="0x06-python连接mongodb">0x06 python连接MongoDB</h3>
+<h3 id="0x07-python连接mongodb">0x07 python连接MongoDB</h3>
 
 <blockquote>
 <pre><code>#!/usr/bin/env python
@@ -334,7 +353,7 @@ print collection.find_one()
 </code></pre>
 </blockquote>
 
-<h3 id="0x07-遇到的问题">0x07 遇到的问题</h3>
+<h3 id="0x08-遇到的问题">0x08 遇到的问题</h3>
 
 <blockquote>
 <pre><code>#非正常停止后再次启动可能会遇到：

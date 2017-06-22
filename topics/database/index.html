@@ -226,8 +226,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 配置  MongoDb版本：version v3.4.4
-#配置文件如下 $ sudo vim /etc/mongod.conf storage: dbPath: /var/lib/mongodb journal: enabled: true systemLog: destination: file logAppend: true path: /var/log/mongodb/mongod.log net: port: 27017 bindIp: 127.0.0.1 processManagement: fork: true #MongoDB默认不需要密码,这里设置为enabled则访问时需要密码 security: authorization: enabled  #配置文件启动 $ sudo mongod --config /etc/mongod.conf #关闭 $ mongo &gt; use admin &gt; db.shutdownServer()   0x01 数据库  $ mongo #创建数据库，创建数据库后只有插入一条数据才能保存数据库 &gt; use test #查看所有数据库 &gt; show dbs #查看当前数据库 &gt; db #删除数据库 &gt;use test switched to db test &gt;db.
+        0x00 角色和权限  Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：
+  数据库用户角色：read,readWrite 数据库管理角色：dbAdmin,dbOwner,userAdmin 集群管理角色：clusterAdmin,clusterManager,clusterMonitor,hostManager 备份和恢复角色：backup,restore 所有数据库角色：readAnyDatabase,readWriteAnyDatabase,userAdminAnyDatabase,dbAdminAnyDatabase 超级用户角色：root 内部角色：__system  0x01 创建用户  #创建管理员用户 &gt; use admin switched to db admin &gt; db.createUser({ ... user:&quot;root&quot;, ... pwd:&quot;root123&quot;, ... roles:[{&quot;role&quot;:&quot;root&quot;,&quot;db&quot;:&quot;admin&quot;}] ... }) Successfully added user: { &quot;user&quot; : &quot;root&quot;, &quot;roles&quot; : [ { &quot;role&quot; : &quot;root&quot;, &quot;db&quot; : &quot;admin&quot; } ] } &gt; db.auth(&quot;root&quot;,&quot;root123&quot;) 1 #这个例子创建了一个名为 root 的用户管理员。创建完了这个用户之后，我们应该马上以该用户的身份登录： #db.auth() 方法返回 1 表示登录成功。接下来我们为指定的数据库创建访问所需的账号。 #创建数据库用户 &gt; use test switched to db test &gt; db.
     </p>
 
     
