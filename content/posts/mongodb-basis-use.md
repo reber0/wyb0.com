@@ -8,7 +8,73 @@ topics = ["Database"]
 
 +++
 
-### 0x00 配置
+### 0x00 角色和权限
+> Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：
+
+* 数据库用户角色：read,readWrite
+* 数据库管理角色：dbAdmin,dbOwner,userAdmin
+* 集群管理角色：clusterAdmin,clusterManager,clusterMonitor,hostManager
+* 备份和恢复角色：backup,restore
+* 所有数据库角色：readAnyDatabase,readWriteAnyDatabase,userAdminAnyDatabase,dbAdminAnyDatabase
+* 超级用户角色：root 
+* 内部角色：__system
+
+
+### 0x01 创建用户
+> ```
+#创建管理员用户
+> use admin
+switched to db admin
+> db.createUser({
+... user:"root",
+... pwd:"root123",
+... roles:[{"role":"root","db":"admin"}]
+... })
+Successfully added user: {
+        "user" : "root",
+        "roles" : [
+                {
+                        "role" : "root",
+                        "db" : "admin"
+                }
+        ]
+}
+> db.auth("root","root123")
+1
+
+#这个例子创建了一个名为 root 的用户管理员。创建完了这个用户之后，我们应该马上以该用户的身份登录：
+#db.auth() 方法返回 1 表示登录成功。接下来我们为指定的数据库创建访问所需的账号。
+
+#创建数据库用户
+> use test
+switched to db test
+> db.createUser({
+... user:"test",
+... pwd:"test123",
+... roles:[
+... {"role":"readWrite","db":"test"},
+... {"role":"dbOwner","db":"test"}]
+... })
+Successfully added user: {
+        "user" : "test",
+        "roles" : [
+                {
+                        "role" : "readWrite",
+                        "db" : "test"
+                },
+                {
+                        "role" : "dbOwner",
+                        "db" : "test"
+                }
+        ]
+}
+> db.auth("test","test123")
+1
+> exit
+bye
+```
+
+### 0x02 配置
 > MongoDb版本：version v3.4.4
 > ```
 #配置文件如下
@@ -35,16 +101,19 @@ security:
   authorization: enabled
 ```
 > ```bash
-#配置文件启动
+#启动服务(通过配置文件)
 $ sudo mongod --config /etc/mongod.conf
 
-#关闭
+#关闭服务(需要进入数据库)
 $ mongo
 > use admin
+#此时就需要验证后才能进行操作
+> db.auth('root','root123')
+1
 > db.shutdownServer()
 ```
 
-### 0x01 数据库
+### 0x03 数据库
 > ```
 $ mongo
 
@@ -64,61 +133,7 @@ switched to db test
 { "dropped" :  "test", "ok" : 1 }
 ```
 
-### 0x02 创建用户
-> ```
-#创建管理员用户
-> use admin
-switched to db admin
-> db.createUser({
-... user:"root",
-... pwd:"root123",
-... roles:[
-... {"role":"userAdminAnyDatabase","db":"admin"},
-... {"role":"dbOwner","db":"admin"},
-... {"role":"clusterAdmin","db":"admin"}]
-... })
-Successfully added user: {
-        "user" : "root",
-        "roles" : [
-                {
-                        "role" : "userAdminAnyDatabase",
-                        "db" : "admin"
-                },
-                {
-                        "role" : "dbOwner",
-                        "db" : "admin"
-                },
-                {
-                        "role" : "clusterAdmin",
-                        "db" : "admin"
-                }
-        ]
-}
-> db.auth("root","root123")
-1
-
-#这个例子创建了一个名为 root 的用户管理员。创建完了这个用户之后，我们应该马上以该用户的身份登录：
-#db.auth() 方法返回 1 表示登录成功。接下来我们为指定的数据库创建访问所需的账号。
-
-#创建数据库用户
-> use test
-switched to db test
-> db.createUser({user:"test",pwd:"test123",roles:["readWrite"]})
-Successfully added user: { "user" : "test", "roles" : [ "readWrite" ] }
-> db.auth("test","test123")
-1
-> exit
-bye
-```
-> ```
-$ mongo
-> use admin
-#退出后再次进入mongo就需要验证才能操作
-> db.auth('root','root123')
-1
-```
-
-### 0x03 集合
+### 0x04 集合
 > ```
 #创建集合
 > use test
@@ -139,7 +154,7 @@ true
 msg
 ```
 
-### 0x04 文档
+### 0x05 文档
 > ```
 #插入文档,若student这个集合不存在时会自动创建集合student
 > db.student.insert({"name":"xiaoming","sex":1})
@@ -178,7 +193,7 @@ WriteResult({ "nRemoved" : 1 })
 WriteResult({ "nRemoved" : 1 })
 ```
 
-### 0x05 其他
+### 0x06 其他
 > ```
 #排序
 > db.student.find()
@@ -193,7 +208,7 @@ $ mongodump 会备份到当前的dump文件夹中
 $ mongorestore 会把dump中的数据导入到mongo
 ```
 
-### 0x06 python连接MongoDB
+### 0x07 python连接MongoDB
 > ```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -213,7 +228,7 @@ collection = db["msg"]
 print collection.find_one()
 ```
 
-### 0x07 遇到的问题
+### 0x08 遇到的问题
 > ```
 #非正常停止后再次启动可能会遇到：
 about to fork child process, waiting until server is ready for connections.
