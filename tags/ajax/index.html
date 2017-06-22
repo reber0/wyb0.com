@@ -83,6 +83,62 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/ajax-cross-domain/">AJAX之跨域</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-06-22</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/ajax">AJAX</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 简介  当使用AJAX请求其他域名下的数据时会出现拒绝访问的情况，这是出于安全考虑，AJAX只能访问本地的资源，而不能跨域访问。
+当使用AJAX与PHP中的代码请求其他域的数据时会出现下面的情况 至于解决方案的话这里说三种：JSONP、jQuery、CORS。
+ 0x01 JSONP  这里的场景是本地127站点跨域请求远程114.115.214.111站点的数据
+&lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;jsonptest&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt; function callback_func(data) { document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;姓名:&quot;+data.name+&quot;--性别:&quot;+data.sex+&quot;--年龄:&quot;+data.age; } function get_msg(name) { var url = &quot;http://114.115.214.111/wyb/msg.php?name=&quot;+name+&quot;&amp;callback=callback_func&quot;; var script = document.createElement('script'); script.setAttribute('src', url); script.setAttribute('id', 'aaabbb'); document.getElementsByTagName('head')[0].appendChild(script); document.getElementById('aaabbb').remove(); } &lt;/script&gt; &lt;h3&gt;在输入框中尝试输入姓名(xiaoming):&lt;/h3&gt; &lt;form action=&quot;&quot;&gt; 输入姓名: &lt;input type=&quot;text&quot; onkeyup=&quot;get_msg(this.value)&quot; /&gt; &lt;/form&gt; &lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;  &lt;?php $conn = @mysql_connect('localhost','admin','123456'); mysql_select_db('test',$conn); $name = $_GET['name']; $callback = $_GET['callback']; $sql = &quot;select * from student where name='&quot;.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/ajax-cross-domain/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/ajax-and-php/">AJAX与PHP</a></h2>
 
         
@@ -260,7 +316,7 @@ AJAX可在不重新加载整个页面的情况下与服务器交换数据从而�
     <h2 class="asidetitle">Categories</h2>
     <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(4)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(10)</a></li>
         
@@ -298,7 +354,7 @@ AJAX可在不重新加载整个页面的情况下与服务器交换数据从而�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">

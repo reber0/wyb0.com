@@ -82,6 +82,83 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/php-mysql-common-function/">PHP之MySQL常用函数</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        处理函数  mysql_connect(server,user,pwd,newlink,clientflag)
+连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE
+ mysql_select_db(database,connection)
+选择数据库的函数，成功则返回true，失败则返回false
+ mysql_query(query,connection)
+执行一条查询，返回一个资源标识符(结果集)，如果查询执行不正确则返回FALSE
+ mysql_num_rows(data)和mysql_num_fields(data)
+函数分别返回结果集中行和列的数目(禁对SELECT语句有效),结果集从 mysql_query()的调用中得到
+ mysql_fetch_assoc(data)
+从结果集中取得一行作为关联数组，若没有更多行则返回false
+ mysql_fetch_row(data)
+从结果集中取得一行作为索引数组，若没有更多行则返回false
+ mysql_error(connection)
+返回上一个MySQL函数的错误文本，如果没有出错则返回&rdquo;(空字符串)
+ mysql_affected_rows(link_identifier)
+返回前一次MySQL操作(增删改)所影响的记录行数,失败则返回-1
+ mysql_insert_id(connection)
+返回上一步INSERT操作产生的 ID。如果上一查询没有产生AUTO_INCREMENT的ID，则mysql_insert_id()返回 0。
+ mysql_data_seek(data,row)
+结果集data从mysql_query()的调用中得到,行指针移动到指定的行号，接着调用 mysql_fetch_row() 将返回那一行。如果成功则返回 true，失败则返回 false
+  例子 &lt;?php $server = &quot;127.0.0.1&quot;; $dbname = &quot;massage&quot;; $user = &quot;msg&quot;; $pass = &quot;123456&quot; $conn = mysql_connect($server,$user,$pass) or die('连接服务器失败:'.mysql_error()); mysql_query(&quot;set names 'utf8'&quot;);//设置数据库输出编码 mysql_select_db($dbname,$conn) or die(mysql_error($conn)); //选择数据库 $sql = &quot;select username,password from user&quot;; //构造sql语句 $result = mysql_query($sql); //执行sql语句，返回结果集 $num = mysql_num_rows($result);//返回执行结果的行数 echo &quot;&lt;br /&gt;结果的行数:{$num}&lt;br /&gt;&quot;; while ($row = mysql_fetch_assoc($result)) { echo $row[id].
+    </p>
+
+    
+    <footer>
+        <a href="/posts/php-mysql-common-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/mysql-syntax/">MySQL语法</a></h2>
 
         
@@ -574,62 +651,6 @@ create database test; use test; drop table if exists users; create table users( 
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/php-basis/">PHP之基础</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-15</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 PHP的作用  收集表单数据 生成动态网页 字符串处理 动态输出图片 处理服务器端文件系统 编写数据库支持的网页 会话跟踪控制 处理XML文件 支持大量的网络协议 服务器端的其他相关操作  0x01 PHP代码嵌入位置  可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&quot;&lt;?php&quot;起始符和终止符&quot;?&gt;&quot;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。   0x02 解读开始和结束标记  1. &lt;?php ?&gt; 2. &lt;script language=&quot;php&quot;&gt;&lt;/script&gt; 3. &lt;? ?&gt; 4. &lt;% %&gt; //前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags   0x03 指令分割符  php一段代码中除了最后一行不用分号，其他每句都要用分号结束，推荐每句都用分号结束
- 0x04 注释  1. 若觉得代码不合适则可以注释，但不要急于删除 2. 注释的目的在于说明程序 3. 注释对调试和编写程序可以起到很好的帮助作用 4. PHP注释符有：&quot;/**/&quot;、&quot;//&quot;、&quot;#&quot;   0x05 空白符  空白符(空格、tab制表符、换行)会被php引擎忽略
- 0x06 变量的声明  其中双引号中的变量可以被解析，单引号中的变量不能被解析
-  变量名对大小写敏感 变量名开头是字母或下划线 后面跟任意数量的数字、字母、下划线 变量名中间不能有空格  0x07 可变变量  &lt;?
-    </p>
-
-    
-    <footer>
-        <a href="/posts/php-basis/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -661,7 +682,7 @@ create database test; use test; drop table if exists users; create table users( 
     <h2 class="asidetitle">Categories</h2>
     <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(3)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/ajax" title="ajax">ajax(4)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(10)</a></li>
         
@@ -699,7 +720,7 @@ create database test; use test; drop table if exists users; create table users( 
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
