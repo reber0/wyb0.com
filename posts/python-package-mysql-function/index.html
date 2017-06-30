@@ -315,6 +315,14 @@ class MySQLX(object):
     def init(self):
         dbconn = pymysql.connect(**mysql_info)
         cursor = dbconn.cursor()
+        # dbconn = pymysql.connect(
+        #     host=mysqldb_conn.get('host'),
+        #     user=mysqldb_conn.get('user'),
+        #     password=mysqldb_conn.get('password'),
+        #     db=mysqldb_conn.get('db'),
+        #     charset=mysqldb_conn.get('charset')
+        #     )
+        # cursor = dbconn.cursor(cursor=pymysql.cursors.DictCursor)
 
         try:
             yield cursor #这里就是with返回的
