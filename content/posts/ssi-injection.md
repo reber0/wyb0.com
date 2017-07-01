@@ -27,12 +27,12 @@ topics = ["Pentest"]
 ### 0x02 示例
 * Referer被输出到了页面中
 
-> {{% fluid_img src="/img/post/ssi_in_url_request.png" alt="ssi漏洞" %}}
+> {{% fluid_img src="/img/post/ssi_in_referer_request.png" alt="ssi漏洞" %}}
 <br><br>
-> {{% fluid_img src="/img/post/ssi_in_url_response.png" alt="ssi漏洞" %}}
+> {{% fluid_img src="/img/post/ssi_in_referer_response.png" alt="ssi漏洞" %}}
 
 * url中的数据被输出到页面中(有时候url中的payload需要url编码)
 
-> {{% fluid_img src="/img/post/ssi_in_referer_request.png" alt="ssi漏洞" %}}
+> {{% fluid_img src="/img/post/ssi_in_url_request.png" alt="ssi漏洞" %}}
 <br><br>
-{{% fluid_img src="/img/post/ssi_in_referer_response.png" alt="ssi漏洞" %}}
+{{% fluid_img src="/img/post/ssi_in_url_response.png" alt="ssi漏洞" %}}
