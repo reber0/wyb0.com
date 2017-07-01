@@ -71,13 +71,13 @@ reber@ubuntu:~/.ssh$ git config --global user.email "email"
 
 ### 0x03 向github上push代码
 > ```bash
-reber@ubuntu:~/.ssh$ cd /home/reber/reber-9.com/  
+reber@ubuntu:~/.ssh$ cd /home/reber/reber-9.com/ 
 reber@ubuntu:~/reber-9.com$ git init #本地初始git目录
 reber@ubuntu:~/reber-9.com$ git add .  #添加文件到缓存(git rm是删除)
-# 关联本地仓库和远程仓库  
+# 关联本地仓库和远程仓库
 reber@ubuntu:~/reber-9.com$ git remote add origin git@github.com:reber-9/reber-9.com.git
-# 将本地缓存提交到github  
-reber@ubuntu:~/reber-9.com$ git commit -m "first commit"  
+# 将本地缓存提交到github
+reber@ubuntu:~/reber-9.com$ git commit -m "first commit"
 reber@ubuntu:~/reber-9.com$ git push origin master
 ```
 
