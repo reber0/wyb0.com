@@ -116,9 +116,8 @@
 
 <h3 id="0x00-角色和权限">0x00 角色和权限</h3>
 
-<blockquote>
-<p>Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：</p>
-</blockquote>
+<ul>
+<li><p>Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下</p>
 
 <ul>
 <li>数据库用户角色：read,readWrite</li>
@@ -128,6 +127,22 @@
 <li>所有数据库角色：readAnyDatabase,readWriteAnyDatabase,userAdminAnyDatabase,dbAdminAnyDatabase</li>
 <li>超级用户角色：root</li>
 <li>内部角色：__system</li>
+</ul></li>
+
+<li><p>角色说明</p>
+
+<ul>
+<li>read：允许用户读取指定数据库</li>
+<li>readWrite：允许用户读写指定数据库</li>
+<li>dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile</li>
+<li>userAdmin：允许用户向system.users集合写入，可以找指定数据库里创建、删除和管理用户</li>
+<li>clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。</li>
+<li>readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限</li>
+<li>readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限</li>
+<li>userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限</li>
+<li>dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。</li>
+<li>root：只在admin数据库中可用。超级账号，超级权限</li>
+</ul></li>
 </ul>
 
 <h3 id="0x01-创建用户">0x01 创建用户</h3>
