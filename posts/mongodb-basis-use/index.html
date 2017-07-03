@@ -116,32 +116,55 @@
 
 <h3 id="0x00-角色和权限">0x00 角色和权限</h3>
 
-<ul>
-<li><p>Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下</p>
+<blockquote>
+<p>Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：</p>
+</blockquote>
 
 <ul>
-<li>数据库用户角色：read,readWrite</li>
-<li>数据库管理角色：dbAdmin,dbOwner,userAdmin</li>
-<li>集群管理角色：clusterAdmin,clusterManager,clusterMonitor,hostManager</li>
-<li>备份和恢复角色：backup,restore</li>
-<li>所有数据库角色：readAnyDatabase,readWriteAnyDatabase,userAdminAnyDatabase,dbAdminAnyDatabase</li>
-<li>超级用户角色：root</li>
-<li>内部角色：__system</li>
-</ul></li>
-
-<li><p>角色说明</p>
+<li>数据库用户角色
 
 <ul>
 <li>read：允许用户读取指定数据库</li>
 <li>readWrite：允许用户读写指定数据库</li>
-<li>dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile</li>
-<li>userAdmin：允许用户向system.users集合写入，可以找指定数据库里创建、删除和管理用户</li>
-<li>clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。</li>
+</ul></li>
+<li>数据库管理角色
+
+<ul>
+<li>dbOwner：包含readWrite、dbAdmin、userAdmin</li>
+<li>dbAdmin：允许用户在指定数据库中对集合、文档等操作</li>
+<li>userAdmin：允许用户向system.users集合写入，可以在指定数据库里创建、删除和管理用户</li>
+</ul></li>
+<li>集群管理角色
+
+<ul>
+<li>clusterAdmin：只在admin数据库中可用，包含clusterManager、clusterMonitor、hostManager</li>
+<li>clusterManager：</li>
+<li>clusterMonitor：</li>
+<li>hostManager</li>
+</ul></li>
+<li>备份和恢复角色
+
+<ul>
+<li>backup</li>
+<li>restore</li>
+</ul></li>
+<li>所有数据库角色
+
+<ul>
 <li>readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限</li>
 <li>readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限</li>
+<li>dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限</li>
 <li>userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限</li>
-<li>dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。</li>
+</ul></li>
+<li>超级用户角色
+
+<ul>
 <li>root：只在admin数据库中可用。超级账号，超级权限</li>
+</ul></li>
+<li>内部角色
+
+<ul>
+<li>__system</li>
 </ul></li>
 </ul>
 

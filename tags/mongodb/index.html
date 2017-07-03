@@ -120,9 +120,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 角色和权限  Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下
- 数据库用户角色：read,readWrite 数据库管理角色：dbAdmin,dbOwner,userAdmin 集群管理角色：clusterAdmin,clusterManager,clusterMonitor,hostManager 备份和恢复角色：backup,restore 所有数据库角色：readAnyDatabase,readWriteAnyDatabase,userAdminAnyDatabase,dbAdminAnyDatabase 超级用户角色：root 内部角色：__system  角色说明
- read：允许用户读取指定数据库 readWrite：允许用户读写指定数据库 dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile userAdmin：允许用户向system.users集合写入，可以找指定数据库里创建、删除和管理用户 clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。 readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限 readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限 userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限 dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。 root：只在admin数据库中可用。超级账号，超级权限   0x01 创建用户  #创建管理员用户 &gt; use admin switched to db admin &gt; db.createUser({ ... user:&quot;root&quot;, ... pwd:&quot;root123&quot;, ... roles:[{&quot;role&quot;:&quot;root&quot;,&quot;db&quot;:&quot;admin&quot;}] ... }) Successfully added user: { &quot;user&quot; : &quot;root&quot;, &quot;roles&quot; : [ { &quot;role&quot; : &quot;root&quot;, &quot;db&quot; : &quot;admin&quot; } ] } &gt; db.
+        0x00 角色和权限  Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：
+  数据库用户角色  read：允许用户读取指定数据库 readWrite：允许用户读写指定数据库  数据库管理角色  dbOwner：包含readWrite、dbAdmin、userAdmin dbAdmin：允许用户在指定数据库中对集合、文档等操作 userAdmin：允许用户向system.users集合写入，可以在指定数据库里创建、删除和管理用户  集群管理角色  clusterAdmin：只在admin数据库中可用，包含clusterManager、clusterMonitor、hostManager clusterManager： clusterMonitor： hostManager  备份和恢复角色  backup restore  所有数据库角色  readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限 readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限 dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限 userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限  超级用户角色  root：只在admin数据库中可用。超级账号，超级权限  内部角色  __system   0x01 创建用户  #创建管理员用户 &gt; use admin switched to db admin &gt; db.createUser({ ... user:&quot;root&quot;, ... pwd:&quot;root123&quot;, ... roles:[{&quot;role&quot;:&quot;root&quot;,&quot;db&quot;:&quot;admin&quot;}] ... }) Successfully added user: { &quot;user&quot; : &quot;root&quot;, &quot;roles&quot; : [ { &quot;role&quot; : &quot;root&quot;, &quot;db&quot; : &quot;admin&quot; } ] } &gt; db.
     </p>
 
     
