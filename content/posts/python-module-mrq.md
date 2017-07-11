@@ -15,7 +15,7 @@ topics = ["Python"]
 
 
 ### 0x01 设置mongo和redis
-> bscan使用的是mrq来调度任务的，mrq依赖于redis和mongo
+> 因为mrq依赖于redis和mongo，所以先安装设置下
 
 * 安装redis
 
@@ -206,7 +206,75 @@ mrq-worker task1 --greenlets 5 --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0
 mrq-worker task2 --greenlets 5 --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq --redis redis://reber_redis@127.0.0.1:6379/0 &
 ```
 
-### 0x03 执行
+### 0x03 修改MRQ库的代码
+> ```python
+#mrq中坑爹的数据库链接，当指定密码连接redis时一直提示没有权限😂，
+#原因是mrp/context.py中格式化redis的连接参数时使用的是import urllib.parse，
+#它是urlparse库的改进版，是Python3.0中的，但是我本地是Python2.7的，没有urllib.parse
+
+#修改/Library/Python/2.7/site-packages/mrq/context.py，自己添加个函数解析下：
+def redis_parse_uri(uri):
+    SCHEME = 'redis://'
+    SCHEME_LEN = len(SCHEME)
+    DEFAULT_PORT = 6379
+
+    host = None
+    port = None
+    path = None
+    password = None
+
+    scheme_free = uri[SCHEME_LEN:]
+
+    idx = scheme_free.rfind('/')
+    if idx == -1:
+        host_part = scheme_free
+    else:
+        path = scheme_free[idx:]
+        host_part = scheme_free[:idx]
+
+    idx = host_part.find('@')
+    if idx == -1:
+        hosts = host_part
+    else:
+        password = host_part[:idx]
+        hosts = host_part[idx+1:]
+
+    idx = hosts.find(':')
+    if idx == -1:
+        host = hosts
+        port = DEFAULT_PORT
+    else:
+        host = hosts.split(':')[0]
+        port = int(hosts.split(':')[1])
+
+    return {
+        'host': host,
+        'port': port,
+        'path': path,
+        'password': password
+    }
+
+def _connections_factory(attr):
+    """找到这里改下"""
+    # urllib.parse.uses_netloc.append('redis')
+    # redis_url = urllib.parse.urlparse(config_obj)
+    redis_url = redis_parse_uri(config_obj)
+
+    log.info("%s: Connecting to Redis at %s..." %
+             (attr, redis_url.get('host')))
+
+    redis_pool = pyredis.BlockingConnectionPool(
+        host=redis_url.get('host'),
+        port=redis_url.get('port'),
+        db=int((redis_url.get('path') or "").replace("/", "") or "0"),
+        password=redis_url.get('password'),
+        max_connections=int(config.get("redis_max_connections")),
+        timeout=int(config.get("redis_timeout")),
+        decode_responses=True
+    )
+```
+
+### 0x04 执行
 * 清空数据库
 
 > ![清空数据库](/img/post/mrq_clear_db.png)
