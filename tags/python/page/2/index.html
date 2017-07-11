@@ -83,6 +83,62 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module/">Python的模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-31</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径 使用if __name__ == &lsquo;__main__&lsquo;:  0x01 实例  文件结构如下  测试文件test.py
+   #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-password-generator/">Python实现密码生成器</a></h2>
 
         
@@ -564,61 +620,6 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-module-requests/">Python的requests模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-02</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 无参数的get请求  import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串   0x01 有参数的get请求  import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } param = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie   0x02 POST请求  import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-module-requests/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -629,7 +630,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
             <a href="/tags/python/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;2 / 3&nbsp;</span>
+        <span>&nbsp;2 / 4&nbsp;</span>
         
         
             <a href="/tags/python/page/3/"><i class="fa fa-chevron-right"></i></a>
@@ -666,7 +667,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(33)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(9)</a></li>
         
@@ -766,7 +767,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>12</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -811,7 +812,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>30</sup>
+                <sup>31</sup>
             </p>
         
             <p style="display:inline-block;">

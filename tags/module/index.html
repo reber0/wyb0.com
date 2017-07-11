@@ -83,6 +83,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module-mrq/">MRQ的使用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-07-10</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。  0x01 设置mongo和redis  bscan使用的是mrq来调度任务的，mrq依赖于redis和mongo
+  安装redis   $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp; $ redis-cli &gt; auth reber_redis    安装mongo   可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &quot;deb [ arch=amd64 ] http://repo.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module-mrq/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-module-tqdm/">下载大文件时显示进度条</a></h2>
 
         
@@ -565,61 +622,6 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-module-requests/">Python的requests模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-02</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 无参数的get请求  import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串   0x01 有参数的get请求  import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } param = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie   0x02 POST请求  import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-module-requests/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -667,7 +669,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(33)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(9)</a></li>
         
@@ -767,7 +769,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>12</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -812,7 +814,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>30</sup>
+                <sup>31</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -83,6 +83,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module-mrq/">MRQ的使用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-07-10</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。  0x01 设置mongo和redis  bscan使用的是mrq来调度任务的，mrq依赖于redis和mongo
+  安装redis   $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp; $ redis-cli &gt; auth reber_redis    安装mongo   可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &quot;deb [ arch=amd64 ] http://repo.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module-mrq/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-module-tqdm/">下载大文件时显示进度条</a></h2>
 
         
@@ -583,62 +640,6 @@
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-module/">Python的模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-08-31</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径 使用if __name__ == &lsquo;__main__&lsquo;:  0x01 实例  文件结构如下  测试文件test.py
-   #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-module/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -649,7 +650,7 @@
             <i class="fa fa-chevron-left"></i>
         
 
-        <span>&nbsp;1 / 3&nbsp;</span>
+        <span>&nbsp;1 / 4&nbsp;</span>
         
         
             <a href="/tags/python/page/2/"><i class="fa fa-chevron-right"></i></a>
@@ -686,7 +687,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(33)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(9)</a></li>
         
@@ -786,7 +787,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>12</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -831,7 +832,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>30</sup>
+                <sup>31</sup>
             </p>
         
             <p style="display:inline-block;">
