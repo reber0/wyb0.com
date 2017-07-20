@@ -83,6 +83,61 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/single-des-simple-implementation/">单重DES的简单实现</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2015-05-22</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/des">des</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/c%E8%AF%AD%E8%A8%80">C语言</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        简介  此程序通过单重des实现8个字节的加密和解密。 新建一个工程，这个工程需要3个cpp文件(c文件也可以)和2个头文件。 cpp文件：main.cpp、des.cpp、status.cpp 头文件：des.h、status.h   代码  以下为主函数main.cpp的内容：   #include &lt;stdio.h&gt; #include &quot;status.h&quot; #include &quot;des.h&quot; int main() { char M[8],Key[9]; printf(&quot;Input Plaintext :&quot;); scanf(&quot;%s&quot;,&amp;M); printf(&quot;Input Key :&quot;); scanf(&quot;%s&quot;,&amp;Key); SetKey(Key);//生成16个子秘钥 printf(&quot;加密：&quot;); Des(M,'e'); printf(&quot;%s\n&quot;,M); printf(&quot;解密：&quot;); Des(M,'d'); printf(&quot;%s\n&quot;,M); return 0; }    以下为des.cpp的内容：   #include &lt;stdio.h&gt; #include &lt;string.h&gt; #include &quot;status.h&quot; #include &quot;des.h&quot; void ByteToBit(const char *In,bool *Out,int bits) { for (int j=0;j&lt;bits;j++) Out[j]=(In[j/8]&gt;&gt;(j%8))&amp; 1; } void BitToByte(bool *In,char *Out,int bits) { memset(Out,0,(bits+7)/8); for (int k=0;k&lt;bits;k++) Out[k/8]|=In[k]&lt;&lt;(k%8); } void Transform(bool *Y,bool *X,const char *Table,int len) { for (int l=0;l&lt;len;l++) Temp[l]=X[Table[l]-1]; memcpy(Y,Temp,len); } void Des(char *m,char ch) { bool Tem[32]; ByteToBit(m,P,64); Transform(P,P,IP1_Table,64); Li=&amp;P[0]; Ri=&amp;P[32]; if (ch=='e') { for (i=0;i&lt;16;i++) { memcpy(Tem,Ri,32);//临时存放明文的右半部分 f(Ri,SubKey[i]); XOR(Ri,Li,32); memcpy(Li,Tem,32);//将明文的右半部分写入Li } } else { for (i=15;i&gt;=0;i--) { memcpy(Tem,Li,32);//临时存放明文的右半部分 f(Li,SubKey[i]); XOR(Li,Ri,32); memcpy(Ri,Tem,32);//将明文的右半部分写入Li } } Transform(P,P,IP2_Table,64); BitToByte(P,m,64); } void f(bool *R,bool *k) { bool T[48]; Transform(T,R,E_Table,48);//32位的Ri扩展为48位 XOR(T,k,48);//Ri和轮秘钥的异或 S_Box_f(T,R); Transform(R,R,P_Table,32); } void XOR(bool *R,bool *k,int len) { for (int m=0;m&lt;len;m++) R[m]=R[m]^k[m]; } void S_Box_f(bool *B,bool *C) { int a,b; for (int k=0;k&lt;8;k++) { a=B[0]*2+B[5]; b=B[1]*8+B[2]*4+B[3]*2+B[4]; ByteToBit(&amp;S_Box[k][a][b],C,4); B+=6; C+=4; } } //以下求得子秘钥 void SetKey(char *KEY) { ByteToBit(KEY,K,64); Transform(K,K,PC1_Table,56); printf(&quot;\n\n\n&quot;); Ci=&amp;K[0]; Di=&amp;K[28]; for (int j=0;j&lt;16;j++) { MovKey(Ci,28,LOOP_Table[j]); MovKey(Di,28,LOOP_Table[j]); Transform(SubKey[j],K,PC2_Table,48); } } void MovKey(bool *LR,int len,int loop) { memcpy(Temp,LR,loop); memcpy(LR,LR+loop,len-loop); memcpy(LR+len-loop,Temp,loop); }    以下为status.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/single-des-simple-implementation/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/cisco-switch-basic-configuration/">思科交换机基本配置</a></h2>
 
         
@@ -173,7 +228,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(62)</a></li>
         
@@ -324,7 +379,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>31</sup>
+                <sup>32</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -379,7 +434,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">

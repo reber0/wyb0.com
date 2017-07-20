@@ -82,6 +82,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/csrf/">CSRF</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-28</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/csrf">csrf</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 概念  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、 删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾认证过的网站并执行某些操作。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作
+ 0x01 利用  利用条件
+ 攻击者可以得知url的所有参数项并了解其含义 诱导用户访问构造好的POC  利用地方
+ 操作是有意义的(比如:修改密码等) 验证过于简单(参数固定、我们可以设置参数)   0x02 GET型CSRF攻击  若有论坛www.aa.com，论坛删除文章的操作是请求类似 http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接  有用户A，他登陆了论坛，且有篇文章id为251，那么他的浏览器此时已经取得了论坛的信任  此时有hacker用户B，他构造了一个html为b.html，b.html内容如下： &lt;html&gt; &lt;head&gt; &lt;title&gt;test&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;img src=&quot;http://www.aa.com/opt.php?id=251&amp;act=del&amp;name=A&quot; /&gt; &lt;/body&gt; &lt;/html&gt; 将b.html放在他自己搭建的网站上，网址为http://www.bb.com/b.html  恶意用户B将链接http://www.bb.com/b.html通过qq发送给用户A， 诱使他访问，用户A一旦访问，他id为251的文章就会被删除   0x03 POST型CSRF攻击  若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图： &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;aa&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;form action=&quot;http://172.23.10.200/setpasswd.php&quot; method=&quot;post&quot;&gt; 昵称：&lt;input type=&quot;text&quot; name=&quot;nickname&quot; id=&quot;nickname&quot; value=&quot;xxxxx&quot;&gt; 用户名：&lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; value=&quot;xiaoming&quot;&gt; 密码：&lt;input type=&quot;passwd&quot; name=&quot;passwd&quot; id=&quot;passwd&quot; value=&quot;&quot;&gt; 确认密码：&lt;input type=&quot;rpasswd&quot; name=&quot;rpasswd&quot; id=&quot;rpasswd&quot; value=&quot;&quot;&gt; &lt;input type=&quot;submit&quot; name=&quot;button&quot; value=&quot;提交&quot;&gt; &lt;/form&gt; &lt;/body&gt; &lt;/html&gt;  此时我们就可以构造自动提交表单的xxxx.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/csrf/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-module-logging/">Python的logging模块</a></h2>
 
         
@@ -559,59 +616,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/injection/">SQL注入</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-19</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 含义  sql注入是将代码插入(拼接)到应用(用户)的输入参数中， 之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击， 总结起来就是攻击者将恶意代码拼接到sql语句并加以执行从而得到数据的过程。   0x01 成因  SQl语句未对用户参数进行严格过滤   0x02 可引发注入的地方  其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入 常见的如下，按出现频率排序： 1. GET 2. POST 3. X-Forwarded-For 4. Cookie 5. User-Agent   0x03 注入分类  根据语法(较权威)： 1. 可联合查询注入: 只要页面有显示位即可使用，且注入速度很快 2. 报错型注入: 没有显示位但用echo &quot;mysql_error()&quot;输出了错误信息，速度很快，但是语句较复杂 3. 布尔型注入: 一次一个字节，速度慢，但只要有注入就能用 4. 基于时间延迟注入: 超级慢，比布尔型注入慢几倍，但是通用性较强 5. 可多语句查询: 只有SQL Server可以使用 根据类型： 1. 整形 2. 字符串型 3. 搜索型   0x04 查找注入点  在URL中： 1. and 1=1/and 1=2(整型) 2.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/injection/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -653,7 +657,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(62)</a></li>
         
@@ -804,7 +808,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>31</sup>
+                <sup>32</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -859,7 +863,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">

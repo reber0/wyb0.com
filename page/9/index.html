@@ -82,6 +82,62 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module-cmd/">Python的cmd模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-14</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        关于cmd模块  使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+ cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  用cmd模块简单实现shell命令  #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot; def __init__(self): Cmd.__init__(self) os.chdir(&quot;C:/Users/WYB_9/Desktop&quot;) hostName = socket.gethostname() self.prompt = &quot;reber@&quot; + hostName + &quot; &quot; + os.path.abspath('.') + &quot;\n$ &quot; def help_dir(self): print &quot;dir [path]&quot; def do_dir(self, arg): if not arg: print &quot;\n&quot;.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module-cmd/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/in-the-wireless-use-ettercap-to-do-man-in-the-middle-attack/">无线下ettercap做中间人攻击</a></h2>
 
         
@@ -569,63 +625,6 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/csrf/">CSRF</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-28</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/csrf">csrf</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 概念  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、 删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾认证过的网站并执行某些操作。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作
- 0x01 利用  利用条件
- 攻击者可以得知url的所有参数项并了解其含义 诱导用户访问构造好的POC  利用地方
- 操作是有意义的(比如:修改密码等) 验证过于简单(参数固定、我们可以设置参数)   0x02 GET型CSRF攻击  若有论坛www.aa.com，论坛删除文章的操作是请求类似 http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接  有用户A，他登陆了论坛，且有篇文章id为251，那么他的浏览器此时已经取得了论坛的信任  此时有hacker用户B，他构造了一个html为b.html，b.html内容如下： &lt;html&gt; &lt;head&gt; &lt;title&gt;test&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;img src=&quot;http://www.aa.com/opt.php?id=251&amp;act=del&amp;name=A&quot; /&gt; &lt;/body&gt; &lt;/html&gt; 将b.html放在他自己搭建的网站上，网址为http://www.bb.com/b.html  恶意用户B将链接http://www.bb.com/b.html通过qq发送给用户A， 诱使他访问，用户A一旦访问，他id为251的文章就会被删除   0x03 POST型CSRF攻击  若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图： &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;aa&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;form action=&quot;http://172.23.10.200/setpasswd.php&quot; method=&quot;post&quot;&gt; 昵称：&lt;input type=&quot;text&quot; name=&quot;nickname&quot; id=&quot;nickname&quot; value=&quot;xxxxx&quot;&gt; 用户名：&lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; value=&quot;xiaoming&quot;&gt; 密码：&lt;input type=&quot;passwd&quot; name=&quot;passwd&quot; id=&quot;passwd&quot; value=&quot;&quot;&gt; 确认密码：&lt;input type=&quot;rpasswd&quot; name=&quot;rpasswd&quot; id=&quot;rpasswd&quot; value=&quot;&quot;&gt; &lt;input type=&quot;submit&quot; name=&quot;button&quot; value=&quot;提交&quot;&gt; &lt;/form&gt; &lt;/body&gt; &lt;/html&gt;  此时我们就可以构造自动提交表单的xxxx.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/csrf/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -667,7 +666,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(62)</a></li>
         
@@ -818,7 +817,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>31</sup>
+                <sup>32</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -873,7 +872,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">

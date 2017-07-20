@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XML基础 - Reber's Blog</title>
+    <title>使用Python读写xml文件 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -77,14 +77,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>XML基础</h2>
+                <h2>使用Python读写xml文件</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-05-25</time>
+                        <time>2017-07-20</time>
                     </div>
 
                     
@@ -105,6 +105,8 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                            
                                 <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xml">xml</a>
                             
                         
@@ -114,147 +116,126 @@
                 
                 
 
-<h3 id="0x00-xml简介">0x00 XML简介</h3>
-
-<ol>
-<li>xml的设计宗旨是传输数据，而并非显示数据</li>
-<li>xms是不作为的，它被设计用来结构化、存储以及传输信息</li>
-<li>xml只是纯文本，独立于软硬件和应用程序</li>
-<li>xml可供任何软硬设备读取数据</li>
-<li>xml可以自定义标签</li>
-<li>xml具有自我描述性</li>
-<li>xml是对html的补充</li>
-<li>xml常用于简化数据的存储和共享</li>
-</ol>
+<h3 id="0x00-文件内容">0x00 文件内容</h3>
 
 <blockquote>
-<p>例子：John给George的便签</p>
-
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;note&gt;   //根元素
-  &lt;to&gt;George&lt;/to&gt;
-  &lt;from&gt;John&lt;/from&gt;
-  &lt;heading&gt;Reminder&lt;/heading&gt;
-  &lt;body&gt;Don't forget the meeting!&lt;/body&gt;
-&lt;/note&gt;
-</code></pre>
-</blockquote>
-
-<h3 id="0x01-xml树结构">0x01 XML树结构</h3>
-
-<ol>
-<li>必须有根节点</li>
-<li>根节点可以有子节点</li>
-</ol>
-
-<blockquote>
-<p>格式：</p>
-
-<pre><code>&lt;root&gt;
-  &lt;child&gt;
-    &lt;subchild&gt;.....&lt;/subchild&gt;
-  &lt;/child&gt;
-&lt;/root&gt;
-</code></pre>
-
-<p>例子：</p>
-
-<pre><code>&lt;books&gt;
+<pre><code>&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;books&gt;
   &lt;book&gt;
     &lt;name&gt;Python黑帽子&lt;/name&gt;
     &lt;date&gt;2015&lt;/date&gt;
     &lt;price&gt;37￥&lt;/price&gt;
-    &lt;description&gt;
-      用python写一些程序
-    &lt;/description&gt;
+    &lt;description&gt;用python写一些程序&lt;/description&gt;
   &lt;/book&gt;
   &lt;book&gt;
     &lt;name&gt;Web安全深度剖析&lt;/name&gt;
     &lt;date&gt;2014&lt;/date&gt;
     &lt;price&gt;39￥&lt;/price&gt;
-    &lt;description&gt;
-      讲述web渗透的基础知识
-    &lt;/description&gt;
+    &lt;description&gt;讲述web渗透的基础知识&lt;/description&gt;
   &lt;/book&gt;
   &lt;book&gt;
     &lt;name&gt;白帽子讲web安全&lt;/name&gt;
     &lt;date&gt;2013&lt;/date&gt;
     &lt;price&gt;44￥&lt;/price&gt;
-    &lt;description&gt;
-        道哥力作
-    &lt;/description&gt;
+    &lt;description&gt;道哥力作&lt;/description&gt;
   &lt;/book&gt;
 &lt;/books&gt;
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-xml语法规则">0x02 XML语法规则</h3>
-
-<ol>
-<li>所有元素必有闭合标签</li>
-<li>标签对大小写敏感</li>
-<li>必须正确的嵌套</li>
-<li>XML必须有根元素</li>
-<li>XML的属性值必须加引号(能用子元素的就用子元素代替属性)</li>
-<li>实体引用<br />
-<code>&amp;lt;   &lt;   小于</code><br />
-<code>&amp;gt;   &gt;   大于</code><br />
-<code>&amp;amp;  &amp;   和号</code><br />
-<code>&amp;apos;     '   单引号</code><br />
-<code>&amp;quot;     &quot;   引号</code><br /></li>
-<li>注释<br />
-<code>&lt;!--   --&gt;</code></li>
-<li>空格会被保留</li>
-<li>XML以LF存储换行</li>
-</ol>
-
-<h3 id="0x03-xml属性">0x03 XML属性</h3>
+<h3 id="0x01-读取xml节点">0x01 读取xml节点</h3>
 
 <blockquote>
-<p>对于xml要尽量避免使用属性<br />
-下面两种xml文档包含信息相同，但是推荐第二种</p>
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-<pre><code>&lt;note date=&quot;08/08/2008&quot;&gt;
-&lt;to&gt;George&lt;/to&gt;
-&lt;from&gt;John&lt;/from&gt;
-&lt;heading&gt;Reminder&lt;/heading&gt;
-&lt;body&gt;Don't forget the meeting!&lt;/body&gt;
-&lt;/note&gt; 
-</code></pre>
+from xml.etree import ElementTree as ET
 
-<pre><code>&lt;note&gt;
-  &lt;date&gt;
-    &lt;day&gt;08&lt;/day&gt;
-    &lt;month&gt;08&lt;/month&gt;
-    &lt;year&gt;2008&lt;/year&gt;
-  &lt;/date&gt;
-&lt;to&gt;George&lt;/to&gt;
-&lt;from&gt;John&lt;/from&gt;
-&lt;heading&gt;Reminder&lt;/heading&gt;
-&lt;body&gt;Don't forget the meeting!&lt;/body&gt;
-&lt;/note&gt;
+tree = ET.parse('test.xml')
+root = tree.getroot()
+# root = ET.fromstring(country_data_as_string) #通过字符串导入,直接获取根
+childs = root.getchildren()
+
+books = []
+for child0 in childs:
+    book = {}
+    for child00 in child0.getchildren():
+        # print child00.tag #标签名，即name、date、price、description
+        # print child00.text
+        book[child00.tag] = child00.text
+    books.append(book)
+
+print books
+&quot;&quot;&quot;
+books = [
+    {'name': 'Python黑帽子','date': '2015','price': '37￥','description': '用python写一些程序'},
+    {'name': 'Web安全深度剖析','date': '2014','price': '39￥','description': '讲述web渗透的基础知识'},
+    {'name': '白帽子讲web安全','date': '2013','price': '44￥','description': '道哥力作'}        
+]
+&quot;&quot;&quot;
 </code></pre>
 </blockquote>
 
-<h3 id="0x04-针对元数据的xml属性">0x04 针对元数据的XML属性</h3>
+<h3 id="0x02-写入xml文件">0x02 写入xml文件</h3>
 
 <blockquote>
-<p>下面的ID仅仅是一个标识符，用于标识不同的便签。</p>
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-<pre><code>&lt;messages&gt;
-  &lt;note id=&quot;501&quot;&gt;
-    &lt;to&gt;George&lt;/to&gt;
-    &lt;from&gt;John&lt;/from&gt;
-    &lt;heading&gt;Reminder&lt;/heading&gt;
-    &lt;body&gt;Don't forget the meeting!&lt;/body&gt;
-  &lt;/note&gt;
-  &lt;note id=&quot;502&quot;&gt;
-    &lt;to&gt;John&lt;/to&gt;
-    &lt;from&gt;George&lt;/from&gt;
-    &lt;heading&gt;Re: Reminder&lt;/heading&gt;
-    &lt;body&gt;I will not&lt;/body&gt;
-  &lt;/note&gt; 
-&lt;/messages&gt;
+from xml.etree.ElementTree import Element,ElementTree
+
+books = [
+    {
+        'name': u'Python黑帽子',
+        'date': '2015',
+        'price': u'37￥',
+        'description': u'用python写一些程序'
+    },
+    {
+        'name': u'Web安全深度剖析',
+        'date': '2014',
+        'price': u'39￥',
+        'description': u'讲述web渗透的基础知识'
+    },
+    {
+        'name': u'白帽子讲web安全',
+        'date': '2013',
+        'price': u'44￥',
+        'description': u'道哥力作'
+    }        
+]
+
+def indent(elem, level=0):
+    &quot;&quot;&quot;美化写入文件的内容&quot;&quot;&quot;
+    i = &quot;\n&quot; + level*&quot;  &quot;
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = i + &quot;  &quot;
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+        for elem in elem:
+            indent(elem, level+1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+    else:
+        if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = i
+
+
+root = Element('books')
+tree = ElementTree(root)
+
+for book in books:
+    child0 = Element('book')
+    root.append(child0)
+
+    for k,v in book.items():
+        child00 = Element(k)
+        child00.text = v
+        child0.append(child00)
+
+indent(root,0)
+tree.write('aa.xml', 'UTF-8')
 </code></pre>
 </blockquote>
 
@@ -272,13 +253,13 @@
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/php-upload-and-download/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/python-module-mrq/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/php-upload-and-download/">PHP之上传与下载</a>
+      <a href="http://wyb0.com/posts/python-module-mrq/">MRQ的使用</a>
     </nav>
     
   </div>
@@ -287,14 +268,8 @@
   </div>
   <div class="pure-u-10-24">
     
-    <nav class="next">
-      <a href="http://wyb0.com/posts/php-mysql-curd/">PHP之MySQL简单操作</a>
-    </nav>
-    
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
-    
-    <a href="http://wyb0.com/posts/php-mysql-curd/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>
