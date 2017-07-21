@@ -8,7 +8,48 @@ topics = ["Other"]
 
 +++
 
-### 0x00 文件内容
+### 0x00 解析XML的方法
+1. SAX (simple API for XML)  
+python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析XML的过程中触发一个个的事件并调用用户定义的回调函数来处理XML文件。
+
+2. DOM(Document Object Model)  
+将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
+
+3. ElementTree(元素树)  
+ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
+
+- **我在这里使用ElementTree**
+
+### 0x01 Element对象的属性
+> 每个Element对象都具有以下属性：
+
+* tag：string对象，表示数据代表的种类
+* attrib：dictionary对象，表示附有的属性
+* text：string对象，表示element的内容
+* tail：string对象，表示element闭合之后的尾迹
+* 若干子元素（child elements）
+
+> ```python
+>>> from xml.etree import ElementTree as ET
+>>> xml = """<books>
+...   <book id='37476'>aaaa</book>
+...   <book id='83727'>bbbb</book>
+... </books>"""
+>>> root = ET.fromstring(xml)
+>>> root.tag
+'books'
+>>> child = root.getchildren()
+>>> child
+[<Element 'book' at 0x106f59410>, <Element 'book' at 0x106f59450>]
+>>> child[0].tag
+'book'
+>>> child[0].attrib
+{'id': '37476'}
+>>> child[0].text
+'aaaa'
+```
+
+### 0x02 文件内容
 > ```
 <?xml version='1.0' encoding='UTF-8'?>
 <books>
@@ -33,7 +74,7 @@ topics = ["Other"]
 </books>
 ```
 
-### 0x01 读取xml节点
+### 0x03 读取xml节点
 > ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -64,7 +105,7 @@ books = [
 """
 ```
 
-### 0x02 写入xml文件
+### 0x04 写入xml文件
 > ```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
