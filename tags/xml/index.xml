@@ -18,7 +18,14 @@
       <pubDate>Thu, 20 Jul 2017 14:20:26 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-read-and-write-xml/</guid>
-      <description>0x00 文件内容  &amp;lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&amp;gt; &amp;lt;books&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;Python黑帽子&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2015&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;37￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt;用python写一些程序&amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;Web安全深度剖析&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2014&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;39￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt;讲述web渗透的基础知识&amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;白帽子讲web安全&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2013&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;44￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt;道哥力作&amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;/books&amp;gt;   0x01 读取xml节点  #!/usr/bin/env python # -*- coding: utf-8 -*- from xml.etree import ElementTree as ET tree = ET.parse(&#39;test.xml&#39;) root = tree.getroot() # root = ET.fromstring(country_data_as_string) #通过字符串导入,直接获取根 childs = root.getchildren() books = [] for child0 in childs: book = {} for child00 in child0.</description>
+      <description>0x00 解析XML的方法  SAX (simple API for XML)
+python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析XML的过程中触发一个个的事件并调用用户定义的回调函数来处理XML文件。
+ DOM(Document Object Model)
+将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
+ ElementTree(元素树)
+ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
+   我在这里使用ElementTree  0x01 Element对象的属性  每个Element对象都具有以下属性：
+  tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）   &amp;gt;&amp;gt;&amp;gt; from xml.etree import ElementTree as ET &amp;gt;&amp;gt;&amp;gt; xml = &amp;quot;&amp;quot;&amp;quot;&amp;lt;books&amp;gt; ... &amp;lt;book id=&#39;37476&#39;&amp;gt;aaaa&amp;lt;/book&amp;gt; ... &amp;lt;book id=&#39;83727&#39;&amp;gt;bbbb&amp;lt;/book&amp;gt; ... &amp;lt;/books&amp;gt;&amp;quot;&amp;quot;&amp;quot; &amp;gt;&amp;gt;&amp;gt; root = ET.fromstring(xml) &amp;gt;&amp;gt;&amp;gt; root.tag &#39;books&#39; &amp;gt;&amp;gt;&amp;gt; child = root.getchildren() &amp;gt;&amp;gt;&amp;gt; child [&amp;lt;Element &#39;book&#39; at 0x106f59410&amp;gt;, &amp;lt;Element &#39;book&#39; at 0x106f59450&amp;gt;] &amp;gt;&amp;gt;&amp;gt; child[0].</description>
     </item>
     
     <item>
