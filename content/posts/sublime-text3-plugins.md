@@ -32,9 +32,9 @@ import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.
 
 ### 0x01 Emmet
 > 前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装)
-{{% fluid_img src="/img/post/sublime_emmet.png" alt="插件Emmet" %}}
-<br /><br />
-<a href='http://emmet.io/'>{{% fluid_img src="/img/post/sublime_emmet_demo.png" alt="插件Emmet示例" %}}</a>
+![插件Emmet](/img/post/sublime_emmet.png)
+<br />
+[![](/img/post/sublime_emmet_demo.png)](http://emmet.io/)
 
 ### 0x02 Anaconda
 > 可以自动补全并提示语法，还可跳转到定义、使用等
