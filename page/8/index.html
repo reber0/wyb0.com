@@ -82,6 +82,56 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/windows-proxifier-implement-global-proxy/">Windows下用Proxifier实现全局代理</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-24</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 环境  在windows下用Shadowsocks和Proxifier实现全局代理：
+System：Windows10 Pro x64 Shadowsocks：Shadowsocks v2.5.2.0 Proxifier：Proxifier Portable Edition v3.29   0x01 配置Shadowsocks   0x02 配置Proxifier  Proxifier添加代理服务  Proxifier添加规则  测试全局代理设置成功与否   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/command-execution-vulnerabilities/">命令执行漏洞</a></h2>
 
         
@@ -576,59 +626,6 @@ ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-module-paramiko/">Python的paramiko模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-14</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         安装 直接pip install paramiko安装
-或者去http://www.paramiko.org/ 下载
-执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&quot;192.168.188.134&quot;,22,&quot;reber&quot;,&quot;123456&quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&quot;ls -l&quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&quot;192.168.188.134&quot;,22)) ftp.connect(username=&quot;reber&quot;,password=&quot;123456&quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\a.txt' sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\WYB_9\\Desktop\\system.log remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\system.log' sftp.get(remotepath, localpath) ftp.close()  
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -639,7 +636,7 @@ ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行
             <a href="/page/7/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;8 / 16&nbsp;</span>
+        <span>&nbsp;8 / 17&nbsp;</span>
         
         
             <a href="/page/9/"><i class="fa fa-chevron-right"></i></a>
@@ -670,7 +667,7 @@ ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(12)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(62)</a></li>
         
@@ -747,6 +744,11 @@ ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/git" title="git">git</a>
                 <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
