@@ -173,16 +173,18 @@ ThinkPHP命令执行</li>
 4. system(&quot;/bin/prog --p=\&quot;$arg\&quot;&quot;);  //可以输入&quot;;ls;&quot;
 5. system(&quot;/bin/prog --p='$arg'&quot;);  //可以输入';ls;'
 
-在Linux上，上面的;也可以用|、||代替
-    ;前面的执行完执行后面的
-    |是管道符，显示后面的执行结果
-    ||当前面的执行出错时执行后面的
+在Linux上，上面的;也可以用|、||、&amp;、&amp;&amp;代替
+    ;前面的执行完执行后面的(ping -c 1 10.11.11.11;whoami)
+    |是管道符，显示后面的执行结果(ping -c 1 10.11.11.11|whoami)
+    ||当前面的执行出错时执行后面的(ping -c 1 a.a.a||whoami)
+    &amp;会把前面的放在后台执行，然后执行后面的(ping -c 1 10.11.11.11&amp;whoami)
+    &amp;&amp;前面的语句为假则直接出错，后面的也不执行(ping -c 1 10.11.11.11&amp;&amp;whoami)
 
-在Windows上，不能用;可以用&amp;、&amp;&amp;、|、||代替
-    &amp;前面的语句为假则直接执行后面的
-    &amp;&amp;前面的语句为假则直接出错，后面的也不执行
-    |直接执行后面的语句
-    ||前面出错执行后面的
+在Windows上，不能用;可以用|、||、&amp;、&amp;&amp;代替
+    |直接执行后面的语句(ping -n 1 10.11.11.11|whoami)
+    ||前面出错才执行后面的(ping -n 1 a.a.a||whoami)
+    &amp;前面执行完执行后面的(ping -n 1 10.11.11.11&amp;whoami)
+    &amp;&amp;前面的语句为假则直接出错，后面的也不执行(ping -n 1 10.11.11.11&amp;&amp;whoami)
 </code></pre>
 </blockquote>
 
