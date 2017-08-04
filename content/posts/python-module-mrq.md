@@ -309,7 +309,3 @@ $ python scheduler.py
 ![添加任务](/img/post/mrq_push_task.png)
 <br>
 ![添加任务后查看jobs](/img/post/mrq_dashboard_jobs2.png)
-
-
-
-
