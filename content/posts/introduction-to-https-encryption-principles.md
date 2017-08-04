@@ -8,7 +8,7 @@ topics = ["Other"]
 
 +++
 
-原文链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
+参考链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
 
 ### 0x00 对称加密与非对称加密
 * 对称加密算法的加密和解密秘钥一样，不区分公钥和私钥，秘钥对外保密.
