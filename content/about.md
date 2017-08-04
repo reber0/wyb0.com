@@ -6,18 +6,19 @@ sidemenu = "true"
 +++
 
 > ## Contact
-* #### QQ:1070018473
-#### Email:wyb_9#live.com
-#### Email:1070018473#qq.com
-
-<br />
+<div style="width:350px;">
+    <div style="float:left">
+        <img src="/img/wx.png" style="width:150px;height:150px;" title="添加微信">
+    </div>
+    <div style="float:right;">
+        <img src="/img/qq.png" style="width:150px;height:150px;" title="添加QQ">
+    </div>
+</div>
 
 > ## About me
 - #### 不断学习
 #### Web安全
 #### 努力工作
-
-<br />
 
 > ## About this site
 * 本博客站点创建于2016年4月11日
