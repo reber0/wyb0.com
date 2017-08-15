@@ -82,6 +82,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/php-directory-and-file/">PHP之目录与文件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-22</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        1.目录的操作 &lt;?php $path = &quot;/var/www/html/php/dir.php&quot;; echo dirname($path).&quot;&lt;br /&gt;&quot;; //返回上级路径 echo basename($path).&quot;&lt;br /&gt;&quot;; //返回文件名部分 print_r(pathinfo($path)); //返回包含path信息的数组 echo &quot;&lt;br /&gt;&lt;br /&gt;&quot;; //readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动 $path = &quot;D:/phpStudy/WWW/php&quot;; $dh = opendir($path); while (false !== ($filename=readdir($dh))) { echo $filename.&quot;&lt;br /&gt;&quot;; } rewinddir($dh); //指针复位 echo readdir($dh); closedir($dh); mkdir(&quot;./aaa&quot;);//创建文件夹aaa rmdir(&quot;./aaa&quot;);//删除文件夹aaa file_put_contents(&quot;aa.php&quot;, &quot;&quot;);//创建文件aa.php unlink(&quot;./aa.php&quot;);//删除文件aa.php ?&gt;   
+2.文件的读写  fopen(filename,mode)和fclose(filename,mode) 例子： &lt;?php $file = fopen(&quot;test.txt&quot;,&quot;r&quot;); $file = fopen(&quot;/home/test/test.txt&quot;,&quot;r&quot;); $file = fopen(&quot;/home/test/test.gif&quot;,&quot;wb&quot;); $file = fopen(&quot;http://www.example.com/&quot;,&quot;r&quot;); $file = fopen(&quot;ftp://user:password@example.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/php-directory-and-file/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/php-string/">PHP之字符串</a></h2>
 
         
@@ -553,63 +607,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/ubuntu-push-blog-to-github/">Ubuntu下向github推送博客</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-09</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/git">Git</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/git">git</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境  Ubuntu14.4
- 0x01 安装hugo和git 0x02 生成密钥，将密钥添加到github  $ cd ~ $ ssh-keygen -t rsa -b 2048 -C &quot;123456@qq.com&quot; $ cd ~/.ssh/ $ cat id_rsa.pub # 将公钥添加到 github   0x03 配置本地用户和邮箱  git config --global user.name &quot;reber-9&quot; git config --global user.email &quot;123456@qq.com&quot;   0x04 验证密钥是否添加成功  ssh -T git@github.com
- 0x05 克隆远程工程  git clone https://github.com/reber-9/reber-9.com.git
- 0x06 添加CNAME  cd ~/reber-9.com/
-echo &ldquo;reber-9.com&rdquo; &gt;&gt; static/CNAME
-    </p>
-
-    
-    <footer>
-        <a href="/posts/ubuntu-push-blog-to-github/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -647,7 +644,7 @@ echo &ldquo;reber-9.com&rdquo; &gt;&gt; static/CNAME
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(5)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(21)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(22)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
@@ -712,6 +709,11 @@ echo &ldquo;reber-9.com&rdquo; &gt;&gt; static/CNAME
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
                 <sup>1</sup>
             </p>
         
