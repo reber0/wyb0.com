@@ -21,7 +21,7 @@
       <description>0x00 关于Docker  Docker中的镜像类似VM的快照，容器类似虚拟机，使用镜像创建容器类似于使用快照创建虚拟机。 Docker中运行应用的是容器，容器的创建和销毁在秒级就能完成。 Docker使用了AUFS，可以以递进的方式创建&amp;rdquo;VM&amp;rdquo;，一个&amp;rdquo;VM&amp;rdquo;叠在另一个&amp;rdquo;VM&amp;rdquo;上，就像使用git增量开发一样。 软件的运行环境（image）和软件本身（container）分离，和数据也分离。
  学习Docker需要了解4个概念：镜像、容器、数据卷、链接
   0x01 镜像image  Docker Images 只是一个只读模板，用来运行Docker容器。 镜像拥有唯一ID(比如：72c989e2d109)以及一个供人阅读的名字和标签对(比如：ubuntu:latest)。 镜像必须完全可移植,Docker不允许例外。  0x02 容器container  可以在一个镜像的基础上创建多个容器，每个容器相互独立。 容器也拥有唯一ID以及一个供人阅读的名字。 容器被启动时会被分配一个随机的私有IP，其他容器可以通过这个IP与它进行通信。 Docker允许公开容器的特定端口。 一个容器一个进程，容器设计本意是用来运行一个应用的而非一台机器。 容器应该是短暂和一次性的。 Docker镜像层对于容器来说，是只读的，容器对于文件的写操作绝对不会作用在镜像中。  0x03 数据卷  数据卷表现为容器内的空间，但实际保存在容器外，你可以在不影响数据的情况下销毁、重建、修改、丢弃容器。 Docker允许你定义应用和数据部分，并提供工具让你可以将它们分开。  0x04 链接  Docker允许你在创建一个新容器时引用其它现存容器，在你刚创建的容器里被引用的容器将获得一个你指定的别名，我们就说这两个容器被链接在了一起。 若DB容器已经在运行，我们可以创建一个Web服务器容器，并在创建时引用这个DB容器，可以给它起个别名(比如dbapp)，在新创建的Web服务器容器中，可以在任何时候使用主机名dbapp与DB容器进行通信。  0x05 镜像与容器关系  Docker镜像是一个文件，属于静态的内容；Docker容器属于动态的内容，可以把容器理解为一个或多个运行进程。 Docker可以通过解析Docker镜像的json文件，获知应该在这个镜像之上运行什么样的进程，应该为进程配置怎么样的环境变量。 Docker守护进程手握Docker镜像的json文件，它为容器配置相应的环境并真正运行Docker镜像所指定的进程，从而完成Docker容器的真正创建。 当Docker容器运行起来之后，Docker镜像json文件就失去作用了。此时Docker镜像的绝大部分作用就是：为Docker容器提供一个文件系统的视角，供容器内部的进程访问文件资源。  0x06 Docker有三个组件和三个基本元素  三个组件
- Docker Daemon 运行于主机上，处理服务请求。 Docker Client 是用户界面，它支持用户与 Docker Daemon 之间通信。 Docker Index 是中央registry，支持拥有公有与私有访问权限的Docker容器镜像的备份。  三个基本要素</description>
+ Docker Daemon 运行于主机上，处理服务请求，是用于管理容器的后台进程，上面有一些api接口。 Docker Client 用于操作容器，它是Deamon的api接口(如docker start、docker rm等)的封装。 Docker Index 是中央registry，支持拥有公有与私有访问权限的Docker容器镜像的备份。  三个基本要素</description>
     </item>
     
     <item>
