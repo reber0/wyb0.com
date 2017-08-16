@@ -46,8 +46,8 @@ topics = ["Linux"]
 
 ### 0x06 Docker有三个组件和三个基本元素
 * 三个组件
-    * Docker Daemon 运行于主机上，处理服务请求。
-    * Docker Client 是用户界面，它支持用户与 Docker Daemon 之间通信。
+    * Docker Daemon 运行于主机上，处理服务请求，是用于管理容器的后台进程，上面有一些api接口。
+    * Docker Client 用于操作容器，它是Deamon的api接口(如docker start、docker rm等)的封装。
     * Docker Index 是中央registry，支持拥有公有与私有访问权限的Docker容器镜像的备份。
 
 * 三个基本要素
