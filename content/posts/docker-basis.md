@@ -91,7 +91,7 @@ index通过Web UI、元数据存储、认证服务、符号化这几个组件来
 客户端
 ```
 
-### 0x09 docker pull原理
+### 0x09 Docker下载镜像的原理
 > ![docker pull](/img/post/docker_pull.png)
 
 1. Client向Index请求，询问从哪里下载CentOS
