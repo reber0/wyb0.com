@@ -3,7 +3,7 @@ date = "2017-08-15T22:16:35+08:00"
 description = ""
 draft = false
 tags = ["docker"]
-title = "初识Docker"
+title = "Docker初识"
 topics = ["Linux"]
 
 +++
@@ -17,7 +17,7 @@ topics = ["Linux"]
 * 学习Docker需要了解4个概念：镜像、容器、数据卷、链接
 
 ### 0x01 镜像image
-* Docker Images 只是一个只读模板，用来运行Docker容器。
+* Docker Images 只是一个只读模板，用来运行Docker容器，可以在Docker hub(官方镜像库)下载。
 * 镜像拥有唯一ID(比如：72c989e2d109)以及一个供人阅读的名字和标签对(比如：ubuntu:latest)。
 * 镜像必须完全可移植,Docker不允许例外。
 
