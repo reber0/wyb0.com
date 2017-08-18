@@ -12,6 +12,7 @@ topics = ["Linux"]
 
 ### 0x00 Docker安装与卸载
 > ```bash
+#安装
 $ sudo apt-get update
 $ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 
@@ -28,6 +29,12 @@ $ sudo apt-get install docker-ce
 $ sudo docker info #查看是否安装成功
 ```
 
+> ```bash
+#卸载
+$ sudo apt-get purge docker-ce
+$ sudo rm -rf /var/lib/docker
+```
+
 > ```
 #添加当前用户到docker组
 $ sudo gpasswd -a ${USER} docker
@@ -35,11 +42,8 @@ $ sudo service docker restart
 $ newgrp - docker
 ```
 
-> ```bash
-#卸载
-$ sudo apt-get purge docker-ce
-$ sudo rm -rf /var/lib/docker
-```
+### 0x01 镜像操作
+* 下载镜像
 
 > ```bash
 #一般容器的id和name可以互换
@@ -50,7 +54,6 @@ $ docker pull ubuntu #从公共registry下载镜像
 $ docker pull ubuntu:14.04
 ```
 
-### 0x01 镜像操作
 * 查看当前系统镜像
 
 > ```bash
@@ -101,15 +104,7 @@ $ docker history ubuntu:desktop
 * 删除镜像(删除镜像前要先删除上面的容器)
 
 > ```bash
-$ docker rmi ubuntu:latest
-Untagged: ubuntu:latest
-Untagged: ubuntu@sha256:84c334414e2bfdcae99509a6add166bbb4fa4041dc3fa6af08046a66fed3005f
-Deleted: sha256:14f60031763da664d5d65f428afbc2e6f9778dfdde17effca7704a138225c4a6
-Deleted: sha256:e8d279c8c8c3200facb99097695dd1fee74410bfc42ec9e3117869440f3840f2
-Deleted: sha256:4c66a8c9cd74cd55b98b23c9b577d5fd19039830ef7854ff7fed76c4c1f958eb
-Deleted: sha256:55cb055d70722e6f41bc22986877c9729ebeab66190550d9e51ddef05c1d5fdc
-Deleted: sha256:28a900eeeb19c99b0ebc4008969ae3441df169f51b799928232d1192c835da54
-Deleted: sha256:e5d2f035d7a4888cf2e23f3c512fc664cff8383a66501e9f91f7d07188cbe04b
+$ docker rmi ubuntu:latest #docker rmi 14f60031763d
 ```
 
 ### 0x02 容器操作
@@ -225,18 +220,19 @@ root         1  0.0  0.0   6524   712 ?        Ss   09:38   0:00 ping 8.8.8.8
 * 停止/启动容器
 
 > ```bash
-$ docker stop 1f665a3ccf4b #docker kill 1f665a3ccf4b，前者会在10s后停止容器，后者直接停止
+$ docker stop 1f665a3ccf4b
 1f665a3ccf4b
+#docker kill 1f665a3ccf4b，stop会在10s后停止，kill则直接停止
 $ docker start 1f665a3ccf4b
 1f665a3ccf4b
 ```
 
-* 删除容器(正在运行的容器需要先停止才能删除)
+* 删除容器(容器需要先停止才能删除)
 
 > ```bash
 $ docker rm 1f665a3ccf4b
 Error response from daemon: You cannot remove a running container 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11. Stop the container before attempting removal or force remove
-$ docker stop 1f665a3ccf4b #docker kill 1f665a3ccf4b，前者会在10s后停止容器，后者直接停止
+$ docker kill 1f665a3ccf4b
 1f665a3ccf4b
 $ docker rm 1f665a3ccf4b
 1f665a3ccf4b
