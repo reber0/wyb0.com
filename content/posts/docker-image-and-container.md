@@ -248,13 +248,12 @@ be5877380ca5
 dc6cadfc08f7
 ```
 
-* 查看镜像或容器的底层信息(IP、端口绑定、配置信息等)
-
+### 0x03 查看镜像或容器的底层信息(IP、端口绑定、配置信息等)
 > ```bash
 $ docker inspect 65987aa8f0cb
 ```
 
-### 0x03 例子
+### 0x04 例子
 > ```bash
 $ exec_ping=$(docker run -d ubuntu:14.04 ping 8.8.8.8)
 $ docker logs $exec_ping
