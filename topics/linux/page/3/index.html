@@ -83,6 +83,56 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/linux-network-configuration/">Linux之网络配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         第一种方法 分5步： 1. 启动网卡： $ ifconfig eth0 up/down 2. 配置ip： $ ifconfig eth0 192.168.22.231 netmask 255.255.255.0 3. 配置网关： $ route add default gw 192.168.22.1 4. 配DNS： $ vim /etc/resolv.conf $ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.cof 5. 重启网络使配置生效： 6. 用文件配置ip信息 $ /etc/sysconfig/network-scripts/ifcfg-eth0 ps:添加静态路由 route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3 //添加静态路由添加网络10.211.55.0，从eth0出去  第二种方法 分1步： 打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:
+DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  打开ip转发 echo &quot;1&quot; &gt;&gt; /proc/sys/net/ipv4/ip_forward 或者vim /etc/sysctl.conf  
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/linux-permission-settings/">Linux之权限(重点)</a></h2>
 
         
@@ -226,7 +276,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(5)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(22)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(23)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
@@ -296,7 +346,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">

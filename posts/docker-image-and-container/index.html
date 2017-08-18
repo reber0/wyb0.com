@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sqlmapapi的简单使用 - Reber's Blog</title>
+    <title>Docker之镜像与容器 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
-    <meta name="description" content="">
+    <meta name="description" content="Docker中镜像以及容器的添加、删除等操作">
     <meta name="author" content="reber">
 
     
@@ -77,14 +77,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>sqlmapapi的简单使用</h2>
+                <h2>Docker之镜像与容器</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-06-28</time>
+                        <time>2017-08-18</time>
                     </div>
 
                     
@@ -95,7 +95,7 @@
                         
                             <i class="fa fa-folder fa-fw"></i>
                             
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
                             
                         
                         
@@ -105,7 +105,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/sqlmap">sqlmap</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
                             
                         
                         
@@ -114,165 +114,338 @@
                 
                 
 
-<h2 id="关于sqlmapapi-py">关于sqlmapapi.py</h2>
+<p>操作系统：Ubuntu14.04.1</p>
 
-<p>当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量</p>
+<h3 id="0x00-docker安装与卸载">0x00 Docker安装与卸载</h3>
 
-<h2 id="用于交互的方法">用于交互的方法</h2>
+<blockquote>
+<pre><code class="language-bash">$ sudo apt-get update
+$ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 
-<p>在sqlmap/lib/utils/api.py中:</p>
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# Verify that the key fingerprint is 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
+$ sudo apt-key fingerprint 0EBFCD88
 
-<pre><code># 用户方法
-@get(&quot;/task/new&quot;) Create new task ID. 
-@get(&quot;/task/&lt;taskid&gt;/delete&quot;) Delete own task ID. 
+$ sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;
 
-# 管理函数
-@get(&quot;/admin/&lt;taskid&gt;/list&quot;) List task pull. 
-@get(&quot;/admin/&lt;taskid&gt;/flush&quot;) Flush task spool (delete all tasks). 
+$ sudo apt-get update
+$ sudo apt-get install docker-ce
 
-# 核心交互函数
-@get(&quot;/option/&lt;taskid&gt;/list&quot;) List options for a certain task ID
-@post(&quot;/option/&lt;taskid&gt;/get&quot;) Get the value of an option (command line switch) for a certain task ID
-@post(&quot;/option/&lt;taskid&gt;/set&quot;) Set an option (command line switch) for a certain task ID
-@post(&quot;/scan/&lt;taskid&gt;/start&quot;) Launch a scan
-@get(&quot;/scan/&lt;taskid&gt;/stop&quot;) Kill a scan
-@get(&quot;/scan/&lt;taskid&gt;/status&quot;) Return status of a scan
-@get(&quot;/scan/&lt;taskid&gt;/data&quot;) Retrieve the data of a scan
-@get(&quot;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&quot;) Retrieve a subset of log messages
-@get(&quot;/scan/&lt;taskid&gt;/log&quot;) Retrieve the log messages
-@get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system
+
+$ sudo docker info #查看是否安装成功
 </code></pre>
 
-<h2 id="sqlmapapi-py参数如下">sqlmapapi.py参数如下</h2>
-
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_help.png" alt="sqlmapapi参数.png">
-</div>
-
-它的-s参数可以启动一个服务(返回一个Admin Id)，只要将url给它就行了：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_server.png" alt="启动sqlmapapi服务.png">
-</div>
-</p>
-
-<h2 id="简单使用">简单使用</h2>
-
-<h3 id="1-创建任务">1. 创建任务</h3>
-
-<p>使用@get(&ldquo;/task/new&rdquo;)方法创建一个新的任务
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_new_task.png" alt="sqlmapapi新建任务.png">
-</div>
-</p>
-
-<h3 id="2-指定参数">2. 指定参数</h3>
-
-<p>使用@post(&ldquo;/option/&lt;taskid&gt;/set&rdquo;)方法设置参数
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_options.png" alt="sqlmapapi指定参数.png">
-</div>
-</p>
-
-<h3 id="3-开始扫描">3. 开始扫描</h3>
-
-<p>使用@post(&ldquo;/scan/&lt;taskid&gt;/start&rdquo;)方法开始扫描
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_scan_start.png" alt="sqlmapapi开始扫描.png">
-</div>
-</p>
-
-<h3 id="4-获取探测是否结束">4. 获取探测是否结束</h3>
-
-<p>使用@get(&ldquo;/scan/&lt;taskid&gt;/status&rdquo;)获取探测是否结束
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_scan_status.png" alt="sqlmapapi得到扫描状态.png">
-</div>
-</p>
-
-<h3 id="5-获取探测结果">5. 获取探测结果</h3>
-
-<p>使用@get(&ldquo;/scan/&lt;taskid&gt;/data&rdquo;)获取探测结果，如果不能注入，则获取到的结果为空，如下：</p>
-
-<pre><code>{u'data': [], u'success': True, u'error': []}
+<pre><code>#添加当前用户到docker组
+$ sudo gpasswd -a ${USER} docker
+$ sudo service docker restart
+$ newgrp - docker
 </code></pre>
 
-<p>若存在注入则可能如下：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_scan_result.png" alt="sqlmapapi得到扫描结果.png">
-</div>
-</p>
-
-<h3 id="6-删除任务">6. 删除任务</h3>
-
-<p>使用@get(&ldquo;/task/delete&rdquo;)方法删除一个任务.</p>
-
-<pre><code>&gt;&gt;&gt;resp = requests.get('http://127.0.0.1:8776/task/96f01550dadabab8/delete')
-&gt;&gt;&gt;resp.json()
-{u'success': True}
+<pre><code class="language-bash">#卸载
+$ sudo apt-get purge docker-ce
+$ sudo rm -rf /var/lib/docker
 </code></pre>
 
+<pre><code class="language-bash">#一般容器的id和name可以互换
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_delete_task.png" alt="sqlmapapi删除任务.png">
-</div>
+$ docker search ubuntu #从公共registry搜索镜像
 
-
-<h2 id="简单示例">简单示例</h2>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import time
-import json
-import requests
-
-url_list = {}
-url_list['url1'] = 'http://192.168.188.134/sqli/Less-1/?id=1'
-url_list['url2'] = 'http://192.168.188.134/sqli/Less-2/?id=1'
-url_list['url3'] = 'http://192.168.188.134/sqli/Less-3/?id=1'
-
-
-for key in url_list.keys():
-    payload = {}
-    resp = requests.get('http://127.0.0.1:8775/task/new') #创建任务
-    taskid = resp.json()['taskid']
-    payload['url'] = url_list[key]
-    headers = {'Content-Type':'application/json'}
-    if resp.json()['success']: #指定参数
-        print &quot;set options...&quot;
-        url = &quot;http://127.0.0.1:8775/option/%s/set&quot; % taskid
-        resp = requests.post(url,data=json.dumps(payload),headers=headers)
-        if resp.json()['success']: #开始扫描
-            print &quot;start scan...&quot;
-            url = &quot;http://127.0.0.1:8775/scan/%s/start&quot; % taskid
-            resp = requests.post(url,data=json.dumps(payload),headers=headers)
-            print &quot;scan runing...&quot;
-            if resp.json()['success']:
-                while 1:
-                    url = &quot;http://127.0.0.1:8775/scan/%s/status&quot; % taskid #查看扫描状态
-                    resp = requests.get(url)
-                    if resp.json()['status'] != 'terminated':
-                        pass
-                    else:
-                        print &quot;scan end.&quot;
-                        url = &quot;http://127.0.0.1:8775/scan/%s/data&quot; % taskid #获取扫描结果
-                        data = requests.get(url)
-                        print data.json()['data']
-                        print &quot;delete task&quot;
-                        url = &quot;http://127.0.0.1:8775/task/%s/delete&quot; % taskid
-                        requests.get(url)
-                        break
-                    time.sleep(2)
-    else:
-        print &quot;new task error&quot;
+$ docker pull ubuntu #从公共registry下载镜像
+$ docker pull ubuntu:14.04
 </code></pre>
+</blockquote>
+
+<h3 id="0x01-镜像操作">0x01 镜像操作</h3>
+
+<ul>
+<li>查看当前系统镜像</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker images
+REPOSITORY    TAG       IMAGE ID        CREATED        SIZE
+ubuntu        latest    14f60031763d    2 weeks ago    120MB
+ubuntu        14.04     54333f1de4ed    2 weeks ago    188MB
+</code></pre>
+</blockquote>
+
+<ul>
+<li>打包镜像</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker save 54333f1de4ed &gt; /home/reber/ubuntu.tar
+</code></pre>
+</blockquote>
+
+<ul>
+<li>加载镜像</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker load &lt; ./ubuntu.tar
+1b0c71361973: Loading layer  196.9MB/196.9MB
+150e95c79e16: Loading layer  209.9kB/209.9kB
+1ae9c3d1e0b7: Loading layer  7.168kB/7.168kB
+4622ee8f36ae: Loading layer  4.608kB/4.608kB
+4455b4d81934: Loading layer  3.072kB/3.072kB
+Loaded image ID: sha256:54333f1de4ed2730bea18e49605b2ea8f8a2689db213ece94db6ccbc8cf279a6
+$ docker images
+REPOSITORY    TAG       IMAGE ID        CREATED        SIZE
+centos        7         328edcd84f1b    7 days ago     193MB
+&lt;none&gt;        &lt;none&gt;    54333f1de4ed    3 weeks ago    188MB
+</code></pre>
+</blockquote>
+
+<ul>
+<li>给镜像打标签</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker tag 54333f1de4ed ubuntu:14.04
+$ docker images
+REPOSITORY    TAG      IMAGE ID        CREATED        SIZE
+centos        7        328edcd84f1b    7 days ago     193MB
+ubuntu        14.04    54333f1de4ed    3 weeks ago    188MB
+</code></pre>
+</blockquote>
+
+<ul>
+<li>查看镜像层组成</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker history ubuntu:desktop
+</code></pre>
+</blockquote>
+
+<ul>
+<li>删除镜像(删除镜像前要先删除上面的容器)</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker rmi ubuntu:latest
+Untagged: ubuntu:latest
+Untagged: ubuntu@sha256:84c334414e2bfdcae99509a6add166bbb4fa4041dc3fa6af08046a66fed3005f
+Deleted: sha256:14f60031763da664d5d65f428afbc2e6f9778dfdde17effca7704a138225c4a6
+Deleted: sha256:e8d279c8c8c3200facb99097695dd1fee74410bfc42ec9e3117869440f3840f2
+Deleted: sha256:4c66a8c9cd74cd55b98b23c9b577d5fd19039830ef7854ff7fed76c4c1f958eb
+Deleted: sha256:55cb055d70722e6f41bc22986877c9729ebeab66190550d9e51ddef05c1d5fdc
+Deleted: sha256:28a900eeeb19c99b0ebc4008969ae3441df169f51b799928232d1192c835da54
+Deleted: sha256:e5d2f035d7a4888cf2e23f3c512fc664cff8383a66501e9f91f7d07188cbe04b
+</code></pre>
+</blockquote>
+
+<h3 id="0x02-容器操作">0x02 容器操作</h3>
+
+<ul>
+<li>运行容器(exit后容器就停止了)</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker run --rm -ti ubuntu:14.04 /bin/bash
+root@172c8d8b0671:/# ls
+bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media  opt  root  sbin  sys  usr
+root@172c8d8b0671:/# exit
+exit
+
+解释：
+--rm：告诉Docker一旦运行的进程退出就删除容器
+-ti：告诉Docker分配一个为终端并进入交互模式(这将进入容器内)
+ubuntu：这是容器立足的镜像
+/bin/bash：shell
+</code></pre>
+</blockquote>
+
+<ul>
+<li>后台运行容器</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker run -d ubuntu:14.04 ping 8.8.8.8
+1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11
+#$ sudo docker run -d ubuntu:14.04 /bin/sh -c &quot;while true; do echo hello world; sleep 1; done&quot;
+</code></pre>
+</blockquote>
+
+<ul>
+<li>查看当前运行的容器</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker ps
+CONTAINER ID   IMAGE          COMMAND          CREATED          STATUS          PORTS    NAMES
+1f665a3ccf4b   ubuntu:14.04   &quot;ping 8.8.8.8&quot;   5 seconds ago    Up 4 seconds             goofy_dubinsky
+</code></pre>
+</blockquote>
+
+<ul>
+<li>查看所有容器</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker ps -a
+CONTAINER ID   IMAGE          COMMAND          CREATED          STATUS          PORTS    NAMES
+1f665a3ccf4b   ubuntu:14.04   &quot;ping 8.8.8.8&quot;   13 minutes ago   Up 13 minutes            goofy_dubinsky
+82113ae171f1   ubuntu         &quot;ping 8.8.8.8&quot;   28 minutes ago   Created                  mystifying_keller
+</code></pre>
+</blockquote>
+
+<ul>
+<li>查看容器日志</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker logs 1f665a3ccf4b
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=127 time=183 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=127 time=184 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=127 time=185 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=127 time=183 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=127 time=182 ms
+64 bytes from 8.8.8.8: icmp_seq=6 ttl=127 time=184 ms
+</code></pre>
+</blockquote>
+
+<ul>
+<li>查看容器的端口映射</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker port 1f665a3ccf4b
+</code></pre>
+</blockquote>
+
+<ul>
+<li>查看容器的进程信息</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker top 1f665a3ccf4b
+</code></pre>
+</blockquote>
+
+<ul>
+<li>查看容器的文件变化</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker diff 1f665a3ccf4b
+C /root
+A /root/.bash_history
+A /root/a.txt
+</code></pre>
+</blockquote>
+
+<ul>
+<li>从宿主机向容器复制数据</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker cp a.txt 1f665a3ccf4b:/root/
+$ docker cp test 1f665a3ccf4b:/root/
+</code></pre>
+</blockquote>
+
+<ul>
+<li>从容器向宿主机复制数据</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker cp 1f665a3ccf4b:/root/libxml29_compat.patch ~/
+$ docker cp 1f665a3ccf4b:/root/test ~/
+</code></pre>
+</blockquote>
+
+<ul>
+<li>导出/导入容器(导出的其实是镜像)</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker export df2a7e881c8a &gt; ./ubuntu_container.tar
+$ docker import ./ubuntu_container.tar
+$ docker images
+REPOSITORY    TAG       IMAGE ID        CREATED               SIZE
+&lt;none&gt;        &lt;none&gt;    499df17f51e7    About a minute ago    175MB
+$ docker tag 499df17f51e7 ubuntu:container
+</code></pre>
+</blockquote>
+
+<ul>
+<li>进入容器</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker exec -ti goofy_dubinsky /bin/bash
+root@1f665a3ccf4b:/# ps -aux|grep ping
+root         1  0.0  0.0   6524   712 ?        Ss   09:38   0:00 ping 8.8.8.8
+</code></pre>
+</blockquote>
+
+<ul>
+<li>停止/启动容器</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker stop 1f665a3ccf4b #docker kill 1f665a3ccf4b，前者会在10s后停止容器，后者直接停止
+1f665a3ccf4b
+$ docker start 1f665a3ccf4b
+1f665a3ccf4b
+</code></pre>
+</blockquote>
+
+<ul>
+<li>删除容器(正在运行的容器需要先停止才能删除)</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker rm 1f665a3ccf4b
+Error response from daemon: You cannot remove a running container 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11. Stop the container before attempting removal or force remove
+$ docker stop 1f665a3ccf4b #docker kill 1f665a3ccf4b，前者会在10s后停止容器，后者直接停止
+1f665a3ccf4b
+$ docker rm 1f665a3ccf4b
+1f665a3ccf4b
+</code></pre>
+</blockquote>
+
+<ul>
+<li>删除所有容器(只能删除停止运行的)</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker rm $(docker ps -a -q)
+be5877380ca5
+3e4b3a11d49f
+2e51c9c2c6d1
+dc6cadfc08f7
+</code></pre>
+</blockquote>
+
+<ul>
+<li>查看镜像或容器的底层信息(IP、端口绑定、配置信息等)</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">$ docker inspect 65987aa8f0cb
+</code></pre>
+</blockquote>
+
+<h3 id="0x03-例子">0x03 例子</h3>
+
+<blockquote>
+<pre><code class="language-bash">$ exec_ping=$(docker run -d ubuntu:14.04 ping 8.8.8.8)
+$ docker logs $exec_ping
+$ docker restart $exec_ping
+$ docker commit $exec_ping ubuntu:ping #保存容器为镜像
+sha256:c496c5d6e3cd4ac9f54d200c5b374ded94cea11f4b2b6eef1fde25a703fcc06c
+$ docker images
+REPOSITORY    TAG      IMAGE ID        CREATED          SIZE
+ubuntu        ping     c496c5d6e3cd    2 seconds ago    188MB
+centos        7        328edcd84f1b    7 days ago       193MB
+ubuntu        14.04    54333f1de4ed    3 weeks ago      188MB
+</code></pre>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">
@@ -288,13 +461,13 @@ for key in url_list.keys():
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/csrf/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/docker-basis/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/csrf/">CSRF</a>
+      <a href="http://wyb0.com/posts/docker-basis/">Docker初识</a>
     </nav>
     
   </div>
@@ -303,14 +476,8 @@ for key in url_list.keys():
   </div>
   <div class="pure-u-10-24">
     
-    <nav class="next">
-      <a href="http://wyb0.com/posts/python-encode-setting/">Python的编码问题</a>
-    </nav>
-    
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
-    
-    <a href="http://wyb0.com/posts/python-encode-setting/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>
