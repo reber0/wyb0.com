@@ -83,6 +83,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/docker-dockerfile/">Dockerfile</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-08-18</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        操作系统：Ubuntu14.04.1
+0x00 Dockerfile  Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令， 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。   0x01 Dockerfile基本指令  FROM &lt;image name&gt;：指定新的镜像基于什么创建 MAINTAINER &lt;author name&gt;：设置该镜像的作者 COPY &lt;source&gt; &lt;dest&gt;：复制文件，dest要以 / 结尾 WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效 RUN &lt;command&gt;：在shell执行命令 EXPOSE port1 port2：容器运行时监听的端口 CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组) ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组) ENV &lt;key&gt; &lt;value&gt;：设置环境变量 USER &lt;uid&gt;：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root VOLUME ['/data']：授权访问从容器内到主机的目录   0x02 实例    Dockerfile   reber@wyb:~/range$ cat Dockerfile FROM ubuntu:14.04.4 MAINTAINER reber ENV MYSQL_ALLOW_EMPTY_PASSWORD yes COPY src/sources.list /etc/apt/sources.list RUN apt-get update &amp;&amp; apt-get upgrade -y COPY src/range.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/docker-dockerfile/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/docker-image-and-container/">Docker之镜像与容器</a></h2>
 
         
@@ -212,7 +266,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(5)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(23)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(24)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
@@ -282,7 +336,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
-                <sup>2</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">

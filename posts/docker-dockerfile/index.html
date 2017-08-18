@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP反序列化漏洞 - Reber's Blog</title>
+    <title>Dockerfile - Reber's Blog</title>
     <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
-    <meta name="description" content="">
+    <meta name="description" content="Dockerfile中写的是一条条指令，你可以通过Dockerfile更简单的构造自己的环境">
     <meta name="author" content="reber">
 
     
@@ -77,14 +77,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>PHP反序列化漏洞</h2>
+                <h2>Dockerfile</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-07-25</time>
+                        <time>2017-08-18</time>
                     </div>
 
                     
@@ -95,7 +95,7 @@
                         
                             <i class="fa fa-folder fa-fw"></i>
                             
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
                             
                         
                         
@@ -105,7 +105,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">反序列化</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
                             
                         
                         
@@ -114,49 +114,146 @@
                 
                 
 
-<h3 id="0x00-关于反序列化漏洞">0x00 关于反序列化漏洞</h3>
+<p>操作系统：Ubuntu14.04.1</p>
+
+<h3 id="0x00-dockerfile">0x00 Dockerfile</h3>
 
 <blockquote>
-<p>序列化：使用函数serialize()可将实例序列化为字符串<br />
-反序列化：使用函数unserialize()可将序列化的字符串还原<br />
-若服务端有如下代码：</p>
-
-<pre><code class="language-php">&lt;?php
-    class foo{
-        public $file = &quot;test.txt&quot;;
-        public $data = &quot;123456&quot;;
-
-        function __destruct(){
-            file_put_contents($this-&gt;file,$this-&gt;data);
-        }
-    }
-
-    $d = $_REQUEST['str'];
-    var_dump($d);
-    echo &quot;&lt;br /&gt;&quot;;
-    $tc = unserialize(base64_decode($d));
-    var_dump($tc);
-?&gt;
+<pre><code>Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令，
+让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。
 </code></pre>
+</blockquote>
 
-<p>客户端可构造如下代码生成序列化后的字符串提交给服务端，<br />
-服务端就会生成文件xx.php，内容为<b>&lt;?php phpinfo(); ?&gt;</b>：</p>
+<h3 id="0x01-dockerfile基本指令">0x01 Dockerfile基本指令</h3>
 
-<pre><code class="language-php">&lt;?php
-    class foo {
-        public $ﬁle = &quot;test.txt&quot;;
-        public $data = &quot;123456&quot;;
-        
-        function __destruct() {
-            ﬁle_put_contents($this-&gt;ﬁle, $this-&gt;data);
-        }
-    }
+<blockquote>
+<pre><code>FROM &lt;image name&gt;：指定新的镜像基于什么创建
+MAINTAINER &lt;author name&gt;：设置该镜像的作者
+COPY &lt;source&gt; &lt;dest&gt;：复制文件，dest要以 / 结尾
+WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效
+RUN &lt;command&gt;：在shell执行命令
+EXPOSE port1 port2：容器运行时监听的端口
+CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组)
+ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组)
+ENV &lt;key&gt; &lt;value&gt;：设置环境变量
+USER &lt;uid&gt;：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root
+VOLUME ['/data']：授权访问从容器内到主机的目录
+</code></pre>
+</blockquote>
 
-    $f = new foo();
-    $f-&gt;ﬁle = &quot;xx.php&quot;;
-    $f-&gt;data = &quot;&lt;?php phpinfo(); ?&gt;&quot;;
-    echo base64_encode(serialize($f));
-?&gt;
+<h3 id="0x02-实例">0x02 实例</h3>
+
+<blockquote>
+<p><img src="/img/post/dockerfile.png" alt="文件结构" /></p>
+</blockquote>
+
+<ul>
+<li>Dockerfile</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">reber@wyb:~/range$ cat Dockerfile
+FROM ubuntu:14.04.4
+MAINTAINER reber
+
+ENV MYSQL_ALLOW_EMPTY_PASSWORD yes
+
+COPY src/sources.list /etc/apt/sources.list
+RUN apt-get update &amp;&amp; apt-get upgrade -y
+
+COPY src/range.zip /tmp/
+COPY src/privileges.sql /tmp/
+
+RUN apt-get install -y apache2 mysql-server mysql-client php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql unzip &amp;&amp; apt-get clean
+
+WORKDIR /var/www/html
+RUN set -x \
+    &amp;&amp; unzip -x /tmp/range.zip -d ./ \
+    &amp;&amp; chmod 777 ./range/upload/uploads \
+    &amp;&amp; chmod 777 ./range/xss_platform/upload
+
+EXPOSE 80
+
+COPY src/start.sh /start.sh
+RUN chmod +x /start.sh
+ENTRYPOINT [&quot;/start.sh&quot;]
+CMD [&quot;default&quot;]
+</code></pre>
+</blockquote>
+
+<ul>
+<li>src/privileges.sql</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-sql">reber@wyb:~/range$ cat src/privileges.sql
+use mysql;
+UPDATE user SET password=PASSWORD('root') where USER='root';
+FLUSH PRIVILEGES;
+</code></pre>
+</blockquote>
+
+<ul>
+<li>src/sources.list</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">reber@wyb:~/range$ cat src/sources.list
+deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+</code></pre>
+</blockquote>
+
+<ul>
+<li>src/start.sh</li>
+</ul>
+
+<blockquote>
+<pre><code class="language-bash">reber@wyb:~/range$ cat src/start.sh
+#!/bin/bash
+set -x
+
+echo 'start mysql'
+/etc/init.d/mysql start
+sleep 3
+
+echo 'import rtest.sql'
+mysql &lt; /var/www/html/range/rtest.sql
+sleep 3
+
+echo 'set password'
+mysql &lt; /tmp/privileges.sql
+
+/etc/init.d/mysql restart
+/etc/init.d/apache2 restart
+
+echo 'set success'
+
+/usr/bin/tail -f /dev/null
+</code></pre>
+</blockquote>
+
+<h3 id="0x03-构建镜像">0x03 构建镜像</h3>
+
+<blockquote>
+<pre><code class="language-bash">reber@wyb:~/range$ ls
+Dockerfile  src
+reber@wyb:~/range$ ls src
+range.zip  sources.list  start.sh
+
+#构建镜像
+reber@wyb:~/range$ docker build -t range:1.0 .
+
+#运行容器，并将容器的80端口转到宿主机的8888端口
+reber@wyb:~/range$ docker run -d -p 8888:80 range:v1.0
 </code></pre>
 </blockquote>
 
@@ -174,13 +271,13 @@
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/code-execution-vulnerabilities/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/docker-image-and-container/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/code-execution-vulnerabilities/">代码执行漏洞</a>
+      <a href="http://wyb0.com/posts/docker-image-and-container/">Docker之镜像与容器</a>
     </nav>
     
   </div>
@@ -189,14 +286,8 @@
   </div>
   <div class="pure-u-10-24">
     
-    <nav class="next">
-      <a href="http://wyb0.com/posts/file-include-vulnerabilities/">文件包含漏洞</a>
-    </nav>
-    
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
-    
-    <a href="http://wyb0.com/posts/file-include-vulnerabilities/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>
