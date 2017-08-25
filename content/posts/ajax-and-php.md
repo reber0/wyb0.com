@@ -125,7 +125,7 @@ echo $response;
 ```
 
 > 结果如下：
-{{% fluid_img src="/img/post/ajax_and_php.gif" alt="ajax与php" %}}
+![ajax与php](/img/post/ajax_and_php.gif)
 
 ### 0x01 AJAX与数据库
 
@@ -208,11 +208,11 @@ echo $response;
 ```
 
 > 结果如下：
-{{% fluid_img src="/img/post/ajax_and_mysql1.png" alt="ajax与mysql1" %}}
-<br /><br />
-{{% fluid_img src="/img/post/ajax_and_mysql2.png" alt="ajax与mysql2" %}}
-<br /><br />
-{{% fluid_img src="/img/post/ajax_and_mysql3.png" alt="ajax与mysql3" %}}
+![ajax与mysql1](/img/post/ajax_and_mysql1.png)
+
+> ![ajax与mysql2](/img/post/ajax_and_mysql2.png)
+
+> ![ajax与mysql3](/img/post/ajax_and_mysql3.png)
 
 ### 0x02 AJAX使用实例
 > ```
