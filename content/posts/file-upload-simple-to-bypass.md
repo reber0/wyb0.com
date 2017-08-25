@@ -238,7 +238,7 @@ if($_FILES['file']['type']=="image/jpeg"){
 
 #### 5. 文件攻击
 - <b>.htaccess</b>文件攻击  
-通过.htaccess文件调用php解析器去解析一个文件名中只要包含"haha"这个字符串的任意文件，无论扩展名是什么(没有也行)，都以php的方式来解析，.haccess文件代码如下：
+Apache设置为AllowOverride All时，通过.htaccess文件调用php解析器去解析一个文件名中只要包含"haha"这个字符串的任意文件，无论扩展名是什么(没有也行)，都以php的方式来解析，.haccess文件代码如下：
 
 > ```
 <FilesMatch "haha">
