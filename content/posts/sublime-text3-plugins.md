@@ -75,8 +75,23 @@ import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.
 {{% fluid_img src="/img/post/sublime_autofilename.png" alt="插件AutoFileName" %}}
 
 ### 0x08 Theme-Flatland和Theme-SoDaReloaded
-> 两个很不错的主题插件，安装好之后：首选项 -> 设置-用户，修改文件
-{{% fluid_img src="/img/post/sublime_theme.png" alt="主题插件" %}}
+> 两个主题插件，安装好之后：首选项 -> 设置-用户，修改文件Packages/User/Preferences.sublime-settings
+> ```
+{
+    "color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+    "font_size": 15,
+    "ignored_packages":
+    [
+        "Vintage"
+    ],
+    "tab_size": 4,
+    "theme": "SoDaReloaded Dark.sublime-theme",//使用的主题
+    "translate_tabs_to_spaces": true,
+    "update_check": false,
+    "word_wrap": "auto",
+    "draw_white_space": "all", //显示空格或tab字符
+}
+```
 
 ### 0x09 Alignment
 > 插件安装好后选中要对齐的文本，然后按Ctrl+Alt+a即可对齐"=","+", "-", "&", "|", "<",">"等符号
