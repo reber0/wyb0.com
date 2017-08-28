@@ -42,6 +42,9 @@ Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
 [wyb@localhost Desktop]$ cd /tmp/a    //绝对路径
 [wyb@localhost a]$ pwd
 /tmp/a
+[wyb@localhost a]$ cd -  //返回原来的目录
+[wyb@localhost Desktop]$ pwd
+/home/user/reber/Desktop
 ```
 
 ### 0x04 mkdir：新建文件夹
