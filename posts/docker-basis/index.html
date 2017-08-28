@@ -255,6 +255,38 @@ index通过Web UI、元数据存储、认证服务、符号化这几个组件来
 <li>Client从Registry A下载所有的层：Registry从后端存储中获取实际的文件数据，返给Client</li>
 </ol>
 
+<h3 id="0x0a-docker安装与卸载">0x0A Docker安装与卸载</h3>
+
+<blockquote>
+<pre><code class="language-bash">#安装
+$ sudo apt-get update
+$ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# Verify that the key fingerprint is 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
+$ sudo apt-key fingerprint 0EBFCD88
+
+$ sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;
+
+$ sudo apt-get update
+$ sudo apt-get install docker-ce
+
+
+$ sudo docker info #查看是否安装成功
+</code></pre>
+
+<pre><code class="language-bash">#卸载
+$ sudo apt-get purge docker-ce
+$ sudo rm -rf /var/lib/docker
+</code></pre>
+
+<pre><code>#添加当前用户到docker组
+$ sudo gpasswd -a ${USER} docker
+$ sudo service docker restart
+$ newgrp - docker
+</code></pre>
+</blockquote>
+
                 
                 <div style="padding:10px 1px;">
                     <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
