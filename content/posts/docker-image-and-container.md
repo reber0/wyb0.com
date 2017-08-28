@@ -9,40 +9,9 @@ topics = ["Linux"]
 +++
 
 操作系统：Ubuntu14.04.1
+Docker：Docker version 17.06.0-ce, build 02c1d87
 
-### 0x00 Docker安装与卸载
-> ```bash
-#安装
-$ sudo apt-get update
-$ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
-
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-# Verify that the key fingerprint is 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
-$ sudo apt-key fingerprint 0EBFCD88
-
-$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-
-$ sudo apt-get update
-$ sudo apt-get install docker-ce
-
-
-$ sudo docker info #查看是否安装成功
-```
-
-> ```bash
-#卸载
-$ sudo apt-get purge docker-ce
-$ sudo rm -rf /var/lib/docker
-```
-
-> ```
-#添加当前用户到docker组
-$ sudo gpasswd -a ${USER} docker
-$ sudo service docker restart
-$ newgrp - docker
-```
-
-### 0x01 镜像操作
+### 0x00 镜像操作
 * 下载镜像
 
 > ```bash
@@ -107,7 +76,7 @@ $ docker history ubuntu:desktop
 $ docker rmi ubuntu:latest #docker rmi 14f60031763d
 ```
 
-### 0x02 容器操作
+### 0x01 容器操作
 * 运行容器(exit后容器就停止了)
 
 > ```bash
@@ -248,12 +217,12 @@ be5877380ca5
 dc6cadfc08f7
 ```
 
-### 0x03 查看镜像或容器的底层信息(IP、端口绑定、配置信息等)
+### 0x02 查看镜像或容器的底层信息(IP、端口绑定、配置信息等)
 > ```bash
 $ docker inspect 65987aa8f0cb
 ```
 
-### 0x04 例子
+### 0x03 例子
 > ```bash
 $ exec_ping=$(docker run -d ubuntu:14.04 ping 8.8.8.8)
 $ docker logs $exec_ping

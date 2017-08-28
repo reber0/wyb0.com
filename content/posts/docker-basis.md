@@ -100,3 +100,35 @@ index通过Web UI、元数据存储、认证服务、符号化这几个组件来
 4. Regsitry A向Index发起请求，验证用户Token的合法性
 5. Index回复Registry A这次请求是否合法
 6. Client从Registry A下载所有的层：Registry从后端存储中获取实际的文件数据，返给Client
+
+### 0x0A Docker安装与卸载
+> ```bash
+#安装
+$ sudo apt-get update
+$ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# Verify that the key fingerprint is 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
+$ sudo apt-key fingerprint 0EBFCD88
+
+$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+$ sudo apt-get update
+$ sudo apt-get install docker-ce
+
+
+$ sudo docker info #查看是否安装成功
+```
+
+> ```bash
+#卸载
+$ sudo apt-get purge docker-ce
+$ sudo rm -rf /var/lib/docker
+```
+
+> ```
+#添加当前用户到docker组
+$ sudo gpasswd -a ${USER} docker
+$ sudo service docker restart
+$ newgrp - docker
+```
