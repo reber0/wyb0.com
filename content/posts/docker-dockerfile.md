@@ -8,8 +8,8 @@ topics = ["Linux"]
 
 +++
 
-操作系统：Ubuntu14.04.1
-Docker：Docker version 17.06.0-ce, build 02c1d87
+操作系统：Ubuntu14.04.1  
+Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
 ### 0x00 Dockerfile
 > ```
