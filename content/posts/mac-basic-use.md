@@ -36,9 +36,7 @@ $ brew update
 ```
 
 ### 0x04 安装scroll-reverser
-> ```
-$ brew install scroll-reverser
-```
+> 去[http://pilotmoon.com/scrollreverser](http://pilotmoon.com/scrollreverser)下载
 
 ### 0x05 安装java
 > ```
