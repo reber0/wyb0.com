@@ -39,9 +39,7 @@ $ brew update
 > 去[http://pilotmoon.com/scrollreverser](http://pilotmoon.com/scrollreverser)下载
 
 ### 0x05 安装java
-> ```
-$ brew install java
-```
+> 去[Oracle官网](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)下载jre然后安装
 
 ### 0x06 安装iterm2
 > 去[http://www.iterm2.com](http://www.iterm2.com)下载
