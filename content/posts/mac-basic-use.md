@@ -38,7 +38,7 @@ $ brew update
 ### 0x04 安装scroll-reverser
 > 去[http://pilotmoon.com/scrollreverser](http://pilotmoon.com/scrollreverser)下载
 
-### 0x05 安装java
+### 0x05 安装java环境
 > 去[Oracle官网](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)下载jre然后安装
 
 ### 0x06 安装iterm2
@@ -62,7 +62,7 @@ $ sudo easy_install pip
 ```
 
 ### 0x09 安装go2shell
-> 下载安装包然后安装，安装好后把图标拖到Dock，然后把Dock中的图标拖到finder
+> 去[这里](http://zipzapmac.com/go2shell)下载安装包然后安装，安装好后把图标拖到Dock，然后把Dock中的图标拖到finder
 
 ### 0x0A Google导入BurpSuite证书
 > ```
