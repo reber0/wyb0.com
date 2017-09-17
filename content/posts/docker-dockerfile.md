@@ -14,6 +14,7 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 ### 0x00 Dockerfile
 > ```
 Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令，
+每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。
 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。
 ```
 
@@ -26,7 +27,7 @@ WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT�
 RUN <command>：在shell执行命令
 EXPOSE port1 port2：容器运行时监听的端口
 CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组)
-ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组)
+ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组)，docker run的参数都会传递给它
 ENV <key> <value>：设置环境变量
 USER <uid>：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root
 VOLUME ['/data']：授权访问从容器内到主机的目录
@@ -63,7 +64,7 @@ EXPOSE 80
 COPY src/start.sh /start.sh
 RUN chmod +x /start.sh
 ENTRYPOINT ["/start.sh"]
-CMD ["default"]
+CMD ["--help"]
 ```
 
 * src/privileges.sql
@@ -129,4 +130,35 @@ reber@wyb:~/range$ docker build -t range:1.0 .
 
 #运行容器，并将容器的80端口转到宿主机的8888端口
 reber@wyb:~/range$ docker run -d -p 8888:80 range:v1.0
+```
+
+### 0x04 注意事项
+* 使用缓存
+
+> 因为每条指令都会创建一个镜像，若一个镜像已经存在的话则不会重新执行指令创建新镜像，而是直接使用。  
+> 为有效的利用已存在的镜像，应保持Dockerfile的一致性，尽量在末尾修改，比如说前几行都如下设置：
+> ```
+FROM ubuntu:14.04.4
+
+MAINTAINER reber <1070018473@qq.com>
+
+RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sourse.list
+RUN apt-get update
+RUN apt-get upgrade -y
+```
+
+* 使用标签
+
+> 始终使用-t参数给镜像打标签：docker build -t ubuntu:range1 .
+
+* 公开端口
+
+> Docker镜像应该能在任何主机上运行，所以不要通过Dockerfile映射共有端口，只映射私有端口：EXPOSE 80
+
+* CMD与ENTRYPOINT
+
+> 应该使用数组语法，两者可以结合使用
+> ```
+ENTRYPOINT ["/start.sh"] #docker run的参数将传递给start.sh
+CMD ["--help"] #若没有参数传递则显示帮助文档
 ```
