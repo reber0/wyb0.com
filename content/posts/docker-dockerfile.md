@@ -40,7 +40,7 @@ VOLUME ['/data']：授权访问从容器内到主机的目录
 
 >```bash
 reber@wyb:~/range$ cat Dockerfile
-FROM ubuntu:14.04.4
+FROM ubuntu:14.04
 MAINTAINER reber
 
 ENV MYSQL_ALLOW_EMPTY_PASSWORD yes
@@ -138,13 +138,13 @@ reber@wyb:~/range$ docker run -d -p 8888:80 range:v1.0
 > 因为每条指令都会创建一个镜像，若一个镜像已经存在的话则不会重新执行指令创建新镜像，而是直接使用。  
 > 为有效的利用已存在的镜像，应保持Dockerfile的一致性，尽量在末尾修改，比如说前几行都如下设置：
 > ```
-FROM ubuntu:14.04.4
+FROM ubuntu:14.04
 
 MAINTAINER reber <1070018473@qq.com>
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sourse.list
 RUN apt-get update
-RUN apt-get upgrade -y
+RUN apt-get upgrade -y #尽量不要upgrade
 ```
 
 * 使用标签
