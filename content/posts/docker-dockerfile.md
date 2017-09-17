@@ -20,7 +20,7 @@ Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻
 
 ### 0x01 Dockerfile基本指令
 > ```
-FROM <image name>：指定新的镜像基于什么创建
+FROM <image name>：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie)
 MAINTAINER <author name>：设置该镜像的作者
 COPY <source> <dest>：复制文件，dest要以 / 结尾
 WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效
