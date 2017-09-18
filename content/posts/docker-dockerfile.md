@@ -19,7 +19,7 @@ Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻
 ```
 
 ### 0x01 Dockerfile基本指令
-> ```
+> ```bash
 FROM <image name>：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie)
 MAINTAINER <author name>：设置该镜像的作者
 COPY <source> <dest>：复制文件，dest要以 / 结尾
@@ -27,10 +27,23 @@ WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT�
 RUN <command>：在shell执行命令
 EXPOSE port1 port2：容器运行时监听的端口
 CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组)
-ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组)，docker run的参数都会传递给它
+ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组)
 ENV <key> <value>：设置环境变量
 USER <uid>：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root
 VOLUME ['/data']：授权访问从容器内到主机的目录
+```
+
+> CMD与ENTRYPOINT的区别：
+```bash
+#docker run ubuntu:test会执行/usr/bin/python test.py
+CMD ['/bin/echo','this is test']
+
+#docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test'
+ENTRYPOINT ['/bin/echo','entrypoint test']
+
+#docker run ubuntu:test start即执行/etc/init.d/mysql start，CMD中的默认参数会被覆盖
+ENTRYPOINT ['/etc/init.d/mysql']
+CMD ["restart"]#CMD中的值会作为ENTRYPOINT的默认参数
 ```
 
 ### 0x02 实例
