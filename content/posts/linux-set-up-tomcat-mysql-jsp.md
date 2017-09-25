@@ -11,7 +11,7 @@ topics = ["Server"]
 安装环境为：CentOS-6.5-x86_64-minimal
 
 ### 0x00 安装mysql  
-> sudo yum install mysql mysql-server mysql-devel  
+> $ sudo yum install mysql mysql-server mysql-devel  
 ![安装mysql.png](/img/post/install_mysql.png)
 <br>
 ![创建数据库tomcat.png](/img/post/creat_db_tomcat.png)
@@ -44,7 +44,7 @@ tomcat包可在[这里](http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/b
 ### 0x04 连接数据库
 > 驱动可在[这里](http://dev.mysql.com/downloads/connector/j/)下载
 ![复制数据库驱动.png](/img/post/tomcat_copy_mysql_driver.png)
-[reber@WYB ~]$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
+$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
 ```jsp
 <%@page contentType="text/html;charset=utf-8" import="java.sql.*" %>
 <%
