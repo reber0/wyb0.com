@@ -8,45 +8,42 @@ topics = ["Server"]
 
 +++
 
-```
 安装环境为：CentOS-6.5-x86_64-minimal
-```
 
-## 安装mysql  
-sudo yum install mysql mysql-server mysql-devel  
+### 0x00 安装mysql  
+> sudo yum install mysql mysql-server mysql-devel  
+![安装mysql.png](/img/post/install_mysql.png)
+<br>
+![创建数据库tomcat.png](/img/post/creat_db_tomcat.png)
+<br>
+![将数据库tomcat分配给用户tomcat.png](/img/post/grant_db_tomcat.png)
 
-{{% fluid_img src="/img/post/install_mysql.png" alt="安装mysql.png" %}}<br />
-
-{{% fluid_img src="/img/post/creat_db_tomcat.png" alt="创建数据库tomcat.png" %}}<br />
-
-{{% fluid_img src="/img/post/grant_db_tomcat.png" alt="将数据库tomcat分配给用户tomcat.png" %}}
-
-## 安装jdk和tomcat
+### 0x01 安装jdk和tomcat
 1. 创建安装jdk和tomcat的文件夹
-{{% fluid_img src="/img/post/mkdir_java_tomcat.png" alt="创建安装jdk和tomcat的文件夹.png" %}}
+![创建安装jdk和tomcat的文件夹.png](/img/post/mkdir_java_tomcat.png)
 
 2. 下载安装包并解压安装  
-jdk包可在http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 下载  
-tomcat包可在http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz 下载
-{{% fluid_img src="/img/post/download_tomcat.png" alt="下载tomcat安装包.png" %}}  
+jdk包可在[这里](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载  
+tomcat包可在[这里](http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz)下载
+![下载tomcat安装包.png](/img/post/download_tomcat.png)
 <br />
-{{% fluid_img src="/img/post/cp_jdk_tomcat_to_opt.png" alt="复制解压后的安装包到/opt下对应目录.png" %}}  
+![复制解压后的安装包到/opt下对应目录.png](/img/post/cp_jdk_tomcat_to_opt.png)
 <br />
-{{% fluid_img src="/img/post/add_java_env.png" alt="为java添加环境变量.png" %}}  
+![为java添加环境变量.png](/img/post/add_java_env.png)
 <br />
-{{% fluid_img src="/img/post/java_version.png" alt="验证jdk是否设置成功.png" %}}
+![验证jdk是否设置成功.png](/img/post/java_version.png)
 
-## 简单配置tomcat
-{{% fluid_img src="/img/post/config_tomcat.png" alt="简单配置tomcat1.png" %}}
+### 0x02 简单配置tomcat
+> ![简单配置tomcat1.png](/img/post/config_tomcat.png)
 
-## 启动tomcat
-{{% fluid_img src="/img/post/start_tomcat.png" alt="启动tomcat.png" %}}
+### 0x03 启动tomcat
+> ![启动tomcat.png](/img/post/start_tomcat.png)
+<br>
+![访问tomcat主页.png](/img/post/see_tomcat_index.png)
 
-{{% fluid_img src="/img/post/see_tomcat_index.png" alt="访问tomcat主页.png" %}}
-
-## 连接数据库
-驱动可在http://dev.mysql.com/downloads/connector/j/ 下载
-{{% fluid_img src="/img/post/tomcat_copy_mysql_driver.png" alt="复制数据库驱动.png" %}}
+### 0x04 连接数据库
+> 驱动可在[这里](http://dev.mysql.com/downloads/connector/j/)下载
+![复制数据库驱动.png](/img/post/tomcat_copy_mysql_driver.png)
 [reber@WYB ~]$ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
 ```jsp
 <%@page contentType="text/html;charset=utf-8" import="java.sql.*" %>
@@ -71,6 +68,5 @@ tomcat包可在http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache
 	    e.printStackTrace(); 
 	} 
 %>
-
 ```
-{{% fluid_img src="/img/post/tomcat_conn_mysql.png" alt="连接数据库.png" %}}
+![连接数据库.png](/img/post/tomcat_conn_mysql.png)
