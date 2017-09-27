@@ -114,7 +114,7 @@
                 
                 
 
-<h2 id="几个编码函数">几个编码函数</h2>
+<h3 id="0x00-几个编码函数">0x00 几个编码函数</h3>
 
 <ul>
 <li>chr(x)
@@ -127,8 +127,9 @@
 将整数转化为八进制字符串</li>
 </ul>
 
-<h2 id="在py文件开头">在py文件开头</h2>
+<h3 id="0x01-在py文件开头">0x01 在py文件开头</h3>
 
+<blockquote>
 <p>使用：</p>
 
 <pre><code class="language-python">#!/usr/bin/env python
@@ -136,14 +137,12 @@
 或：
 #coding=utf8
 </code></pre>
+</blockquote>
 
-<h2 id="永久编码-推荐">永久编码(推荐)</h2>
+<h3 id="0x02-永久编码-推荐">0x02 永久编码(推荐)</h3>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/unicode_encode_error.png" alt="python编码出错.png">
-</div>
-
+<blockquote>
+<p><img src="/img/post/unicode_encode_error.png" alt="python编码出错.png" />
 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：</p>
 
 <pre><code class="language-python">#coding=utf8
@@ -152,9 +151,11 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 # 此方法修改了python环境，设置系统默认编码，永久有效
 </code></pre>
+</blockquote>
 
-<h2 id="编码转换">编码转换</h2>
+<h3 id="0x03-编码转换">0x03 编码转换</h3>
 
+<blockquote>
 <p>python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode</p>
 
 <pre><code># coding: UTF-8
@@ -173,9 +174,11 @@ s = u.encode('utf8')  # 将unicode编码为utf8
 f.write(s)
 f.close()
 </code></pre>
+</blockquote>
 
-<h2 id="网页的编码">网页的编码</h2>
+<h3 id="0x04-网页的编码">0x04 网页的编码</h3>
 
+<blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -190,6 +193,7 @@ print type(html) #&lt;type 'unicode'&gt;
 title = html.lower().split('&lt;title&gt;')[1].split('&lt;/title')[0]
 print title #南阳理工学院
 </code></pre>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">
