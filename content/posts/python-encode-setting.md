@@ -8,7 +8,7 @@ topics = ["Python"]
 
 +++
 
-## 几个编码函数
+### 0x00 几个编码函数
 * chr(x)
     可以将0-255之间的数字转化为ASCII表中的字符
 * ord(x)
@@ -18,8 +18,8 @@ topics = ["Python"]
 * oct(x)
     将整数转化为八进制字符串
 
-## 在py文件开头
-使用：
+### 0x01 在py文件开头
+> 使用：
 ```python
 #!/usr/bin/env python
 #-*- coding: UTF-8 -*-
@@ -27,8 +27,8 @@ topics = ["Python"]
 #coding=utf8
 ```
 
-## 永久编码(推荐)
-{{% fluid_img src="/img/post/unicode_encode_error.png" alt="python编码出错.png" %}}
+### 0x02 永久编码(推荐)
+> ![python编码出错.png](/img/post/unicode_encode_error.png)
 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
 ```python
 #coding=utf8
@@ -38,8 +38,8 @@ sys.setdefaultencoding('utf8')
 # 此方法修改了python环境，设置系统默认编码，永久有效
 ```
 
-## 编码转换
-python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
+### 0x03 编码转换
+> python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
 ```
 # coding: UTF-8
 
@@ -58,8 +58,8 @@ f.write(s)
 f.close()
 ```
 
-## 网页的编码
-```python
+### 0x04 网页的编码
+> ```python
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
