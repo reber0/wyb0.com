@@ -83,6 +83,59 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/docker-volume/">Docker之数据卷</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-09-19</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 为什么使用数据卷  Docker镜像是由多个文件系统(只读层)叠加而成的。 当一个容器启动时Docker会加载只读镜像层并在其上添加一个读写层。 读写层中的修改在镜像重新启动后会全部丢失。 在Docker中，只读层及在顶部的读写层的组合被称为Union File System(联合文件系统)。 如果想要保存数据，则可以使用数据卷来在容器外面保存数据，主要为如下两种方式： * 使用docker run运行容器时指定数据卷 * 在Dockerfile中直接指定数据卷   0x01 docker run挂载Volume(使用-v参数)  不指定主机目录   #运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷 $ docker run -it --name v_test -v /data debian:jessie /bin/bash root@d145e8c6f874:/# ls bin data etc lib media opt root sbin sys usr boot dev home lib64 mnt proc run srv tmp var root@d145e8c6f874:/# exit exit #查看数据卷的对应位置，前者是宿主机的位置，后者是容器中的位置 $ docker inspect -f {{.Mounts}} v_test [{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local true }]    指定主机目录(只能通过-v参数实现，Dockerfile不行)   $ docker run -it -v /home/var/docker_data:/data debian:jessie /bin/bash root@d853c4ca7632:/# exit exit $ docker inspect -f {{.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/docker-volume/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/docker-dockerfile/">Dockerfile</a></h2>
 
         
@@ -564,57 +617,6 @@ sudo apt-get install conky
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/win-and-ubuntu-partition/">win/ubuntu双系统分区设置</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-31</time>
-            </div>
-
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">操作系统</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         win10和ubuntu双系统分区设置  硬盘采用uefi格式 硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息 在硬盘末尾给ubuntu划分50G左右空间 ubuntu的/分区，格式为ext4，空间为40G ubuntu的/home分区，格式为ext4，空间为10G ubuntu的/boot分区，格式为ext4,空间为200M ubuntu的/swap分区，格式为swap，空间为200M ubuntu的引导分区为/boot  &nbsp; 
-    </p>
-
-    
-</article>
-
-
-                
 
                 
 
@@ -652,7 +654,7 @@ sudo apt-get install conky
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(5)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(24)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(25)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
         
@@ -722,7 +724,7 @@ sudo apt-get install conky
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">

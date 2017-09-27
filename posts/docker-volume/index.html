@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tmux的使用 - Reber's Blog</title>
+    <title>Docker之数据卷 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试 漏洞挖掘 web安全 网络安全 python php linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -77,14 +77,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Tmux的使用</h2>
+                <h2>Docker之数据卷</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-09-10</time>
+                        <time>2017-09-19</time>
                     </div>
 
                     
@@ -105,7 +105,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
                             
                         
                         
@@ -114,72 +114,97 @@
                 
                 
 
-<h3 id="0x00-tmux的快捷键前缀">0x00 Tmux的快捷键前缀</h3>
+<h3 id="0x00-为什么使用数据卷">0x00 为什么使用数据卷</h3>
 
 <blockquote>
-<p>Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c</p>
+<pre><code>Docker镜像是由多个文件系统(只读层)叠加而成的。
+当一个容器启动时Docker会加载只读镜像层并在其上添加一个读写层。
+读写层中的修改在镜像重新启动后会全部丢失。
+在Docker中，只读层及在顶部的读写层的组合被称为Union File System(联合文件系统)。
+
+如果想要保存数据，则可以使用数据卷来在容器外面保存数据，主要为如下两种方式：
+* 使用docker run运行容器时指定数据卷
+* 在Dockerfile中直接指定数据卷
+</code></pre>
 </blockquote>
 
-<h3 id="0x01-会话">0x01 会话</h3>
+<h3 id="0x01-docker-run挂载volume-使用-v参数">0x01 docker run挂载Volume(使用-v参数)</h3>
+
+<ul>
+<li>不指定主机目录</li>
+</ul>
 
 <blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/tmux_new_session1.png" alt="新建会话">
-</div>
+<pre><code class="language-bash">#运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷
+$ docker run -it --name v_test -v /data debian:jessie /bin/bash
+root@d145e8c6f874:/# ls
+bin   data  etc   lib    media  opt   root  sbin  sys  usr
+boot  dev   home  lib64  mnt    proc  run   srv   tmp  var
+root@d145e8c6f874:/# exit
+exit
 
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/tmux_new_session2.png" alt="新建会话">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/tmux_view_all_session.png" alt="查看当前所有会话">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/tmux_in_session1.png" alt="进入会话">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/tmux_in_session2.png" alt="进入会话">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/tmux_select_session.png" alt="选择会话">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/tmux_select_session_.png" alt="选择会话">
-</div>
-</p>
+#查看数据卷的对应位置，前者是宿主机的位置，后者是容器中的位置
+$ docker inspect -f {{.Mounts}} v_test
+[{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local  true }]
+</code></pre>
 </blockquote>
 
-<h3 id="0x02-窗口和窗格">0x02 窗口和窗格</h3>
+<ul>
+<li>指定主机目录(只能通过-v参数实现，Dockerfile不行)</li>
+</ul>
 
 <blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/tmux_windows_and_panes.gif" alt="窗口和窗格">
-</div>
+<pre><code class="language-bash">$ docker run -it -v /home/var/docker_data:/data debian:jessie /bin/bash
+root@d853c4ca7632:/# exit
+exit
+$ docker inspect -f {{.Mounts}} d853c4ca7632
+[{bind  /home/var/docker_data /data   true rprivate}]
+$ docker inspect -f {{.Mounts}} d853c4ca7632
+[{bind  /home/var/docker_data /data   true rprivate}]
+</code></pre>
 
-<br /><br />
+<pre><code># 本机创建文件，容器中就会同时出现
+#宿主机创建文件
+$ sudo touch /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ceb09bdcdf743e068/_data/a.txt
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/tmux_windows.png" alt="简介">
-</div>
-</p>
+#容器可以查看到文件同样被创建
+root@8e1ccd30fe33:/# ls data/
+a.txt
+</code></pre>
+</blockquote>
+
+<h3 id="0x02-通过dockerfile声明volume">0x02 通过Dockerfile声明Volume</h3>
+
+<blockquote>
+<pre><code class="language-bash">FROM debian:jessie VOLUME /data #之后的任何命令都不能更改Volume的任何东西
+</code></pre>
+</blockquote>
+
+<h3 id="0x03-数据共享">0x03 数据共享</h3>
+
+<blockquote>
+<p>使用&ndash;volumes-from参数项即可访问另外一个容器的Volume。<br />
+因为数据容器不启动也可以被其它容器访问，所以一般不推荐启动数据容器。</p>
+
+<pre><code class="language-bash">#启动一个容器，使用v_test这个容器的数据钱，v_test没有启动，但依然有data这个数据卷
+$ docker run -it --volumes-from v_test debian:jessie /bin/bash
+root@65aedf9c2ee1:/# ls
+bin   data  etc   lib    media  opt   root  sbin  sys  usr
+boot  dev   home  lib64  mnt    proc  run   srv   tmp  var
+root@65aedf9c2ee1:/# exit
+exit
+
+#可以看下65aedf9c2ee1这个容器的数据卷和v_test数据券在宿主机对应的是同一个文件夹
+$ docker inspect -f {{.Mounts}} 65aedf9c2ee1
+[{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local  true }]
+</code></pre>
+</blockquote>
+
+<h3 id="0x04-删除volumes">0x04 删除Volumes</h3>
+
+<blockquote>
+<pre><code class="language-bash">docker rm -v d145e8c6f874 #删除容器时一起删除数据
+</code></pre>
 </blockquote>
 
                 
@@ -196,13 +221,13 @@
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/poc-framework-pocsuite/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/docker-dockerfile/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/poc-framework-pocsuite/">POC框架Pocsuite</a>
+      <a href="http://wyb0.com/posts/docker-dockerfile/">Dockerfile</a>
     </nav>
     
   </div>
@@ -211,14 +236,8 @@
   </div>
   <div class="pure-u-10-24">
     
-    <nav class="next">
-      <a href="http://wyb0.com/posts/python-blasting-secondary-domain/">Python爆破二级域名</a>
-    </nav>
-    
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
-    
-    <a href="http://wyb0.com/posts/python-blasting-secondary-domain/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>
