@@ -35,7 +35,7 @@ VOLUME ['/data']：授权访问从容器内到主机的目录
 
 > CMD与ENTRYPOINT的区别：
 ```bash
-#docker run ubuntu:test会执行/usr/bin/python test.py
+#docker run ubuntu:test会执行/bin/echo 'this is test'
 CMD ['/bin/echo','this is test']
 
 #docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test'
