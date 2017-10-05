@@ -11,7 +11,7 @@ topics = ["Python", "Database"]
 ### 0x00 安装
 > 有两种，一个是MySQLdb，一个是pymysql
 
-* 下载[MySQL-python-1.2.3.win-amd64-py2.7.exe](http://www.codegood.com/archives/129)然后安装  
+* 下载[MySQL-python](https://pypi.python.org/pypi/MySQL-python/1.2.5)然后安装  
 * sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)
 
 ### 0x01 简单表设计如下
