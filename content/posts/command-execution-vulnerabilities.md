@@ -154,7 +154,7 @@ passthru、popen、proc_popen等，当用户能控制这些函数中的参数时
 <?php
     $arg = $_GET['cmd'];
     // $arg = addslashes($arg);
-    $arg = escapeshellcmd($arg);  //拼接前就处理
+    $arg = escapeshellarg($arg);  //拼接前就处理
     if ($arg) {
         system("ls -al '$arg'");
     }
