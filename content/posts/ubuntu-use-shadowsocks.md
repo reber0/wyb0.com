@@ -12,6 +12,9 @@ topics = ["Linux"]
 
 ### 0x00 安装shadowsocks-qt5
 > ```sh
+sudo apt-get update
+sudo apt-get python-software-properties software-properties-common
+
 sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源）
 sudo apt-get update （更新你的软件库）
 sudo apt-get install shadowsocks-qt5 (正式安装)
