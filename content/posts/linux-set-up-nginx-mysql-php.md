@@ -41,6 +41,7 @@ sudo yum install openssl openssl-devel
 > 可在http://nginx.org/download/nginx-1.9.9.tar.gz 下载
 ![下载nginx安装包](/img/post/download_nginx.png)
 ```sh
+#Ubuntu中需要依赖：libpcre3 libpcre3-dev zlib1g-dev libssl-dev build-essential
 [reber@WYB nginx-1.9.9]$ ./configure
 [reber@WYB nginx-1.9.9]$ make
 [reber@WYB nginx-1.9.9]$ sudo make install
