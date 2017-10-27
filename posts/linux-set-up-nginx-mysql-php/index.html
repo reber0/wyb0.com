@@ -114,11 +114,11 @@
                 
                 
 
-<pre><code>安装环境为：CentOS-6.5-x86_64-minimal
-</code></pre>
+<p>安装环境为：CentOS-6.5-x86_64-minimal</p>
 
-<h2 id="一-准备工作">一、准备工作</h2>
+<h3 id="0x00-准备工作">0x00 准备工作</h3>
 
+<blockquote>
 <pre><code>首先执行：
     sudo yum groupinstall &quot;Development tools&quot;
 安装make：
@@ -126,15 +126,18 @@
 安装g++：
     yum install gcc gcc-c++
 </code></pre>
+</blockquote>
 
-<h2 id="二-安装mysql和php">二、安装mysql和php</h2>
+<h3 id="0x01-安装mysql和php">0x01 安装mysql和php</h3>
 
+<blockquote>
 <pre><code class="language-sh">sudo yum install mysql mysql-server mysql-devel
 sudo yum install php php-devel
 sudo yum install php-gd php-mysql php-fpm
 </code></pre>
+</blockquote>
 
-<h2 id="三-安装依赖">三、安装依赖</h2>
+<h3 id="0x02-安装依赖">0x02 安装依赖</h3>
 
 <ol>
 <li><p>安装pcre、pcre-devel<br />
@@ -147,36 +150,33 @@ sudo yum install zlib zlib-devel</p></li>
 sudo yum install openssl openssl-devel</p></li>
 </ol>
 
-<h2 id="四-安装nginx">四、安装Nginx</h2>
+<h3 id="0x03-安装nginx">0x03 安装Nginx</h3>
 
+<blockquote>
 <p>可在<a href="http://nginx.org/download/nginx-1.9.9.tar.gz">http://nginx.org/download/nginx-1.9.9.tar.gz</a> 下载
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/download_nginx.png" alt="下载nginx安装包">
-</div>
-</p>
+<img src="/img/post/download_nginx.png" alt="下载nginx安装包" /></p>
 
 <pre><code class="language-sh">[reber@WYB nginx-1.9.9]$ ./configure
 [reber@WYB nginx-1.9.9]$ make
 [reber@WYB nginx-1.9.9]$ sudo make install
 </code></pre>
+</blockquote>
 
-<h2 id="五-启动与关闭nginx">五、启动与关闭nginx</h2>
+<h3 id="0x04-启动与关闭nginx">0x04 启动与关闭nginx</h3>
 
+<blockquote>
 <pre><code class="language-sh"># 开启服务：
 [reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
 # 关闭服务：
 [reber@WYB nginx-1.9.9]$ killall nginx
 </code></pre>
 
+<p><img src="/img/post/visit_nginx.png" alt="访问nginx.png" /></p>
+</blockquote>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/visit_nginx.png" alt="访问nginx.png">
-</div>
+<h3 id="0x05-配置nginx支持php">0x05 配置nginx支持php</h3>
 
-
-<h2 id="六-配置nginx支持php">六、配置nginx支持php</h2>
-
+<blockquote>
 <p>[reber@WYB nginx-1.9.9]$ killall nginx<br />
 [reber@WYB nginx-1.9.9]$ vim /usr/local/nginx/conf/nginx.conf</p>
 
@@ -198,11 +198,8 @@ location ~ \.php$ {
 [reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/visit_nginx_phpinfo.png" alt="访问nginx的phpinfo.php.png">
-</div>
-
+<p><img src="/img/post/visit_nginx_phpinfo.png" alt="访问nginx的phpinfo.php" /></p>
+</blockquote>
 
                 
                 <div style="padding:10px 1px;">
