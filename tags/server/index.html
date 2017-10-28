@@ -83,6 +83,59 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/middleware-security-configuration/">中间件安全配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-10-28</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Apache  服务器安全配置   #查看服务器运行权限 $ ps aux|grep apache|grep -v grep $ sudo lsof -i:80 COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME apache2 1377 root 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21121 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21122 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21123 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21124 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21125 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 24800 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 127488 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) 第一行是Apache主进程，以root权限运行的，因为Apache的Web端口是80或443，而在Ubuntu(Linux)中开启小于1024的端口需要root权限，所以主进程必须以root权限运行。 第二行起为Apache子进程，其执行用户为www-data，www-data是Ubuntu中运行Web服务的默认用户，权限较低。 Windows中Apache安装完成后默认是administrator权限，所以需要降权，创建一个用户Apache，用户组为Guests，然后将Apache目录下的日志的可写权限赋给Guests账户。  #目录及文件权限 修改配置文件，vim /etc/apache2/apache2.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/middleware-security-configuration/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/vps-set-up-shadowsocks/">在vps上搭建Shadowsocks</a></h2>
 
         
@@ -590,63 +643,22 @@ reber@ubuntu:~$ vim /etc/apt/sources.list
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/set-up-dns-server/">搭建DNS服务器</a></h2>
 
+                
+
+    
+    
+    <nav class="pagination" role="pagination">
         
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2015-07-14</time>
-            </div>
+            <i class="fa fa-chevron-left"></i>
+        
 
-            
-
-            <div style="padding:2px 5px 2px 0px;">
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">Server</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         环境  虚拟机rhel-server-6.2
- 搭建流程  安装DNS服务器 配置DNS主配置文件 配置DNS正反向解析区域数据文件 启动DNS服务器进行测试  安装DNS服务  挂载光盘
-用mount -o,loop /dev/cdrom /mnt/cdrom命令挂载光盘
- 配置yum源，安装BIND(用命令yum install bind*安装) 安装结果如下：  进行配置
-vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc1921.zones中定义区域  配置正反向解析文件
-分别配置wyb.cn.hosts和wyb.cn.rev   验证  用service named start命令启动DNS
-用nslookup命令进行验证，先查看当前采用那台DNS解析，测试反向资源记录以及正反向解析  
-    </p>
-
-    
-</article>
-
-
-                
-
-                
+        <span>&nbsp;1 / 2&nbsp;</span>
+        
+        
+            <a href="/tags/server/page/2/"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
 
 
             </div>
@@ -680,7 +692,7 @@ vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(9)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(10)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
         
@@ -838,7 +850,7 @@ vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/server" title="server">server</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Tue, 19 Sep 2017 10:35:09 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 28 Oct 2017 13:58:29 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>中间件安全配置</title>
+      <link>http://wyb0.com/posts/middleware-security-configuration/</link>
+      <pubDate>Sat, 28 Oct 2017 13:58:29 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/middleware-security-configuration/</guid>
+      <description>0x00 Apache  服务器安全配置   #查看服务器运行权限 $ ps aux|grep apache|grep -v grep $ sudo lsof -i:80 COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME apache2 1377 root 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21121 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21122 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21123 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21124 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21125 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 24800 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 127488 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) 第一行是Apache主进程，以root权限运行的，因为Apache的Web端口是80或443，而在Ubuntu(Linux)中开启小于1024的端口需要root权限，所以主进程必须以root权限运行。 第二行起为Apache子进程，其执行用户为www-data，www-data是Ubuntu中运行Web服务的默认用户，权限较低。 Windows中Apache安装完成后默认是administrator权限，所以需要降权，创建一个用户Apache，用户组为Guests，然后将Apache目录下的日志的可写权限赋给Guests账户。  #目录及文件权限 修改配置文件，vim /etc/apache2/apache2.</description>
+    </item>
     
     <item>
       <title>Docker之数据卷</title>
