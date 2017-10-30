@@ -240,7 +240,7 @@ location /files { #把/files改为/files/即可修复
 ```
 
 <br>
-参考链接(侵删)：  
+Reference(侵删)：  
 
 * [中间件安全基础(一)](http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652844866&idx=1&sn=7c1d2879e7ad5ef662cccf8fb7663846)
 * [中间件安全基础(二)](http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652845014&idx=1&sn=c6221031b486bbe84de6986c67b76fbc)
