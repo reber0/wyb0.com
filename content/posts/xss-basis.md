@@ -94,9 +94,10 @@ flash文件可以实现一些功能，如google的mail域下的sound.swf是用�
 ```
 #现有flash文件aa.swf，源码如下：
 var func:String=root.loaderInfo.parameters.func; //接受FLASH所带的func参数
-ExternalInterface.call("alert",func);
+var val:String=root.loaderInfo.parameters.val; //接受FLASH所带的vul参数
+ExternalInterface.call(func,vul);
 
-#当访问http://127.0.0.1/aa.swf?func=111&Submit=Submit时就会弹窗111
+#当访问http://localhost/aa.swf?func=alert&vul="document.domain"时就会弹窗域名
 ```
 
 
