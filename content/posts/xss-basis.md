@@ -84,7 +84,7 @@ DOM的规定如下：
 • 节点与节点之间都有等级关系
 ```
 HTML的标签都是一个个节点，这些节点组成了DOM的整体结构：节点树，如下图：
-{{% fluid_img src="/img/post/xss_dom_tree.png" alt="xss中DOM树.png" %}}
+![xss中DOM树](/img/post/xss_dom_tree.png)
 
 * flash XSS
 
@@ -99,8 +99,3 @@ ExternalInterface.call(func,vul);
 
 #当访问http://localhost/aa.swf?func=alert&vul="document.domain"时就会弹窗域名
 ```
-
-
-
-
-
