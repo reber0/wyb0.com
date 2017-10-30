@@ -64,13 +64,14 @@
       <pubDate>Fri, 15 Jul 2016 10:30:54 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/xss-basis/</guid>
-      <description>0x00 简介  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在&amp;rdquo;脚本&amp;rdquo;这两个字上，脚本主要有两个：JavaScript和ActionScript。
-&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。
- 0x01 危害  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。
-• 盗取管理员Cookie • XSS Worm • 挂马(水坑攻击) • 键盘记录(有局限性) • 利用网站重定向 • 修改网页内容 • 等等   0x02 攻击场景  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。
+      <description>0x00 简介  XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在&amp;rdquo;脚本&amp;rdquo;这两个字上，脚本主要有两个：JavaScript和ActionScript。
+要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。
+ 0x01 危害  JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。
+• 盗取管理员Cookie • XSS Worm • 挂马(水坑攻击) • 键盘记录(有局限性) • 利用网站重定向 • 修改网页内容 • 等等   0x02 攻击场景  在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。
 • 支持html解析和javascript解析的客户端,如：html文档、flsh、pdf等 • url的参数，回显到网页上 • form表单提交的内容出现在网页上，如：昵称、邮箱、简介、留言 • 等等   0x03 分类  主要分为三类：反射型、存储型、DOM型(还有flash XSS、mXSS)。
-1. 反射型XSS &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。
-简单流程： 用户访问带有XSS代码的URL请求 服务器端接收数据后处理，然后返回带有XSS代码的数据发送给浏览器 浏览器解析带有XSS代码的数据后，最终造成XSS漏洞 可能攻击流程： • 用户aaa在网站www.xxx.com浏览网页 • 攻击者hacker发现www.xxx.com/xss.php存在反射型XSS漏洞，然后精心构造JavaScript代码， 构造的代码的功能为盗取用户Cookie并发送到指定站点www.xxser.com • hacker将带有反射型XSS漏洞的URL通过站内信发给aaa，站内信为一些诱惑信息，目的是使用户aaa点击 • 假设用户aaa点击了带有XSS漏洞的URL，则aaa的Cookie将被发送到www.xxser.com • hacker获取aaa的Cookie后可以以aaa的身份登陆www.xxx.com，从而得到aaa的敏感信息  2. 存储型XSS &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。</description>
+  反射型XSS
+   反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。
+简单流程： 1. 用户访问带有XSS代码的URL请求 2. 服务器端接收数据后处理，然后返回带有XSS代码的数据发送给浏览器 3. 浏览器解析带有XSS代码的数据后，最终造成XSS漏洞 可能攻击流程： 1. 用户aaa在网站www.xxx.com浏览网页 2. 攻击者hacker发现www.xxx.com/xss.php存在反射型XSS漏洞，然后精心构造JavaScript代码， 3. 构造的代码的功能为盗取用户Cookie并发送到指定站点www.xxser.com 4. hacker将带有反射型XSS漏洞的URL通过站内信发给aaa，站内信为一些诱惑信息，目的是使用户aaa点击 5.</description>
     </item>
     
   </channel>
