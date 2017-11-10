@@ -116,16 +116,23 @@
 
 <h3 id="0x00-几个编码函数">0x00 几个编码函数</h3>
 
-<ul>
-<li>chr(x)
-可以将0-255之间的数字转化为ASCII表中的字符</li>
-<li>ord(x)
-可以ASCII表中的字符转化为0-255之间的数字</li>
-<li>hex(x)
-将整数转化为十六进制字符串</li>
-<li>oct(x)
-将整数转化为八进制字符串</li>
-</ul>
+<blockquote>
+<pre><code>* ord(x)  
+    将字符转换为10进制整数(0~255之间) #ord('a')==&gt;97
+* chr(x)  
+    将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;'a'，chr(0x61)==&gt;'a'
+
+* b2a_hex(x)  
+    将字符转换为对应的16进制 #import binascii;binascii.b2a_hex('a')==&gt;'61'
+* a2b_hex(x)  
+    将16进制转换为对应的字符 #import binascii;binascii.a2b_hex('61')==&gt;'a'
+
+* hex(x)  
+    将10进制整数转换为对应的16进制 #hex(16)==&gt;'0x10'
+* oct(x)  
+    将10进制整数转换为对应的8进制  #oct(9)==&gt;'011'
+</code></pre>
+</blockquote>
 
 <h3 id="0x01-在py文件开头">0x01 在py文件开头</h3>
 
