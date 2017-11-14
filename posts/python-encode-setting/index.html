@@ -134,22 +134,23 @@
 </code></pre>
 </blockquote>
 
-<h3 id="0x01-在py文件开头">0x01 在py文件开头</h3>
+<h3 id="0x01-设置为utf-8">0x01 设置为utf-8</h3>
+
+<ul>
+<li>在py文件开头设置</li>
+</ul>
 
 <blockquote>
-<p>使用：</p>
-
 <pre><code class="language-python">#!/usr/bin/env python
-#-*- coding: UTF-8 -*-
+#-*- coding: utf-8 -*-
 或：
 #coding=utf8
 </code></pre>
 </blockquote>
 
-<h3 id="0x02-永久编码-推荐">0x02 永久编码(推荐)</h3>
-
-<blockquote>
-<p><img src="/img/post/unicode_encode_error.png" alt="python编码出错.png" />
+<ul>
+<li><p>永久编码(推荐)
+<img src="/img/post/unicode_encode_error.png" alt="python编码出错.png" />
 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：</p>
 
 <pre><code class="language-python">#coding=utf8
@@ -157,8 +158,8 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 # 此方法修改了python环境，设置系统默认编码，永久有效
-</code></pre>
-</blockquote>
+</code></pre></li>
+</ul>
 
 <h3 id="0x03-编码转换">0x03 编码转换</h3>
 

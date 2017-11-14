@@ -343,10 +343,9 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 几个编码函数  * ord(x) 将字符转换为10进制整数(0~255之间) #ord('a')==&gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;'a'，chr(0x61)==&gt;'a' * b2a_hex(x) 将字符转换为对应的16进制 #import binascii;binascii.b2a_hex('a')==&gt;'61' * a2b_hex(x) 将16进制转换为对应的字符 #import binascii;binascii.a2b_hex('61')==&gt;'a' * hex(x) 将10进制整数转换为对应的16进制 #hex(16)==&gt;'0x10' * oct(x) 将10进制整数转换为对应的8进制 #oct(9)==&gt;'011'   0x01 在py文件开头  使用：
-#!/usr/bin/env python #-*- coding: UTF-8 -*- 或： #coding=utf8   0x02 永久编码(推荐)  可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
+        0x00 几个编码函数  * ord(x) 将字符转换为10进制整数(0~255之间) #ord('a')==&gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;'a'，chr(0x61)==&gt;'a' * b2a_hex(x) 将字符转换为对应的16进制 #import binascii;binascii.b2a_hex('a')==&gt;'61' * a2b_hex(x) 将16进制转换为对应的字符 #import binascii;binascii.a2b_hex('61')==&gt;'a' * hex(x) 将10进制整数转换为对应的16进制 #hex(16)==&gt;'0x10' * oct(x) 将10进制整数转换为对应的8进制 #oct(9)==&gt;'011'   0x01 设置为utf-8  在py文件开头设置   #!/usr/bin/env python #-*- coding: utf-8 -*- 或： #coding=utf8    永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
 #coding=utf8 import sys reload(sys) sys.setdefaultencoding('utf8') # 此方法修改了python环境，设置系统默认编码，永久有效   0x03 编码转换  python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
-# coding: UTF-8 &quot;&quot;&quot;从gbk编码的文件中读出数据，重新编码为utf8然后存储&quot;&quot;&quot; f = open('test.txt') # gbk编码 s = f.
+# coding: UTF-8 &quot;&quot;&quot;从gbk编码的文件中读出数据，重新编码为utf8然后存储&quot;&quot;&quot; f = open('test.
     </p>
 
     
