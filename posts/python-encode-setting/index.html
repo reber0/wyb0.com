@@ -166,21 +166,34 @@ sys.setdefaultencoding('utf8')
 <blockquote>
 <p>python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode</p>
 
-<pre><code># coding: UTF-8
+<pre><code>python2中的字符串一般包含两种类型：str和unicode
+str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串
+unicode：unicode编码的字符串才是unicode类型的字符串
 
-&quot;&quot;&quot;从gbk编码的文件中读出数据，重新编码为utf8然后存储&quot;&quot;&quot;
+可通过isinstance()和type()来判断
 
-f = open('test.txt')  # gbk编码
-s = f.read()
+&gt;&gt;&gt; aa = '小明'
+&gt;&gt;&gt; isinstance(aa,str)
+True
+&gt;&gt;&gt; type(aa)
+&lt;type 'str'&gt;
 
-u = s.decode('gbk') # 将gbk解码为unicode
-# 通常要判断其编码方式是否为unicode
-# isinstance(s, unicode)可以用来判断是否为unicode 
-# 这里已知是GBK编码，解码成unicode
-s = u.encode('utf8')  # 将unicode编码为utf8
+&gt;&gt;&gt; bb = u'小明'
+&gt;&gt;&gt; isinstance(bb,unicode)
+True
+&gt;&gt;&gt; type(bb)
+&lt;type 'unicode'&gt;
+</code></pre>
 
-f.write(s)
-f.close()
+<pre><code>&gt;&gt;&gt; u'小明'.encode('utf8') #unicode到utf8
+'\xe5\xb0\x8f\xe6\x98\x8e'
+&gt;&gt;&gt; '小明'.decode('utf8') #utf8到unicode
+u'\u5c0f\u660e'
+
+&gt;&gt;&gt; u'小明'.encode('unicode-escape') #unicode到unicode-escape
+'\\u5c0f\\u660e'
+&gt;&gt;&gt; '\\u5c0f\\u660e'.decode('unicode-escape') #unicode-escape到unicode
+u'\u5c0f\u660e'
 </code></pre>
 </blockquote>
 
