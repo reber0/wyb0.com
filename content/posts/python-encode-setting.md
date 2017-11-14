@@ -26,17 +26,18 @@ topics = ["Python"]
     将10进制整数转换为对应的8进制  #oct(9)==>'011'
 ```
 
-### 0x01 在py文件开头
-> 使用：
-```python
+### 0x01 设置为utf-8
+* 在py文件开头设置
+
+> ```python
 #!/usr/bin/env python
-#-*- coding: UTF-8 -*-
+#-*- coding: utf-8 -*-
 或：
 #coding=utf8
 ```
 
-### 0x02 永久编码(推荐)
-> ![python编码出错.png](/img/post/unicode_encode_error.png)
+* 永久编码(推荐)
+![python编码出错.png](/img/post/unicode_encode_error.png)
 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
 ```python
 #coding=utf8
