@@ -77,8 +77,10 @@ u'\u5c0f\u660e'
 
 >>> u'小明'.encode('unicode-escape') #unicode到unicode-escape
 '\\u5c0f\\u660e'
->>> '\\u5c0f\\u660e'.decode('unicode-escape') #unicode-escape到unicode
+>>> '\\u5c0f\\u660e'.decode('unicode-escape')
 u'\u5c0f\u660e'
+>>> print '\\u5c0f\\u660e'.decode('unicode-escape')
+小明
 ```
 
 ### 0x04 网页的编码
