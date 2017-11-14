@@ -50,21 +50,35 @@ sys.setdefaultencoding('utf8')
 ### 0x03 编码转换
 > python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
 ```
-# coding: UTF-8
+python2中的字符串一般包含两种类型：str和unicode
+str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串
+unicode：unicode编码的字符串才是unicode类型的字符串
 
-"""从gbk编码的文件中读出数据，重新编码为utf8然后存储"""
+可通过isinstance()和type()来判断
 
-f = open('test.txt')  # gbk编码
-s = f.read()
+>>> aa = '小明'
+>>> isinstance(aa,str)
+True
+>>> type(aa)
+<type 'str'>
 
-u = s.decode('gbk') # 将gbk解码为unicode
-# 通常要判断其编码方式是否为unicode
-# isinstance(s, unicode)可以用来判断是否为unicode 
-# 这里已知是GBK编码，解码成unicode
-s = u.encode('utf8')  # 将unicode编码为utf8
+>>> bb = u'小明'
+>>> isinstance(bb,unicode)
+True
+>>> type(bb)
+<type 'unicode'>
+```
 
-f.write(s)
-f.close()
+> ```
+>>> u'小明'.encode('utf8') #unicode到utf8
+'\xe5\xb0\x8f\xe6\x98\x8e'
+>>> '小明'.decode('utf8') #utf8到unicode
+u'\u5c0f\u660e'
+
+>>> u'小明'.encode('unicode-escape') #unicode到unicode-escape
+'\\u5c0f\\u660e'
+>>> '\\u5c0f\\u660e'.decode('unicode-escape') #unicode-escape到unicode
+u'\u5c0f\u660e'
 ```
 
 ### 0x04 网页的编码
