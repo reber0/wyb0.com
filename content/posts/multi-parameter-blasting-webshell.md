@@ -2,7 +2,7 @@
 date = "2017-02-17T10:32:24+08:00"
 description = ""
 draft = false
-tags = ["pentest"]
+tags = ["爆破"]
 title = "利用多参数提高webshell爆破速度"
 topics = ["Pentest"]
 
