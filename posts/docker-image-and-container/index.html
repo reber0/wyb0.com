@@ -226,7 +226,7 @@ ubuntu        14.04    54333f1de4ed    3 weeks ago    188MB
 </ul>
 
 <blockquote>
-<pre><code class="language-bash">$ docker run --rm -itd ubuntu:14.04 /bin/bash
+<pre><code class="language-bash">$ docker run --rm -it ubuntu:14.04 /bin/bash
 root@172c8d8b0671:/# ls
 bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
 boot  etc  lib   media  opt  root  sbin  sys  usr
@@ -234,7 +234,7 @@ root@172c8d8b0671:/# exit
 exit
 
 解释：
---rm：告诉Docker一旦运行的进程退出就删除容器
+--rm：告诉Docker一旦运行的容器停止就删除容器
 -ti：告诉Docker分配一个为终端并进入交互模式(这将进入容器内)
 ubuntu：这是容器立足的镜像
 /bin/bash：shell
@@ -246,9 +246,12 @@ ubuntu：这是容器立足的镜像
 </ul>
 
 <blockquote>
-<pre><code class="language-bash">$ docker run -idd ubuntu:14.04 ping 8.8.8.8
+<pre><code class="language-bash">$ docker run -itd ubuntu:14.04 ping 8.8.8.8
 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11
 #$ sudo docker run -itd ubuntu:14.04 /bin/sh -c &quot;while true; do echo hello world; sleep 1; done&quot;
+
+解释：
+-d：告诉Docker容器在后台运行(不能与--rm参数一起用)
 </code></pre>
 </blockquote>
 
