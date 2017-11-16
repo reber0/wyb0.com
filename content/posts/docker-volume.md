@@ -68,7 +68,7 @@ FROM debian:jessie VOLUME /data #之后的任何命令都不能更改Volume的�
 > 使用--volumes-from参数项即可访问另外一个容器的Volume。  
 > 因为数据容器不启动也可以被其它容器访问，所以一般不推荐启动数据容器。
 > ```bash
-#启动一个容器，使用v_test这个容器的数据钱，v_test没有启动，但依然有data这个数据卷
+#启动一个容器，使用v_test这个容器的数据卷，v_test没有启动，但依然有data这个数据卷
 $ docker run -it --volumes-from v_test debian:jessie /bin/bash
 root@65aedf9c2ee1:/# ls
 bin   data  etc   lib    media  opt   root  sbin  sys  usr
@@ -76,7 +76,7 @@ boot  dev   home  lib64  mnt    proc  run   srv   tmp  var
 root@65aedf9c2ee1:/# exit
 exit
 
-#可以看下65aedf9c2ee1这个容器的数据卷和v_test数据券在宿主机对应的是同一个文件夹
+#可以看下65aedf9c2ee1这个容器的数据卷和v_test数据卷在宿主机对应的是同一个文件夹
 $ docker inspect -f {{.Mounts}} 65aedf9c2ee1
 [{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local  true }]
 ```
