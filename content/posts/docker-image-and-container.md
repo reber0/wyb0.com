@@ -32,6 +32,18 @@ ubuntu        latest    14f60031763d    2 weeks ago    120MB
 ubuntu        14.04     54333f1de4ed    2 weeks ago    188MB
 ```
 
+* 提交新的镜像
+
+> ```
+#首先运行一个容器，容器id为50b74968229a
+$ docker commit 50b74968229a ubuntu:add_file
+$ docker images
+REPOSITORY    TAG       IMAGE ID        CREATED        SIZE
+ubuntu        add_file  9e01bfa580bb    1 weeks ago    190MB
+ubuntu        latest    14f60031763d    2 weeks ago    120MB
+ubuntu        14.04     54333f1de4ed    2 weeks ago    188MB
+```
+
 * 打包镜像
 
 > ```bash
