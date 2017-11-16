@@ -25,7 +25,7 @@ Docker镜像是由多个文件系统(只读层)叠加而成的。
 
 > ```bash
 #运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷
-$ docker run -it --name v_test -v /data debian:jessie /bin/bash
+$ docker run -itd --name v_test -v /data debian:jessie /bin/bash
 root@d145e8c6f874:/# ls
 bin   data  etc   lib    media  opt   root  sbin  sys  usr
 boot  dev   home  lib64  mnt    proc  run   srv   tmp  var
@@ -40,7 +40,7 @@ $ docker inspect -f {{.Mounts}} v_test
 * 指定主机目录(只能通过-v参数实现，Dockerfile不行)
 
 > ```bash
-$ docker run -it -v /home/var/docker_data:/data debian:jessie /bin/bash
+$ docker run -itd -v /home/var/docker_data:/data debian:jessie /bin/bash
 root@d853c4ca7632:/# exit
 exit
 $ docker inspect -f {{.Mounts}} d853c4ca7632
@@ -69,7 +69,7 @@ FROM debian:jessie VOLUME /data #之后的任何命令都不能更改Volume的�
 > 因为数据容器不启动也可以被其它容器访问，所以一般不推荐启动数据容器。
 > ```bash
 #启动一个容器，使用v_test这个容器的数据卷，v_test没有启动，但依然有data这个数据卷
-$ docker run -it --volumes-from v_test debian:jessie /bin/bash
+$ docker run -itd --volumes-from v_test debian:jessie /bin/bash
 root@65aedf9c2ee1:/# ls
 bin   data  etc   lib    media  opt   root  sbin  sys  usr
 boot  dev   home  lib64  mnt    proc  run   srv   tmp  var

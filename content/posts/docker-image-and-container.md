@@ -80,7 +80,7 @@ $ docker rmi ubuntu:latest #docker rmi 14f60031763d
 * 运行容器(exit后容器就停止了)
 
 > ```bash
-$ docker run --rm -ti ubuntu:14.04 /bin/bash
+$ docker run --rm -itd ubuntu:14.04 /bin/bash
 root@172c8d8b0671:/# ls
 bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
 boot  etc  lib   media  opt  root  sbin  sys  usr
@@ -97,9 +97,9 @@ ubuntu：这是容器立足的镜像
 * 后台运行容器
 
 > ```bash
-$ docker run -d ubuntu:14.04 ping 8.8.8.8
+$ docker run -idd ubuntu:14.04 ping 8.8.8.8
 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11
-#$ sudo docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+#$ sudo docker run -itd ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
 ```
 
 * 查看当前运行的容器
@@ -224,7 +224,7 @@ $ docker inspect 65987aa8f0cb
 
 ### 0x03 例子
 > ```bash
-$ exec_ping=$(docker run -d ubuntu:14.04 ping 8.8.8.8)
+$ exec_ping=$(docker run -itd ubuntu:14.04 ping 8.8.8.8)
 $ docker logs $exec_ping
 $ docker restart $exec_ping
 $ docker commit $exec_ping ubuntu:ping #保存容器为镜像
