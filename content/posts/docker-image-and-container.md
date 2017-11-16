@@ -92,7 +92,7 @@ $ docker rmi ubuntu:latest #docker rmi 14f60031763d
 * 运行容器(exit后容器就停止了)
 
 > ```bash
-$ docker run --rm -itd ubuntu:14.04 /bin/bash
+$ docker run --rm -it ubuntu:14.04 /bin/bash
 root@172c8d8b0671:/# ls
 bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
 boot  etc  lib   media  opt  root  sbin  sys  usr
@@ -100,7 +100,7 @@ root@172c8d8b0671:/# exit
 exit
 
 解释：
---rm：告诉Docker一旦运行的进程退出就删除容器
+--rm：告诉Docker一旦运行的容器停止就删除容器
 -ti：告诉Docker分配一个为终端并进入交互模式(这将进入容器内)
 ubuntu：这是容器立足的镜像
 /bin/bash：shell
@@ -109,9 +109,12 @@ ubuntu：这是容器立足的镜像
 * 后台运行容器
 
 > ```bash
-$ docker run -idd ubuntu:14.04 ping 8.8.8.8
+$ docker run -itd ubuntu:14.04 ping 8.8.8.8
 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11
 #$ sudo docker run -itd ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+
+解释：
+-d：告诉Docker容器在后台运行(不能与--rm参数一起用)
 ```
 
 * 查看当前运行的容器
