@@ -123,7 +123,10 @@ import time
 import random
 
 class Scheduler(object):
-    """docstring for Scheduler"""
+    """
+    docstring for Scheduler
+    参考的saline表哥的代码
+    """
     def __init__(self, interval, mongodb_uri, redis_uri):
         super(Scheduler, self).__init__()
         self.interval = interval
