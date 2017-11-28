@@ -109,10 +109,11 @@ books = [
 > ```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# code by reber <1070018473@qq.com>
 
-from xml.etree.ElementTree import Element,ElementTree
+from xml.etree import ElementTree as ET
 
-books = [
+bs = [
     {
         'name': u'Python黑帽子',
         'date': '2015',
@@ -149,19 +150,26 @@ def indent(elem, level=0):
         if level and (not elem.tail or not elem.tail.strip()):
             elem.tail = i
 
+books = ET.Element('books')
 
-root = Element('books')
-tree = ElementTree(root)
+# for b in bs:
+#     book = ET.Element('book')
+#     books.append(book)
 
-for book in books:
-    child0 = Element('book')
-    root.append(child0)
+#     for k,v in b.items():
+#         child = ET.Element(k)
+#         child.text = v
+#         book.append(child)
 
-    for k,v in book.items():
-        child00 = Element(k)
-        child00.text = v
-        child0.append(child00)
+for b in bs:
+    book = ET.SubElement(books, 'book')
+    for k,v in b.items():
+        ET.SubElement(book, k).text = v
 
-indent(root,0)
-tree.write('aa.xml', 'UTF-8')
+indent(books,0)
+
+tree = ET.ElementTree(books)
+tree.write('aa.xml', 'utf-8')
+# import sys
+# tree.write(sys.stdout)
 ```
