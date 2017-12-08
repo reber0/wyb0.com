@@ -6,7 +6,7 @@ sidemenu = "true"
 +++
 
 > ## Contact
-<div style="width:350px;">
+<div style="width:350px;margin-left:40px;margin-top:10px;">
     <div style="float:left">
         <img src="/img/wx.png" style="width:150px;height:150px;" title="添加微信">
     </div>
