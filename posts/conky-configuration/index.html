@@ -695,6 +695,34 @@ ${fs_bar 4 /home}
 </div>
 
     
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); 
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
+    
     <script type="text/javascript">
     $(document).ready(function(){
         var alist = $('#tags p');
@@ -722,34 +750,6 @@ ${fs_bar 4 /home}
                 a.addClass("text1");
             }
         });
-    });
-    </script>
-
-    
-    <div class="goToTop">
-      <a href="#top" id="goToTop">
-        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
-      </a>
-    </div>
-    <script type="text/javascript">
-    $.fn.goToTop = function () {
-        if ($(window).scrollTop()<400) {
-            $('#goToTop').hide(); 
-        }
-        $(window).scroll(function () {
-            if ($(this).scrollTop()>400) {
-                $('#goToTop').fadeIn();
-            } else {
-                $('#goToTop').fadeOut();
-            }
-        });
-        this.click(function () {
-            $('html,body').animate({scrollTop:0},800);
-            return false;
-        });
-    }
-    $(document).ready(function () {
-        $('#goToTop').goToTop();
     });
     </script>
 
