@@ -1,3 +1,31 @@
+    <!-- 设置回到顶部按钮 -->
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="{{ .Site.BaseURL }}/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); //滚动条距离顶端的距离小于showDistance是隐藏goToTop按钮
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
     <!-- 标签云 -->
     <script type="text/javascript">
     $(document).ready(function(){
@@ -26,34 +54,6 @@
                 a.addClass("text1");
             }
         });
-    });
-    </script>
-
-    <!-- 设置回到顶部按钮 -->
-    <div class="goToTop">
-      <a href="#top" id="goToTop">
-        <img src="{{ .Site.BaseURL }}/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
-      </a>
-    </div>
-    <script type="text/javascript">
-    $.fn.goToTop = function () {
-        if ($(window).scrollTop()<400) {
-            $('#goToTop').hide(); //滚动条距离顶端的距离小于showDistance是隐藏goToTop按钮
-        }
-        $(window).scroll(function () {
-            if ($(this).scrollTop()>400) {
-                $('#goToTop').fadeIn();
-            } else {
-                $('#goToTop').fadeOut();
-            }
-        });
-        this.click(function () {
-            $('html,body').animate({scrollTop:0},800);
-            return false;
-        });
-    }
-    $(document).ready(function () {
-        $('#goToTop').goToTop();
     });
     </script>
 
