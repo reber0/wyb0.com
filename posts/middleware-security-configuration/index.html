@@ -163,6 +163,13 @@ $ vim /etc/apache2/conf-available/security.conf
 ServerTokens Prod
 ServerSignature Off
 </code></pre>
+
+<pre><code>#禁止执行脚本
+$ vim /etc/apache2/apache2.conf
+&lt;Directory /var/www/html/upload/&gt; #禁止执行php
+    php_flag engine off
+&lt;/Directory&gt;
+</code></pre>
 </blockquote>
 
 <ul>
