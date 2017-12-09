@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>网络设备 on Reber&#39;s Blog</title>
-    <link>http://wyb0.com/tags/%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87.html</link>
+    <link>http://wyb0.com/tags/%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/</link>
     <description>Recent content in 网络设备 on Reber&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -14,19 +14,19 @@
     
     <item>
       <title>中小企业网络搭建</title>
-      <link>http://wyb0.com/posts/small-and-medium-enterprise-network-structures.html</link>
+      <link>http://wyb0.com/posts/small-and-medium-enterprise-network-structures/</link>
       <pubDate>Mon, 13 Jul 2015 13:53:56 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/small-and-medium-enterprise-network-structures.html</guid>
+      <guid>http://wyb0.com/posts/small-and-medium-enterprise-network-structures/</guid>
       <description>中小企业需求分析  搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。 对网络设备能够方便地进行远程管理。 在局域网中公司部门间进行vlan划分，实现安全管理。 对三层设备路由技术这方面采取RIPV2协议或OSPF协议。 配置访问控制列表（ACL）以对网络数据进行有效的分类和控制，限制终端之间的相互访问。 内网通过配置PAT技术实现与外网之间的通信。  所需设备   网络规划  在三层交换机设置ACL，控制个vlan间的通信 在防火墙(路由器)上设置NAT转换 路由协议采用OSPF 内网访问控制  内网中只有市场部可以访问外网 市场部可以访问市场部、打印机 设计部可以访问设计部、财务部、打印机 外网只有202.202.2.0/24能访问内网  IP规划如下：  打印机：192.168.1.0/24 市场部：192.168.2.0/24 设计部：192.168.3.0/24 财务部：192.168.4.0/24 防火墙和三层交换机所在网段：192.168.5.0/24 管理ip所在网段：192.168.100.0/24   网络设备配置命令代码  Firewall配置   Router&amp;gt;enable Router#conf t Router(config)#no ip domain-lookup //禁止域名解析 Router(config)#hostname Firewall //更改设备名 Firewall(config)#enable password 123 Firewall(config)#router eigrp 1 Firewall(config-router)#no auto-summary //关闭自动汇总 Firewall(config-router)#exit Firewall(config)#int f0/0 Firewall(config-if)#ip add 192.168.5.2 255.255.255.0 //配端口ip Firewall(config-if)#no shut Firewall(config-if)#exit Firewall(config)#router ospf 1 //配路由协议ospf Firewall(config-router)#network 202.</description>
     </item>
     
     <item>
       <title>思科交换机基本配置</title>
-      <link>http://wyb0.com/posts/cisco-switch-basic-configuration.html</link>
+      <link>http://wyb0.com/posts/cisco-switch-basic-configuration/</link>
       <pubDate>Wed, 06 May 2015 23:46:26 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/cisco-switch-basic-configuration.html</guid>
+      <guid>http://wyb0.com/posts/cisco-switch-basic-configuration/</guid>
       <description>简单配置命令  Switch&amp;gt;enable(配置交换机名称) Switch(config)#hostname S S(config)#enable password 222//(加密特权密码，密码为222) S(config)#no enable password //(取消enable密码) S(config)#enable secret 333//(设置后用show命令时不能看到密码) S(config)#no enable secret //(取消enable密码) S(config)#line vty 0 4//(有5个虚拟终端，即0-4) S(config-line)#password 444//(设置虚拟终端密码) S(config-line)#login//(使密码生效) S(config)#line console 0//(设置控制台密码) S(config-line)#password 111 S(config-line)#login S(config)#line con 0//(取消控制台密码) S(config-line)#no password S(config-line)#exec-timeout 5 30//(超时时间)(分、秒) S(config)#no ip domain-lookup//(禁止名称解析)   配置交换机管理IP、默认网关  S(config)#interface vlan 1 //(配置交换机管理IP、子网掩码) S(config-if)#ip address 192.168.1.1 255.255.255.0 S(config-if)#no shutdown S(config)# exit S(config)#ip default-gateway 192.168.1.250//(默认网关)   配置交换机的端口速率、端口双工模式  S(config)#//(端口双工模式) S(config)#interface f0/1 S(config-if)#duplex ?</description>
     </item>
     
