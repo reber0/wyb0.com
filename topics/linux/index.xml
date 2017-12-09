@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux on Reber&#39;s Blog</title>
-    <link>http://wyb0.com/topics/linux/</link>
+    <link>http://wyb0.com/topics/linux.html</link>
     <description>Recent content in Linux on Reber&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -14,19 +14,19 @@
     
     <item>
       <title>Docker之数据卷</title>
-      <link>http://wyb0.com/posts/docker-volume/</link>
+      <link>http://wyb0.com/posts/docker-volume.html</link>
       <pubDate>Tue, 19 Sep 2017 10:35:09 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/docker-volume/</guid>
+      <guid>http://wyb0.com/posts/docker-volume.html</guid>
       <description>0x00 为什么使用数据卷  Docker镜像是由多个文件系统(只读层)叠加而成的。 当一个容器启动时Docker会加载只读镜像层并在其上添加一个读写层。 读写层中的修改在镜像重新启动后会全部丢失。 在Docker中，只读层及在顶部的读写层的组合被称为Union File System(联合文件系统)。 如果想要保存数据，则可以使用数据卷来在容器外面保存数据，主要为如下两种方式： * 使用docker run运行容器时指定数据卷 * 在Dockerfile中直接指定数据卷   0x01 docker run挂载Volume(使用-v参数)  不指定主机目录   #运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷 $ docker run -itd --name v_test -v /data debian:jessie /bin/bash root@d145e8c6f874:/# ls bin data etc lib media opt root sbin sys usr boot dev home lib64 mnt proc run srv tmp var root@d145e8c6f874:/# exit exit #查看数据卷的对应位置，前者是宿主机的位置，后者是容器中的位置 $ docker inspect -f {{.Mounts}} v_test [{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local true }]    指定主机目录(只能通过-v参数实现，Dockerfile不行)   $ docker run -itd -v /home/var/docker_data:/data debian:jessie /bin/bash root@d853c4ca7632:/# exit exit $ docker inspect -f {{.</description>
     </item>
     
     <item>
       <title>Docker之Dockerfile</title>
-      <link>http://wyb0.com/posts/docker-dockerfile/</link>
+      <link>http://wyb0.com/posts/docker-dockerfile.html</link>
       <pubDate>Fri, 18 Aug 2017 18:05:43 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/docker-dockerfile/</guid>
+      <guid>http://wyb0.com/posts/docker-dockerfile.html</guid>
       <description>操作系统：Ubuntu14.04.1
 Docker版本：Docker version 17.06.0-ce, build 02c1d87
 0x00 Dockerfile  Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令， 每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。   0x01 Dockerfile基本指令  FROM &amp;lt;image name&amp;gt;：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie) MAINTAINER &amp;lt;author name&amp;gt;：设置该镜像的作者 COPY &amp;lt;source&amp;gt; &amp;lt;dest&amp;gt;：复制文件，dest要以 / 结尾 WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效 RUN &amp;lt;command&amp;gt;：在shell执行命令 EXPOSE port1 port2：容器运行时监听的端口 CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组) ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组) ENV &amp;lt;key&amp;gt; &amp;lt;value&amp;gt;：设置环境变量 USER &amp;lt;uid&amp;gt;：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root VOLUME [&#39;/data&#39;]：授权访问从容器内到主机的目录  CMD与ENTRYPOINT的区别：
@@ -35,10 +35,10 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
     
     <item>
       <title>Docker之镜像与容器</title>
-      <link>http://wyb0.com/posts/docker-image-and-container/</link>
+      <link>http://wyb0.com/posts/docker-image-and-container.html</link>
       <pubDate>Fri, 18 Aug 2017 14:36:39 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/docker-image-and-container/</guid>
+      <guid>http://wyb0.com/posts/docker-image-and-container.html</guid>
       <description>操作系统：Ubuntu14.04.1
 Docker版本：Docker version 17.06.0-ce, build 02c1d87
 0x00 镜像操作  下载镜像   #一般容器的id和name可以互换 $ docker search ubuntu #从公共registry搜索镜像 $ docker pull ubuntu #从公共registry下载镜像 $ docker pull ubuntu:14.04    查看当前系统镜像   $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.04 54333f1de4ed 2 weeks ago 188MB    提交新的镜像   #首先运行一个容器，容器id为50b74968229a $ docker commit 50b74968229a ubuntu:add_file $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu add_file 9e01bfa580bb 1 weeks ago 190MB ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.</description>
@@ -46,10 +46,10 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
     
     <item>
       <title>Docker初识</title>
-      <link>http://wyb0.com/posts/docker-basis/</link>
+      <link>http://wyb0.com/posts/docker-basis.html</link>
       <pubDate>Tue, 15 Aug 2017 22:16:35 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/docker-basis/</guid>
+      <guid>http://wyb0.com/posts/docker-basis.html</guid>
       <description>0x00 关于Docker  Docker中的镜像类似VM的快照，容器类似虚拟机，使用镜像创建容器类似于使用快照创建虚拟机。 Docker中运行应用的是容器，容器的创建和销毁在秒级就能完成。 Docker使用了AUFS，可以以递进的方式创建&amp;rdquo;VM&amp;rdquo;，一个&amp;rdquo;VM&amp;rdquo;叠在另一个&amp;rdquo;VM&amp;rdquo;上，就像使用git增量开发一样。 软件的运行环境（image）和软件本身（container）分离，和数据也分离。
  学习Docker需要了解4个概念：镜像、容器、数据卷、链接
   0x01 镜像image  Docker Images 只是一个只读模板，用来运行Docker容器，可以在Docker hub(官方镜像库)下载。 镜像拥有唯一ID(比如：72c989e2d109)以及一个供人阅读的名字和标签对(比如：ubuntu:latest)。 镜像必须完全可移植,Docker不允许例外。  0x02 容器container  可以在一个镜像的基础上创建多个容器，每个容器相互独立。 容器也拥有唯一ID以及一个供人阅读的名字。 容器被启动时会被分配一个随机的私有IP，其他容器可以通过这个IP与它进行通信。 Docker允许公开容器的特定端口。 一个容器一个进程，容器设计本意是用来运行一个应用的而非一台机器。 容器应该是短暂和一次性的。 Docker镜像层对于容器来说，是只读的，容器对于文件的写操作绝对不会作用在镜像中。  0x03 数据卷  数据卷表现为容器内的空间，但实际保存在容器外，你可以在不影响数据的情况下销毁、重建、修改、丢弃容器。 Docker允许你定义应用和数据部分，并提供工具让你可以将它们分开。  0x04 链接  Docker允许你在创建一个新容器时引用其它现存容器，在你刚创建的容器里被引用的容器将获得一个你指定的别名，我们就说这两个容器被链接在了一起。 若DB容器已经在运行，我们可以创建一个Web服务器容器，并在创建时引用这个DB容器，可以给它起个别名(比如dbapp)，在新创建的Web服务器容器中，可以在任何时候使用主机名dbapp与DB容器进行通信。  0x05 镜像与容器关系  Docker镜像是一个文件，属于静态的内容；Docker容器属于动态的内容，可以把容器理解为一个或多个运行进程。 Docker可以通过解析Docker镜像的json文件，获知应该在这个镜像之上运行什么样的进程，应该为进程配置怎么样的环境变量。 Docker守护进程手握Docker镜像的json文件，它为容器配置相应的环境并真正运行Docker镜像所指定的进程，从而完成Docker容器的真正创建。 当Docker容器运行起来之后，Docker镜像json文件就失去作用了。此时Docker镜像的绝大部分作用就是：为Docker容器提供一个文件系统的视角，供容器内部的进程访问文件资源。  0x06 Docker有三个组件和三个基本元素  三个组件
@@ -58,30 +58,30 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
     
     <item>
       <title>在vps上搭建Shadowsocks</title>
-      <link>http://wyb0.com/posts/vps-set-up-shadowsocks/</link>
+      <link>http://wyb0.com/posts/vps-set-up-shadowsocks.html</link>
       <pubDate>Fri, 10 Mar 2017 10:34:40 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/vps-set-up-shadowsocks/</guid>
+      <guid>http://wyb0.com/posts/vps-set-up-shadowsocks.html</guid>
       <description>0x00 环境  Ubuntu 14.04.1 LTS
  0x01 安装与配置  reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &amp;quot;server&amp;quot;:&amp;quot;服务器 IP 地址&amp;quot;, # 服务器 IP (IPv4/IPv6) &amp;quot;server_port&amp;quot;:8388, # 监听的服务器端口 &amp;quot;local_address&amp;quot;: &amp;quot;127.0.0.1&amp;quot;, # 本地监听的 IP 地址 &amp;quot;local_port&amp;quot;:1080, # 本地端端口 &amp;quot;password&amp;quot;:&amp;quot;mypassword&amp;quot;, # 密码 #&amp;quot;port_password&amp;quot;: #{ # &amp;quot;40001&amp;quot;: &amp;quot;password1&amp;quot;, # &amp;quot;40002&amp;quot;: &amp;quot;password2&amp;quot;, # &amp;quot;40003&amp;quot;: &amp;quot;password3&amp;quot; #}, #&amp;quot;_comment&amp;quot;: #{ # &amp;quot;40001&amp;quot;: &amp;quot;xiaoming&amp;quot;, # &amp;quot;40002&amp;quot;: &amp;quot;lilei&amp;quot;, # &amp;quot;40003&amp;quot;: &amp;quot;mike&amp;quot; #} &amp;quot;timeout&amp;quot;:300, # 超时时间（秒） &amp;quot;method&amp;quot;:&amp;quot;aes-256-cfb&amp;quot;, # 加密方式 # 若Linux内核在3.</description>
     </item>
     
     <item>
       <title>Tmux的使用</title>
-      <link>http://wyb0.com/posts/tmux-usage/</link>
+      <link>http://wyb0.com/posts/tmux-usage.html</link>
       <pubDate>Sat, 10 Sep 2016 16:24:18 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/tmux-usage/</guid>
+      <guid>http://wyb0.com/posts/tmux-usage.html</guid>
       <description> 0x00 Tmux的快捷键前缀  Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c
  0x01 会话   0x02 窗口和窗格   </description>
     </item>
     
     <item>
       <title>Linux下SSH连接</title>
-      <link>http://wyb0.com/posts/linux-ssh-connect/</link>
+      <link>http://wyb0.com/posts/linux-ssh-connect.html</link>
       <pubDate>Wed, 10 Aug 2016 11:46:13 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-ssh-connect/</guid>
+      <guid>http://wyb0.com/posts/linux-ssh-connect.html</guid>
       <description> 0x00 SSH相关选项  -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，用于端口转发 -D socket5代理 -L tcp转发 -C 使用数据压缩，网速快时会影响速度   0x01 SSH免密码登陆  A主机免密码登陆B主机：
 A主机运行： ssh-keygen -t rsa 会生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub 将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中 注： 要确保B主机~/.ssh/authorized_keys权限为600 要确保B主机~/.ssh/文件夹权限为700 要确保上述两个文件属主是当前用户   0x02 SSH反向连接  主机A要通过SSH连接主机B：
 B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定  A主机运行： ssh root@127.0.0.1 -p 8888 输入本机的root的密码即可登入主机B的root用户   0x03 SSH Socks5代理   </description>
@@ -89,10 +89,10 @@ B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reb
     
     <item>
       <title>iptables简单配置DMZ</title>
-      <link>http://wyb0.com/posts/iptables-configure-dmz/</link>
+      <link>http://wyb0.com/posts/iptables-configure-dmz.html</link>
       <pubDate>Tue, 05 Jul 2016 09:56:35 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/iptables-configure-dmz/</guid>
+      <guid>http://wyb0.com/posts/iptables-configure-dmz.html</guid>
       <description>要求  内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网  拓扑   个主机IP信息  内网网段为：192.168.1.0/24
 DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如下：
 #!/bin/bash iptables –F #清空此表中的规则 iptables –X #清空此表中的自定义规则 iptables –Z #清空此表中的计数器为0 iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP iptables -F -t nat iptables -X -t nat iptables -Z -t nat iptables -t nat -P PREROUTING ACCEPT iptables -t nat -P POSTROUTING ACCEPT iptables -t nat -P OUTPUT ACCEPT #添加必要的模块 modprobe ip_nat_ftp modprobe iptable_nat modprobe ip_conntrack modprobe ip_conntrack_ftp #开启转发功能 echo &amp;quot;1&amp;quot; &amp;gt; /proc/sys/net/ipv4/ip_forward #******************************************************************** #PREROUTING： iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.</description>
@@ -100,20 +100,20 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
     
     <item>
       <title>Ubuntu下使用ShadowSocks</title>
-      <link>http://wyb0.com/posts/ubuntu-use-shadowsocks/</link>
+      <link>http://wyb0.com/posts/ubuntu-use-shadowsocks.html</link>
       <pubDate>Mon, 13 Jun 2016 09:14:45 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/ubuntu-use-shadowsocks/</guid>
+      <guid>http://wyb0.com/posts/ubuntu-use-shadowsocks.html</guid>
       <description> 环境：Ubuntu14.04
 0x00 安装shadowsocks-qt5  sudo apt-get update sudo apt-get python-software-properties software-properties-common sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装)   0x01 配置客户端   0x02 配置火狐   访问YouTube   </description>
     </item>
     
     <item>
       <title>conky配置</title>
-      <link>http://wyb0.com/posts/conky-configuration/</link>
+      <link>http://wyb0.com/posts/conky-configuration.html</link>
       <pubDate>Sat, 04 Jun 2016 20:26:21 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/conky-configuration/</guid>
+      <guid>http://wyb0.com/posts/conky-configuration.html</guid>
       <description>0x00 效果  使用软件conky可以在linux上看到系统的运行状态，效果如下：  0x01 安装与配置  先安装conky：
 sudo apt-get install conky
  在/home/username/下创建文件.conkyrc
@@ -124,28 +124,28 @@ sudo apt-get install conky
     
     <item>
       <title>win/ubuntu双系统分区设置</title>
-      <link>http://wyb0.com/posts/win-and-ubuntu-partition/</link>
+      <link>http://wyb0.com/posts/win-and-ubuntu-partition.html</link>
       <pubDate>Tue, 31 May 2016 23:35:06 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/win-and-ubuntu-partition/</guid>
+      <guid>http://wyb0.com/posts/win-and-ubuntu-partition.html</guid>
       <description> win10和ubuntu双系统分区设置  硬盘采用uefi格式 硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息 在硬盘末尾给ubuntu划分50G左右空间 ubuntu的/分区，格式为ext4，空间为40G ubuntu的/home分区，格式为ext4，空间为10G ubuntu的/boot分区，格式为ext4,空间为200M ubuntu的/swap分区，格式为swap，空间为200M ubuntu的引导分区为/boot  &amp;nbsp; </description>
     </item>
     
     <item>
       <title>Nessus的安装</title>
-      <link>http://wyb0.com/posts/nessus-install/</link>
+      <link>http://wyb0.com/posts/nessus-install.html</link>
       <pubDate>Wed, 11 May 2016 17:09:10 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/nessus-install/</guid>
+      <guid>http://wyb0.com/posts/nessus-install.html</guid>
       <description> 下载Nessus的deb安装包: 去【这里】，选择家庭版，然后下载对应的安装包 本地安装nessus: 执行后续安装步骤:  启动nessus  web访问nessus服务  设置账户和密码  申请code，可以在【这里】申请  去邮箱查找code  将code填入，然后等待插件的下载   登陆Nessus: </description>
     </item>
     
     <item>
       <title>Ubuntu下安装sublime text 3</title>
-      <link>http://wyb0.com/posts/ubuntu-insatll-sublime-text3/</link>
+      <link>http://wyb0.com/posts/ubuntu-insatll-sublime-text3.html</link>
       <pubDate>Sun, 08 May 2016 00:04:42 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/ubuntu-insatll-sublime-text3/</guid>
+      <guid>http://wyb0.com/posts/ubuntu-insatll-sublime-text3.html</guid>
       <description>环境： ubuntu14.4
 安装  添加Sublime Text 3的仓库
 sudo add-apt-repository ppa:webupd8team/sublime-text-3
@@ -159,10 +159,10 @@ sudo apt-get install sublime-text-installer
     
     <item>
       <title>Ubuntu初接触(包括搭建LAMP)</title>
-      <link>http://wyb0.com/posts/ubuntu-basis-set/</link>
+      <link>http://wyb0.com/posts/ubuntu-basis-set.html</link>
       <pubDate>Sat, 07 May 2016 21:37:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/ubuntu-basis-set/</guid>
+      <guid>http://wyb0.com/posts/ubuntu-basis-set.html</guid>
       <description>0x00 环境  我是在虚拟机中安装14.04.4版的Ubuntu 下载Ubuntu14.04.4
  0x01 配源或选择最快的更新服务器  选择最快的更新服务器:
 System Settings &amp;ndash;&amp;gt; Software &amp;amp; Updates &amp;ndash;&amp;gt; Download from:other &amp;ndash;&amp;gt; Select Best Server &amp;ndash;&amp;gt; Choose Serve &amp;ndash;&amp;gt; Close
@@ -174,10 +174,10 @@ reber@ubuntu:~$ vim /etc/apt/sources.list
     
     <item>
       <title>Linux之文本处理软件awk</title>
-      <link>http://wyb0.com/posts/linux-text-processing-software-awk/</link>
+      <link>http://wyb0.com/posts/linux-text-processing-software-awk.html</link>
       <pubDate>Wed, 20 Apr 2016 15:54:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-text-processing-software-awk/</guid>
+      <guid>http://wyb0.com/posts/linux-text-processing-software-awk.html</guid>
       <description>0x00 awk  awk默认是以行为单位处理文本的，对test.txt中的每一行都执行后面 &amp;ldquo;{ }&amp;rdquo; 中的语句。
   若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：
 xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 aaaa cccc 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv  要求：
@@ -186,29 +186,29 @@ xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 
     
     <item>
       <title>Linux之文本处理</title>
-      <link>http://wyb0.com/posts/linux-text-processing/</link>
+      <link>http://wyb0.com/posts/linux-text-processing.html</link>
       <pubDate>Wed, 20 Apr 2016 07:58:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-text-processing/</guid>
+      <guid>http://wyb0.com/posts/linux-text-processing.html</guid>
       <description>这里介绍3种方式：awk、grep、sed
 0x00 awk处理文本(最常用)  作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化 awk命令格式：awk [F filed-separator] &#39;commands&#39; input-fiel(s) 参数-F：可以添加任意的分割符，比较重要 awk工作流程是这样的： 读入有&#39;\n&#39;换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&amp;quot;空白键&amp;quot; 或 &amp;quot;[tab]键&amp;quot;。    入门示例：   [wyb@localhost temp]$ head -n 5 /etc/passwd root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin adm:x:3:4:adm:/var/adm:/sbin/nologin lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F &#39;:&#39; &#39;{print $1}&#39; #输出第1列，域分隔符为： root bin daemon adm lp [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F &#39;:&#39; &#39;{pri nt &amp;quot;id:&amp;quot;$1&amp;quot;\tshell:&amp;quot;$7}&#39; #输出第1、7列且给予列名 id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F &#39;:&#39; &#39;BEGIN {print &amp;quot;====begin=====&amp;quot;} {print &amp;quot;id:&amp;quot;$1&amp;quot;\tshell:&amp;quot;$7} END {print &amp;quot;====end====&amp;quot;}&#39; ====begin===== id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin ====end==== [wyb@localhost temp]$ awk -F: &#39;/root/&#39; /etc/passwd #搜索含有root关键字的所有行 root:x:0:0:root:/root:/bin/bash operator:x:11:0:operator:/root:/sbin/nologin [wyb@localhost temp]$ awk -F: &#39;/root/{print $7}&#39; /etc/passwd #匹配root并输出对应shell /bin/bash /sbin/nologin [wyb@localhost temp]$ awk -F: &#39;/^root/&#39; /etc/passwd #匹配以root开头的行 root:x:0:0:root:/root:/bin/bash    内置变量：   ARGC&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;命令行参数个数 ARGV&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;命令行参数排列 ENVIRON&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;支持队列中系统环境变量的使用 FILENAME&amp;nbsp;&amp;nbsp;&amp;nbsp;awk浏览的文件名 FNR&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;浏览文件的记录数 FS&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;设置输入域分隔符，等价于命令行 -F选项 NF&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;浏览记录的域的个数 NR&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;已读的记录数 OFS&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;输出域分隔符 ORS&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;输出记录分隔符 RS&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;控制记录分隔符      [wyb@localhost temp]$ awk -F: &#39;{print &amp;quot;filename:&amp;quot; FILENAME &amp;quot;,linenumber:&amp;quot; NR &amp;quot;,columns:&amp;quot; NF &amp;quot;,linecontent:&amp;quot;$0}&#39; a.</description>
     </item>
     
     <item>
       <title>Linux之tar</title>
-      <link>http://wyb0.com/posts/linux-compression-software/</link>
+      <link>http://wyb0.com/posts/linux-compression-software.html</link>
       <pubDate>Tue, 19 Apr 2016 21:30:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-compression-software/</guid>
+      <guid>http://wyb0.com/posts/linux-compression-software.html</guid>
       <description>tar主要参数： -c 创建一个新的压缩文件 -x 解压 -t 查看压缩文件的内容 -f 指定档案文件的名字 -v 显示过程信息 -r 增加文件到指定的包 -C 指定解压后的路径 -z 使用gzip -j 使用bzip2 -Z 使用compress  tar示例： [wyb@localhost temp]$ ls aaa [wyb@localhost temp]$ tar -cvf 1.tar aaa/ *打包不压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -zcvf 1.tar.gz aaa/ *打包且以gzip压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]$ tar -jcvf 1.tar.bz2 aaa/ *打包且以bzip2压缩* aaa/ aaa/b.txt aaa/c.txt aaa/test.txt aaa/a.txt [wyb@localhost temp]tar -zxvf aa.tar.gz /home/aaa --exclude=dir //排除目录 [wyb@localhost temp]$ ls -l total 24 -rw-r--r--.</description>
     </item>
     
     <item>
       <title>Linux之安装ettercap</title>
-      <link>http://wyb0.com/posts/linux-install-ettercap/</link>
+      <link>http://wyb0.com/posts/linux-install-ettercap.html</link>
       <pubDate>Tue, 19 Apr 2016 20:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-install-ettercap/</guid>
+      <guid>http://wyb0.com/posts/linux-install-ettercap.html</guid>
       <description>操作系统：CentOS
 首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了
 执行：sudo yum groupinstall &amp;ldquo;Development tools&amp;rdquo; 源码安装软件就需要安装这个
@@ -219,29 +219,29 @@ xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 
     
     <item>
       <title>Linux之软件的安装</title>
-      <link>http://wyb0.com/posts/linux-software-installation/</link>
+      <link>http://wyb0.com/posts/linux-software-installation.html</link>
       <pubDate>Tue, 19 Apr 2016 19:07:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-software-installation/</guid>
+      <guid>http://wyb0.com/posts/linux-software-installation.html</guid>
       <description>Linux上的软件安装可以分为三种方式： 1. yum安装 yum基于RPM包管理，一次性安装所有依赖包，提供了查找、安装、删除一个、一组 至全部软件包的命令，配置文件在/etc/yum.repos.d/下 主要命令： yum install gcc g++ yum remove wget yum list installed //显示已经安装过的软件 yum list //显示所有可以安装的包  
 [wyb@localhost ~]$ wget -h //验证有没有安装wget -bash: /usr/bin/wget: No such file or directory [wyb@localhost ~]$ sudo yum search wget //通过yum查找wget，看有没有这个软件包 Loaded plugins: fastestmirror, refresh-packagekit, security Loading mirror speeds from cached hostfile * base: mirrors.yun-idc.com * extras: mirrors.pubyun.com * updates: mirrors.yun-idc.com ============================== N/S Matched: wget =============================== wget.x86_64 : A utility for retrieving files using the HTTP or FTP protocols Name and summary matches only, use &amp;quot;search all&amp;quot; for everything.</description>
     </item>
     
     <item>
       <title>Linux之基础命令</title>
-      <link>http://wyb0.com/posts/linux-basic-command/</link>
+      <link>http://wyb0.com/posts/linux-basic-command.html</link>
       <pubDate>Tue, 19 Apr 2016 10:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-basic-command/</guid>
+      <guid>http://wyb0.com/posts/linux-basic-command.html</guid>
       <description>0x00 ls：显示文件  [wyb@localhost tmp]$ ls a a.txt [wyb@localhost tmp]$ ls -l total 4 drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--. 1 wyb root 0 Apr 17 18:23 a.txt [wyb@localhost tmp]$ ls -a . .. a a.txt .esd-500 .ICE-unix [wyb@localhost tmp]$ ls -al total 20 drwxrwxrwt. 5 root root 4096 Apr 17 18:23 . dr-xr-xr-x. 22 root root 4096 Apr 17 16:31 .. drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--.</description>
     </item>
     
     <item>
       <title>Linux之服务和计划任务</title>
-      <link>http://wyb0.com/posts/linux-service-and-planning-tasks/</link>
+      <link>http://wyb0.com/posts/linux-service-and-planning-tasks.html</link>
       <pubDate>Tue, 19 Apr 2016 10:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-service-and-planning-tasks/</guid>
+      <guid>http://wyb0.com/posts/linux-service-and-planning-tasks.html</guid>
       <description>服务： 在后台运行的软件就叫服务 参数： start stop restart
 apache启动后默认降权
 service httpd start实际调用的是/etc/init.d/httpd这个shell脚本 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d [wyb@localhost ~]$ ls -al /etc/init.d lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&amp;gt; rc.d/init.d  添加服务： 将脚本放在/etc/init.d/下即可  若要自启则： chkconfig --list //查看chk管理的自启动项 chkconfig --add httpd 添加到chk管理里面 chkconfig --del httpd 将httpd移出chk管理 chkcofnig --level 35 httpd on init的345将开启 chkcofnig --level 345 httpd off /etc/rc.d/rc3.d和rc5.d里将有httpd  计划任务： 启动方式： 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件
@@ -252,10 +252,10 @@ cron：每分钟醒来依次查看当前是否有需要运行的命令，最小�
     
     <item>
       <title>Linux之用户和用户组</title>
-      <link>http://wyb0.com/posts/linux-user/</link>
+      <link>http://wyb0.com/posts/linux-user.html</link>
       <pubDate>Sun, 17 Apr 2016 20:48:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-user/</guid>
+      <guid>http://wyb0.com/posts/linux-user.html</guid>
       <description> 0x01 新建用户  环境：Ubuntu 14.04.4
   Step1：添加新用户
 useradd -r -m -s /bin/bash 用户名
@@ -271,20 +271,20 @@ visudo
     
     <item>
       <title>Linux之网络配置</title>
-      <link>http://wyb0.com/posts/linux-network-configuration/</link>
+      <link>http://wyb0.com/posts/linux-network-configuration.html</link>
       <pubDate>Sun, 17 Apr 2016 17:58:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-network-configuration/</guid>
+      <guid>http://wyb0.com/posts/linux-network-configuration.html</guid>
       <description> 第一种方法 分5步： 1. 启动网卡： $ ifconfig eth0 up/down 2. 配置ip： $ ifconfig eth0 192.168.22.231 netmask 255.255.255.0 3. 配置网关： $ route add default gw 192.168.22.1 4. 配DNS： $ vim /etc/resolv.conf $ echo &amp;quot;nameserver 114.114.114.114&amp;quot; &amp;gt; /etc/resolv.cof 5. 重启网络使配置生效： 6. 用文件配置ip信息 $ /etc/sysconfig/network-scripts/ifcfg-eth0 ps:添加静态路由 route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3 //添加静态路由添加网络10.211.55.0，从eth0出去  第二种方法 分1步： 打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:
 DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  打开ip转发 echo &amp;quot;1&amp;quot; &amp;gt;&amp;gt; /proc/sys/net/ipv4/ip_forward 或者vim /etc/sysctl.conf  </description>
     </item>
     
     <item>
       <title>Linux之权限(重点)</title>
-      <link>http://wyb0.com/posts/linux-permission-settings/</link>
+      <link>http://wyb0.com/posts/linux-permission-settings.html</link>
       <pubDate>Sun, 17 Apr 2016 10:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-permission-settings/</guid>
+      <guid>http://wyb0.com/posts/linux-permission-settings.html</guid>
       <description>主要有三种参数：rwx 对于文件来说：分别是读/写/执行
 对于目录来说：r读目录结构；w操作目录结构；x进入目录
 如：drwxr&amp;ndash;r&amp;ndash; 3 root root 4096 Jun 25 08:35 .ssh
@@ -294,10 +294,10 @@ DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  打开ip转�
     
     <item>
       <title>Linux之vim</title>
-      <link>http://wyb0.com/posts/linux-vim/</link>
+      <link>http://wyb0.com/posts/linux-vim.html</link>
       <pubDate>Fri, 15 Apr 2016 21:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/linux-vim/</guid>
+      <guid>http://wyb0.com/posts/linux-vim.html</guid>
       <description>Vim的安装及配置：  安装vim   yum install vim    配置文件的位置   在目录 /etc/ 下面，有个名为vimrc的 文件， 这是系统中公共的vim配置文件，对所有用户都有效。    设置语法高亮显示   1) 打开vimrc，添加以下语句来使得语法高亮显示： syntax on 2) 如果此时语法还是没有高亮显示，那么在/etc目录下的profile文件中添加以下语句： export TERM=xterm-color    设置Windows风格的C/C++自动缩进（添加以下set语句到vimrc中）   1）设置Tab为4个空格 set tabstop=4 #设定tab长度为4 set softtabstop=4 #使按退格键时可以一次删除4个空格 set shiftwidth=4 #表示每一级缩进的长度，一般设置成跟softtabstop一样 set expandtab/noexpandtab #缩进用空格/制表符表示 2）自动缩进 set autoindent/noautoindent #设置每行的缩进值与上一行相等/不相等(我未启用) 3）使用 C/C++ 语言的自动缩进方式 set cindent 4）在左侧显示文本的行号 set nu 5）搜索设置 set incsearch #输入搜索内容时就显示搜索结果 set hlsearch #搜索时高亮显示被找到的文本 6）如果没有下列语句，就加上吧 if &amp;amp;term==&amp;quot;xterm&amp;quot; set t_Co=8 set t_Sb=^[[4%dm set t_Sf=^[[3%dm endif   Vim编辑器的三种模式  命令行模式   $vim 文件名 #直接进入命令行模式 Ctrl+ZZ#可保存文件 5dd/4yy#剪切5行/复制4行 p #粘贴到当前行后面 u #一直点的话会一直撤销，直到回复到文件最初状态 gg/G #光标移动到首行/末行 H/M/L #光标移动到屏幕显示的首行/中间/末行 0/$ #光标移动到行首/行尾 w/b #光标跳到下一个/上一个单词 o #在下一行插入 Ctrl+g #显示文本的信息 dt% #删除所有内容直到遇到 % d0/d$或D #删除从光标到行首/行尾的字符 3dw #删除3个单词 v+方向键 #可以从当前光标向各方向选择字符或行 4+向下的方向键 #光标向下移动4行 /和？#向下和向上搜索    末行模式   :wq #推出并保存 :wq!</description>
     </item>
     

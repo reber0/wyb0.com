@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.21-DEV" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reber's Blog - 漏洞挖掘|渗透测试|python|php </title>
+    <meta name="keywords" content="渗透测试,漏洞挖掘,web安全,网络安全,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有漏洞挖掘、渗透测试、python、php等。">
+    <meta name="author" content="reber">
+
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/fonts-googleapis.css">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+
+    
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="/js/jquery.min.js"></script>
+
+</head>
+<body oncopy="return false" oncontextmenu="return false">
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    
+<div class="main">
+    <div class="left">
+        <div class="content">
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/tmux-usage.html">Tmux的使用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-09-10</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 Tmux的快捷键前缀  Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c
+ 0x01 会话   0x02 窗口和窗格   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/poc-framework-pocsuite.html">POC框架Pocsuite</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-09-08</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/poc">poc</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于Pocsuite  Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。
+ 0x01 简单介绍  安装  使用pip install pocsuite即可安装   常用参数  -u 指定一个目标url -f 指定一个存放目标url的文件 -r 指定一个存放poc的文件夹 &ndash;report 导出结果到html文件 &ndash;cookie 携带cookie &ndash;referer 修改referer &ndash;user-agent 修改UA  模式  执行一个poc有两种模式  --verify 漏洞验证模式(只是验证，不能更改服务器的东西) --attack 漏洞利用模式  示例  pocsuite -u &ldquo;http://www.xxxx.com&quot; -r poc_path/poc_name.py &ndash;atack   poc编写
+ 可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类) 此时示例(对目标进行常见服务的测试，加载一类多个poc脚本)  pocsuite -u &ldquo;http://www.xxxx.com&quot; -r poc_path/server/ &ndash;verify   poc的命名规范
+    </p>
+
+    
+    <footer>
+        <a href="/posts/poc-framework-pocsuite.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/python-form-blasting.html">Python实现表单爆破</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-09-05</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%88%86%E7%A0%B4">爆破</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        接收变量的php脚本如下  //代码仅供测试 &lt;?php $name = @$_POST['uname']; $pass = @$_POST['upass']; if (empty($name) or empty($pass)){ header(&quot;location:http://127.0.0.1:921/test/test/index.html&quot;); exit(); } else { if ($name === 'admin' and $pass === '123456'){ header(&quot;location:http://127.0.0.1:921/test/test/sucess.html&quot;); } else { header(&quot;location:http://127.0.0.1:921/test/test/error.html&quot;); exit(); } } ?&gt;   爆破表单的python脚本如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = [] class FormBlast(threading.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-form-blasting.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/sublime-text3-plugins.html">Sublime Text 3几个好用的插件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-09-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Package Control  安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件
+  代码安装
+ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)   import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())    手动安装
+ 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text  使用方法  Ctrl+Shift+P调出菜单然后选择相应操作  Preferences -&gt; Package Control也可调出  选择Install Package后可以输入想安装的插件名搜索安装    0x01 Emmet  前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 
+ 0x02 Anaconda  可以自动补全并提示语法，还可跳转到定义、使用等 效果如下：  0x03 Git  在编辑器就可以执行git命令，有github的开发者必备  0x04 GitGutter  在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率  0x05 Markdown Preview  可以在本地预览文件  0x06 DocBlokr  这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释  0x07 AutoFileName  快捷输入文件名  0x08 Theme-Flatland和Theme-SoDaReloaded  两个主题插件，安装好之后：首选项 -&gt; 设置-用户，修改文件Packages/User/Preferences.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/sublime-text3-plugins.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/php-safe-configuration.html">PHP安全配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-09-01</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 PHP的配置  PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题
+ 0x01 远程文件包含  涉及配置项  allow_url_include  配置为On时允许进行远程文件包含  allow_url_fopen  配置为On时允许使用函数fopen、file_put_contents   配置方案  alllow_url_include = Off allow_url_fopen = Off   0x02 关闭错误回显  涉及配置项  display_errors  配置为On时会显示错误信息   配置方案  display_errors = Off log_errors = On error_log = /var/log/php_error.log   0x03 隐藏php版本  涉及配置项  expose_php  为Off时会隐藏php版本   配置方案  expose_php = Off   0x04 魔术引号  涉及配置项  magic_quotes_gpc  过滤get、post、cookie的单引号、双引号、反斜杠、空字符，但不过滤$_SERVER  magic_quotes_runtime  对文件或数据库中取出的数据进行过滤，可防止二次注入   配置方案  做逻辑判断时需要去掉反斜杠，所以用全局过滤框架做过滤吧   0x05 安全模式  涉及配置项  safe_mode  开启后安全系数提升，但会限制函数使用权限和操作目录文件权限等   配置方案  在安全模式下可以使用safe_mode_include_dir = /var/www/common来排除某些文件   0x06 目录权限控制  涉及配置项  open_basedir  开启后可将用户访问范围限定，可防止跨站，但会影响性能   配置方案  open_basedir = /var/www/web1/:/var/www/web2/ (后面的斜杠不能少)   0x07 禁止函数  涉及配置项  disable_functions  禁止某些命令执行函数和文件操作函数的使用   配置方案  disable_functions = system,passthru,exec,shell_exec,popen,pcntl_exec, proc_open,chdir,chroot,getcwd,readdir,mkdir,copy,file_get_contents,   0x08 注册全局变量  涉及配置项  register_globals  值为On是会开启全局注册变量功能   配置方案  register_globals = Off   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/python-module.html">Python的模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-31</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径 使用if __name__ == &lsquo;__main__&lsquo;:  0x01 实例  文件结构如下  测试文件test.py
+   #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/python-password-generator.html">Python实现密码生成器</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-29</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        简介  有时候需要在网上注册许多账号，如果每个账户密码都一样的话，若被别人得知一个密码则所有账户就都沦陷了，若密码不一样则可能会忘记，在这里就用脚本写一个生成密码的工具，只需输入域名和账户名就可以根据key生成不一样的密码，也可以把域名和账户名写入文件，这样你用户名也可以不用记了。。。
+ 代码如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import sys import os import optparse import json import msvcrt def get_md5(string): md5 = hashlib.md5() md5.update(string) s = md5.hexdigest() return s def get_domain(): if os.path.exists('account.txt'): data = {} with open('account.txt', 'r') as f: lines = f.readlines() for line in lines: line = line.split('*') data[line[0]] = line[1].strip() else: pass return data def get_pass(): pwd = [] while True: nchar = msvcrt.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-password-generator.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/python-multi-threaded-weak-password-blasting.html">Python实现多线程弱口令爆破</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-26</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%88%86%E7%A0%B4">爆破</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        脚本  #!/usr/bin/env python # -*- coding: utf-8 -*- 'this script can bruter ftp/ssh/mysql' __author__ = 'reber' import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') ch.setFormatter(formatter) logger.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-multi-threaded-weak-password-blasting.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/python-exception-handling.html">Python的异常处理</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-26</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 Python异常处理  #!/usr/bin/env python # -*- coding: utf-8 -*- try: try: # 可嵌套 str(&quot;aaaaa&quot;) # int(&quot;aaaaa&quot;) # print a # print 1/0 except (TypeError, IndexError, ValueError): #捕获多种异常 print &quot;TypeErrorZero or DivisionError or ValueError&quot; except ZeroDivisionError as aa: #捕获除零错误 print aa #输出详细错误信息 except: print u&quot;发生其他异常则执行这里&quot; else: print u&quot;上面没有出错才输出这里&quot; a = [1,2,3] print a[4] #这里出错，会向上抛出错误，最终输出this is error finally: print u&quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&quot; except Exception as e: #可捕获所有异常类型 print &quot;this is error&quot; print e   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/metasploit-usage.html">Metasploit的简单使用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-23</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/msf">msf</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 启动   0x01 Metasploit的工作平台  在msf里的工作平台可以保存历史的一些操作信息  0x02 使用db_nmap扫描主机  扫描后的结果会保留在工作平台中，可以用hosts和services进行查看：  0x03 使用msf的模块进行弱口令爆破  注：这里针对ftp服务进行弱口令测试 使用vulns可以查看结果：msf auxiliary(ftp_login) &gt; vulns  
+    </p>
+
+    
+</article>
+
+
+            
+
+            
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <a href="/page/4.html"><i class="fa fa-chevron-left"></i></a>
+        
+
+        <span>&nbsp;5 / 17&nbsp;</span>
+        
+        
+            <a href="/page/6.html"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
+
+
+        </div>
+    </div>
+    <div class="right">
+        <div style="margin-top:10px;">
+            
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Categories</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(5)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(25)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(64)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/burpsuite" title="burpsuite">burpsuite</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/elevate-privileges" title="elevate-privileges">elevate-privileges</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/module" title="module">module</a>
+                <sup>13</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/msf" title="msf">msf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nessus" title="nessus">nessus</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>32</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlmap" title="sqlmap">sqlmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh" title="ssh">ssh</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+<div style="padding-bottom:20px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <a href="http://www.y-hkl.top/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <a href="http://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+</div>
+
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2016-2017 Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript">
+          var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1261003390'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261003390%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+    <div class="social">
+        
+        
+            <a href="https://github.com/reber0" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+        
+        &nbsp;&nbsp;
+        
+            <a href="http://weibo.com/u/5819760166" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+        
+        &nbsp;&nbsp;
+        <a href="http://wyb0.com/index.xml" target="_blank"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </div>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); 
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var alist = $('#tags p');
+        alist.each(function () {
+            var t = $(this);
+            var a = t.find('a');
+            var sup = parseInt(t.find('sup').text());
+            t.find('sup').hide();
+
+            if (0<sup && sup<6) {
+                a.addClass("text7");
+            } else if (5<sup && sup<11) {
+                a.addClass("text6");
+            } else if (10<sup && sup<16) {
+                a.addClass("text5");
+            } else if (15<sup && sup<21) {
+                a.addClass("text4");
+            } else if (20<sup && sup<26) {
+                a.addClass("text3");
+            } else if (25<sup && sup<31) {
+                a.addClass("text2");
+            } else if (30<sup && sup<36) {
+                a.addClass("text1");
+            } else {
+                a.addClass("text1");
+            }
+        });
+    });
+    </script>
+
+    
+    
+
+</body>
+</html>

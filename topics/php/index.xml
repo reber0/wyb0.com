@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Php on Reber&#39;s Blog</title>
-    <link>http://wyb0.com/topics/php/</link>
+    <link>http://wyb0.com/topics/php.html</link>
     <description>Recent content in Php on Reber&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -14,20 +14,20 @@
     
     <item>
       <title>PHP安全配置</title>
-      <link>http://wyb0.com/posts/php-safe-configuration/</link>
+      <link>http://wyb0.com/posts/php-safe-configuration.html</link>
       <pubDate>Thu, 01 Sep 2016 08:46:03 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-safe-configuration/</guid>
+      <guid>http://wyb0.com/posts/php-safe-configuration.html</guid>
       <description> 0x00 PHP的配置  PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题
  0x01 远程文件包含  涉及配置项  allow_url_include  配置为On时允许进行远程文件包含  allow_url_fopen  配置为On时允许使用函数fopen、file_put_contents   配置方案  alllow_url_include = Off allow_url_fopen = Off   0x02 关闭错误回显  涉及配置项  display_errors  配置为On时会显示错误信息   配置方案  display_errors = Off log_errors = On error_log = /var/log/php_error.log   0x03 隐藏php版本  涉及配置项  expose_php  为Off时会隐藏php版本   配置方案  expose_php = Off   0x04 魔术引号  涉及配置项  magic_quotes_gpc  过滤get、post、cookie的单引号、双引号、反斜杠、空字符，但不过滤$_SERVER  magic_quotes_runtime  对文件或数据库中取出的数据进行过滤，可防止二次注入   配置方案  做逻辑判断时需要去掉反斜杠，所以用全局过滤框架做过滤吧   0x05 安全模式  涉及配置项  safe_mode  开启后安全系数提升，但会限制函数使用权限和操作目录文件权限等   配置方案  在安全模式下可以使用safe_mode_include_dir = /var/www/common来排除某些文件   0x06 目录权限控制  涉及配置项  open_basedir  开启后可将用户访问范围限定，可防止跨站，但会影响性能   配置方案  open_basedir = /var/www/web1/:/var/www/web2/ (后面的斜杠不能少)   0x07 禁止函数  涉及配置项  disable_functions  禁止某些命令执行函数和文件操作函数的使用   配置方案  disable_functions = system,passthru,exec,shell_exec,popen,pcntl_exec, proc_open,chdir,chroot,getcwd,readdir,mkdir,copy,file_get_contents,   0x08 注册全局变量  涉及配置项  register_globals  值为On是会开启全局注册变量功能   配置方案  register_globals = Off   </description>
     </item>
     
     <item>
       <title>CGI与FastCGI与PHP-FPM</title>
-      <link>http://wyb0.com/posts/cgi-and-fastcgi-and-php-fpm/</link>
+      <link>http://wyb0.com/posts/cgi-and-fastcgi-and-php-fpm.html</link>
       <pubDate>Tue, 02 Aug 2016 10:45:14 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/cgi-and-fastcgi-and-php-fpm/</guid>
+      <guid>http://wyb0.com/posts/cgi-and-fastcgi-and-php-fpm.html</guid>
       <description> 0x01 CGI协议  中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议
  0x02 FastCGI  服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低
 fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等
@@ -37,19 +37,19 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
     
     <item>
       <title>PHP之封装MySQL类</title>
-      <link>http://wyb0.com/posts/php-package-mysql-function/</link>
+      <link>http://wyb0.com/posts/php-package-mysql-function.html</link>
       <pubDate>Fri, 03 Jun 2016 11:19:05 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-package-mysql-function/</guid>
+      <guid>http://wyb0.com/posts/php-package-mysql-function.html</guid>
       <description>0x00 config.inc.php内容如下  &amp;lt;?php return array( &#39;DB_HOST&#39; =&amp;gt; &#39;192.168.188.134&#39;, &#39;DB_NAME&#39; =&amp;gt; &#39;scoreboard&#39;, &#39;DB_USER&#39; =&amp;gt; &#39;score&#39;, &#39;DB_PASS&#39; =&amp;gt; &#39;123456&#39;, &#39;DB_CHARSET&#39; =&amp;gt; &#39;utf8&#39;, &#39;IS_LOG&#39; =&amp;gt; 1,//开启日志 &#39;LOGFILEPATH&#39; =&amp;gt; &#39;../log.txt&#39;//日志路径 ); /* $database = require(&#39;./config.php&#39;); echo $database[&#39;DB_TYPE&#39;]; //输出&#39;DB_TYPE&#39; */ ?&amp;gt;   0x01 表设计如下  create database scoreboard; use scoreboard; drop table if exists users; create table users( id int not null auto_increment primary key, gid int not null default &#39;xiaoming&#39; comment &#39;组id&#39;, username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;, password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39;, sex varchar(2) not null default &#39;0&#39; comment &#39;性别&#39;, totalscore int not null default &#39;0&#39; comment &#39;个人总积分&#39; ); drop table if exists share; create table share( id int not null auto_increment primary key, uid int not null, content varchar(1024) not null default &#39;content&#39; comment &#39;分享内容&#39;, comment varchar(1024) comment &#39;点评&#39;, date varchar(15) not null default &#39;20150101&#39; comment &#39;分享日期&#39; ); drop table if exists score; create table score( id int not null auto_increment primary key, uid int not null default &#39;0&#39; comment &#39;用户id&#39;, score int not null default &#39;0&#39; comment &#39;用户单次积分&#39;, ); grant all privileges on scoreboard.</description>
     </item>
     
     <item>
       <title>PHP之MySQL常用函数</title>
-      <link>http://wyb0.com/posts/php-mysql-common-function/</link>
+      <link>http://wyb0.com/posts/php-mysql-common-function.html</link>
       <pubDate>Thu, 02 Jun 2016 13:21:49 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-mysql-common-function/</guid>
+      <guid>http://wyb0.com/posts/php-mysql-common-function.html</guid>
       <description>处理函数  mysql_connect(server,user,pwd,newlink,clientflag)
 连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE
  mysql_select_db(database,connection)
@@ -75,59 +75,59 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
     
     <item>
       <title>PHP之MySQL简单操作</title>
-      <link>http://wyb0.com/posts/php-mysql-curd/</link>
+      <link>http://wyb0.com/posts/php-mysql-curd.html</link>
       <pubDate>Sun, 29 May 2016 22:50:52 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-mysql-curd/</guid>
+      <guid>http://wyb0.com/posts/php-mysql-curd.html</guid>
       <description>0x00 连接数据库   0x01 查看数据库   0x02 创建数据库  一般将sql语句保存在文本中，然后复制运行
 create database test; use test; drop table if exists users; create table users( id int not null auto_increment primary key, username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;, password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39; ); drop table if exists msg; create table msg( id int not null auto_increment primary key, uid int not null default &#39;0&#39; comment &#39;用户id&#39;, title varchar(30) not null default &#39;title&#39; comment &#39;信息标题&#39;, content varchar(1024) not null default &#39;content&#39; comment &#39;信息内容&#39;, ip varchar(15) not null default &#39;127.</description>
     </item>
     
     <item>
       <title>PHP之上传与下载</title>
-      <link>http://wyb0.com/posts/php-upload-and-download/</link>
+      <link>http://wyb0.com/posts/php-upload-and-download.html</link>
       <pubDate>Tue, 24 May 2016 08:31:09 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-upload-and-download/</guid>
+      <guid>http://wyb0.com/posts/php-upload-and-download.html</guid>
       <description>上传 客户端设置  客户端使用form表单上传文件，在form表单中必须指明enctype和method属性的值   &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;post&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;form action=&amp;quot;xx.php&amp;quot; mothod=&amp;quot;post&amp;quot; enctype=&amp;quot;multipart/form-data&amp;quot;&amp;gt; &amp;lt;input type=&amp;quot;file&amp;quot; value=&amp;quot;myfile&amp;quot; /&amp;gt;&amp;lt;br /&amp;gt; &amp;lt;input type=&amp;quot;submit&amp;quot; value=&amp;quot;提交&amp;quot; /&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   服务端设置  php.ini:   file_uploads = On //默认允许HTTP文件上传，此选项不能设置为OFF upload_tmp_dir= //文件上传时存放文件的临时目录 upload_max_filesize = 20M //设定单个文件上传的大小，必须小于post_max_size post_max_size = 19M //允许POST表单的数据最大大小    $_FILES:
    $_FILES[&#39;upload_file&#39;][&#39;name&#39;] //带扩展名的原始文件名 $_FILES[&#39;upload_file&#39;][&#39;size&#39;] //文件大小 $_FILES[&#39;upload_file&#39;][&#39;tmp_name&#39;] //临时文件名 $_FILES[&#39;upload_file&#39;][&#39;error&#39;] //上传文件时的错误信息 $_FILES[&#39;upload_file&#39;][&#39;type&#39;] //上传文件的类型 //type是上传文件时原始信息里的content_type,即MIME,有image/gig、text/html等 //error一般有5中类型： //0 上传成功 //1 文件大小超过了upload_max_filesize //2 文件大小超过了表单总MAX_FILE_SIZE设定的值 //3 只有部分被上传 //4 没有上传任何文件    服务端上传步骤   1.</description>
     </item>
     
     <item>
       <title>PHP之目录与文件</title>
-      <link>http://wyb0.com/posts/php-directory-and-file/</link>
+      <link>http://wyb0.com/posts/php-directory-and-file.html</link>
       <pubDate>Sun, 22 May 2016 16:29:47 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-directory-and-file/</guid>
+      <guid>http://wyb0.com/posts/php-directory-and-file.html</guid>
       <description>1.目录的操作 &amp;lt;?php $path = &amp;quot;/var/www/html/php/dir.php&amp;quot;; echo dirname($path).&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;; //返回上级路径 echo basename($path).&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;; //返回文件名部分 print_r(pathinfo($path)); //返回包含path信息的数组 echo &amp;quot;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;quot;; //readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动 $path = &amp;quot;D:/phpStudy/WWW/php&amp;quot;; $dh = opendir($path); while (false !== ($filename=readdir($dh))) { echo $filename.&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;; } rewinddir($dh); //指针复位 echo readdir($dh); closedir($dh); mkdir(&amp;quot;./aaa&amp;quot;);//创建文件夹aaa rmdir(&amp;quot;./aaa&amp;quot;);//删除文件夹aaa file_put_contents(&amp;quot;aa.php&amp;quot;, &amp;quot;&amp;quot;);//创建文件aa.php unlink(&amp;quot;./aa.php&amp;quot;);//删除文件aa.php ?&amp;gt;   
 2.文件的读写  fopen(filename,mode)和fclose(filename,mode) 例子： &amp;lt;?php $file = fopen(&amp;quot;test.txt&amp;quot;,&amp;quot;r&amp;quot;); $file = fopen(&amp;quot;/home/test/test.txt&amp;quot;,&amp;quot;r&amp;quot;); $file = fopen(&amp;quot;/home/test/test.gif&amp;quot;,&amp;quot;wb&amp;quot;); $file = fopen(&amp;quot;http://www.example.com/&amp;quot;,&amp;quot;r&amp;quot;); $file = fopen(&amp;quot;ftp://user:password@example.</description>
     </item>
     
     <item>
       <title>PHP之字符串</title>
-      <link>http://wyb0.com/posts/php-string/</link>
+      <link>http://wyb0.com/posts/php-string.html</link>
       <pubDate>Sat, 21 May 2016 23:16:28 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-string/</guid>
+      <guid>http://wyb0.com/posts/php-string.html</guid>
       <description>特点  字符串可以使用数组的处理函数操作，但并不是真正的数组 双引号中的变量用{}括起来，因为字符串中若遇到$符号，解析器会尽可能多的获取后面的字符以组成一个合法的变量名
 &amp;lt;?php $lamp = array(&#39;os&#39; =&amp;gt; &#39;Linux&#39;, &#39;webserver&#39; =&amp;gt; &#39;Apache&#39;, &#39;db&#39; =&amp;gt; &#39;Mysql&#39;, &#39;language&#39; =&amp;gt; &#39;PHP&#39;); echo &amp;quot;A OS is $lamp[os].&amp;quot;; // ok echo &amp;quot;A OS is $lamp[&#39;os&#39;].&amp;quot;; // false echo &amp;quot;A OS is {$lamp[&#39;os&#39;]}.&amp;quot;; //ok echo &amp;quot;A OS is {$lamp[os]}.&amp;quot;; // ok echo &amp;quot;This square is $square-&amp;gt;width meters broad.&amp;quot;; //ok echo &amp;quot;This square is $square-&amp;gt;width meters broad.&amp;quot;; //ok echo &amp;quot;This square is $square-&amp;gt;width meters broad.&amp;quot;; //ok ?</description>
     </item>
     
     <item>
       <title>PHP之面向对象</title>
-      <link>http://wyb0.com/posts/php-object-oriented/</link>
+      <link>http://wyb0.com/posts/php-object-oriented.html</link>
       <pubDate>Fri, 20 May 2016 16:07:55 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-object-oriented/</guid>
+      <guid>http://wyb0.com/posts/php-object-oriented.html</guid>
       <description>面向对象  面向对象概念  面向对象是达到了软件工程的三个目标：重用性、灵活性和扩展性，使其编程的代码更加简洁、更易于维护、并且具有更强的可重用性。  类和对象的关系  在面向对象的编程语言中，类是一个对立的程序单位，而对象的抽象就是类。类描述了一组有相同特性(属性)和相同行为(方法)的对象。开发时要先抽象类再用该类去创建对象。而我们的程序中直接使用的是对象而不是类。  什么是类  在面向对象的编程语言中，类是一个对立的程序单位，是具有相同属性和服务的一组对象的集合。它为属于该类的所有对象提供了同意的抽象描述，其内部包括成员属性和服务的方法两个部分。  什么是对象  在客观世界里，所有的事物都是由对象和对象之间的联系组成的。对象是系统中用来描述客观事物的一个实体，它是构成系统的一个基本单位，一个对象由一组属性和有权对这些属性进行操作的一组服务的封装体。   类的声明  类名和变量名还有函数名的命名规则类似，都遵循PHP中定义名称的命名规则。 若类名由多个单词组成，习惯上每个单词的首字母要大写 类中成员可分为属性和方法 属性为静态描述，方法为动态描述 在类中声明成员属性时，变量前面一定要有关键字，如：public、private、static等 若不需要有特定意义的修饰，则使用var关键字  格式： [一些修饰类的关键字] class 类名 { 类中成员; } Class Person { 成员属性： 姓名、性别、年龄、身高、体重、电话、住址等 成员方法： 说话、学习、走路、吃饭、开车、使用手机等 } 例子： &amp;lt;?php class Person { var $name; var $age; var $sex; function say() { echo &amp;quot;人在说话&amp;quot;; } function run() { echo &amp;quot;人在走路&amp;quot;; } } ?&amp;gt;  实例化对象 格式： $变量名 = new 类名称([参数列表]); $变量名 = new 类名称; 例子： &amp;lt;?</description>
     </item>
     
     <item>
       <title>PHP之数组</title>
-      <link>http://wyb0.com/posts/php-array/</link>
+      <link>http://wyb0.com/posts/php-array.html</link>
       <pubDate>Wed, 18 May 2016 11:09:46 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-array/</guid>
+      <guid>http://wyb0.com/posts/php-array.html</guid>
       <description>分类  索引数组 索引值从0开始，依次递增 关联数组 以字符串为索引，键和值对是无序组合，每个键都是唯一的  数组的定义 两种方法：
  直接为数组元素赋值即可声明数组 使用array()函数声明数组
 &amp;lt;?php // 1.直接为数组元素赋值即可声明数组 $contact_index[0] = 1; $contact_index[1] = &amp;quot;高某&amp;quot;; $contact_index[2] = &amp;quot;A公司&amp;quot;; $contact_index[3] = &amp;quot;北京市&amp;quot;; $contact_index[] = &amp;quot;gao@a.com&amp;quot;; var_dump($contact_index); $contact_key[&amp;quot;ID&amp;quot;] = &amp;quot;2&amp;quot;; $contact_key[&amp;quot;姓名&amp;quot;] = &amp;quot;峰某&amp;quot;; $contact_key[&amp;quot;公司&amp;quot;] = &amp;quot;B公司&amp;quot;; $contact_key[&amp;quot;邮箱&amp;quot;] = &amp;quot;feng@b.com&amp;quot;; var_dump($contact_key); // 2.使用array()函数声明数组 $contact_key_array = array( &amp;quot;ID&amp;quot; =&amp;gt; 1; &amp;quot;姓名&amp;quot; =&amp;gt; &amp;quot;峰某&amp;quot;; &amp;quot;公司&amp;quot; =&amp;gt; &amp;quot;B公司&amp;quot;; &amp;quot;邮箱&amp;quot; =&amp;gt; &amp;quot;feng@b.com&amp;quot;; ); var_dump($contact_key_array); ?&amp;gt;   数组的遍历  for语句遍历数组 foreach语句遍历数组</description>
@@ -135,10 +135,10 @@ create database test; use test; drop table if exists users; create table users( 
     
     <item>
       <title>PHP之基础</title>
-      <link>http://wyb0.com/posts/php-basis/</link>
+      <link>http://wyb0.com/posts/php-basis.html</link>
       <pubDate>Sun, 15 May 2016 09:10:23 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/php-basis/</guid>
+      <guid>http://wyb0.com/posts/php-basis.html</guid>
       <description>0x00 PHP的作用  收集表单数据 生成动态网页 字符串处理 动态输出图片 处理服务器端文件系统 编写数据库支持的网页 会话跟踪控制 处理XML文件 支持大量的网络协议 服务器端的其他相关操作  0x01 PHP代码嵌入位置  可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&amp;quot;&amp;lt;?php&amp;quot;起始符和终止符&amp;quot;?&amp;gt;&amp;quot;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。   0x02 解读开始和结束标记  1. &amp;lt;?php ?&amp;gt; 2. &amp;lt;script language=&amp;quot;php&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; 3. &amp;lt;? ?&amp;gt; 4. &amp;lt;% %&amp;gt; //前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags   0x03 指令分割符  php一段代码中除了最后一行不用分号，其他每句都要用分号结束，推荐每句都用分号结束
  0x04 注释  1. 若觉得代码不合适则可以注释，但不要急于删除 2. 注释的目的在于说明程序 3. 注释对调试和编写程序可以起到很好的帮助作用 4. PHP注释符有：&amp;quot;/**/&amp;quot;、&amp;quot;//&amp;quot;、&amp;quot;#&amp;quot;   0x05 空白符  空白符(空格、tab制表符、换行)会被php引擎忽略
  0x06 变量的声明  其中双引号中的变量可以被解析，单引号中的变量不能被解析

