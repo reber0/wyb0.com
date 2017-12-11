@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-07-10</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -122,9 +123,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。  0x01 设置mongo和redis  因为mrq依赖于redis和mongo，所以先安装设置下
-  安装redis   $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp; $ redis-cli &gt; auth reber_redis    安装mongo   可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &quot;deb [ arch=amd64 ] http://repo.
+        0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。  0x01 设置mongo和redis 因为mrq依赖于redis和mongo，所以先安装设置下
+ 安装redis  $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp; $ redis-cli &gt; auth reber_redis   安装mongo  可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &quot;deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.
     </p>
 
     
@@ -147,11 +148,12 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-04-15</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -179,7 +181,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 作用  在下载大文件时以进度条的形式显示下载进度，如下图所示：  0x01 代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers['Content-Length'])/1024 with open(name, &quot;wb&quot;) as f: print &quot;total: &quot;,content_size,'k' for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit='k'): f.write(data) print &quot;done &quot;+name if __name__ == '__main__': url = &quot;http://127.0.0.1/Video.mp4&quot; name = url.split('/')[-1] get_vedio(url,name)   
+         0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers['Content-Length'])/1024 with open(name, &quot;wb&quot;) as f: print &quot;total: &quot;,content_size,'k' for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit='k'): f.write(data) print &quot;done &quot;+name if __name__ == '__main__': url = &quot;http://127.0.0.1/Video.mp4&quot; name = url.split('/')[-1] get_vedio(url,name)  
     </p>
 
     
@@ -198,11 +200,12 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-03-21</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -228,7 +231,9 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于cURL  cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。 利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。   0x01 pycurl常见方法  创建curl对象   c = pycurl.Curl() #创建一个curl对象    设置请求   c.setopt(pycurl.URL,&quot;http://www.baidu.com&quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象    部分返回信息   c.
+        0x00 关于cURL cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。
+利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。
+0x01 pycurl常见方法  创建curl对象  c = pycurl.Curl() #创建一个curl对象   设置请求  c.setopt(pycurl.URL,&quot;http://www.baidu.com&quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象   部分返回信息  c.getinfo(pycurl.HTTP_CODE) #返回的HTTP状态码 c.
     </p>
 
     
@@ -251,11 +256,12 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-11-25</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -283,8 +289,9 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 openpyxl模块  这个模块可以让你读写excel文件   0x01 读取数据  代码如下：
-#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename='aa.xlsx') sheetnames = wb.get_sheet_names() #获得所有表名 print u&quot;存在表：%s&quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&quot;第一张表表名为：%s&quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &quot;表%s有%d行%d列&quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&quot;取部分数据：&quot; print ws['A1'].value,ws['B1'].value print ws['A2'].value,ws['B2'].value print ws.cell(row=1, column=2).
+        0x00 openpyxl模块 这个模块可以让你读写excel文件
+0x01 读取数据 代码如下：
+#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename='aa.xlsx') sheetnames = wb.get_sheet_names() #获得所有表名 print u&quot;存在表：%s&quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&quot;第一张表表名为：%s&quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &quot;表%s有%d行%d列&quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&quot;取部分数据：&quot; print ws['A1'].value,ws['B1'].value print ws['A2'].value,ws['B2'].value print ws.cell(row=1, column=2).value print u&quot;\n输出表%s的所有数据：&quot; % ws.title for x in range(1,rows+1): for y in range(1,columns+1): print ws.
     </p>
 
     
@@ -307,11 +314,12 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-31</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -339,8 +347,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径 使用if __name__ == &lsquo;__main__&lsquo;:  0x01 实例  文件结构如下  测试文件test.py
-   #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.
+        0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append('D:/xx/xx/xx/code')可以添加搜索路径 使用if __name__ == '__main__':  0x01 实例  文件结构如下   测试文件test.py  #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.test()   包package1
     </p>
 
     
@@ -363,11 +370,12 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-19</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -395,10 +403,10 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 colorama  这个模块可以输出带有颜色的字符
-#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.CYAN,content='debug',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.YELLOW,content='warning',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.RED,content='error',g_color=colorama.Fore.RESET)   0x01 pyfiglet  可以输出字体的图片效果
-from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&quot;xtty&quot;) #font可以控制输出的类型   0x02 chardet  这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
-#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&quot;https://tower.im/users/sign_in&quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.
+        0x00 colorama 这个模块可以输出带有颜色的字符
+#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.CYAN,content='debug',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.YELLOW,content='warning',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.RED,content='error',g_color=colorama.Fore.RESET)  0x01 pyfiglet 可以输出字体的图片效果
+from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&quot;xtty&quot;) #font可以控制输出的类型  0x02 chardet 这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
+#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&quot;https://tower.im/users/sign_in&quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.decode(code['encoding']).encode('gbk') print chardet.detect(str1) start = str1.find('&lt;title&gt;') stop = str1.
     </p>
 
     
@@ -421,11 +429,12 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-16</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -453,8 +462,8 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 关于optparse模块  python2.3之后添加的模块optparse是专门用来处理命令行选项的
-import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] domaion', version='%prog 1.2') parser.add_option('-b', '--bug', dest='isbug', default=False, action='store_true', help='Whether open the debug mode, default is false') parser.add_option('-u', '--url', dest='url', default=None, action='store', type='string', help='target url') parser.add_option('-n','--number', dest='num', default=10, type='int', help='the number, default is 10') (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message   0x01 说明  在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action='store'，可以不用写 action='store_true'使用参数时将布尔值true存储到dest指定的变量中 action='store_false'使用参数时将布尔值false存储到dest指定的变量中   
+         0x00 关于optparse模块 python2.3之后添加的模块optparse是专门用来处理命令行选项的
+import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] domaion', version='%prog 1.2') parser.add_option('-b', '--bug', dest='isbug', default=False, action='store_true', help='Whether open the debug mode, default is false') parser.add_option('-u', '--url', dest='url', default=None, action='store', type='string', help='target url') parser.add_option('-n','--number', dest='num', default=10, type='int', help='the number, default is 10') (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message  0x01 说明 在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action='store'，可以不用写 action='store_true'使用参数时将布尔值true存储到dest指定的变量中 action='store_false'使用参数时将布尔值false存储到dest指定的变量中  
     </p>
 
     
@@ -473,11 +482,12 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-11</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -505,7 +515,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 简单尝试   0x01 生成一组数据包   0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包   0x04 得到TCP内容   0x05 SYN Scans   
+         0x00 简单尝试 0x01 生成一组数据包 0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包 0x04 得到TCP内容 0x05 SYN Scans 
     </p>
 
     
@@ -524,11 +534,12 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-07-14</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -556,9 +567,9 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         安装 直接pip install paramiko安装
+         0x00 安装 直接pip install paramiko安装
 或者去http://www.paramiko.org/ 下载
-执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&quot;192.168.188.134&quot;,22,&quot;reber&quot;,&quot;123456&quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&quot;ls -l&quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&quot;192.168.188.134&quot;,22)) ftp.connect(username=&quot;reber&quot;,password=&quot;123456&quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\a.txt' sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\WYB_9\\Desktop\\system.log remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\system.log' sftp.get(remotepath, localpath) ftp.close()  
+0x01 执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&quot;192.168.188.134&quot;,22,&quot;reber&quot;,&quot;123456&quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&quot;ls -l&quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  0x02 上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&quot;192.168.188.134&quot;,22)) ftp.connect(username=&quot;reber&quot;,password=&quot;123456&quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\a.txt' sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\WYB_9\\Desktop\\system.log remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\system.log' sftp.get(remotepath, localpath) ftp.close()  
     </p>
 
     
@@ -577,11 +588,12 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-07-14</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -609,8 +621,8 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        关于cmd模块  使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
- cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  用cmd模块简单实现shell命令  #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot; def __init__(self): Cmd.__init__(self) os.chdir(&quot;C:/Users/WYB_9/Desktop&quot;) hostName = socket.gethostname() self.prompt = &quot;reber@&quot; + hostName + &quot; &quot; + os.path.abspath('.') + &quot;\n$ &quot; def help_dir(self): print &quot;dir [path]&quot; def do_dir(self, arg): if not arg: print &quot;\n&quot;.
+        0x00 关于cmd模块 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+0x01 cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  0x02 用cmd模块简单实现shell命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot; def __init__(self): Cmd.__init__(self) os.chdir(&quot;C:/Users/WYB_9/Desktop&quot;) hostName = socket.gethostname() self.prompt = &quot;reber@&quot; + hostName + &quot; &quot; + os.path.abspath('.') + &quot;\n$ &quot; def help_dir(self): print &quot;dir [path]&quot; def do_dir(self, arg): if not arg: print &quot;\n&quot;.
     </p>
 
     

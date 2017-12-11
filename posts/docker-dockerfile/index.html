@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-08-18</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -119,16 +120,13 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87</p>
 
 <h3 id="0x00-dockerfile">0x00 Dockerfile</h3>
 
-<blockquote>
 <pre><code>Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令，
 每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。
 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-dockerfile基本指令">0x01 Dockerfile基本指令</h3>
 
-<blockquote>
 <pre><code class="language-bash">FROM &lt;image name&gt;：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie)
 MAINTAINER &lt;author name&gt;：设置该镜像的作者
 COPY &lt;source&gt; &lt;dest&gt;：复制文件，dest要以 / 结尾
@@ -154,19 +152,15 @@ ENTRYPOINT ['/bin/echo','entrypoint test']
 ENTRYPOINT ['/etc/init.d/mysql']
 CMD [&quot;restart&quot;]#CMD中的值会作为ENTRYPOINT的默认参数
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-实例">0x02 实例</h3>
 
-<blockquote>
 <p><img src="/img/post/dockerfile.png" alt="文件结构" /></p>
-</blockquote>
 
 <ul>
 <li>Dockerfile</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">reber@wyb:~/range$ cat Dockerfile
 FROM ubuntu:14.04
 MAINTAINER reber
@@ -194,25 +188,21 @@ RUN chmod +x /start.sh
 ENTRYPOINT [&quot;/start.sh&quot;]
 CMD [&quot;--help&quot;]
 </code></pre>
-</blockquote>
 
 <ul>
 <li>src/privileges.sql</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-sql">reber@wyb:~/range$ cat src/privileges.sql
 use mysql;
 UPDATE user SET password=PASSWORD('root') where USER='root';
 FLUSH PRIVILEGES;
 </code></pre>
-</blockquote>
 
 <ul>
 <li>src/sources.list</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">reber@wyb:~/range$ cat src/sources.list
 deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
 deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
@@ -225,13 +215,11 @@ deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted univers
 deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
 deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
 </code></pre>
-</blockquote>
 
 <ul>
 <li>src/start.sh</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">reber@wyb:~/range$ cat src/start.sh
 #!/bin/bash
 set -x
@@ -254,11 +242,9 @@ echo 'set success'
 
 /usr/bin/tail -f /dev/null
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-构建镜像">0x03 构建镜像</h3>
 
-<blockquote>
 <pre><code class="language-bash">reber@wyb:~/range$ ls
 Dockerfile  src
 reber@wyb:~/range$ ls src
@@ -270,7 +256,6 @@ reber@wyb:~/range$ docker build -t range:1.0 .
 #运行容器，并将容器的80端口转到宿主机的8888端口
 reber@wyb:~/range$ docker run -itd -p 8888:80 range:v1.0
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-注意事项">0x04 注意事项</h3>
 
@@ -278,7 +263,6 @@ reber@wyb:~/range$ docker run -itd -p 8888:80 range:v1.0
 <li>使用缓存</li>
 </ul>
 
-<blockquote>
 <p>因为每条指令都会创建一个镜像，若一个镜像已经存在的话则不会重新执行指令创建新镜像，而是直接使用。<br />
 为有效的利用已存在的镜像，应保持Dockerfile的一致性，尽量在末尾修改，比如说前几行都如下设置：</p>
 
@@ -290,35 +274,28 @@ RUN echo &quot;deb http://archive.ubuntu.com/ubuntu precise main universe&quot; 
 RUN apt-get update
 RUN apt-get upgrade -y #尽量不要upgrade
 </code></pre>
-</blockquote>
 
 <ul>
 <li>使用标签</li>
 </ul>
 
-<blockquote>
 <p>始终使用-t参数给镜像打标签：docker build -t ubuntu:range1 .</p>
-</blockquote>
 
 <ul>
 <li>公开端口</li>
 </ul>
 
-<blockquote>
 <p>Docker镜像应该能在任何主机上运行，所以不要通过Dockerfile映射共有端口，只映射私有端口：EXPOSE 80</p>
-</blockquote>
 
 <ul>
 <li>CMD与ENTRYPOINT</li>
 </ul>
 
-<blockquote>
 <p>应该使用数组语法，两者可以结合使用</p>
 
 <pre><code>ENTRYPOINT [&quot;/start.sh&quot;] #docker run的参数将传递给start.sh
 CMD [&quot;--help&quot;] #若没有参数传递则显示帮助文档
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

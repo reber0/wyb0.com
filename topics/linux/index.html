@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-09-19</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -120,7 +121,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 为什么使用数据卷  Docker镜像是由多个文件系统(只读层)叠加而成的。 当一个容器启动时Docker会加载只读镜像层并在其上添加一个读写层。 读写层中的修改在镜像重新启动后会全部丢失。 在Docker中，只读层及在顶部的读写层的组合被称为Union File System(联合文件系统)。 如果想要保存数据，则可以使用数据卷来在容器外面保存数据，主要为如下两种方式： * 使用docker run运行容器时指定数据卷 * 在Dockerfile中直接指定数据卷   0x01 docker run挂载Volume(使用-v参数)  不指定主机目录   #运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷 $ docker run -itd --name v_test -v /data debian:jessie /bin/bash root@d145e8c6f874:/# ls bin data etc lib media opt root sbin sys usr boot dev home lib64 mnt proc run srv tmp var root@d145e8c6f874:/# exit exit #查看数据卷的对应位置，前者是宿主机的位置，后者是容器中的位置 $ docker inspect -f {{.Mounts}} v_test [{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local true }]    指定主机目录(只能通过-v参数实现，Dockerfile不行)   $ docker run -itd -v /home/var/docker_data:/data debian:jessie /bin/bash root@d853c4ca7632:/# exit exit $ docker inspect -f {{.
+        0x00 为什么使用数据卷 Docker镜像是由多个文件系统(只读层)叠加而成的。 当一个容器启动时Docker会加载只读镜像层并在其上添加一个读写层。 读写层中的修改在镜像重新启动后会全部丢失。 在Docker中，只读层及在顶部的读写层的组合被称为Union File System(联合文件系统)。 如果想要保存数据，则可以使用数据卷来在容器外面保存数据，主要为如下两种方式： * 使用docker run运行容器时指定数据卷 * 在Dockerfile中直接指定数据卷  0x01 docker run挂载Volume(使用-v参数)  不指定主机目录  #运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷 $ docker run -itd --name v_test -v /data debian:jessie /bin/bash root@d145e8c6f874:/# ls bin data etc lib media opt root sbin sys usr boot dev home lib64 mnt proc run srv tmp var root@d145e8c6f874:/# exit exit #查看数据卷的对应位置，前者是宿主机的位置，后者是容器中的位置 $ docker inspect -f {{.Mounts}} v_test [{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local true }]   指定主机目录(只能通过-v参数实现，Dockerfile不行)  $ docker run -itd -v /home/var/docker_data:/data debian:jessie /bin/bash root@d853c4ca7632:/# exit exit $ docker inspect -f {{.
     </p>
 
     
@@ -143,11 +144,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-08-18</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -175,8 +177,8 @@
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         操作系统：Ubuntu14.04.1
 Docker版本：Docker version 17.06.0-ce, build 02c1d87
-0x00 Dockerfile  Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令， 每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。   0x01 Dockerfile基本指令  FROM &lt;image name&gt;：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie) MAINTAINER &lt;author name&gt;：设置该镜像的作者 COPY &lt;source&gt; &lt;dest&gt;：复制文件，dest要以 / 结尾 WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效 RUN &lt;command&gt;：在shell执行命令 EXPOSE port1 port2：容器运行时监听的端口 CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组) ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组) ENV &lt;key&gt; &lt;value&gt;：设置环境变量 USER &lt;uid&gt;：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root VOLUME ['/data']：授权访问从容器内到主机的目录  CMD与ENTRYPOINT的区别：
-#docker run ubuntu:test会执行/bin/echo 'this is test' CMD ['/bin/echo','this is test'] #docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test' ENTRYPOINT ['/bin/echo','entrypoint test'] #docker run ubuntu:test start即执行/etc/init.d/mysql start，CMD中的默认参数会被覆盖 ENTRYPOINT ['/etc/init.
+0x00 Dockerfile Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令， 每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。  0x01 Dockerfile基本指令 FROM &lt;image name&gt;：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie) MAINTAINER &lt;author name&gt;：设置该镜像的作者 COPY &lt;source&gt; &lt;dest&gt;：复制文件，dest要以 / 结尾 WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效 RUN &lt;command&gt;：在shell执行命令 EXPOSE port1 port2：容器运行时监听的端口 CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组) ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组) ENV &lt;key&gt; &lt;value&gt;：设置环境变量 USER &lt;uid&gt;：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root VOLUME ['/data']：授权访问从容器内到主机的目录  CMD与ENTRYPOINT的区别：
+#docker run ubuntu:test会执行/bin/echo 'this is test' CMD ['/bin/echo','this is test'] #docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test' ENTRYPOINT ['/bin/echo','entrypoint test'] #docker run ubuntu:test start即执行/etc/init.d/mysql start，CMD中的默认参数会被覆盖 ENTRYPOINT ['/etc/init.d/mysql'] CMD [&quot;restart&quot;]#CMD中的值会作为ENTRYPOINT的默认参数  0x02 实例  Dockerfile  reber@wyb:~/range$ cat Dockerfile FROM ubuntu:14.
     </p>
 
     
@@ -199,11 +201,12 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-08-18</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -231,7 +234,7 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         操作系统：Ubuntu14.04.1
 Docker版本：Docker version 17.06.0-ce, build 02c1d87
-0x00 镜像操作  下载镜像   #一般容器的id和name可以互换 $ docker search ubuntu #从公共registry搜索镜像 $ docker pull ubuntu #从公共registry下载镜像 $ docker pull ubuntu:14.04    查看当前系统镜像   $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.04 54333f1de4ed 2 weeks ago 188MB    提交新的镜像   #首先运行一个容器，容器id为50b74968229a $ docker commit 50b74968229a ubuntu:add_file $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu add_file 9e01bfa580bb 1 weeks ago 190MB ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.
+0x00 镜像操作  下载镜像  #一般容器的id和name可以互换 $ docker search ubuntu #从公共registry搜索镜像 $ docker pull ubuntu #从公共registry下载镜像 $ docker pull ubuntu:14.04   查看当前系统镜像  $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.04 54333f1de4ed 2 weeks ago 188MB   提交新的镜像  #首先运行一个容器，容器id为50b74968229a $ docker commit 50b74968229a ubuntu:add_file $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu add_file 9e01bfa580bb 1 weeks ago 190MB ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.
     </p>
 
     
@@ -254,11 +257,12 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-08-15</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -284,10 +288,10 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于Docker  Docker中的镜像类似VM的快照，容器类似虚拟机，使用镜像创建容器类似于使用快照创建虚拟机。 Docker中运行应用的是容器，容器的创建和销毁在秒级就能完成。 Docker使用了AUFS，可以以递进的方式创建&rdquo;VM&rdquo;，一个&rdquo;VM&rdquo;叠在另一个&rdquo;VM&rdquo;上，就像使用git增量开发一样。 软件的运行环境（image）和软件本身（container）分离，和数据也分离。
- 学习Docker需要了解4个概念：镜像、容器、数据卷、链接
-  0x01 镜像image  Docker Images 只是一个只读模板，用来运行Docker容器，可以在Docker hub(官方镜像库)下载。 镜像拥有唯一ID(比如：72c989e2d109)以及一个供人阅读的名字和标签对(比如：ubuntu:latest)。 镜像必须完全可移植,Docker不允许例外。  0x02 容器container  可以在一个镜像的基础上创建多个容器，每个容器相互独立。 容器也拥有唯一ID以及一个供人阅读的名字。 容器被启动时会被分配一个随机的私有IP，其他容器可以通过这个IP与它进行通信。 Docker允许公开容器的特定端口。 一个容器一个进程，容器设计本意是用来运行一个应用的而非一台机器。 容器应该是短暂和一次性的。 Docker镜像层对于容器来说，是只读的，容器对于文件的写操作绝对不会作用在镜像中。  0x03 数据卷  数据卷表现为容器内的空间，但实际保存在容器外，你可以在不影响数据的情况下销毁、重建、修改、丢弃容器。 Docker允许你定义应用和数据部分，并提供工具让你可以将它们分开。  0x04 链接  Docker允许你在创建一个新容器时引用其它现存容器，在你刚创建的容器里被引用的容器将获得一个你指定的别名，我们就说这两个容器被链接在了一起。 若DB容器已经在运行，我们可以创建一个Web服务器容器，并在创建时引用这个DB容器，可以给它起个别名(比如dbapp)，在新创建的Web服务器容器中，可以在任何时候使用主机名dbapp与DB容器进行通信。  0x05 镜像与容器关系  Docker镜像是一个文件，属于静态的内容；Docker容器属于动态的内容，可以把容器理解为一个或多个运行进程。 Docker可以通过解析Docker镜像的json文件，获知应该在这个镜像之上运行什么样的进程，应该为进程配置怎么样的环境变量。 Docker守护进程手握Docker镜像的json文件，它为容器配置相应的环境并真正运行Docker镜像所指定的进程，从而完成Docker容器的真正创建。 当Docker容器运行起来之后，Docker镜像json文件就失去作用了。此时Docker镜像的绝大部分作用就是：为Docker容器提供一个文件系统的视角，供容器内部的进程访问文件资源。  0x06 Docker有三个组件和三个基本元素  三个组件
+        0x00 关于Docker  Docker中的镜像类似VM的快照，容器类似虚拟机，使用镜像创建容器类似于使用快照创建虚拟机。 Docker中运行应用的是容器，容器的创建和销毁在秒级就能完成。 Docker使用了AUFS，可以以递进的方式创建&rdquo;VM&rdquo;，一个&rdquo;VM&rdquo;叠在另一个&rdquo;VM&rdquo;上，就像使用git增量开发一样。 软件的运行环境（image）和软件本身（container）分离，和数据也分离。  学习Docker需要了解4个概念：镜像、容器、数据卷、链接
+0x01 镜像image  Docker Images 只是一个只读模板，用来运行Docker容器，可以在Docker hub(官方镜像库)下载。 镜像拥有唯一ID(比如：72c989e2d109)以及一个供人阅读的名字和标签对(比如：ubuntu:latest)。 镜像必须完全可移植,Docker不允许例外。  0x02 容器container  可以在一个镜像的基础上创建多个容器，每个容器相互独立。 容器也拥有唯一ID以及一个供人阅读的名字。 容器被启动时会被分配一个随机的私有IP，其他容器可以通过这个IP与它进行通信。 Docker允许公开容器的特定端口。 一个容器一个进程，容器设计本意是用来运行一个应用的而非一台机器。 容器应该是短暂和一次性的。 Docker镜像层对于容器来说，是只读的，容器对于文件的写操作绝对不会作用在镜像中。  0x03 数据卷  数据卷表现为容器内的空间，但实际保存在容器外，你可以在不影响数据的情况下销毁、重建、修改、丢弃容器。 Docker允许你定义应用和数据部分，并提供工具让你可以将它们分开。  0x04 链接  Docker允许你在创建一个新容器时引用其它现存容器，在你刚创建的容器里被引用的容器将获得一个你指定的别名，我们就说这两个容器被链接在了一起。 若DB容器已经在运行，我们可以创建一个Web服务器容器，并在创建时引用这个DB容器，可以给它起个别名(比如dbapp)，在新创建的Web服务器容器中，可以在任何时候使用主机名dbapp与DB容器进行通信。  0x05 镜像与容器关系  Docker镜像是一个文件，属于静态的内容；Docker容器属于动态的内容，可以把容器理解为一个或多个运行进程。 Docker可以通过解析Docker镜像的json文件，获知应该在这个镜像之上运行什么样的进程，应该为进程配置怎么样的环境变量。 Docker守护进程手握Docker镜像的json文件，它为容器配置相应的环境并真正运行Docker镜像所指定的进程，从而完成Docker容器的真正创建。 当Docker容器运行起来之后，Docker镜像json文件就失去作用了。此时Docker镜像的绝大部分作用就是：为Docker容器提供一个文件系统的视角，供容器内部的进程访问文件资源。  0x06 Docker有三个组件和三个基本元素  三个组件
  Docker Daemon 运行于主机上，处理服务请求，是用于管理容器的后台进程，上面有一些api接口。 Docker Client 用于操作容器，它是Deamon的api接口(如docker start、docker rm等)的封装。 Docker Index 是中央registry，支持拥有公有与私有访问权限的Docker容器镜像的备份。  三个基本要素
+ Docker Images 是一个只读模板，用来运行Docker容器。 Docker Containers 负责应用程序的运行，包括操作系统、用户添加的文件以及元数据。 DockerFile 是文件指令集，用来说明如何自动创建Docker镜像。   0x07 Docker的运行原理  Docker使用以下操作系统的功能来提高容器技术效率
     </p>
 
     
@@ -310,11 +314,12 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-03-10</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -340,8 +345,8 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境  Ubuntu 14.04.1 LTS
- 0x01 安装与配置  reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;, # &quot;40002&quot;: &quot;lilei&quot;, # &quot;40003&quot;: &quot;mike&quot; #} &quot;timeout&quot;:300, # 超时时间（秒） &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式 # 若Linux内核在3.
+        0x01 安装与配置 环境：Ubuntu 14.04.1 LTS
+reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;, # &quot;40002&quot;: &quot;lilei&quot;, # &quot;40003&quot;: &quot;mike&quot; #} &quot;timeout&quot;:300, # 超时时间（秒） &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式 # 若Linux内核在3.
     </p>
 
     
@@ -364,11 +369,12 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-09-10</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -394,8 +400,8 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 Tmux的快捷键前缀  Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c
- 0x01 会话   0x02 窗口和窗格   
+         0x00 Tmux的快捷键前缀 Tmux 提供了一个快捷键前缀。当想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。比如想按快捷键c时，你需要：先按ctrl+b，松开后再按c
+0x01 会话 0x02 窗口和窗格 
     </p>
 
     
@@ -414,11 +420,12 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-10</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -444,9 +451,9 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 SSH相关选项  -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，用于端口转发 -D socket5代理 -L tcp转发 -C 使用数据压缩，网速快时会影响速度   0x01 SSH免密码登陆  A主机免密码登陆B主机：
-A主机运行： ssh-keygen -t rsa 会生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub 将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中 注： 要确保B主机~/.ssh/authorized_keys权限为600 要确保B主机~/.ssh/文件夹权限为700 要确保上述两个文件属主是当前用户   0x02 SSH反向连接  主机A要通过SSH连接主机B：
-B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定  A主机运行： ssh root@127.0.0.1 -p 8888 输入本机的root的密码即可登入主机B的root用户   0x03 SSH Socks5代理   
+         0x00 SSH相关选项 -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，用于端口转发 -D socket5代理 -L tcp转发 -C 使用数据压缩，网速快时会影响速度  0x01 SSH免密码登陆 A主机免密码登陆B主机：
+A主机运行： ssh-keygen -t rsa 会生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub 将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中 注： 要确保B主机~/.ssh/authorized_keys权限为600 要确保B主机~/.ssh/文件夹权限为700 要确保上述两个文件属主是当前用户  0x02 SSH反向连接 主机A要通过SSH连接主机B：
+B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定  A主机运行： ssh root@127.0.0.1 -p 8888 输入本机的root的密码即可登入主机B的root用户  0x03 SSH Socks5代理 
     </p>
 
     
@@ -465,11 +472,12 @@ B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reb
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-07-05</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -495,8 +503,8 @@ B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reb
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        要求  内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网  拓扑   个主机IP信息  内网网段为：192.168.1.0/24
-DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如下：
+        0x00 要求  内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网  0x01 拓扑 0x02 个主机IP信息 内网网段为：192.168.1.0/24
+DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容如下：
 #!/bin/bash iptables –F #清空此表中的规则 iptables –X #清空此表中的自定义规则 iptables –Z #清空此表中的计数器为0 iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP iptables -F -t nat iptables -X -t nat iptables -Z -t nat iptables -t nat -P PREROUTING ACCEPT iptables -t nat -P POSTROUTING ACCEPT iptables -t nat -P OUTPUT ACCEPT #添加必要的模块 modprobe ip_nat_ftp modprobe iptable_nat modprobe ip_conntrack modprobe ip_conntrack_ftp #开启转发功能 echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward #******************************************************************** #PREROUTING： iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.
     </p>
 
@@ -520,11 +528,12 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-13</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -551,7 +560,7 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          环境：Ubuntu14.04
-0x00 安装shadowsocks-qt5  sudo apt-get update sudo apt-get python-software-properties software-properties-common sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装)   0x01 配置客户端   0x02 配置火狐   访问YouTube   
+0x00 安装shadowsocks-qt5 sudo apt-get update sudo apt-get python-software-properties software-properties-common sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装)  0x01 配置客户端 0x02 配置火狐 0x03 访问YouTube 
     </p>
 
     
@@ -570,11 +579,12 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-04</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -600,12 +610,12 @@ DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 效果  使用软件conky可以在linux上看到系统的运行状态，效果如下：  0x01 安装与配置  先安装conky：
+        0x00 效果 使用软件conky可以在linux上看到系统的运行状态，效果如下： 0x01 安装与配置  先安装conky：
 sudo apt-get install conky
  在/home/username/下创建文件.conkyrc
  使conky开机自启
 在/etc/profile最下面添加：/usr/bin/conky &amp;
-  0x03 配置文件.conkyrc内容如下  # set to yes if you want Conky to be forked in the background background no cpu_avg_samples 2 net_avg_samples 2 out_to_console no # X font when Xft is disabled, you can pick one with program xfontsel #font 7x12 #font 6x10 #font 7x13 #font 8x13 #font 7x12 #font *mintsmild.
+  0x03 配置文件.conkyrc内容如下 # set to yes if you want Conky to be forked in the background background no cpu_avg_samples 2 net_avg_samples 2 out_to_console no # X font when Xft is disabled, you can pick one with program xfontsel #font 7x12 #font 6x10 #font 7x13 #font 8x13 #font 7x12 #font *mintsmild.se* #font -*-*-*-*-*-*-34-*-*-*-*-*-*-* #font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1 # Use Xft?
     </p>
 
     

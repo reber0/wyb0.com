@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-07-24</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -120,7 +121,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 命令执行  应用有时需要调用一些执行系统命令的函数，如PHP中的system、exec、shell_exec、 passthru、popen、proc_popen等，当用户能控制这些函数中的参数时，就可以将恶意系统命令 拼接到正常命令中，从而造成命令执行攻击，这就是命令执行漏洞。   0x01 利用条件  应用调用执行系统命令的函数 将用户输入作为系统命令的参数拼接到了命令行中 没有对用户输入进行过滤或过滤不严  0x02 漏洞分类  代码层过滤不严
+        0x00 命令执行 应用有时需要调用一些执行系统命令的函数，如PHP中的system、exec、shell_exec、 passthru、popen、proc_popen等，当用户能控制这些函数中的参数时，就可以将恶意系统命令 拼接到正常命令中，从而造成命令执行攻击，这就是命令执行漏洞。  0x01 利用条件  应用调用执行系统命令的函数 将用户输入作为系统命令的参数拼接到了命令行中 没有对用户输入进行过滤或过滤不严  0x02 漏洞分类  代码层过滤不严
 商业应用的一些核心代码封装在二进制文件中，在web应用中通过system函数来调用：
 system(&ldquo;/bin/program --arg $arg&rdquo;); 系统的漏洞造成命令执行
 bash破壳漏洞(CVE-2014-6271)
@@ -128,9 +129,9 @@ bash破壳漏洞(CVE-2014-6271)
 若输出vulnerable则证明存在漏洞 调用的第三方组件存在代码执行漏洞
 如WordPress中用来处理图片的ImageMagick组件
 JAVA中的命令执行漏洞(struts2/ElasticsearchGroovy等)
-ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行系统命令或读写文件 反弹shell 控制整个网站甚至控制服务器 进一步内网渗透 等等  0x04 漏洞挖掘  可以google hacking
+ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行系统命令或读写文件 反弹shell 控制整个网站甚至控制服务器 进一步内网渗透 等等  0x04 漏洞挖掘 可以google hacking
 尝试：filetype:action或filetype:do来找struts2
- 0x05 漏洞可能代码(以system为例)  1. system(&quot;$arg&quot;); //直接输入即可 2. system(&quot;/bin/prog $arg&quot;); //直接输入;ls 3.
+0x05 漏洞可能代码(以system为例) 1. system(&quot;$arg&quot;); //直接输入即可 2. system(&quot;/bin/prog $arg&quot;); //直接输入;ls 3. system(&quot;/bin/prog -p $arg&quot;); //和2一样 4.
     </p>
 
     

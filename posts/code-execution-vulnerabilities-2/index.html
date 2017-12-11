@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>代码执行漏洞2 - Reber's Blog</title>
+    <title>代码执行漏洞(二) - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,漏洞挖掘,web安全,网络安全,python,php,linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -77,7 +77,7 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>代码执行漏洞2</h2>
+                <h2>代码执行漏洞(二)</h2>
             </div>
             <div class="content">
                 
@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-10-14</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,11 +115,10 @@
                 
                 
 
-<p>接着上一篇：<a href="http://wyb0.com/posts/code-execution-vulnerabilities/">http://wyb0.com/posts/code-execution-vulnerabilities/</a></p>
+<h4 id="接着上一篇-代码执行漏洞-一-posts-code-execution-vulnerabilities">接着上一篇：<a href="/posts/code-execution-vulnerabilities/">代码执行漏洞(一)</a></h4>
 
 <h3 id="0x00-函数create-function">0x00 函数create_function()</h3>
 
-<blockquote>
 <p>php中的函数create_function()可以创建一个匿名函数，其函数原型如下：</p>
 
 <pre><code>string create_function ( string $args , string $code )
@@ -126,11 +126,9 @@
 </code></pre>
 
 <p>若对提交的code未过滤或过滤不当则可能会导致代码执行漏洞</p>
-</blockquote>
 
 <h3 id="0x01-示例">0x01 示例</h3>
 
-<blockquote>
 <p>示例a.php代码如下：</p>
 
 <pre><code>&lt;?php
@@ -141,39 +139,18 @@
 上述代码中$nuwfun('1111','2222')代表此时$a='1111',$b='2222',然后将其传给$test
 </code></pre>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_create_function1.png" alt="示例1">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_create_function2.png" alt="示例2">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_create_function3.png" alt="示例3">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/code_execution_create_function1.png" alt="示例1" />
+<img src="/img/post/code_execution_create_function2.png" alt="示例2" />
+<img src="/img/post/code_execution_create_function3.png" alt="示例3" /></p>
 
 <h3 id="0x02-函数assert">0x02 函数assert()</h3>
 
-<blockquote>
 <p>这个函数和eval()的作用差不多</p>
 
 <pre><code>&lt;?php @assert($_GET['str']); ?&gt;
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_assert.png" alt="函数assert()">
-</div>
-
-</blockquote>
+<p><img src="/img/post/code_execution_assert.png" alt="函数assert()" /></p>
 
                 
                 <div style="padding:10px 1px;">

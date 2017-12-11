@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-10-28</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -120,7 +121,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Apache  服务器安全配置   #查看服务器运行权限 $ ps aux|grep apache|grep -v grep $ sudo lsof -i:80 COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME apache2 1377 root 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21121 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21122 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21123 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21124 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21125 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 24800 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 127488 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) 第一行是Apache主进程，以root权限运行的，因为Apache的Web端口是80或443，而在Ubuntu(Linux)中开启小于1024的端口需要root权限，所以主进程必须以root权限运行。 第二行起为Apache子进程，其执行用户为www-data，www-data是Ubuntu中运行Web服务的默认用户，权限较低。 Windows中Apache安装完成后默认是administrator权限，所以需要降权，创建一个用户Apache，用户组为Guests，然后将Apache目录下的日志的可写权限赋给Guests账户。  #目录及文件权限 修改配置文件，vim /etc/apache2/apache2.
+        0x00 Apache  服务器安全配置  #查看服务器运行权限 $ ps aux|grep apache|grep -v grep $ sudo lsof -i:80 COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME apache2 1377 root 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21121 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21122 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21123 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21124 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21125 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 24800 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 127488 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) 第一行是Apache主进程，以root权限运行的，因为Apache的Web端口是80或443，而在Ubuntu(Linux)中开启小于1024的端口需要root权限，所以主进程必须以root权限运行。 第二行起为Apache子进程，其执行用户为www-data，www-data是Ubuntu中运行Web服务的默认用户，权限较低。 Windows中Apache安装完成后默认是administrator权限，所以需要降权，创建一个用户Apache，用户组为Guests，然后将Apache目录下的日志的可写权限赋给Guests账户。  #目录及文件权限 修改配置文件，vim /etc/apache2/apache2.
     </p>
 
     
@@ -143,11 +144,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-03-10</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -173,8 +175,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境  Ubuntu 14.04.1 LTS
- 0x01 安装与配置  reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;, # &quot;40002&quot;: &quot;lilei&quot;, # &quot;40003&quot;: &quot;mike&quot; #} &quot;timeout&quot;:300, # 超时时间（秒） &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式 # 若Linux内核在3.
+        0x01 安装与配置 环境：Ubuntu 14.04.1 LTS
+reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;, # &quot;40002&quot;: &quot;lilei&quot;, # &quot;40003&quot;: &quot;mike&quot; #} &quot;timeout&quot;:300, # 超时时间（秒） &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式 # 若Linux内核在3.
     </p>
 
     
@@ -197,11 +199,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-12</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -254,11 +257,12 @@ yum install httpd  安装MySQL
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-03</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -286,8 +290,8 @@ yum install httpd  安装MySQL
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于Redis  Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。   0x01 安装  可在http://download.redis.io/releases/ 下载
-$ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install   0x02 产生的可执行文件  redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写)   0x03 配置文件  $ vim /opt/redis-3.2.3/redis.conf daemonize yes # 当值为yes时可以后台运行 bind 127.0.0.1 # 绑定ip，配置后只接受来自该ip的请求 port 6379 # 监听端口 timeout 300 # 客户端连接超时时间，单位为秒 loglevel notice # 日志等级分为4级，debug、verbose、notice、warning logfile &quot;/var/log/redis.
+        0x00 关于Redis Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。  0x01 安装 可在http://download.redis.io/releases/ 下载
+$ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install  0x02 产生的可执行文件 redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写)  0x03 配置文件 $ vim /opt/redis-3.2.3/redis.conf daemonize yes # 当值为yes时可以后台运行 bind 127.0.0.1 # 绑定ip，配置后只接受来自该ip的请求 port 6379 # 监听端口 timeout 300 # 客户端连接超时时间，单位为秒 loglevel notice # 日志等级分为4级，debug、verbose、notice、warning logfile &quot;/var/log/redis.log&quot; # 日志文件位置 databases 16 # 数据库数量 sava 900 1 # 设置数据库镜像的频率 dbfilename dump.
     </p>
 
     
@@ -310,11 +314,12 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-07-07</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -342,8 +347,8 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         环境及要求 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器
-安装服务 配置并启用路由和远程访问 新增路由协议 新增接口 新增VPN用户 尝试连接VPN 
+         0x00 环境及要求 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器
+0x01 安装服务 0x02 配置并启用路由和远程访问 0x03 新增路由协议 0x04 新增接口 0x05 新增VPN用户 0x06 尝试连接VPN 
     </p>
 
     
@@ -362,11 +367,12 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-18</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -394,7 +400,7 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         添加组件 开启iis 添加Web服务扩展 运行asp 权限 
+         0x00 添加组件 0x01 开启iis 0x02 添加Web服务扩展 0x03 运行asp 0x04 权限 
     </p>
 
     
@@ -413,11 +419,12 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-18</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -443,8 +450,9 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal  安装 yum install vsftpd
-配置  备份
+        安装环境为：CentOS-6.5-x86_64-minimal
+0x00 安装 yum install vsftpd
+0x01 配置  备份
 cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
  编辑配置文件
 vim /etc/vsftpd/vsftpd.conf anonymous_enable=NO #设定不允许匿名访问 local_enable=YES #设定本地用户可以访问 chroot_list_enable=YES #使用户不能离开主目录 xferlog_file=/var/log/vsftpd.log #设定vsftpd的服务日志 ascii_upload_enable=YES ascii_download_enable=YES #设定支持ASCII pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证 # 并在尾部追加： guest_enable=YES #设定启用虚拟用户功能。 guest_username=ftp #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了 guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同  新增chroot_list并将ftp用户输入进去
@@ -476,11 +484,12 @@ vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行�
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-17</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -507,11 +516,11 @@ vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行�
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         安装环境为：CentOS-6.5-x86_64-minimal
-0x00 安装mysql  $ sudo yum install mysql mysql-server mysql-devel
- 0x01 安装jdk和tomcat  创建安装jdk和tomcat的文件夹  下载安装包并解压安装
+0x00 安装mysql $ sudo yum install mysql mysql-server mysql-devel
+0x01 安装jdk和tomcat  创建安装jdk和tomcat的文件夹  下载安装包并解压安装
 jdk包可在这里下载
-tomcat包可在这里下载   0x02 简单配置tomcat   0x03 启动tomcat   0x04 连接数据库  驱动可在这里下载 $ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
-&lt;%@page contentType=&quot;text/html;charset=utf-8&quot; import=&quot;java.sql.*&quot; %&gt; &lt;% String driver = &quot;com.mysql.jdbc.Driver&quot;; String url = &quot;jdbc:mysql://localhost:3306/tomcat&quot;; //数据库web String user = &quot;tomcat&quot;; String password = &quot;123456&quot;; try { Class.forName(driver); Connection conn = DriverManager.getConnection(url, user, password); if(!conn.isClosed()) out.
+tomcat包可在这里下载   0x02 简单配置tomcat 0x03 启动tomcat 0x04 连接数据库 驱动可在这里下载 $ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
+&lt;%@page contentType=&quot;text/html;charset=utf-8&quot; import=&quot;java.sql.*&quot; %&gt; &lt;% String driver = &quot;com.mysql.jdbc.Driver&quot;; String url = &quot;jdbc:mysql://localhost:3306/tomcat&quot;; //数据库web String user = &quot;tomcat&quot;; String password = &quot;123456&quot;; try { Class.forName(driver); Connection conn = DriverManager.getConnection(url, user, password); if(!conn.isClosed()) out.println(&quot;数据库连接成功！&quot;); conn.close(); } catch(ClassNotFoundException e) { out.println(&quot;找不到驱动程序&quot;); e.
     </p>
 
     
@@ -534,11 +543,12 @@ tomcat包可在这里下载   0x02 简单配置tomcat   0x03 启动tomcat   0x04
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-17</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -565,12 +575,13 @@ tomcat包可在这里下载   0x02 简单配置tomcat   0x03 启动tomcat   0x04
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         安装环境为：CentOS-6.5-x86_64-minimal
-0x00 准备工作  首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++   0x01 安装mysql和php  sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm   0x02 安装依赖  安装pcre、pcre-devel
+0x00 准备工作 首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++  0x01 安装mysql和php sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm  0x02 安装依赖  安装pcre、pcre-devel
 sudo yum install pcre pcre-devel
  安装zlib、zlib-devel
 sudo yum install zlib zlib-devel
  安装ssl
 sudo yum install openssl openssl-devel
+  0x03 安装Nginx 可在http://nginx.
     </p>
 
     
@@ -593,11 +604,12 @@ sudo yum install openssl openssl-devel
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-05-07</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -625,13 +637,13 @@ sudo yum install openssl openssl-devel
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 环境  我是在虚拟机中安装14.04.4版的Ubuntu 下载Ubuntu14.04.4
- 0x01 配源或选择最快的更新服务器  选择最快的更新服务器:
+        0x00 环境 我是在虚拟机中安装14.04.4版的Ubuntu 下载Ubuntu14.04.4
+0x01 配源或选择最快的更新服务器  选择最快的更新服务器:
 System Settings &ndash;&gt; Software &amp; Updates &ndash;&gt; Download from:other &ndash;&gt; Select Best Server &ndash;&gt; Choose Serve &ndash;&gt; Close
  配源:
 reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak
 reber@ubuntu:~$ vim /etc/apt/sources.list
-   中科大源： deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb http://debian.
+  中科大源： deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse deb-src http://debian.
     </p>
 
     

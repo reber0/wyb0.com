@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-05-30</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,7 +117,6 @@
 
 <h3 id="0x00-数据表结构">0x00 数据表结构</h3>
 
-<blockquote>
 <pre><code>CREATE DATABASE student;
 
 CREATE TABLE info
@@ -138,11 +138,9 @@ INSERT INTO info(name,sex,age,hight) VALUES('xiaoming',1,21,165);
 INSERT INTO info(name,sex,age,hight) VALUES('xiaowang',1,23,166);
 INSERT INTO info(name,sex,age,hight) VALUES('xiaojuan',0,21,159);
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-存储过程">0x01 存储过程</h3>
 
-<blockquote>
 <pre><code>--如果存在名为get_student_msg(相当于函数)的存储过程则删除
 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p')
     DROP PROCEDURE get_student_msg
@@ -159,11 +157,9 @@ GO
 --创建好存储过程后在其他地方直接使用函数并传参就行了
 EXEC get_student_msg 'xiaoli'
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-使用游标的存储过程">0x02 使用游标的存储过程</h3>
 
-<blockquote>
 <pre><code>-- 使用DECLARE声明局部变量，一般在函数和存储过程中使用
 DECLARE @name VARCHAR(20)
 DECLARE @sex INT
@@ -197,7 +193,6 @@ WHILE (@@FETCH_STATUS = 0) --判断是否成功获取数据
 CLOSE stu_cursor --关闭游标
 DEALLOCATE stu_cursor --删除游标
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

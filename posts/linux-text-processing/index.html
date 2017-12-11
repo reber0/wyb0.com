@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-04-20</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,22 +117,18 @@
 
 <p>这里介绍3种方式：awk、grep、sed</p>
 
-<h3 id="0x00-awk处理文本-最常用">0x00 awk处理文本(<em>最常用</em>)</h3>
+<h3 id="0x00-awk处理文本-最常用">0x00 awk处理文本(最常用)</h3>
 
-<blockquote>
 <pre><code>作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化  
 awk命令格式：awk [F filed-separator] 'commands' input-fiel(s)  
 参数-F：可以添加任意的分割符，比较重要  
 awk工作流程是这样的：  
 读入有'\n'换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&quot;空白键&quot; 或 &quot;[tab]键&quot;。
 </code></pre>
-</blockquote>
 
 <ul>
-<li>入门示例：</li>
-</ul>
+<li><p>入门示例：</p>
 
-<blockquote>
 <pre><code class="language-bash">[wyb@localhost temp]$ head -n 5 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -167,11 +164,9 @@ operator:x:11:0:operator:/root:/sbin/nologin
 /sbin/nologin
 [wyb@localhost temp]$ awk -F: '/^root/' /etc/passwd #匹配以root开头的行
 root:x:0:0:root:/root:/bin/bash
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>内置变量：
+<li><p>内置变量：
 <table>
 <tr>
     <td bgcolor=black>
@@ -188,10 +183,8 @@ ORS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
 RS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;控制记录分隔符
     </td>
 </tr>
-</table></li>
-</ul>
+</table></p>
 
-<blockquote>
 <pre><code>[wyb@localhost temp]$ awk -F: '{print &quot;filename:&quot; FILENAME &quot;,linenumber:&quot; NR &quot;,columns:&quot; NF &quot;,linecontent:&quot;$0}' a.txt
 filename:a.txt,linenumber:1,columns:1,linecontent:1     root    12sf34s56
 filename:a.txt,linenumber:2,columns:1,linecontent:2     admin   ksdjfiweurf
@@ -202,17 +195,13 @@ filename:a.txt,linenumber:6,columns:1,linecontent:6     canki   sdkj834
 filename:a.txt,linenumber:7,columns:1,linecontent:7     lola    er8f7734
 filename:a.txt,linenumber:8,columns:1,linecontent:8     marry   j8jkf78
 filename:a.txt,linenumber:9,columns:1,linecontent:9     candy   kd89943
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
 <li><p>awk编程：</p>
 
 <ul>
-<li>变量和赋值：</li>
-</ul>
+<li><p>变量和赋值：</p>
 
-<blockquote>
 <pre><code>[wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':'  'BEGIN {count=0} {count++; print &quot;username:&quot;$1} END {print &quot;count:&quot;count}'
 username:root
 username:bin
@@ -224,29 +213,26 @@ count:5
 [end]size is: 160 byte
 [wyb@localhost ~]$ ls -l aaa/ettercap-0.8.2 | awk 'BEGIN {size=0;} {size=size+5;} END {print &quot;[end]size is:&quot;,size/1024/1024,&quot;M&quot;}'
 [end]size is: 0.000152588 M
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>条件语句：</li>
-</ul>
+<li><p>条件语句：</p>
 
-<blockquote>
 <pre><code>[wyb@localhost ~]$ head -n 6 /etc/passwd | awk -F ':' '{if($1==&quot;root&quot;) print &quot;root bash is:&quot;$7}'
 root bash is:/bin/bash
 [wyb@localhost ~]$ 
-</code></pre>
-</blockquote></li>
+</code></pre></li>
+</ul></li>
 </ul>
 
 <h3 id="0x01-grep处理文本">0x01 Grep处理文本</h3>
 
-<blockquote>
-<p>匹配到时输出一行<br />
-常用参数：nrABC
+<p>匹配到时输出一行</p>
+
+<ul>
+<li>常用参数：nrABC
 <table>
-    <tr>
-        <td bgcolor=black>
+<tr>
+    <td bgcolor=black>
 -n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出匹配到的字符串所在行数<br/>
 -r&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;遍历子目录文件查找字符串<br/>
 -A 3&nbsp;&nbsp;显示匹配行及下面3行<br/>
@@ -254,9 +240,10 @@ root bash is:/bin/bash
 -C 4&nbsp;&nbsp;显示匹配行及上下4行<br/>
 -i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不区分大小写<br/>
 -v&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示所有不包含字符的行
-        </td>
-    </tr>
-</table></p>
+    </td>
+</tr>
+</table></li>
+</ul>
 
 <pre><code>[wyb@localhost ~]$ grep root /etc/passwd #查找root这个字符
 root:x:0:0:root:/root:/bin/bash
@@ -286,11 +273,9 @@ wyb        3230  0.0  0.0 103244   828 pts/0    S+   18:27   0:00 grep ^wyb
 [wyb@localhost temp]$ ps aux | grep ora
 wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-sed处理文本">0x02 sed处理文本</h3>
 
-<blockquote>
 <pre><code>* 处理大文本很好用，上几十万、上百万行的数据
 * sed主要以行为单位，可以将数据行进行替换、删除、新增、选取等
 * sed语法 参数 动作 文件
@@ -303,13 +288,11 @@ wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
     * c 替换字符串，后面可跟字符串，字符串替换n1到n2之间的行&lt;br/&gt;
       s 替换字符串，通常搭配正则
 </code></pre>
-</blockquote>
 
 <ul>
 <li>字符的删除</li>
 </ul>
 
-<blockquote>
 <pre><code>[wyb@localhost aa]$ nl a.txt | sed '3,8d' #不输出3-8行
      1  1     root      12sf34s56
      2  2     admin     ksdjfiweurf
@@ -327,13 +310,11 @@ wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
      8  8     marry     j8jkf78
      9  9     candy     kd89943
 </code></pre>
-</blockquote>
 
 <ul>
 <li>a插入字符</li>
 </ul>
 
-<blockquote>
 <pre><code>[wyb@localhost aa]$ nl a.txt | sed '2a aaaaaa' | head -n 5 #在第二行下面插入一行字符串aaaaaa
      1  1     root      12sf34s56
      2  2     admin     ksdjfiweurf
@@ -358,13 +339,11 @@ dddddd
      2  2     admin     ksdjfiweurf
      3  3     dome      skd89453
 </code></pre>
-</blockquote>
 
 <ul>
 <li>p输出字符</li>
 </ul>
 
-<blockquote>
 <pre><code>[wyb@localhost aa]$ nl a.txt | sed '2,5p'
      1  1     root      12sf34s56
      2  2     admin     ksdjfiweurf
@@ -390,13 +369,11 @@ dddddd
      1  111111:x:0:0:root:/root:/bin/bash
     11  operator:x:11:0:operator:/111111:/sbin/nologin
 </code></pre>
-</blockquote>
 
 <ul>
 <li>c和s替换字符</li>
 </ul>
 
-<blockquote>
 <pre><code>[wyb@localhost aa]$ nl a.txt | sed '2,5c aaaaaa' #将第2-5行替换
      1  1     root      12sf34s56
 aaaaaa
@@ -414,13 +391,11 @@ aaaaaa
 [wyb@localhost aa]$ nl /etc/passwd | sed -n '1,5{s/root/1111/g;p;q}'前五行查找root，然后将整行的root替换为1111,查找到一个就退出
      1  1111:x:0:0:1111:/1111:/bin/bash
 </code></pre>
-</blockquote>
 
 <ul>
 <li>实例</li>
 </ul>
 
-<blockquote>
 <pre><code>[wyb@localhost aa]$ ifconfig eth0
 eth0      Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10  
           inet addr:192.168.63.131  Bcast:192.168.63.255  Mask:255.255.255.0
@@ -461,7 +436,6 @@ eth0      Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10
      1  root:x:0:0:root:/root:/bin/buleshell
      2  bin:x:1:1:bin:/bin:/sbin/nologin
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">
@@ -483,7 +457,7 @@ eth0      Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/linux-compression-software/">Linux之tar</a>
+      <a href="http://wyb0.com/posts/linux-compression-software/">Linux之压缩</a>
     </nav>
     
   </div>

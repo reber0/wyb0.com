@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-07-13</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,86 +115,32 @@
                 
                 
 
-<h2 id="网络拓扑及信息">网络拓扑及信息</h2>
+<h3 id="0x00-网络拓扑及信息">0x00 网络拓扑及信息</h3>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_topology.png" alt="无线网络渗透测试拓扑图.png">
-</div>
-
+<p><img src="/img/post/wireless_topology.png" alt="无线网络渗透测试拓扑图" />
 其中ip等信息如下：
+<img src="/img/post/wireless_base_msg.png" alt="无线网络渗透测试IP等基本信息" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_base_msg.png" alt="无线网络渗透测试IP等基本信息.png">
-</div>
-</p>
+<h3 id="0x01-获取信息">0x01 获取信息</h3>
 
-<h2 id="攻击wpa保护下的802-11网络">攻击WPA保护下的802.11网络</h2>
+<ol>
+<li><p>查看无线网卡并将其设置为监听模式
+<img src="/img/post/wireless_ifconfig.png" alt="无线网络渗透测试查看网卡信息" />
+<img src="/img/post/wireless_mode_to_monitor.png" alt="无线网络渗透测试设置网卡为监听模式" /></p></li>
 
-<h4 id="1-查看无线网卡并将其设置为监听模式">1. 查看无线网卡并将其设置为监听模式</h4>
+<li><p>打开kismet，进行基本设置
+<img src="/img/post/wireless_start_kismet.png" alt="无线网络渗透测试开启kismet" />
+<img src="/img/post/wireless_kismet_add_source.png" alt="无线网络渗透测试add source" />
+<img src="/img/post/wireless_kismet.png" alt="无线网络渗透测试kismet主界面" /></p></li>
 
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_ifconfig.png" alt="无线网络渗透测试查看网卡信息.png">
-</div>
+<li><p>选择名字为111111的AP为目标
+<img src="/img/post/wireless_select_target.png" alt="无线网络渗透测试kismet选择目标" />
+<img src="/img/post/wireless_target_msg.png" alt="无线网络渗透测试AP的信息" />
+<img src="/img/post/wireless_quit_kismet.png" alt="无线网络渗透测试退出kismet" /></p></li>
 
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_mode_to_monitor.png" alt="无线网络渗透测试设置网卡为监听模式.png">
-</div>
-</p>
-</blockquote>
-
-<h4 id="2-打开kismet-进行基本设置">2. 打开kismet，进行基本设置</h4>
-
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_start_kismet.png" alt="无线网络渗透测试开启kismet.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_kismet_add_source.png" alt="无线网络渗透测试add source.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_kismet.png" alt="无线网络渗透测试kismet主界面.png">
-</div>
-</p>
-</blockquote>
-
-<h4 id="3-选择名字为111111的ap为目标">3. 选择名字为111111的AP为目标</h4>
-
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_select_target.png" alt="无线网络渗透测试kismet选择目标.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_target_msg.png" alt="无线网络渗透测试AP的信息.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_quit_kismet.png" alt="无线网络渗透测试退出kismet.png">
-</div>
-</p>
-</blockquote>
-
-<h4 id="4-查看kismet抓包信息">4. 查看kismet抓包信息</h4>
-
-<blockquote>
-<p>kismet生成的nettxt文件的部分信息如下：</p>
+<li><p>查看kismet抓包信息
+kismet生成的nettxt文件的部分信息如下：</p></li>
+</ol>
 
 <pre><code>Network 104: BSSID D8:42:AC:C9:5C:1D
  Manuf      : Shanghai
@@ -258,43 +205,20 @@ Encryption : WPA+AES-CCM
 Channel    : 5
 Client 3: MAC DC:C7:93:C5:05:58
 </code></pre>
-</blockquote>
 
-<h4 id="5-通过airodump-ng-c-5-w-20151117-wlan0开始抓包保存">5. 通过airodump-ng -c 5 -w 20151117 wlan0开始抓包保存</h4>
+<h3 id="0x02-开始攻击">0x02 开始攻击</h3>
 
-<blockquote>
+<ol>
+<li><p>通过airodump-ng -c 5 -w 20151117 wlan0开始抓包保存
+<img src="/img/post/wireless_get_package.png" alt="无线网络渗透测试抓包" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_get_package.png" alt="无线网络渗透测试抓包.png">
-</div>
+<li><p>得到handshake包，用另一个终端进行deauth攻击
+<img src="/img/post/wireless_start_deauth_attack.png" alt="无线网络渗透测试开始deauth攻击" />
+<img src="/img/post/wireless_get_handshake_package.png" alt="无线网络渗透测试得到handshake包" /></p></li>
 
-</blockquote>
-
-<h4 id="6-得到handshake包-用另一个终端进行deauth攻击">6. 得到handshake包，用另一个终端进行deauth攻击</h4>
-
-<blockquote>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_start_deauth_attack.png" alt="无线网络渗透测试开始deauth攻击.png">
-</div>
-
-
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_get_handshake_package.png" alt="无线网络渗透测试得到handshake包.png">
-</div>
-
-</blockquote>
-
-<h4 id="6-得到ap密码">6. 得到AP密码</h4>
-
-<blockquote>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/wireless_get_ap_password.png" alt="无线网络渗透测试得到无线的密码.png">
-</div>
-
-</blockquote>
+<li><p>得到AP密码
+<img src="/img/post/wireless_get_ap_password.png" alt="无线网络渗透测试得到无线的密码" /></p></li>
+</ol>
 
                 
                 <div style="padding:10px 1px;">

@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-07-02</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -118,7 +119,6 @@
 
 <h3 id="0x00-无参数的get请求">0x00 无参数的get请求</h3>
 
-<blockquote>
 <pre><code class="language-python">import requests
 
 resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误
@@ -126,16 +126,10 @@ print resp.text #一般用来输出纯文本，可得到unicode类型字符串
 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/requests_text.png" alt="requests得到html源码.png">
-</div>
-
-</blockquote>
+<p><img src="/img/post/requests_text.png" alt="requests得到html源码" /></p>
 
 <h3 id="0x01-有参数的get请求">0x01 有参数的get请求</h3>
 
-<blockquote>
 <pre><code class="language-python">import requests
 
 url = 'http://10.10.10.10:8080/Lab2.0/Login.action'
@@ -150,16 +144,10 @@ print resp.headers #得到html头
 print resp.cookies #得到cookie
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/requests_get_params.png" alt="有参数的get请求.png">
-</div>
-
-</blockquote>
+<p><img src="/img/post/requests_get_params.png" alt="有参数的get请求" /></p>
 
 <h3 id="0x02-post请求">0x02 POST请求</h3>
 
-<blockquote>
 <pre><code class="language-python">import requests
 url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action'
 url2 = 'http://10.10.10.10:8080/Lab2.0/student.action'
@@ -180,26 +168,18 @@ resp = requests.get(url2,cookies=cookie) #要加上cookie
 print resp.text
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面.png">
-</div>
-
-</blockquote>
+<p><img src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面" /></p>
 
 <h3 id="0x03-ssl证书">0x03 SSL证书</h3>
 
-<blockquote>
 <pre><code class="language-python">import requests
 url = 'https://www.aa.com'
 requests.get(url)   #出错，因为是https，验证了证书
 requests.get(url,verify=False) #正常，因为忽略了证书验证
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-添加cookie">0x04 添加Cookie</h3>
 
-<blockquote>
 <pre><code class="language-python">import requests
 url = 'http://10.10.10.10:8080/Lab2.0/student.action'
 cookie = {
@@ -208,11 +188,9 @@ cookie = {
 resp = s.get(url=url,cookies=cookie)
 print resp.status_code
 </code></pre>
-</blockquote>
 
 <h3 id="0x05-使用session">0x05 使用Session</h3>
 
-<blockquote>
 <pre><code class="language-python">import requests
 url = 'http://10.10.10.10:8080/Lab2.0/Login.action'
 proxy = {
@@ -230,22 +208,12 @@ resp = s.get('http://10.10.10.10:8080/Lab2.0/student.action')
 print resp.text
 </code></pre>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/requests_proxies.png" alt="post登陆后带cookie访问页面.png">
-</div>
+<p><img src="/img/post/requests_proxies.png" alt="post登陆后带cookie访问页面" /></p>
 
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面.png">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面" /></p>
 
 <h3 id="0x06-上传与下载">0x06 上传与下载</h3>
 
-<blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -275,11 +243,9 @@ with open(&quot;a.tar.gz&quot;,&quot;wb&quot;) as f:
 
 urllib.urlretrieve(url, &quot;b.tar.gz&quot;) #只能下载http的
 </code></pre>
-</blockquote>
 
 <h3 id="0x07-重定向">0x07 重定向</h3>
 
-<blockquote>
 <pre><code>&gt;&gt;&gt; import requests
 &gt;&gt;&gt; r = requests.get('http://github.com') #默认跳转
 &gt;&gt;&gt; r.url
@@ -296,7 +262,6 @@ u'http://github.com/' #可以看到没有跳转，还是http
 &gt;&gt;&gt; r.history
 []
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

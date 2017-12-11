@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-08-15</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -120,11 +121,10 @@
 <li>Docker中的镜像类似VM的快照，容器类似虚拟机，使用镜像创建容器类似于使用快照创建虚拟机。</li>
 <li>Docker中运行应用的是容器，容器的创建和销毁在秒级就能完成。</li>
 <li>Docker使用了AUFS，可以以递进的方式创建&rdquo;VM&rdquo;，一个&rdquo;VM&rdquo;叠在另一个&rdquo;VM&rdquo;上，就像使用git增量开发一样。</li>
-
-<li><p>软件的运行环境（image）和软件本身（container）分离，和数据也分离。</p></li>
-
-<li><p>学习Docker需要了解4个概念：镜像、容器、数据卷、链接</p></li>
+<li>软件的运行环境（image）和软件本身（container）分离，和数据也分离。</li>
 </ul>
+
+<p>学习Docker需要了解4个概念：镜像、容器、数据卷、链接</p>
 
 <h3 id="0x01-镜像image">0x01 镜像image</h3>
 
@@ -204,47 +204,33 @@ UnionFS：union文件系统，容器的构建块。它用于保存镜像并使�
 
 <h3 id="0x08-docker-registry">0x08 Docker Registry</h3>
 
-<blockquote>
 <p>Docker Registry是Docker的镜像存储服务端，它是所有仓库(包括私有和公有)以及工作流的中央Registry<br />
 Docker Registry有3个角色：index、registry、registry client</p>
-</blockquote>
 
 <ul>
-<li>index</li>
-</ul>
+<li><p>index</p>
 
-<blockquote>
 <pre><code>负责并维护有关用户账户、镜像的体验以及公共命名空间的信息。
 index通过Web UI、元数据存储、认证服务、符号化这几个组件来维护这些信息。
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>registry</li>
-</ul>
+<li><p>registry<br />
+它是镜像和图表的仓库(比如Docker hub)</p>
 
-<blockquote>
-<pre><code>它是镜像和图表的仓库(比如Docker hub)
-* Registry包含一个或多个Repository
-* Repository包含一个或多个Image
-* Image用GUID表示，有一个或多个Tag与之关联
-</code></pre>
-</blockquote>
+<pre><code>Registry包含一个或多个Repository
+Repository包含一个或多个Image
+Image用GUID表示，有一个或多个Tag与之关联
+</code></pre></li>
 
-<ul>
-<li>registry client</li>
-</ul>
+<li><p>registry client</p>
 
-<blockquote>
 <pre><code>客户端
-</code></pre>
-</blockquote>
+</code></pre></li>
+</ul>
 
 <h3 id="0x09-docker下载镜像的原理">0x09 Docker下载镜像的原理</h3>
 
-<blockquote>
 <p><img src="/img/post/docker_pull.png" alt="docker pull" /></p>
-</blockquote>
 
 <ol>
 <li>Client向Index请求，询问从哪里下载CentOS</li>
@@ -257,7 +243,6 @@ index通过Web UI、元数据存储、认证服务、符号化这几个组件来
 
 <h3 id="0x0a-docker安装与卸载">0x0A Docker安装与卸载</h3>
 
-<blockquote>
 <pre><code class="language-bash">#安装
 $ sudo apt-get update
 $ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
@@ -285,7 +270,6 @@ $ sudo gpasswd -a ${USER} docker
 $ sudo service docker restart
 $ newgrp - docker
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

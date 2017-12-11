@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-01-16</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,35 +115,24 @@
                 
                 
 
-<blockquote>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/anime/anime004.jpg" alt="钢之炼金术师FA">
-</div>
-
-</blockquote>
+<p><img src="/img/anime/anime004.jpg" alt="钢之炼金术师FA" /></p>
 
 <h3 id="0x00-前期准备">0x00 前期准备</h3>
 
-<blockquote>
 <pre><code># 环境 Ubuntu 14.04
 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server
 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client
 reber@ubuntu:~/Desktop$ sudo apt-get install git
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-安装">0x01 安装</h3>
 
-<blockquote>
 <pre><code>reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb
 reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-配置">0x02 配置</h3>
 
-<blockquote>
 <pre><code>reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb
     external_url 'http://192.168.188.160:80'
     ......
@@ -180,29 +170,27 @@ tcp        0      0 0.0.0.0:22          0.0.0.0:*            LISTEN
 # 其中8080是unicore的端口
 # 80是nginx的端口，nginx反向代理ruby开的web服务unicore
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-访问web页面">0x03 访问web页面</h3>
 
 <ul>
-<li>有时出现502，可以刷新网页或者再次reconfigure</li>
-<li>有时需要sudo gitlab-ctl restart nginx</li>
-<li>初次访问Web页面会强制让你改密码，初始用户名/密码：root/5iveL!fe</li>
-<li>禁止前台注册<br />
+<li><p>有时出现502，可以刷新网页或者再次reconfigure</p></li>
+
+<li><p>有时需要sudo gitlab-ctl restart nginx</p></li>
+
+<li><p>初次访问Web页面会强制让你改密码，初始用户名/密码：root/5iveL!fe</p></li>
+
+<li><p>禁止前台注册<br />
 登录后：右上角 Admin Area &ndash;&gt; Settings &ndash;&gt; Sign-in Restrictions
+<img src="/img/post/gitlab_forbid_registration.png" alt="禁止前台注册" />
+然后保存</p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/gitlab_forbid_registration.png" alt="禁止前台注册">
-</div>
-
-然后保存</li>
-<li>修改admin的邮箱<br />
-Admin Area &ndash;&gt; Users &ndash;&gt; Edit 然后保存</li>
+<li><p>修改admin的邮箱<br />
+Admin Area &ndash;&gt; Users &ndash;&gt; Edit 然后保存</p></li>
 </ul>
 
 <h3 id="0x04-添加401认证">0x04 添加401认证</h3>
 
-<blockquote>
 <pre><code># 401认证是nginx的，如果gitlab出现漏洞，也需要过401才行
 reber@ubuntu:~/Desktop$ cd /var/opt/gitlab/
 # 安装软件apache2-utils，用于生成认证的密码文件
@@ -229,16 +217,10 @@ server {
 reber@ubuntu:/var/opt/gitlab$ sudo gitlab-ctl restart nginx
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/gitlab_401_verify.png" alt="401验证">
-</div>
-
-</blockquote>
+<p><img src="/img/post/gitlab_401_verify.png" alt="401验证" /></p>
 
 <h3 id="0x05-汉化">0x05 汉化</h3>
 
-<blockquote>
 <pre><code># 首先检查版本
 reber@ubuntu:~/Desktop$ cat /opt/gitlab/embedded/service/gitlab-rails/VERSION
  8.8.0
@@ -249,11 +231,9 @@ reber@ubuntu:~/Desktop/gitlab$ git diff origin/8-8-stable origin/8-8-zh &gt; /tm
 # 应用补丁
 reber@ubuntu:~/Desktop/gitlab$ sudo patch -d /opt/gitlab/embedded/service/gitlab-rails -p1 &lt; /tmp/8.8.diff
 </code></pre>
-</blockquote>
 
 <h3 id="0x06-添加ssh公钥">0x06 添加ssh公钥</h3>
 
-<blockquote>
 <pre><code>首先用邮箱514581887@qq.com注册一个用户，用户名为55555
 $ ssh-keygen -t rsa -C &quot;514581887@qq.com&quot; #在本机生成秘钥对
 $ cat /home/reber/.ssh/id_rsa.pub #查看公钥
@@ -279,11 +259,9 @@ $ ssh -T git@192.168.188.160
 若出现错误：&quot;git: 'credential-cache' is not a git command.&quot;
 则运行：&quot;git config --global --unset credential.helper&quot;
 </code></pre>
-</blockquote>
 
 <h3 id="0x07-推送自己的代码">0x07 推送自己的代码</h3>
 
-<blockquote>
 <pre><code># 首先clone项目
 [reber@WYB ~]$ git clone git@192.168.188.160:first_group/first_project.git
 [reber@WYB first_project]$ cd first_project
@@ -309,11 +287,7 @@ To git@106.75.87.166:first_group/first_project.git
 </code></pre>
 
 <p>web端请求合并代码到master分支
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/gitlab_pull_request.png" alt="请求合并代码">
-</div>
-</p>
+<img src="/img/post/gitlab_pull_request.png" alt="请求合并代码" /></p>
 
 <pre><code># 下面的操作做不做都行
 [reber@WYB first_project]$ git checkout master # 切换回master分支
@@ -325,27 +299,15 @@ Deleted branch 163 (was d5df55a).
 * master
 [reber@WYB first_project]$ 
 </code></pre>
-</blockquote>
 
 <h3 id="0x08-结果">0x08 结果</h3>
 
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/gitlab_result1.png" alt="结果1">
-</div>
+<p><img src="/img/post/gitlab_result1.png" alt="结果1" /></p>
 
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/gitlab_result2.png" alt="结果2">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/gitlab_result2.png" alt="结果2" /></p>
 
 <h3 id="0x09-备份与还原">0x09 备份与还原</h3>
 
-<blockquote>
 <p>注意：若要迁移，则新服务器上的Gitlab的版本必须与创建备份时的Gitlab版本号相同</p>
 
 <pre><code># 如果出现backups文件夹没有权限，那就给700，所有者为git:git
@@ -368,7 +330,6 @@ drwxr-xr-x 13 root root     4096 Feb 17 15:01 ..
 -rw-------  1 git  git  35317760 Feb 17 15:09 1487315379_gitlab_backup.tar
 ubuntu@1fa167:~$ sudo gitlab-rake gitlab:backup:restore BACKUP=1487315379
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

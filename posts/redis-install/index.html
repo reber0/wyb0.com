@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-08-03</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -118,16 +119,13 @@
 
 <h3 id="0x00-关于redis">0x00 关于Redis</h3>
 
-<blockquote>
 <pre><code>Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库，
 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高,
 不适合做海量数据存储。
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-安装">0x01 安装</h3>
 
-<blockquote>
 <p>可在<a href="http://download.redis.io/releases/">http://download.redis.io/releases/</a> 下载</p>
 
 <pre><code>$ cd /opt
@@ -137,21 +135,17 @@ $ cd redis-3.2.3
 $ make
 $ make install
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-产生的可执行文件">0x02 产生的可执行文件</h3>
 
-<blockquote>
 <pre><code>redis-server：redis服务器启动程序
 redis-cli：redis命令行工具，也可为客户端
 redis-stat：redis状态检测工具
 redis-benchmark：redis性能检测工具(读写)
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-配置文件">0x03 配置文件</h3>
 
-<blockquote>
 <pre><code>$ vim /opt/redis-3.2.3/redis.conf
   daemonize yes  # 当值为yes时可以后台运行
   bind 127.0.0.1  # 绑定ip，配置后只接受来自该ip的请求
@@ -170,33 +164,21 @@ redis-benchmark：redis性能检测工具(读写)
   # mexmemory &lt;bytes&gt;  # redis能够使用的最大内存
   appendonly no  # 可以设置是否只能追加
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-启动测试">0x04 启动测试</h3>
 
-<blockquote>
 <pre><code>本地启动：
 $ redis-server /opt/redis-3.2.3/redis.conf  # 启动服务
 $ ps -aux | grep redis
 </code></pre>
 
 <p>在另外一个机器上用redis-cli连接刚搭建的服务器：
+<img src="/img/post/redis_install_conn_and_write_file.png" alt="连接redis并创建文件" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/redis_install_conn_and_write_file.png" alt="连接redis并创建文件">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/redis_install_visit_file.png" alt="访问redis创建的文件">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/redis_install_visit_file.png" alt="访问redis创建的文件" /></p>
 
 <h3 id="0x05-windows下安装redis">0x05 Windows下安装Redis</h3>
 
-<blockquote>
 <p>下载：<a href="https://github.com/MSOpenTech/redis/releases" target="_blank">点此下载</a></p>
 
 <p>安装后添加环境变量</p>
@@ -218,7 +200,6 @@ redis-server.exe --service-stop
 带密码连接Redis：
 redis-cli.exe -h 127.0.0.1 -p 6379 -a mypassword
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

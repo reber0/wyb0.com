@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-06-21</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,129 +117,42 @@
 
 <h3 id="0x00-前提">0x00 前提</h3>
 
-<blockquote>
-<pre><code>要用联合查询进行注入则：页面必须有显示位
-</code></pre>
-</blockquote>
+<p>要用联合查询进行注入则：页面必须有显示位</p>
 
 <h3 id="0x01-联合查询">0x01 联合查询</h3>
 
-<blockquote>
-<pre><code>union可合并两个或多个select语句的结果集，
-前提是两个select必有相同列、且各列的数据类型也相同
-</code></pre>
-</blockquote>
+<p>union可合并两个或多个select语句的结果集，前提是两个select必有相同列、且各列的数据类型也相同</p>
 
 <h3 id="0x02-注入步骤">0x02 注入步骤</h3>
 
-<ul>
-<li>找注入点且得到闭合字符</li>
-<li>判断数据库类型</li>
-<li>猜解列数，得到显示位</li>
-<li>得到基本信息(如：数据库名、数据库版本、当前数据库名等)</li>
-<li>得到数据库名</li>
-<li>得到表名</li>
-<li>得到列名</li>
-<li>得到列值</li>
-</ul>
+<ol>
+<li><p>找到注入点得到闭合字符
+<img src="/img/post/sqli1_get_closed_character.png" alt="找到注入点得到闭合字符" />
+<img src="/img/post/sqli1_check_closed_character.png" alt="确认闭合字符" /></p></li>
 
-<h4 id="1-找到注入点得到闭合字符">1. 找到注入点得到闭合字符</h4>
+<li><p>判断数据库类型
+<img src="/img/post/sqli1_get_type_of_db.png" alt="判断数据库类型" /></p></li>
 
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_get_closed_character.png" alt="找到注入点得到闭合字符">
-</div>
+<li><p>猜解列数，得到显示位
+<img src="/img/post/sqli1_order_by.png" alt="猜解列数" />
+<img src="/img/post/sqli1_get_display_point.png" alt="得到显示位" /></p></li>
 
-<br /><br />
+<li><p>得到基本信息(数据库名、版本、数据库版本等)
+<img src="/img/post/sqli1_get_base_msg.png" alt="得到基础信息" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_check_closed_character.png" alt="确认闭合字符">
-</div>
-</p>
-</blockquote>
+<li><p>得到数据库
+<img src="/img/post/sqli1_get_db_num.png" alt="得到数据库个数" />
+<img src="/img/post/sqli1_get_db_name.png" alt="得到数据库名" /></p></li>
 
-<h4 id="2-判断数据库类型">2. 判断数据库类型</h4>
+<li><p>得到security数据库的表名
+<img src="/img/post/sqli1_get_table_name.png" alt="得到security数据库的表名" /></p></li>
 
-<blockquote>
+<li><p>猜解列名
+<img src="/img/post/sqli1_get_column_name.png" alt="得到表列名" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_get_type_of_db.png" alt="判断数据库类型">
-</div>
-
-</blockquote>
-
-<h4 id="3-猜解列数-得到显示位">3. 猜解列数，得到显示位</h4>
-
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_order_by.png" alt="猜解列数">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_get_display_point.png" alt="得到显示位">
-</div>
-</p>
-</blockquote>
-
-<h4 id="4-得到基本信息-数据库名-版本-数据库版本等">4. 得到基本信息(数据库名、版本、数据库版本等)</h4>
-
-<blockquote>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_get_base_msg.png" alt="得到基础信息">
-</div>
-
-</blockquote>
-
-<h4 id="5-得到数据库">5. 得到数据库</h4>
-
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_get_db_num.png" alt="得到数据库个数">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_get_db_name.png" alt="得到数据库名">
-</div>
-</p>
-</blockquote>
-
-<h4 id="6-得到security数据库的表名">6. 得到security数据库的表名</h4>
-
-<blockquote>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_get_table_name.png" alt="得到security数据库的表名">
-</div>
-
-</blockquote>
-
-<h4 id="7-猜解列名">7. 猜解列名</h4>
-
-<blockquote>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_get_column_name.png" alt="得到表列名">
-</div>
-
-</blockquote>
-
-<h4 id="8-猜解数据">8. 猜解数据</h4>
-
-<blockquote>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqli1_get_column_value.png" alt="同时得到用户名和密码">
-</div>
-
-</blockquote>
+<li><p>猜解数据
+<img src="/img/post/sqli1_get_column_value.png" alt="同时得到用户名和密码" /></p></li>
+</ol>
 
                 
                 <div style="padding:10px 1px;">

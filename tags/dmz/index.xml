@@ -18,8 +18,8 @@
       <pubDate>Tue, 05 Jul 2016 09:56:35 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/iptables-configure-dmz/</guid>
-      <description>要求  内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网  拓扑   个主机IP信息  内网网段为：192.168.1.0/24
-DMZ区网段为：172.16.1.0/24  iptables的策略  新建iptables.sh,内容如下：
+      <description>0x00 要求  内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网  0x01 拓扑 0x02 个主机IP信息 内网网段为：192.168.1.0/24
+DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容如下：
 #!/bin/bash iptables –F #清空此表中的规则 iptables –X #清空此表中的自定义规则 iptables –Z #清空此表中的计数器为0 iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP iptables -F -t nat iptables -X -t nat iptables -Z -t nat iptables -t nat -P PREROUTING ACCEPT iptables -t nat -P POSTROUTING ACCEPT iptables -t nat -P OUTPUT ACCEPT #添加必要的模块 modprobe ip_nat_ftp modprobe iptable_nat modprobe ip_conntrack modprobe ip_conntrack_ftp #开启转发功能 echo &amp;quot;1&amp;quot; &amp;gt; /proc/sys/net/ipv4/ip_forward #******************************************************************** #PREROUTING： iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.</description>
     </item>
     

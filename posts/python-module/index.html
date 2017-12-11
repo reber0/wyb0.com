@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-08-31</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -120,28 +121,26 @@
 
 <ul>
 <li>在python中，任何一个python文件都可以看作一个模块</li>
-<li>不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py</li>
+<li>不同包下有相同模块名并不会冲突，且包下必须有文件<code>__init__.py</code></li>
 <li>from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数)</li>
 <li>from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test</li>
 <li>import导入模块时会从sys.path输出的结果路径中查找模块然后导入</li>
-<li>sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径</li>
-<li>使用if __name__ == &lsquo;__main__&lsquo;:</li>
+<li><code>sys.path.append('D:/xx/xx/xx/code')</code>可以添加搜索路径</li>
+<li>使用<code>if __name__ == '__main__':</code></li>
 </ul>
 
 <h3 id="0x01-实例">0x01 实例</h3>
 
 <ul>
-<li><p>文件结构如下
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/python_module_file_tree.png" alt="模块目录结构.png">
-</div>
-</p></li>
-
-<li><p>测试文件test.py</p></li>
+<li>文件结构如下</li>
 </ul>
 
-<blockquote>
+<p><img src="/img/post/python_module_file_tree.png" alt="模块目录结构" /></p>
+
+<ul>
+<li>测试文件test.py</li>
+</ul>
+
 <pre><code class="language-python">#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -161,7 +160,6 @@ c.test()
 d = s.Class4()
 d.test()
 </code></pre>
-</blockquote>
 
 <ul>
 <li><p>包package1</p>
@@ -318,11 +316,7 @@ if __name__ == '__main__':
 </blockquote></li>
 
 <li><p>执行python test.py结果
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/python_module_test_result.png" alt="导入模块测试结果.png">
-</div>
-</p></li>
+<img src="/img/post/python_module_test_result.png" alt="导入模块测试结果" /></p></li>
 </ul>
 
                 

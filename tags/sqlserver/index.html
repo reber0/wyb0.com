@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-05-30</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -120,7 +121,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 数据表结构  CREATE DATABASE student; CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT 'xiaoming', sex INT NOT NULL DEFAULT 1, age INT NOT NULL DEFAULT 0, hight INT NOT NULL DEFAULT 0 ) INSERT INTO info(name,sex,age,hight) VALUES('xiaohong',0,23,165); INSERT INTO info(name,sex,age,hight) VALUES('xiaogang',1,24,175); INSERT INTO info(name,sex,age,hight) VALUES('xiaoliu',1,21,160); INSERT INTO info(name,sex,age,hight) VALUES('xiaozhang',1,19,165); INSERT INTO info(name,sex,age,hight) VALUES('xiaoli',1,23,170); INSERT INTO info(name,sex,age,hight) VALUES('xiaohua',0,23,160); INSERT INTO info(name,sex,age,hight) VALUES('xiaoming',1,21,165); INSERT INTO info(name,sex,age,hight) VALUES('xiaowang',1,23,166); INSERT INTO info(name,sex,age,hight) VALUES('xiaojuan',0,21,159);   0x01 存储过程  --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p') DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg 'xiaoli'   0x02 使用游标的存储过程  -- 使用DECLARE声明局部变量，一般在函数和存储过程中使用 DECLARE @name VARCHAR(20) DECLARE @sex INT DECLARE @age INT DECLARE @hight INT DECLARE stu_cursor CURSOR FOR --定义游标，后面跟sql语句 SELECT name,sex,age,hight --使用游标的对象(根据需要写select语句) FROM dbo.
+        0x00 数据表结构 CREATE DATABASE student; CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT 'xiaoming', sex INT NOT NULL DEFAULT 1, age INT NOT NULL DEFAULT 0, hight INT NOT NULL DEFAULT 0 ) INSERT INTO info(name,sex,age,hight) VALUES('xiaohong',0,23,165); INSERT INTO info(name,sex,age,hight) VALUES('xiaogang',1,24,175); INSERT INTO info(name,sex,age,hight) VALUES('xiaoliu',1,21,160); INSERT INTO info(name,sex,age,hight) VALUES('xiaozhang',1,19,165); INSERT INTO info(name,sex,age,hight) VALUES('xiaoli',1,23,170); INSERT INTO info(name,sex,age,hight) VALUES('xiaohua',0,23,160); INSERT INTO info(name,sex,age,hight) VALUES('xiaoming',1,21,165); INSERT INTO info(name,sex,age,hight) VALUES('xiaowang',1,23,166); INSERT INTO info(name,sex,age,hight) VALUES('xiaojuan',0,21,159);  0x01 存储过程 --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p') DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg 'xiaoli'  0x02 使用游标的存储过程 -- 使用DECLARE声明局部变量，一般在函数和存储过程中使用 DECLARE @name VARCHAR(20) DECLARE @sex INT DECLARE @age INT DECLARE @hight INT DECLARE stu_cursor CURSOR FOR --定义游标，后面跟sql语句 SELECT name,sex,age,hight --使用游标的对象(根据需要写select语句) FROM dbo.
     </p>
 
     
@@ -143,11 +144,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-05-30</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -173,7 +175,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 数据库  -- 创建数据库 CREATE DATABASE student; -- 选择数据库 USE student; -- 查看当前数据库 SELECT DB_NAME(); -- 查看当前数据库 SELECT DB_NAME(); -- 查看数据库版本 SELECT @@version;   0x01 数据表  -- 创建数据库表 CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT 'xiaoming', sex INT NOT NULL DEFAULT 1 ) -- 查看表结构 EXEC sp_help 'info'; -- 更新表结构 ALTER TABLE info add age int; -- 添加一列 ALTER TABLE info DROP COLUMN age; -- 删除一列 -- 插入数据 INSERT INTO info(name,sex) VALUES('xiaohong',0); -- 查看数据 SELECT * FROM dbo.
+        0x00 数据库 -- 创建数据库 CREATE DATABASE student; -- 选择数据库 USE student; -- 查看当前数据库 SELECT DB_NAME(); -- 查看当前数据库 SELECT DB_NAME(); -- 查看数据库版本 SELECT @@version;  0x01 数据表 -- 创建数据库表 CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT 'xiaoming', sex INT NOT NULL DEFAULT 1 ) -- 查看表结构 EXEC sp_help 'info'; -- 更新表结构 ALTER TABLE info add age int; -- 添加一列 ALTER TABLE info DROP COLUMN age; -- 删除一列 -- 插入数据 INSERT INTO info(name,sex) VALUES('xiaohong',0); -- 查看数据 SELECT * FROM dbo.
     </p>
 
     

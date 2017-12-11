@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-04-19</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,7 +117,6 @@
 
 <h3 id="0x00-ls-显示文件">0x00 ls：显示文件</h3>
 
-<blockquote>
 <pre><code>[wyb@localhost tmp]$ ls
 a  a.txt
 [wyb@localhost tmp]$ ls -l
@@ -134,19 +134,15 @@ drwxr-xr-x.  2 wyb  root 4096 Apr 17 18:23 a
 drwx------.  2 wyb  wyb  4096 Apr 10 19:15 .esd-500
 drwxrwxrwt.  2 root root 4096 Apr 17 16:31 .ICE-unix
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-pwd-查看当前工作路径">0x02 pwd：查看当前工作路径</h3>
 
-<blockquote>
 <pre><code>[wyb@localhost ~]$ pwd  
 /home/wyb
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-cd-切换目录">0x03 cd：切换目录</h3>
 
-<blockquote>
 <pre><code>[wyb@localhost ~]$ ls
 Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
 [wyb@localhost ~]$ cd Desktop/     //相对路径
@@ -157,33 +153,27 @@ Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
 [wyb@localhost Desktop]$ pwd
 /home/user/reber/Desktop
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-mkdir-新建文件夹">0x04 mkdir：新建文件夹</h3>
 
-<blockquote>
 <pre><code>[wyb@localhost tmp]$ ls
 a  a.txt
 [wyb@localhost tmp]$ mkdir bbb
 [wyb@localhost tmp]$ ls
 a  a.txt  bbb
 </code></pre>
-</blockquote>
 
 <h3 id="0x05-touch-vim-新建文件">0x05 touch/vim：新建文件</h3>
 
-<blockquote>
 <pre><code>[wyb@localhost tmp]$ ls
 a  a.txt  bbb
 [wyb@localhost tmp]$ touch bbb.txt
 [wyb@localhost tmp]$ ls
 a  a.txt  bbb  bbb.txt
 </code></pre>
-</blockquote>
 
 <h3 id="0x06-rm-删除文件">0x06 rm：删除文件</h3>
 
-<blockquote>
 <pre><code>[wyb@localhost tmp]$ ls
 a  a.txt  bbb  bbb.txt  c.txt
 [wyb@localhost tmp]$ rm c.txt   //删除文件c.txt
@@ -195,11 +185,9 @@ rm: cannot remove `a': Is a directory
 [wyb@localhost tmp]$ ls
 a.txt  bbb  bbb.txt
 </code></pre>
-</blockquote>
 
 <h3 id="0x07-ifconfig-查看网卡的信息">0x07 ifconfig：查看网卡的信息</h3>
 
-<blockquote>
 <pre><code>[wyb@localhost tmp]$ ifconfig
 eth0    Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10  
         inet addr:192.168.63.131  Bcast:192.168.63.255  Mask:255.255.255.0
@@ -219,11 +207,9 @@ lo      Link encap:Local Loopback
         collisions:0 txqueuelen:0 
         RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
 </code></pre>
-</blockquote>
 
 <h3 id="0x08-netstat-查找网络连接信息">0x08 netstat：查找网络连接信息</h3>
 
-<blockquote>
 <pre><code>netstat -l   //listen状态的
 netstat -an  //显示所有的连接信息，且以ip地址代替名称
 netstat -t   //显示tcp连接信息
@@ -248,33 +234,25 @@ unix  2      [ ACC ]     STREAM     LISTENING     14240  private/rewrite
 unix  2      [ ACC ]     STREAM     LISTENING     14244  private/bounce
 unix  2      [ ACC ]     STREAM     LISTENING     14248  private/defer
 </code></pre>
-</blockquote>
 
 <h3 id="0x09-nslookup-查看dns信息">0x09 nslookup：查看DNS信息</h3>
 
-<blockquote>
 <pre><code>nslookup 查看ip和域名的相互映射
 nslookup www.baidu.com   //返回一些信息
 </code></pre>
-</blockquote>
 
 <h3 id="0x0a-ping">0x0A ping</h3>
 
-<blockquote>
 <pre><code>ping -c 3 www.baidu.com   //指定ping百度3次
 </code></pre>
-</blockquote>
 
 <h3 id="0x0b-last-查看近期的登陆信息">0x0B last：查看近期的登陆信息</h3>
 
-<blockquote>
 <pre><code>[root@localhost ~]# last
 </code></pre>
-</blockquote>
 
 <h3 id="0x0c-find-查找文件">0x0C find：查找文件</h3>
 
-<blockquote>
 <pre><code>which vim   //查看可执行文件的位置
 *which是通过 PATH环境变量到该路径内查找可执行文件，所以基本的功能是寻找可执行文件* 
 
@@ -298,11 +276,9 @@ find /bin -perm 4755  //返回有gid(即s权限)的文件    2是gid
 -rwxr-xr-x. 1 root root  55472 Jun 22  2012 /bin/chgrp
 -rwxr-xr-x. 1 root root  52472 Jun 22  2012 /bin/chmod
 </code></pre>
-</blockquote>
 
 <h3 id="0x0d-grep">0x0D grep</h3>
 
-<blockquote>
 <pre><code>//可以遍历查询mkr文件夹下含有字符串&quot;reber&quot;的文件及字符串所在行
 reber@WYB:~$ grep -Rn &quot;reber&quot; mkdir   
 mkr/cc:3:reber
@@ -310,11 +286,9 @@ mkr/a/a.txt:3:reber
 mkr/a/b.txt:16:reber
 mkr/b/xx:8:reber
 </code></pre>
-</blockquote>
 
 <h3 id="0x0e-cat-nl">0x0E cat/nl</h3>
 
-<blockquote>
 <pre><code>前者显示
 后者显示的同时有行号
 [wyb@localhost tmp]$ cat &gt; a.txt  //创建文件同时写入数据
@@ -331,11 +305,9 @@ this is b.txt
  1  this is a.txt
  2  this is b.txt
 </code></pre>
-</blockquote>
 
 <h3 id="0x0f-head">0x0F head</h3>
 
-<blockquote>
 <pre><code>[wyb@localhost tmp]$ head /etc/passwd   //默认显示前10行
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -361,11 +333,9 @@ this is add content
      1  this is a.txt
      2  this is b.[wyb@localhost tmp]$ 
 </code></pre>
-</blockquote>
 
 <h3 id="0x10-tail">0x10 tail</h3>
 
-<blockquote>
 <pre><code>[wyb@localhost tmp]$ tail -f a.txt  //实时显示文件后10行
 this is a.txt
 111111
@@ -385,11 +355,9 @@ this is add content
 this is add content
 [wyb@localhost tmp]$ 
 </code></pre>
-</blockquote>
 
 <h3 id="0x11-scp">0x11 scp</h3>
 
-<blockquote>
 <pre><code>向远程服务器put文件和文件夹，默认就是22端口
 scp -P 22 ./aa.txt reber@123.206.78.220:/home/reber
 scp -r ./bb reber@123.206.78.220:/home/reber
@@ -398,30 +366,34 @@ scp -r ./bb reber@123.206.78.220:/home/reber
 scp -P 2222 ubuntu@123.22.38.215:/home/reber/a.txt D:/a.txt
 scp -r -P 2222 ubuntu@123.22.38.215:/home/reber/test D:/test/
 </code></pre>
-</blockquote>
 
 <h3 id="0x12-磁盘">0x12 磁盘</h3>
 
-<blockquote>
 <pre><code>fdisk /dev/sdb
 sudo mkfs.ext3 /dev/sdb1
 mount -t ext3 -o rw /dev/sdb1 /home/aaa  //-o指定权限
 </code></pre>
-</blockquote>
 
 <h3 id="0x13-finger">0x13 finger</h3>
 
-<blockquote>
 <pre><code>finger可以查看用户登录情况
 </code></pre>
-</blockquote>
 
 <h3 id="0x14-时间同步">0x14 时间同步</h3>
 
-<blockquote>
 <pre><code>ntpdate time.nist.gov //需要root权限
 </code></pre>
-</blockquote>
+
+<h3 id="0x15-下载">0x15 下载</h3>
+
+<pre><code>$ curl -o aa.xml http://wyb0.com/index.xml #可以访问网页，它同时还保存了文件，文件名为aa.xml
+$ wget http://wyb0.com/index.xml #下载的文件名为index.xml
+</code></pre>
+
+<h3 id="0x16-环境变量">0x16 环境变量</h3>
+
+<pre><code>$ env
+</code></pre>
 
                 
                 <div style="padding:10px 1px;">

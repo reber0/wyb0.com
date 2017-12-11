@@ -18,9 +18,9 @@
       <pubDate>Mon, 10 Jul 2017 16:30:43 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-mrq/</guid>
-      <description>0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;amp;CPU密集，很多小任务&amp;amp;几个大任务)。  0x01 设置mongo和redis  因为mrq依赖于redis和mongo，所以先安装设置下
-  安装redis   $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp;amp; $ redis-cli &amp;gt; auth reber_redis    安装mongo   可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &amp;quot;deb [ arch=amd64 ] http://repo.</description>
+      <description>0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;amp;CPU密集，很多小任务&amp;amp;几个大任务)。  0x01 设置mongo和redis 因为mrq依赖于redis和mongo，所以先安装设置下
+ 安装redis  $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp;amp; $ redis-cli &amp;gt; auth reber_redis   安装mongo  可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &amp;quot;deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.</description>
     </item>
     
     <item>
@@ -29,7 +29,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Sat, 15 Apr 2017 18:49:37 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-tqdm/</guid>
-      <description> 0x00 作用  在下载大文件时以进度条的形式显示下载进度，如下图所示：  0x01 代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers[&#39;Content-Length&#39;])/1024 with open(name, &amp;quot;wb&amp;quot;) as f: print &amp;quot;total: &amp;quot;,content_size,&#39;k&#39; for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit=&#39;k&#39;): f.write(data) print &amp;quot;done &amp;quot;+name if __name__ == &#39;__main__&#39;: url = &amp;quot;http://127.0.0.1/Video.mp4&amp;quot; name = url.split(&#39;/&#39;)[-1] get_vedio(url,name)   </description>
+      <description> 0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers[&#39;Content-Length&#39;])/1024 with open(name, &amp;quot;wb&amp;quot;) as f: print &amp;quot;total: &amp;quot;,content_size,&#39;k&#39; for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit=&#39;k&#39;): f.write(data) print &amp;quot;done &amp;quot;+name if __name__ == &#39;__main__&#39;: url = &amp;quot;http://127.0.0.1/Video.mp4&amp;quot; name = url.split(&#39;/&#39;)[-1] get_vedio(url,name)  </description>
     </item>
     
     <item>
@@ -38,7 +38,9 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Tue, 21 Mar 2017 23:18:50 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-pycurl/</guid>
-      <description>0x00 关于cURL  cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。 利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。   0x01 pycurl常见方法  创建curl对象   c = pycurl.Curl() #创建一个curl对象    设置请求   c.setopt(pycurl.URL,&amp;quot;http://www.baidu.com&amp;quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&amp;quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&amp;quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象    部分返回信息   c.</description>
+      <description>0x00 关于cURL cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。
+利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。
+0x01 pycurl常见方法  创建curl对象  c = pycurl.Curl() #创建一个curl对象   设置请求  c.setopt(pycurl.URL,&amp;quot;http://www.baidu.com&amp;quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&amp;quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&amp;quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象   部分返回信息  c.getinfo(pycurl.HTTP_CODE) #返回的HTTP状态码 c.</description>
     </item>
     
     <item>
@@ -47,8 +49,9 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Fri, 25 Nov 2016 17:44:23 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-openpyxl/</guid>
-      <description>0x00 openpyxl模块  这个模块可以让你读写excel文件   0x01 读取数据  代码如下：
-#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename=&#39;aa.xlsx&#39;) sheetnames = wb.get_sheet_names() #获得所有表名 print u&amp;quot;存在表：%s&amp;quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&amp;quot;第一张表表名为：%s&amp;quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &amp;quot;表%s有%d行%d列&amp;quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&amp;quot;取部分数据：&amp;quot; print ws[&#39;A1&#39;].value,ws[&#39;B1&#39;].value print ws[&#39;A2&#39;].value,ws[&#39;B2&#39;].value print ws.cell(row=1, column=2).</description>
+      <description>0x00 openpyxl模块 这个模块可以让你读写excel文件
+0x01 读取数据 代码如下：
+#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename=&#39;aa.xlsx&#39;) sheetnames = wb.get_sheet_names() #获得所有表名 print u&amp;quot;存在表：%s&amp;quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&amp;quot;第一张表表名为：%s&amp;quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &amp;quot;表%s有%d行%d列&amp;quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&amp;quot;取部分数据：&amp;quot; print ws[&#39;A1&#39;].value,ws[&#39;B1&#39;].value print ws[&#39;A2&#39;].value,ws[&#39;B2&#39;].value print ws.cell(row=1, column=2).value print u&amp;quot;\n输出表%s的所有数据：&amp;quot; % ws.title for x in range(1,rows+1): for y in range(1,columns+1): print ws.</description>
     </item>
     
     <item>
@@ -57,8 +60,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Wed, 31 Aug 2016 11:22:41 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module/</guid>
-      <description>0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&amp;rsquo;D:/xx/xx/xx/code&amp;rsquo;)可以添加搜索路径 使用if __name__ == &amp;lsquo;__main__&amp;lsquo;:  0x01 实例  文件结构如下  测试文件test.py
-   #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.</description>
+      <description>0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&#39;D:/xx/xx/xx/code&#39;)可以添加搜索路径 使用if __name__ == &#39;__main__&#39;:  0x01 实例  文件结构如下   测试文件test.py  #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.test()   包package1</description>
     </item>
     
     <item>
@@ -67,10 +69,10 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Fri, 19 Aug 2016 19:42:14 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-some-small-modules/</guid>
-      <description>0x00 colorama  这个模块可以输出带有颜色的字符
-#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.CYAN,content=&#39;debug&#39;,g_color=colorama.Fore.RESET) print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.YELLOW,content=&#39;warning&#39;,g_color=colorama.Fore.RESET) print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.RED,content=&#39;error&#39;,g_color=colorama.Fore.RESET)   0x01 pyfiglet  可以输出字体的图片效果
-from pyfiglet import figlet_format print figlet_format(&amp;quot;reber&amp;quot;, font=&amp;quot;xtty&amp;quot;) #font可以控制输出的类型   0x02 chardet  这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
-#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&amp;quot;https://tower.im/users/sign_in&amp;quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.</description>
+      <description>0x00 colorama 这个模块可以输出带有颜色的字符
+#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.CYAN,content=&#39;debug&#39;,g_color=colorama.Fore.RESET) print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.YELLOW,content=&#39;warning&#39;,g_color=colorama.Fore.RESET) print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.RED,content=&#39;error&#39;,g_color=colorama.Fore.RESET)  0x01 pyfiglet 可以输出字体的图片效果
+from pyfiglet import figlet_format print figlet_format(&amp;quot;reber&amp;quot;, font=&amp;quot;xtty&amp;quot;) #font可以控制输出的类型  0x02 chardet 这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
+#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&amp;quot;https://tower.im/users/sign_in&amp;quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.decode(code[&#39;encoding&#39;]).encode(&#39;gbk&#39;) print chardet.detect(str1) start = str1.find(&#39;&amp;lt;title&amp;gt;&#39;) stop = str1.</description>
     </item>
     
     <item>
@@ -79,8 +81,8 @@ from pyfiglet import figlet_format print figlet_format(&amp;quot;reber&amp;quot;
       <pubDate>Tue, 16 Aug 2016 15:10:44 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-optparse/</guid>
-      <description> 0x00 关于optparse模块  python2.3之后添加的模块optparse是专门用来处理命令行选项的
-import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options] domaion&#39;, version=&#39;%prog 1.2&#39;) parser.add_option(&#39;-b&#39;, &#39;--bug&#39;, dest=&#39;isbug&#39;, default=False, action=&#39;store_true&#39;, help=&#39;Whether open the debug mode, default is false&#39;) parser.add_option(&#39;-u&#39;, &#39;--url&#39;, dest=&#39;url&#39;, default=None, action=&#39;store&#39;, type=&#39;string&#39;, help=&#39;target url&#39;) parser.add_option(&#39;-n&#39;,&#39;--number&#39;, dest=&#39;num&#39;, default=10, type=&#39;int&#39;, help=&#39;the number, default is 10&#39;) (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message   0x01 说明  在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action=&#39;store&#39;，可以不用写 action=&#39;store_true&#39;使用参数时将布尔值true存储到dest指定的变量中 action=&#39;store_false&#39;使用参数时将布尔值false存储到dest指定的变量中   </description>
+      <description> 0x00 关于optparse模块 python2.3之后添加的模块optparse是专门用来处理命令行选项的
+import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options] domaion&#39;, version=&#39;%prog 1.2&#39;) parser.add_option(&#39;-b&#39;, &#39;--bug&#39;, dest=&#39;isbug&#39;, default=False, action=&#39;store_true&#39;, help=&#39;Whether open the debug mode, default is false&#39;) parser.add_option(&#39;-u&#39;, &#39;--url&#39;, dest=&#39;url&#39;, default=None, action=&#39;store&#39;, type=&#39;string&#39;, help=&#39;target url&#39;) parser.add_option(&#39;-n&#39;,&#39;--number&#39;, dest=&#39;num&#39;, default=10, type=&#39;int&#39;, help=&#39;the number, default is 10&#39;) (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message  0x01 说明 在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action=&#39;store&#39;，可以不用写 action=&#39;store_true&#39;使用参数时将布尔值true存储到dest指定的变量中 action=&#39;store_false&#39;使用参数时将布尔值false存储到dest指定的变量中  </description>
     </item>
     
     <item>
@@ -89,7 +91,7 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Thu, 11 Aug 2016 23:26:39 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-scapy/</guid>
-      <description> 0x00 简单尝试   0x01 生成一组数据包   0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包   0x04 得到TCP内容   0x05 SYN Scans   </description>
+      <description> 0x00 简单尝试 0x01 生成一组数据包 0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包 0x04 得到TCP内容 0x05 SYN Scans </description>
     </item>
     
     <item>
@@ -98,9 +100,9 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Thu, 14 Jul 2016 15:24:11 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-paramiko/</guid>
-      <description> 安装 直接pip install paramiko安装
+      <description> 0x00 安装 直接pip install paramiko安装
 或者去http://www.paramiko.org/ 下载
-执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&amp;quot;192.168.188.134&amp;quot;,22,&amp;quot;reber&amp;quot;,&amp;quot;123456&amp;quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&amp;quot;ls -l&amp;quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&amp;quot;192.168.188.134&amp;quot;,22)) ftp.connect(username=&amp;quot;reber&amp;quot;,password=&amp;quot;123456&amp;quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\WYB_9\\Desktop\\a.txt&#39; sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\WYB_9\\Desktop\\system.log remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\WYB_9\\Desktop\\system.log&#39; sftp.get(remotepath, localpath) ftp.close()  </description>
+0x01 执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&amp;quot;192.168.188.134&amp;quot;,22,&amp;quot;reber&amp;quot;,&amp;quot;123456&amp;quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&amp;quot;ls -l&amp;quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  0x02 上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&amp;quot;192.168.188.134&amp;quot;,22)) ftp.connect(username=&amp;quot;reber&amp;quot;,password=&amp;quot;123456&amp;quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\WYB_9\\Desktop\\a.txt&#39; sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\WYB_9\\Desktop\\system.log remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\WYB_9\\Desktop\\system.log&#39; sftp.get(remotepath, localpath) ftp.close()  </description>
     </item>
     
     <item>
@@ -109,8 +111,8 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Thu, 14 Jul 2016 09:44:06 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-cmd/</guid>
-      <description>关于cmd模块  使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
- cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  用cmd模块简单实现shell命令  #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &amp;quot;&amp;quot;&amp;quot;docstring for ClassShell&amp;quot;&amp;quot;&amp;quot; def __init__(self): Cmd.__init__(self) os.chdir(&amp;quot;C:/Users/WYB_9/Desktop&amp;quot;) hostName = socket.gethostname() self.prompt = &amp;quot;reber@&amp;quot; + hostName + &amp;quot; &amp;quot; + os.path.abspath(&#39;.&#39;) + &amp;quot;\n$ &amp;quot; def help_dir(self): print &amp;quot;dir [path]&amp;quot; def do_dir(self, arg): if not arg: print &amp;quot;\n&amp;quot;.</description>
+      <description>0x00 关于cmd模块 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+0x01 cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  0x02 用cmd模块简单实现shell命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &amp;quot;&amp;quot;&amp;quot;docstring for ClassShell&amp;quot;&amp;quot;&amp;quot; def __init__(self): Cmd.__init__(self) os.chdir(&amp;quot;C:/Users/WYB_9/Desktop&amp;quot;) hostName = socket.gethostname() self.prompt = &amp;quot;reber@&amp;quot; + hostName + &amp;quot; &amp;quot; + os.path.abspath(&#39;.&#39;) + &amp;quot;\n$ &amp;quot; def help_dir(self): print &amp;quot;dir [path]&amp;quot; def do_dir(self, arg): if not arg: print &amp;quot;\n&amp;quot;.</description>
     </item>
     
     <item>
@@ -119,7 +121,7 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Sat, 02 Jul 2016 10:47:19 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-requests/</guid>
-      <description>0x00 无参数的get请求  import requests resp = requests.get(&#39;http://www.baidu.com&#39;,timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串   0x01 有参数的get请求  import requests url = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; header = { &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0&#39;, } param = {&#39;aaa&#39;:&#39;1111&#39;,&#39;bbb&#39;:&#39;2222&#39;} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie   0x02 POST请求  import requests url1 = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; url2 = &#39;http://10.</description>
+      <description>0x00 无参数的get请求 import requests resp = requests.get(&#39;http://www.baidu.com&#39;,timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串  0x01 有参数的get请求 import requests url = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; header = { &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0&#39;, } param = {&#39;aaa&#39;:&#39;1111&#39;,&#39;bbb&#39;:&#39;2222&#39;} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie  0x02 POST请求 import requests url1 = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; url2 = &#39;http://10.10.10.10:8080/Lab2.0/student.action&#39; data = { &#39;userid&#39;:&#39;1315935xxx&#39;, &#39;password&#39;:&#39;xxxxxxx&#39;, &#39;quan&#39;:&#39;Student&#39;, } header = { &#39;User-Agent&#39;: &#39;Mozilla/5.</description>
     </item>
     
     <item>
@@ -128,7 +130,7 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Sat, 25 Jun 2016 08:55:30 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-logging/</guid>
-      <description>使用流程  创建一个logger 创建一个handler，用于写入日志文件 定义handler的输出格式 将handler添加到logger 记录日志  示例  #!/usr/bin/env python # -*- coding: utf-8 -*- import logging class MyLog(object): &amp;quot;&amp;quot;&amp;quot;docstring for MyLog&amp;quot;&amp;quot;&amp;quot; def __init__(self, logfile, loglevel, logger): super(MyLog, self).__init__() # 创建一个logger self.logger = logging.getLogger(logger) self.logger.setLevel(logging.DEBUG) # 创建一个用于写入日志文件的handler fh = logging.FileHandler(logfile) fh.setLevel(logging.DEBUG) # 只要是写入文件的等级都为DEBUG，也可以设置为loglevel formatterf = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;) fh.setFormatter(formatterf) # 创建一个用于输出到控制台的handler ch = logging.StreamHandler() ch.setLevel(loglevel) formatterc = logging.Formatter(&#39;%(asctime)s - %(message)s&#39;) ch.setFormatter(formatterc) # 将handler添加到logger self.</description>
+      <description>0x00 使用流程  创建一个logger 创建一个handler，用于写入日志文件 定义handler的输出格式 将handler添加到logger 记录日志  0x01 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- import logging class MyLog(object): &amp;quot;&amp;quot;&amp;quot;docstring for MyLog&amp;quot;&amp;quot;&amp;quot; def __init__(self, logfile, loglevel, logger): super(MyLog, self).__init__() # 创建一个logger self.logger = logging.getLogger(logger) self.logger.setLevel(logging.DEBUG) # 创建一个用于写入日志文件的handler fh = logging.FileHandler(logfile) fh.setLevel(logging.DEBUG) # 只要是写入文件的等级都为DEBUG，也可以设置为loglevel formatterf = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;) fh.setFormatter(formatterf) # 创建一个用于输出到控制台的handler ch = logging.StreamHandler() ch.setLevel(loglevel) formatterc = logging.Formatter(&#39;%(asctime)s - %(message)s&#39;) ch.setFormatter(formatterc) # 将handler添加到logger self.</description>
     </item>
     
     <item>
@@ -137,8 +139,7 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Wed, 15 Jun 2016 13:08:00 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-install-third-party-modules/</guid>
-      <description> 第三方模块安装方法  使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装  使用easy_install安装  在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName   使用pip安装  在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName   网站下载安装包  在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装
- </description>
+      <description>0x00 第三方模块安装方法  使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装  0x01 使用easy_install安装 在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName  0x02 使用pip安装 在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName  0x03 网站下载安装包 在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装</description>
     </item>
     
   </channel>

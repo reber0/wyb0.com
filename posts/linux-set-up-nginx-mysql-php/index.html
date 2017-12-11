@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-06-17</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -118,7 +119,6 @@
 
 <h3 id="0x00-准备工作">0x00 准备工作</h3>
 
-<blockquote>
 <pre><code>首先执行：
     sudo yum groupinstall &quot;Development tools&quot;
 安装make：
@@ -126,16 +126,13 @@
 安装g++：
     yum install gcc gcc-c++
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-安装mysql和php">0x01 安装mysql和php</h3>
 
-<blockquote>
 <pre><code class="language-sh">sudo yum install mysql mysql-server mysql-devel
 sudo yum install php php-devel
 sudo yum install php-gd php-mysql php-fpm
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-安装依赖">0x02 安装依赖</h3>
 
@@ -152,7 +149,6 @@ sudo yum install openssl openssl-devel</p></li>
 
 <h3 id="0x03-安装nginx">0x03 安装Nginx</h3>
 
-<blockquote>
 <p>可在<a href="http://nginx.org/download/nginx-1.9.9.tar.gz">http://nginx.org/download/nginx-1.9.9.tar.gz</a> 下载
 <img src="/img/post/download_nginx.png" alt="下载nginx安装包" /></p>
 
@@ -161,11 +157,9 @@ sudo yum install openssl openssl-devel</p></li>
 [reber@WYB nginx-1.9.9]$ make
 [reber@WYB nginx-1.9.9]$ sudo make install
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-启动与关闭nginx">0x04 启动与关闭nginx</h3>
 
-<blockquote>
 <pre><code class="language-sh"># 开启服务：
 [reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
 # 关闭服务：
@@ -173,11 +167,9 @@ sudo yum install openssl openssl-devel</p></li>
 </code></pre>
 
 <p><img src="/img/post/visit_nginx.png" alt="访问nginx.png" /></p>
-</blockquote>
 
 <h3 id="0x05-配置nginx支持php">0x05 配置nginx支持php</h3>
 
-<blockquote>
 <p>[reber@WYB nginx-1.9.9]$ killall nginx<br />
 [reber@WYB nginx-1.9.9]$ vim /usr/local/nginx/conf/nginx.conf</p>
 
@@ -200,7 +192,6 @@ location ~ \.php$ {
 </code></pre>
 
 <p><img src="/img/post/visit_nginx_phpinfo.png" alt="访问nginx的phpinfo.php" /></p>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

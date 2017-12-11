@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-12-09</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -120,9 +121,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 XXE  XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
+        0x00 XXE XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
 XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛
- 0x01 XML格式  &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;!--xml声明--&gt; &lt;!--文档类型定义--&gt; &lt;!DOCTYPE note [ &lt;!ELEMENT note (to,from,heading,body)&gt; &lt;!ELEMENT to (#PCDATA)&gt; &lt;!ELEMENT from (#PCDATA)&gt; &lt;!ELEMENT heading (#PCDATA)&gt; &lt;!ELEMENT body (#PCDATA)&gt; ]&gt; &lt;!--文档元素--&gt; &lt;note&gt; &lt;to&gt;Tom&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Hi,I’am John&lt;/body&gt; &lt;/note&gt;   0x02 内部声明与外部引用  &lt;!--内部声明实体--&gt; &lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt; &lt;!--引用外部实体--&gt; &lt;!ENTITY 实体名称 SYSTEM &quot;URI&quot;&gt;   0x03 XXE漏洞  外部引用时可能会出现漏洞，几种payload：   &lt;?xml version=&quot;1.0&quot;?&gt; &lt;!DOCTYPE a [ &lt;!
+0x01 XML格式 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;!--xml声明--&gt; &lt;!--文档类型定义--&gt; &lt;!DOCTYPE note [ &lt;!ELEMENT note (to,from,heading,body)&gt; &lt;!ELEMENT to (#PCDATA)&gt; &lt;!ELEMENT from (#PCDATA)&gt; &lt;!ELEMENT heading (#PCDATA)&gt; &lt;!ELEMENT body (#PCDATA)&gt; ]&gt; &lt;!--文档元素--&gt; &lt;note&gt; &lt;to&gt;Tom&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Hi,I’am John&lt;/body&gt; &lt;/note&gt;  0x02 内部声明与外部引用 &lt;!--内部声明实体--&gt; &lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt; &lt;!--引用外部实体--&gt; &lt;!ENTITY 实体名称 SYSTEM &quot;URI&quot;&gt;  0x03 XXE漏洞  外部引用时可能会出现漏洞，几种payload：  &lt;?xml version=&quot;1.0&quot;?&gt; &lt;!DOCTYPE a [ &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt; ]&gt; &lt;test&gt;&amp;xxe;&lt;/test&gt;  &lt;?
     </p>
 
     
@@ -145,11 +146,12 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-07-20</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -183,8 +185,8 @@ python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析X
 将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
  ElementTree(元素树)
 ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
-   我在这里使用ElementTree  0x01 Element对象的属性  每个Element对象都具有以下属性：
-  tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）   &gt;&gt;&gt; from xml.etree import ElementTree as ET &gt;&gt;&gt; xml = &quot;&quot;&quot;&lt;books&gt; ... &lt;book id='37476'&gt;aaaa&lt;/book&gt; ... &lt;book id='83727'&gt;bbbb&lt;/book&gt; ... &lt;/books&gt;&quot;&quot;&quot; &gt;&gt;&gt; root = ET.fromstring(xml) &gt;&gt;&gt; root.tag 'books' &gt;&gt;&gt; child = root.getchildren() &gt;&gt;&gt; child [&lt;Element 'book' at 0x106f59410&gt;, &lt;Element 'book' at 0x106f59450&gt;] &gt;&gt;&gt; child[0].
+   我在这里使用ElementTree  0x01 Element对象的属性 每个Element对象都具有以下属性：
+ tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）  &gt;&gt;&gt; from xml.etree import ElementTree as ET &gt;&gt;&gt; xml = &quot;&quot;&quot;&lt;books&gt; ... &lt;book id='37476'&gt;aaaa&lt;/book&gt; ... &lt;book id='83727'&gt;bbbb&lt;/book&gt; ... &lt;/books&gt;&quot;&quot;&quot; &gt;&gt;&gt; root = ET.fromstring(xml) &gt;&gt;&gt; root.tag 'books' &gt;&gt;&gt; child = root.getchildren() &gt;&gt;&gt; child [&lt;Element 'book' at 0x106f59410&gt;, &lt;Element 'book' at 0x106f59450&gt;] &gt;&gt;&gt; child[0].
     </p>
 
     
@@ -207,11 +209,12 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-05-25</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -237,10 +240,22 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 XML简介  xml的设计宗旨是传输数据，而并非显示数据 xms是不作为的，它被设计用来结构化、存储以及传输信息 xml只是纯文本，独立于软硬件和应用程序 xml可供任何软硬设备读取数据 xml可以自定义标签 xml具有自我描述性 xml是对html的补充 xml常用于简化数据的存储和共享   例子：John给George的便签
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;note&gt; //根元素 &lt;to&gt;George&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Don't forget the meeting!&lt;/body&gt; &lt;/note&gt;   0x01 XML树结构  必须有根节点 根节点可以有子节点   格式：
+        0x00 XML简介 1、xml的设计宗旨是传输数据，而并非显示数据
+2、xms是不作为的，它被设计用来结构化、存储以及传输信息
+3、xml只是纯文本，独立于软硬件和应用程序
+4、xml可供任何软硬设备读取数据
+5、xml可以自定义标签
+6、xml具有自我描述性
+7、xml是对html的补充
+8、xml常用于简化数据的存储和共享
+例子：John给George的便签
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;note&gt; //根元素 &lt;to&gt;George&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Don't forget the meeting!&lt;/body&gt; &lt;/note&gt;  0x01 XML树结构 1、必须有根节点
+2、根节点可以有子节点
+格式：
 &lt;root&gt; &lt;child&gt; &lt;subchild&gt;.....&lt;/subchild&gt; &lt;/child&gt; &lt;/root&gt;  例子：
-&lt;books&gt; &lt;book&gt; &lt;name&gt;Python黑帽子&lt;/name&gt; &lt;date&gt;2015&lt;/date&gt; &lt;price&gt;37￥&lt;/price&gt; &lt;description&gt; 用python写一些程序 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;Web安全深度剖析&lt;/name&gt; &lt;date&gt;2014&lt;/date&gt; &lt;price&gt;39￥&lt;/price&gt; &lt;description&gt; 讲述web渗透的基础知识 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;白帽子讲web安全&lt;/name&gt; &lt;date&gt;2013&lt;/date&gt; &lt;price&gt;44￥&lt;/price&gt; &lt;description&gt; 道哥力作 &lt;/description&gt; &lt;/book&gt; &lt;/books&gt;   0x02 XML语法规则  所有元素必有闭合标签 标签对大小写敏感 必须正确的嵌套 XML必须有根元素 XML的属性值必须加引号(能用子元素的就用子元素代替属性) 实体引用
+&lt;books&gt; &lt;book&gt; &lt;name&gt;Python黑帽子&lt;/name&gt; &lt;date&gt;2015&lt;/date&gt; &lt;price&gt;37￥&lt;/price&gt; &lt;description&gt; 用python写一些程序 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;Web安全深度剖析&lt;/name&gt; &lt;date&gt;2014&lt;/date&gt; &lt;price&gt;39￥&lt;/price&gt; &lt;description&gt; 讲述web渗透的基础知识 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;白帽子讲web安全&lt;/name&gt; &lt;date&gt;2013&lt;/date&gt; &lt;price&gt;44￥&lt;/price&gt; &lt;description&gt; 道哥力作 &lt;/description&gt; &lt;/book&gt; &lt;/books&gt;  0x02 XML语法规则 1、所有元素必有闭合标签
+2、标签对大小写敏感
+3、必须正确的嵌套
     </p>
 
     

@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-07-14</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,12 +117,12 @@
                 
                 
 
-<h2 id="安装">安装</h2>
+<h3 id="0x00-安装">0x00 安装</h3>
 
 <p>直接pip install paramiko安装<br />
 或者去<a href="http://www.paramiko.org/">http://www.paramiko.org/</a> 下载</p>
 
-<h2 id="执行一条远程命令">执行一条远程命令</h2>
+<h3 id="0x01-执行一条远程命令">0x01 执行一条远程命令</h3>
 
 <pre><code class="language-python">#!/usr/bin/env python
 #-*- coding:utf-8 -*-
@@ -142,13 +143,9 @@ print stderr.readlines()   #有错误信息就返回错误信息，没有就返�
 ssh.close()
 </code></pre>
 
+<p><img src="/img/post/paramiko_ssh_one_command.png" alt="paramiko远程ssh后执行一条命令" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/paramiko_ssh_one_command.png" alt="paramiko远程ssh后执行一条命令.png">
-</div>
-
-
-<h2 id="上传与下载文件">上传与下载文件</h2>
+<h3 id="0x02-上传与下载文件">0x02 上传与下载文件</h3>
 
 <pre><code class="language-python">#!/usr/bin/env python
 #-*- coding:utf-8 -*-
@@ -171,11 +168,7 @@ sftp.get(remotepath, localpath)
 ftp.close()
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/paramiko_put_file.png" alt="paramiko上传文件.png">
-</div>
-
+<p><img src="/img/post/paramiko_put_file.png" alt="paramiko上传文件" /></p>
 
                 
                 <div style="padding:10px 1px;">

@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2015-07-14</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,11 +115,9 @@
                 
                 
 
-<h2 id="环境">环境</h2>
+<h3 id="0x00-环境">0x00 环境</h3>
 
-<blockquote>
 <p>虚拟机rhel-server-6.2</p>
-</blockquote>
 
 <h2 id="搭建流程">搭建流程</h2>
 
@@ -129,69 +128,35 @@
 <li>启动DNS服务器进行测试</li>
 </ul>
 
-<h2 id="安装dns服务">安装DNS服务</h2>
+<h3 id="0x01-安装dns服务">0x01 安装DNS服务</h3>
 
 <ul>
 <li><p>挂载光盘<br />
 用mount -o,loop /dev/cdrom /mnt/cdrom命令挂载光盘</p></li>
 
 <li><p>配置yum源，安装BIND(用命令yum install bind*安装)
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dns_yum_configuration_source.png" alt="搭建dns配置yum源.png">
-</div>
-
+<img src="/img/post/dns_yum_configuration_source.png" alt="搭建dns配置yum源" />
 安装结果如下：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dns_install.png" alt="安装bind.png">
-</div>
-</p></li>
+<img src="/img/post/dns_install.png" alt="安装bind" /></p></li>
 
 <li><p>进行配置<br />
 vim /etc/named.conf,添加必要的信息
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dns_vim_named_conf.png" alt="配置dns服务,添加必要的信息.png">
-</div>
-
+<img src="/img/post/dns_vim_named_conf.png" alt="配置dns服务,添加必要的信息" />
 在named.conf的包含文件named.rfc1921.zones中定义区域
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dns_define_regions.png" alt="配置dns服务,定义区域.png">
-</div>
-</p></li>
+<img src="/img/post/dns_define_regions.png" alt="配置dns服务,定义区域" /></p></li>
 
 <li><p>配置正反向解析文件<br />
 分别配置wyb.cn.hosts和wyb.cn.rev
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dns_analytical_paper_example.png" alt="解析文件样例.png">
-</div>
-
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dns_forward_mapping_file.png" alt="正向解析文件.png">
-</div>
-
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dns_reverse_mapping_file.png" alt="反向解析文件.png">
-</div>
-</p></li>
+<img src="/img/post/dns_analytical_paper_example.png" alt="解析文件样例" />
+<img src="/img/post/dns_forward_mapping_file.png" alt="正向解析文件" />
+<img src="/img/post/dns_reverse_mapping_file.png" alt="反向解析文件" /></p></li>
 </ul>
 
-<h2 id="验证">验证</h2>
+<h3 id="0x02-验证">0x02 验证</h3>
 
-<blockquote>
 <p>用service named start命令启动DNS<br />
 用nslookup命令进行验证，先查看当前采用那台DNS解析，测试反向资源记录以及正反向解析
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dns_test.png" alt="测试DNS.png">
-</div>
-</p>
-</blockquote>
+<img src="/img/post/dns_test.png" alt="测试DNS" /></p>
 
                 
                 <div style="padding:10px 1px;">

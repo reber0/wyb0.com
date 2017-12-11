@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2015-07-13</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,7 +115,7 @@
                 
                 
 
-<h2 id="中小企业需求分析">中小企业需求分析</h2>
+<h3 id="0x00-中小企业需求分析">0x00 中小企业需求分析</h3>
 
 <ol>
 <li>搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。</li>
@@ -125,17 +126,11 @@
 <li>内网通过配置PAT技术实现与外网之间的通信。</li>
 </ol>
 
-<h2 id="所需设备">所需设备</h2>
+<h3 id="0x01-所需设备">0x01 所需设备</h3>
 
-<blockquote>
+<p><img src="/img/post/enterprise_network_the_required_equipment.png" alt="中小企业所需设备" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_the_required_equipment.png" alt="中小企业所需设备.png">
-</div>
-
-</blockquote>
-
-<h2 id="网络规划">网络规划</h2>
+<h3 id="0x02-网络规划">0x02 网络规划</h3>
 
 <ol>
 <li>在三层交换机设置ACL，控制个vlan间的通信</li>
@@ -161,13 +156,12 @@
 </ul></li>
 </ol>
 
-<h2 id="网络设备配置命令代码">网络设备配置命令代码</h2>
+<h3 id="0x03-网络设备配置命令代码">0x03 网络设备配置命令代码</h3>
 
 <ul>
 <li>Firewall配置</li>
 </ul>
 
-<blockquote>
 <pre><code>Router&gt;enable 
 Router#conf t
 Router(config)#no ip domain-lookup  //禁止域名解析
@@ -207,13 +201,11 @@ Building configuration...
 [OK]
 Firewall#
 </code></pre>
-</blockquote>
 
 <ul>
 <li>R1的配置</li>
 </ul>
 
-<blockquote>
 <pre><code>Router&gt;enable 
 Router#conf t
 Router(config)#no ip domain-lookup 
@@ -245,13 +237,11 @@ Building configuration...
 [OK]
 R1#
 </code></pre>
-</blockquote>
 
 <ul>
 <li>三层交换机配置</li>
 </ul>
 
-<blockquote>
 <pre><code>Switch&gt;enable 
 Switch#conf t
 Switch(config)#no ip domain-lookup
@@ -341,13 +331,11 @@ Building configuration...
 [OK]
 MS1#
 </code></pre>
-</blockquote>
 
 <ul>
 <li>S1的配置(S2、S3和S1一样)</li>
 </ul>
 
-<blockquote>
 <pre><code>Switch&gt;enable 
 Switch#conf t
 Switch(config)#no ip domain-lookup 
@@ -374,13 +362,11 @@ Building configuration...
 [OK]
 S1#
 </code></pre>
-</blockquote>
 
 <ul>
 <li>S4的配置(S5、S6、S7和S4一样)</li>
 </ul>
 
-<blockquote>
 <pre><code>Switch&gt;enable 
 Switch#conf t
 Switch(config)#no ip domain-lookup 
@@ -428,72 +414,34 @@ Building configuration...
 [OK]
 S4#
 </code></pre>
-</blockquote>
 
-<h2 id="测试及结果截图">测试及结果截图</h2>
+<h3 id="0x04-测试及结果截图">0x04 测试及结果截图</h3>
 
 <ul>
 <li><p>开始时外网和内网均能相互通信
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_init1.png" alt="开始时内外网能相互ping通1.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_init2.png" alt="开始时内外网能相互ping通2.png">
-</div>
-</p></li>
+<img src="/img/post/enterprise_network_init1.png" alt="开始时内外网能相互ping通1" />
+<img src="/img/post/enterprise_network_init2.png" alt="开始时内外网能相互ping通2" /></p></li>
 
 <li><p>外网的2.0网段和3.0网段ping内网网段，只有2.0只能ping通内网的网段，且只能ping通192.168.2.0
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_test1.png" alt="测试1.png">
-</div>
-</p></li>
+<img src="/img/post/enterprise_network_test1.png" alt="测试1" /></p></li>
 
 <li><p>内网网段ping外网的202.202.2.1，只有2.0能ping通外网
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_test2.png" alt="测试2.png">
-</div>
-</p></li>
+<img src="/img/post/enterprise_network_test2.png" alt="测试2" /></p></li>
 
 <li><p>内网2.0网段ping内网网段，只能访问1.0
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_test3.png" alt="测试3.png">
-</div>
-</p></li>
+<img src="/img/post/enterprise_network_test3.png" alt="测试3" /></p></li>
 
 <li><p>内网3.0网段ping内网网段，能ping通1.0和4.0
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_test4.png" alt="测试4.png">
-</div>
-</p></li>
+<img src="/img/post/enterprise_network_test4.png" alt="测试4" /></p></li>
 
 <li><p>内网4.0网段ping内网网段，能ping通1.0和3.0
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_test5.png" alt="测试5.png">
-</div>
-</p></li>
+<img src="/img/post/enterprise_network_test5.png" alt="测试5" /></p></li>
 
 <li><p>远程配置设备
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_test6.png" alt="测试6.png">
-</div>
-</p></li>
+<img src="/img/post/enterprise_network_test6.png" alt="测试6" /></p></li>
 
 <li><p>查看NAT转换
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/enterprise_network_test7.png" alt="测试7.png">
-</div>
-</p></li>
+<img src="/img/post/enterprise_network_test7.png" alt="测试7" /></p></li>
 </ul>
 
 <p>以上</p>

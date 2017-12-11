@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-09-12</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -120,9 +121,7 @@
 
 <h3 id="0x00-安装">0x00 安装</h3>
 
-<blockquote>
 <p>有两种，一个是MySQLdb，一个是pymysql</p>
-</blockquote>
 
 <ul>
 <li>下载<a href="https://pypi.python.org/pypi/MySQL-python/1.2.5">MySQL-python</a>然后安装<br /></li>
@@ -131,7 +130,6 @@
 
 <h3 id="0x01-简单表设计如下">0x01 简单表设计如下</h3>
 
-<blockquote>
 <pre><code>insert into mysql.user(Host,User,Password) values('%','python','123456');
 
 drop database if exists python;
@@ -148,11 +146,9 @@ domain varchar(100) not null default 'www.xx.com' comment '域名'
 grant all privileges on python.* to 'python'@'%' identified by '123456';
 flush privileges;
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-mysqldb封装代码">0x02 MySQLdb封装代码</h3>
 
-<blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -289,11 +285,9 @@ if __name__ == '__main__':
 
     db.close()
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-pymysql封装代码">0x03 pymysql封装代码</h3>
 
-<blockquote>
 <pre><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -350,7 +344,6 @@ if __name__ == '__main__':
     result = sqlconn.query(sql,&quot;2&quot;)
     print result
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-05-25</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,9 +117,7 @@
 
 <h3 id="0x00-角色和权限">0x00 角色和权限</h3>
 
-<blockquote>
 <p>Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：</p>
-</blockquote>
 
 <ul>
 <li>数据库用户角色
@@ -170,7 +169,6 @@
 
 <h3 id="0x01-创建用户">0x01 创建用户</h3>
 
-<blockquote>
 <pre><code>#创建管理员用户
 &gt; use admin
 switched to db admin
@@ -222,11 +220,9 @@ Successfully added user: {
 &gt; exit
 bye
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-配置">0x02 配置</h3>
 
-<blockquote>
 <p>MongoDb版本：version v3.4.4</p>
 
 <pre><code>#配置文件如下
@@ -264,11 +260,9 @@ $ mongo
 1
 &gt; db.shutdownServer()
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-数据库">0x03 数据库</h3>
 
-<blockquote>
 <pre><code>$ mongo
 
 #创建数据库，创建数据库后只有插入一条数据才能保存数据库
@@ -286,11 +280,9 @@ switched to db test
 &gt;db.dropDatabase()
 { &quot;dropped&quot; :  &quot;test&quot;, &quot;ok&quot; : 1 }
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-集合">0x04 集合</h3>
 
-<blockquote>
 <pre><code>#创建集合
 &gt; use test
 &gt; db.createCollection(&quot;msg&quot;)
@@ -309,11 +301,9 @@ true
 &gt; show collections
 msg
 </code></pre>
-</blockquote>
 
 <h3 id="0x05-文档">0x05 文档</h3>
 
-<blockquote>
 <pre><code>#插入文档,若student这个集合不存在时会自动创建集合student
 &gt; db.student.insert({&quot;name&quot;:&quot;xiaoming&quot;,&quot;sex&quot;:1})
 WriteResult({ &quot;nInserted&quot; : 1 })
@@ -350,11 +340,9 @@ WriteResult({ &quot;nRemoved&quot; : 1 })
 &gt; db.student.remove({sex:1},1)  只删除一条性别为1的数据
 WriteResult({ &quot;nRemoved&quot; : 1 })
 </code></pre>
-</blockquote>
 
 <h3 id="0x06-其他">0x06 其他</h3>
 
-<blockquote>
 <pre><code>#排序
 &gt; db.student.find()
 { &quot;_id&quot; : ObjectId(&quot;592681367e72bcd757917262&quot;), &quot;name&quot; : &quot;xiaohong&quot;, &quot;sex&quot; : 0, &quot;age&quot; : 30 }
@@ -367,11 +355,9 @@ WriteResult({ &quot;nRemoved&quot; : 1 })
 $ mongodump 会备份到当前的dump文件夹中
 $ mongorestore 会把dump中的数据导入到mongo
 </code></pre>
-</blockquote>
 
 <h3 id="0x07-python连接mongodb">0x07 python连接MongoDB</h3>
 
-<blockquote>
 <pre><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -392,11 +378,9 @@ collection = db[&quot;msg&quot;]
 #输出集合的第一条数据
 print collection.find_one()
 </code></pre>
-</blockquote>
 
 <h3 id="0x08-遇到的问题">0x08 遇到的问题</h3>
 
-<blockquote>
 <pre><code>#非正常停止后再次启动可能会遇到：
 about to fork child process, waiting until server is ready for connections.
 forked process: 2221
@@ -405,7 +389,6 @@ ERROR: child process failed, exited with error number 1
 解决方案，使用sudo权限：
 $ sudo mongod --config /etc/mongod.conf
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

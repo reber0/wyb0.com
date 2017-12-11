@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-08-02</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,23 +117,17 @@
 
 <h3 id="0x01-cgi协议">0x01 CGI协议</h3>
 
-<blockquote>
 <p>中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议</p>
-</blockquote>
 
-<h2 id="0x02-fastcgi">0x02 FastCGI</h2>
+<h3 id="0x02-fastcgi">0x02 FastCGI</h3>
 
-<blockquote>
 <p>服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低</p>
 
 <p>fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等</p>
-</blockquote>
 
 <h3 id="0x03-fastcgi工作流程">0x03 FastCGI工作流程</h3>
 
-<blockquote>
 <p>一般情况下，FastCGI的整个工作流程是这样的：</p>
-</blockquote>
 
 <ol>
 <li>Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module)</li>

@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSRF - Reber's Blog</title>
+    <title>CSRF漏洞 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,漏洞挖掘,web安全,网络安全,python,php,linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -77,7 +77,7 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>CSRF</h2>
+                <h2>CSRF漏洞</h2>
             </div>
             <div class="content">
                 
@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-06-28</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,11 +117,9 @@
 
 <h3 id="0x00-概念">0x00 概念</h3>
 
-<blockquote>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、
-删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSRF就是：攻击者通过一些技术手段欺骗用户的<font color="FF0000">浏览器</font>去<font color="FF0000">访问</font>一个自己曾<font color="FF0000">认证过</font>的网站并<font color="FF0000">执行某些操作</font>。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作</p>
-</blockquote>
+<p>当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。</p>
+
+<p>CSRF就是：攻击者通过一些技术手段欺骗用户的<font color="FF0000">浏览器</font>去<font color="FF0000">访问</font>一个自己曾<font color="FF0000">认证过</font>的网站并<font color="FF0000">执行某些操作</font>。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作</p>
 
 <h3 id="0x01-利用">0x01 利用</h3>
 
@@ -142,7 +141,6 @@
 
 <h3 id="0x02-get型csrf攻击">0x02 GET型CSRF攻击</h3>
 
-<blockquote>
 <pre><code>若有论坛www.aa.com，论坛删除文章的操作是请求类似
 http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接
 </code></pre>
@@ -165,17 +163,11 @@ http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接
 <pre><code>恶意用户B将链接http://www.bb.com/b.html通过qq发送给用户A，
 诱使他访问，用户A一旦访问，他id为251的文章就会被删除
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-post型csrf攻击">0x03 POST型CSRF攻击</h3>
 
-<blockquote>
 <p>若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/csrf_post.png" alt="csrf_post利用.png">
-</div>
-</p>
+<img src="/img/post/csrf_post.png" alt="csrf_post利用" /></p>
 
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -213,8 +205,7 @@ http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接
 &lt;/html&gt;
 </code></pre>
 
-<p>然后将连接<a href="http://www.bb.com/xxxx.html">http://www.bb.com/xxxx.html</a> 发送给用户,诱使他点击链接,一旦他点击,则密码就会被修改</p>
-</blockquote>
+<p>然后将连接<code>http://www.bb.com/xxxx.html</code> 发送给用户,诱使他点击链接,一旦他点击,则密码就会被修改</p>
 
 <h3 id="0x04-防御">0x04 防御：</h3>
 

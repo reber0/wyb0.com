@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-03-21</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,12 +117,9 @@
 
 <h3 id="0x00-关于curl">0x00 关于cURL</h3>
 
-<blockquote>
-<pre><code>cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。
+<p>cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。</p>
 
-利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。
-</code></pre>
-</blockquote>
+<p>利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。</p>
 
 <h3 id="0x01-pycurl常见方法">0x01 pycurl常见方法</h3>
 
@@ -129,16 +127,13 @@
 <li>创建curl对象</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-python">c = pycurl.Curl()    #创建一个curl对象 
 </code></pre>
-</blockquote>
 
 <ul>
 <li>设置请求</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-python">c.setopt(pycurl.URL,&quot;http://www.baidu.com&quot;)      #指定请求的URL
 c.setopt(pycurl.CONNECTTIMEOUT, 5)    #连接的等待时间，设置为0则不等待
 c.setopt(pycurl.TIMEOUT, 5)           #请求超时时间
@@ -155,13 +150,11 @@ c.setopt(pycurl.WRITEFUNCTION, getbody)      #将返回的内容定向到回调�
 c.setopt(pycurl.WRITEHEADER, fileobj)        #将返回的HTTP HEADER定向到fileobj文件对象
 c.setopt(pycurl.WRITEDATA, fileobj)          #将返回的HTML内容定向到fileobj文件对象
 </code></pre>
-</blockquote>
 
 <ul>
 <li>部分返回信息</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-python">c.getinfo(pycurl.HTTP_CODE)         #返回的HTTP状态码
 c.getinfo(pycurl.HEADER_SIZE)       #HTTP头部大小
 c.getinfo(pycurl.TOTAL_TIME)        #传输结束所消耗的总时间
@@ -175,11 +168,9 @@ c.getinfo(pycurl.SIZE_DOWNLOAD)     #下载数据包大小
 c.getinfo(pycurl.SPEED_DOWNLOAD)    #平均下载速度
 c.getinfo(pycurl.SPEED_UPLOAD)      #平均上传速度
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-简单使用">0x02 简单使用</h3>
 
-<blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -205,7 +196,6 @@ print status_code
 print content_size
 print content
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-04-19</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,28 +115,23 @@
                 
                 
 
-<h2 id="服务">服务：</h2>
+<h3 id="0x00-服务">0x00 服务：</h3>
 
-<p>在后台运行的软件就叫服务
-参数：
-start
-stop
-restart</p>
+<p>在后台运行的软件就叫服务，参数一般为：start/stop/restart</p>
 
-<p>apache启动后默认降权</p>
+<ul>
+<li><p>apache启动后默认降权</p>
 
 <pre><code>service httpd start实际调用的是/etc/init.d/httpd这个shell脚本
 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d
 [wyb@localhost ~]$ ls -al /etc/init.d
 lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&gt; rc.d/init.d
-</code></pre>
+</code></pre></li>
 
-<h4 id="添加服务">添加服务：</h4>
+<li><p>添加服务<br />
+将脚本放在/etc/init.d/下即可</p></li>
 
-<pre><code>将脚本放在/etc/init.d/下即可
-</code></pre>
-
-<h4 id="若要自启则">若要自启则：</h4>
+<li><p>若要自启则</p>
 
 <pre><code>chkconfig --list   //查看chk管理的自启动项
 chkconfig --add httpd   添加到chk管理里面
@@ -143,23 +139,22 @@ chkconfig --del httpd   将httpd移出chk管理
 chkcofnig --level 35 httpd on  init的345将开启
 chkcofnig --level 345 httpd off
 /etc/rc.d/rc3.d和rc5.d里将有httpd
-</code></pre>
+</code></pre></li>
+</ul>
 
-<hr />
+<h3 id="0x01-计划任务">0x01 计划任务</h3>
 
-<h2 id="计划任务">计划任务：</h2>
+<p>系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件</p>
 
-<p>启动方式：
-系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件</p>
+<p>cron每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟</p>
 
-<p>cron：每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟</p>
+<p>任务格式：分(0-59) 时 日 月 周(0-6) 命令</p>
 
-<h4 id="添加任务">添加任务：</h4>
+<ul>
+<li>添加任务第一种方法</li>
+</ul>
 
-<p>格式：分(0-59) 时 日 月 周(0-6) 命令</p>
-
-<pre><code>第一种方法：
-crontab -e  //任何权限都可以运行这个命令，针对某个用户
+<pre><code>crontab -e  //任何权限都可以运行这个命令，针对某个用户
 
 [wyb@localhost spool]$ crontab -e   //进入编辑，实际是写入到/var/spool/cron/username这个文件中
 no crontab for wyb - using an empty one
@@ -176,16 +171,20 @@ wyb
 */1 * * * * date &gt;&gt; /tmp/date.txt
 1 * * * * date &gt;&gt; /tmp/date1.txt
 [wyb@localhost spool]$ 
-
 </code></pre>
 
-<pre><code>第二种方法：
-编辑/etc/crontab文件    //要具有root权限，针对系统任务
+<ul>
+<li>添加任务第二种方法</li>
+</ul>
+
+<pre><code>编辑/etc/crontab文件    //要具有root权限，针对系统任务
 vim /etc/crontab会以root权限执行，不推荐使用
 01 * * * *　用户名　命令 date &gt;&gt; /tmp/date2.txt在每个小时的第一分钟执行
 </code></pre>
 
-<h4 id="查看用户任务">查看用户任务：</h4>
+<ul>
+<li>查看用户任务</li>
+</ul>
 
 <pre><code>[wyb@localhost tmp]$ sudo cat /var/spool/cron/wyb   //用户的计划任务
 */1 * * * * date &gt;&gt; /tmp/date.txt

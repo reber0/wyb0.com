@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-04-17</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -120,10 +121,10 @@
 如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh<br />
 若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中</p>
 
-<h2 id="文件权限">文件权限</h2>
+<h3 id="0x00-文件权限">0x00 文件权限</h3>
 
 <ol>
-<li><h3 id="chmod-x">chmod -x</h3>
+<li><p>chmod -x</p>
 
 <pre><code>[root@localhost tmp]# ls -l
 total 0
@@ -141,7 +142,7 @@ aaa
 [root@localhost tmp]# 
 </code></pre></li>
 
-<li><h3 id="chmod-r">chmod -R</h3>
+<li><p>chmod -R</p>
 
 <pre><code>[root@localhost tmp]# ls -l a;ls -l a/a.txt 
 total 0
@@ -154,7 +155,7 @@ total 0
 -rw-r--r-x. 1 root root 0 Apr 16 20:35 a/a.txt
 </code></pre></li>
 
-<li><h3 id="chmod-7-a-txt">chmod 7 a.txt</h3>
+<li><p>chmod 7 a.txt</p>
 
 <pre><code>[root@localhost tmp]# ll a.txt 
 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt
@@ -164,14 +165,14 @@ total 0
 </code></pre></li>
 </ol>
 
-<h2 id="文件夹权限">文件夹权限：</h2>
+<h3 id="0x01-文件夹权限">0x01 文件夹权限：</h3>
 
 <p>可读是指能看到里面的文件<br/>
 可写是指能在里面删除、增加文件<br/>
 文件夹可执行是指能cd进去</p>
 
 <ol>
-<li><h3 id="不能进入没有x权限的文件夹">不能进入没有x权限的文件夹：</h3>
+<li><p>不能进入没有x权限的文件夹：</p>
 
 <pre><code>[wyb@localhost Desktop]$ ls -l
 total 4
@@ -179,7 +180,7 @@ dr--------. 2 wyb wyb 4096 Apr 17 01:25 aa
 [wyb@localhost Desktop]$ cd aa/
 </code></pre></li>
 
-<li><h3 id="不能删除有777权限的文件">不能删除有777权限的文件：</h3>
+<li><p>不能删除有777权限的文件：</p>
 
 <pre><code>[wyb@localhost Desktop]$ ls -l;ls -l aa/a.txt 
 total 4
@@ -190,17 +191,15 @@ rm: cannot remove `aa/a.txt': Permission denied  //因为没有aa的x权限，�
 </code></pre></li>
 </ol>
 
-<h2 id="chown">chown：</h2>
+<h3 id="0x02-chown">0x02 chown：</h3>
 
-<ol>
-<li><p>普通用户不能将自己的文件改变成其他的拥有者。其操作权限一般为管理员。</p>
+<p>普通用户不能将自己的文件改变成其他的拥有者。其操作权限一般为管理员。</p>
 
 <pre><code>//将aaa.txt的所属由xiao改变为fans组，属主为xiaofang
-xiao$ chown xiaofang:fans aaa.txt
-</code></pre></li>
-</ol>
+$ chown xiaofang:fans aaa.txt
+</code></pre>
 
-<h4 id="一般用visudo添加sudo">一般用visudo添加sudo</h4>
+<h3 id="0x03-一般用visudo添加sudo">0x03 一般用visudo添加sudo</h3>
 
                 
                 <div style="padding:10px 1px;">

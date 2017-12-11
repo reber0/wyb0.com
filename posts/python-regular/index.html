@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-02-05</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,120 +117,62 @@
                 
                 
 
-<h2 id="正则表达式">正则表达式</h2>
+<h3 id="0x00-正则表达式">0x00 正则表达式</h3>
 
-<blockquote>
 <p>正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串</p>
-</blockquote>
 
-<h2 id="原子字符">原子字符</h2>
+<h3 id="0x01-原子字符">0x01 原子字符</h3>
 
-<blockquote>
+<p><img src="/img/post/regular_atomic_character.png" alt="正则的原子字符" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_atomic_character.png" alt="正则的原子字符">
-</div>
+<h3 id="0x02-元字符">0x02 元字符</h3>
 
-</blockquote>
+<p><img src="/img/post/regular_metacharacters.png" alt="正则的元字符" /></p>
 
-<h2 id="元字符">元字符</h2>
+<h3 id="0x03-修饰符">0x03 修饰符</h3>
 
-<blockquote>
+<p><img src="/img/post/regular_modifier.png" alt="正则的修饰符" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_metacharacters.png" alt="正则的元字符">
-</div>
+<h3 id="0x04-re模块">0x04 re模块</h3>
 
-</blockquote>
-
-<h2 id="修饰符">修饰符</h2>
-
-<blockquote>
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_modifier.png" alt="正则的修饰符">
-</div>
-
-</blockquote>
-
-<h2 id="re模块">re模块</h2>
-
-<blockquote>
 <p>由于Pyton的字符串本身也用\转义，强烈建议使用r前缀</p>
-</blockquote>
 
 <ul>
 <li><p>函数match()<br />
 这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_re_match.png" alt="re模块的match函数">
-</div>
-</p></li>
+<img src="/img/post/regular_re_match.png" alt="re模块的match函数" /></p></li>
 
 <li><p>函数search()<br />
 这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_re_search.png" alt="re模块的match函数">
-</div>
-</p></li>
+<img src="/img/post/regular_re_search.png" alt="re模块的match函数" /></p></li>
 
 <li><p>函数findall()和finditer()<br />
 re.findall()将以列表的形式返回所有能匹配到的字符<br />
 re.finditer()将以迭代器的形式返回所有能匹配到的字符
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_re_findall_finditer.png" alt="re的findall和finditer">
-</div>
-</p></li>
+<img src="/img/post/regular_re_findall_finditer.png" alt="re的findall和finditer" /></p></li>
 
 <li><p>函数sub()<br />
 这个函数会对字符串进行匹配，然后替换，可以指定替换次数
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_re_sub.png" alt="re的sub函数">
-</div>
-</p></li>
+<img src="/img/post/regular_re_sub.png" alt="re的sub函数" /></p></li>
 
 <li><p>函数split()<br />
 这个函数会以正则来分割字符串，以列表样式返回
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_re_split.png" alt="re的split函数">
-</div>
-</p></li>
+<img src="/img/post/regular_re_split.png" alt="re的split函数" /></p></li>
 
 <li><p>函数compile()<br />
 这个函数可以编译正则，提高匹配速度
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_re_compile.png" alt="re的compile函数">
-</div>
-</p></li>
+<img src="/img/post/regular_re_compile.png" alt="re的compile函数" /></p></li>
 </ul>
 
-<h2 id="提取子串">提取子串</h2>
+<h3 id="0x05-提取子串">0x05 提取子串</h3>
 
-<blockquote>
 <p>根据正则可以匹配字符然后提取出来，用括号表示要提取的分组
+<img src="/img/post/regular_re_get_substr.png" alt="提取子串" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_re_get_substr.png" alt="提取子串">
-</div>
-</p>
-</blockquote>
+<h3 id="0x06-贪婪匹配">0x06 贪婪匹配</h3>
 
-<h2 id="贪婪匹配">贪婪匹配</h2>
-
-<blockquote>
 <p>正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&rdquo;？&rdquo;来抑制贪婪匹配
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/regular_re_not_greed_match%20.png" alt="非贪婪匹配">
-</div>
-</p>
-</blockquote>
+<img src="/img/post/regular_re_not_greed_match .png" alt="非贪婪匹配" /></p>
 
                 
                 <div style="padding:10px 1px;">

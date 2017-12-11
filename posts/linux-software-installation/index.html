@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-04-19</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,9 +115,9 @@
                 
                 
 
-<h2 id="linux上的软件安装可以分为三种方式">Linux上的软件安装可以分为三种方式：</h2>
+<p>Linux上的软件安装可以分为三种方式：</p>
 
-<h3 id="1-yum安装">1. yum安装</h3>
+<h3 id="0x00-yum安装">0x00 yum安装</h3>
 
 <pre><code>yum基于RPM包管理，一次性安装所有依赖包，提供了查找、安装、删除一个、一组
 至全部软件包的命令，配置文件在/etc/yum.repos.d/下
@@ -127,7 +128,7 @@ yum list installed //显示已经安装过的软件
 yum list   //显示所有可以安装的包
 </code></pre>
 
-<p><br/></p>
+<p><br /></p>
 
 <pre><code>[wyb@localhost ~]$ wget -h  //验证有没有安装wget
 -bash: /usr/bin/wget: No such file or directory
@@ -175,12 +176,14 @@ Resolving Dependencies
 --&gt; Finished Dependency Resolution
 </code></pre>
 
-<h3 id="2-rpm安装">2. rpm安装</h3>
+<h3 id="0x01-rpm安装">0x01 rpm安装</h3>
 
 <p>分为：二进制包和源代码包<br />
 二进制包可直接安装，源码包会由rpm自动编译、安装，安装包常以src、rpm做为后缀</p>
 
-<h4 id="主要参数">主要参数：</h4>
+<ul>
+<li>主要参数</li>
+</ul>
 
 <pre><code>-ivh *.rpm  安装并显示安装进度
 -Uvh *.rpm  升级软件包
@@ -193,9 +196,11 @@ Resolving Dependencies
 -e 软件名    移除软件包
 </code></pre>
 
-<h4 id="用rpm安装软件">用rpm安装软件：</h4>
+<ul>
+<li>用rpm安装软件</li>
+</ul>
 
-<pre><code>[wyb@localhost ~]$ wget http://192.168.1.7/wget-1.12-5.el6_6.1.x86_64.rpm   //使用wget下载软件
+<pre><code class="language-bash">[wyb@localhost ~]$ wget http://192.168.1.7/wget-1.12-5.el6_6.1.x86_64.rpm   //使用wget下载软件
 --2016-04-18 04:31:27--  http://192.168.1.7/wget-1.12-5.el6_6.1.x86_64.rpm
 Connecting to 192.168.1.7:80... connected.
 HTTP request sent, awaiting response... 200 OK
@@ -207,7 +212,9 @@ Saving to: 鈝get-1.12-5.el6_6.1.x86_64.rpm?
 2016-04-18 04:31:27 (1006 KB/s) - 鈝get-1.12-5.el6_6.1.x86_64.rpm鈙aved [494884/494884]
 </code></pre>
 
-<h6 id="先yum-remove-wget卸载wget-然后用rpm安装软件">先yum remove wget卸载wget，然后用rpm安装软件</h6>
+<ul>
+<li>案例</li>
+</ul>
 
 <pre><code>[wyb@localhost ~]$ ls
 wget-1.12-5.el6_6.1.x86_64.rpm
@@ -244,12 +251,9 @@ wget-1.12-5.el6_6.1.x86_64
 -bash: /usr/bin/wget: No such file or directory
 </code></pre>
 
-<h3 id="3-源码安装">3. 源码安装</h3>
+<h3 id="0x02-源码安装">0x02 源码安装</h3>
 
-<pre><code>sudo yum groupinstall &quot;Development tools&quot;  //如果你源码安装软件就需要安装这个
-</code></pre>
-
-<p><br/></p>
+<p>$ sudo yum groupinstall &ldquo;Development tools&rdquo;  //如果你源码安装软件就需要安装这个</p>
 
 <pre><code>源代码安装软件：
 1、./configure，对系统进行检测然后生成makefile，为下一步的编译做准备
@@ -258,15 +262,6 @@ wget-1.12-5.el6_6.1.x86_64
 实际上它不是编译工具，其实是一个构建工具
 3、make install 进行安装，一般你要拥有root权限，因为要向系统写入东西，相当与配环境变量、将二进制文件拷贝到/usr/local/bin下面
 4、make clean将由make产生的过程文件清除
-</code></pre>
-
-<p><br/><br/></p>
-
-<h3 id="ps">PS:</h3>
-
-<pre><code>curl -o wget.rpm url可以访问网页，它同时还保存了文件，文件名为wget.rpm
-wget url也能下载，文件名为全名
-Linux下的env可查看环境变量
 </code></pre>
 
                 

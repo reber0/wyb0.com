@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-07-05</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,7 +115,7 @@
                 
                 
 
-<h2 id="要求">要求</h2>
+<h3 id="0x00-要求">0x00 要求</h3>
 
 <ol>
 <li>内网可以访问外网</li>
@@ -125,31 +126,18 @@
 <li>DMZ区不能主动访问外网</li>
 </ol>
 
-<h2 id="拓扑">拓扑</h2>
+<h3 id="0x01-拓扑">0x01 拓扑</h3>
 
-<blockquote>
+<p><img src="/img/post/iptables_dmz_topology.png" alt="iptables简单配置DMZ的拓扑" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_topology.png" alt="iptables简单配置DMZ的拓扑.png">
-</div>
+<h3 id="0x02-个主机ip信息">0x02 个主机IP信息</h3>
 
-</blockquote>
-
-<h2 id="个主机ip信息">个主机IP信息</h2>
-
-<blockquote>
 <p>内网网段为：192.168.1.0/24<br />
 DMZ区网段为：172.16.1.0/24
+<img src="/img/post/iptables_dmz_ip_info.png" alt="iptables简单配置DMZ的ip信息" /></p>
 
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_ip_info.png" alt="iptables简单配置DMZ的ip信息.png">
-</div>
-</p>
-</blockquote>
+<h3 id="0x03-iptables的策略">0x03 iptables的策略</h3>
 
-<h2 id="iptables的策略">iptables的策略</h2>
-
-<blockquote>
 <p>新建iptables.sh,内容如下：</p>
 
 <pre><code>#!/bin/bash
@@ -213,62 +201,29 @@ iptables -t nat -A POSTROUTING -o eth0 -s 172.16.1.0/24 -j SNAT --to-source 192.
 service iptables save
 service iptables restart
 </code></pre>
-</blockquote>
 
-<h2 id="测试">测试</h2>
+<h3 id="0x04-测试">0x04 测试</h3>
 
 <ol>
 <li><p>内网可以访问外网
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_lan_to_internet.png" alt="内网可以访问外网.png">
-</div>
-</p></li>
+<img src="/img/post/iptables_dmz_lan_to_internet.png" alt="内网可以访问外网" /></p></li>
 
 <li><p>内网可以访问DMZ
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_lan_to_dmz_www.png" alt="内网可以访问DMZ的www.png">
-</div>
-
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_lan_to_dmz_ftp.png" alt="内网可以访问DMZ的ftp.png">
-</div>
-</p></li>
+<img src="/img/post/iptables_dmz_lan_to_dmz_www.png" alt="内网可以访问DMZ的www" />
+<img src="/img/post/iptables_dmz_lan_to_dmz_ftp.png" alt="内网可以访问DMZ的ftp" /></p></li>
 
 <li><p>外网不能访问内网
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_internet_not_to_lan.png" alt="外网不能访问内网.png">
-</div>
-</p></li>
+<img src="/img/post/iptables_dmz_internet_not_to_lan.png" alt="外网不能访问内网" /></p></li>
 
 <li><p>外网可以访问DMZ
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_internet_to_dmz_www.png" alt="外网可以访问DMZ的www.png">
-</div>
-
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_internet_to_dmz_ftp.png" alt="外网可以访问DMZ的ftp.png">
-</div>
-</p></li>
+<img src="/img/post/iptables_dmz_internet_to_dmz_www.png" alt="外网可以访问DMZ的www" />
+<img src="/img/post/iptables_dmz_internet_to_dmz_ftp.png" alt="外网可以访问DMZ的ftp" /></p></li>
 
 <li><p>DMZ不能访问内网
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_dmz_not_to_lan.png" alt="DMZ不能访问内网.png">
-</div>
-</p></li>
+<img src="/img/post/iptables_dmz_dmz_not_to_lan.png" alt="DMZ不能访问内网" /></p></li>
 
 <li><p>DMZ不能访问外网
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/iptables_dmz_dmz_not_to_internet.png" alt="DMZ不能访问外网.png">
-</div>
-</p></li>
+<img src="/img/post/iptables_dmz_dmz_not_to_internet.png" alt="DMZ不能访问外网" /></p></li>
 </ol>
 
                 

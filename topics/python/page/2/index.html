@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-09-12</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -124,8 +125,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        参考：https://github.com/lijiejie/subDomainsBrute
-帮助信息   代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &quot;&quot;&quot;docstring for SubDomain&quot;&quot;&quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + '.txt' if not outfile else outfile self.f = open('./output/'+outfile,'a+') self.ip_list = [] def _scan(self): while not self.queue.empty(): self.
+        Reference(侵删)：https://github.com/lijiejie/subDomainsBrute
+0x00 帮助信息 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &quot;&quot;&quot;docstring for SubDomain&quot;&quot;&quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + '.txt' if not outfile else outfile self.f = open('./output/'+outfile,'a+') self.ip_list = [] def _scan(self): while not self.queue.empty(): self.ip_list = [] ips = None sub_domain = self.
     </p>
 
     
@@ -148,11 +149,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-09-08</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -180,9 +182,10 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于Pocsuite  Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。
- 0x01 简单介绍  安装  使用pip install pocsuite即可安装   常用参数  -u 指定一个目标url -f 指定一个存放目标url的文件 -r 指定一个存放poc的文件夹 &ndash;report 导出结果到html文件 &ndash;cookie 携带cookie &ndash;referer 修改referer &ndash;user-agent 修改UA  模式  执行一个poc有两种模式  --verify 漏洞验证模式(只是验证，不能更改服务器的东西) --attack 漏洞利用模式  示例  pocsuite -u &ldquo;http://www.xxxx.com&quot; -r poc_path/poc_name.py &ndash;atack   poc编写
- 可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类) 此时示例(对目标进行常见服务的测试，加载一类多个poc脚本)  pocsuite -u &ldquo;http://www.xxxx.com&quot; -r poc_path/server/ &ndash;verify   poc的命名规范
+        0x00 关于Pocsuite Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。
+0x01 简单介绍  安装  使用pip install pocsuite即可安装   常用参数  -u 指定一个目标url -f 指定一个存放目标url的文件 -r 指定一个存放poc的文件夹 &ndash;report 导出结果到html文件 &ndash;cookie 携带cookie &ndash;referer 修改referer &ndash;user-agent 修改UA  模式  执行一个poc有两种模式  --verify 漏洞验证模式(只是验证，不能更改服务器的东西) --attack 漏洞利用模式  示例  pocsuite -u &quot;http://www.xxxx.com&quot; -r poc_path/poc_name.py --atack   poc编写
+ 可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类) 此时示例(对目标进行常见服务的测试，加载一类多个poc脚本)  pocsuite -u &quot;http://www.xxxx.com&quot; -r poc_path/server/ --verify   poc的命名规范
+ 漏洞ID_版本号_漏洞类型(其中不能有大写字母，所有符号要改为&quot;_&quot;),大致如下：  _xxxx_struct2_2016_s2_016_code_execution.
     </p>
 
     
@@ -205,11 +208,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-09-05</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -239,7 +243,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        接收变量的php脚本如下  //代码仅供测试 &lt;?php $name = @$_POST['uname']; $pass = @$_POST['upass']; if (empty($name) or empty($pass)){ header(&quot;location:http://127.0.0.1:921/test/test/index.html&quot;); exit(); } else { if ($name === 'admin' and $pass === '123456'){ header(&quot;location:http://127.0.0.1:921/test/test/sucess.html&quot;); } else { header(&quot;location:http://127.0.0.1:921/test/test/error.html&quot;); exit(); } } ?&gt;   爆破表单的python脚本如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = [] class FormBlast(threading.
+        0x00 接收变量的php脚本如下 //代码仅供测试 &lt;?php $name = @$_POST['uname']; $pass = @$_POST['upass']; if (empty($name) or empty($pass)){ header(&quot;location:http://127.0.0.1:921/test/test/index.html&quot;); exit(); } else { if ($name === 'admin' and $pass === '123456'){ header(&quot;location:http://127.0.0.1:921/test/test/sucess.html&quot;); } else { header(&quot;location:http://127.0.0.1:921/test/test/error.html&quot;); exit(); } } ?&gt;  0x01 爆破表单的python脚本如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = [] class FormBlast(threading.
     </p>
 
     
@@ -262,11 +266,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-31</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -294,8 +299,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&rsquo;D:/xx/xx/xx/code&rsquo;)可以添加搜索路径 使用if __name__ == &lsquo;__main__&lsquo;:  0x01 实例  文件结构如下  测试文件test.py
-   #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.
+        0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append('D:/xx/xx/xx/code')可以添加搜索路径 使用if __name__ == '__main__':  0x01 实例  文件结构如下   测试文件test.py  #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.test()   包package1
     </p>
 
     
@@ -318,11 +322,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-29</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -348,8 +353,8 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        简介  有时候需要在网上注册许多账号，如果每个账户密码都一样的话，若被别人得知一个密码则所有账户就都沦陷了，若密码不一样则可能会忘记，在这里就用脚本写一个生成密码的工具，只需输入域名和账户名就可以根据key生成不一样的密码，也可以把域名和账户名写入文件，这样你用户名也可以不用记了。。。
- 代码如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import sys import os import optparse import json import msvcrt def get_md5(string): md5 = hashlib.md5() md5.update(string) s = md5.hexdigest() return s def get_domain(): if os.path.exists('account.txt'): data = {} with open('account.txt', 'r') as f: lines = f.readlines() for line in lines: line = line.split('*') data[line[0]] = line[1].strip() else: pass return data def get_pass(): pwd = [] while True: nchar = msvcrt.
+        0x00 简介 有时候需要在网上注册许多账号，如果每个账户密码都一样的话，若被别人得知一个密码则所有账户就都沦陷了，若密码不一样则可能会忘记，在这里就用脚本写一个生成密码的工具，只需输入域名和账户名就可以根据key生成不一样的密码，也可以把域名和账户名写入文件，这样你用户名也可以不用记了。。。
+0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import sys import os import optparse import json import msvcrt def get_md5(string): md5 = hashlib.md5() md5.update(string) s = md5.hexdigest() return s def get_domain(): if os.path.exists('account.txt'): data = {} with open('account.txt', 'r') as f: lines = f.readlines() for line in lines: line = line.split('*') data[line[0]] = line[1].strip() else: pass return data def get_pass(): pwd = [] while True: nchar = msvcrt.
     </p>
 
     
@@ -372,11 +377,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-26</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -406,7 +412,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        脚本  #!/usr/bin/env python # -*- coding: utf-8 -*- 'this script can bruter ftp/ssh/mysql' __author__ = 'reber' import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') ch.setFormatter(formatter) logger.
+        0x00 脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- 'this script can bruter ftp/ssh/mysql' __author__ = 'reber' import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') ch.setFormatter(formatter) logger.
     </p>
 
     
@@ -429,11 +435,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-26</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -459,7 +466,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 Python异常处理  #!/usr/bin/env python # -*- coding: utf-8 -*- try: try: # 可嵌套 str(&quot;aaaaa&quot;) # int(&quot;aaaaa&quot;) # print a # print 1/0 except (TypeError, IndexError, ValueError): #捕获多种异常 print &quot;TypeErrorZero or DivisionError or ValueError&quot; except ZeroDivisionError as aa: #捕获除零错误 print aa #输出详细错误信息 except: print u&quot;发生其他异常则执行这里&quot; else: print u&quot;上面没有出错才输出这里&quot; a = [1,2,3] print a[4] #这里出错，会向上抛出错误，最终输出this is error finally: print u&quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&quot; except Exception as e: #可捕获所有异常类型 print &quot;this is error&quot; print e   
+         0x00 Python异常处理 #!/usr/bin/env python # -*- coding: utf-8 -*- try: try: # 可嵌套 str(&quot;aaaaa&quot;) # int(&quot;aaaaa&quot;) # print a # print 1/0 except (TypeError, IndexError, ValueError): #捕获多种异常 print &quot;TypeErrorZero or DivisionError or ValueError&quot; except ZeroDivisionError as aa: #捕获除零错误 print aa #输出详细错误信息 except: print u&quot;发生其他异常则执行这里&quot; else: print u&quot;上面没有出错才输出这里&quot; a = [1,2,3] print a[4] #这里出错，会向上抛出错误，最终输出this is error finally: print u&quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&quot; except Exception as e: #可捕获所有异常类型 print &quot;this is error&quot; print e  
     </p>
 
     
@@ -478,11 +485,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-19</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -510,10 +518,10 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 colorama  这个模块可以输出带有颜色的字符
-#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.CYAN,content='debug',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.YELLOW,content='warning',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.RED,content='error',g_color=colorama.Fore.RESET)   0x01 pyfiglet  可以输出字体的图片效果
-from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&quot;xtty&quot;) #font可以控制输出的类型   0x02 chardet  这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
-#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&quot;https://tower.im/users/sign_in&quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.
+        0x00 colorama 这个模块可以输出带有颜色的字符
+#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.CYAN,content='debug',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.YELLOW,content='warning',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.RED,content='error',g_color=colorama.Fore.RESET)  0x01 pyfiglet 可以输出字体的图片效果
+from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&quot;xtty&quot;) #font可以控制输出的类型  0x02 chardet 这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
+#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&quot;https://tower.im/users/sign_in&quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.decode(code['encoding']).encode('gbk') print chardet.detect(str1) start = str1.find('&lt;title&gt;') stop = str1.
     </p>
 
     
@@ -536,11 +544,12 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-16</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -568,8 +577,8 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 关于optparse模块  python2.3之后添加的模块optparse是专门用来处理命令行选项的
-import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] domaion', version='%prog 1.2') parser.add_option('-b', '--bug', dest='isbug', default=False, action='store_true', help='Whether open the debug mode, default is false') parser.add_option('-u', '--url', dest='url', default=None, action='store', type='string', help='target url') parser.add_option('-n','--number', dest='num', default=10, type='int', help='the number, default is 10') (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message   0x01 说明  在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action='store'，可以不用写 action='store_true'使用参数时将布尔值true存储到dest指定的变量中 action='store_false'使用参数时将布尔值false存储到dest指定的变量中   
+         0x00 关于optparse模块 python2.3之后添加的模块optparse是专门用来处理命令行选项的
+import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] domaion', version='%prog 1.2') parser.add_option('-b', '--bug', dest='isbug', default=False, action='store_true', help='Whether open the debug mode, default is false') parser.add_option('-u', '--url', dest='url', default=None, action='store', type='string', help='target url') parser.add_option('-n','--number', dest='num', default=10, type='int', help='the number, default is 10') (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message  0x01 说明 在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action='store'，可以不用写 action='store_true'使用参数时将布尔值true存储到dest指定的变量中 action='store_false'使用参数时将布尔值false存储到dest指定的变量中  
     </p>
 
     
@@ -588,11 +597,12 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-08-11</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -620,7 +630,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 简单尝试   0x01 生成一组数据包   0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包   0x04 得到TCP内容   0x05 SYN Scans   
+         0x00 简单尝试 0x01 生成一组数据包 0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包 0x04 得到TCP内容 0x05 SYN Scans 
     </p>
 
     

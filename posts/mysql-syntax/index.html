@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-06-02</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,7 +117,7 @@
                 
                 
 
-<h2 id="select语句的一般语法">Select语句的一般语法</h2>
+<h3 id="0x00-select语句的一般语法">0x00 Select语句的一般语法</h3>
 
 <pre><code>1.SELECT [ALL|DISTINCT] &lt;目标列表达式&gt; [,&lt;目标列表达式&gt; ]...
 2.FROM &lt;表名或视图名&gt; [,&lt;表名或视图名&gt; ]...
@@ -138,7 +139,7 @@ select * from message where title like '%留言_';  //%匹配任意个字符,_�
 select * from message where uid in (2,3,4); //删除2、3、4共3条数据
 </code></pre>
 
-<h2 id="连接查询">连接查询</h2>
+<h3 id="0x01-连接查询">0x01 连接查询</h3>
 
 <p><code>[&lt;表名1&gt;.][&lt;列名1&gt;]  &lt;比较运算符&gt;  [&lt;表名2&gt;.][&lt;列名2&gt;]</code><br />
 <code>[&lt;表名1&gt;.][&lt;列名1&gt;]  BETWEEN  [&lt;表名2&gt;.][&lt;列名2&gt;] AND [&lt;表名2&gt;.][&lt;列名3&gt;]</code></p>
@@ -147,7 +148,7 @@ select * from message where uid in (2,3,4); //删除2、3、4共3条数据
 select m.id,m.title '标题',m.ip,u.username '名字' from message as m,user as u where m.uid=u.id;
 </code></pre>
 
-<h2 id="子查询">子查询</h2>
+<h3 id="0x02-子查询">0x02 子查询</h3>
 
 <p>一个SELECT-FROM-WHERE语句成为一个查询块。<br />
 将一个查询块嵌套到另外一个查询块的WHERE子句或HAVING短句条件中的查询成为子查询或嵌套查询，它允许我们根据另一个查询的结果检索数据。<br />
@@ -162,12 +163,12 @@ where id in (
     );
 </code></pre>
 
-<h2 id="集合查询">集合查询</h2>
+<h3 id="0x03-集合查询">0x03 集合查询</h3>
 
 <p>集合的并操作：使用UNION运算符经多个SELECT查询结果合并起来，形成一个完整的查询结果，系统合并时会自动去掉重复的元组。<br />
 注意：前后SELECT语句查询的列数要相同。</p>
 
-<h2 id="数据更新">数据更新</h2>
+<h3 id="0x04-数据更新">0x04 数据更新</h3>
 
 <ol>
 <li>插入数据
@@ -200,7 +201,7 @@ FROM &lt;表名&gt;<br />
 [WHERE &lt;条件&gt;]</li>
 </ol>
 
-<h2 id="sql的数据控制功能">SQL的数据控制功能</h2>
+<h3 id="0x05-sql的数据控制功能">0x05 SQL的数据控制功能</h3>
 
 <p>授权语句</p>
 
@@ -213,14 +214,14 @@ TO &lt;用户1&gt;[,&lt;用户2&gt;],
 <p>创建用户blog，设密码为666666,并将数据库db_blog的所有权限赋给他<br />
 grant all privileges on db_blog.* to blog@localhost identified by &lsquo;666666&rsquo;;</p>
 
-<h2 id="order-by和limit">order by和limit</h2>
+<h3 id="0x06-order-by和limit">0x06 order by和limit</h3>
 
 <pre><code>select * from message order by uid desc;
 select * from message order by uid desc limit 5; //默认从0开始，查询5条数据
 select * from message order by uid desc limit 2,4;  //从第2条开始查询4条数据
 </code></pre>
 
-<h2 id="统计函数">统计函数</h2>
+<h3 id="0x07-统计函数">0x07 统计函数</h3>
 
 <p>count()<br />
 sum()<br />

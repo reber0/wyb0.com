@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-07-31</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,11 +117,8 @@
 
 <h3 id="0x00-逻辑漏洞">0x00 逻辑漏洞</h3>
 
-<blockquote>
-<pre><code>逻辑漏洞是一种业务逻辑上的设计缺陷，业务流存在问题。
-这里说一下密码找回漏洞、多线程条件竞争漏洞和支付漏洞。
-</code></pre>
-</blockquote>
+<p>逻辑漏洞是一种业务逻辑上的设计缺陷，业务流存在问题。
+这里说一下密码找回漏洞、多线程条件竞争漏洞和支付漏洞。</p>
 
 <h3 id="0x01-密码找回漏洞">0x01 密码找回漏洞</h3>
 
@@ -137,101 +135,64 @@
 <li><p>分类</p>
 
 <ul>
-<li>邮箱找回</li>
-</ul>
+<li><p>邮箱找回</p>
 
-<blockquote>
 <pre><code>一般是点击邮件中的链接后会转跳到修改密码的页面，需要分析链接的token构造，可以考虑是时间戳md5、用户名或邮箱和随机字符串md5等，一般是类似如下链接：
 http://domain/findpwd.php?u=xiaoming&amp;token=MTIzQHFxLmNvbQ==
 http://domain/findpwd.php?id=374&amp;token=2ad64bf14c714dbce88c7993663da7da
 当构造相应链接时就可以重置任意用户的密码
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>手机短信找回</li>
-</ul>
+<li><p>手机短信找回</p>
 
-<blockquote>
 <pre><code>短信找回一般就是4位或6位验证码，暴力猜测吧
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>找回逻辑错误</li>
-</ul>
+<li><p>找回逻辑错误</p>
 
-<blockquote>
 <pre><code>若恶意用户A用15123333333找回密码，此时收到验证码但不使用
 此时恶意用户A再用受害者B的手机号找回密码
 用户A在B的验证表单填入自己收到的验证码，发送
 此时跳转的修改密码页面修改的就是用户B的密码
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>直接修改密码
-<br /></li>
-</ul>
+<li><p>直接修改密码</p>
 
-<blockquote>
 <pre><code>在修改密码时跳过选择找回方式，直接访问修改密码的页面进行修改
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>本地验证</li>
-</ul>
+<li><p>本地验证</p>
 
-<blockquote>
 <pre><code>随意输入一个验证码，开Burp抓包，forward，抓返回包，返回包里可能有一个flag字段，
 若flag的值为1则跳转到修改密码页面，所以只要修改返回包即可
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>服务端将验证码返回给浏览器
-<br /></li>
-</ul>
+<li><p>服务端将验证码返回给浏览器</p>
 
-<blockquote>
 <pre><code>在点击获取验证码时，服务器会将验证码发送给浏览器，抓包即可
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>验证码直接出现在url中</li>
-</ul>
+<li><p>验证码直接出现在url中</p>
 
-<blockquote>
 <pre><code>当点击获取验证码时发出的请求链接中直接有code
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>密保问题找回</li>
-</ul>
+<li><p>密保问题找回</p>
 
-<blockquote>
 <pre><code>回答密保问题，有时一些答案就在html源码里
-</code></pre>
-</blockquote></li>
+</code></pre></li>
+</ul></li>
 </ul>
 
 <h3 id="0x02-多线程条件竞争漏洞">0x02 多线程条件竞争漏洞</h3>
 
-<blockquote>
-<p>多线程条件竞争漏洞是一种服务端的漏洞，服务端是并发处理用户请求的,<br />
-若并发处理不当或相关操作逻辑设计有缺陷时就会产生一些安全问题。</p>
-</blockquote>
+<p>多线程条件竞争漏洞是一种服务端的漏洞，服务端是并发处理用户请求的，若并发处理不当或相关操作逻辑设计有缺陷时就会产生一些安全问题。</p>
 
 <ul>
 <li>文件上传</li>
 </ul>
 
-<blockquote>
-<p>服务端可以sudo apt-get install inotify-tools安装监听文件的软件，<br />
-执行inotifywait -m /var/www/html/admin监听admin文件夹中文件的变化</p>
+<p>服务端可以sudo apt-get install inotify-tools安装监听文件的软件，执行inotifywait -m /var/www/html/admin监听admin文件夹中文件的变化</p>
 
 <pre><code class="language-php">//uploads.php代码如下，仅供测试：
 &lt;meta charset='utf-8'&gt;
@@ -264,13 +225,11 @@ http://domain/findpwd.php?id=374&amp;token=2ad64bf14c714dbce88c7993663da7da
     }
 ?&gt;
 </code></pre>
-</blockquote>
 
 <ul>
 <li>简单利用代码如下：</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -334,21 +293,15 @@ try:
 except KeyboardInterrupt:
     print 'stopped by keyboard'
 </code></pre>
-</blockquote>
 
 <ul>
 <li>数据库操作</li>
 </ul>
 
-<blockquote>
-<pre><code>在数据库进行update、delete等操作时使用多线程请求，可在一次
-update时间内完成多次update，和上面的文件上传其实是一个原理
-</code></pre>
-</blockquote>
+<p>在数据库进行update、delete等操作时使用多线程请求，可在一次update时间内完成多次update，和上面的文件上传其实是一个原理</p>
 
 <h3 id="0x03-支付漏洞">0x03 支付漏洞</h3>
 
-<blockquote>
 <pre><code>攻击者通过修改交易金额、交易数量等从而利用漏洞，
 如Burp修改交易金额、使交易数量为负数或无限大等。
 
@@ -357,7 +310,6 @@ update时间内完成多次update，和上面的文件上传其实是一个原�
   或使购买数量无限大，无限大时则程序可能处理出错，从而实现0金额支付
 * 请求重放，在购买成功后重放请求，可实现&quot;一次购买对此收货&quot;
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-漏洞修复">0x04 漏洞修复</h3>
 

@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-06-22</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,18 +117,16 @@
 
 <h3 id="0x00-简介">0x00 简介</h3>
 
-<blockquote>
 <p>当使用AJAX请求其他域名下的数据时会出现拒绝访问的情况，这是出于安全考虑，AJAX只能访问本地的资源，而不能跨域访问。</p>
 
-<p>当使用<a href="http://wyb0.com/posts/ajax-and-php/">AJAX与PHP</a>中的代码请求其他域的数据时会出现下面的情况
-<img src="/img/post/ajax_cross_domain.png" alt="ajax跨域请求" /></p>
+<p>当使用<a href="http://wyb0.com/posts/ajax-and-php/">AJAX与PHP</a>中的代码请求其他域的数据时会出现下面的情况</p>
+
+<p><img src="/img/post/ajax_cross_domain.png" alt="ajax跨域请求" /></p>
 
 <p>至于解决方案的话这里说三种：JSONP、jQuery、CORS。</p>
-</blockquote>
 
 <h3 id="0x01-jsonp">0x01 JSONP</h3>
 
-<blockquote>
 <p>这里的场景是本地127站点跨域请求远程114.115.214.111站点的数据</p>
 
 <pre><code>&lt;html lang=&quot;en&quot;&gt;
@@ -185,11 +184,9 @@
 <p><img src="/img/post/ajax_cross_domain_jsonp.png" alt="ajax跨域请求" />
 <br>
 我们看到调用的url中传递了一个name参数，告诉远端服务器获取name为xiaoliu的信息，而callback参数则告诉服务器，我的本地回调函数叫做callback_func，所以请把查询结果传入这个函数中。</p>
-</blockquote>
 
 <h3 id="0x02-jquery中的ajax">0x02 jQuery中的ajax</h3>
 
-<blockquote>
 <p>其实就是对上面JSONP例子中函数的封装扩展</p>
 
 <pre><code>&lt;html lang=&quot;en&quot;&gt;
@@ -232,15 +229,12 @@
 </code></pre>
 
 <p><img src="/img/post/ajax_cross_domain_jquery.png" alt="ajax跨域请求" /></p>
-</blockquote>
 
 <h3 id="0x03-cors">0x03 CORS</h3>
 
-<blockquote>
 <p>简单来说就是在请求的文件中加入header，指定可以访问资源的域名<br />
 在php中就是<code>header(&quot;Access-Control-Allow-Origin:*&quot;);</code> 这里的*代表允许所有<br />
 加入后使用<a href="http://wyb0.com/posts/ajax-and-php/">AJAX与PHP</a>中的代码就能跨域访问</p>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linux下SSH连接 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,漏洞挖掘,web安全,网络安全,python,php,linux">
-    <meta name="description" content="">
+    <meta name="description" content="Linux下SSH的多种连接方式">
     <meta name="author" content="reber">
 
     
@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-08-10</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,7 +117,6 @@
 
 <h3 id="0x00-ssh相关选项">0x00 SSH相关选项</h3>
 
-<blockquote>
 <pre><code>-V 显示版本
 -f 输入密码后进入后台模式
 -N 不执行远程命令，用于端口转发
@@ -124,11 +124,9 @@
 -L tcp转发
 -C 使用数据压缩，网速快时会影响速度
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-ssh免密码登陆">0x01 SSH免密码登陆</h3>
 
-<blockquote>
 <p>A主机免密码登陆B主机：</p>
 
 <pre><code>A主机运行：
@@ -141,34 +139,13 @@
     要确保上述两个文件属主是当前用户
 </code></pre>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssh_no_pwd_login_create_keys.png" alt="A主机生成密钥对.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssh_no_pwd_login_write_pub_key_to_b.png" alt="将A主机产生的公钥写入B主机.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssh_no_pwd_login_check_authorized_keys_permissions.png" alt="检查B主机authorized_keys权限.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssh_no_pwd_login_a_login_b.png" alt="A主机免密码登陆主机B.png">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/ssh_no_pwd_login_create_keys.png" alt="A主机生成密钥对" />
+<img src="/img/post/ssh_no_pwd_login_write_pub_key_to_b.png" alt="将A主机产生的公钥写入B主机" />
+<img src="/img/post/ssh_no_pwd_login_check_authorized_keys_permissions.png" alt="检查B主机authorized_keys权限" />
+<img src="/img/post/ssh_no_pwd_login_a_login_b.png" alt="A主机免密码登陆主机B" /></p>
 
 <h3 id="0x02-ssh反向连接">0x02 SSH反向连接</h3>
 
-<blockquote>
 <p>主机A要通过SSH连接主机B：</p>
 
 <pre><code>B上先运行：
@@ -176,45 +153,20 @@ ssh -NfR 8888:localhost:22 reber@A-IP
 输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssh_reverse_conn_b_run_command.png" alt="主机B反向连接主机A.png">
-</div>
-
+<p><img src="/img/post/ssh_reverse_conn_b_run_command.png" alt="主机B反向连接主机A" /></p>
 
 <pre><code>A主机运行：
 ssh root@127.0.0.1 -p 8888
 输入本机的root的密码即可登入主机B的root用户
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssh_reverse_conn_a_run_command.png" alt="主机A连接主机B.png">
-</div>
-
-</blockquote>
+<p><img src="/img/post/ssh_reverse_conn_a_run_command.png" alt="主机A连接主机B" /></p>
 
 <h3 id="0x03-ssh-socks5代理">0x03 SSH Socks5代理</h3>
 
-<blockquote>
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssh_socks5_proxy_set.png" alt="设置ssh socks5.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssh_socks5_proxy_set_firefox.png" alt="设置ssh socks5.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/ssh_socks5_proxy_firefox_internet.png" alt="火狐通过代理可以上网.png">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/ssh_socks5_proxy_set.png" alt="设置ssh socks5" />
+<img src="/img/post/ssh_socks5_proxy_set_firefox.png" alt="设置ssh socks5" />
+<img src="/img/post/ssh_socks5_proxy_firefox_internet.png" alt="火狐通过代理可以上网" /></p>
 
                 
                 <div style="padding:10px 1px;">

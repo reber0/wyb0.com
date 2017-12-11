@@ -89,11 +89,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-12-09</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -119,9 +120,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 XXE  XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
+        0x00 XXE XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
 XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛
- 0x01 XML格式  &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;!--xml声明--&gt; &lt;!--文档类型定义--&gt; &lt;!DOCTYPE note [ &lt;!ELEMENT note (to,from,heading,body)&gt; &lt;!ELEMENT to (#PCDATA)&gt; &lt;!ELEMENT from (#PCDATA)&gt; &lt;!ELEMENT heading (#PCDATA)&gt; &lt;!ELEMENT body (#PCDATA)&gt; ]&gt; &lt;!--文档元素--&gt; &lt;note&gt; &lt;to&gt;Tom&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Hi,I’am John&lt;/body&gt; &lt;/note&gt;   0x02 内部声明与外部引用  &lt;!--内部声明实体--&gt; &lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt; &lt;!--引用外部实体--&gt; &lt;!ENTITY 实体名称 SYSTEM &quot;URI&quot;&gt;   0x03 XXE漏洞  外部引用时可能会出现漏洞，几种payload：   &lt;?xml version=&quot;1.0&quot;?&gt; &lt;!DOCTYPE a [ &lt;!
+0x01 XML格式 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;!--xml声明--&gt; &lt;!--文档类型定义--&gt; &lt;!DOCTYPE note [ &lt;!ELEMENT note (to,from,heading,body)&gt; &lt;!ELEMENT to (#PCDATA)&gt; &lt;!ELEMENT from (#PCDATA)&gt; &lt;!ELEMENT heading (#PCDATA)&gt; &lt;!ELEMENT body (#PCDATA)&gt; ]&gt; &lt;!--文档元素--&gt; &lt;note&gt; &lt;to&gt;Tom&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Hi,I’am John&lt;/body&gt; &lt;/note&gt;  0x02 内部声明与外部引用 &lt;!--内部声明实体--&gt; &lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt; &lt;!--引用外部实体--&gt; &lt;!ENTITY 实体名称 SYSTEM &quot;URI&quot;&gt;  0x03 XXE漏洞  外部引用时可能会出现漏洞，几种payload：  &lt;?xml version=&quot;1.0&quot;?&gt; &lt;!DOCTYPE a [ &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt; ]&gt; &lt;test&gt;&amp;xxe;&lt;/test&gt;  &lt;?
     </p>
 
     
@@ -144,11 +145,12 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-10-28</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -174,7 +176,7 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Apache  服务器安全配置   #查看服务器运行权限 $ ps aux|grep apache|grep -v grep $ sudo lsof -i:80 COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME apache2 1377 root 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21121 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21122 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21123 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21124 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21125 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 24800 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 127488 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) 第一行是Apache主进程，以root权限运行的，因为Apache的Web端口是80或443，而在Ubuntu(Linux)中开启小于1024的端口需要root权限，所以主进程必须以root权限运行。 第二行起为Apache子进程，其执行用户为www-data，www-data是Ubuntu中运行Web服务的默认用户，权限较低。 Windows中Apache安装完成后默认是administrator权限，所以需要降权，创建一个用户Apache，用户组为Guests，然后将Apache目录下的日志的可写权限赋给Guests账户。  #目录及文件权限 修改配置文件，vim /etc/apache2/apache2.
+        0x00 Apache  服务器安全配置  #查看服务器运行权限 $ ps aux|grep apache|grep -v grep $ sudo lsof -i:80 COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME apache2 1377 root 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21121 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21122 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21123 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21124 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21125 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 24800 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 127488 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) 第一行是Apache主进程，以root权限运行的，因为Apache的Web端口是80或443，而在Ubuntu(Linux)中开启小于1024的端口需要root权限，所以主进程必须以root权限运行。 第二行起为Apache子进程，其执行用户为www-data，www-data是Ubuntu中运行Web服务的默认用户，权限较低。 Windows中Apache安装完成后默认是administrator权限，所以需要降权，创建一个用户Apache，用户组为Guests，然后将Apache目录下的日志的可写权限赋给Guests账户。  #目录及文件权限 修改配置文件，vim /etc/apache2/apache2.
     </p>
 
     
@@ -197,11 +199,12 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-09-19</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -227,7 +230,7 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 为什么使用数据卷  Docker镜像是由多个文件系统(只读层)叠加而成的。 当一个容器启动时Docker会加载只读镜像层并在其上添加一个读写层。 读写层中的修改在镜像重新启动后会全部丢失。 在Docker中，只读层及在顶部的读写层的组合被称为Union File System(联合文件系统)。 如果想要保存数据，则可以使用数据卷来在容器外面保存数据，主要为如下两种方式： * 使用docker run运行容器时指定数据卷 * 在Dockerfile中直接指定数据卷   0x01 docker run挂载Volume(使用-v参数)  不指定主机目录   #运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷 $ docker run -itd --name v_test -v /data debian:jessie /bin/bash root@d145e8c6f874:/# ls bin data etc lib media opt root sbin sys usr boot dev home lib64 mnt proc run srv tmp var root@d145e8c6f874:/# exit exit #查看数据卷的对应位置，前者是宿主机的位置，后者是容器中的位置 $ docker inspect -f {{.Mounts}} v_test [{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local true }]    指定主机目录(只能通过-v参数实现，Dockerfile不行)   $ docker run -itd -v /home/var/docker_data:/data debian:jessie /bin/bash root@d853c4ca7632:/# exit exit $ docker inspect -f {{.
+        0x00 为什么使用数据卷 Docker镜像是由多个文件系统(只读层)叠加而成的。 当一个容器启动时Docker会加载只读镜像层并在其上添加一个读写层。 读写层中的修改在镜像重新启动后会全部丢失。 在Docker中，只读层及在顶部的读写层的组合被称为Union File System(联合文件系统)。 如果想要保存数据，则可以使用数据卷来在容器外面保存数据，主要为如下两种方式： * 使用docker run运行容器时指定数据卷 * 在Dockerfile中直接指定数据卷  0x01 docker run挂载Volume(使用-v参数)  不指定主机目录  #运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷 $ docker run -itd --name v_test -v /data debian:jessie /bin/bash root@d145e8c6f874:/# ls bin data etc lib media opt root sbin sys usr boot dev home lib64 mnt proc run srv tmp var root@d145e8c6f874:/# exit exit #查看数据卷的对应位置，前者是宿主机的位置，后者是容器中的位置 $ docker inspect -f {{.Mounts}} v_test [{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local true }]   指定主机目录(只能通过-v参数实现，Dockerfile不行)  $ docker run -itd -v /home/var/docker_data:/data debian:jessie /bin/bash root@d853c4ca7632:/# exit exit $ docker inspect -f {{.
     </p>
 
     
@@ -250,11 +253,12 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-08-18</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -282,8 +286,8 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         操作系统：Ubuntu14.04.1
 Docker版本：Docker version 17.06.0-ce, build 02c1d87
-0x00 Dockerfile  Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令， 每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。   0x01 Dockerfile基本指令  FROM &lt;image name&gt;：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie) MAINTAINER &lt;author name&gt;：设置该镜像的作者 COPY &lt;source&gt; &lt;dest&gt;：复制文件，dest要以 / 结尾 WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效 RUN &lt;command&gt;：在shell执行命令 EXPOSE port1 port2：容器运行时监听的端口 CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组) ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组) ENV &lt;key&gt; &lt;value&gt;：设置环境变量 USER &lt;uid&gt;：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root VOLUME ['/data']：授权访问从容器内到主机的目录  CMD与ENTRYPOINT的区别：
-#docker run ubuntu:test会执行/bin/echo 'this is test' CMD ['/bin/echo','this is test'] #docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test' ENTRYPOINT ['/bin/echo','entrypoint test'] #docker run ubuntu:test start即执行/etc/init.d/mysql start，CMD中的默认参数会被覆盖 ENTRYPOINT ['/etc/init.
+0x00 Dockerfile Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令， 每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。  0x01 Dockerfile基本指令 FROM &lt;image name&gt;：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie) MAINTAINER &lt;author name&gt;：设置该镜像的作者 COPY &lt;source&gt; &lt;dest&gt;：复制文件，dest要以 / 结尾 WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效 RUN &lt;command&gt;：在shell执行命令 EXPOSE port1 port2：容器运行时监听的端口 CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组) ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组) ENV &lt;key&gt; &lt;value&gt;：设置环境变量 USER &lt;uid&gt;：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root VOLUME ['/data']：授权访问从容器内到主机的目录  CMD与ENTRYPOINT的区别：
+#docker run ubuntu:test会执行/bin/echo 'this is test' CMD ['/bin/echo','this is test'] #docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test' ENTRYPOINT ['/bin/echo','entrypoint test'] #docker run ubuntu:test start即执行/etc/init.d/mysql start，CMD中的默认参数会被覆盖 ENTRYPOINT ['/etc/init.d/mysql'] CMD [&quot;restart&quot;]#CMD中的值会作为ENTRYPOINT的默认参数  0x02 实例  Dockerfile  reber@wyb:~/range$ cat Dockerfile FROM ubuntu:14.
     </p>
 
     
@@ -306,11 +310,12 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-08-18</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -338,7 +343,7 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         操作系统：Ubuntu14.04.1
 Docker版本：Docker version 17.06.0-ce, build 02c1d87
-0x00 镜像操作  下载镜像   #一般容器的id和name可以互换 $ docker search ubuntu #从公共registry搜索镜像 $ docker pull ubuntu #从公共registry下载镜像 $ docker pull ubuntu:14.04    查看当前系统镜像   $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.04 54333f1de4ed 2 weeks ago 188MB    提交新的镜像   #首先运行一个容器，容器id为50b74968229a $ docker commit 50b74968229a ubuntu:add_file $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu add_file 9e01bfa580bb 1 weeks ago 190MB ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.
+0x00 镜像操作  下载镜像  #一般容器的id和name可以互换 $ docker search ubuntu #从公共registry搜索镜像 $ docker pull ubuntu #从公共registry下载镜像 $ docker pull ubuntu:14.04   查看当前系统镜像  $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.04 54333f1de4ed 2 weeks ago 188MB   提交新的镜像  #首先运行一个容器，容器id为50b74968229a $ docker commit 50b74968229a ubuntu:add_file $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu add_file 9e01bfa580bb 1 weeks ago 190MB ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.
     </p>
 
     
@@ -361,11 +366,12 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-08-15</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -391,10 +397,10 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于Docker  Docker中的镜像类似VM的快照，容器类似虚拟机，使用镜像创建容器类似于使用快照创建虚拟机。 Docker中运行应用的是容器，容器的创建和销毁在秒级就能完成。 Docker使用了AUFS，可以以递进的方式创建&rdquo;VM&rdquo;，一个&rdquo;VM&rdquo;叠在另一个&rdquo;VM&rdquo;上，就像使用git增量开发一样。 软件的运行环境（image）和软件本身（container）分离，和数据也分离。
- 学习Docker需要了解4个概念：镜像、容器、数据卷、链接
-  0x01 镜像image  Docker Images 只是一个只读模板，用来运行Docker容器，可以在Docker hub(官方镜像库)下载。 镜像拥有唯一ID(比如：72c989e2d109)以及一个供人阅读的名字和标签对(比如：ubuntu:latest)。 镜像必须完全可移植,Docker不允许例外。  0x02 容器container  可以在一个镜像的基础上创建多个容器，每个容器相互独立。 容器也拥有唯一ID以及一个供人阅读的名字。 容器被启动时会被分配一个随机的私有IP，其他容器可以通过这个IP与它进行通信。 Docker允许公开容器的特定端口。 一个容器一个进程，容器设计本意是用来运行一个应用的而非一台机器。 容器应该是短暂和一次性的。 Docker镜像层对于容器来说，是只读的，容器对于文件的写操作绝对不会作用在镜像中。  0x03 数据卷  数据卷表现为容器内的空间，但实际保存在容器外，你可以在不影响数据的情况下销毁、重建、修改、丢弃容器。 Docker允许你定义应用和数据部分，并提供工具让你可以将它们分开。  0x04 链接  Docker允许你在创建一个新容器时引用其它现存容器，在你刚创建的容器里被引用的容器将获得一个你指定的别名，我们就说这两个容器被链接在了一起。 若DB容器已经在运行，我们可以创建一个Web服务器容器，并在创建时引用这个DB容器，可以给它起个别名(比如dbapp)，在新创建的Web服务器容器中，可以在任何时候使用主机名dbapp与DB容器进行通信。  0x05 镜像与容器关系  Docker镜像是一个文件，属于静态的内容；Docker容器属于动态的内容，可以把容器理解为一个或多个运行进程。 Docker可以通过解析Docker镜像的json文件，获知应该在这个镜像之上运行什么样的进程，应该为进程配置怎么样的环境变量。 Docker守护进程手握Docker镜像的json文件，它为容器配置相应的环境并真正运行Docker镜像所指定的进程，从而完成Docker容器的真正创建。 当Docker容器运行起来之后，Docker镜像json文件就失去作用了。此时Docker镜像的绝大部分作用就是：为Docker容器提供一个文件系统的视角，供容器内部的进程访问文件资源。  0x06 Docker有三个组件和三个基本元素  三个组件
+        0x00 关于Docker  Docker中的镜像类似VM的快照，容器类似虚拟机，使用镜像创建容器类似于使用快照创建虚拟机。 Docker中运行应用的是容器，容器的创建和销毁在秒级就能完成。 Docker使用了AUFS，可以以递进的方式创建&rdquo;VM&rdquo;，一个&rdquo;VM&rdquo;叠在另一个&rdquo;VM&rdquo;上，就像使用git增量开发一样。 软件的运行环境（image）和软件本身（container）分离，和数据也分离。  学习Docker需要了解4个概念：镜像、容器、数据卷、链接
+0x01 镜像image  Docker Images 只是一个只读模板，用来运行Docker容器，可以在Docker hub(官方镜像库)下载。 镜像拥有唯一ID(比如：72c989e2d109)以及一个供人阅读的名字和标签对(比如：ubuntu:latest)。 镜像必须完全可移植,Docker不允许例外。  0x02 容器container  可以在一个镜像的基础上创建多个容器，每个容器相互独立。 容器也拥有唯一ID以及一个供人阅读的名字。 容器被启动时会被分配一个随机的私有IP，其他容器可以通过这个IP与它进行通信。 Docker允许公开容器的特定端口。 一个容器一个进程，容器设计本意是用来运行一个应用的而非一台机器。 容器应该是短暂和一次性的。 Docker镜像层对于容器来说，是只读的，容器对于文件的写操作绝对不会作用在镜像中。  0x03 数据卷  数据卷表现为容器内的空间，但实际保存在容器外，你可以在不影响数据的情况下销毁、重建、修改、丢弃容器。 Docker允许你定义应用和数据部分，并提供工具让你可以将它们分开。  0x04 链接  Docker允许你在创建一个新容器时引用其它现存容器，在你刚创建的容器里被引用的容器将获得一个你指定的别名，我们就说这两个容器被链接在了一起。 若DB容器已经在运行，我们可以创建一个Web服务器容器，并在创建时引用这个DB容器，可以给它起个别名(比如dbapp)，在新创建的Web服务器容器中，可以在任何时候使用主机名dbapp与DB容器进行通信。  0x05 镜像与容器关系  Docker镜像是一个文件，属于静态的内容；Docker容器属于动态的内容，可以把容器理解为一个或多个运行进程。 Docker可以通过解析Docker镜像的json文件，获知应该在这个镜像之上运行什么样的进程，应该为进程配置怎么样的环境变量。 Docker守护进程手握Docker镜像的json文件，它为容器配置相应的环境并真正运行Docker镜像所指定的进程，从而完成Docker容器的真正创建。 当Docker容器运行起来之后，Docker镜像json文件就失去作用了。此时Docker镜像的绝大部分作用就是：为Docker容器提供一个文件系统的视角，供容器内部的进程访问文件资源。  0x06 Docker有三个组件和三个基本元素  三个组件
  Docker Daemon 运行于主机上，处理服务请求，是用于管理容器的后台进程，上面有一些api接口。 Docker Client 用于操作容器，它是Deamon的api接口(如docker start、docker rm等)的封装。 Docker Index 是中央registry，支持拥有公有与私有访问权限的Docker容器镜像的备份。  三个基本要素
+ Docker Images 是一个只读模板，用来运行Docker容器。 Docker Containers 负责应用程序的运行，包括操作系统、用户添加的文件以及元数据。 DockerFile 是文件指令集，用来说明如何自动创建Docker镜像。   0x07 Docker的运行原理  Docker使用以下操作系统的功能来提高容器技术效率
     </p>
 
     
@@ -417,11 +423,12 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-08-01</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -447,7 +454,7 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        参考链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
+        原文链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
 0x00 对称加密与非对称加密  对称加密算法的加密和解密秘钥一样，不区分公钥和私钥，秘钥对外保密. 非对称加密算法的加密秘钥和解密秘钥不一样，公钥加密的内容只能由私钥解密，私钥加密的内容只能由公钥解密，其中私钥保密，公钥公开.  0x01 加密通信基本流程  Step1：
 客户端&ndash;&gt;服务器：你好
  Step2：
@@ -462,10 +469,10 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 服务器&ndash;&gt;客户端： 服务器用私钥解密收到的数据得到对称加密算法及其秘钥
  Step7:
 后面客户端和服务器就用对称加密算法进行通信
-  0x02 https通信大致原理  在上面的通信过程中存在一些问题：客户端如何获得公钥？如何确保获得的公钥就是服务器的？
+  0x02 https通信大致原理 在上面的通信过程中存在一些问题：客户端如何获得公钥？如何确保获得的公钥就是服务器的？
 如果黑客生成一对公私钥，然后发给用户的话同样可以完成上述认证流程。
 而证书正是为了解决这一问题而存在的，只要改变上面的Step3和Step4即可引入证书。
-  Step1：
+ Step1：
 客户端&ndash;&gt;服务器：你好
  Step2：
 服务器&ndash;&gt;客户端：你好，我是服务器(同时发送证书)
@@ -475,6 +482,8 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 服务端&ndash;&gt;客户端：
  服务器把string用自己的私钥进行加密，生成str 服务器把str发送给客户端
   Step5：
+客户端&ndash;&gt;服务器：
+ 客户端收到服务器的数据str后，用服务器的公钥解密，生成string1 客户端将string1和string对比，若一致则说明对方确实是服务器(因为私钥加密后的内容只能由公钥解密，私钥只有服务器持有) 客户端选择一个对称加密算法和一个秘钥，用服务器公钥将他们加密发送给服务器，告诉服务器后续的通信用这个秘钥加密，因为公钥加密的数据只有私钥能解密，所以对称加密的算法和秘钥只有服务器知道  Step6：
     </p>
 
     
@@ -497,11 +506,12 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-07-20</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -535,8 +545,8 @@ python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析X
 将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
  ElementTree(元素树)
 ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
-   我在这里使用ElementTree  0x01 Element对象的属性  每个Element对象都具有以下属性：
-  tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）   &gt;&gt;&gt; from xml.etree import ElementTree as ET &gt;&gt;&gt; xml = &quot;&quot;&quot;&lt;books&gt; ... &lt;book id='37476'&gt;aaaa&lt;/book&gt; ... &lt;book id='83727'&gt;bbbb&lt;/book&gt; ... &lt;/books&gt;&quot;&quot;&quot; &gt;&gt;&gt; root = ET.fromstring(xml) &gt;&gt;&gt; root.tag 'books' &gt;&gt;&gt; child = root.getchildren() &gt;&gt;&gt; child [&lt;Element 'book' at 0x106f59410&gt;, &lt;Element 'book' at 0x106f59450&gt;] &gt;&gt;&gt; child[0].
+   我在这里使用ElementTree  0x01 Element对象的属性 每个Element对象都具有以下属性：
+ tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）  &gt;&gt;&gt; from xml.etree import ElementTree as ET &gt;&gt;&gt; xml = &quot;&quot;&quot;&lt;books&gt; ... &lt;book id='37476'&gt;aaaa&lt;/book&gt; ... &lt;book id='83727'&gt;bbbb&lt;/book&gt; ... &lt;/books&gt;&quot;&quot;&quot; &gt;&gt;&gt; root = ET.fromstring(xml) &gt;&gt;&gt; root.tag 'books' &gt;&gt;&gt; child = root.getchildren() &gt;&gt;&gt; child [&lt;Element 'book' at 0x106f59410&gt;, &lt;Element 'book' at 0x106f59450&gt;] &gt;&gt;&gt; child[0].
     </p>
 
     
@@ -559,11 +569,12 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-07-10</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -591,9 +602,9 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。  0x01 设置mongo和redis  因为mrq依赖于redis和mongo，所以先安装设置下
-  安装redis   $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp; $ redis-cli &gt; auth reber_redis    安装mongo   可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &quot;deb [ arch=amd64 ] http://repo.
+        0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。  0x01 设置mongo和redis 因为mrq依赖于redis和mongo，所以先安装设置下
+ 安装redis  $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp; $ redis-cli &gt; auth reber_redis   安装mongo  可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &quot;deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.
     </p>
 
     
@@ -616,11 +627,12 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-06-22</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -646,9 +658,10 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 简介  当使用AJAX请求其他域名下的数据时会出现拒绝访问的情况，这是出于安全考虑，AJAX只能访问本地的资源，而不能跨域访问。
-当使用AJAX与PHP中的代码请求其他域的数据时会出现下面的情况 至于解决方案的话这里说三种：JSONP、jQuery、CORS。
- 0x01 JSONP  这里的场景是本地127站点跨域请求远程114.115.214.111站点的数据
+        0x00 简介 当使用AJAX请求其他域名下的数据时会出现拒绝访问的情况，这是出于安全考虑，AJAX只能访问本地的资源，而不能跨域访问。
+当使用AJAX与PHP中的代码请求其他域的数据时会出现下面的情况
+至于解决方案的话这里说三种：JSONP、jQuery、CORS。
+0x01 JSONP 这里的场景是本地127站点跨域请求远程114.115.214.111站点的数据
 &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;jsonptest&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;script&gt; function callback_func(data) { document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;姓名:&quot;+data.name+&quot;--性别:&quot;+data.sex+&quot;--年龄:&quot;+data.age; } function get_msg(name) { var url = &quot;http://114.115.214.111/wyb/msg.php?name=&quot;+name+&quot;&amp;callback=callback_func&quot;; var script = document.createElement('script'); script.setAttribute('src', url); script.setAttribute('id', 'aaabbb'); document.getElementsByTagName('head')[0].appendChild(script); document.getElementById('aaabbb').remove(); } &lt;/script&gt; &lt;h3&gt;在输入框中尝试输入姓名(xiaoming):&lt;/h3&gt; &lt;form action=&quot;&quot;&gt; 输入姓名: &lt;input type=&quot;text&quot; onkeyup=&quot;get_msg(this.value)&quot; /&gt; &lt;/form&gt; &lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;  &lt;?php $conn = @mysql_connect('localhost','admin','123456'); mysql_select_db('test',$conn); $name = $_GET['name']; $callback = $_GET['callback']; $sql = &quot;select * from student where name='&quot;.
     </p>
 

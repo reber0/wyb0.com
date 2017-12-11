@@ -90,11 +90,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-08-01</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -120,7 +121,7 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        参考链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
+        原文链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
 0x00 对称加密与非对称加密  对称加密算法的加密和解密秘钥一样，不区分公钥和私钥，秘钥对外保密. 非对称加密算法的加密秘钥和解密秘钥不一样，公钥加密的内容只能由私钥解密，私钥加密的内容只能由公钥解密，其中私钥保密，公钥公开.  0x01 加密通信基本流程  Step1：
 客户端&ndash;&gt;服务器：你好
  Step2：
@@ -135,10 +136,10 @@
 服务器&ndash;&gt;客户端： 服务器用私钥解密收到的数据得到对称加密算法及其秘钥
  Step7:
 后面客户端和服务器就用对称加密算法进行通信
-  0x02 https通信大致原理  在上面的通信过程中存在一些问题：客户端如何获得公钥？如何确保获得的公钥就是服务器的？
+  0x02 https通信大致原理 在上面的通信过程中存在一些问题：客户端如何获得公钥？如何确保获得的公钥就是服务器的？
 如果黑客生成一对公私钥，然后发给用户的话同样可以完成上述认证流程。
 而证书正是为了解决这一问题而存在的，只要改变上面的Step3和Step4即可引入证书。
-  Step1：
+ Step1：
 客户端&ndash;&gt;服务器：你好
  Step2：
 服务器&ndash;&gt;客户端：你好，我是服务器(同时发送证书)
@@ -148,6 +149,8 @@
 服务端&ndash;&gt;客户端：
  服务器把string用自己的私钥进行加密，生成str 服务器把str发送给客户端
   Step5：
+客户端&ndash;&gt;服务器：
+ 客户端收到服务器的数据str后，用服务器的公钥解密，生成string1 客户端将string1和string对比，若一致则说明对方确实是服务器(因为私钥加密后的内容只能由公钥解密，私钥只有服务器持有) 客户端选择一个对称加密算法和一个秘钥，用服务器公钥将他们加密发送给服务器，告诉服务器后续的通信用这个秘钥加密，因为公钥加密的数据只有私钥能解密，所以对称加密的算法和秘钥只有服务器知道  Step6：
     </p>
 
     
@@ -170,11 +173,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-07-20</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -208,8 +212,8 @@ python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析X
 将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
  ElementTree(元素树)
 ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
-   我在这里使用ElementTree  0x01 Element对象的属性  每个Element对象都具有以下属性：
-  tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）   &gt;&gt;&gt; from xml.etree import ElementTree as ET &gt;&gt;&gt; xml = &quot;&quot;&quot;&lt;books&gt; ... &lt;book id='37476'&gt;aaaa&lt;/book&gt; ... &lt;book id='83727'&gt;bbbb&lt;/book&gt; ... &lt;/books&gt;&quot;&quot;&quot; &gt;&gt;&gt; root = ET.fromstring(xml) &gt;&gt;&gt; root.tag 'books' &gt;&gt;&gt; child = root.getchildren() &gt;&gt;&gt; child [&lt;Element 'book' at 0x106f59410&gt;, &lt;Element 'book' at 0x106f59450&gt;] &gt;&gt;&gt; child[0].
+   我在这里使用ElementTree  0x01 Element对象的属性 每个Element对象都具有以下属性：
+ tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）  &gt;&gt;&gt; from xml.etree import ElementTree as ET &gt;&gt;&gt; xml = &quot;&quot;&quot;&lt;books&gt; ... &lt;book id='37476'&gt;aaaa&lt;/book&gt; ... &lt;book id='83727'&gt;bbbb&lt;/book&gt; ... &lt;/books&gt;&quot;&quot;&quot; &gt;&gt;&gt; root = ET.fromstring(xml) &gt;&gt;&gt; root.tag 'books' &gt;&gt;&gt; child = root.getchildren() &gt;&gt;&gt; child [&lt;Element 'book' at 0x106f59410&gt;, &lt;Element 'book' at 0x106f59450&gt;] &gt;&gt;&gt; child[0].
     </p>
 
     
@@ -232,11 +236,12 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-05-19</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -262,7 +267,8 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 安装brew  $ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;   0x01 安装wget  $ brew install wget   0x02 安装oh-my-zsh  $ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh $ cat /etc/shells #查看当前有什么shell $ which zsh #查看zsh路径 $ chsh -s /bin/zsh #切换shell为zsh $ vim ~/.zshrc添加alias c='clear'   0x03 换源  # 对于zsh用户换源 $ echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' &gt;&gt; ~/.zshrc $ source ~/.zshrc $ brew update   0x04 安装scroll-reverser  去http://pilotmoon.
+        0x00 安装brew $ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;  0x01 安装wget $ brew install wget  0x02 安装oh-my-zsh $ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh $ cat /etc/shells #查看当前有什么shell $ which zsh #查看zsh路径 $ chsh -s /bin/zsh #切换shell为zsh $ vim ~/.zshrc添加alias c='clear'  0x03 换源 # 对于zsh用户换源 $ echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' &gt;&gt; ~/.zshrc $ source ~/.zshrc $ brew update  0x04 安装scroll-reverser  去http://pilotmoon.com/scrollreverser下载
+ 0x05 安装java环境  去Oracle官网下载jre然后安装
     </p>
 
     
@@ -285,11 +291,12 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2017-02-07</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -315,7 +322,7 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 目的  由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2   0x01 开启rewrite模块  $ sudo a2enmod rewrite   0x02 根目录下新建.htaccess：  Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名   0x03 修改配置文件  # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt;   0x04 重启Apache  $ sudo /etc/init.d/apache2 restart   
+         0x00 目的 由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2  0x01 开启rewrite模块 $ sudo a2enmod rewrite  0x02 根目录下新建.htaccess： Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名  0x03 修改配置文件 # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt;  0x04 重启Apache $ sudo /etc/init.d/apache2 restart  
     </p>
 
     
@@ -334,11 +341,12 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-09-02</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -364,11 +372,12 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Package Control  安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件
-  代码安装
-ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)   import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())    手动安装
- 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text  使用方法  Ctrl+Shift+P调出菜单然后选择相应操作  Preferences -&gt; Package Control也可调出  选择Install Package后可以输入想安装的插件名搜索安装    0x01 Emmet  前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 
- 0x02 Anaconda  可以自动补全并提示语法，还可跳转到定义、使用等 效果如下：  0x03 Git  在编辑器就可以执行git命令，有github的开发者必备  0x04 GitGutter  在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率  0x05 Markdown Preview  可以在本地预览文件  0x06 DocBlokr  这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释  0x07 AutoFileName  快捷输入文件名  0x08 Theme-Flatland和Theme-SoDaReloaded  两个主题插件，安装好之后：首选项 -&gt; 设置-用户，修改文件Packages/User/Preferences.
+        0x00 Package Control 安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件
+ 代码安装
+ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)  import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())   手动安装
+ 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text  使用方法
+ Ctrl+Shift+P调出菜单然后选择相应操作  Preferences -&gt; Package Control也可调出  选择Install Package后可以输入想安装的插件名搜索安装    0x01 Emmet 前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 
+0x02 Anaconda 可以自动补全并提示语法，还可跳转到定义、使用等 效果如下： 0x03 Git 在编辑器就可以执行git命令，有github的开发者必备 0x04 GitGutter 在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率 0x05 Markdown Preview 可以在本地预览文件 0x06 DocBlokr 这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释 0x07 AutoFileName 快捷输入文件名 0x08 Theme-Flatland和Theme-SoDaReloaded 两个主题插件，安装好之后：首选项 -&gt; 设置-用户，修改文件Packages/User/Preferences.
     </p>
 
     
@@ -391,11 +400,12 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-07-20</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -422,7 +432,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
          vm-tools安装后可以在客户机和虚拟机间双向复制文件
-安装   Kali2.0  一般安装的话按照上面的步骤即可安装成功，但是Kali2.0不行，可以用如下方法安装： 安装后可以终端输入：dpkg-reconfigure locales，在弹出的界面选择zh_CN.UTF-8设置语言为中文 可以用vim /root/.config/user-dirs.dirs将&quot;桌面&quot;修改为&quot;Desktop&quot;   
+0x00 安装 0x01 Kali2.0 一般安装的话按照上面的步骤即可安装成功，但是Kali2.0不行，可以用如下方法安装： 安装后可以终端输入：dpkg-reconfigure locales，在弹出的界面选择zh_CN.UTF-8设置语言为中文 可以用vim /root/.config/user-dirs.dirs将&quot;桌面&quot;修改为&quot;Desktop&quot;  
     </p>
 
     
@@ -441,11 +451,12 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-07-13</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -471,8 +482,8 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        网络拓扑及信息 其中ip等信息如下： 攻击WPA保护下的802.11网络 1. 查看无线网卡并将其设置为监听模式   2. 打开kismet，进行基本设置   3. 选择名字为111111的AP为目标   4. 查看kismet抓包信息  kismet生成的nettxt文件的部分信息如下：
-Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:21 2015 Last : Mon Nov 16 13:10:23 2015 Type : infrastructure BSSID : D8:42:AC:C9:5C:1D SSID 1 Type : Probe Response SSID : &quot;111111&quot; First : Mon Nov 16 12:46:30 2015 Last : Mon Nov 16 13:10:22 2015 Max Rate : 54.
+        0x00 网络拓扑及信息 其中ip等信息如下： 0x01 获取信息  查看无线网卡并将其设置为监听模式  打开kismet，进行基本设置  选择名字为111111的AP为目标  查看kismet抓包信息 kismet生成的nettxt文件的部分信息如下：
+  Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:21 2015 Last : Mon Nov 16 13:10:23 2015 Type : infrastructure BSSID : D8:42:AC:C9:5C:1D SSID 1 Type : Probe Response SSID : &quot;111111&quot; First : Mon Nov 16 12:46:30 2015 Last : Mon Nov 16 13:10:22 2015 Max Rate : 54.
     </p>
 
     
@@ -495,11 +506,12 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-04</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -545,11 +557,12 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-05-25</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -575,10 +588,22 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 XML简介  xml的设计宗旨是传输数据，而并非显示数据 xms是不作为的，它被设计用来结构化、存储以及传输信息 xml只是纯文本，独立于软硬件和应用程序 xml可供任何软硬设备读取数据 xml可以自定义标签 xml具有自我描述性 xml是对html的补充 xml常用于简化数据的存储和共享   例子：John给George的便签
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;note&gt; //根元素 &lt;to&gt;George&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Don't forget the meeting!&lt;/body&gt; &lt;/note&gt;   0x01 XML树结构  必须有根节点 根节点可以有子节点   格式：
+        0x00 XML简介 1、xml的设计宗旨是传输数据，而并非显示数据
+2、xms是不作为的，它被设计用来结构化、存储以及传输信息
+3、xml只是纯文本，独立于软硬件和应用程序
+4、xml可供任何软硬设备读取数据
+5、xml可以自定义标签
+6、xml具有自我描述性
+7、xml是对html的补充
+8、xml常用于简化数据的存储和共享
+例子：John给George的便签
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;note&gt; //根元素 &lt;to&gt;George&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Don't forget the meeting!&lt;/body&gt; &lt;/note&gt;  0x01 XML树结构 1、必须有根节点
+2、根节点可以有子节点
+格式：
 &lt;root&gt; &lt;child&gt; &lt;subchild&gt;.....&lt;/subchild&gt; &lt;/child&gt; &lt;/root&gt;  例子：
-&lt;books&gt; &lt;book&gt; &lt;name&gt;Python黑帽子&lt;/name&gt; &lt;date&gt;2015&lt;/date&gt; &lt;price&gt;37￥&lt;/price&gt; &lt;description&gt; 用python写一些程序 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;Web安全深度剖析&lt;/name&gt; &lt;date&gt;2014&lt;/date&gt; &lt;price&gt;39￥&lt;/price&gt; &lt;description&gt; 讲述web渗透的基础知识 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;白帽子讲web安全&lt;/name&gt; &lt;date&gt;2013&lt;/date&gt; &lt;price&gt;44￥&lt;/price&gt; &lt;description&gt; 道哥力作 &lt;/description&gt; &lt;/book&gt; &lt;/books&gt;   0x02 XML语法规则  所有元素必有闭合标签 标签对大小写敏感 必须正确的嵌套 XML必须有根元素 XML的属性值必须加引号(能用子元素的就用子元素代替属性) 实体引用
+&lt;books&gt; &lt;book&gt; &lt;name&gt;Python黑帽子&lt;/name&gt; &lt;date&gt;2015&lt;/date&gt; &lt;price&gt;37￥&lt;/price&gt; &lt;description&gt; 用python写一些程序 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;Web安全深度剖析&lt;/name&gt; &lt;date&gt;2014&lt;/date&gt; &lt;price&gt;39￥&lt;/price&gt; &lt;description&gt; 讲述web渗透的基础知识 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;白帽子讲web安全&lt;/name&gt; &lt;date&gt;2013&lt;/date&gt; &lt;price&gt;44￥&lt;/price&gt; &lt;description&gt; 道哥力作 &lt;/description&gt; &lt;/book&gt; &lt;/books&gt;  0x02 XML语法规则 1、所有元素必有闭合标签
+2、标签对大小写敏感
+3、必须正确的嵌套
     </p>
 
     
@@ -601,11 +626,12 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-04-12</time>
-            </div>
-
+                &nbsp;&nbsp;&nbsp;&nbsp;
             
 
-            <div style="padding:2px 5px 2px 0px;">
+                
+
+            
                 
                 
                 
@@ -631,7 +657,7 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 标题   0x01 列表   0x02 引用   0x03 图片和链接  网络图片引用：
+         0x00 标题 0x01 列表 0x02 引用 0x03 图片和链接 网络图片引用：
 ![Mou icon](http://mouapp.com/Mou_128.png) 本地图片引用：
 ![Logo](/img/logo.png) 图片链接：
 [![](http://wyb0.com/img/logo.png)](http://wyb0.com/img/logo.png) 
@@ -642,8 +668,8 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
 新标签打开(部分平台不识别)：
 [百度一下](http://www.baidu.com){:target=&quot;_blank&quot;}
 也可用{:width=&ldquo;300&rdquo; height=&ldquo;100&rdquo;}来设置图片大小(部分平台不识别)
- 0x04 粗体与斜体   0x05 表格   0x06 代码块  行内代码块：使用两个Esc按键下的符号`将代码包裹起来即可
-代码块：在代码左侧加4个空格即可(tab键缩进也行)  0x07 线   0x08 字体、字号和颜色设置   
+0x04 粗体与斜体 0x05 表格 0x06 代码块 行内代码块：使用两个Esc按键下的符号`将代码包裹起来即可
+代码块：在代码左侧加4个空格即可(tab键缩进也行) 0x07 线 0x08 字体、字号和颜色设置 
     </p>
 
     

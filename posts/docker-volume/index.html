@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-09-19</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,7 +117,6 @@
 
 <h3 id="0x00-为什么使用数据卷">0x00 为什么使用数据卷</h3>
 
-<blockquote>
 <pre><code>Docker镜像是由多个文件系统(只读层)叠加而成的。
 当一个容器启动时Docker会加载只读镜像层并在其上添加一个读写层。
 读写层中的修改在镜像重新启动后会全部丢失。
@@ -126,7 +126,6 @@
 * 使用docker run运行容器时指定数据卷
 * 在Dockerfile中直接指定数据卷
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-docker-run挂载volume-使用-v参数">0x01 docker run挂载Volume(使用-v参数)</h3>
 
@@ -134,7 +133,6 @@
 <li>不指定主机目录</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">#运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷
 $ docker run -itd --name v_test -v /data debian:jessie /bin/bash
 root@d145e8c6f874:/# ls
@@ -147,13 +145,11 @@ exit
 $ docker inspect -f {{.Mounts}} v_test
 [{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local  true }]
 </code></pre>
-</blockquote>
 
 <ul>
 <li>指定主机目录(只能通过-v参数实现，Dockerfile不行)</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker run -itd -v /home/var/docker_data:/data debian:jessie /bin/bash
 root@d853c4ca7632:/# exit
 exit
@@ -171,18 +167,14 @@ $ sudo touch /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce
 root@8e1ccd30fe33:/# ls data/
 a.txt
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-通过dockerfile声明volume">0x02 通过Dockerfile声明Volume</h3>
 
-<blockquote>
 <pre><code class="language-bash">FROM debian:jessie VOLUME /data #之后的任何命令都不能更改Volume的任何东西
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-数据共享">0x03 数据共享</h3>
 
-<blockquote>
 <p>使用&ndash;volumes-from参数项即可访问另外一个容器的Volume。<br />
 因为数据容器不启动也可以被其它容器访问，所以一般不推荐启动数据容器。</p>
 
@@ -198,14 +190,11 @@ exit
 $ docker inspect -f {{.Mounts}} 65aedf9c2ee1
 [{volume 8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068 /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ce00a159b09bdcdf743e068/_data /data local  true }]
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-删除volumes">0x04 删除Volumes</h3>
 
-<blockquote>
 <pre><code class="language-bash">docker rm -v d145e8c6f874 #删除容器时一起删除数据
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

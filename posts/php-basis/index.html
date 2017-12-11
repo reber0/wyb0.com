@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-05-15</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -131,49 +132,36 @@
 
 <h3 id="0x01-php代码嵌入位置">0x01 PHP代码嵌入位置</h3>
 
-<blockquote>
-<pre><code class="language-php">可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&quot;&lt;?php&quot;起始符和终止符&quot;?&gt;&quot;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。
-</code></pre>
-</blockquote>
+<p>可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用&rdquo;&lt;?php&rdquo;起始符和终止符&rdquo;?&gt;&ldquo;就会开启PHP模式。在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。</p>
 
 <h3 id="0x02-解读开始和结束标记">0x02 解读开始和结束标记</h3>
 
-<blockquote>
 <pre><code class="language-bash">1. &lt;?php ?&gt;
 2. &lt;script language=&quot;php&quot;&gt;&lt;/script&gt;
 3. &lt;? ?&gt;
 4. &lt;% %&gt;
-//前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags
+#前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-指令分割符">0x03 指令分割符</h3>
 
-<blockquote>
 <p>php一段代码中除了最后一行不用分号，其他每句都要用分号结束，推荐每句都用分号结束</p>
-</blockquote>
 
 <h3 id="0x04-注释">0x04 注释</h3>
 
-<blockquote>
 <pre><code class="language-php">1. 若觉得代码不合适则可以注释，但不要急于删除
 2. 注释的目的在于说明程序
 3. 注释对调试和编写程序可以起到很好的帮助作用
 4. PHP注释符有：&quot;/**/&quot;、&quot;//&quot;、&quot;#&quot;
 </code></pre>
-</blockquote>
 
 <h3 id="0x05-空白符">0x05 空白符</h3>
 
-<blockquote>
 <p>空白符(空格、tab制表符、换行)会被php引擎忽略</p>
-</blockquote>
 
 <h3 id="0x06-变量的声明">0x06 变量的声明</h3>
 
-<blockquote>
 <p>其中双引号中的变量可以被解析，单引号中的变量不能被解析</p>
-</blockquote>
 
 <ol>
 <li>变量名对大小写敏感</li>
@@ -184,18 +172,15 @@
 
 <h3 id="0x07-可变变量">0x07 可变变量</h3>
 
-<blockquote>
 <pre><code class="language-php">&lt;?php
     $a = 'hello';
     $$a = 'world';  //此时$a的值hello就相当于$$a的键
     echo &quot;$a $hello&quot;; //输出hello world
 ?&gt;
 </code></pre>
-</blockquote>
 
 <h3 id="0x08-引用">0x08 引用</h3>
 
-<blockquote>
 <pre><code class="language-php">&lt;?php
     $a = 123;
     $b = $a;
@@ -204,7 +189,6 @@
     $b = 111;  //此时$b和$c都是111
 ?&gt;
 </code></pre>
-</blockquote>
 
 <h3 id="0x09-变量类型">0x09 变量类型</h3>
 
@@ -222,9 +206,7 @@
 
 <h3 id="0x0a-布尔类型">0x0A 布尔类型</h3>
 
-<blockquote>
 <p>以下会被认为是FALSE，其他所有值都被认为是TRUE(包括任何资源)</p>
-</blockquote>
 
 <ol>
 <li>布尔值FALSE</li>
@@ -268,7 +250,6 @@
 
 <h3 id="0x0d-运算符">0x0D 运算符</h3>
 
-<blockquote>
 <pre><code>* 算数运算符：&quot;+&quot;、&quot;-&quot;、&quot;*&quot;、&quot;/&quot;、&quot;%&quot;
 * 赋值运算符：&quot;=&quot;、&quot;+=&quot;、&quot;-=&quot;、&quot;*=&quot;、&quot;/=&quot;、&quot;%=&quot;
 * 字符串运算符：&quot;.&quot;、&quot;.=&quot;
@@ -298,7 +279,6 @@
     * &lt;&gt;   不等于则返回true
     * !==  完全不同则返回true
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

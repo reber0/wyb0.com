@@ -18,7 +18,7 @@
       <pubDate>Tue, 01 Aug 2017 18:16:39 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/introduction-to-https-encryption-principles/</guid>
-      <description>参考链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
+      <description>原文链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
 0x00 对称加密与非对称加密  对称加密算法的加密和解密秘钥一样，不区分公钥和私钥，秘钥对外保密. 非对称加密算法的加密秘钥和解密秘钥不一样，公钥加密的内容只能由私钥解密，私钥加密的内容只能由公钥解密，其中私钥保密，公钥公开.  0x01 加密通信基本流程  Step1：
 客户端&amp;ndash;&amp;gt;服务器：你好
  Step2：
@@ -33,10 +33,10 @@
 服务器&amp;ndash;&amp;gt;客户端： 服务器用私钥解密收到的数据得到对称加密算法及其秘钥
  Step7:
 后面客户端和服务器就用对称加密算法进行通信
-  0x02 https通信大致原理  在上面的通信过程中存在一些问题：客户端如何获得公钥？如何确保获得的公钥就是服务器的？
+  0x02 https通信大致原理 在上面的通信过程中存在一些问题：客户端如何获得公钥？如何确保获得的公钥就是服务器的？
 如果黑客生成一对公私钥，然后发给用户的话同样可以完成上述认证流程。
 而证书正是为了解决这一问题而存在的，只要改变上面的Step3和Step4即可引入证书。
-  Step1：
+ Step1：
 客户端&amp;ndash;&amp;gt;服务器：你好
  Step2：
 服务器&amp;ndash;&amp;gt;客户端：你好，我是服务器(同时发送证书)
@@ -45,7 +45,9 @@
  判断证书是否为服务器的(证书中有服务器的公钥，若证书是服务器的则这个公钥就也是服务器的) 客户端向服务器发送随机生成的字符串string  Step4：
 服务端&amp;ndash;&amp;gt;客户端：
  服务器把string用自己的私钥进行加密，生成str 服务器把str发送给客户端
-  Step5：</description>
+  Step5：
+客户端&amp;ndash;&amp;gt;服务器：
+ 客户端收到服务器的数据str后，用服务器的公钥解密，生成string1 客户端将string1和string对比，若一致则说明对方确实是服务器(因为私钥加密后的内容只能由公钥解密，私钥只有服务器持有) 客户端选择一个对称加密算法和一个秘钥，用服务器公钥将他们加密发送给服务器，告诉服务器后续的通信用这个秘钥加密，因为公钥加密的数据只有私钥能解密，所以对称加密的算法和秘钥只有服务器知道  Step6：</description>
     </item>
     
     <item>
@@ -60,8 +62,8 @@ python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析X
 将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
  ElementTree(元素树)
 ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
-   我在这里使用ElementTree  0x01 Element对象的属性  每个Element对象都具有以下属性：
-  tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）   &amp;gt;&amp;gt;&amp;gt; from xml.etree import ElementTree as ET &amp;gt;&amp;gt;&amp;gt; xml = &amp;quot;&amp;quot;&amp;quot;&amp;lt;books&amp;gt; ... &amp;lt;book id=&#39;37476&#39;&amp;gt;aaaa&amp;lt;/book&amp;gt; ... &amp;lt;book id=&#39;83727&#39;&amp;gt;bbbb&amp;lt;/book&amp;gt; ... &amp;lt;/books&amp;gt;&amp;quot;&amp;quot;&amp;quot; &amp;gt;&amp;gt;&amp;gt; root = ET.fromstring(xml) &amp;gt;&amp;gt;&amp;gt; root.tag &#39;books&#39; &amp;gt;&amp;gt;&amp;gt; child = root.getchildren() &amp;gt;&amp;gt;&amp;gt; child [&amp;lt;Element &#39;book&#39; at 0x106f59410&amp;gt;, &amp;lt;Element &#39;book&#39; at 0x106f59450&amp;gt;] &amp;gt;&amp;gt;&amp;gt; child[0].</description>
+   我在这里使用ElementTree  0x01 Element对象的属性 每个Element对象都具有以下属性：
+ tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）  &amp;gt;&amp;gt;&amp;gt; from xml.etree import ElementTree as ET &amp;gt;&amp;gt;&amp;gt; xml = &amp;quot;&amp;quot;&amp;quot;&amp;lt;books&amp;gt; ... &amp;lt;book id=&#39;37476&#39;&amp;gt;aaaa&amp;lt;/book&amp;gt; ... &amp;lt;book id=&#39;83727&#39;&amp;gt;bbbb&amp;lt;/book&amp;gt; ... &amp;lt;/books&amp;gt;&amp;quot;&amp;quot;&amp;quot; &amp;gt;&amp;gt;&amp;gt; root = ET.fromstring(xml) &amp;gt;&amp;gt;&amp;gt; root.tag &#39;books&#39; &amp;gt;&amp;gt;&amp;gt; child = root.getchildren() &amp;gt;&amp;gt;&amp;gt; child [&amp;lt;Element &#39;book&#39; at 0x106f59410&amp;gt;, &amp;lt;Element &#39;book&#39; at 0x106f59450&amp;gt;] &amp;gt;&amp;gt;&amp;gt; child[0].</description>
     </item>
     
     <item>
@@ -70,7 +72,8 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
       <pubDate>Fri, 19 May 2017 16:51:11 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/mac-basic-use/</guid>
-      <description>0x00 安装brew  $ /usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;   0x01 安装wget  $ brew install wget   0x02 安装oh-my-zsh  $ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh $ cat /etc/shells #查看当前有什么shell $ which zsh #查看zsh路径 $ chsh -s /bin/zsh #切换shell为zsh $ vim ~/.zshrc添加alias c=&#39;clear&#39;   0x03 换源  # 对于zsh用户换源 $ echo &#39;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles&#39; &amp;gt;&amp;gt; ~/.zshrc $ source ~/.zshrc $ brew update   0x04 安装scroll-reverser  去http://pilotmoon.</description>
+      <description>0x00 安装brew $ /usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;  0x01 安装wget $ brew install wget  0x02 安装oh-my-zsh $ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh $ cat /etc/shells #查看当前有什么shell $ which zsh #查看zsh路径 $ chsh -s /bin/zsh #切换shell为zsh $ vim ~/.zshrc添加alias c=&#39;clear&#39;  0x03 换源 # 对于zsh用户换源 $ echo &#39;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles&#39; &amp;gt;&amp;gt; ~/.zshrc $ source ~/.zshrc $ brew update  0x04 安装scroll-reverser  去http://pilotmoon.com/scrollreverser下载
+ 0x05 安装java环境  去Oracle官网下载jre然后安装</description>
     </item>
     
     <item>
@@ -79,7 +82,7 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
       <pubDate>Tue, 07 Feb 2017 10:49:38 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/301-redirect/</guid>
-      <description> 0x00 目的  由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2   0x01 开启rewrite模块  $ sudo a2enmod rewrite   0x02 根目录下新建.htaccess：  Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名   0x03 修改配置文件  # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &amp;lt;Directory /var/www/&amp;gt; Options FollowSymLinks AllowOverride All Require all granted &amp;lt;/Directory&amp;gt;   0x04 重启Apache  $ sudo /etc/init.d/apache2 restart   </description>
+      <description> 0x00 目的 由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2  0x01 开启rewrite模块 $ sudo a2enmod rewrite  0x02 根目录下新建.htaccess： Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名  0x03 修改配置文件 # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &amp;lt;Directory /var/www/&amp;gt; Options FollowSymLinks AllowOverride All Require all granted &amp;lt;/Directory&amp;gt;  0x04 重启Apache $ sudo /etc/init.d/apache2 restart  </description>
     </item>
     
     <item>
@@ -88,11 +91,12 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
       <pubDate>Fri, 02 Sep 2016 23:07:44 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/sublime-text3-plugins/</guid>
-      <description>0x00 Package Control  安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件
-  代码安装
-ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)   import urllib.request,os; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), &#39;wb&#39;).write(urllib.request.urlopen( &#39;http://sublime.wbond.net/&#39; + pf.replace(&#39; &#39;,&#39;%20&#39;)).read())    手动安装
- 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text  使用方法  Ctrl+Shift+P调出菜单然后选择相应操作  Preferences -&amp;gt; Package Control也可调出  选择Install Package后可以输入想安装的插件名搜索安装    0x01 Emmet  前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 
- 0x02 Anaconda  可以自动补全并提示语法，还可跳转到定义、使用等 效果如下：  0x03 Git  在编辑器就可以执行git命令，有github的开发者必备  0x04 GitGutter  在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率  0x05 Markdown Preview  可以在本地预览文件  0x06 DocBlokr  这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释  0x07 AutoFileName  快捷输入文件名  0x08 Theme-Flatland和Theme-SoDaReloaded  两个主题插件，安装好之后：首选项 -&amp;gt; 设置-用户，修改文件Packages/User/Preferences.</description>
+      <description>0x00 Package Control 安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件
+ 代码安装
+ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)  import urllib.request,os; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), &#39;wb&#39;).write(urllib.request.urlopen( &#39;http://sublime.wbond.net/&#39; + pf.replace(&#39; &#39;,&#39;%20&#39;)).read())   手动安装
+ 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text  使用方法
+ Ctrl+Shift+P调出菜单然后选择相应操作  Preferences -&amp;gt; Package Control也可调出  选择Install Package后可以输入想安装的插件名搜索安装    0x01 Emmet 前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 
+0x02 Anaconda 可以自动补全并提示语法，还可跳转到定义、使用等 效果如下： 0x03 Git 在编辑器就可以执行git命令，有github的开发者必备 0x04 GitGutter 在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率 0x05 Markdown Preview 可以在本地预览文件 0x06 DocBlokr 这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释 0x07 AutoFileName 快捷输入文件名 0x08 Theme-Flatland和Theme-SoDaReloaded 两个主题插件，安装好之后：首选项 -&amp;gt; 设置-用户，修改文件Packages/User/Preferences.</description>
     </item>
     
     <item>
@@ -102,7 +106,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
       
       <guid>http://wyb0.com/posts/vmware-install-vm-tools/</guid>
       <description> vm-tools安装后可以在客户机和虚拟机间双向复制文件
-安装   Kali2.0  一般安装的话按照上面的步骤即可安装成功，但是Kali2.0不行，可以用如下方法安装： 安装后可以终端输入：dpkg-reconfigure locales，在弹出的界面选择zh_CN.UTF-8设置语言为中文 可以用vim /root/.config/user-dirs.dirs将&amp;quot;桌面&amp;quot;修改为&amp;quot;Desktop&amp;quot;   </description>
+0x00 安装 0x01 Kali2.0 一般安装的话按照上面的步骤即可安装成功，但是Kali2.0不行，可以用如下方法安装： 安装后可以终端输入：dpkg-reconfigure locales，在弹出的界面选择zh_CN.UTF-8设置语言为中文 可以用vim /root/.config/user-dirs.dirs将&amp;quot;桌面&amp;quot;修改为&amp;quot;Desktop&amp;quot;  </description>
     </item>
     
     <item>
@@ -111,8 +115,8 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
       <pubDate>Wed, 13 Jul 2016 08:18:59 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/attack-802.11-network-under-wpa-protection/</guid>
-      <description>网络拓扑及信息 其中ip等信息如下： 攻击WPA保护下的802.11网络 1. 查看无线网卡并将其设置为监听模式   2. 打开kismet，进行基本设置   3. 选择名字为111111的AP为目标   4. 查看kismet抓包信息  kismet生成的nettxt文件的部分信息如下：
-Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:21 2015 Last : Mon Nov 16 13:10:23 2015 Type : infrastructure BSSID : D8:42:AC:C9:5C:1D SSID 1 Type : Probe Response SSID : &amp;quot;111111&amp;quot; First : Mon Nov 16 12:46:30 2015 Last : Mon Nov 16 13:10:22 2015 Max Rate : 54.</description>
+      <description>0x00 网络拓扑及信息 其中ip等信息如下： 0x01 获取信息  查看无线网卡并将其设置为监听模式  打开kismet，进行基本设置  选择名字为111111的AP为目标  查看kismet抓包信息 kismet生成的nettxt文件的部分信息如下：
+  Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:21 2015 Last : Mon Nov 16 13:10:23 2015 Type : infrastructure BSSID : D8:42:AC:C9:5C:1D SSID 1 Type : Probe Response SSID : &amp;quot;111111&amp;quot; First : Mon Nov 16 12:46:30 2015 Last : Mon Nov 16 13:10:22 2015 Max Rate : 54.</description>
     </item>
     
     <item>
@@ -131,10 +135,22 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
       <pubDate>Wed, 25 May 2016 13:59:59 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/xml-basis/</guid>
-      <description>0x00 XML简介  xml的设计宗旨是传输数据，而并非显示数据 xms是不作为的，它被设计用来结构化、存储以及传输信息 xml只是纯文本，独立于软硬件和应用程序 xml可供任何软硬设备读取数据 xml可以自定义标签 xml具有自我描述性 xml是对html的补充 xml常用于简化数据的存储和共享   例子：John给George的便签
-&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;note&amp;gt; //根元素 &amp;lt;to&amp;gt;George&amp;lt;/to&amp;gt; &amp;lt;from&amp;gt;John&amp;lt;/from&amp;gt; &amp;lt;heading&amp;gt;Reminder&amp;lt;/heading&amp;gt; &amp;lt;body&amp;gt;Don&#39;t forget the meeting!&amp;lt;/body&amp;gt; &amp;lt;/note&amp;gt;   0x01 XML树结构  必须有根节点 根节点可以有子节点   格式：
+      <description>0x00 XML简介 1、xml的设计宗旨是传输数据，而并非显示数据
+2、xms是不作为的，它被设计用来结构化、存储以及传输信息
+3、xml只是纯文本，独立于软硬件和应用程序
+4、xml可供任何软硬设备读取数据
+5、xml可以自定义标签
+6、xml具有自我描述性
+7、xml是对html的补充
+8、xml常用于简化数据的存储和共享
+例子：John给George的便签
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt; &amp;lt;note&amp;gt; //根元素 &amp;lt;to&amp;gt;George&amp;lt;/to&amp;gt; &amp;lt;from&amp;gt;John&amp;lt;/from&amp;gt; &amp;lt;heading&amp;gt;Reminder&amp;lt;/heading&amp;gt; &amp;lt;body&amp;gt;Don&#39;t forget the meeting!&amp;lt;/body&amp;gt; &amp;lt;/note&amp;gt;  0x01 XML树结构 1、必须有根节点
+2、根节点可以有子节点
+格式：
 &amp;lt;root&amp;gt; &amp;lt;child&amp;gt; &amp;lt;subchild&amp;gt;.....&amp;lt;/subchild&amp;gt; &amp;lt;/child&amp;gt; &amp;lt;/root&amp;gt;  例子：
-&amp;lt;books&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;Python黑帽子&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2015&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;37￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt; 用python写一些程序 &amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;Web安全深度剖析&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2014&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;39￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt; 讲述web渗透的基础知识 &amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;白帽子讲web安全&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2013&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;44￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt; 道哥力作 &amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;/books&amp;gt;   0x02 XML语法规则  所有元素必有闭合标签 标签对大小写敏感 必须正确的嵌套 XML必须有根元素 XML的属性值必须加引号(能用子元素的就用子元素代替属性) 实体引用</description>
+&amp;lt;books&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;Python黑帽子&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2015&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;37￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt; 用python写一些程序 &amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;Web安全深度剖析&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2014&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;39￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt; 讲述web渗透的基础知识 &amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;book&amp;gt; &amp;lt;name&amp;gt;白帽子讲web安全&amp;lt;/name&amp;gt; &amp;lt;date&amp;gt;2013&amp;lt;/date&amp;gt; &amp;lt;price&amp;gt;44￥&amp;lt;/price&amp;gt; &amp;lt;description&amp;gt; 道哥力作 &amp;lt;/description&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;/books&amp;gt;  0x02 XML语法规则 1、所有元素必有闭合标签
+2、标签对大小写敏感
+3、必须正确的嵌套</description>
     </item>
     
     <item>
@@ -143,7 +159,7 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
       <pubDate>Tue, 12 Apr 2016 01:01:01 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/markdown-coding-syle/</guid>
-      <description> 0x00 标题   0x01 列表   0x02 引用   0x03 图片和链接  网络图片引用：
+      <description> 0x00 标题 0x01 列表 0x02 引用 0x03 图片和链接 网络图片引用：
 ![Mou icon](http://mouapp.com/Mou_128.png) 本地图片引用：
 ![Logo](/img/logo.png) 图片链接：
 [![](http://wyb0.com/img/logo.png)](http://wyb0.com/img/logo.png) 
@@ -154,8 +170,8 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
 新标签打开(部分平台不识别)：
 [百度一下](http://www.baidu.com){:target=&amp;quot;_blank&amp;quot;}
 也可用{:width=&amp;ldquo;300&amp;rdquo; height=&amp;ldquo;100&amp;rdquo;}来设置图片大小(部分平台不识别)
- 0x04 粗体与斜体   0x05 表格   0x06 代码块  行内代码块：使用两个Esc按键下的符号`将代码包裹起来即可
-代码块：在代码左侧加4个空格即可(tab键缩进也行)  0x07 线   0x08 字体、字号和颜色设置   </description>
+0x04 粗体与斜体 0x05 表格 0x06 代码块 行内代码块：使用两个Esc按键下的符号`将代码包裹起来即可
+代码块：在代码左侧加4个空格即可(tab键缩进也行) 0x07 线 0x08 字体、字号和颜色设置 </description>
     </item>
     
     <item>
@@ -164,7 +180,7 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
       <pubDate>Mon, 13 Jul 2015 13:53:56 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/small-and-medium-enterprise-network-structures/</guid>
-      <description>中小企业需求分析  搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。 对网络设备能够方便地进行远程管理。 在局域网中公司部门间进行vlan划分，实现安全管理。 对三层设备路由技术这方面采取RIPV2协议或OSPF协议。 配置访问控制列表（ACL）以对网络数据进行有效的分类和控制，限制终端之间的相互访问。 内网通过配置PAT技术实现与外网之间的通信。  所需设备   网络规划  在三层交换机设置ACL，控制个vlan间的通信 在防火墙(路由器)上设置NAT转换 路由协议采用OSPF 内网访问控制  内网中只有市场部可以访问外网 市场部可以访问市场部、打印机 设计部可以访问设计部、财务部、打印机 外网只有202.202.2.0/24能访问内网  IP规划如下：  打印机：192.168.1.0/24 市场部：192.168.2.0/24 设计部：192.168.3.0/24 财务部：192.168.4.0/24 防火墙和三层交换机所在网段：192.168.5.0/24 管理ip所在网段：192.168.100.0/24   网络设备配置命令代码  Firewall配置   Router&amp;gt;enable Router#conf t Router(config)#no ip domain-lookup //禁止域名解析 Router(config)#hostname Firewall //更改设备名 Firewall(config)#enable password 123 Firewall(config)#router eigrp 1 Firewall(config-router)#no auto-summary //关闭自动汇总 Firewall(config-router)#exit Firewall(config)#int f0/0 Firewall(config-if)#ip add 192.168.5.2 255.255.255.0 //配端口ip Firewall(config-if)#no shut Firewall(config-if)#exit Firewall(config)#router ospf 1 //配路由协议ospf Firewall(config-router)#network 202.</description>
+      <description>0x00 中小企业需求分析  搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。 对网络设备能够方便地进行远程管理。 在局域网中公司部门间进行vlan划分，实现安全管理。 对三层设备路由技术这方面采取RIPV2协议或OSPF协议。 配置访问控制列表（ACL）以对网络数据进行有效的分类和控制，限制终端之间的相互访问。 内网通过配置PAT技术实现与外网之间的通信。  0x01 所需设备 0x02 网络规划  在三层交换机设置ACL，控制个vlan间的通信 在防火墙(路由器)上设置NAT转换 路由协议采用OSPF 内网访问控制  内网中只有市场部可以访问外网 市场部可以访问市场部、打印机 设计部可以访问设计部、财务部、打印机 外网只有202.202.2.0/24能访问内网  IP规划如下：  打印机：192.168.1.0/24 市场部：192.168.2.0/24 设计部：192.168.3.0/24 财务部：192.168.4.0/24 防火墙和三层交换机所在网段：192.168.5.0/24 管理ip所在网段：192.168.100.0/24   0x03 网络设备配置命令代码  Firewall配置  Router&amp;gt;enable Router#conf t Router(config)#no ip domain-lookup //禁止域名解析 Router(config)#hostname Firewall //更改设备名 Firewall(config)#enable password 123 Firewall(config)#router eigrp 1 Firewall(config-router)#no auto-summary //关闭自动汇总 Firewall(config-router)#exit Firewall(config)#int f0/0 Firewall(config-if)#ip add 192.168.5.2 255.255.255.0 //配端口ip Firewall(config-if)#no shut Firewall(config-if)#exit Firewall(config)#router ospf 1 //配路由协议ospf Firewall(config-router)#network 202.</description>
     </item>
     
     <item>
@@ -173,7 +189,7 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
       <pubDate>Fri, 22 May 2015 16:52:55 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/single-des-simple-implementation/</guid>
-      <description>简介  此程序通过单重des实现8个字节的加密和解密。 新建一个工程，这个工程需要3个cpp文件(c文件也可以)和2个头文件。 cpp文件：main.cpp、des.cpp、status.cpp 头文件：des.h、status.h   代码  以下为主函数main.cpp的内容：   #include &amp;lt;stdio.h&amp;gt; #include &amp;quot;status.h&amp;quot; #include &amp;quot;des.h&amp;quot; int main() { char M[8],Key[9]; printf(&amp;quot;Input Plaintext :&amp;quot;); scanf(&amp;quot;%s&amp;quot;,&amp;amp;M); printf(&amp;quot;Input Key :&amp;quot;); scanf(&amp;quot;%s&amp;quot;,&amp;amp;Key); SetKey(Key);//生成16个子秘钥 printf(&amp;quot;加密：&amp;quot;); Des(M,&#39;e&#39;); printf(&amp;quot;%s\n&amp;quot;,M); printf(&amp;quot;解密：&amp;quot;); Des(M,&#39;d&#39;); printf(&amp;quot;%s\n&amp;quot;,M); return 0; }    以下为des.cpp的内容：   #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;quot;status.h&amp;quot; #include &amp;quot;des.h&amp;quot; void ByteToBit(const char *In,bool *Out,int bits) { for (int j=0;j&amp;lt;bits;j++) Out[j]=(In[j/8]&amp;gt;&amp;gt;(j%8))&amp;amp; 1; } void BitToByte(bool *In,char *Out,int bits) { memset(Out,0,(bits+7)/8); for (int k=0;k&amp;lt;bits;k++) Out[k/8]|=In[k]&amp;lt;&amp;lt;(k%8); } void Transform(bool *Y,bool *X,const char *Table,int len) { for (int l=0;l&amp;lt;len;l++) Temp[l]=X[Table[l]-1]; memcpy(Y,Temp,len); } void Des(char *m,char ch) { bool Tem[32]; ByteToBit(m,P,64); Transform(P,P,IP1_Table,64); Li=&amp;amp;P[0]; Ri=&amp;amp;P[32]; if (ch==&#39;e&#39;) { for (i=0;i&amp;lt;16;i++) { memcpy(Tem,Ri,32);//临时存放明文的右半部分 f(Ri,SubKey[i]); XOR(Ri,Li,32); memcpy(Li,Tem,32);//将明文的右半部分写入Li } } else { for (i=15;i&amp;gt;=0;i--) { memcpy(Tem,Li,32);//临时存放明文的右半部分 f(Li,SubKey[i]); XOR(Li,Ri,32); memcpy(Ri,Tem,32);//将明文的右半部分写入Li } } Transform(P,P,IP2_Table,64); BitToByte(P,m,64); } void f(bool *R,bool *k) { bool T[48]; Transform(T,R,E_Table,48);//32位的Ri扩展为48位 XOR(T,k,48);//Ri和轮秘钥的异或 S_Box_f(T,R); Transform(R,R,P_Table,32); } void XOR(bool *R,bool *k,int len) { for (int m=0;m&amp;lt;len;m++) R[m]=R[m]^k[m]; } void S_Box_f(bool *B,bool *C) { int a,b; for (int k=0;k&amp;lt;8;k++) { a=B[0]*2+B[5]; b=B[1]*8+B[2]*4+B[3]*2+B[4]; ByteToBit(&amp;amp;S_Box[k][a][b],C,4); B+=6; C+=4; } } //以下求得子秘钥 void SetKey(char *KEY) { ByteToBit(KEY,K,64); Transform(K,K,PC1_Table,56); printf(&amp;quot;\n\n\n&amp;quot;); Ci=&amp;amp;K[0]; Di=&amp;amp;K[28]; for (int j=0;j&amp;lt;16;j++) { MovKey(Ci,28,LOOP_Table[j]); MovKey(Di,28,LOOP_Table[j]); Transform(SubKey[j],K,PC2_Table,48); } } void MovKey(bool *LR,int len,int loop) { memcpy(Temp,LR,loop); memcpy(LR,LR+loop,len-loop); memcpy(LR+len-loop,Temp,loop); }    以下为status.</description>
+      <description>0x00 简介 此程序通过单重des实现8个字节的加密和解密。 新建一个工程，这个工程需要3个cpp文件(c文件也可以)和2个头文件。 cpp文件：main.cpp、des.cpp、status.cpp 头文件：des.h、status.h  0x01 代码  以下为主函数main.cpp的内容：  #include &amp;lt;stdio.h&amp;gt; #include &amp;quot;status.h&amp;quot; #include &amp;quot;des.h&amp;quot; int main() { char M[8],Key[9]; printf(&amp;quot;Input Plaintext :&amp;quot;); scanf(&amp;quot;%s&amp;quot;,&amp;amp;M); printf(&amp;quot;Input Key :&amp;quot;); scanf(&amp;quot;%s&amp;quot;,&amp;amp;Key); SetKey(Key);//生成16个子秘钥 printf(&amp;quot;加密：&amp;quot;); Des(M,&#39;e&#39;); printf(&amp;quot;%s\n&amp;quot;,M); printf(&amp;quot;解密：&amp;quot;); Des(M,&#39;d&#39;); printf(&amp;quot;%s\n&amp;quot;,M); return 0; }   以下为des.cpp的内容：  #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;quot;status.h&amp;quot; #include &amp;quot;des.h&amp;quot; void ByteToBit(const char *In,bool *Out,int bits) { for (int j=0;j&amp;lt;bits;j++) Out[j]=(In[j/8]&amp;gt;&amp;gt;(j%8))&amp;amp; 1; } void BitToByte(bool *In,char *Out,int bits) { memset(Out,0,(bits+7)/8); for (int k=0;k&amp;lt;bits;k++) Out[k/8]|=In[k]&amp;lt;&amp;lt;(k%8); } void Transform(bool *Y,bool *X,const char *Table,int len) { for (int l=0;l&amp;lt;len;l++) Temp[l]=X[Table[l]-1]; memcpy(Y,Temp,len); } void Des(char *m,char ch) { bool Tem[32]; ByteToBit(m,P,64); Transform(P,P,IP1_Table,64); Li=&amp;amp;P[0]; Ri=&amp;amp;P[32]; if (ch==&#39;e&#39;) { for (i=0;i&amp;lt;16;i++) { memcpy(Tem,Ri,32);//临时存放明文的右半部分 f(Ri,SubKey[i]); XOR(Ri,Li,32); memcpy(Li,Tem,32);//将明文的右半部分写入Li } } else { for (i=15;i&amp;gt;=0;i--) { memcpy(Tem,Li,32);//临时存放明文的右半部分 f(Li,SubKey[i]); XOR(Li,Ri,32); memcpy(Ri,Tem,32);//将明文的右半部分写入Li } } Transform(P,P,IP2_Table,64); BitToByte(P,m,64); } void f(bool *R,bool *k) { bool T[48]; Transform(T,R,E_Table,48);//32位的Ri扩展为48位 XOR(T,k,48);//Ri和轮秘钥的异或 S_Box_f(T,R); Transform(R,R,P_Table,32); } void XOR(bool *R,bool *k,int len) { for (int m=0;m&amp;lt;len;m++) R[m]=R[m]^k[m]; } void S_Box_f(bool *B,bool *C) { int a,b; for (int k=0;k&amp;lt;8;k++) { a=B[0]*2+B[5]; b=B[1]*8+B[2]*4+B[3]*2+B[4]; ByteToBit(&amp;amp;S_Box[k][a][b],C,4); B+=6; C+=4; } } //以下求得子秘钥 void SetKey(char *KEY) { ByteToBit(KEY,K,64); Transform(K,K,PC1_Table,56); printf(&amp;quot;\n\n\n&amp;quot;); Ci=&amp;amp;K[0]; Di=&amp;amp;K[28]; for (int j=0;j&amp;lt;16;j++) { MovKey(Ci,28,LOOP_Table[j]); MovKey(Di,28,LOOP_Table[j]); Transform(SubKey[j],K,PC2_Table,48); } } void MovKey(bool *LR,int len,int loop) { memcpy(Temp,LR,loop); memcpy(LR,LR+loop,len-loop); memcpy(LR+len-loop,Temp,loop); }   以下为status.</description>
     </item>
     
     <item>
@@ -182,7 +198,7 @@ Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:2
       <pubDate>Wed, 06 May 2015 23:46:26 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/cisco-switch-basic-configuration/</guid>
-      <description>简单配置命令  Switch&amp;gt;enable(配置交换机名称) Switch(config)#hostname S S(config)#enable password 222//(加密特权密码，密码为222) S(config)#no enable password //(取消enable密码) S(config)#enable secret 333//(设置后用show命令时不能看到密码) S(config)#no enable secret //(取消enable密码) S(config)#line vty 0 4//(有5个虚拟终端，即0-4) S(config-line)#password 444//(设置虚拟终端密码) S(config-line)#login//(使密码生效) S(config)#line console 0//(设置控制台密码) S(config-line)#password 111 S(config-line)#login S(config)#line con 0//(取消控制台密码) S(config-line)#no password S(config-line)#exec-timeout 5 30//(超时时间)(分、秒) S(config)#no ip domain-lookup//(禁止名称解析)   配置交换机管理IP、默认网关  S(config)#interface vlan 1 //(配置交换机管理IP、子网掩码) S(config-if)#ip address 192.168.1.1 255.255.255.0 S(config-if)#no shutdown S(config)# exit S(config)#ip default-gateway 192.168.1.250//(默认网关)   配置交换机的端口速率、端口双工模式  S(config)#//(端口双工模式) S(config)#interface f0/1 S(config-if)#duplex ?</description>
+      <description>0x00 简单配置命令 Switch&amp;gt;enable(配置交换机名称) Switch(config)#hostname S S(config)#enable password 222//(加密特权密码，密码为222) S(config)#no enable password //(取消enable密码) S(config)#enable secret 333//(设置后用show命令时不能看到密码) S(config)#no enable secret //(取消enable密码) S(config)#line vty 0 4//(有5个虚拟终端，即0-4) S(config-line)#password 444//(设置虚拟终端密码) S(config-line)#login//(使密码生效) S(config)#line console 0//(设置控制台密码) S(config-line)#password 111 S(config-line)#login S(config)#line con 0//(取消控制台密码) S(config-line)#no password S(config-line)#exec-timeout 5 30//(超时时间)(分、秒) S(config)#no ip domain-lookup//(禁止名称解析)  0x01 配置交换机管理IP、默认网关 S(config)#interface vlan 1 //(配置交换机管理IP、子网掩码) S(config-if)#ip address 192.168.1.1 255.255.255.0 S(config-if)#no shutdown S(config)# exit S(config)#ip default-gateway 192.168.1.250//(默认网关)  0x02 配置交换机的端口速率、端口双工模式 S(config)#//(端口双工模式) S(config)#interface f0/1 S(config-if)#duplex ? auto Enable AUTO duplex configuration full Force full duplex operation half Force half-duplex operation S(config-if)#duplex auto S(config-if)#speed ?</description>
     </item>
     
   </channel>

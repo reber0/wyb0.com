@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-08-18</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -123,7 +124,6 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87</p>
 <li>下载镜像</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">#一般容器的id和name可以互换
 
 $ docker search ubuntu #从公共registry搜索镜像
@@ -131,25 +131,21 @@ $ docker search ubuntu #从公共registry搜索镜像
 $ docker pull ubuntu #从公共registry下载镜像
 $ docker pull ubuntu:14.04
 </code></pre>
-</blockquote>
 
 <ul>
 <li>查看当前系统镜像</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker images
 REPOSITORY    TAG       IMAGE ID        CREATED        SIZE
 ubuntu        latest    14f60031763d    2 weeks ago    120MB
 ubuntu        14.04     54333f1de4ed    2 weeks ago    188MB
 </code></pre>
-</blockquote>
 
 <ul>
 <li>提交新的镜像</li>
 </ul>
 
-<blockquote>
 <pre><code>#首先运行一个容器，容器id为50b74968229a
 $ docker commit 50b74968229a ubuntu:add_file
 $ docker images
@@ -158,22 +154,18 @@ ubuntu        add_file  9e01bfa580bb    1 weeks ago    190MB
 ubuntu        latest    14f60031763d    2 weeks ago    120MB
 ubuntu        14.04     54333f1de4ed    2 weeks ago    188MB
 </code></pre>
-</blockquote>
 
 <ul>
 <li>打包镜像</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker save 54333f1de4ed &gt; /home/reber/ubuntu.tar
 </code></pre>
-</blockquote>
 
 <ul>
 <li>加载镜像</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker load &lt; ./ubuntu.tar
 1b0c71361973: Loading layer  196.9MB/196.9MB
 150e95c79e16: Loading layer  209.9kB/209.9kB
@@ -186,38 +178,31 @@ REPOSITORY    TAG       IMAGE ID        CREATED        SIZE
 centos        7         328edcd84f1b    7 days ago     193MB
 &lt;none&gt;        &lt;none&gt;    54333f1de4ed    3 weeks ago    188MB
 </code></pre>
-</blockquote>
 
 <ul>
 <li>给镜像打标签</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker tag 54333f1de4ed ubuntu:14.04
 $ docker images
 REPOSITORY    TAG      IMAGE ID        CREATED        SIZE
 centos        7        328edcd84f1b    7 days ago     193MB
 ubuntu        14.04    54333f1de4ed    3 weeks ago    188MB
 </code></pre>
-</blockquote>
 
 <ul>
 <li>查看镜像层组成</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker history ubuntu:desktop
 </code></pre>
-</blockquote>
 
 <ul>
 <li>删除镜像(删除镜像前要先删除上面的容器)</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker rmi ubuntu:latest #docker rmi 14f60031763d
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-容器操作">0x01 容器操作</h3>
 
@@ -225,7 +210,6 @@ ubuntu        14.04    54333f1de4ed    3 weeks ago    188MB
 <li>运行容器(exit后容器就停止了)</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker run --rm -it ubuntu:14.04 /bin/bash
 root@172c8d8b0671:/# ls
 bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
@@ -239,13 +223,11 @@ exit
 ubuntu：这是容器立足的镜像
 /bin/bash：shell
 </code></pre>
-</blockquote>
 
 <ul>
 <li>后台运行容器</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker run -itd ubuntu:14.04 ping 8.8.8.8
 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11
 #$ sudo docker run -itd ubuntu:14.04 /bin/sh -c &quot;while true; do echo hello world; sleep 1; done&quot;
@@ -253,36 +235,30 @@ ubuntu：这是容器立足的镜像
 解释：
 -d：告诉Docker容器在后台运行(不能与--rm参数一起用)
 </code></pre>
-</blockquote>
 
 <ul>
 <li>查看当前运行的容器</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker ps
 CONTAINER ID   IMAGE          COMMAND          CREATED          STATUS          PORTS    NAMES
 1f665a3ccf4b   ubuntu:14.04   &quot;ping 8.8.8.8&quot;   5 seconds ago    Up 4 seconds             goofy_dubinsky
 </code></pre>
-</blockquote>
 
 <ul>
 <li>查看所有容器</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker ps -a
 CONTAINER ID   IMAGE          COMMAND          CREATED          STATUS          PORTS    NAMES
 1f665a3ccf4b   ubuntu:14.04   &quot;ping 8.8.8.8&quot;   13 minutes ago   Up 13 minutes            goofy_dubinsky
 82113ae171f1   ubuntu         &quot;ping 8.8.8.8&quot;   28 minutes ago   Created                  mystifying_keller
 </code></pre>
-</blockquote>
 
 <ul>
 <li>查看容器日志</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker logs 1f665a3ccf4b
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=1 ttl=127 time=183 ms
@@ -292,63 +268,51 @@ PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=5 ttl=127 time=182 ms
 64 bytes from 8.8.8.8: icmp_seq=6 ttl=127 time=184 ms
 </code></pre>
-</blockquote>
 
 <ul>
 <li>查看容器的端口映射</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker port 1f665a3ccf4b
 </code></pre>
-</blockquote>
 
 <ul>
 <li>查看容器的进程信息</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker top 1f665a3ccf4b
 </code></pre>
-</blockquote>
 
 <ul>
 <li>查看容器的文件变化</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker diff 1f665a3ccf4b
 C /root
 A /root/.bash_history
 A /root/a.txt
 </code></pre>
-</blockquote>
 
 <ul>
 <li>从宿主机向容器复制数据</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker cp a.txt 1f665a3ccf4b:/root/
 $ docker cp test 1f665a3ccf4b:/root/
 </code></pre>
-</blockquote>
 
 <ul>
 <li>从容器向宿主机复制数据</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker cp 1f665a3ccf4b:/root/libxml29_compat.patch ~/
 $ docker cp 1f665a3ccf4b:/root/test ~/
 </code></pre>
-</blockquote>
 
 <ul>
 <li>导出/导入容器(导出的其实是镜像)</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker export df2a7e881c8a &gt; ./ubuntu_container.tar
 $ docker import ./ubuntu_container.tar
 $ docker images
@@ -356,37 +320,31 @@ REPOSITORY    TAG       IMAGE ID        CREATED               SIZE
 &lt;none&gt;        &lt;none&gt;    499df17f51e7    About a minute ago    175MB
 $ docker tag 499df17f51e7 ubuntu:container
 </code></pre>
-</blockquote>
 
 <ul>
 <li>进入容器</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker exec -ti goofy_dubinsky /bin/bash
 root@1f665a3ccf4b:/# ps -aux|grep ping
 root         1  0.0  0.0   6524   712 ?        Ss   09:38   0:00 ping 8.8.8.8
 </code></pre>
-</blockquote>
 
 <ul>
 <li>停止/启动容器</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker stop 1f665a3ccf4b
 1f665a3ccf4b
 #docker kill 1f665a3ccf4b，stop会在10s后停止，kill则直接停止
 $ docker start 1f665a3ccf4b
 1f665a3ccf4b
 </code></pre>
-</blockquote>
 
 <ul>
 <li>删除容器(容器需要先停止才能删除)</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker rm 1f665a3ccf4b
 Error response from daemon: You cannot remove a running container 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11. Stop the container before attempting removal or force remove
 $ docker kill 1f665a3ccf4b
@@ -394,31 +352,25 @@ $ docker kill 1f665a3ccf4b
 $ docker rm 1f665a3ccf4b
 1f665a3ccf4b
 </code></pre>
-</blockquote>
 
 <ul>
 <li>删除所有容器(只能删除停止运行的)</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-bash">$ docker rm $(docker ps -a -q)
 be5877380ca5
 3e4b3a11d49f
 2e51c9c2c6d1
 dc6cadfc08f7
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-查看镜像或容器的底层信息-ip-端口绑定-配置信息等">0x02 查看镜像或容器的底层信息(IP、端口绑定、配置信息等)</h3>
 
-<blockquote>
 <pre><code class="language-bash">$ docker inspect 65987aa8f0cb
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-例子">0x03 例子</h3>
 
-<blockquote>
 <pre><code class="language-bash">$ exec_ping=$(docker run -itd ubuntu:14.04 ping 8.8.8.8)
 $ docker logs $exec_ping
 $ docker restart $exec_ping
@@ -430,7 +382,6 @@ ubuntu        ping     c496c5d6e3cd    2 seconds ago    188MB
 centos        7        328edcd84f1b    7 days ago       193MB
 ubuntu        14.04    54333f1de4ed    3 weeks ago      188MB
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

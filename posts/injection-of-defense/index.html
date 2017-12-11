@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-06-23</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,33 +117,26 @@
 
 <h3 id="0x00-要做的事">0x00 要做的事</h3>
 
-<blockquote>
-<pre><code>也就是找到注入点然后修复
-</code></pre>
-</blockquote>
+<p>也就是找到注入点然后修复</p>
 
 <h3 id="0x01-防御方法">0x01 防御方法</h3>
 
 <ul>
-<li>使用转义函数<br />
+<li><p>使用转义函数<br />
 如：addslashes()和mysql_real_escape_string()<br />
-在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件<br /></li>
-</ul>
+在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件</p>
 
-<blockquote>
 <pre><code class="language-php">&lt;?php
-    //简单过滤
-    $filter = array(&amp;$_GET,&amp;$_POST,&amp;$_COOKIE);
-    foreach ($filter as $key =&gt; $value){
-        foreach ($value as $k =&gt; $v){
-            $filter[$key][$k] = mysql_real_escape_string($v);
-        }
+//简单过滤
+$filter = array(&amp;$_GET,&amp;$_POST,&amp;$_COOKIE);
+foreach ($filter as $key =&gt; $value){
+    foreach ($value as $k =&gt; $v){
+        $filter[$key][$k] = mysql_real_escape_string($v);
     }
+}
 ?&gt;
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
 <li><p>检查数据类型<br />
 使用(int)或settype()等将数字等进行强制转换<br />
 对邮箱、日期等也进行检查</p></li>

@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-08-03</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,7 +117,6 @@
 
 <h3 id="0x00-连接redis">0x00 连接Redis</h3>
 
-<blockquote>
 <pre><code class="language-cs"># 客户端连接
 $ redis-cli
 
@@ -139,7 +139,6 @@ $ redis-cli -h host -p port -a password
 OK
 127.0.0.1:6379&gt; exit
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-数据类型">0x01 数据类型</h3>
 
@@ -181,7 +180,6 @@ OK
 
 <h3 id="0x02-string">0x02 String</h3>
 
-<blockquote>
 <pre><code class="language-cs"># 添加键值对
 127.0.0.1:6379&gt; set name &quot;xiaoming&quot;
 # 获取键值
@@ -189,11 +187,9 @@ OK
 # 删除键值对
 127.0.0.1:6379&gt; del name
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-hash">0x03 Hash</h3>
 
-<blockquote>
 <pre><code class="language-cs"># Hash中一个key对应多个值
 127.0.0.1:6379&gt; hmset student1 name &quot;xiaohong&quot; age &quot;18&quot;
 OK
@@ -210,11 +206,9 @@ OK
 3) &quot;age&quot;
 4) &quot;23&quot;
 </code></pre>
-</blockquote>
 
 <h3 id="0x04-list">0x04 List</h3>
 
-<blockquote>
 <pre><code class="language-cs">127.0.0.1:6379&gt; lpush list1 &quot;python&quot;
 (integer) 1
 127.0.0.1:6379&gt; lpush list1 &quot;php&quot;
@@ -242,11 +236,9 @@ OK
 127.0.0.1:6379&gt; rpop list1
 &quot;aaaa&quot;
 </code></pre>
-</blockquote>
 
 <h3 id="0x05-set">0x05 Set</h3>
 
-<blockquote>
 <pre><code class="language-cs">127.0.0.1:6379&gt; sadd set1 &quot;333&quot;
 (integer) 1
 127.0.0.1:6379&gt; sadd set1 &quot;222&quot;
@@ -263,11 +255,9 @@ OK
 3) &quot;333&quot;
 4) &quot;111&quot;
 </code></pre>
-</blockquote>
 
 <h3 id="0x06-zset">0x06 zset</h3>
 
-<blockquote>
 <pre><code class="language-cs">127.0.0.1:6379&gt; zadd zset1 2 &quot;222&quot;
 (integer) 1
 127.0.0.1:6379&gt; zadd zset1 1 &quot;111&quot;
@@ -303,7 +293,6 @@ OK
  9) &quot;333&quot;
 10) &quot;3&quot;
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">

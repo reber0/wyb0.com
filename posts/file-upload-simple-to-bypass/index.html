@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-07-20</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,20 +115,17 @@
                 
                 
 
-<h2 id="0x00-一般防止上传漏洞手法">0x00 一般防止上传漏洞手法</h2>
+<h3 id="0x00-一般防止上传漏洞手法">0x00 一般防止上传漏洞手法</h3>
 
-<blockquote>
 <pre><code>1、客户端检测：客户端使用JavaScript检测，在文件未上传时，就对文件进行验证
     //任何客户端的验证都是不安全的，客户端验证目的是防止用户输入错误、减少
     //服务器开销，而服务端验证才可以真正防御攻击者。  
 2、服务器端检测：服务端脚本一般会检测文件的MIME类型，检测文件扩展名是否合法
 </code></pre>
-</blockquote>
 
-<h2 id="0x01-客户端检测">0x01 客户端检测</h2>
+<h3 id="0x01-客户端检测">0x01 客户端检测</h3>
 
-<blockquote>
-<h4 id="客户端验证代码形如下">客户端验证代码形如下：</h4>
+<p>客户端验证代码形如下：</p>
 
 <pre><code class="language-html">&lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
@@ -160,7 +158,7 @@
 &lt;/html&gt;
 </code></pre>
 
-<h4 id="接收文件的脚本upload-php代码如下">接收文件的脚本upload.php代码如下：</h4>
+<p>接收文件的脚本upload.php代码如下：</p>
 
 <pre><code class="language-php">&lt;?php
 if(isset($_POST[&quot;submit&quot;])){
@@ -174,7 +172,7 @@ if(isset($_POST[&quot;submit&quot;])){
 ?&gt;
 </code></pre>
 
-<h4 id="绕过">绕过：</h4>
+<p>绕过：</p>
 
 <pre><code>1、可以用firebug将form表单中的onsubmit事件删除，这样就可以绕过验证。
 2、使用Burp Suite：
@@ -182,13 +180,11 @@ if(isset($_POST[&quot;submit&quot;])){
     2）上传时使用Burp Suite拦截数据包，将木马文件扩展名改为php就可绕过客户端验证。
     注意：这里修改文件名字后，请求头中的Content-Length的值也要改
 </code></pre>
-</blockquote>
 
-<h2 id="0x02-服务端检测">0x02 服务端检测</h2>
+<h3 id="0x02-服务端检测">0x02 服务端检测</h3>
 
-<h4 id="服务端分为6项">服务端分为6项：</h4>
+<p>服务端分为6项：</p>
 
-<blockquote>
 <pre><code>* 黑名单与白名单验证
 * MIME验证
 * 目录验证
@@ -196,7 +192,6 @@ if(isset($_POST[&quot;submit&quot;])){
 * 文件攻击
 * 检测文件内容
 </code></pre>
-</blockquote>
 
 <h4 id="1-黑名单与白名单验证">1. 黑名单与白名单验证</h4>
 
@@ -204,7 +199,6 @@ if(isset($_POST[&quot;submit&quot;])){
 <li>黑名单过滤方式</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-php">&lt;?php
 $Blacklist = array('asp','php','jsp','php5','asa','aspx');    //黑名单
 if (isset($_POST[&quot;submit&quot;])){
@@ -237,13 +231,11 @@ if (isset($_POST[&quot;submit&quot;])){
 * 0x00截断绕过
 * 解析漏洞
 </code></pre>
-</blockquote>
 
 <ul>
 <li>白名单过滤方式</li>
 </ul>
 
-<blockquote>
 <pre><code class="language-php">&lt;?php
 $WhiteList = array('rar','jpg','png','bmp','gif','jpg','doc');
 if(isset($_POST[&quot;submit&quot;])){
@@ -273,11 +265,9 @@ if(isset($_POST[&quot;submit&quot;])){
 * 此时若在iis6.0，则可以将木马名改为test.asp;1.jpg来上传，从而通过验证
 * 配合解析漏洞
 </code></pre>
-</blockquote>
 
 <h4 id="2-mime验证">2. MIME验证</h4>
 
-<blockquote>
 <p>对文件MIME类型做验证的PHP代码如下：</p>
 
 <pre><code class="language-php">&lt;?php
@@ -299,22 +289,12 @@ if($_FILES['file']['type']==&quot; image/jpeg&quot;){
 </code></pre>
 
 <p>未修改MIME类型，上传失败：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_not_alter_mime.png" alt="上传漏洞没有修改MIME.png">
-</div>
-
+<img src="/img/post/upload_vuln_not_alter_mime.png" alt="上传漏洞没有修改MIME" />
 修改MIME类型，上传成功：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_alter_mime.png" alt="上传漏洞修改MIME.png">
-</div>
-</p>
-</blockquote>
+<img src="/img/post/upload_vuln_alter_mime.png" alt="上传漏洞修改MIME" /></p>
 
 <h4 id="3-目录验证">3. 目录验证</h4>
 
-<blockquote>
 <p>文件上传时通常允许用户将文件放到指定的目录中，若目录存在则将文件写入目录，否则新建目录然后写入，若为iis6.0则可以利用这个漏洞，客户端上传代码如下：</p>
 
 <pre><code class="language-html">&lt;html&gt;
@@ -358,62 +338,29 @@ if($_FILES['file']['type']==&quot;image/jpeg&quot;){
 </code></pre>
 
 <p>查看上传到了那个文件：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_check_upload_dirname.png" alt="上传漏洞查看上传到那个文件夹.png">
-</div>
-
+<img src="/img/post/upload_vuln_check_upload_dirname.png" alt="上传漏洞查看上传到那个文件夹" />
 将文件改名：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_alter_upload_dirname.png" alt="上传漏洞尝试更改上传文件夹名字.png">
-</div>
-
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_check_asp_dirname.png" alt="上传漏洞查看asp文件夹是否生成.png">
-</div>
-</p>
-</blockquote>
+<img src="/img/post/upload_vuln_alter_upload_dirname.png" alt="上传漏洞尝试更改上传文件夹名字" />
+<img src="/img/post/upload_vuln_check_asp_dirname.png" alt="上传漏洞查看asp文件夹是否生成" /></p>
 
 <h4 id="4-截断上传攻击">4. 截断上传攻击</h4>
 
-<blockquote>
 <p>截断上传攻击在ASP程序中比较常见(在PHP、JSP中也有)
 先上传正常后缀的图片马：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_upload_normal_picture.png" alt="上传漏洞上传正常后缀的图片马.png">
-</div>
-
+<img src="/img/post/upload_vuln_upload_normal_picture.png" alt="上传漏洞上传正常后缀的图片马" />
 更改图片名字：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_alter_picture_name.png" alt="上传漏洞修改图片名字.png">
-</div>
-
+<img src="/img/post/upload_vuln_alter_picture_name.png" alt="上传漏洞修改图片名字" />
 截断：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_truncate_picture_name.png" alt="上传漏洞截断文件名.png">
-</div>
-
+<img src="/img/post/upload_vuln_truncate_picture_name.png" alt="上传漏洞截断文件名" />
 上传成功：
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_upload_success.png" alt="上传漏洞成功将jpg图片马上传为asp脚本.png">
-</div>
-</p>
-</blockquote>
+<img src="/img/post/upload_vuln_upload_success.png" alt="上传漏洞成功将jpg图片马上传为asp脚本" /></p>
 
 <h4 id="5-文件攻击">5. 文件攻击</h4>
 
 <ul>
-<li><b>.htaccess</b>文件攻击<br />
-Apache设置为AllowOverride All时，通过.htaccess文件调用php解析器去解析一个文件名中只要包含&rdquo;haha&rdquo;这个字符串的任意文件，无论扩展名是什么(没有也行)，都以php的方式来解析，.haccess文件代码如下：</li>
-</ul>
+<li><p>.htaccess文件攻击<br />
+Apache设置为AllowOverride All时，通过.htaccess文件调用php解析器去解析一个文件名中只要包含&rdquo;haha&rdquo;这个字符串的任意文件，无论扩展名是什么(没有也行)，都以php的方式来解析，.haccess文件代码如下：</p>
 
-<blockquote>
 <pre><code>&lt;FilesMatch &quot;haha&quot;&gt;
 SetHandler application/x-httpd-php
 &lt;/FilesMatch&gt;
@@ -431,69 +378,46 @@ SetHandler application/x-httpd-php
 <pre><code>&lt;Files *.png&gt;
 SetHandler application/x-httpd-php
 &lt;/Files&gt;
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li><b>.user.ini</b>文件攻击<br /></li>
-</ul>
+<li><p>.user.ini文件攻击</p>
 
-<blockquote>
 <pre><code>只要中间键是以fastcgi运行的php都可以用这个方法，.user.ini能被动态加载，它也有两个配置
 项：auto_append_file和auto_prepend_file，只要在.user.ini中添加auto_prepend_file=aa.jpg
 这句话，就可以让其他php文件执行前自动包含aa.jpg，和require()类似。
 </code></pre>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_file_attack1.png" alt="上传漏洞-文件攻击1.png">
-</div>
-
-<br /><br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/upload_vuln_file_attack2.png" alt="上传漏洞-文件攻击2.png">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/upload_vuln_file_attack1.png" alt="上传漏洞-文件攻击1" />
+<img src="/img/post/upload_vuln_file_attack2.png" alt="上传漏洞-文件攻击2" /></p></li>
+</ul>
 
 <h4 id="6-检测文件内容">6. 检测文件内容</h4>
 
 <ul>
-<li>文件幻数检测<br />
-在文件首部加上如下幻数，后面跟一句话木马即可</li>
-</ul>
+<li><p>文件幻数检测<br />
+在文件首部加上如下幻数，后面跟一句话木马即可</p>
 
-<blockquote>
 <pre><code>JFIF    FF D8 FF E0 00 10 4A 46 49 46
 GIF89a  47 49 46 38 39 61
 PNG     89 50 4E 47
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>文件相关信息检测<br />
-通常用的getimagesize()函数，只需要在幻数基础上加一些文件信息就行了，如下：</li>
-</ul>
+<li><p>文件相关信息检测<br />
+通常用的getimagesize()函数，只需要在幻数基础上加一些文件信息就行了，如下：</p>
 
-<blockquote>
 <pre><code>GIF89a
 (...some binary data for image...)
 &lt;?php phpinfo(); ?&gt;
 (... skipping the rest of binary data ...)
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>文件加载检测<br />
-服务端会调用API或函数对文件进行加载测试，常见的是图像渲染测试，变态的甚至是二次渲染：</li>
-</ul>
+<li><p>文件加载检测<br />
+服务端会调用API或函数对文件进行加载测试，常见的是图像渲染测试，变态的甚至是二次渲染：</p>
 
-<blockquote>
 <pre><code>对渲染/加载测试的攻击方式是代码注入绕过
 对二次渲染的攻击方式是攻击文件加载器本身
-</code></pre>
-</blockquote>
+</code></pre></li>
+</ul>
 
                 
                 <div style="padding:10px 1px;">

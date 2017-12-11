@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2017-10-28</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -120,7 +121,6 @@
 <li>服务器安全配置</li>
 </ul>
 
-<blockquote>
 <pre><code>#查看服务器运行权限
 $ ps aux|grep apache|grep -v grep
 $ sudo lsof -i:80
@@ -170,13 +170,11 @@ $ vim /etc/apache2/apache2.conf
     php_flag engine off
 &lt;/Directory&gt;
 </code></pre>
-</blockquote>
 
 <ul>
 <li>Apache日志格式</li>
 </ul>
 
-<blockquote>
 <p>vim /etc/apache2/apache2.conf</p>
 
 <pre><code>#access.log格式
@@ -209,7 +207,6 @@ User-Agent：&quot;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 
 路径一般为：/var/log/apache2/error.log，notice级别的消息总是会被记录下来，而不能被屏蔽。
 日志格式：[日期和时间] [错误等级] 错误消息
 </code></pre>
-</blockquote>
 
 <h3 id="0x01-tomcat">0x01 Tomcat</h3>
 
@@ -217,7 +214,6 @@ User-Agent：&quot;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 
 <li>服务器安全配置</li>
 </ul>
 
-<blockquote>
 <pre><code>#运行权限
 Linux中Tomcat的运行权限与Tomcat的启动账户有关，比如以root用户启动，那获取的webshell就也是root权限
 Windows权限控制需要进行账户配置，新建一个Tomcat用户，并归属于Guests组，再将账户设置为服务登录账户
@@ -229,7 +225,6 @@ $ vim /usr/local/tomcat/conf/tomcat-users.xml
   &lt;role rolename=&quot;manager-gui&quot;/&gt;
   &lt;user username=&quot;tomcat&quot; password=&quot;sdkfiewnksdhsfs&quot; roles=&quot;manager-gui&quot;/&gt;
 </code></pre>
-</blockquote>
 
 <ul>
 <li><p>服务器访问限制</p>
@@ -258,7 +253,6 @@ $ ./startup.sh
 <li><p>服务日志</p></li>
 </ul>
 
-<blockquote>
 <pre><code>$ ll /opt/tomcat/logs
 localhost.2017-09-29.log：程序异常没有被捕获的时候抛出的地方
 catalina.2017-09-29.log：程序的输出，tomcat的运行日志
@@ -272,7 +266,6 @@ SEVERE &gt; WARNING &gt; INFO &gt; CONFIG &gt; FINE &gt; FINER &gt; FINEST
 $ vim conf/logging.properties #修改日志级别
 1catalina.org.apache.juli.AsyncFileHandler.level = FINE
 </code></pre>
-</blockquote>
 
 <h3 id="0x02-nginx">0x02 Nginx</h3>
 
@@ -280,7 +273,6 @@ $ vim conf/logging.properties #修改日志级别
 <li>隐藏版本号</li>
 </ul>
 
-<blockquote>
 <pre><code>$ vim /usr/local/nginx/conf/nginx.conf
 http {
     include       mime.types;
@@ -288,13 +280,11 @@ http {
 
     server_tokens off; #隐藏版本号
 </code></pre>
-</blockquote>
 
 <ul>
 <li>伪造中间件类型和版本号</li>
 </ul>
 
-<blockquote>
 <pre><code>伪造中间件类型，修改源码然后安装：
 $ vim src/http/ngx_http_header_filter_module.c #修改第49行
 static char ngx_http_server_string[] = &quot;Server: nginx&quot; CRLF;
@@ -309,13 +299,11 @@ $ vim nginx-1.9.9/src/core/nginx.h
 $ vim /usr/local/nginx/conf/fastcgi.conf #修改第17行
 fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;
 </code></pre>
-</blockquote>
 
 <ul>
 <li>防止钓鱼和XSS</li>
 </ul>
 
-<blockquote>
 <pre><code>$ vim /usr/local/nginx/conf/nginx.conf
     server {
         listen       80;
@@ -328,13 +316,11 @@ DENY：浏览器拒绝当前页面加载任何Frame页面
 SAMEORIGIN：frame页面的地址只能为同源域名下的页面
 ALLOW-FROM：origin为允许frame加载的页面地址
 </code></pre>
-</blockquote>
 
 <ul>
 <li>CRLF注入</li>
 </ul>
 
-<blockquote>
 <pre><code>案例一：
 location /sectest {
   return 302 https://$host$uri; #应将$uri或者$document_uri改为$request_uri
@@ -355,13 +341,11 @@ server {
     }
 }
 </code></pre>
-</blockquote>
 
 <ul>
 <li>alias导致的任意文件读取</li>
 </ul>
 
-<blockquote>
 <pre><code>location /files { #把/files改为/files/即可修复
   alias /home/;
 }
@@ -369,37 +353,33 @@ server {
 当访问http://joychou.me/files/x.txt，即访问服务器上的/home/x.txt文件
 当访问http://joychou.me/files../etc/passwd时就读取了passwd文件了
 </code></pre>
-</blockquote>
 
 <ul>
 <li>反向代理中的SSRF</li>
 </ul>
 
-<blockquote>
 <pre><code>反向代理语法：proxy_pass http://ip:port/uri/;
 当ip可控时那么反向代理的机器会对该ip发起http请求，即可造成SSRF。
 这种场景多出现在云WAF、CDN、高防DDOS等网络产品。
 </code></pre>
-</blockquote>
 
 <ul>
 <li>add_header重定义</li>
 </ul>
 
-<blockquote>
 <pre><code>如果location区块有add_header，那么以location为准。
 如果location没有add_header，则继承Http和server块的add_header内容。
 </code></pre>
-</blockquote>
 
-<p><br>
-Reference(侵删)：</p>
+<p><br /></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
 
 <ul>
-<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652844866&amp;idx=1&amp;sn=7c1d2879e7ad5ef662cccf8fb7663846">中间件安全基础(一)</a></li>
-<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652845014&amp;idx=1&amp;sn=c6221031b486bbe84de6986c67b76fbc">中间件安全基础(二)</a></li>
-<li><a href="http://mp.weixin.qq.com/s/768Jx-lBShb-OsiMgg-48A">中间件安全基础(三)</a></li>
-<li><a href="http://mp.weixin.qq.com/s/QhB-PYpOik_PVdm3F7LIJw">Nginx Config Sec</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652844866&amp;idx=1&amp;sn=7c1d2879e7ad5ef662cccf8fb7663846">http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652844866&amp;idx=1&amp;sn=7c1d2879e7ad5ef662cccf8fb7663846</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652845014&amp;idx=1&amp;sn=c6221031b486bbe84de6986c67b76fbc">http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652845014&amp;idx=1&amp;sn=c6221031b486bbe84de6986c67b76fbc</a></li>
+<li><a href="http://mp.weixin.qq.com/s/768Jx-lBShb-OsiMgg-48A">http://mp.weixin.qq.com/s/768Jx-lBShb-OsiMgg-48A</a></li>
+<li><a href="http://mp.weixin.qq.com/s/QhB-PYpOik_PVdm3F7LIJw">http://mp.weixin.qq.com/s/QhB-PYpOik_PVdm3F7LIJw</a></li>
 </ul>
 
                 

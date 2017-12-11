@@ -24,8 +24,8 @@ python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析X
 将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
  ElementTree(元素树)
 ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
-   我在这里使用ElementTree  0x01 Element对象的属性  每个Element对象都具有以下属性：
-  tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）   &amp;gt;&amp;gt;&amp;gt; from xml.etree import ElementTree as ET &amp;gt;&amp;gt;&amp;gt; xml = &amp;quot;&amp;quot;&amp;quot;&amp;lt;books&amp;gt; ... &amp;lt;book id=&#39;37476&#39;&amp;gt;aaaa&amp;lt;/book&amp;gt; ... &amp;lt;book id=&#39;83727&#39;&amp;gt;bbbb&amp;lt;/book&amp;gt; ... &amp;lt;/books&amp;gt;&amp;quot;&amp;quot;&amp;quot; &amp;gt;&amp;gt;&amp;gt; root = ET.fromstring(xml) &amp;gt;&amp;gt;&amp;gt; root.tag &#39;books&#39; &amp;gt;&amp;gt;&amp;gt; child = root.getchildren() &amp;gt;&amp;gt;&amp;gt; child [&amp;lt;Element &#39;book&#39; at 0x106f59410&amp;gt;, &amp;lt;Element &#39;book&#39; at 0x106f59450&amp;gt;] &amp;gt;&amp;gt;&amp;gt; child[0].</description>
+   我在这里使用ElementTree  0x01 Element对象的属性 每个Element对象都具有以下属性：
+ tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）  &amp;gt;&amp;gt;&amp;gt; from xml.etree import ElementTree as ET &amp;gt;&amp;gt;&amp;gt; xml = &amp;quot;&amp;quot;&amp;quot;&amp;lt;books&amp;gt; ... &amp;lt;book id=&#39;37476&#39;&amp;gt;aaaa&amp;lt;/book&amp;gt; ... &amp;lt;book id=&#39;83727&#39;&amp;gt;bbbb&amp;lt;/book&amp;gt; ... &amp;lt;/books&amp;gt;&amp;quot;&amp;quot;&amp;quot; &amp;gt;&amp;gt;&amp;gt; root = ET.fromstring(xml) &amp;gt;&amp;gt;&amp;gt; root.tag &#39;books&#39; &amp;gt;&amp;gt;&amp;gt; child = root.getchildren() &amp;gt;&amp;gt;&amp;gt; child [&amp;lt;Element &#39;book&#39; at 0x106f59410&amp;gt;, &amp;lt;Element &#39;book&#39; at 0x106f59450&amp;gt;] &amp;gt;&amp;gt;&amp;gt; child[0].</description>
     </item>
     
     <item>
@@ -34,9 +34,9 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
       <pubDate>Mon, 10 Jul 2017 16:30:43 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-mrq/</guid>
-      <description>0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;amp;CPU密集，很多小任务&amp;amp;几个大任务)。  0x01 设置mongo和redis  因为mrq依赖于redis和mongo，所以先安装设置下
-  安装redis   $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp;amp; $ redis-cli &amp;gt; auth reber_redis    安装mongo   可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &amp;quot;deb [ arch=amd64 ] http://repo.</description>
+      <description>0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;amp;CPU密集，很多小任务&amp;amp;几个大任务)。  0x01 设置mongo和redis 因为mrq依赖于redis和mongo，所以先安装设置下
+ 安装redis  $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp;amp; $ redis-cli &amp;gt; auth reber_redis   安装mongo  可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &amp;quot;deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.</description>
     </item>
     
     <item>
@@ -45,7 +45,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Sat, 15 Apr 2017 18:49:37 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-tqdm/</guid>
-      <description> 0x00 作用  在下载大文件时以进度条的形式显示下载进度，如下图所示：  0x01 代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers[&#39;Content-Length&#39;])/1024 with open(name, &amp;quot;wb&amp;quot;) as f: print &amp;quot;total: &amp;quot;,content_size,&#39;k&#39; for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit=&#39;k&#39;): f.write(data) print &amp;quot;done &amp;quot;+name if __name__ == &#39;__main__&#39;: url = &amp;quot;http://127.0.0.1/Video.mp4&amp;quot; name = url.split(&#39;/&#39;)[-1] get_vedio(url,name)   </description>
+      <description> 0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers[&#39;Content-Length&#39;])/1024 with open(name, &amp;quot;wb&amp;quot;) as f: print &amp;quot;total: &amp;quot;,content_size,&#39;k&#39; for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit=&#39;k&#39;): f.write(data) print &amp;quot;done &amp;quot;+name if __name__ == &#39;__main__&#39;: url = &amp;quot;http://127.0.0.1/Video.mp4&amp;quot; name = url.split(&#39;/&#39;)[-1] get_vedio(url,name)  </description>
     </item>
     
     <item>
@@ -54,7 +54,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Tue, 03 Jan 2017 18:43:27 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/tornado-basis/</guid>
-      <description>0x00 简介  Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django, 但Tornado更注重速度,能够处理海量的同时发生的流量。   0x01 示例  main.py代码如下：
+      <description>0x00 简介 Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django, 但Tornado更注重速度,能够处理海量的同时发生的流量。  0x01 示例 main.py代码如下：
 #!/usr/bin/env python # -*- coding: utf-8 -*- import tornado.ioloop import tornado.web class IndexHandler(tornado.web.RequestHandler): def get(self): #访问根时触发这个函数 name = self.get_argument(&#39;name&#39;,&#39;wyb&#39;) self.write(&#39;Hello,&#39; + name) self.write(&#39;&amp;lt;br /&amp;gt;&amp;lt;a href=&amp;quot;/login&amp;quot;&amp;gt;login&amp;lt;/a&amp;gt;&#39;) class MyLoginHandler(tornado.web.RequestHandler): def get(self): self.render(&#39;login.html&#39;) #若用户请求/login页面则将login.html发送给客户端，客户会看的一个登陆表单 def post(self): #当用户点击提交按钮是触发这个函数 name = self.get_argument(&#39;name&#39;) #接收表单的name password = self.get_argument(&#39;password&#39;) #接收表单的password self.write(&amp;quot;you name is:%s\nyou password is:%s&amp;quot; % (name,password)) def get_app(): handlers = [ (r&amp;quot;/&amp;quot;,IndexHandler), #代表请求/的都让IndexHandler处理 (r&amp;quot;/login&amp;quot;,MyLoginHandler), #表示请求/login页面的让MyLoginHandler处理 ] app = tornado.</description>
     </item>
     
@@ -64,8 +64,8 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Fri, 23 Dec 2016 21:10:05 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-cnd-check/</guid>
-      <description>0x00 什么是CDN  CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。   0x01 判断方法  可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息  0x02 代码  首先安装dnspython这个第三方模块：pip install dnspython
-#!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.</description>
+      <description>0x00 什么是CDN CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。  0x01 判断方法  可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息  0x02 代码 首先安装dnspython这个第三方模块：pip install dnspython
+#!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.netloc # print url rsv = dns.</description>
     </item>
     
     <item>
@@ -74,8 +74,9 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Fri, 25 Nov 2016 17:44:23 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-openpyxl/</guid>
-      <description>0x00 openpyxl模块  这个模块可以让你读写excel文件   0x01 读取数据  代码如下：
-#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename=&#39;aa.xlsx&#39;) sheetnames = wb.get_sheet_names() #获得所有表名 print u&amp;quot;存在表：%s&amp;quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&amp;quot;第一张表表名为：%s&amp;quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &amp;quot;表%s有%d行%d列&amp;quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&amp;quot;取部分数据：&amp;quot; print ws[&#39;A1&#39;].value,ws[&#39;B1&#39;].value print ws[&#39;A2&#39;].value,ws[&#39;B2&#39;].value print ws.cell(row=1, column=2).</description>
+      <description>0x00 openpyxl模块 这个模块可以让你读写excel文件
+0x01 读取数据 代码如下：
+#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename=&#39;aa.xlsx&#39;) sheetnames = wb.get_sheet_names() #获得所有表名 print u&amp;quot;存在表：%s&amp;quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&amp;quot;第一张表表名为：%s&amp;quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &amp;quot;表%s有%d行%d列&amp;quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&amp;quot;取部分数据：&amp;quot; print ws[&#39;A1&#39;].value,ws[&#39;B1&#39;].value print ws[&#39;A2&#39;].value,ws[&#39;B2&#39;].value print ws.cell(row=1, column=2).value print u&amp;quot;\n输出表%s的所有数据：&amp;quot; % ws.title for x in range(1,rows+1): for y in range(1,columns+1): print ws.</description>
     </item>
     
     <item>
@@ -84,8 +85,8 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Tue, 20 Sep 2016 14:50:59 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-blasting-zip-archive/</guid>
-      <description>0x00 代码  多线程爆破加密的zip压缩包
-#!/usr/bin/env python # -*- coding: utf-8 -*- import sys import optparse import zipfile import threading import Queue queue = Queue.Queue() lock = threading.Lock() result = &#39;&#39; def load_pwd(filename): for line in open(filename,&#39;r&#39;): if line: queue.put(line.strip()) def bruter(zipname,queue): global result zFile = zipfile.ZipFile(zipname) while not queue.empty(): password = queue.get() try: zFile.extractall(pwd=password) # 解压 lock.acquire() print &amp;quot;[Ok] password is: %s&amp;quot; % password lock.release() result = password except: lock.</description>
+      <description>0x00 代码 多线程爆破加密的zip压缩包
+#!/usr/bin/env python # -*- coding: utf-8 -*- import sys import optparse import zipfile import threading import Queue queue = Queue.Queue() lock = threading.Lock() result = &#39;&#39; def load_pwd(filename): for line in open(filename,&#39;r&#39;): if line: queue.put(line.strip()) def bruter(zipname,queue): global result zFile = zipfile.ZipFile(zipname) while not queue.empty(): password = queue.get() try: zFile.extractall(pwd=password) # 解压 lock.acquire() print &amp;quot;[Ok] password is: %s&amp;quot; % password lock.release() result = password except: lock.acquire() print &amp;quot;[Error] password not is: %s&amp;quot; % password lock.</description>
     </item>
     
     <item>
@@ -94,7 +95,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Tue, 13 Sep 2016 11:36:39 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-implement-agent/</guid>
-      <description>帮助信息   代码如下  #!/usr/bin/env python # -*- coding: utf-8 -*- &#39;This is a proxy&#39; __author__ = &#39;xxx&#39; import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b&#39; &#39;.join(&amp;quot;[%0*X]&amp;quot; % (digits,ord(x)) for x in s) text = b&#39;&#39;.</description>
+      <description>0x00 帮助信息 0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- &#39;This is a proxy&#39; __author__ = &#39;xxx&#39; import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b&#39; &#39;.join(&amp;quot;[%0*X]&amp;quot; % (digits,ord(x)) for x in s) text = b&#39;&#39;.join([x if 0x20 &amp;lt;= ord(x) &amp;lt; 0x7F else b&#39;.</description>
     </item>
     
     <item>
@@ -103,9 +104,9 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Mon, 12 Sep 2016 22:54:28 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-package-mysql-function/</guid>
-      <description>0x00 安装  有两种，一个是MySQLdb，一个是pymysql
-  下载MySQL-python然后安装
- sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)  0x01 简单表设计如下  insert into mysql.user(Host,User,Password) values(&#39;%&#39;,&#39;python&#39;,&#39;123456&#39;); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default &#39;127.0.0.1&#39; comment &#39;ip地址&#39;, domain varchar(100) not null default &#39;www.xx.com&#39; comment &#39;域名&#39; ); grant all privileges on python.* to &#39;python&#39;@&#39;%&#39; identified by &#39;123456&#39;; flush privileges;   0x02 MySQLdb封装代码  #!</description>
+      <description>0x00 安装 有两种，一个是MySQLdb，一个是pymysql
+ 下载MySQL-python然后安装
+ sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)  0x01 简单表设计如下 insert into mysql.user(Host,User,Password) values(&#39;%&#39;,&#39;python&#39;,&#39;123456&#39;); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default &#39;127.0.0.1&#39; comment &#39;ip地址&#39;, domain varchar(100) not null default &#39;www.xx.com&#39; comment &#39;域名&#39; ); grant all privileges on python.* to &#39;python&#39;@&#39;%&#39; identified by &#39;123456&#39;; flush privileges;  0x02 MySQLdb封装代码 #!</description>
     </item>
     
     <item>
@@ -114,8 +115,8 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Mon, 12 Sep 2016 21:31:37 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-blasting-secondary-domain/</guid>
-      <description>参考：https://github.com/lijiejie/subDomainsBrute
-帮助信息   代码  #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &amp;quot;&amp;quot;&amp;quot;docstring for SubDomain&amp;quot;&amp;quot;&amp;quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + &#39;.txt&#39; if not outfile else outfile self.f = open(&#39;./output/&#39;+outfile,&#39;a+&#39;) self.ip_list = [] def _scan(self): while not self.queue.empty(): self.</description>
+      <description>Reference(侵删)：https://github.com/lijiejie/subDomainsBrute
+0x00 帮助信息 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &amp;quot;&amp;quot;&amp;quot;docstring for SubDomain&amp;quot;&amp;quot;&amp;quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + &#39;.txt&#39; if not outfile else outfile self.f = open(&#39;./output/&#39;+outfile,&#39;a+&#39;) self.ip_list = [] def _scan(self): while not self.queue.empty(): self.ip_list = [] ips = None sub_domain = self.</description>
     </item>
     
     <item>
@@ -124,7 +125,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Mon, 05 Sep 2016 23:43:22 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-form-blasting/</guid>
-      <description>接收变量的php脚本如下  //代码仅供测试 &amp;lt;?php $name = @$_POST[&#39;uname&#39;]; $pass = @$_POST[&#39;upass&#39;]; if (empty($name) or empty($pass)){ header(&amp;quot;location:http://127.0.0.1:921/test/test/index.html&amp;quot;); exit(); } else { if ($name === &#39;admin&#39; and $pass === &#39;123456&#39;){ header(&amp;quot;location:http://127.0.0.1:921/test/test/sucess.html&amp;quot;); } else { header(&amp;quot;location:http://127.0.0.1:921/test/test/error.html&amp;quot;); exit(); } } ?&amp;gt;   爆破表单的python脚本如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = [] class FormBlast(threading.</description>
+      <description>0x00 接收变量的php脚本如下 //代码仅供测试 &amp;lt;?php $name = @$_POST[&#39;uname&#39;]; $pass = @$_POST[&#39;upass&#39;]; if (empty($name) or empty($pass)){ header(&amp;quot;location:http://127.0.0.1:921/test/test/index.html&amp;quot;); exit(); } else { if ($name === &#39;admin&#39; and $pass === &#39;123456&#39;){ header(&amp;quot;location:http://127.0.0.1:921/test/test/sucess.html&amp;quot;); } else { header(&amp;quot;location:http://127.0.0.1:921/test/test/error.html&amp;quot;); exit(); } } ?&amp;gt;  0x01 爆破表单的python脚本如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import requests from Queue import Queue import threading from optparse import OptionParser from time import sleep lock = threading.Lock() queue = Queue() result = [] class FormBlast(threading.</description>
     </item>
     
     <item>
@@ -133,8 +134,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Wed, 31 Aug 2016 11:22:41 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module/</guid>
-      <description>0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&amp;rsquo;D:/xx/xx/xx/code&amp;rsquo;)可以添加搜索路径 使用if __name__ == &amp;lsquo;__main__&amp;lsquo;:  0x01 实例  文件结构如下  测试文件test.py
-   #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.</description>
+      <description>0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&#39;D:/xx/xx/xx/code&#39;)可以添加搜索路径 使用if __name__ == &#39;__main__&#39;:  0x01 实例  文件结构如下   测试文件test.py  #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.test()   包package1</description>
     </item>
     
     <item>
@@ -143,8 +143,8 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Mon, 29 Aug 2016 15:14:57 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-password-generator/</guid>
-      <description>简介  有时候需要在网上注册许多账号，如果每个账户密码都一样的话，若被别人得知一个密码则所有账户就都沦陷了，若密码不一样则可能会忘记，在这里就用脚本写一个生成密码的工具，只需输入域名和账户名就可以根据key生成不一样的密码，也可以把域名和账户名写入文件，这样你用户名也可以不用记了。。。
- 代码如下  #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import sys import os import optparse import json import msvcrt def get_md5(string): md5 = hashlib.md5() md5.update(string) s = md5.hexdigest() return s def get_domain(): if os.path.exists(&#39;account.txt&#39;): data = {} with open(&#39;account.txt&#39;, &#39;r&#39;) as f: lines = f.readlines() for line in lines: line = line.split(&#39;*&#39;) data[line[0]] = line[1].strip() else: pass return data def get_pass(): pwd = [] while True: nchar = msvcrt.</description>
+      <description>0x00 简介 有时候需要在网上注册许多账号，如果每个账户密码都一样的话，若被别人得知一个密码则所有账户就都沦陷了，若密码不一样则可能会忘记，在这里就用脚本写一个生成密码的工具，只需输入域名和账户名就可以根据key生成不一样的密码，也可以把域名和账户名写入文件，这样你用户名也可以不用记了。。。
+0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import sys import os import optparse import json import msvcrt def get_md5(string): md5 = hashlib.md5() md5.update(string) s = md5.hexdigest() return s def get_domain(): if os.path.exists(&#39;account.txt&#39;): data = {} with open(&#39;account.txt&#39;, &#39;r&#39;) as f: lines = f.readlines() for line in lines: line = line.split(&#39;*&#39;) data[line[0]] = line[1].strip() else: pass return data def get_pass(): pwd = [] while True: nchar = msvcrt.</description>
     </item>
     
     <item>
@@ -153,7 +153,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Fri, 26 Aug 2016 17:53:51 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-multi-threaded-weak-password-blasting/</guid>
-      <description>脚本  #!/usr/bin/env python # -*- coding: utf-8 -*- &#39;this script can bruter ftp/ssh/mysql&#39; __author__ = &#39;reber&#39; import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &amp;quot;&amp;quot;&amp;quot;docstring for CommonFun&amp;quot;&amp;quot;&amp;quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;) ch.setFormatter(formatter) logger.</description>
+      <description>0x00 脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- &#39;this script can bruter ftp/ssh/mysql&#39; __author__ = &#39;reber&#39; import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &amp;quot;&amp;quot;&amp;quot;docstring for CommonFun&amp;quot;&amp;quot;&amp;quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;) ch.setFormatter(formatter) logger.</description>
     </item>
     
     <item>
@@ -162,7 +162,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Fri, 26 Aug 2016 10:40:44 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-exception-handling/</guid>
-      <description> 0x00 Python异常处理  #!/usr/bin/env python # -*- coding: utf-8 -*- try: try: # 可嵌套 str(&amp;quot;aaaaa&amp;quot;) # int(&amp;quot;aaaaa&amp;quot;) # print a # print 1/0 except (TypeError, IndexError, ValueError): #捕获多种异常 print &amp;quot;TypeErrorZero or DivisionError or ValueError&amp;quot; except ZeroDivisionError as aa: #捕获除零错误 print aa #输出详细错误信息 except: print u&amp;quot;发生其他异常则执行这里&amp;quot; else: print u&amp;quot;上面没有出错才输出这里&amp;quot; a = [1,2,3] print a[4] #这里出错，会向上抛出错误，最终输出this is error finally: print u&amp;quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&amp;quot; except Exception as e: #可捕获所有异常类型 print &amp;quot;this is error&amp;quot; print e   </description>
+      <description> 0x00 Python异常处理 #!/usr/bin/env python # -*- coding: utf-8 -*- try: try: # 可嵌套 str(&amp;quot;aaaaa&amp;quot;) # int(&amp;quot;aaaaa&amp;quot;) # print a # print 1/0 except (TypeError, IndexError, ValueError): #捕获多种异常 print &amp;quot;TypeErrorZero or DivisionError or ValueError&amp;quot; except ZeroDivisionError as aa: #捕获除零错误 print aa #输出详细错误信息 except: print u&amp;quot;发生其他异常则执行这里&amp;quot; else: print u&amp;quot;上面没有出错才输出这里&amp;quot; a = [1,2,3] print a[4] #这里出错，会向上抛出错误，最终输出this is error finally: print u&amp;quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&amp;quot; except Exception as e: #可捕获所有异常类型 print &amp;quot;this is error&amp;quot; print e  </description>
     </item>
     
     <item>
@@ -171,10 +171,10 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Fri, 19 Aug 2016 19:42:14 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-some-small-modules/</guid>
-      <description>0x00 colorama  这个模块可以输出带有颜色的字符
-#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.CYAN,content=&#39;debug&#39;,g_color=colorama.Fore.RESET) print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.YELLOW,content=&#39;warning&#39;,g_color=colorama.Fore.RESET) print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.RED,content=&#39;error&#39;,g_color=colorama.Fore.RESET)   0x01 pyfiglet  可以输出字体的图片效果
-from pyfiglet import figlet_format print figlet_format(&amp;quot;reber&amp;quot;, font=&amp;quot;xtty&amp;quot;) #font可以控制输出的类型   0x02 chardet  这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
-#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&amp;quot;https://tower.im/users/sign_in&amp;quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.</description>
+      <description>0x00 colorama 这个模块可以输出带有颜色的字符
+#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.CYAN,content=&#39;debug&#39;,g_color=colorama.Fore.RESET) print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.YELLOW,content=&#39;warning&#39;,g_color=colorama.Fore.RESET) print &amp;quot;{f_color}{content}{g_color}&amp;quot;.format(f_color=colorama.Fore.RED,content=&#39;error&#39;,g_color=colorama.Fore.RESET)  0x01 pyfiglet 可以输出字体的图片效果
+from pyfiglet import figlet_format print figlet_format(&amp;quot;reber&amp;quot;, font=&amp;quot;xtty&amp;quot;) #font可以控制输出的类型  0x02 chardet 这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
+#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&amp;quot;https://tower.im/users/sign_in&amp;quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.decode(code[&#39;encoding&#39;]).encode(&#39;gbk&#39;) print chardet.detect(str1) start = str1.find(&#39;&amp;lt;title&amp;gt;&#39;) stop = str1.</description>
     </item>
     
     <item>
@@ -183,8 +183,8 @@ from pyfiglet import figlet_format print figlet_format(&amp;quot;reber&amp;quot;
       <pubDate>Tue, 16 Aug 2016 15:10:44 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-optparse/</guid>
-      <description> 0x00 关于optparse模块  python2.3之后添加的模块optparse是专门用来处理命令行选项的
-import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options] domaion&#39;, version=&#39;%prog 1.2&#39;) parser.add_option(&#39;-b&#39;, &#39;--bug&#39;, dest=&#39;isbug&#39;, default=False, action=&#39;store_true&#39;, help=&#39;Whether open the debug mode, default is false&#39;) parser.add_option(&#39;-u&#39;, &#39;--url&#39;, dest=&#39;url&#39;, default=None, action=&#39;store&#39;, type=&#39;string&#39;, help=&#39;target url&#39;) parser.add_option(&#39;-n&#39;,&#39;--number&#39;, dest=&#39;num&#39;, default=10, type=&#39;int&#39;, help=&#39;the number, default is 10&#39;) (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message   0x01 说明  在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action=&#39;store&#39;，可以不用写 action=&#39;store_true&#39;使用参数时将布尔值true存储到dest指定的变量中 action=&#39;store_false&#39;使用参数时将布尔值false存储到dest指定的变量中   </description>
+      <description> 0x00 关于optparse模块 python2.3之后添加的模块optparse是专门用来处理命令行选项的
+import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options] domaion&#39;, version=&#39;%prog 1.2&#39;) parser.add_option(&#39;-b&#39;, &#39;--bug&#39;, dest=&#39;isbug&#39;, default=False, action=&#39;store_true&#39;, help=&#39;Whether open the debug mode, default is false&#39;) parser.add_option(&#39;-u&#39;, &#39;--url&#39;, dest=&#39;url&#39;, default=None, action=&#39;store&#39;, type=&#39;string&#39;, help=&#39;target url&#39;) parser.add_option(&#39;-n&#39;,&#39;--number&#39;, dest=&#39;num&#39;, default=10, type=&#39;int&#39;, help=&#39;the number, default is 10&#39;) (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message  0x01 说明 在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action=&#39;store&#39;，可以不用写 action=&#39;store_true&#39;使用参数时将布尔值true存储到dest指定的变量中 action=&#39;store_false&#39;使用参数时将布尔值false存储到dest指定的变量中  </description>
     </item>
     
     <item>
@@ -193,7 +193,7 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Thu, 11 Aug 2016 23:26:39 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-scapy/</guid>
-      <description> 0x00 简单尝试   0x01 生成一组数据包   0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包   0x04 得到TCP内容   0x05 SYN Scans   </description>
+      <description> 0x00 简单尝试 0x01 生成一组数据包 0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包 0x04 得到TCP内容 0x05 SYN Scans </description>
     </item>
     
     <item>
@@ -202,9 +202,9 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Thu, 14 Jul 2016 15:24:11 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-paramiko/</guid>
-      <description> 安装 直接pip install paramiko安装
+      <description> 0x00 安装 直接pip install paramiko安装
 或者去http://www.paramiko.org/ 下载
-执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&amp;quot;192.168.188.134&amp;quot;,22,&amp;quot;reber&amp;quot;,&amp;quot;123456&amp;quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&amp;quot;ls -l&amp;quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&amp;quot;192.168.188.134&amp;quot;,22)) ftp.connect(username=&amp;quot;reber&amp;quot;,password=&amp;quot;123456&amp;quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\WYB_9\\Desktop\\a.txt&#39; sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\WYB_9\\Desktop\\system.log remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\WYB_9\\Desktop\\system.log&#39; sftp.get(remotepath, localpath) ftp.close()  </description>
+0x01 执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&amp;quot;192.168.188.134&amp;quot;,22,&amp;quot;reber&amp;quot;,&amp;quot;123456&amp;quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&amp;quot;ls -l&amp;quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  0x02 上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&amp;quot;192.168.188.134&amp;quot;,22)) ftp.connect(username=&amp;quot;reber&amp;quot;,password=&amp;quot;123456&amp;quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\WYB_9\\Desktop\\a.txt&#39; sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\WYB_9\\Desktop\\system.log remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\WYB_9\\Desktop\\system.log&#39; sftp.get(remotepath, localpath) ftp.close()  </description>
     </item>
     
     <item>
@@ -213,8 +213,8 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Thu, 14 Jul 2016 09:44:06 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-cmd/</guid>
-      <description>关于cmd模块  使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
- cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  用cmd模块简单实现shell命令  #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &amp;quot;&amp;quot;&amp;quot;docstring for ClassShell&amp;quot;&amp;quot;&amp;quot; def __init__(self): Cmd.__init__(self) os.chdir(&amp;quot;C:/Users/WYB_9/Desktop&amp;quot;) hostName = socket.gethostname() self.prompt = &amp;quot;reber@&amp;quot; + hostName + &amp;quot; &amp;quot; + os.path.abspath(&#39;.&#39;) + &amp;quot;\n$ &amp;quot; def help_dir(self): print &amp;quot;dir [path]&amp;quot; def do_dir(self, arg): if not arg: print &amp;quot;\n&amp;quot;.</description>
+      <description>0x00 关于cmd模块 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+0x01 cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  0x02 用cmd模块简单实现shell命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &amp;quot;&amp;quot;&amp;quot;docstring for ClassShell&amp;quot;&amp;quot;&amp;quot; def __init__(self): Cmd.__init__(self) os.chdir(&amp;quot;C:/Users/WYB_9/Desktop&amp;quot;) hostName = socket.gethostname() self.prompt = &amp;quot;reber@&amp;quot; + hostName + &amp;quot; &amp;quot; + os.path.abspath(&#39;.&#39;) + &amp;quot;\n$ &amp;quot; def help_dir(self): print &amp;quot;dir [path]&amp;quot; def do_dir(self, arg): if not arg: print &amp;quot;\n&amp;quot;.</description>
     </item>
     
     <item>
@@ -223,7 +223,7 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Sun, 03 Jul 2016 20:06:39 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-simple-decode-ip-head/</guid>
-      <description>解码IP头 Windows上运行时要以管理员身份运行
+      <description>0x00 解码IP头 Windows上运行时要以管理员身份运行
 代码可以解码IP头统计通信信息并保存到文本，同时统计数量
 #!/usr/bin/env python #-*- coding:utf-8 -*- import socket import os import sys import time import struct from ctypes import * host = &amp;quot;10.22.114.114&amp;quot; tcp_num = 0 udp_num = 0 icmp_num = 0 class IP(Structure): _fields_ = [ (&amp;quot;ihl&amp;quot;, c_ubyte,4), (&amp;quot;version&amp;quot;, c_ubyte,4), (&amp;quot;tos&amp;quot;, c_ubyte), (&amp;quot;len&amp;quot;, c_ushort), (&amp;quot;id&amp;quot;, c_ushort), (&amp;quot;offset&amp;quot;, c_ushort), (&amp;quot;ttl&amp;quot;, c_ubyte), (&amp;quot;protocol_num&amp;quot;,c_ubyte), (&amp;quot;sum&amp;quot;, c_ushort), (&amp;quot;src&amp;quot;, c_ulong), (&amp;quot;dst&amp;quot;, c_ulong) ] def __new__ (self,socket_buffer=None): return self.from_buffer_copy(socket_buffer) def __init__ (self,socket_buffer=None): self.</description>
     </item>
@@ -234,7 +234,7 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Sat, 02 Jul 2016 10:47:19 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-requests/</guid>
-      <description>0x00 无参数的get请求  import requests resp = requests.get(&#39;http://www.baidu.com&#39;,timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串   0x01 有参数的get请求  import requests url = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; header = { &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0&#39;, } param = {&#39;aaa&#39;:&#39;1111&#39;,&#39;bbb&#39;:&#39;2222&#39;} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie   0x02 POST请求  import requests url1 = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; url2 = &#39;http://10.</description>
+      <description>0x00 无参数的get请求 import requests resp = requests.get(&#39;http://www.baidu.com&#39;,timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串  0x01 有参数的get请求 import requests url = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; header = { &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0&#39;, } param = {&#39;aaa&#39;:&#39;1111&#39;,&#39;bbb&#39;:&#39;2222&#39;} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie  0x02 POST请求 import requests url1 = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; url2 = &#39;http://10.10.10.10:8080/Lab2.0/student.action&#39; data = { &#39;userid&#39;:&#39;1315935xxx&#39;, &#39;password&#39;:&#39;xxxxxxx&#39;, &#39;quan&#39;:&#39;Student&#39;, } header = { &#39;User-Agent&#39;: &#39;Mozilla/5.</description>
     </item>
     
     <item>
@@ -243,8 +243,9 @@ import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options]
       <pubDate>Wed, 29 Jun 2016 15:14:11 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-encode-setting/</guid>
-      <description>0x00 几个编码函数  * ord(x) 将字符转换为10进制整数(0~255之间) #ord(&#39;a&#39;)==&amp;gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(97)==&amp;gt;&#39;a&#39;，chr(0x61)==&amp;gt;&#39;a&#39; * b2a_hex(x) 将字符转换为对应的16进制 #import binascii;binascii.b2a_hex(&#39;a&#39;)==&amp;gt;&#39;61&#39; * a2b_hex(x) 将16进制转换为对应的字符 #import binascii;binascii.a2b_hex(&#39;61&#39;)==&amp;gt;&#39;a&#39; * hex(x) 将10进制整数转换为对应的16进制 #hex(16)==&amp;gt;&#39;0x10&#39; * oct(x) 将10进制整数转换为对应的8进制 #oct(9)==&amp;gt;&#39;011&#39;   0x01 设置为utf-8  在py文件开头设置   #!/usr/bin/env python #-*- coding: utf-8 -*- 或： #coding=utf8    永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
-#coding=utf8 import sys reload(sys) sys.setdefaultencoding(&#39;utf8&#39;) # 此方法修改了python环境，设置系统默认编码，永久有效   0x03 编码转换  python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
+      <description>0x00 几个编码函数 * ord(x) 将字符转换为10进制整数(0~255之间) #ord(&#39;a&#39;)==&amp;gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(97)==&amp;gt;&#39;a&#39;，chr(0x61)==&amp;gt;&#39;a&#39; * b2a_hex(x) 将字符转换为对应的16进制 #import binascii;binascii.b2a_hex(&#39;a&#39;)==&amp;gt;&#39;61&#39; * a2b_hex(x) 将16进制转换为对应的字符 #import binascii;binascii.a2b_hex(&#39;61&#39;)==&amp;gt;&#39;a&#39; * hex(x) 将10进制整数转换为对应的16进制 #hex(16)==&amp;gt;&#39;0x10&#39; * oct(x) 将10进制整数转换为对应的8进制 #oct(9)==&amp;gt;&#39;011&#39;  0x01 设置为utf-8  在py文件开头设置
+#!/usr/bin/env python #-*- coding: utf-8 -*- 或： #coding=utf8  永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
+#coding=utf8 import sys reload(sys) sys.setdefaultencoding(&#39;utf8&#39;) # 此方法修改了python环境，设置系统默认编码，永久有效   0x03 编码转换 python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
 python2中的字符串一般包含两种类型：str和unicode str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串 unicode：unicode编码的字符串才是unicode类型的字符串 可通过isinstance()和type()来判断 &amp;gt;&amp;gt;&amp;gt; aa = &#39;小明&#39; &amp;gt;&amp;gt;&amp;gt; isinstance(aa,str) True &amp;gt;&amp;gt;&amp;gt; type(aa) &amp;lt;type &#39;str&#39;&amp;gt; &amp;gt;&amp;gt;&amp;gt; bb = u&#39;小明&#39; &amp;gt;&amp;gt;&amp;gt; isinstance(bb,unicode) True &amp;gt;&amp;gt;&amp;gt; type(bb) &amp;lt;type &#39;unicode&#39;&amp;gt;  &amp;gt;&amp;gt;&amp;gt; u&#39;小明&#39;.</description>
     </item>
     
@@ -254,7 +255,7 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
       <pubDate>Sat, 25 Jun 2016 08:55:30 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-logging/</guid>
-      <description>使用流程  创建一个logger 创建一个handler，用于写入日志文件 定义handler的输出格式 将handler添加到logger 记录日志  示例  #!/usr/bin/env python # -*- coding: utf-8 -*- import logging class MyLog(object): &amp;quot;&amp;quot;&amp;quot;docstring for MyLog&amp;quot;&amp;quot;&amp;quot; def __init__(self, logfile, loglevel, logger): super(MyLog, self).__init__() # 创建一个logger self.logger = logging.getLogger(logger) self.logger.setLevel(logging.DEBUG) # 创建一个用于写入日志文件的handler fh = logging.FileHandler(logfile) fh.setLevel(logging.DEBUG) # 只要是写入文件的等级都为DEBUG，也可以设置为loglevel formatterf = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;) fh.setFormatter(formatterf) # 创建一个用于输出到控制台的handler ch = logging.StreamHandler() ch.setLevel(loglevel) formatterc = logging.Formatter(&#39;%(asctime)s - %(message)s&#39;) ch.setFormatter(formatterc) # 将handler添加到logger self.</description>
+      <description>0x00 使用流程  创建一个logger 创建一个handler，用于写入日志文件 定义handler的输出格式 将handler添加到logger 记录日志  0x01 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- import logging class MyLog(object): &amp;quot;&amp;quot;&amp;quot;docstring for MyLog&amp;quot;&amp;quot;&amp;quot; def __init__(self, logfile, loglevel, logger): super(MyLog, self).__init__() # 创建一个logger self.logger = logging.getLogger(logger) self.logger.setLevel(logging.DEBUG) # 创建一个用于写入日志文件的handler fh = logging.FileHandler(logfile) fh.setLevel(logging.DEBUG) # 只要是写入文件的等级都为DEBUG，也可以设置为loglevel formatterf = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;) fh.setFormatter(formatterf) # 创建一个用于输出到控制台的handler ch = logging.StreamHandler() ch.setLevel(loglevel) formatterc = logging.Formatter(&#39;%(asctime)s - %(message)s&#39;) ch.setFormatter(formatterc) # 将handler添加到logger self.</description>
     </item>
     
     <item>
@@ -263,8 +264,7 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
       <pubDate>Wed, 15 Jun 2016 13:08:00 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-install-third-party-modules/</guid>
-      <description> 第三方模块安装方法  使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装  使用easy_install安装  在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName   使用pip安装  在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName   网站下载安装包  在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装
- </description>
+      <description>0x00 第三方模块安装方法  使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装  0x01 使用easy_install安装 在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName  0x02 使用pip安装 在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName  0x03 网站下载安装包 在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装</description>
     </item>
     
     <item>
@@ -273,7 +273,7 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
       <pubDate>Sun, 12 Jun 2016 22:17:35 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-coding-style/</guid>
-      <description>0x00 代码编排  1.缩进：使用4个空格缩进 2.行长度：每行不要超过80个字符 3.空行：顶级定义之间空两行，如函数或类的定义，方法定义、类定义与第一个方法之间都应该空一行。 4.分号：行尾不要有分号，也不要用分号将两条命令放在一行,除非是： 1.长的导入模块语句。 2.注释里的URL. 3.可以使用圆括号实现隐式行连接   0x01文档编排  1.导入：模块注释-&amp;gt;文档字符串-&amp;gt;导入-&amp;gt;模块全局变量-&amp;gt;常量 导入顺序：标准库导入-&amp;gt;第三方库导入-&amp;gt;应用程序指定库导入 2.import:不要在一行中import多个库，一行中只导入一个   0x02 空格  1.不要在逗号、分号、冒号前加空格，但应在他们后面加(除了在行尾) 2.二元操作符(赋值、比较、布尔)两边都加空格 3.当&amp;quot;=&amp;quot;用于指示关键字参数或默认参数值是，不要再其两侧使用空格 4.&amp;quot;,&amp;quot;和&amp;quot;#&amp;quot;和&amp;quot;=&amp;quot;不需要对齐，因为空格会成为维护的负担   0x03 注释  总体原则，错误的注释不如没有注释。 注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。 1.块注释：在一段代码前增加的注释。在&amp;quot;#&amp;quot;后加一空格。段落之间以只有&amp;quot;#&amp;quot;的行间隔。 2.行注释，在一句代码后加注释。进来少使用. 3.绝不要描述代码. 假设阅读代码的人比你更懂Python, 他只是不知道你的代码要做什么.   0x04 文档描述  1.为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。 2.如果docstring要换行，参考如下例子 class SampleClass(object): &amp;quot;&amp;quot;&amp;quot;Summary of class here. Longer class information.... Longer class information.... Attributes: likes_spam: A boolean indicating if we like SPAM or not. eggs: An integer count of the eggs we have laid.</description>
+      <description>0x00 代码编排 1.缩进：使用4个空格缩进 2.行长度：每行不要超过80个字符 3.空行：顶级定义之间空两行，如函数或类的定义，方法定义、类定义与第一个方法之间都应该空一行。 4.分号：行尾不要有分号，也不要用分号将两条命令放在一行,除非是： 1.长的导入模块语句。 2.注释里的URL. 3.可以使用圆括号实现隐式行连接  0x01文档编排 1.导入：模块注释-&amp;gt;文档字符串-&amp;gt;导入-&amp;gt;模块全局变量-&amp;gt;常量 导入顺序：标准库导入-&amp;gt;第三方库导入-&amp;gt;应用程序指定库导入 2.import:不要在一行中import多个库，一行中只导入一个  0x02 空格 1.不要在逗号、分号、冒号前加空格，但应在他们后面加(除了在行尾) 2.二元操作符(赋值、比较、布尔)两边都加空格 3.当&amp;quot;=&amp;quot;用于指示关键字参数或默认参数值是，不要再其两侧使用空格 4.&amp;quot;,&amp;quot;和&amp;quot;#&amp;quot;和&amp;quot;=&amp;quot;不需要对齐，因为空格会成为维护的负担  0x03 注释 总体原则，错误的注释不如没有注释。 注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。 1.块注释：在一段代码前增加的注释。在&amp;quot;#&amp;quot;后加一空格。段落之间以只有&amp;quot;#&amp;quot;的行间隔。 2.行注释，在一句代码后加注释。进来少使用. 3.绝不要描述代码. 假设阅读代码的人比你更懂Python, 他只是不知道你的代码要做什么.  0x04 文档描述 1.为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。 2.如果docstring要换行，参考如下例子 class SampleClass(object): &amp;quot;&amp;quot;&amp;quot;Summary of class here. Longer class information.... Longer class information.... Attributes: likes_spam: A boolean indicating if we like SPAM or not. eggs: An integer count of the eggs we have laid. &amp;quot;&amp;quot;&amp;quot; def __init__(self): &amp;quot;&amp;quot;&amp;quot;Inits SampleClass with blah.</description>
     </item>
     
     <item>
@@ -282,16 +282,16 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
       <pubDate>Fri, 05 Feb 2016 11:38:23 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-regular/</guid>
-      <description> 正则表达式  正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串
- 原子字符   元字符   修饰符   re模块  由于Pyton的字符串本身也用\转义，强烈建议使用r前缀
-  函数match()
-这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None  函数search()
-这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None  函数findall()和finditer()
+      <description> 0x00 正则表达式 正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串
+0x01 原子字符 0x02 元字符 0x03 修饰符 0x04 re模块 由于Pyton的字符串本身也用\转义，强烈建议使用r前缀
+ 函数match()
+这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None  函数search()
+这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None  函数findall()和finditer()
 re.findall()将以列表的形式返回所有能匹配到的字符
-re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数sub()
-这个函数会对字符串进行匹配，然后替换，可以指定替换次数  函数split()
-这个函数会以正则来分割字符串，以列表样式返回  函数compile()
-这个函数可以编译正则，提高匹配速度   提取子串  根据正则可以匹配字符然后提取出来，用括号表示要提取的分组  贪婪匹配  正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&amp;rdquo;？&amp;rdquo;来抑制贪婪匹配  </description>
+re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数sub()
+这个函数会对字符串进行匹配，然后替换，可以指定替换次数  函数split()
+这个函数会以正则来分割字符串，以列表样式返回  函数compile()
+这个函数可以编译正则，提高匹配速度   0x05 提取子串 根据正则可以匹配字符然后提取出来，用括号表示要提取的分组 0x06 贪婪匹配 正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&amp;rdquo;？&amp;rdquo;来抑制贪婪匹配 </description>
     </item>
     
     <item>
@@ -301,7 +301,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数s
       
       <guid>http://wyb0.com/posts/python-thread/</guid>
       <description>Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。
-单线程  #!/usr/bin/env python # -*- coding: utf-8 -*- from time import time,ctime,sleep def music(arg): for x in range(2): print &amp;quot;I&#39;m listening to %s. %s&amp;quot; % (arg,ctime()) sleep(1) def movie(arg): for x in range(2): print &amp;quot;I&#39;m watching %s. %s&amp;quot; % (arg,ctime()) sleep(5) if __name__ == &#39;__main__&#39;: start = int(time()) music(u&#39;我&#39;) movie(u&#39;可是&#39;) print &amp;quot;All over time:%s&amp;quot; % ctime() print &amp;quot;Used time:%d&amp;quot; % int(time()-start)   多线程  #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep INDEX = 0 def http_get(sites): global INDEX while INDEX &amp;lt; len(sites): url = sites[INDEX] INDEX += 1 resp = requests.</description>
+0x00 单线程 #!/usr/bin/env python # -*- coding: utf-8 -*- from time import time,ctime,sleep def music(arg): for x in range(2): print &amp;quot;I&#39;m listening to %s. %s&amp;quot; % (arg,ctime()) sleep(1) def movie(arg): for x in range(2): print &amp;quot;I&#39;m watching %s. %s&amp;quot; % (arg,ctime()) sleep(5) if __name__ == &#39;__main__&#39;: start = int(time()) music(u&#39;我&#39;) movie(u&#39;可是&#39;) print &amp;quot;All over time:%s&amp;quot; % ctime() print &amp;quot;Used time:%d&amp;quot; % int(time()-start)  0x01 多线程 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep INDEX = 0 def http_get(sites): global INDEX while INDEX &amp;lt; len(sites): url = sites[INDEX] INDEX += 1 resp = requests.</description>
     </item>
     
     <item>
@@ -310,8 +310,8 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数s
       <pubDate>Sun, 31 Jan 2016 12:27:06 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-io-operation/</guid>
-      <description>文件的操作 文件读写  r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入
-#!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&amp;quot;test.txt&amp;quot;,&amp;quot;r&amp;quot;) data = f.read() print &amp;quot;File name: &amp;quot;,f.name print &amp;quot;File open moudle: &amp;quot;,f.mode print &amp;quot;File is close ?&amp;quot;,f.closed print &amp;quot;File content: &amp;quot;,data finally: f.close() with open(&amp;quot;test.txt&amp;quot;,&amp;quot;a+&amp;quot;) as f: #自动调用close() data = &amp;quot;\nYes,I know.&amp;quot; f.write(data) print u&amp;quot;写入内容：%s&amp;quot; % data with open(&amp;quot;test.txt&amp;quot;,&amp;quot;r&amp;quot;) as f: #readlines()一次读取一行，返回一个列表，也可以用read(size)读取指定大小 line = f.readlines() print line   指针移动  #!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&amp;quot;test.</description>
+      <description>0x00 文件的操作  文件读写  r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入
+#!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&amp;quot;test.txt&amp;quot;,&amp;quot;r&amp;quot;) data = f.read() print &amp;quot;File name: &amp;quot;,f.name print &amp;quot;File open moudle: &amp;quot;,f.mode print &amp;quot;File is close ?&amp;quot;,f.closed print &amp;quot;File content: &amp;quot;,data finally: f.close() with open(&amp;quot;test.txt&amp;quot;,&amp;quot;a+&amp;quot;) as f: #自动调用close() data = &amp;quot;\nYes,I know.&amp;quot; f.write(data) print u&amp;quot;写入内容：%s&amp;quot; % data with open(&amp;quot;test.txt&amp;quot;,&amp;quot;r&amp;quot;) as f: #readlines()一次读取一行，返回一个列表，也可以用read(size)读取指定大小 line = f.readlines() print line   指针移动  #!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&amp;quot;test.</description>
     </item>
     
     <item>
@@ -320,7 +320,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数s
       <pubDate>Mon, 25 Jan 2016 11:17:59 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-object-oriented/</guid>
-      <description>面向对象  面向对象是为了解决系统的可维护性，可扩展性，可重用性
+      <description>0x00 面向对象  面向对象是为了解决系统的可维护性，可扩展性，可重用性
  三个基本特征：封装、继承、多态
  封装：对一类事物，将其相同特点和功能提取出来，所共有的特点叫做属性，共有的功能就叫做方法，将属性和方法组合在一起就叫做封装。
 如：人具有姓名、年龄、性别，这些就是属性，人可以说话、可以走、可以跑，这些就是方法，封装起来就是一个类，而类的实例化就是对象
@@ -328,8 +328,8 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数s
 如：有一个类People，教师就可以继承自People，可以添加自己的属性，如：工资、职工号，也可以添加自己的方法，如：备课、写教案
  多态：首先，多态必有继承，没有继承就没有多态，继承后一个父类的引用变量可以指向其任意一个子类对象。
 如：有一个People类，它的子类可以有学生、老师、工人，有多种形态，这就是多态
-   类的实例  注意：类中每个方法后面都要写self，self就是当前对象指针
-  示例一   #!/usr/bin/env python # -*- coding:utf-8 -*- # 声明一个People类 class People(object): &amp;quot;&amp;quot;&amp;quot;docstring for People&amp;quot;&amp;quot;&amp;quot; def __init__(self, name, age): super(People, self).__init__() self.name = name self.age = age def running(self): print &amp;quot;%s is running&amp;quot; % self.name def print_base_msg(self): print &amp;quot;Name:%s Age:%d&amp;quot; % (self.name,self.age) # 继承自People类 class Teacher(People): &amp;quot;&amp;quot;&amp;quot;docstring for Teacher&amp;quot;&amp;quot;&amp;quot; def __init__(self, name, age, salary): super(Teacher, self).</description>
+   0x01 类的实例 注意：类中每个方法后面都要写self，self就是当前对象指针
+ 示例一  #!/usr/bin/env python # -*- coding:utf-8 -*- # 声明一个People类 class People(object): &amp;quot;&amp;quot;&amp;quot;docstring for People&amp;quot;&amp;quot;&amp;quot; def __init__(self, name, age): super(People, self).__init__() self.name = name self.age = age def running(self): print &amp;quot;%s is running&amp;quot; % self.name def print_base_msg(self): print &amp;quot;Name:%s Age:%d&amp;quot; % (self.name,self.age) # 继承自People类 class Teacher(People): &amp;quot;&amp;quot;&amp;quot;docstring for Teacher&amp;quot;&amp;quot;&amp;quot; def __init__(self, name, age, salary): super(Teacher, self).</description>
     </item>
     
     <item>
@@ -338,15 +338,16 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数s
       <pubDate>Thu, 21 Jan 2016 21:13:17 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-functional-programming/</guid>
-      <description>函数式编程  首先说一下高阶函数，能将函数作为参数来接收的函数就可以称为高阶函数，如下：
+      <description>0x00 函数式编程 首先说一下高阶函数，能将函数作为参数来接收的函数就可以称为高阶函数，如下：
 def add(x,y,f): return f(x) + f(y) print add(7,-3,abs) #abs是求绝对值的函数，这里返回的值为10  将函数作为参数传入，这样的函数就是高阶函数，而函数式编程就是指这种抽象程度很高的编程范式。
 函数式编程的一个特点就是可以将函数作为参数，还允许返回一个函数。
 纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。
 允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。
- 高阶函数  map()函数
-map接收两个参数，一个是函数，一个是列表(list)，map将函数依次作用到list的每个元素，然后返回新的list   def f(x): return x*x print map(f,[1,2,3,4]) #返回[1,4,9,16] print map(str,[1,2,3,4]) # 返回[&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;]    reduce()函数
-reduce接收参数和map一样(但传入的函数必须接收两个参数)，reduce会对list的每个元素反复调用函数，然后返回最终值   def f(x,y): return x*y print reduce(f,[1,2,3,4]) #1*2*3*4，返回24    filter()函数
-filter也接收函数和list，函数会对list的每个元素进行判断然后返回True或False，为True的组成新list返回   def f(x): return x &amp;gt; 3 print filter(f,[1,2,3,4,5]) #返回[4,5]    sorted()函数</description>
+0x01 高阶函数  map()函数
+map接收两个参数，一个是函数，一个是列表(list)，map将函数依次作用到list的每个元素，然后返回新的list  def f(x): return x*x print map(f,[1,2,3,4]) #返回[1,4,9,16] print map(str,[1,2,3,4]) # 返回[&#39;1&#39;,&#39;2&#39;,&#39;3&#39;,&#39;4&#39;]   reduce()函数
+reduce接收参数和map一样(但传入的函数必须接收两个参数)，reduce会对list的每个元素反复调用函数，然后返回最终值  def f(x,y): return x*y print reduce(f,[1,2,3,4]) #1*2*3*4，返回24   filter()函数
+filter也接收函数和list，函数会对list的每个元素进行判断然后返回True或False，为True的组成新list返回  def f(x): return x &amp;gt; 3 print filter(f,[1,2,3,4,5]) #返回[4,5]   sorted()函数
+Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #返回[2,3,34,345]  sorted也是一个高阶函数，当然也可以接收函数和参数。通常规定，对于两个元素x和y，若认为x &amp;lt; y则返回-1，若认为x == y则返回0，若认为x &amp;gt; y则返回1，从而进行正向排序</description>
     </item>
     
     <item>
@@ -355,7 +356,7 @@ filter也接收函数和list，函数会对list的每个元素进行判断然后
       <pubDate>Tue, 19 Jan 2016 13:47:17 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-type-of-data/</guid>
-      <description>0x00 特点及差别  常见4种数据类型：list、tuple、dict、set list即列表，它内部是有序的，可以添加、更新、删除元素 tuple是元组，它的内部也是有序的，但一般不可更新、删除，即内部元素不可变 dict即字典，它的内部无序，key不可变、不可重复，key值可更新，可删除键值对 set可用作求交集、并集等，它的内部无序，key不可变、不可重复，可添加和删除   0x01 操作示例  #!/usr/bin/env python # -*- coding: utf-8 -*- ####################################### print &#39;-----list-----&#39; L = [] #这样就可以声明一个list了 n = 1 while n &amp;lt;= 9: L.append(n) #添加 n = n + 2 print L #[1,3,5,7,9] L[len(L)-1] = 11 #更新 print L #[1,3,5,7,11] L.pop() #删除,和L.pop(-1)一样 L.pop(-2) print L #[1,3,7] L.insert(1,&#39;jack&#39;) for x in range(len(L)): print L[x], #逗号可抑制换行，结果为 1 jack 3 7 print &#39;\n-----list-----\n&#39; ####################################### print &#39;-----tuple-----&#39; T =(&#39;Michael&#39;,&#39;Bob&#39;,&#39;Tracy&#39;) print T #[&#39;Michael&#39;, &#39;Bob&#39;, &#39;Tracy&#39;] for x in range(len(T)): print T[x], # Michael Bob Tracy print &#39;\n-----tuple-----\n&#39; ####################################### print &#39;-----dict-----&#39; D = {&#39;Adam&#39;:95,&#39;Lisa&#39;:90,&#39;Bart&#39;:75} print D #{&#39;Lisa&#39;: 90, &#39;Adam&#39;: 95, &#39;Bart&#39;: 75} D[&#39;Lisa&#39;] = 99 #更新 D[&#39;Kongming&#39;] = &#39;X&#39; #添加 print D #{&#39;Lisa&#39;: 99, &#39;Kongming&#39;: &#39;X&#39;, &#39;Adam&#39;: 95, &#39;Bart&#39;: 75} D.</description>
+      <description>0x00 特点及差别 常见4种数据类型：list、tuple、dict、set list即列表，它内部是有序的，可以添加、更新、删除元素 tuple是元组，它的内部也是有序的，但一般不可更新、删除，即内部元素不可变 dict即字典，它的内部无序，key不可变、不可重复，key值可更新，可删除键值对 set可用作求交集、并集等，它的内部无序，key不可变、不可重复，可添加和删除  0x01 操作示例 #!/usr/bin/env python # -*- coding: utf-8 -*- ####################################### print &#39;-----list-----&#39; L = [] #这样就可以声明一个list了 n = 1 while n &amp;lt;= 9: L.append(n) #添加 n = n + 2 print L #[1,3,5,7,9] L[len(L)-1] = 11 #更新 print L #[1,3,5,7,11] L.pop() #删除,和L.pop(-1)一样 L.pop(-2) print L #[1,3,7] L.insert(1,&#39;jack&#39;) for x in range(len(L)): print L[x], #逗号可抑制换行，结果为 1 jack 3 7 print &#39;\n-----list-----\n&#39; ####################################### print &#39;-----tuple-----&#39; T =(&#39;Michael&#39;,&#39;Bob&#39;,&#39;Tracy&#39;) print T #[&#39;Michael&#39;, &#39;Bob&#39;, &#39;Tracy&#39;] for x in range(len(T)): print T[x], # Michael Bob Tracy print &#39;\n-----tuple-----\n&#39; ####################################### print &#39;-----dict-----&#39; D = {&#39;Adam&#39;:95,&#39;Lisa&#39;:90,&#39;Bart&#39;:75} print D #{&#39;Lisa&#39;: 90, &#39;Adam&#39;: 95, &#39;Bart&#39;: 75} D[&#39;Lisa&#39;] = 99 #更新 D[&#39;Kongming&#39;] = &#39;X&#39; #添加 print D #{&#39;Lisa&#39;: 99, &#39;Kongming&#39;: &#39;X&#39;, &#39;Adam&#39;: 95, &#39;Bart&#39;: 75} D.</description>
     </item>
     
   </channel>

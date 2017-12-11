@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-06-24</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -116,14 +117,10 @@
 
 <h3 id="0x00-应用场景">0x00 应用场景</h3>
 
-<blockquote>
-<pre><code>在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被&quot;\&quot;转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。
-</code></pre>
-</blockquote>
+<p>在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被<code>&quot;\&quot;</code>转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。</p>
 
 <h3 id="0x01-测试代码">0x01 测试代码</h3>
 
-<blockquote>
 <pre><code>&lt;?php
     $conn = mysql_connect('localhost','root','root');
     mysql_select_db('messages',$conn);
@@ -152,34 +149,18 @@
 ?&gt;
 </code></pre>
 
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/injection_of_wide_byte_addslashes.png" alt="单引号被转义">
-</div>
-
-</blockquote>
+<p><img src="/img/post/injection_of_wide_byte_addslashes.png" alt="单引号被转义" /></p>
 
 <h3 id="0x02-宽字节注入原理">0x02 宽字节注入原理</h3>
 
-<blockquote>
 <pre><code class="language-ini">当MySQL使用的是GBK编码时，0xbf5c会被当做一个字符(双字节字符)，其中5c是&quot;\&quot;
 
 当注入语句为http://127.0.0.1/test.php?id=2%bf'时
 在数据库中bf会和转义符&quot;\&quot;形成一个双字节字符&quot;縗&quot;，从而单引号逃逸
 </code></pre>
 
-<p>
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/injection_of_wide_byte_bf.png" alt="转义符被bf吃掉">
-</div>
-
-<br /></br />
-
-<div class="pure-u-1">
-  <img class="pure-img border_img" src="/img/post/injection_of_wide_byte_user.png" alt="单引号逃逸后查询user">
-</div>
-</p>
-</blockquote>
+<p><img src="/img/post/injection_of_wide_byte_bf.png" alt="转义符被bf吃掉" />
+<img src="/img/post/injection_of_wide_byte_user.png" alt="单引号逃逸后查询user" /></p>
 
                 
                 <div style="padding:10px 1px;">

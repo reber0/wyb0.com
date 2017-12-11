@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-04-17</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -114,9 +115,7 @@
                 
                 
 
-<h2 id="第一种方法">第一种方法</h2>
-
-<h3 id="分5步">分5步：</h3>
+<h3 id="0x00-第一种方法">0x00 第一种方法</h3>
 
 <pre><code>1. 启动网卡：  
 $ ifconfig eth0 up/down
@@ -136,9 +135,7 @@ route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3
 //添加静态路由添加网络10.211.55.0，从eth0出去
 </code></pre>
 
-<h2 id="第二种方法">第二种方法</h2>
-
-<h3 id="分1步">分1步：</h3>
+<h3 id="0x01-第二种方法">0x01 第二种方法</h3>
 
 <p>打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:</p>
 
@@ -150,7 +147,7 @@ NETMASK=
 GATEWAY=
 </code></pre>
 
-<h2 id="打开ip转发">打开ip转发</h2>
+<h3 id="0x02-打开ip转发">0x02 打开ip转发</h3>
 
 <pre><code>echo &quot;1&quot; &gt;&gt; /proc/sys/net/ipv4/ip_forward
 或者vim /etc/sysctl.conf

