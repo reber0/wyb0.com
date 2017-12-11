@@ -8,10 +8,9 @@ topics = ["Server"]
 
 +++
 
-### 0x00 环境
-虚拟机rhel-server-6.2
+环境：虚拟机rhel-server-6.2
 
-## 搭建流程
+### 0x00 搭建流程
 * 安装DNS服务器
 * 配置DNS主配置文件
 * 配置DNS正反向解析区域数据文件
