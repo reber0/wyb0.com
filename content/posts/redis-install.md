@@ -9,14 +9,14 @@ topics = ["Server"]
 +++
 
 ### 0x00 关于Redis
-> ```
+```
 Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库，
 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高,
 不适合做海量数据存储。
 ```
 
 ### 0x01 安装
-> 可在http://download.redis.io/releases/ 下载
+可在http://download.redis.io/releases/ 下载
 ```
 $ cd /opt
 $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz
@@ -27,7 +27,7 @@ $ make install
 ```
 
 ### 0x02 产生的可执行文件
-> ```
+```
 redis-server：redis服务器启动程序
 redis-cli：redis命令行工具，也可为客户端
 redis-stat：redis状态检测工具
@@ -35,7 +35,7 @@ redis-benchmark：redis性能检测工具(读写)
 ```
 
 ### 0x03 配置文件
-> ```
+```
 $ vim /opt/redis-3.2.3/redis.conf
   daemonize yes  # 当值为yes时可以后台运行
   bind 127.0.0.1  # 绑定ip，配置后只接受来自该ip的请求
@@ -56,22 +56,22 @@ $ vim /opt/redis-3.2.3/redis.conf
 ```
 
 ### 0x04 启动测试
-> ```
+```
 本地启动：
 $ redis-server /opt/redis-3.2.3/redis.conf  # 启动服务
 $ ps -aux | grep redis
 ```
 在另外一个机器上用redis-cli连接刚搭建的服务器：
-{{% fluid_img src="/img/post/redis_install_conn_and_write_file.png" alt="连接redis并创建文件" %}}
-<br /><br />
-{{% fluid_img src="/img/post/redis_install_visit_file.png" alt="访问redis创建的文件" %}}
+![连接redis并创建文件](/img/post/redis_install_conn_and_write_file.png)
+
+![访问redis创建的文件](/img/post/redis_install_visit_file.png)
 
 ### 0x05 Windows下安装Redis
-> 下载：<a href="https://github.com/MSOpenTech/redis/releases" target="_blank">点此下载</a>
+下载：<a href="https://github.com/MSOpenTech/redis/releases" target="_blank">点此下载</a>
 
-> 安装后添加环境变量
+安装后添加环境变量
 
-> ```
+```
 添加为系统服务：
 redis-server.exe --service-install redis.windows.conf --loglevel verbose
 

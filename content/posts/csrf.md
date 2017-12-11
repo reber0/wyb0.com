@@ -3,15 +3,15 @@ date = "2016-06-28T09:21:34+08:00"
 description = ""
 draft = false
 tags = ["csrf"]
-title = "CSRF"
+title = "CSRF漏洞"
 topics = ["Pentest"]
 
 +++
 
 ### 0x00 概念
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、
-删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSRF就是：攻击者通过一些技术手段欺骗用户的<font color="FF0000">浏览器</font>去<font color="FF0000">访问</font>一个自己曾<font color="FF0000">认证过</font>的网站并<font color="FF0000">执行某些操作</font>。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作
+当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。  
+
+CSRF就是：攻击者通过一些技术手段欺骗用户的<font color="FF0000">浏览器</font>去<font color="FF0000">访问</font>一个自己曾<font color="FF0000">认证过</font>的网站并<font color="FF0000">执行某些操作</font>。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作
 
 ### 0x01 利用
 * 利用条件
@@ -23,14 +23,14 @@ topics = ["Pentest"]
     * 验证过于简单(参数固定、我们可以设置参数)
 
 ### 0x02 GET型CSRF攻击
-> ```
+```
 若有论坛www.aa.com，论坛删除文章的操作是请求类似
 http://www.aa.com/opt.php?id=135&act=del&name=Tom的链接
 ```
-> ```
+```
 有用户A，他登陆了论坛，且有篇文章id为251，那么他的浏览器此时已经取得了论坛的信任
 ```
-> ```
+```
 此时有hacker用户B，他构造了一个html为b.html，b.html内容如下：
 <html>
 <head>
@@ -48,8 +48,8 @@ http://www.aa.com/opt.php?id=135&act=del&name=Tom的链接
 ```
 
 ### 0x03 POST型CSRF攻击
-> 若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图：
-{{% fluid_img src="/img/post/csrf_post.png" alt="csrf_post利用.png" %}}
+若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图：
+![csrf_post利用](/img/post/csrf_post.png)
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -85,7 +85,7 @@ http://www.aa.com/opt.php?id=135&act=del&name=Tom的链接
 </body>
 </html>
 ```
-然后将连接http://www.bb.com/xxxx.html 发送给用户,诱使他点击链接,一旦他点击,则密码就会被修改
+然后将连接```http://www.bb.com/xxxx.html``` 发送给用户,诱使他点击链接,一旦他点击,则密码就会被修改
 
 ### 0x04 防御：
 * 对于修改密码的表单可以要求输入原密码  

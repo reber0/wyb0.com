@@ -8,8 +8,8 @@ topics = ["Python", "Pentest"]
 
 +++
 
-## 接收变量的php脚本如下
-> ```php
+### 0x00 接收变量的php脚本如下
+```php
 //代码仅供测试
 <?php
     $name = @$_POST['uname'];
@@ -29,8 +29,8 @@ topics = ["Python", "Pentest"]
 ?>
 ```
 
-## 爆破表单的python脚本如下
-> ```python
+### 0x01 爆破表单的python脚本如下
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -169,7 +169,7 @@ if __name__ == '__main__':
     main()
 ```
 
-## 结果
-> {{% fluid_img src="/img/post/form_blast1.png" alt="表单爆破1" %}}
-<br /><br />
-{{% fluid_img src="/img/post/form_blast2.png" alt="表单爆破2" %}}
+### 0x02 结果
+![表单爆破1](/img/post/form_blast1.png)
+
+![表单爆破2](/img/post/form_blast2.png)

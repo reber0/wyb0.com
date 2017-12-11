@@ -8,10 +8,10 @@ topics = ["Python"]
 
 +++
 
-## 关于cmd模块
-> 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+### 0x00 关于cmd模块
+使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
 
-## cmd模块的一些常用方法：
+### 0x01 cmd模块的一些常用方法：
 1. cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器
 2. onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名
 3. emptyline()：当输入空行时调用该方法
@@ -22,8 +22,8 @@ topics = ["Python"]
 8. preloop()：cmdloop()运行之前调用该方法
 9. postloop()：cmdloop()退出之后调用该方法
 
-## 用cmd模块简单实现shell命令
-> ```
+### 0x02 用cmd模块简单实现shell命令
+```
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -142,5 +142,5 @@ if __name__ == '__main__':
     shell.cmdloop()
 ```
 
-## 程序执行结果如下
-> {{% fluid_img src="/img/post/cmd_results_sample.png" alt="cmd简单实现shell运行结果.png" %}}
+### 0x03 程序执行结果如下
+![cmd简单实现shell运行结果](/img/post/cmd_results_sample.png)

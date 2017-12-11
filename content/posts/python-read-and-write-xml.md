@@ -21,7 +21,7 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 - **我在这里使用ElementTree**
 
 ### 0x01 Element对象的属性
-> 每个Element对象都具有以下属性：
+每个Element对象都具有以下属性：
 
 * tag：string对象，表示数据代表的种类
 * attrib：dictionary对象，表示附有的属性
@@ -29,7 +29,7 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 * tail：string对象，表示element闭合之后的尾迹
 * 若干子元素（child elements）
 
-> ```python
+```python
 >>> from xml.etree import ElementTree as ET
 >>> xml = """<books>
 ...   <book id='37476'>aaaa</book>
@@ -50,7 +50,7 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 ```
 
 ### 0x02 文件内容
-> ```
+```
 <?xml version='1.0' encoding='UTF-8'?>
 <books>
   <book>
@@ -75,7 +75,7 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 ```
 
 ### 0x03 读取xml节点
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -106,7 +106,7 @@ books = [
 ```
 
 ### 0x04 写入xml文件
-> ```
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # code by reber <1070018473@qq.com>

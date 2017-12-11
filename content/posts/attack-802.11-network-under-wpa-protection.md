@@ -8,34 +8,30 @@ topics = ["Other"]
 
 +++
 
-## 网络拓扑及信息
-{{% fluid_img src="/img/post/wireless_topology.png" alt="无线网络渗透测试拓扑图.png" %}}
+### 0x00 网络拓扑及信息
+![无线网络渗透测试拓扑图](/img/post/wireless_topology.png)
 其中ip等信息如下：
-{{% fluid_img src="/img/post/wireless_base_msg.png" alt="无线网络渗透测试IP等基本信息.png" %}}
+![无线网络渗透测试IP等基本信息](/img/post/wireless_base_msg.png)
 
-## 攻击WPA保护下的802.11网络
-#### 1. 查看无线网卡并将其设置为监听模式
-> {{% fluid_img src="/img/post/wireless_ifconfig.png" alt="无线网络渗透测试查看网卡信息.png" %}}
-<br /><br />
-> {{% fluid_img src="/img/post/wireless_mode_to_monitor.png" alt="无线网络渗透测试设置网卡为监听模式.png" %}}
+### 0x01 获取信息
+1. 查看无线网卡并将其设置为监听模式
+![无线网络渗透测试查看网卡信息](/img/post/wireless_ifconfig.png)
+![无线网络渗透测试设置网卡为监听模式](/img/post/wireless_mode_to_monitor.png)
 
-#### 2. 打开kismet，进行基本设置
-> {{% fluid_img src="/img/post/wireless_start_kismet.png" alt="无线网络渗透测试开启kismet.png" %}}
-<br /><br />
-> {{% fluid_img src="/img/post/wireless_kismet_add_source.png" alt="无线网络渗透测试add source.png" %}}
-<br /><br />
-> {{% fluid_img src="/img/post/wireless_kismet.png" alt="无线网络渗透测试kismet主界面.png" %}}
+2. 打开kismet，进行基本设置
+![无线网络渗透测试开启kismet](/img/post/wireless_start_kismet.png)
+![无线网络渗透测试add source](/img/post/wireless_kismet_add_source.png)
+![无线网络渗透测试kismet主界面](/img/post/wireless_kismet.png)
 
-#### 3. 选择名字为111111的AP为目标
-> {{% fluid_img src="/img/post/wireless_select_target.png" alt="无线网络渗透测试kismet选择目标.png" %}}
-<br /><br />
-> {{% fluid_img src="/img/post/wireless_target_msg.png" alt="无线网络渗透测试AP的信息.png" %}}
-<br /><br />
-> {{% fluid_img src="/img/post/wireless_quit_kismet.png" alt="无线网络渗透测试退出kismet.png" %}}
+3. 选择名字为111111的AP为目标
+![无线网络渗透测试kismet选择目标](/img/post/wireless_select_target.png)
+![无线网络渗透测试AP的信息](/img/post/wireless_target_msg.png)
+![无线网络渗透测试退出kismet](/img/post/wireless_quit_kismet.png)
 
-#### 4. 查看kismet抓包信息
-> kismet生成的nettxt文件的部分信息如下：
-> ```
+4. 查看kismet抓包信息
+kismet生成的nettxt文件的部分信息如下：
+
+```
 Network 104: BSSID D8:42:AC:C9:5C:1D
  Manuf      : Shanghai
  First      : Mon Nov 16 12:46:21 2015
@@ -90,7 +86,7 @@ Encryption : WPA+AES-CCM
                Mon Nov 16 13:09:55 2015
 ```
 筛选出的有用信息如下：
-> ```
+```
 BSSID      : D8:42:AC:C9:5C:1D
 SSID       : "111111" 
 Encryption : WPA+PSK
@@ -99,13 +95,13 @@ Channel    : 5
 Client 3: MAC DC:C7:93:C5:05:58
 ```
 
-#### 5. 通过airodump-ng -c 5 -w 20151117 wlan0开始抓包保存
-> {{% fluid_img src="/img/post/wireless_get_package.png" alt="无线网络渗透测试抓包.png" %}}
+### 0x02 开始攻击
+1. 通过airodump-ng -c 5 -w 20151117 wlan0开始抓包保存
+![无线网络渗透测试抓包](/img/post/wireless_get_package.png)
 
-#### 6. 得到handshake包，用另一个终端进行deauth攻击
-> {{% fluid_img src="/img/post/wireless_start_deauth_attack.png" alt="无线网络渗透测试开始deauth攻击.png" %}}
+2. 得到handshake包，用另一个终端进行deauth攻击
+![无线网络渗透测试开始deauth攻击](/img/post/wireless_start_deauth_attack.png)
+![无线网络渗透测试得到handshake包](/img/post/wireless_get_handshake_package.png)
 
-> {{% fluid_img src="/img/post/wireless_get_handshake_package.png" alt="无线网络渗透测试得到handshake包.png" %}}
-
-#### 6. 得到AP密码
-> {{% fluid_img src="/img/post/wireless_get_ap_password.png" alt="无线网络渗透测试得到无线的密码.png" %}}
+3. 得到AP密码
+![无线网络渗透测试得到无线的密码](/img/post/wireless_get_ap_password.png)

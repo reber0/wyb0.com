@@ -9,7 +9,7 @@ topics = ["Database"]
 +++
 
 ### 0x00 角色和权限
-> Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：
+Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：
 
 * 数据库用户角色
     * read：允许用户读取指定数据库
@@ -37,7 +37,7 @@ topics = ["Database"]
     * __system
 
 ### 0x01 创建用户
-> ```
+```
 #创建管理员用户
 > use admin
 switched to db admin
@@ -91,8 +91,8 @@ bye
 ```
 
 ### 0x02 配置
-> MongoDb版本：version v3.4.4
-> ```
+MongoDb版本：version v3.4.4
+```
 #配置文件如下
 $ sudo vim /etc/mongod.conf
 storage:
@@ -116,7 +116,7 @@ processManagement:
 security:
   authorization: enabled
 ```
-> ```bash
+```bash
 #启动服务(通过配置文件)
 $ sudo mongod --config /etc/mongod.conf
 
@@ -130,7 +130,7 @@ $ mongo
 ```
 
 ### 0x03 数据库
-> ```
+```
 $ mongo
 
 #创建数据库，创建数据库后只有插入一条数据才能保存数据库
@@ -150,7 +150,7 @@ switched to db test
 ```
 
 ### 0x04 集合
-> ```
+```
 #创建集合
 > use test
 > db.createCollection("msg")
@@ -171,7 +171,7 @@ msg
 ```
 
 ### 0x05 文档
-> ```
+```
 #插入文档,若student这个集合不存在时会自动创建集合student
 > db.student.insert({"name":"xiaoming","sex":1})
 WriteResult({ "nInserted" : 1 })
@@ -210,7 +210,7 @@ WriteResult({ "nRemoved" : 1 })
 ```
 
 ### 0x06 其他
-> ```
+```
 #排序
 > db.student.find()
 { "_id" : ObjectId("592681367e72bcd757917262"), "name" : "xiaohong", "sex" : 0, "age" : 30 }
@@ -225,7 +225,7 @@ $ mongorestore 会把dump中的数据导入到mongo
 ```
 
 ### 0x07 python连接MongoDB
-> ```
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -248,7 +248,7 @@ print collection.find_one()
 ```
 
 ### 0x08 遇到的问题
-> ```
+```
 #非正常停止后再次启动可能会遇到：
 about to fork child process, waiting until server is ready for connections.
 forked process: 2221

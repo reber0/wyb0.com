@@ -9,7 +9,7 @@ topics = ["Python"]
 +++
 
 ### 0x00 Python异常处理
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -35,5 +35,4 @@ except Exception as e: #可捕获所有异常类型
     print "this is error"
     print e
 ```
-{{% fluid_img src="/img/post/python_exception_handling.png" alt="python的异常处理.png" %}}
-
+![python的异常处理](/img/post/python_exception_handling.png)

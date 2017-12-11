@@ -9,7 +9,7 @@ topics = ["Python", "Pentest"]
 +++
 
 ### 0x00 代码
-> 多线程爆破加密的zip压缩包
+多线程爆破加密的zip压缩包
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-

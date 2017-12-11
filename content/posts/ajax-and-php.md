@@ -9,9 +9,9 @@ topics = ["JavaScript"]
 +++
 
 ### 0x00 AJAX与PHP
-> ajax.html代码如下：
+ajax.html代码如下：
 
-> ```
+```
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +49,7 @@ topics = ["JavaScript"]
 </body>
 </html>
 ```
-> ```
+```
 上面的代码会完成以下的东西：
 
 1. 在输入字母时会调用showHint()
@@ -58,9 +58,8 @@ topics = ["JavaScript"]
 4. xmlhttp.open()访问当前目录下的ajax.php来请求资源
 ```
 
-> ajax.php代码如下：
-
-> ```
+ajax.php代码如下：
+```
 <?php
 // Fill up array with names
 $a[]="Anna";
@@ -124,17 +123,17 @@ echo $response;
 ?>
 ```
 
-> 结果如下：
+结果如下：
 ![ajax与php](/img/post/ajax_and_php.gif)
 
 ### 0x01 AJAX与数据库
 
-> ```
+```
 可以通过xmlhttp.open("GET","./ajax.php?q="+str,true);的形式获取服务器数据，
 那么也就可以通过这种方式获取服务端数据库中的内容
 ```
-> ajax.html代码如下：
-> ```
+ajax.html代码如下：
+```
 <html>
 <head>
     <meta charset="utf-8">
@@ -175,8 +174,8 @@ echo $response;
 </body>
 </html>
 ```
-> getuser.php代码如下：
-> ```
+getuser.php代码如下：
+```
 <?php
     header("Content-Type:text/html; charset=gbk");
 
@@ -207,15 +206,13 @@ echo $response;
 ?>
 ```
 
-> 结果如下：
+结果如下：
 ![ajax与mysql1](/img/post/ajax_and_mysql1.png)
-
-> ![ajax与mysql2](/img/post/ajax_and_mysql2.png)
-
-> ![ajax与mysql3](/img/post/ajax_and_mysql3.png)
+![ajax与mysql2](/img/post/ajax_and_mysql2.png)
+![ajax与mysql3](/img/post/ajax_and_mysql3.png)
 
 ### 0x02 AJAX使用实例
-> ```
+```
 <!DOCTYPE html>
 <html>
 <head>

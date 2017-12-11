@@ -15,16 +15,16 @@ topics = ["Python"]
 
 
 ### 0x01 设置mongo和redis
-> 因为mrq依赖于redis和mongo，所以先安装设置下
+因为mrq依赖于redis和mongo，所以先安装设置下
 
 * 安装redis
 
-> ```bash
+```bash
 $ sudo apt-get install redis-server
 $ netstat -nlt|grep 6379
 $ sudo /etc/init.d/redis-server status
 ```
-> ```bash
+```bash
 $ sudo /etc/init.d/redis-server stop
 $ sudo vim /etc/redis/redis.conf
     #bind 127.0.0.1
@@ -36,8 +36,8 @@ $ redis-cli
 
 * 安装mongo
 
-> 可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
-> ```bash
+可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
+```bash
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
 $ echo "deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
 $ sudo apt-get update
@@ -45,7 +45,8 @@ $ sudo apt-get install -y mongodb-org
 $ ps -aux|grep mongodb
 $ netstat -nlt|grep 27017
 ```
-> ```bash
+<br />
+```bash
 $ mongo
 > use admin
 switched to db admin
@@ -76,7 +77,8 @@ Successfully added user: {
 > db.auth('reber_mrq_u','reber_mrq_p')
 > db.shutdownServer()
 ```
-> ```bash
+<br />
+```bash
 $ sudo vim /etc/mongod.conf
 storage:
   dbPath: /var/lib/mongodb
@@ -103,7 +105,7 @@ switched to db mrq
 ```
 
 ### 0x02 案例代码
-> ```
+```
 $ mkdir mrqtest && cd mrqtest
 $ touch __init__.py
 $ touch scheduler.py
@@ -114,7 +116,7 @@ $ touch worker.sh && chmod 777 worker.sh
 
 * scheduler.py
 
-> ```
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """定期推送执行任务"""
@@ -164,7 +166,7 @@ if __name__ == '__main__':
 
 * tasks_push.py
 
-> ```
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """执行任务时调用的就是这个文件中类中的run函数"""
@@ -187,7 +189,7 @@ class task2(Task):
 
 * dotask.py
 
-> ```
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """执行任务的具体函数"""
@@ -201,7 +203,7 @@ def do_task2(params):
 
 * worker.sh
 
-> ```
+```
 #!/bin/bash
 
 mrq-worker task1 --greenlets 5 --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq --redis redis://reber_redis@127.0.0.1:6379/0 &
@@ -210,7 +212,7 @@ mrq-worker task2 --greenlets 5 --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0
 ```
 
 ### 0x03 修改MRQ库的代码
-> ```python
+```python
 #mrq中坑爹的数据库链接，当指定密码连接redis时一直提示没有权限😂，
 #原因是mrp/context.py中格式化redis的连接参数时使用的是import urllib.parse，
 #它是urlparse库的改进版，是Python3.0中的，但是我本地是Python2.7的，没有urllib.parse
@@ -280,11 +282,11 @@ def _connections_factory(attr):
 ### 0x04 执行
 * 清空数据库
 
-> ![清空数据库](/img/post/mrq_clear_db.png)
+![清空数据库](/img/post/mrq_clear_db.png)
 
 * 启动mrq-dashboard
 
-> ```bash
+```bash
 $ mrq-dashboard --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq --redis redis://reber_redis@127.0.0.1:6379/0
 
 #--mongodb和--redis均以uri格式指定连接数据库的信息
@@ -294,21 +296,21 @@ $ mrq-dashboard --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq 
 
 * 执行workers.sh
 
-> ```
+```
 $ cd mrqtest
 $ ./worker.sh
 #这里会创建两个worker，名字为task1和task2
 ```
 ![启动mrq-dashboard后查看dashboad](/img/post/mrq_run_workers_dashboad.png)
-<br>
+
 ![未添加任务时jobs为空](/img/post/mrq_dashboard_jobs1.png)
 
 * 执行scheduler.py从而推送任务
 
-> ```
+```
 $ cd mrqtest
 $ python scheduler.py
 ```
 ![添加任务](/img/post/mrq_push_task.png)
-<br>
+
 ![添加任务后查看jobs](/img/post/mrq_dashboard_jobs2.png)

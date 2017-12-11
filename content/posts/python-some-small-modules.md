@@ -9,7 +9,7 @@ topics = ["Python"]
 +++
 
 ### 0x00 colorama
-> 这个模块可以输出带有颜色的字符
+这个模块可以输出带有颜色的字符
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -22,19 +22,19 @@ print "{f_color}{content}{g_color}".format(f_color=colorama.Fore.CYAN,content='d
 print "{f_color}{content}{g_color}".format(f_color=colorama.Fore.YELLOW,content='warning',g_color=colorama.Fore.RESET)
 print "{f_color}{content}{g_color}".format(f_color=colorama.Fore.RED,content='error',g_color=colorama.Fore.RESET)
 ```
-{{% fluid_img src="/img/post/python_moudle_colorama.png" alt="python的colorama模块" %}}
+![python的colorama模块](/img/post/python_moudle_colorama.png)
 
 ### 0x01 pyfiglet
-> 可以输出字体的图片效果
+可以输出字体的图片效果
 ```python
 from pyfiglet import figlet_format
 
 print figlet_format("reber", font="xtty") #font可以控制输出的类型
 ```
-{{% fluid_img src="/img/post/python_moudle_pyfiglet.png" alt="python的pyfiglet模块" %}}
+![python的pyfiglet模块](/img/post/python_moudle_pyfiglet.png)
 
 ### 0x02 chardet
-> 这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
+这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
 ```python
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
@@ -59,10 +59,10 @@ if not isinstance(html,unicode):
 else:
     print u"编码是unicode."
 ```
-{{% fluid_img src="/img/post/python_moudle_chardet.png" alt="python的chardet模块" %}}
+![python的chardet模块](/img/post/python_moudle_chardet.png)
 
 ### 0x03 tqdm
-> 进度条
+进度条
 ```python
 from tqdm import tqdm
 import time
@@ -71,10 +71,10 @@ num = 233
 for x in tqdm(xrange(1,num+1)):
     time.sleep(0.001)
 ```
-{{% fluid_img src="/img/post/python_moudle_tqdm.png" alt="python的tqdm模块" %}}
+![python的tqdm模块](/img/post/python_moudle_tqdm.png)
 
 ### 0x04 xpinyin
-> 可以将汉字转化为拼音
+可以将汉字转化为拼音
 ```
 >>> from xpinyin import Pinyin
 >>> p = Pinyin()

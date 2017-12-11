@@ -8,13 +8,12 @@ topics = ["Server"]
 
 +++
 
-```
 安装环境为：CentOS-6.5-x86_64-minimal
-```
-## 安装
+
+### 0x00 安装
 yum install vsftpd
 
-## 配置
+### 0x01 配置
 1. 备份  
 cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
 
@@ -61,7 +60,7 @@ auth required pam_userdb.so db=/etc/vsftpd/vuser_passwd
 account required pam_userdb.so db=/etc/vsftpd/vuser_passwd
 ```
 
-## 针对每个用户增加个性化配置文件
+### 0x02 针对每个用户增加个性化配置文件
 配置后user1登陆后所在目录就是/var/ftphome了，而user2、user3登陆后还是在默认的/var/ftp/
 ```
 mkdir /etc/vsftpd/vuser_conf/
@@ -78,6 +77,6 @@ mkdir /var/ftphome
 chmod 777 /var/ftphome
 ```
 
-## 启动服务
+### 0x03 启动服务
 service vsftpd start  
 此时就可以用用户名登陆ftp了(只能终端登录)

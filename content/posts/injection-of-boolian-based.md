@@ -9,71 +9,49 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 特点
-> ```
+```
 当页面存在注入，但是没有显示位，且没有用echo "mysql_error()"输出错误信息时可以用，
 它一次只能猜测一个字节，速度慢，但是只要存在注入就能用
 ```
 
 ### 0x01 利用方式
-> ```
+```
 用and连接前后语句：www.xxx.com/aa.php?id=1 and (注入语句) --+
 根据返回页面是否相同来得到数据
 ```
 
 ### 0x02 注入步骤
-* 找注入点、猜闭合字符
-* 猜解列数、尝试得到显示位
-* 猜数据库名
-* 猜表名
-* 猜列名
-* 猜列值
+1. 找到注入点，判断闭合字符
+![得到闭合字符](/img/post/sqli8_get_closed_character.png)
 
-#### 找到注入点，判断闭合字符
-> {{% fluid_img src="/img/post/sqli8_get_closed_character.png" alt="得到闭合字符.png" %}}
+2. 尝试猜解列数，得到显示位
+![猜解列数](/img/post/sqli8_order_by.png)
+![尝试得到显示位](/img/post/sqli8_display_point.png)
 
-#### 尝试猜解列数，得到显示位
-> {{% fluid_img src="/img/post/sqli8_order_by.png" alt="猜解列数.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/sqli8_display_point.png" alt="尝试得到显示位.png" %}}
-
-#### 得到数据库名
-> {{% fluid_img src="/img/post/sqli8_get_db_num.png" alt="猜解数据库数量.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/sqli8_get_db_name_char.png" alt="猜第5个数据库第2个字符.png" %}}
-```
+3. 得到数据库名
+![猜解数据库数量](/img/post/sqli8_get_db_num.png)
+![猜第5个数据库第2个字符](/img/post/sqli8_get_db_name_char.png)
 最终得到第五个数据库名为security
-```
 
-#### 得到表名
-> {{% fluid_img src="/img/post/sqli8_get_table_num_name_len.png" alt="猜解表的数量和第4张表的表名长度.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/sqli8_get_table_name_char.png" alt="猜第4个表第1个字符.png" %}}
-```
+4. 得到表名
+![猜解表的数量和第4张表的表名长度](/img/post/sqli8_get_table_num_name_len.png)
+![猜第4个表第1个字符](/img/post/sqli8_get_table_name_char.png)
 最终依次猜的表名为users
-```
 
-#### 得到列名
-> {{% fluid_img src="/img/post/sqli8_get_column_num.png" alt="猜解有几列.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/sqli8_get_column_name_len.png" alt="猜解users表第2列列名的长度.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/sqli8_get_column_name_one_char.png" alt="猜测users表第2列列名的第1个字符.png" %}}
-```
+5. 得到列名
+![猜解有几列](/img/post/sqli8_get_column_num.png)
+![猜解users表第2列列名的长度](/img/post/sqli8_get_column_name_len.png)
+![猜测users表第2列列名的第1个字符](/img/post/sqli8_get_column_name_one_char.png)
 同理最终得到第2列列名为username，第3列列名为password
-```
 
-#### 得到列值
-> {{% fluid_img src="/img/post/sqli8_get_column_value_num.png" alt="猜解数据条数.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/sqli8_get_column_value_len.png" alt="猜解第13条数据username字段值的长度.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/sqli8_get_column_value_char.png" alt="猜解第13条数据username字段值的前两个字符.png" %}}<br />
-```
+6. 得到列值
+![猜解数据条数](/img/post/sqli8_get_column_value_num.png)
+![猜解第13条数据username字段值的长度](/img/post/sqli8_get_column_value_len.png)
+![猜解第13条数据username字段值的前两个字符](/img/post/sqli8_get_column_value_char.png)
 依次得到为admin4，同理可得其他数据
-```
 
 ### 0x04 附上python脚本
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # code by reber <1070018473@qq.com>

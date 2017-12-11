@@ -8,15 +8,16 @@ topics = ["Linux", "Pentest"]
 
 +++
 
-> 操作系统：CentOS  
+### 0x00 准备
+```
+操作系统：CentOS  
 首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了  
-执行：sudo yum groupinstall "Development tools"    *源码安装软件就需要安装这个*
+执行：sudo yum groupinstall "Development tools"    #源码安装软件就需要安装这个
+使用wget下载ettercap源码
+```
 
-### 一、下载解压
-> 可用wget下载
-
-### 二、查看需要的依赖项
-> ```
+### 0x01 查看需要的依赖项
+```
 [wyb@localhost ettercap-0.8.2]$ vim INSTALL
 
  #### Bundled libraries  
@@ -30,7 +31,7 @@ topics = ["Linux", "Pentest"]
 check  curl  libnet  luajit
 ```
 
-### 三、安装依赖包
+### 0x02 安装依赖包
 1. 安装check
 ```
 [wyb@localhost check]$ cd check-0.9.14
@@ -66,7 +67,7 @@ check  curl  libnet  luajit
 [wyb@localhost luajit]$ sudo make install
 ```
 
-5. 安装ettercap  
+5. 安装ettercap
 
         [wyb@localhost ettercap-0.8.2]$ cd ettercap-0.8.2 
         [wyb@localhost ettercap-0.8.2]$ mkdir build                   

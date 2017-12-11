@@ -9,17 +9,17 @@ topics = ["Other"]
 +++
 
 ### 0x00 安装brew
-> ```
+```
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 ### 0x01 安装wget
-> ```
+```
 $ brew install wget
 ```
 
 ### 0x02 安装oh-my-zsh
-> ```
+```
 $ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
 $ cat /etc/shells #查看当前有什么shell
 $ which zsh #查看zsh路径
@@ -28,7 +28,7 @@ $ vim ~/.zshrc添加alias c='clear'
 ```
 
 ### 0x03 换源
-> ```
+```
 # 对于zsh用户换源
 $ echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' >> ~/.zshrc
 $ source ~/.zshrc
@@ -45,7 +45,7 @@ $ brew update
 > 去[http://www.iterm2.com](http://www.iterm2.com)下载
 
 ### 0x07 设置MAMP
-> ```
+```
 # 下载安装包安装后，将MAMP的mysql添加到环境变量
 $ ln -s /Applications/MAMP/Library/bin/mysql /usr/local/bin/mysql
 
@@ -56,16 +56,16 @@ $ ln -s /Applications/MAMP/Library/bin/mysql /usr/local/bin/mysql
 ```
 
 ### 0x08 pip安装
-> ```
+```
 # mac里面python自带easy_install
 $ sudo easy_install pip
 ```
 
 ### 0x09 安装go2shell
-> 去[这里](http://zipzapmac.com/go2shell)下载安装包然后安装，安装好后把图标拖到Dock，然后把Dock中的图标拖到finder
+去[这里](http://zipzapmac.com/go2shell)下载安装包然后安装，安装好后把图标拖到Dock，然后把Dock中的图标拖到finder
 
 ### 0x0A Google导入BurpSuite证书
-> ```
+```
 1. 使用burp代理，下载证书然后改为.crt
 2. 谷歌-设置-HTTPS/SSL-证书管理
 3. 钥匙串访问-系统，左上角文件-导入项目，然后导入证书
@@ -73,12 +73,12 @@ $ sudo easy_install pip
 ```
 
 ### 0x0B 快捷键
-> ```
+```
 $ open .  # 在finder中打开当前文件夹
 ```
 
-> **基本操作**
-> ```
+**基本操作**
+```
 Command-Z 撤销　
 Command-X 剪切
 Command-C 拷贝
@@ -93,8 +93,8 @@ Command-M 最小化窗口
 Command-空格 切换输入法
 ```
 
-> **文本处理**
-> ```
+**文本处理**
+```
 fn-Delete 相当于PC全尺寸键盘上的Delete，也就是向后删除
 fn-上箭头 向上滚动一页（Page Up）
 fn-下箭头 向下滚动一页（Page Down）
@@ -106,8 +106,8 @@ Command-下箭头 将光标移至文稿末尾
 Command-上箭头 将光标移至文稿开头
 ```
 
-> **在Finder中**
-> ```
+**在Finder中**
+```
 return 这个其实不算快捷键，点击文件，按下可重命名文件
 Command-O 打开所选项。在Mac里打开文件不像Windows里直接按Enter
 Command-Option-V 对文件复制，在目的位置按下这个快捷键，文件将被剪切到此位置
@@ -116,8 +116,8 @@ Command-Delete 将文件移至废纸篓
 空格键 快速查看选中的文件，也就是预览功能
 ```
 
-> **在浏览器中**
-> ```
+**在浏览器中**
+```
 Control-Tab 转向下一个标签页
 Command-L 光标直接跳至地址栏
 Control-Tab 转向下一个标签页

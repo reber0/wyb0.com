@@ -9,7 +9,7 @@ topics = ["Database"]
 +++
 
 ### 0x00 数据表结构
-> ```
+```
 CREATE DATABASE student;
 
 CREATE TABLE info
@@ -33,7 +33,7 @@ INSERT INTO info(name,sex,age,hight) VALUES('xiaojuan',0,21,159);
 ```
 
 ### 0x01 存储过程
-> ```
+```
 --如果存在名为get_student_msg(相当于函数)的存储过程则删除
 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p')
     DROP PROCEDURE get_student_msg
@@ -52,7 +52,7 @@ EXEC get_student_msg 'xiaoli'
 ```
 
 ### 0x02 使用游标的存储过程
-> ```
+```
 -- 使用DECLARE声明局部变量，一般在函数和存储过程中使用
 DECLARE @name VARCHAR(20)
 DECLARE @sex INT

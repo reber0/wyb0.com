@@ -9,15 +9,15 @@ topics = ["PHP"]
 +++
 
 ### 0x01 CGI协议
-> 中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议
+中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议
 
-## 0x02 FastCGI
-> 服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低
+### 0x02 FastCGI
+服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低
 
-> fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等
+fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等
 
 ### 0x03 FastCGI工作流程
-> 一般情况下，FastCGI的整个工作流程是这样的：
+一般情况下，FastCGI的整个工作流程是这样的：
 
 1. Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module)
 2. FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待WebServer的连接。

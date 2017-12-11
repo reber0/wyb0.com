@@ -8,13 +8,11 @@ topics = ["Linux"]
 
 +++
 
-> {{% fluid_img src="/img/anime/anime005.jpg" alt="某科学的超电磁炮" %}}
-
-### 0x00 环境
-> Ubuntu 14.04.1 LTS
+![某科学的超电磁炮](/img/anime/anime005.jpg)
 
 ### 0x01 安装与配置
-> ```bash
+环境：Ubuntu 14.04.1 LTS
+```bash
 reber@localhost:~$ sudo apt-get update
 reber@localhost:~$ python --version
 Python 2.7.6
@@ -50,7 +48,7 @@ reber@localhost:~$ sudo apt-get install python-m2crypto
 ```
 
 ### 0x02 服务端启动
-> ```
+```
 # 前台运行
 reber@localhost:~$ sudo ssserver -c /home/reber/shadowsocks.json
 # 后台运行
@@ -61,4 +59,4 @@ reber@localhost:~$ sudo killall ssserver
 
 #### 0x03 本地使用
 > 添加如下配置
-{{% fluid_img src="/img/post/use_ss.png" alt="使用Shadowsocks" %}}
+![使用Shadowsocks](/img/post/use_ss.png)

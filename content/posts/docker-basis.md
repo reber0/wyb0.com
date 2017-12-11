@@ -14,7 +14,7 @@ topics = ["Linux"]
 * Docker使用了AUFS，可以以递进的方式创建"VM"，一个"VM"叠在另一个"VM"上，就像使用git增量开发一样。
 * 软件的运行环境（image）和软件本身（container）分离，和数据也分离。
 
-* 学习Docker需要了解4个概念：镜像、容器、数据卷、链接
+学习Docker需要了解4个概念：镜像、容器、数据卷、链接
 
 ### 0x01 镜像image
 * Docker Images 只是一个只读模板，用来运行Docker容器，可以在Docker hub(官方镜像库)下载。
@@ -66,33 +66,30 @@ UnionFS：union文件系统，容器的构建块。它用于保存镜像并使�
 在基础层面上，Docker Client会告诉Docker Daemon需要创建的镜像以及需要在容器内运行的命令
 
 ### 0x08 Docker Registry
-> Docker Registry是Docker的镜像存储服务端，它是所有仓库(包括私有和公有)以及工作流的中央Registry  
+Docker Registry是Docker的镜像存储服务端，它是所有仓库(包括私有和公有)以及工作流的中央Registry  
 Docker Registry有3个角色：index、registry、registry client
 
 * index
-
-> ```
+```
 负责并维护有关用户账户、镜像的体验以及公共命名空间的信息。
 index通过Web UI、元数据存储、认证服务、符号化这几个组件来维护这些信息。
 ```
 
-* registry
-
-> ```
+* registry  
 它是镜像和图表的仓库(比如Docker hub)
-* Registry包含一个或多个Repository
-* Repository包含一个或多个Image
-* Image用GUID表示，有一个或多个Tag与之关联
+```
+Registry包含一个或多个Repository
+Repository包含一个或多个Image
+Image用GUID表示，有一个或多个Tag与之关联
 ```
 
 * registry client
-
-> ```
+```
 客户端
 ```
 
 ### 0x09 Docker下载镜像的原理
-> ![docker pull](/img/post/docker_pull.png)
+![docker pull](/img/post/docker_pull.png)
 
 1. Client向Index请求，询问从哪里下载CentOS
 2. Index回复Client说CentOS在Registry A可以得到，并且返回CentOS的Checksum，所有层的Token
@@ -102,7 +99,7 @@ index通过Web UI、元数据存储、认证服务、符号化这几个组件来
 6. Client从Registry A下载所有的层：Registry从后端存储中获取实际的文件数据，返给Client
 
 ### 0x0A Docker安装与卸载
-> ```bash
+```bash
 #安装
 $ sudo apt-get update
 $ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
@@ -120,13 +117,13 @@ $ sudo apt-get install docker-ce
 $ sudo docker info #查看是否安装成功
 ```
 
-> ```bash
+```bash
 #卸载
 $ sudo apt-get purge docker-ce
 $ sudo rm -rf /var/lib/docker
 ```
 
-> ```
+```
 #添加当前用户到docker组
 $ sudo gpasswd -a ${USER} docker
 $ sudo service docker restart

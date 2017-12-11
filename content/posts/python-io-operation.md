@@ -8,9 +8,10 @@ topics = ["Python"]
 
 +++
 
-## 文件的操作
-#### 文件读写
-> r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入
+### 0x00 文件的操作
+* 文件读写
+
+r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -35,10 +36,11 @@ with open("test.txt","r") as f:
     line = f.readlines()
     print line
 ```
-{{% fluid_img src="/img/post/python_file_read_write.png" alt="python文件读写.png" %}}
+![python文件读写](/img/post/python_file_read_write.png)
 
-#### 指针移动
-> ```python
+* 指针移动
+
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -55,10 +57,11 @@ try:
 finally:
     f.close()
 ```
-{{% fluid_img src="/img/post/python_file_read_point.png" alt="python操作指针读文件.png" %}}
+![python操作指针读文件](/img/post/python_file_read_point.png)
 
-#### 文件操作
-> ```python
+* 文件操作
+
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -78,11 +81,12 @@ if os.path.exists("temp.txt"):
     os.remove("temp.txt") #删除文件
     print u"删除文件temp.txt"
 ```
-{{% fluid_img src="/img/post/python_file_operation.png" alt="python文件操作.png" %}}
+![python文件操作](/img/post/python_file_operation.png)
 
-## 目录的操作
-#### 目录操作
-> ```python
+### 0x01 目录的操作
+* 目录操作
+
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -107,10 +111,11 @@ os.chdir("d:\Clone") #切换工作路径
 print u"切换工作路径到d:\Clone"
 print u"当前工作路径：",os.getcwd()
 ```
-{{% fluid_img src="/img/post/python_create_and_del_dir.png" alt="python创建和删除文件夹.png" %}}
+![python创建和删除文件夹](/img/post/python_create_and_del_dir.png)
 
-#### 删除非空文件夹
-> ```python
+* 删除非空文件夹
+
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -137,10 +142,11 @@ def deldir(dirname):
 dirname = raw_input("Please input you want to delete the folder name: ")
 deldir(dirname)
 ```
-{{% fluid_img src="/img/post/python_del_not_null_dir.png" alt="python删除非空文件夹.png" %}}
+![python删除非空文件夹](/img/post/python_del_not_null_dir.png)
 
-#### 常用方法
-> ```python
+* 常用方法
+
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -165,4 +171,4 @@ print os.path.dirname('C:\windows\c.txt') #返回目录名
 print os.path.basename('C:\windows\c.txt') #返回文件名
 print os.path.splitext('1.txt') #分离文件名与拓展名
 ```
-{{% fluid_img src="/img/post/python_file_common_fun.png" alt="python文件操作常用方法.png" %}}
+![python文件操作常用方法](/img/post/python_file_common_fun.png)

@@ -8,7 +8,7 @@ topics = ["Python"]
 
 +++
 
-## 解码IP头
+### 0x00 解码IP头
 Windows上运行时要以管理员身份运行  
 代码可以解码IP头统计通信信息并保存到文本，同时统计数量
 ```python
@@ -95,7 +95,7 @@ except KeyboardInterrupt:
         sniffer.ioctl(socket.SIO_RCVALL,socket.RCVALL_OFF)
 ```
 
-## 结果
-{{% fluid_img src="/img/post/ip_decoding_run_msg.png" alt="程序运行信息.png" %}}
+### 0x01 结果
+![程序运行信息](/img/post/ip_decoding_run_msg.png)
 
-{{% fluid_img src="/img/post/ip_decoding_data.png" alt="保存的数据.png" %}}
+![保存的数据](/img/post/ip_decoding_data.png)

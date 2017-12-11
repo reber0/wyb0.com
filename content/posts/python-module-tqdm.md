@@ -9,11 +9,11 @@ topics = ["Python"]
 +++
 
 ### 0x00 作用
-> 在下载大文件时以进度条的形式显示下载进度，如下图所示：
-{{% fluid_img src="/img/post/tqdm_progress_bar.png" alt="下载进度条" %}}
+在下载大文件时以进度条的形式显示下载进度，如下图所示：
+![下载进度条](/img/post/tqdm_progress_bar.png)
 
 ### 0x01 代码
-> ```
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 

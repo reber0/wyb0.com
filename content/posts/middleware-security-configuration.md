@@ -10,8 +10,8 @@ topics = ["Server"]
 
 ### 0x00 Apache
 * 服务器安全配置
- 
-> ```
+
+```
 #查看服务器运行权限
 $ ps aux|grep apache|grep -v grep
 $ sudo lsof -i:80
@@ -64,7 +64,7 @@ $ vim /etc/apache2/apache2.conf
 
 * Apache日志格式
 
-> vim /etc/apache2/apache2.conf
+vim /etc/apache2/apache2.conf
 ```
 #access.log格式
 LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined
@@ -100,7 +100,7 @@ User-Agent："Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firef
 ### 0x01 Tomcat
 * 服务器安全配置
 
-> ```
+```
 #运行权限
 Linux中Tomcat的运行权限与Tomcat的启动账户有关，比如以root用户启动，那获取的webshell就也是root权限
 Windows权限控制需要进行账户配置，新建一个Tomcat用户，并归属于Guests组，再将账户设置为服务登录账户
@@ -135,7 +135,7 @@ $ vim /usr/local/tomcat/conf/tomcat-users.xml
 
 * 服务日志
 
-> ```
+```
 $ ll /opt/tomcat/logs
 localhost.2017-09-29.log：程序异常没有被捕获的时候抛出的地方
 catalina.2017-09-29.log：程序的输出，tomcat的运行日志
@@ -153,7 +153,7 @@ $ vim conf/logging.properties #修改日志级别
 ### 0x02 Nginx
 * 隐藏版本号
 
-> ```
+```
 $ vim /usr/local/nginx/conf/nginx.conf
 http {
     include       mime.types;
@@ -164,7 +164,7 @@ http {
 
 * 伪造中间件类型和版本号
 
-> ```
+```
 伪造中间件类型，修改源码然后安装：
 $ vim src/http/ngx_http_header_filter_module.c #修改第49行
 static char ngx_http_server_string[] = "Server: nginx" CRLF;
@@ -182,7 +182,7 @@ fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;
 
 * 防止钓鱼和XSS
 
-> ```
+```
 $ vim /usr/local/nginx/conf/nginx.conf
     server {
         listen       80;
@@ -198,7 +198,7 @@ ALLOW-FROM：origin为允许frame加载的页面地址
 
 * CRLF注入
 
-> ```
+```
 案例一：
 location /sectest {
   return 302 https://$host$uri; #应将$uri或者$document_uri改为$request_uri
@@ -222,7 +222,7 @@ server {
 
 * alias导致的任意文件读取
 
-> ```
+```
 location /files { #把/files改为/files/即可修复
   alias /home/;
 }
@@ -233,7 +233,7 @@ location /files { #把/files改为/files/即可修复
 
 * 反向代理中的SSRF
 
-> ```
+```
 反向代理语法：proxy_pass http://ip:port/uri/;
 当ip可控时那么反向代理的机器会对该ip发起http请求，即可造成SSRF。
 这种场景多出现在云WAF、CDN、高防DDOS等网络产品。
@@ -241,17 +241,14 @@ location /files { #把/files改为/files/即可修复
 
 * add_header重定义
 
-> ```
+```
 如果location区块有add_header，那么以location为准。
 如果location没有add_header，则继承Http和server块的add_header内容。
 ```
 
-<br>
-Reference(侵删)：  
-
-* [中间件安全基础(一)](http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652844866&idx=1&sn=7c1d2879e7ad5ef662cccf8fb7663846)
-* [中间件安全基础(二)](http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652845014&idx=1&sn=c6221031b486bbe84de6986c67b76fbc)
-* [中间件安全基础(三)](http://mp.weixin.qq.com/s/768Jx-lBShb-OsiMgg-48A)
-* [Nginx Config Sec](http://mp.weixin.qq.com/s/QhB-PYpOik_PVdm3F7LIJw)
-
-
+<br />
+#### Reference(侵删)：
+* [http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652844866&idx=1&sn=7c1d2879e7ad5ef662cccf8fb7663846](http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652844866&idx=1&sn=7c1d2879e7ad5ef662cccf8fb7663846)
+* [http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652845014&idx=1&sn=c6221031b486bbe84de6986c67b76fbc](http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652845014&idx=1&sn=c6221031b486bbe84de6986c67b76fbc)
+* [http://mp.weixin.qq.com/s/768Jx-lBShb-OsiMgg-48A](http://mp.weixin.qq.com/s/768Jx-lBShb-OsiMgg-48A)
+* [http://mp.weixin.qq.com/s/QhB-PYpOik_PVdm3F7LIJw](http://mp.weixin.qq.com/s/QhB-PYpOik_PVdm3F7LIJw)

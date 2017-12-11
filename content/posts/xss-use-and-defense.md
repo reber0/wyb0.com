@@ -9,11 +9,12 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 XSS的检测
-> 检测XSS一般分两种方法：一种是手工检测、一种是软件自动检测  
+检测XSS一般分两种方法：一种是手工检测、一种是软件自动检测  
 手工检测：检测结果准确，但对于大型web来说费时费力  
 软件检测：方便省力，但存在误报，且有些隐蔽的XSS无法检测出  
 <font color="FF0000">检测XSS最重要的就是考虑哪里有输入，输入的数据在哪里输出</font>
-#### 1. 手工检测
+
+* 手工检测
 ```
 可得知输出位置:
     • 输入敏感字符，如“<、>、"、'、()”等，然后在提交后查看html源代码，看这些字符是否被转义。
@@ -24,7 +25,8 @@ topics = ["Pentest"]
     在属性内：<input type="text" name="content" value="XSS Test" />
     这种情况通常采用输入"/>XSS Test来测试。
 ```
-#### 2. 全自动检测XSS
+
+* 全自动检测XSS
 如APPSCAN、AWVS、Burp Suite等软件都可以有效的检测XSS，他们还会检测其他的漏洞，但是他们的效率不如专业的XSS检测工具高。  
 专业的XSS扫描工具有知名的XSSER、XSSF等，还有专门扫描DOM类型XSS的web服务(www.domxssscanner.com)。  
 一般要手工和软件一起使用，因为有些XSS软件不能检测，比如有些留言需要输入验证码等，工具无法做到。
@@ -53,7 +55,7 @@ XSS一般就是闭合标签，和SQL注入类似，常见payload如下：
 ```
 
 ### 0x03 XSS简单示例
-> ```
+```
 反射型xss简单示例:
     • <?php
           echo $_GET['x'];
@@ -84,7 +86,7 @@ a.txt中就存放着恶意脚本。
 ### 0x04 XSS的防御
 * 过滤输入与输出(重点)
 
-> 使用htmlspecialchars()和htmlentities()将一些预定义的字符转换为HTML实体
+使用htmlspecialchars()和htmlentities()将一些预定义的字符转换为HTML实体
 ```
 <?php
     @$html = $_GET['x'];
@@ -96,6 +98,6 @@ a.txt中就存放着恶意脚本。
 
 * HttpOnly
 
-> ```
+```
 HttpOnly并不能防御XSS，但它能解决XSS漏洞后面的Cookie劫持攻击，防止XSS会话劫持
 ```

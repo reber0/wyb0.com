@@ -9,7 +9,7 @@ topics = ["PHP", "Database"]
 +++
 
 ### 0x00 config.inc.php内容如下
-> ```
+```
 <?php
 return array(
     'DB_HOST' => '192.168.188.134',
@@ -29,7 +29,7 @@ return array(
 ```
 
 ### 0x01 表设计如下
-> ```
+```
 create database scoreboard;
 use scoreboard;
 
@@ -68,7 +68,7 @@ flush privileges;
 ```
 
 ### 0x02 封装类如下
-> ```
+```
 <?php
 
 class mysql {
@@ -78,8 +78,7 @@ class mysql {
     private $conn;
 
     //构造函数
-    public function __construct()
-    {
+    public function __construct() {
         $config = include_once(dirname(__FILE__)."/../config/config.inc.php");
         $this->is_log = $config['IS_LOG'];
         $this->logfilepath = $config['LOGFILEPATH'];
@@ -93,8 +92,7 @@ class mysql {
     }
 
     //连接数据库
-    public function connect($dbhost, $dbuser, $dbpass, $dbname, $dbcharset)
-    {
+    public function connect($dbhost, $dbuser, $dbpass, $dbname, $dbcharset) {
         $this->conn = @mysql_connect($dbhost,$dbuser,$dbpass);
         if (!$this->conn) {
             $msg = "连接数据库失败：".mysql_error();
@@ -116,7 +114,7 @@ class mysql {
     }
 
     //执行语句
-    public function query($sql){
+    public function query($sql) {
         
         $result = @mysql_query($sql);
 
@@ -129,8 +127,7 @@ class mysql {
     }
 
     //查询一条数据
-    public function select_one($tab,$column = "*",$condition = '',$debug=False)   //查询函数
-    {
+    public function select_one($tab,$column = "*",$condition = '',$debug=False) {   //查询函数
         $condition = $condition ? ' where ' . $condition : NULL;
         $sql = "select $column from $tab $condition ";
         if ($debug) {
@@ -143,8 +140,7 @@ class mysql {
     }
 
     //查询多条数据
-    public function select_more($tab,$column = "*",$condition = '',$debug=False)   //查询函数
-    {
+    public function select_more($tab,$column = "*",$condition = '',$debug=False) {   //查询函数
         $condition = $condition ? ' where ' . $condition : NULL;
         $sql = "select $column from $tab $condition";
         if ($debug) {
@@ -163,8 +159,7 @@ class mysql {
     }
 
     //返回结果集
-    public function echo_result($tab,$column = "*",$condition = '',$debug=False)   //查询函数
-    {
+    public function echo_result($tab,$column = "*",$condition = '',$debug=False) {   //查询函数
         $condition = $condition ? ' where ' . $condition : NULL;
         $sql = "select $column from $tab $condition ";
         if ($debug) {
@@ -175,8 +170,7 @@ class mysql {
     }
 
     //插入数据
-    public function insert($tab,$arr,$debug=False)
-    {
+    public function insert($tab,$arr,$debug=False) {
         $value = '';
         $column = '';
         foreach ($arr as $k => $v) {
@@ -205,8 +199,7 @@ class mysql {
     }
 
     //更新数据
-    public function update($tab,$arr,$condition = '',$debug=False)
-    {
+    public function update($tab,$arr,$condition = '',$debug=False) {
         if (!$condition) {
             die("error".mysql_error());
         } else {
@@ -232,8 +225,7 @@ class mysql {
     }
 
     //删除数据
-    public function delete($tab,$condition='',$debug=False)
-    {
+    public function delete($tab,$condition='',$debug=False) {
         $condition = $condition ? ' where ' . $condition : NULL;
         $sql = "delete from $tab $condition";
         if ($debug) {
@@ -247,15 +239,13 @@ class mysql {
     }
 
     //返回受影响行数
-    public function affected_num()
-    {
+    public function affected_num() {
         $num = @mysql_affected_rows();
         return $num;
     }
 
     //写入日志
-    public function write_log($msg='')
-    {
+    public function write_log($msg='') {
         if ($this->is_log){
             $text = date("Y-m-d H:i:s")." ".$msg."\r\n";
             fwrite($this->hlog,$text);
@@ -263,20 +253,17 @@ class mysql {
     }
 
     //关闭数据库连接
-    public function close()
-    {  
+    public function close() {  
         mysql_close($this->conn);
     }
 
     //析构函数
-    public function __destruct()
-    {
+    public function __destruct() {
         if($this->is_log){
             fclose($this->hlog);
         }
     }
 }
-
 
     //$db = new mysql();
     
@@ -284,7 +271,6 @@ class mysql {
     // $rows = $db->select_more('share','*');
     // print_r($rows[0]);
     // print_r($rows[1]);
-
 
     // //insert($tab,$arr)
     // $arr = array();
@@ -294,7 +280,6 @@ class mysql {
     // $arr['date'] = '1464082630';
     // $db->insert('share',$arr);
 
-
     // //update($tab,$arr,$condition = '')
     // $arr = array();
     // $arr['content'] = 'xssxssxssxssxss';
@@ -302,11 +287,8 @@ class mysql {
     // $condition = 'id > 5';
     // $db->update('share',$arr,$condition);
 
-
     //$db->delete("share","id between 10 and 15");
 
-
     //$db->close();
-
 ?>
 ```

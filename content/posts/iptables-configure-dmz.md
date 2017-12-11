@@ -8,7 +8,7 @@ topics = ["Linux"]
 
 +++
 
-## 要求
+### 0x00 要求
 1. 内网可以访问外网
 2. 内网可以访问DMZ区
 3. 外网不能访问内网
@@ -16,17 +16,17 @@ topics = ["Linux"]
 5. DMZ区不能访问内网
 6. DMZ区不能主动访问外网
 
-## 拓扑
-> {{% fluid_img src="/img/post/iptables_dmz_topology.png" alt="iptables简单配置DMZ的拓扑.png" %}}
+### 0x01 拓扑
+![iptables简单配置DMZ的拓扑](/img/post/iptables_dmz_topology.png)
 
-## 个主机IP信息
-> 内网网段为：192.168.1.0/24  
-> DMZ区网段为：172.16.1.0/24
-{{% fluid_img src="/img/post/iptables_dmz_ip_info.png" alt="iptables简单配置DMZ的ip信息.png" %}}
+### 0x02 个主机IP信息
+内网网段为：192.168.1.0/24  
+DMZ区网段为：172.16.1.0/24
+![iptables简单配置DMZ的ip信息](/img/post/iptables_dmz_ip_info.png)
 
-## iptables的策略
-> 新建iptables.sh,内容如下：  
-> ```
+### 0x03 iptables的策略
+新建iptables.sh,内容如下：  
+```
 #!/bin/bash
 
 iptables –F #清空此表中的规则
@@ -89,23 +89,23 @@ service iptables save
 service iptables restart
 ```
 
-## 测试
+### 0x04 测试
 1. 内网可以访问外网
-{{% fluid_img src="/img/post/iptables_dmz_lan_to_internet.png" alt="内网可以访问外网.png" %}}
+![内网可以访问外网](/img/post/iptables_dmz_lan_to_internet.png)
 
 2. 内网可以访问DMZ
-{{% fluid_img src="/img/post/iptables_dmz_lan_to_dmz_www.png" alt="内网可以访问DMZ的www.png" %}}
-{{% fluid_img src="/img/post/iptables_dmz_lan_to_dmz_ftp.png" alt="内网可以访问DMZ的ftp.png" %}}
+![内网可以访问DMZ的www](/img/post/iptables_dmz_lan_to_dmz_www.png)
+![内网可以访问DMZ的ftp](/img/post/iptables_dmz_lan_to_dmz_ftp.png)
 
 3. 外网不能访问内网
-{{% fluid_img src="/img/post/iptables_dmz_internet_not_to_lan.png" alt="外网不能访问内网.png" %}}
+![外网不能访问内网](/img/post/iptables_dmz_internet_not_to_lan.png)
 
 4. 外网可以访问DMZ
-{{% fluid_img src="/img/post/iptables_dmz_internet_to_dmz_www.png" alt="外网可以访问DMZ的www.png" %}}
-{{% fluid_img src="/img/post/iptables_dmz_internet_to_dmz_ftp.png" alt="外网可以访问DMZ的ftp.png" %}}
+![外网可以访问DMZ的www](/img/post/iptables_dmz_internet_to_dmz_www.png)
+![外网可以访问DMZ的ftp](/img/post/iptables_dmz_internet_to_dmz_ftp.png)
 
 5. DMZ不能访问内网
-{{% fluid_img src="/img/post/iptables_dmz_dmz_not_to_lan.png" alt="DMZ不能访问内网.png" %}}
+![DMZ不能访问内网](/img/post/iptables_dmz_dmz_not_to_lan.png)
 
 6. DMZ不能访问外网
-{{% fluid_img src="/img/post/iptables_dmz_dmz_not_to_internet.png" alt="DMZ不能访问外网.png" %}}
+![DMZ不能访问外网](/img/post/iptables_dmz_dmz_not_to_internet.png)

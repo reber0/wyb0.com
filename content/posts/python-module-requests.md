@@ -9,17 +9,17 @@ topics = ["Python"]
 +++
 
 ### 0x00 无参数的get请求
-> ```python
+```python
 import requests
 
 resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误
 print resp.text #一般用来输出纯文本，可得到unicode类型字符串
 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串
 ```
-{{% fluid_img src="/img/post/requests_text.png" alt="requests得到html源码.png" %}}
+![requests得到html源码](/img/post/requests_text.png)
 
 ### 0x01 有参数的get请求
-> ```python
+```python
 import requests
 
 url = 'http://10.10.10.10:8080/Lab2.0/Login.action'
@@ -33,10 +33,10 @@ print resp.status_code #得到返回的状态码
 print resp.headers #得到html头
 print resp.cookies #得到cookie
 ```
-{{% fluid_img src="/img/post/requests_get_params.png" alt="有参数的get请求.png" %}}
+![有参数的get请求](/img/post/requests_get_params.png)
 
 ### 0x02 POST请求
-> ```python
+```python
 import requests
 url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action'
 url2 = 'http://10.10.10.10:8080/Lab2.0/student.action'
@@ -56,10 +56,10 @@ cookie = resp.cookies #保存cookie
 resp = requests.get(url2,cookies=cookie) #要加上cookie
 print resp.text
 ```
-{{% fluid_img src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面.png" %}}
+![post登陆后带cookie访问页面](/img/post/requests_post.png)
 
 ### 0x03 SSL证书
-> ```python
+```python
 import requests
 url = 'https://www.aa.com'
 requests.get(url)   #出错，因为是https，验证了证书
@@ -67,7 +67,7 @@ requests.get(url,verify=False) #正常，因为忽略了证书验证
 ```
 
 ### 0x04 添加Cookie
-> ```python
+```python
 import requests
 url = 'http://10.10.10.10:8080/Lab2.0/student.action'
 cookie = {
@@ -78,7 +78,7 @@ print resp.status_code
 ```
 
 ### 0x05 使用Session
-> ```python
+```python
 import requests
 url = 'http://10.10.10.10:8080/Lab2.0/Login.action'
 proxy = {
@@ -95,12 +95,12 @@ resp = s.post(url,data=data,proxies=proxy)
 resp = s.get('http://10.10.10.10:8080/Lab2.0/student.action')
 print resp.text
 ```
-{{% fluid_img src="/img/post/requests_proxies.png" alt="post登陆后带cookie访问页面.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/requests_post.png" alt="post登陆后带cookie访问页面.png" %}}
+![post登陆后带cookie访问页面](/img/post/requests_proxies.png)
+
+![post登陆后带cookie访问页面](/img/post/requests_post.png)
 
 ### 0x06 上传与下载
-> ```python
+```python
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -113,7 +113,7 @@ upload_url = "http://123.206.78.220/u.php"
 requests.post(upload_url, files=file)
 ```
 
-> ```
+```
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
@@ -133,7 +133,7 @@ urllib.urlretrieve(url, "b.tar.gz") #只能下载http的
 ```
 
 ### 0x07 重定向
-> ```
+```
 >>> import requests
 >>> r = requests.get('http://github.com') #默认跳转
 >>> r.url

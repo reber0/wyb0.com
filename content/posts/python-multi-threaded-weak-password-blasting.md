@@ -8,8 +8,8 @@ topics = ["Python", "Pentest"]
 
 +++
 
-## 脚本
-> ```python
+### 0x00 脚本
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -327,11 +327,11 @@ if __name__ == '__main__':
     main()
 ```
 
-## 尝试爆破
-> {{% fluid_img src="/img/post/bruter_help.png" alt="帮助信息.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/bruter_ssh.png" alt="爆破SSH.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/bruter_ftp.png" alt="爆破FTP.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/bruter_mysql.png" alt="爆破MySQL.png" %}}
+### 0x01 尝试爆破
+![帮助信息](/img/post/bruter_help.png)
+
+![爆破SSH](/img/post/bruter_ssh.png)
+
+![爆破FTP](/img/post/bruter_ftp.png)
+
+![爆破MySQL](/img/post/bruter_mysql.png)

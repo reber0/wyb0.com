@@ -9,7 +9,7 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 _blank
-> _blank是html中的标签属性，如```<a target="_blank" href="http://xss.reber-9.com/1.php">HELLO</a>```, 但若点击HELLO打开的网页1.php中有如下代码：
+_blank是html中的标签属性，如```<a target="_blank" href="http://xss.reber-9.com/1.php">HELLO</a>```, 但若点击HELLO打开的网页1.php中有如下代码：
 ```
 <script>
 if(window.opener){
@@ -22,7 +22,7 @@ if(window.opener){
 ### 0x01 简单模板
 * a.html内容如下：
 
-> ```
+```
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +37,7 @@ if(window.opener){
 
 * ```http://xss.reber-9.com/1.php```中1.php内容如下：
 
-> ```
+```
 <html>
 <head>
     <title>test</title>
@@ -55,7 +55,7 @@ if(window.opener){
 
 * 1.php同级下有个钓鱼模板fish.html，内容如下：
 
-> ```
+```
 <html>
 <head>
     <title>fish</title>
@@ -68,4 +68,4 @@ if(window.opener){
 
 * 点击a.html中的HELLO则会出现下面的情况，也就导致了钓鱼：
 
-> {{% fluid_img src="/img/post/blank.gif" alt="blank钓鱼" %}}
+![blank钓鱼](/img/post/blank.gif)

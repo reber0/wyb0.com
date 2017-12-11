@@ -9,64 +9,57 @@ topics = ["Pentest"]
 +++
 
 提权是在已经getshell但是权限不大的前提下做的
+
 ### 0x00 查看基本信息
-> {{% fluid_img src="/img/post/privilge_escalation_win_view_msg1.png" alt="Windows系统漏洞提权-查看基本信息1" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_view_msg2.png" alt="Windows系统漏洞提权-查看基本信息2" %}}
+![Windows系统漏洞提权-查看基本信息1](/img/post/privilge_escalation_win_view_msg1.png)
+
+![Windows系统漏洞提权-查看基本信息2](/img/post/privilge_escalation_win_view_msg2.png)
 
 ### 0x01 使用cmd执行命令
 * 尝试使用cmd执行命令
-{{% fluid_img src="/img/post/privilge_escalation_win_try_use_cmd.png" alt="Windows系统漏洞提权-尝试使用cmd执行命令" %}}
+![Windows系统漏洞提权-尝试使用cmd执行命令](/img/post/privilge_escalation_win_try_use_cmd.png)
 
 * 找可写目录
-{{% fluid_img src="/img/post/privilge_escalation_win_find_wirteable_dir.png" alt="Windows系统漏洞提权-找可写目录" %}}
+![Windows系统漏洞提权-找可写目录](/img/post/privilge_escalation_win_find_wirteable_dir.png)
 
 * 尝试上传cmd.exe
-{{% fluid_img src="/img/post/privilge_escalation_win_try_upload_cmd.png" alt="Windows系统漏洞提权-尝试上传cmd" %}}
+![Windows系统漏洞提权-尝试上传cmd](/img/post/privilge_escalation_win_try_upload_cmd.png)
 
 * 写一个aspx马
-{{% fluid_img src="/img/post/privilge_escalation_win_write_aspx.png" alt="Windows系统漏洞提权-写一个aspx马" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_view_aspx.png" alt="Windows系统漏洞提权-查看aspx马" %}}
+![Windows系统漏洞提权-写一个aspx马](/img/post/privilge_escalation_win_write_aspx.png)
+![Windows系统漏洞提权-查看aspx马](/img/post/privilge_escalation_win_view_aspx.png)
 
 * 上传cmd.exe
-{{% fluid_img src="/img/post/privilge_escalation_win_upload_cmd.png" alt="Windows系统漏洞提权-上传cmd" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_view_cmd.png" alt="Windows系统漏洞提权-查看上传的cmd" %}}
+![Windows系统漏洞提权-上传cmd](/img/post/privilge_escalation_win_upload_cmd.png)
+![Windows系统漏洞提权-查看上传的cmd](/img/post/privilge_escalation_win_view_cmd.png)
 
 * 再次尝试使用cmd执行命令
-{{% fluid_img src="/img/post/privilge_escalation_win_try_use_cmd_again1.png" alt="Windows系统漏洞提权-再次尝试使用cmd执行命令1" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_try_use_cmd_again2.png" alt="Windows系统漏洞提权-再次尝试使用cmd执行命令2" %}}
+![Windows系统漏洞提权-再次尝试使用cmd执行命令1](/img/post/privilge_escalation_win_try_use_cmd_again1.png)
+![Windows系统漏洞提权-再次尝试使用cmd执行命令2](/img/post/privilge_escalation_win_try_use_cmd_again2.png)
 
 ### 0x02 权限提升
 * 查看未安装补丁
-{{% fluid_img src="/img/post/privilge_escalation_win_view_patch.png" alt="Windows系统漏洞提权-查看系统未安装补丁" %}}
+![Windows系统漏洞提权-查看系统未安装补丁](/img/post/privilge_escalation_win_view_patch.png)
 
 * 上传exp提权
-{{% fluid_img src="/img/post/privilge_escalation_win_upload_iis6.png" alt="Windows系统漏洞提权-上传iis6" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_run_iis6_1.png" alt="Windows系统漏洞提权-第一次运行iis6" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_run_iis6_2.png" alt="Windows系统漏洞提权-再次运行iis6" %}}
+![Windows系统漏洞提权-上传iis6](/img/post/privilge_escalation_win_upload_iis6.png)
+![Windows系统漏洞提权-第一次运行iis6](/img/post/privilge_escalation_win_run_iis6_1.png)
+![Windows系统漏洞提权-再次运行iis6](/img/post/privilge_escalation_win_run_iis6_2.png)
 
 ### 0x03 添加用户
 * 添加远程连接用户
-{{% fluid_img src="/img/post/privilge_escalation_win_use_sys_help_user.png" alt="Windows系统漏洞提权-使用系统自带的帮助用户" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_sys_help_user_add_pwd.png" alt="Windows系统漏洞提权-为系统自带的帮助用户添加密码" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_sys_help_user_add_administrators.png" alt="Windows系统漏洞提权-将系统自带的帮助用户添加到管理员组" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_active_sys_help_user.png" alt="Windows系统漏洞提权-启用系统自带的帮助用户" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_view_sys_help_user.png" alt="Windows系统漏洞提权-查看系统自带的帮助用户现在的权限信息" %}}
+
+![Windows系统漏洞提权-使用系统自带的帮助用户](/img/post/privilge_escalation_win_use_sys_help_user.png)
+![Windows系统漏洞提权-为系统自带的帮助用户添加密码](/img/post/privilge_escalation_win_sys_help_user_add_pwd.png)
+![Windows系统漏洞提权-将系统自带的帮助用户添加到管理员组](/img/post/privilge_escalation_win_sys_help_user_add_administrators.png)
+![Windows系统漏洞提权-启用系统自带的帮助用户](/img/post/privilge_escalation_win_active_sys_help_user.png)
+![Windows系统漏洞提权-查看系统自带的帮助用户现在的权限信息](/img/post/privilge_escalation_win_view_sys_help_user.png)
 
 ### 0x04 使用3389远程连接
-> {{% fluid_img src="/img/post/privilge_escalation_win_view_ip.png" alt="Windows系统漏洞提权-查看ip信息" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_remote_connection.png" alt="Windows系统漏洞提权-远程连接" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_remote_connection_input_pwd.png" alt="Windows系统漏洞提权-远程连接输入用户名密码" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_win_remote_connection_success.png" alt="Windows系统漏洞提权-远程连接成功" %}}
+![Windows系统漏洞提权-查看ip信息](/img/post/privilge_escalation_win_view_ip.png)
+
+![Windows系统漏洞提权-远程连接](/img/post/privilge_escalation_win_remote_connection.png)
+
+![Windows系统漏洞提权-远程连接输入用户名密码](/img/post/privilge_escalation_win_remote_connection_input_pwd.png)
+
+![Windows系统漏洞提权-远程连接成功](/img/post/privilge_escalation_win_remote_connection_success.png)

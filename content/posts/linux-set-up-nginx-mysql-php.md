@@ -11,7 +11,7 @@ topics = ["Server"]
 安装环境为：CentOS-6.5-x86_64-minimal
 
 ### 0x00 准备工作
-> ```
+```
 首先执行：
     sudo yum groupinstall "Development tools"
 安装make：
@@ -21,7 +21,7 @@ topics = ["Server"]
 ```
 
 ### 0x01 安装mysql和php
-> ```sh
+```sh
 sudo yum install mysql mysql-server mysql-devel
 sudo yum install php php-devel
 sudo yum install php-gd php-mysql php-fpm
@@ -38,7 +38,7 @@ sudo yum install zlib zlib-devel
 sudo yum install openssl openssl-devel
 
 ### 0x03 安装Nginx
-> 可在http://nginx.org/download/nginx-1.9.9.tar.gz 下载
+可在http://nginx.org/download/nginx-1.9.9.tar.gz 下载
 ![下载nginx安装包](/img/post/download_nginx.png)
 ```sh
 #Ubuntu中需要依赖：libpcre3 libpcre3-dev zlib1g-dev libssl-dev build-essential
@@ -48,7 +48,7 @@ sudo yum install openssl openssl-devel
 ```
 
 ### 0x04 启动与关闭nginx
-> ```sh
+```sh
 # 开启服务：
 [reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
 # 关闭服务：
@@ -57,10 +57,10 @@ sudo yum install openssl openssl-devel
 ![访问nginx.png](/img/post/visit_nginx.png)
 
 ### 0x05 配置nginx支持php
-> [reber@WYB nginx-1.9.9]$ killall nginx  
+[reber@WYB nginx-1.9.9]$ killall nginx  
 [reber@WYB nginx-1.9.9]$ vim /usr/local/nginx/conf/nginx.conf
 
-> ```
+```
 location / {
     root   html;
     index  index.html index.htm index.php;

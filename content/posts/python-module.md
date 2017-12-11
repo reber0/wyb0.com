@@ -10,20 +10,21 @@ topics = ["Python"]
 
 ### 0x00 Python的模块
 * 在python中，任何一个python文件都可以看作一个模块
-* 不同包下有相同模块名并不会冲突，且包下必须有文件\_\_init\_\_.py
+* 不同包下有相同模块名并不会冲突，且包下必须有文件```__init__.py```
 * from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数)
 * from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test
 * import导入模块时会从sys.path输出的结果路径中查找模块然后导入
-* sys.path.append('D:/xx/xx/xx/code')可以添加搜索路径
-* 使用if \_\_name\_\_ == '\_\_main\_\_':
+* ```sys.path.append('D:/xx/xx/xx/code')```可以添加搜索路径
+* 使用```if __name__ == '__main__':```
 
 ### 0x01 实例
 * 文件结构如下
-{{% fluid_img src="/img/post/python_module_file_tree.png" alt="模块目录结构.png" %}}
+
+![模块目录结构](/img/post/python_module_file_tree.png)
 
 * 测试文件test.py
 
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -45,6 +46,7 @@ d.test()
 ```
 
 * 包package1
+
     * __init__.py
 
     > ```python
@@ -177,4 +179,4 @@ d.test()
         sub11.main()
     ```
 * 执行python test.py结果
-{{% fluid_img src="/img/post/python_module_test_result.png" alt="导入模块测试结果.png" %}}
+![导入模块测试结果](/img/post/python_module_test_result.png)

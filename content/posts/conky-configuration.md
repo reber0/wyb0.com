@@ -9,8 +9,8 @@ topics = ["Linux"]
 +++
 
 ### 0x00 效果
-> 使用软件conky可以在linux上看到系统的运行状态，效果如下：
-{{% fluid_img src="/img/post/Conky.png" alt="conky效果图" %}}
+使用软件conky可以在linux上看到系统的运行状态，效果如下：
+![conky效果图](/img/post/Conky.png)
 
 ### 0x01 安装与配置
 1. 先安装conky：  
@@ -22,7 +22,7 @@ sudo apt-get install conky
 在/etc/profile最下面添加：/usr/bin/conky &
 
 ### 0x03 配置文件.conkyrc内容如下
-> ```
+```
 # set to yes if you want Conky to be forked in the background
 background no
 cpu_avg_samples 2

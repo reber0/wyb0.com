@@ -9,11 +9,12 @@
             <div style="padding:5px 5px 2px 0px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>{{ with .Site.Params.DateFormat }}{{ $.Date.Format . }}{{ else }}{{ .Date.Format "02 Jan 2006, 15:04" }}{{ end }}</time>
-            </div>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- </div> -->
 
-            {{ $baseUrl := .Site.BaseURL }}
+                {{ $baseUrl := .Site.BaseURL }}
 
-            <div style="padding:2px 5px 2px 0px;">
+            <!-- <div style="padding:2px 5px 2px 0px;"> -->
                 {{ if isset .Params "topics" }}
                 {{ $count := len .Params.topics }}
                 {{ if gt $count 0 }}

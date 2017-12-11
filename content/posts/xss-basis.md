@@ -9,11 +9,11 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 简介
-> XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在"脚本"这两个字上，脚本主要有两个：JavaScript和ActionScript。  
+XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在"脚本"这两个字上，脚本主要有两个：JavaScript和ActionScript。  
 <font color="FF0000">要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。</font>
 
 ### 0x01 危害
-> JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。
+JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。
 ```
 • 盗取管理员Cookie
 • XSS Worm
@@ -25,7 +25,7 @@ topics = ["Pentest"]
 ```
 
 ### 0x02 攻击场景
-> 在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。
+在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。
 ```
 • 支持html解析和javascript解析的客户端,如：html文档、flsh、pdf等
 • url的参数，回显到网页上
@@ -34,11 +34,11 @@ topics = ["Pentest"]
 ```
 
 ### 0x03 分类
-> 主要分为三类：反射型、存储型、DOM型(还有flash XSS、mXSS)。   
+主要分为三类：反射型、存储型、DOM型(还有flash XSS、mXSS)。   
 
 * 反射型XSS  
 
-> 反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。
+反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。
 ```
 简单流程：
 1. 用户访问带有XSS代码的URL请求
@@ -56,7 +56,7 @@ topics = ["Pentest"]
 
 * 存储型XSS  
 
-> 存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。
+存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。
 ```
 测试技巧：
 1. 首先确定输入点和输出点，比如留言，若留言输出(显示)的地方是标签内，则XSS代码会被执行，但若输出在属性内，则不会执行，如：<input type="text" name="content" value="<script>alert(/xss/)</script>" />
@@ -74,7 +74,7 @@ topics = ["Pentest"]
 
 * DOM XSS
 
-> DOM即文本对象模型，DOM通常代表在html、xhtml和xml中的对象，使用DOM可以允许程序和脚本动态的访问和更新文档的内容、结构和样式。它不需要服务器解析响应的直接参与，触发XSS靠的是浏览器端的DOM解析，可以认为完全是客户端的事情。
+DOM即文本对象模型，DOM通常代表在html、xhtml和xml中的对象，使用DOM可以允许程序和脚本动态的访问和更新文档的内容、结构和样式。它不需要服务器解析响应的直接参与，触发XSS靠的是浏览器端的DOM解析，可以认为完全是客户端的事情。
 ```
 DOM的规定如下：
 • 整个文档是一个文档节点
@@ -88,9 +88,9 @@ HTML的标签都是一个个节点，这些节点组成了DOM的整体结构：�
 
 * flash XSS
 
-> 利用网页上flash文件的缺陷来执行js脚本，一般是反射型XSS。  
+利用网页上flash文件的缺陷来执行js脚本，一般是反射型XSS。  
 flash文件可以实现一些功能，如google的mail域下的sound.swf是用来播放声音的，uploaderapi2.swf是上传文件, audio.swf是播放音频文件。  
-如：https://mail.google.com/mail/html/audio.swf?videoUrl=aa.mp4 ，这个audio.swf文件就是从videoUrl接收参数然后进行播放。
+如：https://mail.google.com/mail/html/audio.swf?videoUrl=aa.mp4 ，audio.swf文件就是从videoUrl接收参数然后进行播放。
 ```
 #现有flash文件aa.swf，源码如下：
 var func:String=root.loaderInfo.parameters.func; //接受FLASH所带的func参数

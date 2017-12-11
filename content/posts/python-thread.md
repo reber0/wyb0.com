@@ -9,8 +9,9 @@ topics = ["Python"]
 +++
 
 Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。
-## 单线程
-> ```python
+
+### 0x00 单线程
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -32,10 +33,10 @@ if __name__ == '__main__':
     print "All over time:%s" % ctime()
     print "Used time:%d" % int(time()-start)
 ```
-{{% fluid_img src="/img/post/thread_single.png" alt="单线程" %}}
+![单线程](/img/post/thread_single.png)
 
-## 多线程
-> ```python
+### 0x01 多线程
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -79,14 +80,14 @@ if __name__ == '__main__':
         
     print "Used time:%d" % int(time() - start)
 ```
-{{% fluid_img src="/img/post/thread_multithreading.png" alt="多线程" %}}
+![多线程](/img/post/thread_multithreading.png)
 
-## 线程同步
-> 使用多线程时若线程共用一个资源则可能导致线程竞争问题，可以通过互斥锁和队列来解决
+### 0x02 线程同步
+使用多线程时若线程共用一个资源则可能导致线程竞争问题，可以通过互斥锁和队列来解决
 
 * 线程竞争
 
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -119,13 +120,13 @@ if __name__ == '__main__':
         
     print "Used time:%d" % int(time() - start)
 ```
-{{% fluid_img src="/img/post/thread_compete1.png" alt="线程竞争1" %}}
-<br /><br />
-{{% fluid_img src="/img/post/thread_compete2.png" alt="线程竞争2" %}}
+![线程竞争1](/img/post/thread_compete1.png)
+
+![线程竞争2](/img/post/thread_compete2.png)
 
 * 互斥锁
 
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -172,12 +173,11 @@ if __name__ == '__main__':
 
     print "Total use time %d" % int(time() - start)
 ```
-{{% fluid_img src="/img/post/thread_mutex.png" alt="互斥锁同步" %}}
-
+![互斥锁同步](/img/post/thread_mutex.png)
 
 * 队列(推荐)
 
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -214,10 +214,10 @@ if __name__ == '__main__':
 
     print "Total use time %d" % int(time() - start)
 ```
-{{% fluid_img src="/img/post/thread_queue.png" alt="队列解决线程竞争问题" %}}
+![队列解决线程竞争问题](/img/post/thread_queue.png)
 
-## 多线程与类与队列
-> ```python
+### 0x03 多线程与类与队列
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -278,4 +278,4 @@ if __name__ == '__main__':
     main()
     print "Total use time %d" % int(time() - start)
 ```
-{{% fluid_img src="/img/post/thread_multithreading_queue_class.png" alt="使用多线程和类和队列" %}}
+![使用多线程和类和队列](/img/post/thread_multithreading_queue_class.png)

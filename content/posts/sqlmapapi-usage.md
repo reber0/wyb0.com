@@ -8,10 +8,10 @@ topics = ["Pentest"]
 
 +++
 
-## 关于sqlmapapi.py
+### 0x00 关于sqlmapapi.py
 当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量
 
-## 用于交互的方法
+### 0x01 用于交互的方法
 在sqlmap/lib/utils/api.py中:
 ```
 # 用户方法
@@ -35,42 +35,46 @@ topics = ["Pentest"]
 @get("/download/<taskid>/<target>/<filename:path>") Download a certain file from the file system
 ```
 
-## sqlmapapi.py参数如下
-{{% fluid_img src="/img/post/sqlmapapi_help.png" alt="sqlmapapi参数.png" %}}
+### 0x02 sqlmapapi.py参数如下
+![sqlmapapi参数](/img/post/sqlmapapi_help.png)
 它的-s参数可以启动一个服务(返回一个Admin Id)，只要将url给它就行了：
-{{% fluid_img src="/img/post/sqlmapapi_server.png" alt="启动sqlmapapi服务.png" %}}
+![启动sqlmapapi服务](/img/post/sqlmapapi_server.png)
 
-## 简单使用
-
-### 1. 创建任务
+### 0x03 简单使用
+1. 创建任务
 使用@get("/task/new")方法创建一个新的任务
-{{% fluid_img src="/img/post/sqlmapapi_new_task.png" alt="sqlmapapi新建任务.png" %}}
-### 2. 指定参数
+![sqlmapapi新建任务](/img/post/sqlmapapi_new_task.png)
+
+2. 指定参数
 使用@post("/option/\<taskid\>/set")方法设置参数
-{{% fluid_img src="/img/post/sqlmapapi_options.png" alt="sqlmapapi指定参数.png" %}}
-### 3. 开始扫描
+![sqlmapapi指定参数](/img/post/sqlmapapi_options.png)
+
+3. 开始扫描
 使用@post("/scan/\<taskid\>/start")方法开始扫描
-{{% fluid_img src="/img/post/sqlmapapi_scan_start.png" alt="sqlmapapi开始扫描.png" %}}
-### 4. 获取探测是否结束
+![sqlmapapi开始扫描](/img/post/sqlmapapi_scan_start.png)
+
+4. 获取探测是否结束
 使用@get("/scan/\<taskid\>/status")获取探测是否结束
-{{% fluid_img src="/img/post/sqlmapapi_scan_status.png" alt="sqlmapapi得到扫描状态.png" %}}
-### 5. 获取探测结果
+![sqlmapapi得到扫描状态](/img/post/sqlmapapi_scan_status.png)
+
+5. 获取探测结果
 使用@get("/scan/\<taskid\>/data")获取探测结果，如果不能注入，则获取到的结果为空，如下：
 ```
 {u'data': [], u'success': True, u'error': []}
 ```
 若存在注入则可能如下：
-{{% fluid_img src="/img/post/sqlmapapi_scan_result.png" alt="sqlmapapi得到扫描结果.png" %}}
-### 6. 删除任务
+![sqlmapapi得到扫描结果](/img/post/sqlmapapi_scan_result.png)
+
+6. 删除任务
 使用@get("/task/delete")方法删除一个任务.
 ```
 >>>resp = requests.get('http://127.0.0.1:8776/task/96f01550dadabab8/delete')
 >>>resp.json()
 {u'success': True}
 ```
-{{% fluid_img src="/img/post/sqlmapapi_delete_task.png" alt="sqlmapapi删除任务.png" %}}
+![sqlmapapi删除任务](/img/post/sqlmapapi_delete_task.png)
 
-## 简单示例
+### 0x04 简单示例
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-

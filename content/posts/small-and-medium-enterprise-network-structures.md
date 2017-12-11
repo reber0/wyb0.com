@@ -8,7 +8,7 @@ topics = ["Other"]
 
 +++
 
-## 中小企业需求分析
+### 0x00 中小企业需求分析
 1. 搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。
 2. 对网络设备能够方便地进行远程管理。
 3. 在局域网中公司部门间进行vlan划分，实现安全管理。
@@ -16,10 +16,10 @@ topics = ["Other"]
 5. 配置访问控制列表（ACL）以对网络数据进行有效的分类和控制，限制终端之间的相互访问。
 6. 内网通过配置PAT技术实现与外网之间的通信。
 
-## 所需设备
-> {{% fluid_img src="/img/post/enterprise_network_the_required_equipment.png" alt="中小企业所需设备.png" %}}
+### 0x01 所需设备
+![中小企业所需设备](/img/post/enterprise_network_the_required_equipment.png)
 
-## 网络规划
+### 0x02 网络规划
 1. 在三层交换机设置ACL，控制个vlan间的通信
 2. 在防火墙(路由器)上设置NAT转换
 3. 路由协议采用OSPF
@@ -36,10 +36,10 @@ topics = ["Other"]
    * 防火墙和三层交换机所在网段：192.168.5.0/24
    * 管理ip所在网段：192.168.100.0/24
 
-## 网络设备配置命令代码
+### 0x03 网络设备配置命令代码
 * Firewall配置
 
-> ```
+```
 Router>enable 
 Router#conf t
 Router(config)#no ip domain-lookup  //禁止域名解析
@@ -82,7 +82,7 @@ Firewall#
 
 * R1的配置
 
-> ```
+```
 Router>enable 
 Router#conf t
 Router(config)#no ip domain-lookup 
@@ -117,7 +117,7 @@ R1#
 
 * 三层交换机配置
 
-> ```
+```
 Switch>enable 
 Switch#conf t
 Switch(config)#no ip domain-lookup
@@ -210,7 +210,7 @@ MS1#
 
 * S1的配置(S2、S3和S1一样)
 
-> ```
+```
 Switch>enable 
 Switch#conf t
 Switch(config)#no ip domain-lookup 
@@ -240,7 +240,7 @@ S1#
 
 * S4的配置(S5、S6、S7和S4一样)
 
-> ```
+```
 Switch>enable 
 Switch#conf t
 Switch(config)#no ip domain-lookup 
@@ -289,31 +289,30 @@ Building configuration...
 S4#
 ```
 
-## 测试及结果截图
+### 0x04 测试及结果截图
 * 开始时外网和内网均能相互通信
-{{% fluid_img src="/img/post/enterprise_network_init1.png" alt="开始时内外网能相互ping通1.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/enterprise_network_init2.png" alt="开始时内外网能相互ping通2.png" %}}
+![开始时内外网能相互ping通1](/img/post/enterprise_network_init1.png)
+![开始时内外网能相互ping通2](/img/post/enterprise_network_init2.png)
 
 * 外网的2.0网段和3.0网段ping内网网段，只有2.0只能ping通内网的网段，且只能ping通192.168.2.0
-{{% fluid_img src="/img/post/enterprise_network_test1.png" alt="测试1.png" %}}
+![测试1](/img/post/enterprise_network_test1.png)
 
 * 内网网段ping外网的202.202.2.1，只有2.0能ping通外网
-{{% fluid_img src="/img/post/enterprise_network_test2.png" alt="测试2.png" %}}
+![测试2](/img/post/enterprise_network_test2.png)
 
 * 内网2.0网段ping内网网段，只能访问1.0
-{{% fluid_img src="/img/post/enterprise_network_test3.png" alt="测试3.png" %}}
+![测试3](/img/post/enterprise_network_test3.png)
 
 * 内网3.0网段ping内网网段，能ping通1.0和4.0
-{{% fluid_img src="/img/post/enterprise_network_test4.png" alt="测试4.png" %}}
+![测试4](/img/post/enterprise_network_test4.png)
 
 * 内网4.0网段ping内网网段，能ping通1.0和3.0
-{{% fluid_img src="/img/post/enterprise_network_test5.png" alt="测试5.png" %}}
+![测试5](/img/post/enterprise_network_test5.png)
 
 * 远程配置设备
-{{% fluid_img src="/img/post/enterprise_network_test6.png" alt="测试6.png" %}}
+![测试6](/img/post/enterprise_network_test6.png)
 
 * 查看NAT转换
-{{% fluid_img src="/img/post/enterprise_network_test7.png" alt="测试7.png" %}}
+![测试7](/img/post/enterprise_network_test7.png)
 
 以上

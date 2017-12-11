@@ -9,7 +9,7 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 关于War包
-> ```
+```
 War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码,
 以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布
 则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat
@@ -18,28 +18,23 @@ War包一般是进行Web开发时一个网站Project下的所有代码,包括前
 
 ### 0x01 上传War包GetShell
 * 找到后台猜密码然后登录
-{{% fluid_img src="/img/post/tomcat_vul_background.png" alt="Tomcat后台" %}}
-<br /><br />
-{{% fluid_img src="/img/post/tomcat_vul_login.png" alt="Tomcat后台登录" %}}
-<br /><br />
-{{% fluid_img src="/img/post/tomcat_vul_war_login_success.png" alt="Tomcat后台登录成功" %}}
+![Tomcat后台](/img/post/tomcat_vul_background.png)
+![Tomcat后台登录](/img/post/tomcat_vul_login.png)
+![Tomcat后台登录成功](/img/post/tomcat_vul_war_login_success.png)
 
 * 上传War包  
 先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包
-{{% fluid_img src="/img/post/tomcot_vul_put_war.png" alt="Tomcat上传War包" %}}
-<br /><br />
-{{% fluid_img src="/img/post/tomcot_vul_put_war_success.png" alt="Tomcat上传War包成功" %}}
-<br /><br />
-{{% fluid_img src="/img/post/tomcot_vul_visit_shell1.png" alt="Tomcat部署War包后访问shell1" %}}
-<br /><br />
-{{% fluid_img src="/img/post/tomcot_vul_visit_shell2.png" alt="Tomcat部署War包后访问shell2" %}}
+![Tomcat上传War包](/img/post/tomcot_vul_put_war.png)
+![Tomcat上传War包成功](/img/post/tomcot_vul_put_war_success.png)
+![Tomcat部署War包后访问shell1](/img/post/tomcot_vul_visit_shell1.png)
+![Tomcat部署War包后访问shell2](/img/post/tomcot_vul_visit_shell2.png)
 
 ### 0x02漏洞防御
 * 后台使用强密码
 * 删除Tomcat下的manager文件夹
 
 ### 0x03 附爆破弱口令代码
-> ```python
+```python
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 

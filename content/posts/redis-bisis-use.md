@@ -9,7 +9,7 @@ topics = ["Database"]
 +++
 
 ### 0x00 连接Redis
-> ```cs
+```cs
 # 客户端连接
 $ redis-cli
 
@@ -54,7 +54,7 @@ OK
     * zset的成员是唯一的,但分数(score)却可以重复。
 
 ### 0x02 String
-> ```cs
+```cs
 # 添加键值对
 127.0.0.1:6379> set name "xiaoming"
 # 获取键值
@@ -64,7 +64,7 @@ OK
 ```
 
 ### 0x03 Hash
-> ```cs
+```cs
 # Hash中一个key对应多个值
 127.0.0.1:6379> hmset student1 name "xiaohong" age "18"
 OK
@@ -83,7 +83,7 @@ OK
 ```
 
 ### 0x04 List
-> ```cs
+```cs
 127.0.0.1:6379> lpush list1 "python"
 (integer) 1
 127.0.0.1:6379> lpush list1 "php"
@@ -113,7 +113,7 @@ OK
 ```
 
 ### 0x05 Set
-> ```cs
+```cs
 127.0.0.1:6379> sadd set1 "333"
 (integer) 1
 127.0.0.1:6379> sadd set1 "222"
@@ -132,7 +132,7 @@ OK
 ```
 
 ### 0x06 zset
-> ```cs
+```cs
 127.0.0.1:6379> zadd zset1 2 "222"
 (integer) 1
 127.0.0.1:6379> zadd zset1 1 "111"

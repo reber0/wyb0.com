@@ -9,7 +9,7 @@ topics = ["Python"]
 +++
 
 ### 0x00 几个编码函数
-> ```
+```
 * ord(x)  
     将字符转换为10进制整数(0~255之间) #ord('a')==>97
 * chr(x)  
@@ -28,8 +28,7 @@ topics = ["Python"]
 
 ### 0x01 设置为utf-8
 * 在py文件开头设置
-
-> ```python
+```python
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 或：
@@ -48,7 +47,7 @@ sys.setdefaultencoding('utf8')
 ```
 
 ### 0x03 编码转换
-> python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
+python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
 ```
 python2中的字符串一般包含两种类型：str和unicode
 str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串
@@ -69,7 +68,7 @@ True
 <type 'unicode'>
 ```
 
-> ```
+```
 >>> u'小明'.encode('utf8') #unicode到utf8
 '\xe5\xb0\x8f\xe6\x98\x8e'
 >>> '小明'.decode('utf8') #utf8到unicode
@@ -84,7 +83,7 @@ u'\u5c0f\u660e'
 ```
 
 ### 0x04 网页的编码
-> ```python
+```python
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 

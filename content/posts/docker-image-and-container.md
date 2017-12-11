@@ -14,7 +14,7 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 ### 0x00 镜像操作
 * 下载镜像
 
-> ```bash
+```bash
 #一般容器的id和name可以互换
 
 $ docker search ubuntu #从公共registry搜索镜像
@@ -25,7 +25,7 @@ $ docker pull ubuntu:14.04
 
 * 查看当前系统镜像
 
-> ```bash
+```bash
 $ docker images
 REPOSITORY    TAG       IMAGE ID        CREATED        SIZE
 ubuntu        latest    14f60031763d    2 weeks ago    120MB
@@ -34,7 +34,7 @@ ubuntu        14.04     54333f1de4ed    2 weeks ago    188MB
 
 * 提交新的镜像
 
-> ```
+```
 #首先运行一个容器，容器id为50b74968229a
 $ docker commit 50b74968229a ubuntu:add_file
 $ docker images
@@ -46,13 +46,13 @@ ubuntu        14.04     54333f1de4ed    2 weeks ago    188MB
 
 * 打包镜像
 
-> ```bash
+```bash
 $ docker save 54333f1de4ed > /home/reber/ubuntu.tar
 ```
 
 * 加载镜像
 
-> ```bash
+```bash
 $ docker load < ./ubuntu.tar
 1b0c71361973: Loading layer  196.9MB/196.9MB
 150e95c79e16: Loading layer  209.9kB/209.9kB
@@ -68,7 +68,7 @@ centos        7         328edcd84f1b    7 days ago     193MB
 
 * 给镜像打标签
 
-> ```bash
+```bash
 $ docker tag 54333f1de4ed ubuntu:14.04
 $ docker images
 REPOSITORY    TAG      IMAGE ID        CREATED        SIZE
@@ -78,20 +78,20 @@ ubuntu        14.04    54333f1de4ed    3 weeks ago    188MB
 
 * 查看镜像层组成
 
-> ```bash
+```bash
 $ docker history ubuntu:desktop
 ```
 
 * 删除镜像(删除镜像前要先删除上面的容器)
 
-> ```bash
+```bash
 $ docker rmi ubuntu:latest #docker rmi 14f60031763d
 ```
 
 ### 0x01 容器操作
 * 运行容器(exit后容器就停止了)
 
-> ```bash
+```bash
 $ docker run --rm -it ubuntu:14.04 /bin/bash
 root@172c8d8b0671:/# ls
 bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
@@ -108,7 +108,7 @@ ubuntu：这是容器立足的镜像
 
 * 后台运行容器
 
-> ```bash
+```bash
 $ docker run -itd ubuntu:14.04 ping 8.8.8.8
 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11
 #$ sudo docker run -itd ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
@@ -119,7 +119,7 @@ $ docker run -itd ubuntu:14.04 ping 8.8.8.8
 
 * 查看当前运行的容器
 
-> ```bash
+```bash
 $ docker ps
 CONTAINER ID   IMAGE          COMMAND          CREATED          STATUS          PORTS    NAMES
 1f665a3ccf4b   ubuntu:14.04   "ping 8.8.8.8"   5 seconds ago    Up 4 seconds             goofy_dubinsky
@@ -127,7 +127,7 @@ CONTAINER ID   IMAGE          COMMAND          CREATED          STATUS          
 
 * 查看所有容器
 
-> ```bash
+```bash
 $ docker ps -a
 CONTAINER ID   IMAGE          COMMAND          CREATED          STATUS          PORTS    NAMES
 1f665a3ccf4b   ubuntu:14.04   "ping 8.8.8.8"   13 minutes ago   Up 13 minutes            goofy_dubinsky
@@ -136,7 +136,7 @@ CONTAINER ID   IMAGE          COMMAND          CREATED          STATUS          
 
 * 查看容器日志
 
-> ```bash
+```bash
 $ docker logs 1f665a3ccf4b
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=1 ttl=127 time=183 ms
@@ -149,19 +149,19 @@ PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 
 * 查看容器的端口映射
 
-> ```bash
+```bash
 $ docker port 1f665a3ccf4b
 ```
 
 * 查看容器的进程信息
 
-> ```bash
+```bash
 $ docker top 1f665a3ccf4b
 ```
 
 * 查看容器的文件变化
 
-> ```bash
+```bash
 $ docker diff 1f665a3ccf4b
 C /root
 A /root/.bash_history
@@ -170,21 +170,21 @@ A /root/a.txt
 
 * 从宿主机向容器复制数据
 
-> ```bash
+```bash
 $ docker cp a.txt 1f665a3ccf4b:/root/
 $ docker cp test 1f665a3ccf4b:/root/
 ```
 
 * 从容器向宿主机复制数据
 
-> ```bash
+```bash
 $ docker cp 1f665a3ccf4b:/root/libxml29_compat.patch ~/
 $ docker cp 1f665a3ccf4b:/root/test ~/
 ```
 
 * 导出/导入容器(导出的其实是镜像)
 
-> ```bash
+```bash
 $ docker export df2a7e881c8a > ./ubuntu_container.tar
 $ docker import ./ubuntu_container.tar
 $ docker images
@@ -195,7 +195,7 @@ $ docker tag 499df17f51e7 ubuntu:container
 
 * 进入容器
 
-> ```bash
+```bash
 $ docker exec -ti goofy_dubinsky /bin/bash
 root@1f665a3ccf4b:/# ps -aux|grep ping
 root         1  0.0  0.0   6524   712 ?        Ss   09:38   0:00 ping 8.8.8.8
@@ -203,7 +203,7 @@ root         1  0.0  0.0   6524   712 ?        Ss   09:38   0:00 ping 8.8.8.8
 
 * 停止/启动容器
 
-> ```bash
+```bash
 $ docker stop 1f665a3ccf4b
 1f665a3ccf4b
 #docker kill 1f665a3ccf4b，stop会在10s后停止，kill则直接停止
@@ -213,7 +213,7 @@ $ docker start 1f665a3ccf4b
 
 * 删除容器(容器需要先停止才能删除)
 
-> ```bash
+```bash
 $ docker rm 1f665a3ccf4b
 Error response from daemon: You cannot remove a running container 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11. Stop the container before attempting removal or force remove
 $ docker kill 1f665a3ccf4b
@@ -224,7 +224,7 @@ $ docker rm 1f665a3ccf4b
 
 * 删除所有容器(只能删除停止运行的)
 
-> ```bash
+```bash
 $ docker rm $(docker ps -a -q)
 be5877380ca5
 3e4b3a11d49f
@@ -233,12 +233,12 @@ dc6cadfc08f7
 ```
 
 ### 0x02 查看镜像或容器的底层信息(IP、端口绑定、配置信息等)
-> ```bash
+```bash
 $ docker inspect 65987aa8f0cb
 ```
 
 ### 0x03 例子
-> ```bash
+```bash
 $ exec_ping=$(docker run -itd ubuntu:14.04 ping 8.8.8.8)
 $ docker logs $exec_ping
 $ docker restart $exec_ping

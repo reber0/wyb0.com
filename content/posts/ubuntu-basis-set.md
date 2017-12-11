@@ -9,7 +9,6 @@ topics = ["Linux", "Server"]
 +++
 
 ### 0x00 环境
->
 我是在虚拟机中安装14.04.4版的Ubuntu [下载Ubuntu14.04.4](http://mirrors.163.com/ubuntu-releases/14.04.4/ubuntu-14.04.4-desktop-amd64.iso)
 
 ### 0x01 配源或选择最快的更新服务器
@@ -20,7 +19,7 @@ System Settings --> Software & Updates --> Download from:other --> Select Best S
 reber@ubuntu:~$ cp /etc/apt/sources.list /etc/apt/sources.list.bak  
 reber@ubuntu:~$ vim /etc/apt/sources.list
 
-> ```
+```
 中科大源：
 deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
 deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
@@ -52,7 +51,7 @@ reber@ubuntu:~$ sudo apt-get upgrade
     
 
 ### 0x02 简单配置
-> ```bash
+```bash
 $ sudo apt-get install open-vm-tools-desktop fuse
 $ sudo apt-get install vim
 $ sudo apt-get install nautilus-open-terminal  #注销,再次登陆即可任意地方右键打开终端
@@ -61,7 +60,7 @@ $ vim ~/.bashrc  #添加alias c='clear'
 ```
     
 ### 0x03 安装输入法
-> ```
+```
 apt-get -f install可解决依赖问题
 reber@ubuntu:~$ apt-get install ibus-sunpinyin   #安装后重启系统
 进入设置：system setting->text entry->添加sunpinyin
@@ -70,7 +69,7 @@ reber@ubuntu:~$ apt-get install ibus-sunpinyin   #安装后重启系统
 ### 0x04 配置Apache/MySQL/PHP
 * 安装
 
-> ```bash
+```bash
 sudo apt-get install apache2
 sudo apt-get install mysql-client mysql-server
 sudo apt-get install php5
@@ -82,7 +81,7 @@ sudo chmod 777 /var/www   #为了方便
     
 * 解决乱码问题
 
-> ```
+```
 查看编码：
     mysql> show variables like 'char%';
 apache：
@@ -96,7 +95,7 @@ mysql：
 
 * 测试数据库连接
 
-> ```
+```
 <?php
     $link = mysql_connect("localhost", "root", "password");
     if(!$link)
@@ -108,13 +107,13 @@ mysql：
 ```
  
 ### 0x05 管理开机自启
-> ```
+```
 ubuntu管理软件自启一般用rcconf：sudo apt-get install rcconf
 ubuntu添加mysql自启可以在/etc/rc.local添加/etc/init.d/mysql start
 ```
 
 ### 0x06 调时间
-> ```
+```
 # 查看系统时间
 $ date                                         
 

@@ -9,8 +9,8 @@ topics = ["Pentest"]
 +++
 
 ### Struts2 046
-> 前段时间写的struts2 046检测脚本，代码如下：
-> ```
+前段时间写的struts2 046检测脚本，代码如下：
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # code by reber

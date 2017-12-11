@@ -9,7 +9,7 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 Linux下的提权
-> Linux下一般都是系统漏洞提权，分为以下几个步骤：
+Linux下一般都是系统漏洞提权，分为以下几个步骤：
 ```
 1. 获取系统版本号
 2. 根据系统版本号找对应exp
@@ -48,16 +48,16 @@ topics = ["Pentest"]
 
 ### 0x02 实例
 * 得到系统版本号
-{{% fluid_img src="/img/post/privilge_escalation_linux_get_sys_version.png" alt="得到系统版本号.png" %}}
+![得到系统版本号](/img/post/privilge_escalation_linux_get_sys_version.png)
+
 * 找对应exp
-{{% fluid_img src="/img/post/privilge_escalation_linux_search_exp.png" alt="找相应exp.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_linux_exp_code.png" alt="保存exp源码.png" %}}
+![找相应exp](/img/post/privilge_escalation_linux_search_exp.png)
+![保存exp源码](/img/post/privilge_escalation_linux_exp_code.png)
+
 * 反弹shell
-{{% fluid_img src="/img/post/privilge_escalation_linux_webshell_rebound_shell.png" alt="反弹shell.png" %}}
+![反弹shell](/img/post/privilge_escalation_linux_webshell_rebound_shell.png)
+
 * 提权
-{{% fluid_img src="/img/post/privilge_escalation_linux_write_exp_code.png" alt="下载exp源码.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_linux_compile_exp_code.png" alt="编译exp源码.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/privilge_escalation_linux_run_exp.png" alt="运行exp.png" %}}
+![下载exp源码](/img/post/privilge_escalation_linux_write_exp_code.png)
+![编译exp源码](/img/post/privilge_escalation_linux_compile_exp_code.png)
+![运行exp](/img/post/privilge_escalation_linux_run_exp.png)

@@ -8,10 +8,10 @@ topics = ["Pentest"]
 
 +++
 
-> {{% fluid_img src="/img/anime/anime006.jpg" alt="攻壳机动队" %}}
+![攻壳机动队](/img/anime/anime006.jpg)
 
 ### 0x00 浏览器解析
-> ```
+```
 浏览器收到服务器发来的HTML内容，会从头解析，遇到<script></script>时，
 会调用js脚本解析器来解析并执行脚本，然后继续解析其他的HTML内容，
 对于需要触发才能执行的事件，当事件触发时脚本解析器才会解析其中的脚本，
@@ -50,7 +50,7 @@ topics = ["Pentest"]
 ```
 
 ### 0x02 编码与解码顺序
-> 解码时先解码最外层，编码时先编码最内层
+解码时先解码最外层，编码时先编码最内层
 ```html
 如<td onclick="openUrl(add.do?userName='{$value}');">11</td>，
 首先value出现在url中，而url在js中，而js又是html一部分，所以

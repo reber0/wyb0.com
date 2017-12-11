@@ -12,14 +12,14 @@ topics = ["Linux"]
 Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
 ### 0x00 Dockerfile
-> ```
+```
 Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令，
 每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。
 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。
 ```
 
 ### 0x01 Dockerfile基本指令
-> ```bash
+```bash
 FROM <image name>：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie)
 MAINTAINER <author name>：设置该镜像的作者
 COPY <source> <dest>：复制文件，dest要以 / 结尾
@@ -33,7 +33,7 @@ USER <uid>：镜像正在运行时设置一个uid，即设定启动容器的用�
 VOLUME ['/data']：授权访问从容器内到主机的目录
 ```
 
-> CMD与ENTRYPOINT的区别：
+CMD与ENTRYPOINT的区别：
 ```bash
 #docker run ubuntu:test会执行/bin/echo 'this is test'
 CMD ['/bin/echo','this is test']
@@ -47,11 +47,11 @@ CMD ["restart"]#CMD中的值会作为ENTRYPOINT的默认参数
 ```
 
 ### 0x02 实例
-> ![文件结构](/img/post/dockerfile.png)
+![文件结构](/img/post/dockerfile.png)
 
 * Dockerfile
 
->```bash
+```bash
 reber@wyb:~/range$ cat Dockerfile
 FROM ubuntu:14.04
 MAINTAINER reber
@@ -82,7 +82,7 @@ CMD ["--help"]
 
 * src/privileges.sql
 
-> ```sql
+```sql
 reber@wyb:~/range$ cat src/privileges.sql
 use mysql;
 UPDATE user SET password=PASSWORD('root') where USER='root';
@@ -91,7 +91,7 @@ FLUSH PRIVILEGES;
 
 * src/sources.list
 
-> ```bash
+```bash
 reber@wyb:~/range$ cat src/sources.list
 deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
 deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
@@ -107,7 +107,7 @@ deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted unive
 
 * src/start.sh
 
-> ```bash
+```bash
 reber@wyb:~/range$ cat src/start.sh
 #!/bin/bash
 set -x
@@ -132,7 +132,7 @@ echo 'set success'
 ```
 
 ### 0x03 构建镜像
-> ```bash
+```bash
 reber@wyb:~/range$ ls
 Dockerfile  src
 reber@wyb:~/range$ ls src
@@ -148,9 +148,9 @@ reber@wyb:~/range$ docker run -itd -p 8888:80 range:v1.0
 ### 0x04 注意事项
 * 使用缓存
 
-> 因为每条指令都会创建一个镜像，若一个镜像已经存在的话则不会重新执行指令创建新镜像，而是直接使用。  
-> 为有效的利用已存在的镜像，应保持Dockerfile的一致性，尽量在末尾修改，比如说前几行都如下设置：
-> ```
+因为每条指令都会创建一个镜像，若一个镜像已经存在的话则不会重新执行指令创建新镜像，而是直接使用。  
+为有效的利用已存在的镜像，应保持Dockerfile的一致性，尽量在末尾修改，比如说前几行都如下设置：
+```
 FROM ubuntu:14.04
 
 MAINTAINER reber <1070018473@qq.com>
@@ -162,16 +162,16 @@ RUN apt-get upgrade -y #尽量不要upgrade
 
 * 使用标签
 
-> 始终使用-t参数给镜像打标签：docker build -t ubuntu:range1 .
+始终使用-t参数给镜像打标签：docker build -t ubuntu:range1 .
 
 * 公开端口
 
-> Docker镜像应该能在任何主机上运行，所以不要通过Dockerfile映射共有端口，只映射私有端口：EXPOSE 80
+Docker镜像应该能在任何主机上运行，所以不要通过Dockerfile映射共有端口，只映射私有端口：EXPOSE 80
 
 * CMD与ENTRYPOINT
 
-> 应该使用数组语法，两者可以结合使用
-> ```
+应该使用数组语法，两者可以结合使用
+```
 ENTRYPOINT ["/start.sh"] #docker run的参数将传递给start.sh
 CMD ["--help"] #若没有参数传递则显示帮助文档
 ```

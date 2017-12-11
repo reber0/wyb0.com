@@ -9,12 +9,12 @@ topics = ["Python", "Pentest"]
 +++
 
 ### 0x00 关于Pocsuite
-> Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。
+Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。
 
 ### 0x01 简单介绍
 * 安装
     * 使用pip install pocsuite即可安装
-    {{% fluid_img src="/img/post/pocsuite_install.png" alt="安装pocsuite" %}}
+    ![安装pocsuite](/img/post/pocsuite_install.png)
 * 常用参数
     * -u 指定一个目标url
     * -f 指定一个存放目标url的文件
@@ -28,14 +28,14 @@ topics = ["Python", "Pentest"]
         * \-\-verify 漏洞验证模式(只是验证，不能更改服务器的东西)
         * \-\-attack 漏洞利用模式
     * 示例
-        * pocsuite -u "http://www.xxxx.com" -r poc_path/poc_name.py --atack
+        * ```pocsuite -u "http://www.xxxx.com" -r poc_path/poc_name.py --atack```
 * poc编写
     * 可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类)
     * 此时示例(对目标进行常见服务的测试，加载一类多个poc脚本)
-        * pocsuite -u "http://www.xxxx.com" -r poc_path/server/ --verify
+        * ```pocsuite -u "http://www.xxxx.com" -r poc_path/server/ --verify```
 
 * poc的命名规范
-    * 漏洞ID_版本号_漏洞类型(其中不能有大写字母，所有符号要改为"\_"),大致如下：
+    * 漏洞ID_版本号_漏洞类型(其中不能有大写字母，所有符号要改为```"_"```),大致如下：
         * _xxxx_struct2_2016_s2_016_code_execution.py
         * _xxxx_dedecms_20130715_sql_inj.py
 * poc的编写流程

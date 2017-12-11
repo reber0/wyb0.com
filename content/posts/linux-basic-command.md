@@ -9,7 +9,7 @@ topics = ["Linux"]
 +++
 
 ### 0x00 ls：显示文件
-> ```
+```
 [wyb@localhost tmp]$ ls
 a  a.txt
 [wyb@localhost tmp]$ ls -l
@@ -29,13 +29,13 @@ drwxrwxrwt.  2 root root 4096 Apr 17 16:31 .ICE-unix
 ```
 
 ### 0x02 pwd：查看当前工作路径
-> ```             
+```             
 [wyb@localhost ~]$ pwd  
 /home/wyb
 ```
 
 ### 0x03 cd：切换目录
-> ```
+```
 [wyb@localhost ~]$ ls
 Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
 [wyb@localhost ~]$ cd Desktop/     //相对路径
@@ -48,7 +48,7 @@ Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
 ```
 
 ### 0x04 mkdir：新建文件夹
-> ```
+```
 [wyb@localhost tmp]$ ls
 a  a.txt
 [wyb@localhost tmp]$ mkdir bbb
@@ -57,7 +57,7 @@ a  a.txt  bbb
 ```
 
 ### 0x05 touch/vim：新建文件
-> ```
+```
 [wyb@localhost tmp]$ ls
 a  a.txt  bbb
 [wyb@localhost tmp]$ touch bbb.txt
@@ -66,7 +66,7 @@ a  a.txt  bbb  bbb.txt
 ```
 
 ### 0x06 rm：删除文件
-> ```
+```
 [wyb@localhost tmp]$ ls
 a  a.txt  bbb  bbb.txt  c.txt
 [wyb@localhost tmp]$ rm c.txt   //删除文件c.txt
@@ -80,7 +80,7 @@ a.txt  bbb  bbb.txt
 ```
 
 ### 0x07 ifconfig：查看网卡的信息
-> ```
+```
 [wyb@localhost tmp]$ ifconfig
 eth0    Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10  
         inet addr:192.168.63.131  Bcast:192.168.63.255  Mask:255.255.255.0
@@ -102,7 +102,7 @@ lo      Link encap:Local Loopback
 ```
 
 ### 0x08 netstat：查找网络连接信息
-> ```
+```
 netstat -l   //listen状态的
 netstat -an  //显示所有的连接信息，且以ip地址代替名称
 netstat -t   //显示tcp连接信息
@@ -129,23 +129,23 @@ unix  2      [ ACC ]     STREAM     LISTENING     14248  private/defer
 ```
 
 ### 0x09 nslookup：查看DNS信息
-> ```
+```
 nslookup 查看ip和域名的相互映射
 nslookup www.baidu.com   //返回一些信息
 ```
 
 ### 0x0A ping
->```
+```
 ping -c 3 www.baidu.com   //指定ping百度3次
 ```
 
 ### 0x0B last：查看近期的登陆信息
->```
+```
 [root@localhost ~]# last
 ```
 
 ### 0x0C find：查找文件
->```
+```
 which vim   //查看可执行文件的位置
 *which是通过 PATH环境变量到该路径内查找可执行文件，所以基本的功能是寻找可执行文件* 
 
@@ -171,7 +171,7 @@ find /bin -perm 4755  //返回有gid(即s权限)的文件    2是gid
 ```
 
 ### 0x0D grep
-> ```
+```
 //可以遍历查询mkr文件夹下含有字符串"reber"的文件及字符串所在行
 reber@WYB:~$ grep -Rn "reber" mkdir   
 mkr/cc:3:reber
@@ -181,7 +181,7 @@ mkr/b/xx:8:reber
 ```
 
 ### 0x0E cat/nl
-> ```
+```
 前者显示
 后者显示的同时有行号
 [wyb@localhost tmp]$ cat > a.txt  //创建文件同时写入数据
@@ -200,7 +200,7 @@ this is b.txt
 ```
      
 ### 0x0F head
-> ```
+```
 [wyb@localhost tmp]$ head /etc/passwd   //默认显示前10行
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -228,7 +228,7 @@ this is add content
 ```
 
 ### 0x10 tail
-> ```
+```
 [wyb@localhost tmp]$ tail -f a.txt  //实时显示文件后10行
 this is a.txt
 111111
@@ -250,7 +250,7 @@ this is add content
 ```
 
 ### 0x11 scp
-> ```
+```
 向远程服务器put文件和文件夹，默认就是22端口
 scp -P 22 ./aa.txt reber@123.206.78.220:/home/reber
 scp -r ./bb reber@123.206.78.220:/home/reber
@@ -261,18 +261,29 @@ scp -r -P 2222 ubuntu@123.22.38.215:/home/reber/test D:/test/
 ```
 
 ### 0x12 磁盘
-> ```
+```
 fdisk /dev/sdb
 sudo mkfs.ext3 /dev/sdb1
 mount -t ext3 -o rw /dev/sdb1 /home/aaa  //-o指定权限
 ```
     
 ### 0x13 finger
-> ```
+```
 finger可以查看用户登录情况
 ```
 
 ### 0x14 时间同步
-> ```
+```
 ntpdate time.nist.gov //需要root权限
+```
+
+### 0x15 下载
+```
+$ curl -o aa.xml http://wyb0.com/index.xml #可以访问网页，它同时还保存了文件，文件名为aa.xml
+$ wget http://wyb0.com/index.xml #下载的文件名为index.xml
+```
+
+### 0x16 环境变量
+```
+$ env
 ```

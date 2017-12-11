@@ -9,7 +9,7 @@ topics = ["Database"]
 +++
 
 ### 0x00 数据库
-> ```
+```
 -- 创建数据库
 CREATE DATABASE student;
 
@@ -27,7 +27,7 @@ SELECT @@version;
 ```
 
 ### 0x01 数据表
-> ```
+```
 -- 创建数据库表
 CREATE TABLE info
 (

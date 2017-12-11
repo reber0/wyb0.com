@@ -8,16 +8,13 @@ topics = ["Python"]
 
 +++
 
-> {{% fluid_img src="/img/anime/anime001.jpg" alt="夏目友人帐" %}}
+![夏目友人帐](/img/anime/anime001.jpg)
 
 ### 0x00 openpyxl模块
-> ```
 这个模块可以让你读写excel文件
-```
 
 ### 0x01 读取数据
-> {{% fluid_img src="/img/post/openpyxl_excel.png" alt="excel数据" %}}
-<br /><br />
+![excel数据](/img/post/openpyxl_excel.png)
 代码如下：
 ```
 #!/usr/bin/env python
@@ -50,12 +47,12 @@ for x in range(1,rows+1):
     print
 ```
 
-> 结果如下：
-{{% fluid_img src="/img/post/openpyxl_result.png" alt="excel数据提取结果" %}}
+结果如下：
+![excel数据提取结果](/img/post/openpyxl_result.png)
 
 ### 0x02 写入数据
-> 代码如下：
-> ```python
+代码如下：
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -83,5 +80,5 @@ for x in range(1,4):
 wb.save(filename='test.xlsx') # 保存数据
 ```
 
-> 结果如下：
-{{% fluid_img src="/img/post/openpyxl_write.png" alt="向excel写入数据" %}}
+结果如下：
+![向excel写入数据](/img/post/openpyxl_write.png)

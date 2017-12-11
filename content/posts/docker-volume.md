@@ -9,7 +9,7 @@ topics = ["Linux"]
 +++
 
 ### 0x00 为什么使用数据卷
-> ```
+```
 Docker镜像是由多个文件系统(只读层)叠加而成的。
 当一个容器启动时Docker会加载只读镜像层并在其上添加一个读写层。
 读写层中的修改在镜像重新启动后会全部丢失。
@@ -23,7 +23,7 @@ Docker镜像是由多个文件系统(只读层)叠加而成的。
 ### 0x01 docker run挂载Volume(使用-v参数)
 * 不指定主机目录
 
-> ```bash
+```bash
 #运行完后容器中的根目录下就会多个data文件夹，这个就是数据卷
 $ docker run -itd --name v_test -v /data debian:jessie /bin/bash
 root@d145e8c6f874:/# ls
@@ -39,7 +39,7 @@ $ docker inspect -f {{.Mounts}} v_test
 
 * 指定主机目录(只能通过-v参数实现，Dockerfile不行)
 
-> ```bash
+```bash
 $ docker run -itd -v /home/var/docker_data:/data debian:jessie /bin/bash
 root@d853c4ca7632:/# exit
 exit
@@ -49,7 +49,7 @@ $ docker inspect -f {{.Mounts}} d853c4ca7632
 [{bind  /home/var/docker_data /data   true rprivate}]
 ```
 
-> ```
+```
 # 本机创建文件，容器中就会同时出现
 #宿主机创建文件
 $ sudo touch /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ceb09bdcdf743e068/_data/a.txt
@@ -60,14 +60,14 @@ a.txt
 ```
 
 ### 0x02 通过Dockerfile声明Volume
-> ```bash
+```bash
 FROM debian:jessie VOLUME /data #之后的任何命令都不能更改Volume的任何东西
 ```
 
 ### 0x03 数据共享
-> 使用--volumes-from参数项即可访问另外一个容器的Volume。  
-> 因为数据容器不启动也可以被其它容器访问，所以一般不推荐启动数据容器。
-> ```bash
+使用--volumes-from参数项即可访问另外一个容器的Volume。  
+因为数据容器不启动也可以被其它容器访问，所以一般不推荐启动数据容器。
+```bash
 #启动一个容器，使用v_test这个容器的数据卷，v_test没有启动，但依然有data这个数据卷
 $ docker run -itd --volumes-from v_test debian:jessie /bin/bash
 root@65aedf9c2ee1:/# ls
@@ -82,6 +82,6 @@ $ docker inspect -f {{.Mounts}} 65aedf9c2ee1
 ```
 
 ### 0x04 删除Volumes
-> ```bash
+```bash
 docker rm -v d145e8c6f874 #删除容器时一起删除数据
 ```

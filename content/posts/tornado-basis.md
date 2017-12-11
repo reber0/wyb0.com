@@ -8,18 +8,18 @@ topics = ["Python"]
 
 +++
 
-> {{% fluid_img src="/img/anime/anime003.jpg" alt="命运石之门" %}}
+![命运石之门](/img/anime/anime003.jpg)
 
 ### 0x00 简介
-> ```
+```
 Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的
 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django,
 但Tornado更注重速度,能够处理海量的同时发生的流量。 
 ```
 
 ### 0x01 示例
-> main.py代码如下：
-> ```
+main.py代码如下：
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -57,8 +57,8 @@ if __name__ == '__main__':
     tornado.ioloop.IOLoop.instance().start()
 ```
 
-> login.html代码如下：
-> ```
+login.html代码如下：
+```
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,8 +76,8 @@ if __name__ == '__main__':
 ```
 
 ### 0x03 结果如下
-> {{% fluid_img src="/img/post/tornado_test1.png" alt="初识tornado1" %}}
-<br /><br />
-{{% fluid_img src="/img/post/tornado_test2.png" alt="初识tornado2" %}}
-<br /><br />
-{{% fluid_img src="/img/post/tornado_test3.png" alt="初识tornado3" %}}
+![初识tornado1](/img/post/tornado_test1.png)
+
+![初识tornado2](/img/post/tornado_test2.png)
+
+![初识tornado3](/img/post/tornado_test3.png)

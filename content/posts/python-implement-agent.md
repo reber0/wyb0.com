@@ -8,11 +8,11 @@ topics = ["Python"]
 
 +++
 
-## 帮助信息
-> {{% fluid_img src="/img/post/python_proxy_help.png" alt="帮助信息" %}}
+### 0x00 帮助信息
+![帮助信息](/img/post/python_proxy_help.png)
 
-## 代码如下
-> ```python
+### 0x01 代码如下
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -182,5 +182,5 @@ def main ():
 main()
 ```
 
-## 效果图
-> {{% fluid_img src="/img/post/python_proxy_result.png" alt="效果图" %}}
+### 0x02 效果图
+![效果图](/img/post/python_proxy_result.png)

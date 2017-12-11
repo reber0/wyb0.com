@@ -8,10 +8,9 @@ topics = ["Linux"]
 
 +++
 
-#### 环境：
-ubuntu14.4
+环境：ubuntu14.4
 
-## 安装
+### 0x00 安装
 1. 添加Sublime Text 3的仓库  
 sudo add-apt-repository ppa:webupd8team/sublime-text-3
 
@@ -21,7 +20,7 @@ sudo apt-get update
 3. 安装Sublime Text 3  
 sudo apt-get install sublime-text-installer
 
-## 解决不能输入中文的问题
+### 0x01 解决不能输入中文的问题
 1. 新建sublime\_imfix.c(位于～目录)，写入如下内容
 ```c
 #include <gtk/gtkimcontext.h>
@@ -82,5 +81,7 @@ sudo vim /usr/share/applications/sublime_text.desktop
     Exec=bash -c "LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text --command new_file"
 ```
 
-## 插件
-> |Anaconda|ConvertToUTF8|Emmet|
+### 0x02 插件
+* Anaconda
+* ConvertToUTF8
+* Emmet

@@ -8,7 +8,7 @@ topics = ["Python"]
 
 +++
 
-## 面向对象
+### 0x00 面向对象
 * 面向对象是为了解决系统的可维护性，可扩展性，可重用性
 
 * 三个基本特征：封装、继承、多态  
@@ -21,12 +21,12 @@ topics = ["Python"]
     * 多态：首先，多态必有继承，没有继承就没有多态，继承后一个父类的引用变量可以指向其任意一个子类对象。  
     如：有一个People类，它的子类可以有学生、老师、工人，有多种形态，这就是多态
 
-## 类的实例
-> 注意：类中每个方法后面都要写self，self就是当前对象指针
+### 0x01 类的实例
+注意：类中每个方法后面都要写self，self就是当前对象指针
 
 * 示例一
 
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
@@ -79,7 +79,7 @@ s.print_base_msg() #Name:xiaoming Age:16 Score:97
 
 * 示例二
 
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
@@ -141,7 +141,7 @@ b.call_a_fun()
 
 * 示例三
 
-> ```python
+```python
 #!/usr/bin/env python
 # -- coding: utf-8 -*-
 

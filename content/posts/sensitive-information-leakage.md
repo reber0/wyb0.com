@@ -9,7 +9,7 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 软件敏感信息
-> ```
+```
 * 操作系统版本
     可用namp扫描得知
 * 中间件的类型、版本
@@ -21,7 +21,7 @@ topics = ["Pentest"]
 ```
 
 ### 0x01 Web敏感信息
-> ```
+```
 * phpinfo()信息泄露
     http://[ip]/test.php和http://[ip]/phpinfo.php
 * 测试页面泄露在外网
@@ -56,14 +56,14 @@ topics = ["Pentest"]
 ```
 
 ### 0x02 网络信息泄露
-> ```
+```
 * DNS域传送漏洞
 * 运维监控系统弱口令、网络拓扑泄露
     zabbix弱口令、zabbix sql注入等
 ```
 
 ### 0x03 第三方软件应用
-> ```
+```
 * github上源码、数据库、邮箱密码泄露
     搜类似：smtp 163 password关键字
 * 百度网盘被员工不小心上传敏感文件
@@ -71,7 +71,7 @@ topics = ["Pentest"]
 ```
 
 ### 0x04 敏感信息搜集工具
-> ```
+```
 https://github.com/ring04h/weakﬁlescan
 https://github.com/lijiejie/BBScan
 whatweb
@@ -80,4 +80,4 @@ github
 ```
 
 ### 0x05 示例
-> {{% fluid_img src="/img/post/sensitive_information_leakage.png" alt="敏感信息泄露.png" %}}
+![敏感信息泄露](/img/post/sensitive_information_leakage.png)

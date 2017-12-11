@@ -8,12 +8,12 @@ topics = ["Python", "Pentest"]
 
 +++
 
-参考：https://github.com/lijiejie/subDomainsBrute
-## 帮助信息
-> {{% fluid_img src="/img/post/sub_domain_blast_help.png" alt="帮助信息" %}}
+Reference(侵删)：https://github.com/lijiejie/subDomainsBrute
+### 0x00 帮助信息
+![帮助信息](/img/post/sub_domain_blast_help.png)
 
-## 代码
-> ```python
+### 0x01 代码
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 

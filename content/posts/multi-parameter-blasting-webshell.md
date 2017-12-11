@@ -9,10 +9,12 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 原理
-> 之前在[https://www.t00ls.net/viewthread.php?tid=36985](https://www.t00ls.net/viewthread.php?tid=36985)看到这个思路的。Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5883个参数，可以一次提交多个密码，从而快速爆破。
+之前在[https://www.t00ls.net/viewthread.php?tid=36985](https://www.t00ls.net/viewthread.php?tid=36985)看到这个思路的。
+
+Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5883个参数，可以一次提交多个密码，从而快速爆破。
 
 ### 0x01 爆破webshell代码
-> ```
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # code by reber <1070018473@qq.com>
@@ -63,9 +65,8 @@ if __name__ == '__main__':
 ![](/img/post/blasting_webshell.png)
 
 ### 0x02 猜想
->  平时爆破表单时都是一次提交一个payload，比如说username='xxx'&password='xxx'  
-10w个组合需要提交10w次，若一次提交500个组合则只需要提交200次
+平时爆破表单时都是一次提交一个payload，比如说```username='xxx'&password='xxx'```，10w个组合需要提交10w次，若一次提交500个组合则只需要提交200次
 
-> 我们可以直接一次提交500个payload，如：name='111'&pass='111'&name='112'&pass='112'&name='113'&pass='113'& 。。。。。。(500个payload)
+我们可以直接一次提交500个payload，如：name='111'&pass='111'&name='112'&pass='112'&name='113'&pass='113'& 。。。。。。(500个payload)
 
-> 如果正确的密码在你测试的某1000个参数中，那么返回页面的是不同的，则可以断定正确的用户名和密码在这1000个参数里，然后对这1000个参数用二分法再次进行测试，直到得到正确的用户名和密码
+如果正确的密码在你测试的某1000个参数中，那么返回页面的是不同的，则可以断定正确的用户名和密码在这1000个参数里，然后对这1000个参数用二分法再次进行测试，直到得到正确的用户名和密码

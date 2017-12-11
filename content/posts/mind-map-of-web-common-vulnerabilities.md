@@ -9,4 +9,4 @@ topics = ["Pentest"]
 +++
 
 ## Web常见漏洞
-{{% fluid_img src="/img/post/web_common_vulnerability_maps.png" alt="Web常见漏洞.png" %}}
+![Web常见漏洞](/img/post/web_common_vulnerability_maps.png)

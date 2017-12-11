@@ -8,7 +8,7 @@ topics = ["PHP"]
 
 +++
 
-## 1.目录的操作
+### 0x00 目录的操作
 ```php
 <?php
   $path = "/var/www/html/php/dir.php";
@@ -36,14 +36,14 @@ topics = ["PHP"]
 ?>
 ```
 <center>
-{{% fluid_img src="/img/post/arrow.png" alt="箭头" %}}
-{{% fluid_img src="/img/post/dir.png" alt="目录的操作" %}}
+![箭头](/img/post/arrow.png)<br />
+![目录的操作](/img/post/dir.png)
 </center>
 
-## 2.文件的读写
+### 0x01 文件的读写
 1. fopen(filename,mode)和fclose(filename,mode)
-{{% fluid_img src="/img/post/file_open_mode.png" alt="fopen()打开文件的模式" %}}
-##### 例子：
+![fopen()打开文件的模式](/img/post/file_open_mode.png)
+#### 例子：
 ```php
 <?php
 	$file = fopen("test.txt","r");
@@ -72,7 +72,7 @@ file_put_content($filename, $str, FILE_APPEND)可以将字符串追加到文件�
 filetype($filename)可以得到文件的类型
 ```
 
-## 3.查看文件夹下的文件信息
+### 0x02 查看文件夹下的文件信息
 ```php
 <?php
 	$path = "./";
@@ -116,6 +116,6 @@ filetype($filename)可以得到文件的类型
 ?>
 ```
 <center>
-{{% fluid_img src="/img/post/arrow.png" alt="箭头" %}}
-{{% fluid_img src="/img/post/file_info.png" alt="查看文件夹下的文件信息" %}}
+![箭头](/img/post/arrow.png)<br />
+![查看文件夹下的文件信息](/img/post/file_info.png)
 </center>

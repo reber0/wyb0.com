@@ -8,19 +8,19 @@ topics = ["Other"]
 
 +++
 
-## 简介
+### 0x00 简介
 
-> ```
+```
 此程序通过单重des实现8个字节的加密和解密。
 新建一个工程，这个工程需要3个cpp文件(c文件也可以)和2个头文件。
 cpp文件：main.cpp、des.cpp、status.cpp
 头文件：des.h、status.h
 ```
 
-## 代码
+### 0x01 代码
 * 以下为主函数main.cpp的内容：
 
-> ```
+```
 #include <stdio.h>
 #include "status.h"
 #include "des.h"
@@ -49,7 +49,7 @@ int main()
 
 * 以下为des.cpp的内容：
 
-> ```
+```
 #include <stdio.h>
 #include <string.h>
 #include "status.h"
@@ -162,7 +162,7 @@ void MovKey(bool *LR,int len,int loop)
 
 * 以下为status.cpp中的内容：
 
-> ```
+```
 #include "status.h"
 
 int i;
@@ -300,7 +300,7 @@ const char S_Box[8][4][16]={
 
 * 以下为des.h的内容：
 
-> ```
+```
 //函数的声明
 
 void ByteToBit(const char *In,bool *Out,int bits);//将字节转换为位
@@ -316,7 +316,7 @@ void f(bool *Ri,bool *k);//f函数
 
 * 以下为status.h的内容：
 
-> ```
+```
 //变量的声明
 
 extern int i;
@@ -336,5 +336,5 @@ extern const char LOOP_Table[16];
 extern const char S_Box[8][4][16];
 ```
 
-## 执行结果
-> {{% fluid_img src="/img/post/des.png" alt="单重DES运行结果.png" %}}
+### 0x02 执行结果
+![单重DES运行结果](/img/post/des.png)

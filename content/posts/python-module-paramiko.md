@@ -8,11 +8,11 @@ topics = ["Python"]
 
 +++
 
-## 安装
+### 0x00 安装
 直接pip install paramiko安装  
 或者去http://www.paramiko.org/ 下载
 
-## 执行一条远程命令
+### 0x01 执行一条远程命令
 ```python
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
@@ -32,9 +32,9 @@ print stderr.readlines()   #有错误信息就返回错误信息，没有就返�
 
 ssh.close()
 ```
-{{% fluid_img src="/img/post/paramiko_ssh_one_command.png" alt="paramiko远程ssh后执行一条命令.png" %}}
+![paramiko远程ssh后执行一条命令](/img/post/paramiko_ssh_one_command.png)
 
-## 上传与下载文件
+### 0x02 上传与下载文件
 ```python
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
@@ -56,4 +56,4 @@ sftp.get(remotepath, localpath)
 
 ftp.close()
 ```
-{{% fluid_img src="/img/post/paramiko_put_file.png" alt="paramiko上传文件.png" %}}
+![paramiko上传文件](/img/post/paramiko_put_file.png)

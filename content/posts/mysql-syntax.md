@@ -8,7 +8,7 @@ topics = ["Database"]
 
 +++
 
-## Select语句的一般语法
+### 0x00 Select语句的一般语法
 ```
 1.SELECT [ALL|DISTINCT] <目标列表达式> [,<目标列表达式> ]...
 2.FROM <表名或视图名> [,<表名或视图名> ]...
@@ -29,7 +29,7 @@ select * from message where title like '%留言_';  //%匹配任意个字符,_�
 select * from message where uid in (2,3,4); //删除2、3、4共3条数据
 ```
 
-## 连接查询
+### 0x01 连接查询
 `[<表名1>.][<列名1>]  <比较运算符>  [<表名2>.][<列名2>]`  
 `[<表名1>.][<列名1>]  BETWEEN  [<表名2>.][<列名2>] AND [<表名2>.][<列名3>]`
 ```
@@ -37,7 +37,7 @@ select * from user,msg where user.id=msg.uid;
 select m.id,m.title '标题',m.ip,u.username '名字' from message as m,user as u where m.uid=u.id;
 ```
 
-## 子查询
+### 0x02 子查询
 一个SELECT-FROM-WHERE语句成为一个查询块。  
 将一个查询块嵌套到另外一个查询块的WHERE子句或HAVING短句条件中的查询成为子查询或嵌套查询，它允许我们根据另一个查询的结果检索数据。  
 子查询的方法是由里向外处理，即每个子查询在其上一级查询之前查询，子查询的结果用于建立其副查询的查询条件。
@@ -51,11 +51,11 @@ where id in (
 	);
 ```
 
-## 集合查询
+### 0x03 集合查询
 集合的并操作：使用UNION运算符经多个SELECT查询结果合并起来，形成一个完整的查询结果，系统合并时会自动去掉重复的元组。  
 注意：前后SELECT语句查询的列数要相同。
 
-## 数据更新
+### 0x04 数据更新
 1. 插入数据
 	* 插入单个元组：  
 	INSERT INTO <表名> [(<属性列1>[,<属性列2>...])]  
@@ -82,7 +82,7 @@ where id in (
     FROM <表名>   
     [WHERE <条件>]
 
-## SQL的数据控制功能
+### 0x05 SQL的数据控制功能
 授权语句
 ```
 GRENT <权限1>，[,<权限2>]...  
@@ -93,14 +93,14 @@ TO <用户1>[,<用户2>],
 创建用户blog，设密码为666666,并将数据库db_blog的所有权限赋给他  
 grant all privileges on db_blog.* to blog@localhost identified by '666666';
 
-## order by和limit
+### 0x06 order by和limit
 ```
 select * from message order by uid desc;
 select * from message order by uid desc limit 5; //默认从0开始，查询5条数据
 select * from message order by uid desc limit 2,4;  //从第2条开始查询4条数据
 ```
 
-## 统计函数
+### 0x07 统计函数
 count()  
 sum()  
 avg()  

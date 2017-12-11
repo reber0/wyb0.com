@@ -9,13 +9,13 @@ topics = ["Python", "Database"]
 +++
 
 ### 0x00 安装
-> 有两种，一个是MySQLdb，一个是pymysql
+有两种，一个是MySQLdb，一个是pymysql
 
 * 下载[MySQL-python](https://pypi.python.org/pypi/MySQL-python/1.2.5)然后安装  
 * sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)
 
 ### 0x01 简单表设计如下
-> ```
+```
 insert into mysql.user(Host,User,Password) values('%','python','123456');
 
 drop database if exists python;
@@ -34,7 +34,7 @@ flush privileges;
 ```
 
 ### 0x02 MySQLdb封装代码
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -173,7 +173,7 @@ if __name__ == '__main__':
 ```
 
 ### 0x03 pymysql封装代码
-> ```
+```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 

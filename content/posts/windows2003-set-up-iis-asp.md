@@ -8,29 +8,29 @@ topics = ["Windows", "Server"]
 
 +++
 
-## 添加组件
-{{% fluid_img src="/img/post/add_component1.png" alt="添加组件1.png" %}}<br />
+### 0x00 添加组件
+![添加组件1](/img/post/add_component1.png)
 
-{{% fluid_img src="/img/post/add_component2.png" alt="添加组件2.png" %}}<br />
+![添加组件2](/img/post/add_component2.png)
 
-{{% fluid_img src="/img/post/add_component3.png" alt="添加组件3.png" %}}<br />
+![添加组件3](/img/post/add_component3.png)
 
-{{% fluid_img src="/img/post/add_component4.png" alt="添加组件4.png" %}}
+![添加组件4](/img/post/add_component4.png)
 
-## 开启iis
-{{% fluid_img src="/img/post/start_iis1.png" alt="开启iis1.png" %}}
+### 0x01 开启iis
+![开启iis1](/img/post/start_iis1.png)
 
-{{% fluid_img src="/img/post/start_iis2.png" alt="开启iis2.png" %}}
+![开启iis2](/img/post/start_iis2.png)
 
-{{% fluid_img src="/img/post/visit_iis_index.png" alt="开启iis2.png" %}}
+![开启iis2](/img/post/visit_iis_index.png)
 
-## 添加Web服务扩展
-{{% fluid_img src="/img/post/add_ext.png" alt="添加扩展.png" %}}
+### 0x02 添加Web服务扩展
+![添加扩展](/img/post/add_ext.png)
 
-## 运行asp
-{{% fluid_img src="/img/post/add_iis_asp.png" alt="添加asp文件.png" %}}
+### 0x03 运行asp
+![添加asp文件](/img/post/add_iis_asp.png)
 
-{{% fluid_img src="/img/post/visit_iis_asp.png" alt="访问asp文件.png" %}}
+![访问asp文件](/img/post/visit_iis_asp.png)
 
-## 权限
-{{% fluid_img src="/img/post/iis_perm.png" alt="注意文件权限.png" %}}
+### 0x04 权限
+![注意文件权限](/img/post/iis_perm.png)

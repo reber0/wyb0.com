@@ -8,39 +8,38 @@ topics = ["PHP", "Database"]
 
 +++
 
-## 处理函数
-1. mysql\_connect(server,user,pwd,newlink,clientflag)  
+### 0x00 处理函数
+1. mysql_connect(server,user,pwd,newlink,clientflag)  
 连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE
 
-2. mysql\_select\_db(database,connection)  
+2. mysql_select_db(database,connection)  
 选择数据库的函数，成功则返回true，失败则返回false
 
-3. mysql\_query(query,connection)  
+3. mysql_query(query,connection)  
 执行一条查询，返回一个资源标识符(结果集)，如果查询执行不正确则返回FALSE
 
-4. mysql\_num\_rows(data)和mysql\_num\_fields(data)  
+4. mysql_num_rows(data)和mysql_num_fields(data)  
 函数分别返回结果集中行和列的数目(禁对SELECT语句有效),结果集从 mysql_query()的调用中得到
 
-5. mysql\_fetch\_assoc(data)  
+5. mysql_fetch_assoc(data)  
 从结果集中取得一行作为关联数组，若没有更多行则返回false
 
-6. mysql\_fetch\_row(data)  
+6. mysql_fetch_row(data)  
 从结果集中取得一行作为索引数组，若没有更多行则返回false
 
-7. mysql\_error(connection)  
+7. mysql_error(connection)  
 返回上一个MySQL函数的错误文本，如果没有出错则返回''(空字符串)
 
-8. mysql\_affected\_rows(link\_identifier)  
+8. mysql_affected_rows(link_identifier)  
 返回前一次MySQL操作(增删改)所影响的记录行数,失败则返回-1
 
-9. mysql\_insert\_id(connection)  
+9. mysql_insert_id(connection)  
 返回上一步INSERT操作产生的 ID。如果上一查询没有产生AUTO_INCREMENT的ID，则mysql_insert_id()返回 0。
 
-10. mysql\_data\_seek(data,row)  
+10. mysql_data_seek(data,row)  
 结果集data从mysql_query()的调用中得到,行指针移动到指定的行号，接着调用 mysql_fetch_row() 将返回那一行。如果成功则返回 true，失败则返回 false
 
-
-## 例子
+### 0x01 例子
 ```php
 <?php
 	$server = "127.0.0.1";

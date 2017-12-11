@@ -10,8 +10,8 @@ topics = ["Linux"]
 
 这里介绍3种方式：awk、grep、sed
 
-### 0x00 awk处理文本(*最常用*)
-> ```
+### 0x00 awk处理文本(最常用)
+```
 作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化  
 awk命令格式：awk [F filed-separator] 'commands' input-fiel(s)  
 参数-F：可以添加任意的分割符，比较重要  
@@ -20,8 +20,7 @@ awk工作流程是这样的：
 ```
 
 * 入门示例：
-
-> ```bash
+```bash
 [wyb@localhost temp]$ head -n 5 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -77,8 +76,7 @@ RS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </td>
     </tr>
 </table>
-
-> ```
+```
 [wyb@localhost temp]$ awk -F: '{print "filename:" FILENAME ",linenumber:" NR ",columns:" NF ",linecontent:"$0}' a.txt
 filename:a.txt,linenumber:1,columns:1,linecontent:1     root    12sf34s56
 filename:a.txt,linenumber:2,columns:1,linecontent:2     admin   ksdjfiweurf
@@ -93,8 +91,7 @@ filename:a.txt,linenumber:9,columns:1,linecontent:9     candy   kd89943
 
 * awk编程：
     * 变量和赋值：
-
-    > ```
+    ```
     [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':'  'BEGIN {count=0} {count++; print "username:"$1} END {print "count:"count}'
     username:root
     username:bin
@@ -109,16 +106,16 @@ filename:a.txt,linenumber:9,columns:1,linecontent:9     candy   kd89943
     ```
     
     * 条件语句：
-
-    > ```
+    ```
     [wyb@localhost ~]$ head -n 6 /etc/passwd | awk -F ':' '{if($1=="root") print "root bash is:"$7}'
     root bash is:/bin/bash
     [wyb@localhost ~]$ 
     ```
 
 ### 0x01 Grep处理文本
-> 匹配到时输出一行  
-常用参数：nrABC
+匹配到时输出一行  
+
+* 常用参数：nrABC
 <table>
     <tr>
         <td bgcolor=black>
@@ -133,7 +130,7 @@ filename:a.txt,linenumber:9,columns:1,linecontent:9     candy   kd89943
     </tr>
 </table>
 
-> ```
+```
 [wyb@localhost ~]$ grep root /etc/passwd #查找root这个字符
 root:x:0:0:root:/root:/bin/bash
 operator:x:11:0:operator:/root:/sbin/nologin
@@ -164,7 +161,7 @@ wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
 ```
 
 ### 0x02 sed处理文本
-> ```
+```
 * 处理大文本很好用，上几十万、上百万行的数据
 * sed主要以行为单位，可以将数据行进行替换、删除、新增、选取等
 * sed语法 参数 动作 文件
@@ -180,7 +177,7 @@ wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
 
 * 字符的删除
 
-> ```
+```
 [wyb@localhost aa]$ nl a.txt | sed '3,8d' #不输出3-8行
      1  1     root      12sf34s56
      2  2     admin     ksdjfiweurf
@@ -201,7 +198,7 @@ wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
 
 * a插入字符
 
-> ```
+```
 [wyb@localhost aa]$ nl a.txt | sed '2a aaaaaa' | head -n 5 #在第二行下面插入一行字符串aaaaaa
      1  1     root      12sf34s56
      2  2     admin     ksdjfiweurf
@@ -229,7 +226,7 @@ dddddd
 
 * p输出字符
 
-> ```
+```
 [wyb@localhost aa]$ nl a.txt | sed '2,5p'
      1  1     root      12sf34s56
      2  2     admin     ksdjfiweurf
@@ -258,7 +255,7 @@ dddddd
 
 * c和s替换字符
 
-> ```
+```
 [wyb@localhost aa]$ nl a.txt | sed '2,5c aaaaaa' #将第2-5行替换
      1  1     root      12sf34s56
 aaaaaa
@@ -279,7 +276,7 @@ aaaaaa
 
 * 实例
 
-> ```
+```
 [wyb@localhost aa]$ ifconfig eth0
 eth0      Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10  
           inet addr:192.168.63.131  Bcast:192.168.63.255  Mask:255.255.255.0

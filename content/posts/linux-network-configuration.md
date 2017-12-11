@@ -8,8 +8,7 @@ topics = ["Linux"]
 
 +++
 
-## 第一种方法
-### 分5步：
+### 0x00 第一种方法
 ```
 1. 启动网卡：  
 $ ifconfig eth0 up/down
@@ -29,10 +28,8 @@ route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3
 //添加静态路由添加网络10.211.55.0，从eth0出去
 ```
 
-## 第二种方法
-### 分1步：
+### 0x01 第二种方法
 打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:
-
 ```
 DEVICE=ethl
 ONBOOT=yes
@@ -42,6 +39,8 @@ NETMASK=
 GATEWAY=
 ```
 
-## 打开ip转发
-    echo "1" >> /proc/sys/net/ipv4/ip_forward
-    或者vim /etc/sysctl.conf
+### 0x02 打开ip转发
+```
+echo "1" >> /proc/sys/net/ipv4/ip_forward
+或者vim /etc/sysctl.conf
+```

@@ -9,7 +9,7 @@ topics = ["Python"]
 +++
 
 ### 0x00 特点及差别
-> ```
+```
 常见4种数据类型：list、tuple、dict、set
 
 list即列表，它内部是有序的，可以添加、更新、删除元素
@@ -19,7 +19,7 @@ set可用作求交集、并集等，它的内部无序，key不可变、不可�
 ```
 
 ### 0x01 操作示例
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -74,11 +74,10 @@ for x in S:
     print x, #a c e d 5
 print '\n-----set-----'
 ```
-<br>
-{{% fluid_img src="/img/post/python_data_type.png" alt="python数据的操作" %}}
+![python数据的操作](/img/post/python_data_type.png)
 
 ### 0x02 切片
-> ```python
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -108,11 +107,10 @@ print (1,2,3,4,5)[:3]
 #字符串'xxx'或Unicode字符串u'xxx'也可看成一种list
 print 'abcdefg'[1:4]
 ```
-<br>
-{{% fluid_img src="/img/post/python_slice.png" alt="python的切片" %}}
+![python的切片](/img/post/python_slice.png)
 
 ### 0x03 迭代
-> 通过for循环遍历list或tuple这种遍历在python中称为迭代
+通过for循环遍历list或tuple这种遍历在python中称为迭代
 ```python
 d = {'a':1,'b':2,'c':3}
 for k,v in d.iteritems():
@@ -126,8 +124,7 @@ print
 for x,y in [(1,1),(2,4),(3,9)]: #python可一次将多个值赋给多个变量
     print x,y
 ```
-<br>
-{{% fluid_img src="/img/post/python_iteration.png" alt="python的迭代" %}}
+![python的迭代](/img/post/python_iteration.png)
 
 ### 0x04 解析json
 * 常用函数
@@ -136,8 +133,8 @@ for x,y in [(1,1),(2,4),(3,9)]: #python可一次将多个值赋给多个变量
     * json.loads()
         * 解码：把Json格式字符串解码转换成Python对象
     
-    > {{% fluid_img src="/img/post/python_json.png" alt="python解析json" %}}
+    ![python解析json](/img/post/python_json.png)
 
 * 排序和缩进
 
-> {{% fluid_img src="/img/post/python_sort_and_indent.png" alt="排序和缩进" %}}
+![排序和缩进](/img/post/python_sort_and_indent.png)

@@ -8,10 +8,10 @@ topics = ["Git"]
 
 +++
 
-> {{% fluid_img src="/img/anime/anime004.jpg" alt="钢之炼金术师FA" %}}
+![钢之炼金术师FA](/img/anime/anime004.jpg)
 
 ### 0x00 前期准备
-> ```
+```
 # 环境 Ubuntu 14.04
 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server
 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client
@@ -19,13 +19,13 @@ reber@ubuntu:~/Desktop$ sudo apt-get install git
 ```
 
 ### 0x01 安装
-> ```
+```
 reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb
 reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb
 ```
 
 ### 0x02 配置
-> ```
+```
 reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb
     external_url 'http://192.168.188.160:80'
     ......
@@ -66,17 +66,21 @@ tcp        0      0 0.0.0.0:22          0.0.0.0:*            LISTEN
 
 ### 0x03 访问web页面
 * 有时出现502，可以刷新网页或者再次reconfigure
+
 * 有时需要sudo gitlab-ctl restart nginx
+
 * 初次访问Web页面会强制让你改密码，初始用户名/密码：root/5iveL!fe
+
 * 禁止前台注册  
 登录后：右上角 Admin Area --> Settings --> Sign-in Restrictions
-{{% fluid_img src="/img/post/gitlab_forbid_registration.png" alt="禁止前台注册" %}}
+![禁止前台注册](/img/post/gitlab_forbid_registration.png)
 然后保存
+
 * 修改admin的邮箱  
 Admin Area --> Users --> Edit 然后保存
 
 ### 0x04 添加401认证
-> ```
+```
 # 401认证是nginx的，如果gitlab出现漏洞，也需要过401才行
 reber@ubuntu:~/Desktop$ cd /var/opt/gitlab/
 # 安装软件apache2-utils，用于生成认证的密码文件
@@ -102,10 +106,10 @@ server {
 # 重启nginx
 reber@ubuntu:/var/opt/gitlab$ sudo gitlab-ctl restart nginx
 ```
-{{% fluid_img src="/img/post/gitlab_401_verify.png" alt="401验证" %}}
+![401验证](/img/post/gitlab_401_verify.png)
 
 ### 0x05 汉化
-> ```
+```
 # 首先检查版本
 reber@ubuntu:~/Desktop$ cat /opt/gitlab/embedded/service/gitlab-rails/VERSION
  8.8.0
@@ -118,7 +122,7 @@ reber@ubuntu:~/Desktop/gitlab$ sudo patch -d /opt/gitlab/embedded/service/gitlab
 ```
 
 ### 0x06 添加ssh公钥
-> ```
+```
 首先用邮箱514581887@qq.com注册一个用户，用户名为55555
 $ ssh-keygen -t rsa -C "514581887@qq.com" #在本机生成秘钥对
 $ cat /home/reber/.ssh/id_rsa.pub #查看公钥
@@ -146,7 +150,7 @@ $ ssh -T git@192.168.188.160
 ```
 
 ### 0x07 推送自己的代码
-> ```
+```
 # 首先clone项目
 [reber@WYB ~]$ git clone git@192.168.188.160:first_group/first_project.git
 [reber@WYB first_project]$ cd first_project
@@ -171,10 +175,10 @@ To git@106.75.87.166:first_group/first_project.git
  * [new branch]      163 -> 163
 ```
 
-> web端请求合并代码到master分支
-{{% fluid_img src="/img/post/gitlab_pull_request.png" alt="请求合并代码" %}}
+web端请求合并代码到master分支
+![请求合并代码](/img/post/gitlab_pull_request.png)
 
-> ```
+```
 # 下面的操作做不做都行
 [reber@WYB first_project]$ git checkout master # 切换回master分支
 Switched to branch 'master'
@@ -187,14 +191,14 @@ Deleted branch 163 (was d5df55a).
 ```
 
 ### 0x08 结果
-> {{% fluid_img src="/img/post/gitlab_result1.png" alt="结果1" %}}
-<br /><br />
-{{% fluid_img src="/img/post/gitlab_result2.png" alt="结果2" %}}
+![结果1](/img/post/gitlab_result1.png)
+
+![结果2](/img/post/gitlab_result2.png)
 
 ### 0x09 备份与还原
->注意：若要迁移，则新服务器上的Gitlab的版本必须与创建备份时的Gitlab版本号相同
+注意：若要迁移，则新服务器上的Gitlab的版本必须与创建备份时的Gitlab版本号相同
 
-> ```
+```
 # 如果出现backups文件夹没有权限，那就给700，所有者为git:git
 
 ubuntu@1fa167:~$ sudo gitlab-rake gitlab:backup:create
