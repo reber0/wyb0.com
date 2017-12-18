@@ -79,7 +79,7 @@
       <description>0x00 Select语句的一般语法 1.SELECT [ALL|DISTINCT] &amp;lt;目标列表达式&amp;gt; [,&amp;lt;目标列表达式&amp;gt; ]... 2.FROM &amp;lt;表名或视图名&amp;gt; [,&amp;lt;表名或视图名&amp;gt; ]... 3.[ WHERE &amp;lt;行条件表达式&amp;gt; ] 4.[ GROUP BY &amp;lt;列名1&amp;gt; ,[列名2][,...][HAVING组条件表达式] ] 5.[ ORDER BY &amp;lt;列名1&amp;gt; ,[ASC|DESC][,...] ];  上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5，
 即先确定从哪个数据源查找，
 然后确定过滤条件，
-若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一布限制，
+若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一步限制，
 然后将符合条件的列查询出来，
 最后对结果进行排序。
 select name as &#39;名字&#39;,password as &#39;密码&#39; form user; select * from message where id between 2 and 6; select * from message where title like &#39;%留言_&#39;; //%匹配任意个字符,_匹配一个字符 select * from message where uid in (2,3,4); //删除2、3、4共3条数据  0x01 连接查询 [&amp;lt;表名1&amp;gt;.</description>

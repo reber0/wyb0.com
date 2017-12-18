@@ -203,7 +203,7 @@
         0x00 Select语句的一般语法 1.SELECT [ALL|DISTINCT] &lt;目标列表达式&gt; [,&lt;目标列表达式&gt; ]... 2.FROM &lt;表名或视图名&gt; [,&lt;表名或视图名&gt; ]... 3.[ WHERE &lt;行条件表达式&gt; ] 4.[ GROUP BY &lt;列名1&gt; ,[列名2][,...][HAVING组条件表达式] ] 5.[ ORDER BY &lt;列名1&gt; ,[ASC|DESC][,...] ];  上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5，
 即先确定从哪个数据源查找，
 然后确定过滤条件，
-若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一布限制，
+若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一步限制，
 然后将符合条件的列查询出来，
 最后对结果进行排序。
 select name as '名字',password as '密码' form user; select * from message where id between 2 and 6; select * from message where title like '%留言_'; //%匹配任意个字符,_匹配一个字符 select * from message where uid in (2,3,4); //删除2、3、4共3条数据  0x01 连接查询 [&lt;表名1&gt;.
