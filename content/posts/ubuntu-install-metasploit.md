@@ -19,7 +19,7 @@ $ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config
 $ chmod 755 msfinstall
 ```
 
-* 安装(时间较久)
+* 安装(可能时间较久)
 ```
 $ ./msfinstall
 ```
