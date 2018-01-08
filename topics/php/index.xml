@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Thu, 01 Sep 2016 08:46:03 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jan 2018 22:02:07 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/topics/php/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>打包下载php文件</title>
+      <link>http://wyb0.com/posts/package-and-download-the-php-file/</link>
+      <pubDate>Mon, 08 Jan 2018 22:02:07 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/package-and-download-the-php-file/</guid>
+      <description>0x00 代码如下 &amp;lt;?php function addFileToZip($zip,$zipname,$path){ $handler = opendir($path); while(($filename = readdir($handler))!==false) { if($filename != &amp;quot;.&amp;quot; &amp;amp;&amp;amp; $filename != &amp;quot;..&amp;quot; &amp;amp;&amp;amp; $filename!= $zipname){ if (is_dir($path.&amp;quot;/&amp;quot;.$filename)) { //如果读取的某个对象是文件夹，则递归 addFileToZip($zip,$zipname,$path.&amp;quot;/&amp;quot;.$filename); } else { $zip-&amp;gt;addFile($path.&amp;quot;/&amp;quot;.$filename); } } } @closedir($path); } function tar($zipname,$path) { $zip = new ZipArchive(); //使用本类，linux需开启zlib，windows需取消php_zip.dll前的注释 if ($zip-&amp;gt;open($zipname, ZipArchive::OVERWRITE) === TRUE) { addFileToZip($zip,$zipname,$path);$zip-&amp;gt;close(); } else { exit(&#39;Unable to open file, or file creation failed!&#39;); } } function download($zipname) { if(!file_exists($zipname)){ exit(&amp;quot;Zip file does not exist!</description>
+    </item>
     
     <item>
       <title>PHP安全配置</title>

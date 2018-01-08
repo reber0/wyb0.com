@@ -83,6 +83,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/package-and-download-the-php-file/">打包下载php文件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-01-08</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 代码如下 &lt;?php function addFileToZip($zip,$zipname,$path){ $handler = opendir($path); while(($filename = readdir($handler))!==false) { if($filename != &quot;.&quot; &amp;&amp; $filename != &quot;..&quot; &amp;&amp; $filename!= $zipname){ if (is_dir($path.&quot;/&quot;.$filename)) { //如果读取的某个对象是文件夹，则递归 addFileToZip($zip,$zipname,$path.&quot;/&quot;.$filename); } else { $zip-&gt;addFile($path.&quot;/&quot;.$filename); } } } @closedir($path); } function tar($zipname,$path) { $zip = new ZipArchive(); //使用本类，linux需开启zlib，windows需取消php_zip.dll前的注释 if ($zip-&gt;open($zipname, ZipArchive::OVERWRITE) === TRUE) { addFileToZip($zip,$zipname,$path);$zip-&gt;close(); } else { exit('Unable to open file, or file creation failed!'); } } function download($zipname) { if(!file_exists($zipname)){ exit(&quot;Zip file does not exist!
+    </p>
+
+    
+    <footer>
+        <a href="/posts/package-and-download-the-php-file/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/php-safe-configuration/">PHP安全配置</a></h2>
 
         
@@ -610,62 +664,6 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/php-array/">PHP之数组</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-18</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 分类  索引数组 索引值从0开始，依次递增 关联数组 以字符串为索引，键和值对是无序组合，每个键都是唯一的  0x01 数组的定义 两种方法：
- 直接为数组元素赋值即可声明数组 使用array()函数声明数组
-&lt;?php // 1.直接为数组元素赋值即可声明数组 $contact_index[0] = 1; $contact_index[1] = &quot;高某&quot;; $contact_index[2] = &quot;A公司&quot;; $contact_index[3] = &quot;北京市&quot;; $contact_index[] = &quot;gao@a.com&quot;; var_dump($contact_index); $contact_key[&quot;ID&quot;] = &quot;2&quot;; $contact_key[&quot;姓名&quot;] = &quot;峰某&quot;; $contact_key[&quot;公司&quot;] = &quot;B公司&quot;; $contact_key[&quot;邮箱&quot;] = &quot;feng@b.com&quot;; var_dump($contact_key); // 2.使用array()函数声明数组 $contact_key_array = array( &quot;ID&quot; =&gt; 1; &quot;姓名&quot; =&gt; &quot;峰某&quot;; &quot;公司&quot; =&gt; &quot;B公司&quot;; &quot;邮箱&quot; =&gt; &quot;feng@b.com&quot;; ); var_dump($contact_key_array); ?&gt;   0x02 数组的遍历  for语句遍历数组 foreach语句遍历数组
-    </p>
-
-    
-    <footer>
-        <a href="/posts/php-array/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -711,7 +709,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(64)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
         
@@ -848,7 +846,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/php" title="php">php</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">

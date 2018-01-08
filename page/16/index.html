@@ -82,6 +82,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/linux-user/">Linux之用户和用户组</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x01 新建用户 环境：Ubuntu 14.04.4
+ Step1：添加新用户
+useradd -r -m -s /bin/bash 用户名
+ Step2:配置新用户密码
+passwd 用户名
+ Step3：给新添加的用户增加root权限
+visudo
+然后添加：
+用户名 ALL=(ALL:ALL) ALL
+ ctrl+o 保存 ctrl+x 退出
+  0x01 用户组 初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个  useradd xm 用户xm会默认加到xm组 useradd -g fans xm 将xm的所属组改为fans useradd -G fans xm 初始组为xm，有效组为fans  useradd xiaoming usermod -g fans xiaoming 只有一个初始组，被修改为fans useradd xm usermod -G fans xm xm用户会有两个组，初始组为xm，又添加一个有效组fans usermod -G fans1 xm xm用户两个组，初始组为xm，有效组更改为fans1  用户创建的文件拥有者是初始组  
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/linux-network-configuration/">Linux之网络配置</a></h2>
 
         
@@ -587,69 +647,6 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-object-oriented/">Python的面向对象</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-01-25</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 面向对象  面向对象是为了解决系统的可维护性，可扩展性，可重用性
- 三个基本特征：封装、继承、多态
- 封装：对一类事物，将其相同特点和功能提取出来，所共有的特点叫做属性，共有的功能就叫做方法，将属性和方法组合在一起就叫做封装。
-如：人具有姓名、年龄、性别，这些就是属性，人可以说话、可以走、可以跑，这些就是方法，封装起来就是一个类，而类的实例化就是对象
- 继承：继承可以使得子类具有父类的属性和方法，不需要再次编写相同的代码，子类可以对继承的代码进行重写，也可以追加新的属性和方法。
-如：有一个类People，教师就可以继承自People，可以添加自己的属性，如：工资、职工号，也可以添加自己的方法，如：备课、写教案
- 多态：首先，多态必有继承，没有继承就没有多态，继承后一个父类的引用变量可以指向其任意一个子类对象。
-如：有一个People类，它的子类可以有学生、老师、工人，有多种形态，这就是多态
-   0x01 类的实例 注意：类中每个方法后面都要写self，self就是当前对象指针
- 示例一  #!/usr/bin/env python # -*- coding:utf-8 -*- # 声明一个People类 class People(object): &quot;&quot;&quot;docstring for People&quot;&quot;&quot; def __init__(self, name, age): super(People, self).__init__() self.name = name self.age = age def running(self): print &quot;%s is running&quot; % self.name def print_base_msg(self): print &quot;Name:%s Age:%d&quot; % (self.name,self.age) # 继承自People类 class Teacher(People): &quot;&quot;&quot;docstring for Teacher&quot;&quot;&quot; def __init__(self, name, age, salary): super(Teacher, self).
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-object-oriented/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -694,7 +691,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(64)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
         
@@ -831,7 +828,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/php" title="php">php</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">

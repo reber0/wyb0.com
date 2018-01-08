@@ -82,6 +82,62 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module-pycurl/">Python的pycurl模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-03-21</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于cURL cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。
+利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。
+0x01 pycurl常见方法  创建curl对象  c = pycurl.Curl() #创建一个curl对象   设置请求  c.setopt(pycurl.URL,&quot;http://www.baidu.com&quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象   部分返回信息  c.getinfo(pycurl.HTTP_CODE) #返回的HTTP状态码 c.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module-pycurl/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/vps-set-up-shadowsocks/">在vps上搭建Shadowsocks</a></h2>
 
         
@@ -575,60 +631,6 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/ajax-request-and-response/">AJAX之XHR请求与响应</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-25</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/javascript">JavaScript</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 GET请求 &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;test&lt;/title&gt; &lt;script type=&quot;text/javascript&quot;&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) { //创建对象 xmlhttp = new XMLHttpRequest(); } else { xmlhttp = new ActiveXObjece(&quot;Microsoft.XMLHTTP&quot;); } // readyState改变时，就会触发onreadystatechange事件 // readyState存有XMLHttpRequest的状态，为0-4，4表示请求已完成，且响应已就绪 // status为200代表ok，为404代表未找到页面 xmlhttp.onreadystatechange=function() { if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { // xmlhttp.responseText获取来自服务器的响应 document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;2.html?t=&quot;+Math.random(),true); //GET请求，改变readyState // xmlhttp.open(&quot;GET&quot;,&quot;2.html?name=test&amp;age=23&quot;,true); //GET发送信息 xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;AJAX&lt;/h2&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;Request data&lt;/button&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;/div&gt; &lt;/body&gt; &lt;/html&gt;  点击&rdquo;Request data&rdquo;时就会请求服务端的2.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/ajax-request-and-response/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -673,7 +675,7 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(64)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
         
@@ -810,7 +812,7 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/php" title="php">php</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">
