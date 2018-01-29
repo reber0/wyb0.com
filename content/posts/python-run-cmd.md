@@ -64,10 +64,14 @@ drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
 >>> from subprocess import Popen,PIPE
 >>> cmd = "python /Users/reber/Desktop/a.py"
 >>> h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
->>> h.stdout.read()
+>>> h.stdout.read() #返回执行结果
 '3\n'
->>> h.stderr.read()
+>>> h.stderr.read() #返回错误信息
 ''
+>>> h.pid #返回子进程id
+46777
+>>> h.poll() #返回执行结果状态码
+0
 >>> f = open('a.txt','a+')
 >>> h = Popen("ls -l", stdout=f, stderr=PIPE, shell=True) #写入文件
 >>> h = Popen("ifconfig", shell=True, stdout=f, stderr=PIPE)
