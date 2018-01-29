@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metasploit的简单使用 - Reber's Blog</title>
+    <title>Python中执行系统命令 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,网络安全,python,php,linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -77,14 +77,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Metasploit的简单使用</h2>
+                <h2>Python中执行系统命令</h2>
             </div>
             <div class="content">
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 0px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-08-23</time>
+                        <time>2018-01-29</time>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     
 
@@ -96,7 +96,7 @@
                         
                             <i class="fa fa-folder fa-fw"></i>
                             
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
                             
                         
                         
@@ -106,7 +106,9 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/msf">msf</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
                             
                         
                         
@@ -115,33 +117,93 @@
                 
                 
 
-<h3 id="0x00-启动">0x00 启动</h3>
+<h3 id="0x00-使用模块">0x00 使用模块</h3>
 
-<p><img src="/img/post/msf_start.png" alt="启动msf" /></p>
+<p>在python执行系统命令一般可以通过3个模块来实现，这三个模块是：os、commands、subprocess</p>
 
-<h3 id="0x01-metasploit的工作平台">0x01 Metasploit的工作平台</h3>
+<h3 id="0x01-os模块执行系统命令">0x01 os模块执行系统命令</h3>
 
-<p>在msf里的工作平台可以保存历史的一些操作信息
-<img src="/img/post/msf_workspace_h.png" alt="msf工作平台的帮助信息" />
-<img src="/img/post/msf_workspace.png" alt="创建新的工作平台" /></p>
+<p>一般用os模块的system函数来执行一些简单的命令</p>
 
-<h3 id="0x02-使用db-nmap扫描主机">0x02 使用db_nmap扫描主机</h3>
+<pre><code class="language-python">&gt;&gt;&gt; import os
+&gt;&gt;&gt; os.system(&quot;pwd&quot;)
+/Users/reber
+0
+</code></pre>
 
-<p><img src="/img/post/msf_nmap_lanou3g_ip.png" alt="扫描lanou3g的ip信息" />
-扫描后的结果会保留在工作平台中，可以用hosts和services进行查看：
-<img src="/img/post/msf_hosts.png" alt="查看主机列表" />
-<img src="/img/post/msf_services.png" alt="查看服务" /></p>
+<h3 id="0x02-commands模块执行系统命令">0x02 commands模块执行系统命令</h3>
 
-<h3 id="0x03-使用msf的模块进行弱口令爆破">0x03 使用msf的模块进行弱口令爆破</h3>
+<p>commands这个模块在python3中被移除了</p>
 
-<p>注：这里针对ftp服务进行弱口令测试
-<img src="/img/post/msf_services_p_21.png" alt="查看都有那个主机开启了21端口" />
-<img src="/img/post/msf_search_module.png" alt="查找用于ftp爆破的模块" />
-<img src="/img/post/msf_use_module_and_set.png" alt="使用模块并设置参数" />
-<img src="/img/post/msf_use_show_options.png" alt="查看设置的参数" />
-<img src="/img/post/msf_start_attack_ftp.png" alt="开始攻击" /></p>
+<pre><code class="language-python">&gt;&gt;&gt; import commands
+&gt;&gt;&gt; commands.getoutput(&quot;pwd&quot;)
+'/Users/reber'
+&gt;&gt;&gt; commands.getstatusoutput(&quot;pwd&quot;)
+(0, '/Users/reber') #返回状态码以及结果
+</code></pre>
 
-<p>使用vulns可以查看结果：msf auxiliary(ftp_login) &gt; vulns</p>
+<h3 id="0x03-subprocess模块">0x03 subprocess模块</h3>
+
+<ul>
+<li>call函数<br />
+函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)</li>
+</ul>
+
+<pre><code class="language-python">&gt;&gt;&gt; from subprocess import call
+&gt;&gt;&gt; call([&quot;ls&quot;,&quot;-l&quot;]) #传入一个list
+total 16
+-rw-r--r--   1 reber  staff    80  8 16 16:19 README.md
+drwxr-xr-x@  3 reber  staff   102  3 14  2017 archetypes
+-rwxr-xr-x@  1 reber  staff  1403 12 13 17:43 config.toml
+drwxr-xr-x@  4 reber  staff   136 12  9 23:02 content
+drwxr-xr-x@  7 reber  staff   238  4 26  2017 layouts
+drwxr-xr-x@ 19 reber  staff   646 10 11 12:33 public
+drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
+0
+&gt;&gt;&gt; call(&quot;ls -l&quot;,shell=True) #shell设置为True时可以传入一个字符串
+total 16
+-rw-r--r--   1 reber  staff    80  8 16 16:19 README.md
+drwxr-xr-x@  3 reber  staff   102  3 14  2017 archetypes
+-rwxr-xr-x@  1 reber  staff  1403 12 13 17:43 config.toml
+drwxr-xr-x@  4 reber  staff   136 12  9 23:02 content
+drwxr-xr-x@  7 reber  staff   238  4 26  2017 layouts
+drwxr-xr-x@ 19 reber  staff   646 10 11 12:33 public
+drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
+0
+</code></pre>
+
+<ul>
+<li>Popen函数</li>
+</ul>
+
+<pre><code class="language-python">&gt;&gt;&gt; from subprocess import Popen,PIPE
+&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/a.py&quot;
+&gt;&gt;&gt; h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+&gt;&gt;&gt; h.stdout.read()
+'3\n'
+&gt;&gt;&gt; h.stderr.read()
+''
+&gt;&gt;&gt; f = open('a.txt','a+')
+&gt;&gt;&gt; h = Popen(&quot;ls -l&quot;, stdout=f, stderr=PIPE, shell=True) #写入文件
+&gt;&gt;&gt; h = Popen(&quot;ifconfig&quot;, shell=True, stdout=f, stderr=PIPE)
+&gt;&gt;&gt; f.close()
+</code></pre>
+
+<ul>
+<li>在python3中subprocess实现了commands的getstatusoutput方法</li>
+</ul>
+
+<pre><code>$ py3
+(py3env) [16:28 reber@wyb in ~/wyb0.com git:(master) ✗]
+$ python
+Python 3.6.3 (default, Oct  4 2017, 06:09:15)
+[GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.37)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; from subprocess import getstatusoutput
+&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/a.py&quot;
+&gt;&gt;&gt; getstatusoutput(cmd)
+(0, '3')
+</code></pre>
 
                 
                 <div style="padding:10px 1px;">
@@ -157,13 +219,13 @@
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/python-some-small-modules/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/package-and-download-the-php-file/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/python-some-small-modules/">Python的一些小模块</a>
+      <a href="http://wyb0.com/posts/package-and-download-the-php-file/">打包下载php文件</a>
     </nav>
     
   </div>
@@ -172,14 +234,8 @@
   </div>
   <div class="pure-u-10-24">
     
-    <nav class="next">
-      <a href="http://wyb0.com/posts/python-exception-handling/">Python的异常处理</a>
-    </nav>
-    
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
-    
-    <a href="http://wyb0.com/posts/python-exception-handling/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>

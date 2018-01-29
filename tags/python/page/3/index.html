@@ -83,6 +83,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module-cmd/">Python的cmd模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-14</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于cmd模块 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+0x01 cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  0x02 用cmd模块简单实现shell命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot; def __init__(self): Cmd.__init__(self) os.chdir(&quot;C:/Users/WYB_9/Desktop&quot;) hostName = socket.gethostname() self.prompt = &quot;reber@&quot; + hostName + &quot; &quot; + os.path.abspath('.') + &quot;\n$ &quot; def help_dir(self): print &quot;dir [path]&quot; def do_dir(self, arg): if not arg: print &quot;\n&quot;.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module-cmd/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-simple-decode-ip-head/">Python简单解码IP头</a></h2>
 
         
@@ -583,69 +640,6 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-object-oriented/">Python的面向对象</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-01-25</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 面向对象  面向对象是为了解决系统的可维护性，可扩展性，可重用性
- 三个基本特征：封装、继承、多态
- 封装：对一类事物，将其相同特点和功能提取出来，所共有的特点叫做属性，共有的功能就叫做方法，将属性和方法组合在一起就叫做封装。
-如：人具有姓名、年龄、性别，这些就是属性，人可以说话、可以走、可以跑，这些就是方法，封装起来就是一个类，而类的实例化就是对象
- 继承：继承可以使得子类具有父类的属性和方法，不需要再次编写相同的代码，子类可以对继承的代码进行重写，也可以追加新的属性和方法。
-如：有一个类People，教师就可以继承自People，可以添加自己的属性，如：工资、职工号，也可以添加自己的方法，如：备课、写教案
- 多态：首先，多态必有继承，没有继承就没有多态，继承后一个父类的引用变量可以指向其任意一个子类对象。
-如：有一个People类，它的子类可以有学生、老师、工人，有多种形态，这就是多态
-   0x01 类的实例 注意：类中每个方法后面都要写self，self就是当前对象指针
- 示例一  #!/usr/bin/env python # -*- coding:utf-8 -*- # 声明一个People类 class People(object): &quot;&quot;&quot;docstring for People&quot;&quot;&quot; def __init__(self, name, age): super(People, self).__init__() self.name = name self.age = age def running(self): print &quot;%s is running&quot; % self.name def print_base_msg(self): print &quot;Name:%s Age:%d&quot; % (self.name,self.age) # 继承自People类 class Teacher(People): &quot;&quot;&quot;docstring for Teacher&quot;&quot;&quot; def __init__(self, name, age, salary): super(Teacher, self).
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-object-oriented/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -693,7 +687,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(35)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(10)</a></li>
         
@@ -803,7 +797,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>13</sup>
+                <sup>14</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -843,7 +837,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>32</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

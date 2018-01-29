@@ -83,6 +83,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module-cmd/">Python的cmd模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-14</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于cmd模块 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+0x01 cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  0x02 用cmd模块简单实现shell命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot; def __init__(self): Cmd.__init__(self) os.chdir(&quot;C:/Users/WYB_9/Desktop&quot;) hostName = socket.gethostname() self.prompt = &quot;reber@&quot; + hostName + &quot; &quot; + os.path.abspath('.') + &quot;\n$ &quot; def help_dir(self): print &quot;dir [path]&quot; def do_dir(self, arg): if not arg: print &quot;\n&quot;.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module-cmd/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-module-requests/">Python的requests模块</a></h2>
 
         
@@ -290,7 +347,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(35)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(10)</a></li>
         
@@ -400,7 +457,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>13</sup>
+                <sup>14</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -440,7 +497,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>32</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

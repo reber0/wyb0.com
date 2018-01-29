@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Thu, 20 Jul 2017 14:20:26 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jan 2018 16:45:34 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python中执行系统命令</title>
+      <link>http://wyb0.com/posts/python-run-cmd/</link>
+      <pubDate>Mon, 29 Jan 2018 16:45:34 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/python-run-cmd/</guid>
+      <description>0x00 使用模块 在python执行系统命令一般可以通过3个模块来实现，这三个模块是：os、commands、subprocess
+0x01 os模块执行系统命令 一般用os模块的system函数来执行一些简单的命令
+&amp;gt;&amp;gt;&amp;gt; import os &amp;gt;&amp;gt;&amp;gt; os.system(&amp;quot;pwd&amp;quot;) /Users/reber 0  0x02 commands模块执行系统命令 commands这个模块在python3中被移除了
+&amp;gt;&amp;gt;&amp;gt; import commands &amp;gt;&amp;gt;&amp;gt; commands.getoutput(&amp;quot;pwd&amp;quot;) &#39;/Users/reber&#39; &amp;gt;&amp;gt;&amp;gt; commands.getstatusoutput(&amp;quot;pwd&amp;quot;) (0, &#39;/Users/reber&#39;) #返回状态码以及结果  0x03 subprocess模块  call函数
+函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)  &amp;gt;&amp;gt;&amp;gt; from subprocess import call &amp;gt;&amp;gt;&amp;gt; call([&amp;quot;ls&amp;quot;,&amp;quot;-l&amp;quot;]) #传入一个list total 16 -rw-r--r-- 1 reber staff 80 8 16 16:19 README.md drwxr-xr-x@ 3 reber staff 102 3 14 2017 archetypes -rwxr-xr-x@ 1 reber staff 1403 12 13 17:43 config.</description>
+    </item>
     
     <item>
       <title>使用Python读写xml文件</title>

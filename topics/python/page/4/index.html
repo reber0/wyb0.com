@@ -83,6 +83,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-thread/">Python的线程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-02-03</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/thread">thread</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。
+0x00 单线程 #!/usr/bin/env python # -*- coding: utf-8 -*- from time import time,ctime,sleep def music(arg): for x in range(2): print &quot;I'm listening to %s. %s&quot; % (arg,ctime()) sleep(1) def movie(arg): for x in range(2): print &quot;I'm watching %s. %s&quot; % (arg,ctime()) sleep(5) if __name__ == '__main__': start = int(time()) music(u'我') movie(u'可是') print &quot;All over time:%s&quot; % ctime() print &quot;Used time:%d&quot; % int(time()-start)  0x01 多线程 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep INDEX = 0 def http_get(sites): global INDEX while INDEX &lt; len(sites): url = sites[INDEX] INDEX += 1 resp = requests.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-thread/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-io-operation/">Python的IO操作</a></h2>
 
         
@@ -361,7 +418,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(35)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(10)</a></li>
         
@@ -471,7 +528,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>13</sup>
+                <sup>14</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -511,7 +568,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>32</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

