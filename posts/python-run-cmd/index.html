@@ -179,10 +179,14 @@ drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
 <pre><code class="language-python">&gt;&gt;&gt; from subprocess import Popen,PIPE
 &gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/a.py&quot;
 &gt;&gt;&gt; h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-&gt;&gt;&gt; h.stdout.read()
+&gt;&gt;&gt; h.stdout.read() #返回执行结果
 '3\n'
-&gt;&gt;&gt; h.stderr.read()
+&gt;&gt;&gt; h.stderr.read() #返回错误信息
 ''
+&gt;&gt;&gt; h.pid #返回子进程id
+46777
+&gt;&gt;&gt; h.poll() #返回执行结果状态码
+0
 &gt;&gt;&gt; f = open('a.txt','a+')
 &gt;&gt;&gt; h = Popen(&quot;ls -l&quot;, stdout=f, stderr=PIPE, shell=True) #写入文件
 &gt;&gt;&gt; h = Popen(&quot;ifconfig&quot;, shell=True, stdout=f, stderr=PIPE)
