@@ -30,7 +30,7 @@ commands这个模块在python3中被移除了
 (0, '/Users/reber') #返回状态码以及结果
 ```
 
-### 0x03 subprocess模块
+### 0x03 subprocess模块执行系统命令
 * task.py代码
 
 ```
@@ -44,7 +44,7 @@ def aaa():
 print(aaa())
 ```
 
-* call函数  
+* call函数执行命令(会阻塞到任务完成)  
 函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)
 
 ```python
@@ -71,20 +71,38 @@ drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
 0
 ```
 
-* Popen函数
+* Popen函数进行进程交互(非阻塞)
 
 ```python
->>> from subprocess import Popen,PIPE
+>>> from subprocess import Popen,PIPE,STDOUT
+>>> h = Popen("ls dsfj",stdout=PIPE,stderr=STDOUT,shell=True)
+>>> h.stdout.read() #从数据流中读出数据，如果数据流过大且不读数据的话可能会死锁
+'ls: dsfj: No such file or directory\n'
+>>> h.stderr.read() #使用的是STDOUT，将错误通过标准输出流输出，没有read方法
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'NoneType' object has no attribute 'read'
+
+
+>>> h = Popen("ls dsfj",stdout=PIPE,stderr=PIPE,shell=True)
+>>> h.stdout.read()
+''
+>>> h.stderr.read()
+'ls: dsfj: No such file or directory\n'
+```
+<br>
+
+```python
 >>> cmd = "python /Users/reber/Desktop/task.py"
 >>> h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
->>> h.stdout.read() #返回执行结果
-'3\n'
->>> h.stderr.read() #返回错误信息
-''
->>> h.pid #返回子进程id
-46777
->>> h.poll() #返回执行结果状态码
-0
+>>> stdoutput = h.stdout.read() #stdoutput,erroutput = h.communicate()
+>>> erroutput = h.stdout.read()
+>>> stdoutput,erroutput
+('3\n', '')
+>>> h.pid,h.poll() #子进程id，执行结果状态码(0代表成功)
+(49787, 0)
+
+
 >>> f = open('a.txt','a+')
 >>> h = Popen("ls -l", stdout=f, stderr=PIPE, shell=True) #写入文件
 >>> h = Popen("ifconfig", shell=True, stdout=f, stderr=PIPE)
