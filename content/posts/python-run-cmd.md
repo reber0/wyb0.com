@@ -31,6 +31,19 @@ commands这个模块在python3中被移除了
 ```
 
 ### 0x03 subprocess模块
+* task.py代码
+
+```
+def aaa():
+    s = 0
+    for x in range(3):
+        time.sleep(1)
+        s += x
+    return s
+
+print(aaa())
+```
+
 * call函数  
 函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)
 
@@ -62,7 +75,7 @@ drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
 
 ```python
 >>> from subprocess import Popen,PIPE
->>> cmd = "python /Users/reber/Desktop/a.py"
+>>> cmd = "python /Users/reber/Desktop/task.py"
 >>> h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
 >>> h.stdout.read() #返回执行结果
 '3\n'
@@ -88,7 +101,7 @@ Python 3.6.3 (default, Oct  4 2017, 06:09:15)
 [GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.37)] on darwin
 Type "help", "copyright", "credits" or "license" for more information.
 >>> from subprocess import getstatusoutput
->>> cmd = "python /Users/reber/Desktop/a.py"
+>>> cmd = "python /Users/reber/Desktop/task.py"
 >>> getstatusoutput(cmd)
 (0, '3')
 ```
