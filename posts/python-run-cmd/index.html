@@ -142,7 +142,7 @@
 (0, '/Users/reber') #返回状态码以及结果
 </code></pre>
 
-<h3 id="0x03-subprocess模块">0x03 subprocess模块</h3>
+<h3 id="0x03-subprocess模块执行系统命令">0x03 subprocess模块执行系统命令</h3>
 
 <ul>
 <li>task.py代码</li>
@@ -159,7 +159,7 @@ print(aaa())
 </code></pre>
 
 <ul>
-<li>call函数<br />
+<li>call函数执行命令(会阻塞到任务完成)<br />
 函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)</li>
 </ul>
 
@@ -187,20 +187,38 @@ drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
 </code></pre>
 
 <ul>
-<li>Popen函数</li>
+<li>Popen函数进行进程交互(非阻塞)</li>
 </ul>
 
-<pre><code class="language-python">&gt;&gt;&gt; from subprocess import Popen,PIPE
-&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/task.py&quot;
-&gt;&gt;&gt; h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-&gt;&gt;&gt; h.stdout.read() #返回执行结果
-'3\n'
-&gt;&gt;&gt; h.stderr.read() #返回错误信息
+<pre><code class="language-python">&gt;&gt;&gt; from subprocess import Popen,PIPE,STDOUT
+&gt;&gt;&gt; h = Popen(&quot;ls dsfj&quot;,stdout=PIPE,stderr=STDOUT,shell=True)
+&gt;&gt;&gt; h.stdout.read() #从数据流中读出数据，如果数据流过大且不读数据的话可能会死锁
+'ls: dsfj: No such file or directory\n'
+&gt;&gt;&gt; h.stderr.read() #使用的是STDOUT，将错误通过标准输出流输出，没有read方法
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: 'NoneType' object has no attribute 'read'
+
+
+&gt;&gt;&gt; h = Popen(&quot;ls dsfj&quot;,stdout=PIPE,stderr=PIPE,shell=True)
+&gt;&gt;&gt; h.stdout.read()
 ''
-&gt;&gt;&gt; h.pid #返回子进程id
-46777
-&gt;&gt;&gt; h.poll() #返回执行结果状态码
-0
+&gt;&gt;&gt; h.stderr.read()
+'ls: dsfj: No such file or directory\n'
+</code></pre>
+
+<p><br></p>
+
+<pre><code class="language-python">&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/task.py&quot;
+&gt;&gt;&gt; h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+&gt;&gt;&gt; stdoutput = h.stdout.read() #stdoutput,erroutput = h.communicate()
+&gt;&gt;&gt; erroutput = h.stdout.read()
+&gt;&gt;&gt; stdoutput,erroutput
+('3\n', '')
+&gt;&gt;&gt; h.pid,h.poll() #子进程id，执行结果状态码(0代表成功)
+(49787, 0)
+
+
 &gt;&gt;&gt; f = open('a.txt','a+')
 &gt;&gt;&gt; h = Popen(&quot;ls -l&quot;, stdout=f, stderr=PIPE, shell=True) #写入文件
 &gt;&gt;&gt; h = Popen(&quot;ifconfig&quot;, shell=True, stdout=f, stderr=PIPE)

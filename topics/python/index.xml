@@ -21,7 +21,7 @@
       <description>0x00 使用模块 在python执行系统命令一般可以通过3个模块来实现，这三个模块是：os、commands、subprocess
 0x01 os模块执行系统命令 一般用os模块的system函数来执行一些简单的命令
 &amp;gt;&amp;gt;&amp;gt; import os &amp;gt;&amp;gt;&amp;gt; os.system(&amp;quot;pwd&amp;quot;) /Users/reber 0  0x02 commands模块执行系统命令 commands这个模块在python3中被移除了
-&amp;gt;&amp;gt;&amp;gt; import commands &amp;gt;&amp;gt;&amp;gt; commands.getoutput(&amp;quot;pwd&amp;quot;) &#39;/Users/reber&#39; &amp;gt;&amp;gt;&amp;gt; commands.getstatusoutput(&amp;quot;pwd&amp;quot;) (0, &#39;/Users/reber&#39;) #返回状态码以及结果  0x03 subprocess模块  task.py代码  def aaa(): s = 0 for x in range(3): time.sleep(1) s += x return s print(aaa())   call函数
+&amp;gt;&amp;gt;&amp;gt; import commands &amp;gt;&amp;gt;&amp;gt; commands.getoutput(&amp;quot;pwd&amp;quot;) &#39;/Users/reber&#39; &amp;gt;&amp;gt;&amp;gt; commands.getstatusoutput(&amp;quot;pwd&amp;quot;) (0, &#39;/Users/reber&#39;) #返回状态码以及结果  0x03 subprocess模块执行系统命令  task.py代码  def aaa(): s = 0 for x in range(3): time.sleep(1) s += x return s print(aaa())   call函数执行命令(会阻塞到任务完成)
 函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)  &amp;gt;&amp;gt;&amp;gt; from subprocess import call &amp;gt;&amp;gt;&amp;gt; call([&amp;quot;ls&amp;quot;,&amp;quot;-l&amp;quot;]) #传入一个list total 16 -rw-r--r-- 1 reber staff 80 8 16 16:19 README.</description>
     </item>
     
