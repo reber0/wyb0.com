@@ -145,6 +145,20 @@
 <h3 id="0x03-subprocess模块">0x03 subprocess模块</h3>
 
 <ul>
+<li>task.py代码</li>
+</ul>
+
+<pre><code>def aaa():
+    s = 0
+    for x in range(3):
+        time.sleep(1)
+        s += x
+    return s
+
+print(aaa())
+</code></pre>
+
+<ul>
 <li>call函数<br />
 函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)</li>
 </ul>
@@ -177,7 +191,7 @@ drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
 </ul>
 
 <pre><code class="language-python">&gt;&gt;&gt; from subprocess import Popen,PIPE
-&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/a.py&quot;
+&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/task.py&quot;
 &gt;&gt;&gt; h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
 &gt;&gt;&gt; h.stdout.read() #返回执行结果
 '3\n'
@@ -204,7 +218,7 @@ Python 3.6.3 (default, Oct  4 2017, 06:09:15)
 [GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.37)] on darwin
 Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
 &gt;&gt;&gt; from subprocess import getstatusoutput
-&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/a.py&quot;
+&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/task.py&quot;
 &gt;&gt;&gt; getstatusoutput(cmd)
 (0, '3')
 </code></pre>
