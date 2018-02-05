@@ -39,6 +39,9 @@ topics = ["Pentest"]
 
 ### 0x02 权限提升
 * 查看未安装补丁
+```  
+systeminfo>a.txt&(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592799 KB2621440 KB2160329 KB970483 KB2124261 KB977165 KB958644) do @type a.txt|@find /i "%i"||@echo %i Not Installed!)&del /f /q /a a.txt
+```
 ![Windows系统漏洞提权-查看系统未安装补丁](/img/post/privilge_escalation_win_view_patch.png)
 
 * 上传exp提权
