@@ -151,8 +151,12 @@
 <h3 id="0x02-权限提升">0x02 权限提升</h3>
 
 <ul>
-<li><p>查看未安装补丁
-<img src="/img/post/privilge_escalation_win_view_patch.png" alt="Windows系统漏洞提权-查看系统未安装补丁" /></p></li>
+<li><p>查看未安装补丁</p>
+
+<pre><code>systeminfo&gt;a.txt&amp;(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592799 KB2621440 KB2160329 KB970483 KB2124261 KB977165 KB958644) do @type a.txt|@find /i &quot;%i&quot;||@echo %i Not Installed!)&amp;del /f /q /a a.txt
+</code></pre>
+
+<p><img src="/img/post/privilge_escalation_win_view_patch.png" alt="Windows系统漏洞提权-查看系统未安装补丁" /></p></li>
 
 <li><p>上传exp提权
 <img src="/img/post/privilge_escalation_win_upload_iis6.png" alt="Windows系统漏洞提权-上传iis6" />
