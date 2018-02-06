@@ -1,6 +1,6 @@
 +++
 date = "2018-02-06T15:12:32+08:00"
-description = "在windows的终端下下载文件"
+description = "在windows的终端下下载文件，在windows的终端下执行远程文件"
 draft = false
 tags = ["intranet"]
 title = "Windows终端下载文件和执行远程文件"
