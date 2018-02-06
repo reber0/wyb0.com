@@ -82,6 +82,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/ubuntu-build-blog-in-github/">Ubuntu下用github搭建博客</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-09</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/git">Git</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/git">git</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        环境：ubuntu14.04.4
+0x00 安装hugo  在https://github.com/spf13/hugo/releases 下载hugo的deb安装包
+ 安装hugo
+reber@ubuntu:~/Downloads$ sudo dpkg -i hug_015_amd64
+ 生成站点
+  reber@ubuntu:~/Downloads$ cd /home/reber reber@ubuntu:~$ hugo new site reber-9.com #新建站点 #启动站点,访问localhost:1313测试有没有成功 reber@ubuntu:~/reber-9.com$ hugo server -w  0x01 配置github  安装git  reber@ubuntu:~$ sudo apt-get install git reber@ubuntu:~$ git --version #查看版本判断是否安装成功   安装ssh  reber@ubuntu:~/reber-9.com$ sudo apt-get install ssh   备份并创建本地ssh
+  reber@ubuntu:~/reber-9.com$ cd /home/reber/.ssh/ reber@ubuntu:~/.ssh$ mkdir ras.bak reber@ubuntu:~/.ssh$ cp id_ras* rsa.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/ubuntu-build-blog-in-github/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/ubuntu-insatll-sublime-text3/">Ubuntu下安装sublime text 3</a></h2>
 
         
@@ -595,68 +655,6 @@ xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-service-and-planning-tasks/">Linux之服务和计划任务</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-19</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 服务： 在后台运行的软件就叫服务，参数一般为：start/stop/restart
- apache启动后默认降权
-service httpd start实际调用的是/etc/init.d/httpd这个shell脚本 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d [wyb@localhost ~]$ ls -al /etc/init.d lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&gt; rc.d/init.d  添加服务
-将脚本放在/etc/init.d/下即可
- 若要自启则
-chkconfig --list //查看chk管理的自启动项 chkconfig --add httpd 添加到chk管理里面 chkconfig --del httpd 将httpd移出chk管理 chkcofnig --level 35 httpd on init的345将开启 chkcofnig --level 345 httpd off /etc/rc.d/rc3.d和rc5.d里将有httpd   0x01 计划任务 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件
-cron每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟
-任务格式：分(0-59) 时 日 月 周(0-6) 命令
- 添加任务第一种方法  crontab -e //任何权限都可以运行这个命令，针对某个用户 [wyb@localhost spool]$ crontab -e //进入编辑，实际是写入到/var/spool/cron/username这个文件中 no crontab for wyb - using an empty one */1 * * * * date &gt;&gt; /tmp/date.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-service-and-planning-tasks/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -667,7 +665,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
             <a href="/page/14/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;15 / 17&nbsp;</span>
+        <span>&nbsp;15 / 18&nbsp;</span>
         
         
             <a href="/page/16/"><i class="fa fa-chevron-right"></i></a>
@@ -699,7 +697,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(64)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(65)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -789,6 +787,11 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
                 <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">

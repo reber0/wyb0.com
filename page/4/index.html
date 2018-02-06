@@ -82,6 +82,64 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-module-openpyxl/">Python的openpyxl模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-11-25</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 openpyxl模块 这个模块可以让你读写excel文件
+0x01 读取数据 代码如下：
+#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook wb = load_workbook(filename='aa.xlsx') sheetnames = wb.get_sheet_names() #获得所有表名 print u&quot;存在表：%s&quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&quot;第一张表表名为：%s&quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &quot;表%s有%d行%d列&quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&quot;取部分数据：&quot; print ws['A1'].value,ws['B1'].value print ws['A2'].value,ws['B2'].value print ws.cell(row=1, column=2).value print u&quot;\n输出表%s的所有数据：&quot; % ws.title for x in range(1,rows+1): for y in range(1,columns+1): print ws.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module-openpyxl/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/ajax-and-php/">AJAX与PHP</a></h2>
 
         
@@ -588,60 +646,6 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-implement-agent/">Python实现代理</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-09-13</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 帮助信息 0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- 'This is a proxy' __author__ = 'xxx' import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s) text = b''.join([x if 0x20 &lt;= ord(x) &lt; 0x7F else b'.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-implement-agent/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -652,7 +656,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
             <a href="/page/3/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;4 / 17&nbsp;</span>
+        <span>&nbsp;4 / 18&nbsp;</span>
         
         
             <a href="/page/5/"><i class="fa fa-chevron-right"></i></a>
@@ -684,7 +688,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(64)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(65)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -774,6 +778,11 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
                 <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">

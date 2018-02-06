@@ -82,6 +82,69 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-read-and-write-xml/">使用Python读写xml文件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-07-20</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xml">xml</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 解析XML的方法  SAX (simple API for XML)
+python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析XML的过程中触发一个个的事件并调用用户定义的回调函数来处理XML文件。
+ DOM(Document Object Model)
+将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
+ ElementTree(元素树)
+ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
+   我在这里使用ElementTree  0x01 Element对象的属性 每个Element对象都具有以下属性：
+ tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）  &gt;&gt;&gt; from xml.etree import ElementTree as ET &gt;&gt;&gt; xml = &quot;&quot;&quot;&lt;books&gt; ... &lt;book id='37476'&gt;aaaa&lt;/book&gt; ... &lt;book id='83727'&gt;bbbb&lt;/book&gt; ... &lt;/books&gt;&quot;&quot;&quot; &gt;&gt;&gt; root = ET.fromstring(xml) &gt;&gt;&gt; root.tag 'books' &gt;&gt;&gt; child = root.getchildren() &gt;&gt;&gt; child [&lt;Element 'book' at 0x106f59410&gt;, &lt;Element 'book' at 0x106f59450&gt;] &gt;&gt;&gt; child[0].
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-read-and-write-xml/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-module-mrq/">MRQ的使用</a></h2>
 
         
@@ -572,62 +635,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/weblogic-ssrf-check/">检测WebLogic是否存在SSRF</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-04-14</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ssrf">ssrf</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        检测脚本如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import sys import Queue import requests import threading from requests.packages.urllib3.exceptions import InsecureRequestWarning requests.packages.urllib3.disable_warnings(InsecureRequestWarning) queue = Queue.Queue() mutex = threading.Lock() class Weblogic_SSRF_Check(threading.Thread): &quot;&quot;&quot;docstring for Weblogic_SSRF_Check&quot;&quot;&quot; def __init__(self, queue): threading.Thread.__init__(self) self.queue = queue def check(self,domain,ip): payload = &quot;uddiexplorer/SearchPublicRegistries.jsp?operator={ip}&amp;rdoSearch=name&amp;txtSearchname=sdf&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search&quot;.format(ip=ip) url = domain + payload try: html = requests.get(url=url, timeout=15, verify=False).content m = re.search('weblogic.uddi.client.structures.exception.XML_SoapException',html) if m: mutex.acquire() with open('ssrf.txt','a+') as f: print &quot;%s has weblogic ssrf.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/weblogic-ssrf-check/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -638,7 +645,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <a href="/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;2 / 17&nbsp;</span>
+        <span>&nbsp;2 / 18&nbsp;</span>
         
         
             <a href="/page/3/"><i class="fa fa-chevron-right"></i></a>
@@ -670,7 +677,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(64)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(65)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -760,6 +767,11 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
                 <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
