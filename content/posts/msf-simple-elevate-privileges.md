@@ -1,6 +1,6 @@
 +++
 date = "2018-02-26T13:43:20+08:00"
-description = ""
+description = "本地构建渗透测试环境，在已经获得shell的前提下尝试利用Metasploit进行提权"
 draft = false
 tags = ["msf","elevate privileges"]
 title = "Metasploit简单提权"
@@ -163,7 +163,7 @@ msf exploit(multi/handler) >
 ```
 
 ### 0x03 提权
-通过systeminfo得知为Win7主机，只有一个补丁，直接尝试绕过UAC进行提权
+前面通过systeminfo得知为Win7主机，只有一个补丁，直接尝试绕过UAC进行提权
 ```
 msf exploit(multi/handler) > use exploit/windows/local/bypassuac
 msf exploit(windows/local/bypassuac) > options
