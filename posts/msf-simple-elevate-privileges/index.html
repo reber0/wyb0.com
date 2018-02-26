@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metasploit简单提权 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,网络安全,python,php,linux">
-    <meta name="description" content="">
+    <meta name="description" content="本地构建渗透测试环境，在已经获得shell的前提下尝试利用Metasploit进行提权">
     <meta name="author" content="reber">
 
     
@@ -278,7 +278,7 @@ msf exploit(multi/handler) &gt;
 
 <h3 id="0x03-提权">0x03 提权</h3>
 
-<p>通过systeminfo得知为Win7主机，只有一个补丁，直接尝试绕过UAC进行提权</p>
+<p>前面通过systeminfo得知为Win7主机，只有一个补丁，直接尝试绕过UAC进行提权</p>
 
 <pre><code>msf exploit(multi/handler) &gt; use exploit/windows/local/bypassuac
 msf exploit(windows/local/bypassuac) &gt; options
