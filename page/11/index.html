@@ -82,6 +82,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-encode-setting/">Python的编码问题</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-29</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 几个编码函数 * ord(x) 将字符转换为10进制整数(0~255之间) #ord('a')==&gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;'a'，chr(0x61)==&gt;'a' * b2a_hex(x) 将字符转换为对应的16进制 #import binascii;binascii.b2a_hex('a')==&gt;'61' * a2b_hex(x) 将16进制转换为对应的字符 #import binascii;binascii.a2b_hex('61')==&gt;'a' * hex(x) 将10进制整数转换为对应的16进制 #hex(16)==&gt;'0x10' * oct(x) 将10进制整数转换为对应的8进制 #oct(9)==&gt;'011'  0x01 设置为utf-8  在py文件开头设置
+#!/usr/bin/env python #-*- coding: utf-8 -*- 或： #coding=utf8  永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
+#coding=utf8 import sys reload(sys) sys.setdefaultencoding('utf8') # 此方法修改了python环境，设置系统默认编码，永久有效   0x03 编码转换 python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
+python2中的字符串一般包含两种类型：str和unicode str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串 unicode：unicode编码的字符串才是unicode类型的字符串 可通过isinstance()和type()来判断 &gt;&gt;&gt; aa = '小明' &gt;&gt;&gt; isinstance(aa,str) True &gt;&gt;&gt; type(aa) &lt;type 'str'&gt; &gt;&gt;&gt; bb = u'小明' &gt;&gt;&gt; isinstance(bb,unicode) True &gt;&gt;&gt; type(bb) &lt;type 'unicode'&gt;  &gt;&gt;&gt; u'小明'.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-encode-setting/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/sqlmapapi-usage/">sqlmapapi的简单使用</a></h2>
 
         
@@ -595,63 +652,6 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/injection-of-check-database-type/">SQL注入之判断数据库类型</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-19</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 常见手段 扫描端口、指纹、抓包查看http头信息、在网址后面直接判断
-0x01 根据各数据库特有函数判断  Access:
-and (select count(*) from MSysAccessObjects)&gt;0 返回正常说明是access and exists(select count(*) from表) ID=1 and (select count (*) from sysobjects)&gt;0 返回异常 ID=1 and (select count (*) from msysobjects)&gt;0返回异常  SQLServer:
-and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and (select count (*) from sysobjects)&gt;0 返回正常 ID=1 and (select count (*) from msysobjects)&gt;0返回异常 ID=1 and left(version(),1)=5%23 //红色字体也可能是4 ID=1 and exists(select id from sysobjects) ID=1 and len(user)&gt;0 ID=1 CHAR(97)+CHAR(110)+CHAR(100)+CHAR(32)+CHAR(49)+CHAR(61)+CHAR(49)  MySQL:
-    </p>
-
-    
-    <footer>
-        <a href="/posts/injection-of-check-database-type/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -694,7 +694,7 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(65)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(66)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -763,7 +763,7 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/elevate-privileges" title="elevate-privileges">elevate-privileges</a>
-                <sup>6</sup>
+                <sup>7</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -823,7 +823,7 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/msf" title="msf">msf</a>
-                <sup>2</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">

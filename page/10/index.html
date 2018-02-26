@@ -82,6 +82,68 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/xss-basis/">XSS初识</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-15</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xss">xss</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 简介 XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在&rdquo;脚本&rdquo;这两个字上，脚本主要有两个：JavaScript和ActionScript。
+要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。
+0x01 危害 JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。
+• 盗取管理员Cookie • XSS Worm • 挂马(水坑攻击) • 键盘记录(有局限性) • 利用网站重定向 • 修改网页内容 • 等等  0x02 攻击场景 在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。
+• 支持html解析和javascript解析的客户端,如：html文档、flsh、pdf等 • url的参数，回显到网页上 • form表单提交的内容出现在网页上，如：昵称、邮箱、简介、留言 • 等等  0x03 分类 主要分为三类：反射型、存储型、DOM型(还有flash XSS、mXSS)。
+ 反射型XSS
+  反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。
+简单流程： 1. 用户访问带有XSS代码的URL请求 2. 服务器端接收数据后处理，然后返回带有XSS代码的数据发送给浏览器 3. 浏览器解析带有XSS代码的数据后，最终造成XSS漏洞 可能攻击流程： 1. 用户aaa在网站www.xxx.com浏览网页 2. 攻击者hacker发现www.xxx.com/xss.php存在反射型XSS漏洞，然后精心构造JavaScript代码， 3. 构造的代码的功能为盗取用户Cookie并发送到指定站点www.xxser.com 4. hacker将带有反射型XSS漏洞的URL通过站内信发给aaa，站内信为一些诱惑信息，目的是使用户aaa点击 5. 假设用户aaa点击了带有XSS漏洞的URL，则aaa的Cookie将被发送到www.xxser.com 6. hacker获取aaa的Cookie后可以以aaa的身份登陆www.xxx.com，从而得到aaa的敏感信息   存储型XSS
+  存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。
+    </p>
+
+    
+    <footer>
+        <a href="/posts/xss-basis/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-module-paramiko/">Python的paramiko模块</a></h2>
 
         
@@ -576,63 +638,6 @@ DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-encode-setting/">Python的编码问题</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-29</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 几个编码函数 * ord(x) 将字符转换为10进制整数(0~255之间) #ord('a')==&gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;'a'，chr(0x61)==&gt;'a' * b2a_hex(x) 将字符转换为对应的16进制 #import binascii;binascii.b2a_hex('a')==&gt;'61' * a2b_hex(x) 将16进制转换为对应的字符 #import binascii;binascii.a2b_hex('61')==&gt;'a' * hex(x) 将10进制整数转换为对应的16进制 #hex(16)==&gt;'0x10' * oct(x) 将10进制整数转换为对应的8进制 #oct(9)==&gt;'011'  0x01 设置为utf-8  在py文件开头设置
-#!/usr/bin/env python #-*- coding: utf-8 -*- 或： #coding=utf8  永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
-#coding=utf8 import sys reload(sys) sys.setdefaultencoding('utf8') # 此方法修改了python环境，设置系统默认编码，永久有效   0x03 编码转换 python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
-python2中的字符串一般包含两种类型：str和unicode str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串 unicode：unicode编码的字符串才是unicode类型的字符串 可通过isinstance()和type()来判断 &gt;&gt;&gt; aa = '小明' &gt;&gt;&gt; isinstance(aa,str) True &gt;&gt;&gt; type(aa) &lt;type 'str'&gt; &gt;&gt;&gt; bb = u'小明' &gt;&gt;&gt; isinstance(bb,unicode) True &gt;&gt;&gt; type(bb) &lt;type 'unicode'&gt;  &gt;&gt;&gt; u'小明'.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-encode-setting/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -675,7 +680,7 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(65)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(66)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -744,7 +749,7 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/elevate-privileges" title="elevate-privileges">elevate-privileges</a>
-                <sup>6</sup>
+                <sup>7</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -804,7 +809,7 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/msf" title="msf">msf</a>
-                <sup>2</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">

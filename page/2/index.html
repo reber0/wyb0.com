@@ -82,6 +82,89 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/introduction-to-https-encryption-principles/">[转]HTTPS加密原理简介</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-08-01</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/https">https</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        原文链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
+0x00 对称加密与非对称加密  对称加密算法的加密和解密秘钥一样，不区分公钥和私钥，秘钥对外保密. 非对称加密算法的加密秘钥和解密秘钥不一样，公钥加密的内容只能由私钥解密，私钥加密的内容只能由公钥解密，其中私钥保密，公钥公开.  0x01 加密通信基本流程  Step1：
+客户端&ndash;&gt;服务器：你好
+ Step2：
+服务器&ndash;&gt;客户端：你好，我是服务器
+ Step3：
+客户端&ndash;&gt;服务器：向我证明你是服务器
+ Step4：
+服务器&ndash;&gt;客户端：
+ 服务器生成随机字符串string 服务器用自己的私钥加密string，生成密文str 服务器把string和str发送给客户端  Step5：
+客户端&ndash;&gt;服务器：
+ 客户端收到服务器的数据后，用服务器的公钥解密str，生成string1 客户端将string1和string对比，若一致则说明对方确实是服务器(因为私钥加密后的内容只能由公钥解密，私钥只有服务器持有) 客户端选择一个对称加密算法和一个秘钥，用服务器公钥将他们加密发送给服务器，告诉服务器后续的通信用这个秘钥加密，因为公钥加密的数据只有私钥能解密，所以对称加密的算法和秘钥只有服务器知道  Step6：
+服务器&ndash;&gt;客户端： 服务器用私钥解密收到的数据得到对称加密算法及其秘钥
+ Step7:
+后面客户端和服务器就用对称加密算法进行通信
+  0x02 https通信大致原理 在上面的通信过程中存在一些问题：客户端如何获得公钥？如何确保获得的公钥就是服务器的？
+如果黑客生成一对公私钥，然后发给用户的话同样可以完成上述认证流程。
+而证书正是为了解决这一问题而存在的，只要改变上面的Step3和Step4即可引入证书。
+ Step1：
+客户端&ndash;&gt;服务器：你好
+ Step2：
+服务器&ndash;&gt;客户端：你好，我是服务器(同时发送证书)
+ Step3：
+客户端&ndash;&gt;服务端：
+ 判断证书是否为服务器的(证书中有服务器的公钥，若证书是服务器的则这个公钥就也是服务器的) 客户端向服务器发送随机生成的字符串string  Step4：
+服务端&ndash;&gt;客户端：
+ 服务器把string用自己的私钥进行加密，生成str 服务器把str发送给客户端
+  Step5：
+客户端&ndash;&gt;服务器：
+ 客户端收到服务器的数据str后，用服务器的公钥解密，生成string1 客户端将string1和string对比，若一致则说明对方确实是服务器(因为私钥加密后的内容只能由公钥解密，私钥只有服务器持有) 客户端选择一个对称加密算法和一个秘钥，用服务器公钥将他们加密发送给服务器，告诉服务器后续的通信用这个秘钥加密，因为公钥加密的数据只有私钥能解密，所以对称加密的算法和秘钥只有服务器知道  Step6：
+    </p>
+
+    
+    <footer>
+        <a href="/posts/introduction-to-https-encryption-principles/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-read-and-write-xml/">使用Python读写xml文件</a></h2>
 
         
@@ -583,58 +666,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-module-tqdm/">下载大文件时显示进度条</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-04-15</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers['Content-Length'])/1024 with open(name, &quot;wb&quot;) as f: print &quot;total: &quot;,content_size,'k' for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit='k'): f.write(data) print &quot;done &quot;+name if __name__ == '__main__': url = &quot;http://127.0.0.1/Video.mp4&quot; name = url.split('/')[-1] get_vedio(url,name)  
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -677,7 +708,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(65)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(66)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -746,7 +777,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/elevate-privileges" title="elevate-privileges">elevate-privileges</a>
-                <sup>6</sup>
+                <sup>7</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -806,7 +837,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/msf" title="msf">msf</a>
-                <sup>2</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">
