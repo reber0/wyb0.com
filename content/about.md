@@ -28,4 +28,3 @@ sidemenu = "true"
 #### Categories：Python是关于Python的学习
 #### Categories：Server是关于服务搭建的文章
 #### Categories：Miscellanea是生活随笔
-#### Categories：Plan是制定计划
