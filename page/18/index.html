@@ -82,6 +82,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/small-and-medium-enterprise-network-structures/">中小企业网络搭建</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2015-07-13</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87">网络设备</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 中小企业需求分析  搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。 对网络设备能够方便地进行远程管理。 在局域网中公司部门间进行vlan划分，实现安全管理。 对三层设备路由技术这方面采取RIPV2协议或OSPF协议。 配置访问控制列表（ACL）以对网络数据进行有效的分类和控制，限制终端之间的相互访问。 内网通过配置PAT技术实现与外网之间的通信。  0x01 所需设备 0x02 网络规划  在三层交换机设置ACL，控制个vlan间的通信 在防火墙(路由器)上设置NAT转换 路由协议采用OSPF 内网访问控制  内网中只有市场部可以访问外网 市场部可以访问市场部、打印机 设计部可以访问设计部、财务部、打印机 外网只有202.202.2.0/24能访问内网  IP规划如下：  打印机：192.168.1.0/24 市场部：192.168.2.0/24 设计部：192.168.3.0/24 财务部：192.168.4.0/24 防火墙和三层交换机所在网段：192.168.5.0/24 管理ip所在网段：192.168.100.0/24   0x03 网络设备配置命令代码  Firewall配置  Router&gt;enable Router#conf t Router(config)#no ip domain-lookup //禁止域名解析 Router(config)#hostname Firewall //更改设备名 Firewall(config)#enable password 123 Firewall(config)#router eigrp 1 Firewall(config-router)#no auto-summary //关闭自动汇总 Firewall(config-router)#exit Firewall(config)#int f0/0 Firewall(config-if)#ip add 192.168.5.2 255.255.255.0 //配端口ip Firewall(config-if)#no shut Firewall(config-if)#exit Firewall(config)#router ospf 1 //配路由协议ospf Firewall(config-router)#network 202.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/small-and-medium-enterprise-network-structures/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/single-des-simple-implementation/">单重DES的简单实现</a></h2>
 
         
@@ -230,7 +284,7 @@
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(66)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(67)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -454,7 +508,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -474,7 +528,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">

