@@ -2,7 +2,7 @@
 date = "2016-08-08T08:28:27+08:00"
 description = ""
 draft = false
-tags = ["elevate privileges"]
+tags = ["intranet"]
 title = "导出主机密码与开启3389"
 topics = ["Pentest"]
 
