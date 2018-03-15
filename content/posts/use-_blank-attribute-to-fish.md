@@ -69,3 +69,6 @@ if(window.opener){
 * 点击a.html中的HELLO则会出现下面的情况，也就导致了钓鱼：
 
 ![blank钓鱼](/img/post/blank.gif)
+
+### 0x02 修复方案
+网站中的链接使用```target="_blank"```的带上```rel="noopener noreferrer nofollow"```
