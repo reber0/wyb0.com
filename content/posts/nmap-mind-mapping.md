@@ -1,8 +1,8 @@
 +++
 date = "2016-05-10T20:24:07+08:00"
-description = ""
+description = "渗透测试中探测端口的利器nmap的脑图"
 draft = false
-tags = ["脑图"]
+tags = ["tools"]
 title = "Nmap思维导图"
 topics = ["Pentest"]
 
