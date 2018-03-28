@@ -2,7 +2,7 @@
 date = "2016-08-13T23:53:39+08:00"
 description = ""
 draft = false
-tags = ["burpsuite"]
+tags = ["tools"]
 title = "BurpSuite抓手机包"
 topics = ["Pentest"]
 
