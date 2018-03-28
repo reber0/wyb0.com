@@ -2,7 +2,7 @@
 date = "2018-02-26T13:43:20+08:00"
 description = "本地构建渗透测试环境，在已经获得shell的前提下尝试利用Metasploit进行提权"
 draft = false
-tags = ["msf","intranet"]
+tags = ["tools","intranet"]
 title = "Metasploit简单提权"
 topics = ["Pentest"]
 
