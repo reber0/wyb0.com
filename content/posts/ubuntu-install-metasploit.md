@@ -1,8 +1,8 @@
 +++
 date = "2016-08-18T10:38:41+08:00"
-description = ""
+description = "在Ubuntu下安装渗透测试工具Metasploit"
 draft = false
-tags = ["msf"]
+tags = ["tools"]
 title = "Ubuntu下安装Metasploit"
 topics = ["Pentest"]
 
