@@ -1,8 +1,8 @@
 +++
 date = "2016-05-11T17:09:10+08:00"
-description = ""
+description = "介绍下nessus家庭版的安装方法"
 draft = false
-tags = ["nessus"]
+tags = ["tools"]
 title = "Nessus的安装"
 topics = ["Linux", "Pentest"]
 
