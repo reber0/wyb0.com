@@ -1,6 +1,6 @@
 +++
 date = "2016-05-11T17:09:10+08:00"
-description = "介绍下nessus家庭版的安装方法"
+description = "介绍下渗透测试中可能用到的工具nessus家庭版的安装方法"
 draft = false
 tags = ["tools"]
 title = "Nessus的安装"
