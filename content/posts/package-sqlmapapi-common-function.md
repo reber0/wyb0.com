@@ -2,7 +2,7 @@
 date = "2016-09-21T17:37:33+08:00"
 description = ""
 draft = false
-tags = ["sqlmap"]
+tags = ["tools"]
 title = "SqlmapApi常用方法封装"
 topics = ["Pentest"]
 
