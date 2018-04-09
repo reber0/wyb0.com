@@ -149,7 +149,8 @@ if(isset($_POST["submit"])){
 绕过方法：
 ```
 * 0x00截断绕过
-* 此时若在iis6.0，则可以将木马名改为test.asp;1.jpg来上传，从而通过验证
+* 上传不符合Windows命名规则的文件名通过验证，如：test.asp.、test.asp(空格)、test.asp_、test.asp;1.jpg、test.php::$DATA
+* 后缀名大小写绕过
 * 配合解析漏洞
 ```
 
