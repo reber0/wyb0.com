@@ -56,5 +56,5 @@ topics = ["Pentest"]
 可用于绕过：
 php php2 php3 php5 phtml
 asp aspx ascx ashx cer asa
-jsp jspx
+jsp jspx jspf
 ```
