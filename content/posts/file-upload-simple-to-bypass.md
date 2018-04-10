@@ -143,8 +143,8 @@ if(isset($_POST["submit"])){
 * 从黑名单中找到web开发者忽略的扩展名，如：cer
 * 没有对扩展名进行大小写转换，在window平台依然可以大小写绕过
 * 在window下，若文件名以"."或者空格作为结尾，系统会自动去除"."与空格，所以可以上传不符合Windows命名规则的文件来绕过，
-  如：test.asp.、test.asp(空格)、test.asp_、test.asp;1.jpg、test.php::$DATA
-* 配合解析漏洞
+  如：test.asp.、test.asp(空格)、test.asp_、test.php::$DATA
+* 配合解析漏洞，如iis6上传test.asp;1.jpg
 ```
 
 #### 2. MIME验证
