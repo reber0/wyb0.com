@@ -90,7 +90,8 @@ apache：
 mysql：
     编辑数据库配置文件
     在[client]下面添加：default-character-set=utf8
-    在[mysqld]在下面添加character_set_server=utf8
+    在[mysqld]在下面添加：character_set_server=utf8
+                        init_connect='SET NAMES utf8'
 ```
 
 * 测试数据库连接
