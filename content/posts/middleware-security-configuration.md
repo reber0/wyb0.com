@@ -136,6 +136,11 @@ $ vim /usr/local/tomcat/conf/tomcat-users.xml
 * 服务日志
 
 ```
+启用日志（默认就是开启的）：vim /opt/tomcat/conf/server.xml
+<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+       prefix="localhost_access_log" suffix=".txt"
+       pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+
 $ ll /opt/tomcat/logs
 localhost.2017-09-29.log：程序异常没有被捕获的时候抛出的地方
 catalina.2017-09-29.log：程序的输出，tomcat的运行日志
