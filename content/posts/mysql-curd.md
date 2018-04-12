@@ -2,9 +2,9 @@
 date = "2016-05-29T22:50:52+08:00"
 description = ""
 draft = false
-tags = ["php", "mysql"]
-title = "PHP之MySQL简单操作"
-topics = ["PHP", "Database"]
+tags = ["mysql"]
+title = "MySQL的增删改查"
+topics = ["Database"]
 
 +++
 
