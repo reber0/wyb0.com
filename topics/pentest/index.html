@@ -127,8 +127,8 @@
         0x00 关于thinkphp5的where函数 前段时间公司委托别的公司开发一个网站，使用的是ThinkPHP5.0，而ThinkPHP5在处理sql相关操作时使用的是PDO来进行操作的，它理应是没有注入漏洞的，但是有个地方出现了注入，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
 0x01 示例代码 tp5/application/home/controller/Index.php
 &lt;?php namespace app\home\controller; use think\Db; class Index { public function testDb() { $msg = db('msg'); $id = input('param.id',1); //不存在id的话默认为1 $where = &quot;id=&quot;.$id; $result = $msg-&gt;where($where)-&gt;select(); // $result = $msg-&gt;where(['id'=&gt;$id])-&gt;select(); echo $msg-&gt;getLastSql(); echo '&lt;br/&gt;&lt;br/&gt;'; echo var_dump($result); } }  访问http://127.0.0.1/Source/tp5/home/index/testdb/id/1时返回的语句分别如下：
-SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存在注入，如下： 0x02 简单分析 执行语句为：$msg-&gt;where()-&gt;select()，主要代码在tp5/thinkphp/library/think/db/Query.php中
- where()的处理   //指定AND查询条件 public function where($field, $op = null, $condition = null) { $param = func_get_args(); //array(1) { [0]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; } array_shift($param); //array(0) { } $this-&gt;parseWhereExp('AND', $field, $op, $condition, $param); return $this; } //分析查询表达式 protected function parseWhereExp($logic, $field, $op, $condition, $param = []) { //$logic='AND' //$field=&quot;id=1) and 1=1 and (1)=(1&quot; $logic = strtoupper($logic); if ($field instanceof \Closure) { $this-&gt;options['where'][$logic][] = is_string($op) ?
+SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存在注入，如下： 主要调用文件及函数顺序如下：
+tp5/thinkphp/library/think/db/Query.php __construct() tp5/thinkphp/library/db/Builder.php __construct() tp5/thinkphp/library/think/db/Query.php where() tp5/thinkphp/library/think/db/Query.
     </p>
 
     

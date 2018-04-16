@@ -159,7 +159,16 @@ SELECT * FROM `msg` WHERE `id` = 1
 <p>前者存在注入，如下：
 <img src="/img/post/tp5_where_str1.png" alt="and 1=1" />
 <br>
-<img src="/img/post/tp5_where_str2.png" alt="and 1=2" /></p>
+<img src="/img/post/tp5_where_str2.png" alt="and 1=2" />
+主要调用文件及函数顺序如下：</p>
+
+<pre><code class="language-php">tp5/thinkphp/library/think/db/Query.php __construct()
+tp5/thinkphp/library/db/Builder.php __construct()
+tp5/thinkphp/library/think/db/Query.php where()
+tp5/thinkphp/library/think/db/Query.php select()
+tp5/thinkphp/library/db/Builder.php select()
+tp5/thinkphp/library/think/db/Query.php query()
+</code></pre>
 
 <h3 id="0x02-简单分析">0x02 简单分析</h3>
 
