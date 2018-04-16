@@ -83,6 +83,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/thinkphp5-where-function/">ThinkPHP5的where函数</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-04-16</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于thinkphp5的where函数 前段时间公司委托别的公司开发一个网站，使用的是ThinkPHP5.0，而ThinkPHP5在处理sql相关操作时使用的是PDO来进行操作的，它理应是没有注入漏洞的，但是有个地方出现了注入，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
+0x01 示例代码 tp5/application/home/controller/Index.php
+&lt;?php namespace app\home\controller; use think\Db; class Index { public function testDb() { $msg = db('msg'); $id = input('param.id',1); //不存在id的话默认为1 $where = &quot;id=&quot;.$id; $result = $msg-&gt;where($where)-&gt;select(); // $result = $msg-&gt;where(['id'=&gt;$id])-&gt;select(); echo $msg-&gt;getLastSql(); echo '&lt;br/&gt;&lt;br/&gt;'; echo var_dump($result); } }  访问http://127.0.0.1/Source/tp5/home/index/testdb/id/1时返回的语句分别如下：
+SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存在注入，如下： 0x02 简单分析 执行语句为：$msg-&gt;where()-&gt;select()，主要代码在tp5/thinkphp/library/think/db/Query.php中
+ where()的处理   //指定AND查询条件 public function where($field, $op = null, $condition = null) { $param = func_get_args(); //array(1) { [0]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; } array_shift($param); //array(0) { } $this-&gt;parseWhereExp('AND', $field, $op, $condition, $param); return $this; } //分析查询表达式 protected function parseWhereExp($logic, $field, $op, $condition, $param = []) { //$logic='AND' //$field=&quot;id=1) and 1=1 and (1)=(1&quot; $logic = strtoupper($logic); if ($field instanceof \Closure) { $this-&gt;options['where'][$logic][] = is_string($op) ?
+    </p>
+
+    
+    <footer>
+        <a href="/posts/thinkphp5-where-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/cve-2017-10271/">WebLogic WLS组件反序列化漏洞</a></h2>
 
         
@@ -589,62 +649,6 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/docker-image-and-container/">Docker之镜像与容器</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-08-18</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        操作系统：Ubuntu14.04.1
-Docker版本：Docker version 17.06.0-ce, build 02c1d87
-0x00 镜像操作  下载镜像  #一般容器的id和name可以互换 $ docker search ubuntu #从公共registry搜索镜像 $ docker pull ubuntu #从公共registry下载镜像 $ docker pull ubuntu:14.04   查看当前系统镜像  $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.04 54333f1de4ed 2 weeks ago 188MB   提交新的镜像  #首先运行一个容器，容器id为50b74968229a $ docker commit 50b74968229a ubuntu:add_file $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu add_file 9e01bfa580bb 1 weeks ago 190MB ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/docker-image-and-container/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -687,9 +691,9 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(67)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(68)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(35)</a></li>
         
@@ -766,7 +770,7 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">

