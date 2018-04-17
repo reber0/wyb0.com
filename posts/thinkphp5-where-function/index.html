@@ -172,297 +172,298 @@ tp5/thinkphp/library/think/db/Query.php query()
 
 <h3 id="0x02-简单分析">0x02 简单分析</h3>
 
-<p>执行语句为：$msg-&gt;where()-&gt;select()，主要代码在tp5/thinkphp/library/think/db/Query.php中</p>
+<p>执行语句为：$msg-&gt;where()-&gt;select()，主要涉及到两个文件：<br />
+tp5/thinkphp/library/think/db/Query.php和p5/thinkphp/library/db/Builder.php</p>
 
 <ul>
 <li>where()的处理</li>
 </ul>
 
-<pre><code>    //指定AND查询条件
-    public function where($field, $op = null, $condition = null)
-    {
-        $param = func_get_args(); //array(1) { [0]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; } 
-        array_shift($param); //array(0) { } 
-        $this-&gt;parseWhereExp('AND', $field, $op, $condition, $param);
-        return $this;
+<pre><code>//指定AND查询条件
+public function where($field, $op = null, $condition = null)
+{
+    $param = func_get_args(); //array(1) { [0]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; } 
+    array_shift($param); //array(0) { } 
+    $this-&gt;parseWhereExp('AND', $field, $op, $condition, $param);
+    return $this;
+}
+
+//分析查询表达式
+protected function parseWhereExp($logic, $field, $op, $condition, $param = [])
+{
+    //$logic='AND'
+    //$field=&quot;id=1) and 1=1 and (1)=(1&quot;
+    $logic = strtoupper($logic);
+    if ($field instanceof \Closure) {
+        $this-&gt;options['where'][$logic][] = is_string($op) ? [$op, $field] : $field;
+        return;
     }
 
-    //分析查询表达式
-    protected function parseWhereExp($logic, $field, $op, $condition, $param = [])
-    {
-        //$logic='AND'
-        //$field=&quot;id=1) and 1=1 and (1)=(1&quot;
-        $logic = strtoupper($logic);
-        if ($field instanceof \Closure) {
-            $this-&gt;options['where'][$logic][] = is_string($op) ? [$op, $field] : $field;
-            return;
-        }
-
-        if (is_string($field) &amp;&amp; !empty($this-&gt;options['via']) &amp;&amp; !strpos($field, '.')) {
-            $field = $this-&gt;options['via'] . '.' . $field;
-        }
-
-        if (is_string($field) &amp;&amp; preg_match('/[,=\&gt;\&lt;\'\&quot;\(\s]/', $field)) {//进入
-            $where[] = ['exp', $field];
-            // echo '&lt;pre&gt;';
-            // var_dump($where);
-            // echo '&lt;pre&gt;';
-            if (is_array($op)) {//跳出
-                // 参数绑定
-                $this-&gt;bind($op);
-            }
-        } elseif (is_null($op) &amp;&amp; is_null($condition)) {
-            if (is_array($field)) {
-                // 数组批量查询
-                $where = $field;
-                foreach ($where as $k =&gt; $val) {
-                    $this-&gt;options['multi'][$logic][$k][] = $val;
-                }
-            } elseif ($field &amp;&amp; is_string($field)) {
-                // 字符串查询
-                $where[$field]                            = ['null', ''];
-                $this-&gt;options['multi'][$logic][$field][] = $where[$field];
-            }
-        } elseif (is_array($op)) {
-            $where[$field] = $param;
-        } elseif (in_array(strtolower($op), ['null', 'notnull', 'not null'])) {
-            // null查询
-            $where[$field]                            = [$op, ''];
-            $this-&gt;options['multi'][$logic][$field][] = $where[$field];
-        } elseif (is_null($condition)) {
-            // 字段相等查询
-            $where[$field]                            = ['eq', $op];
-            $this-&gt;options['multi'][$logic][$field][] = $where[$field];
-        } else {
-            $where[$field] = [$op, $condition, isset($param[2]) ? $param[2] : null];
-            if ('exp' == strtolower($op) &amp;&amp; isset($param[2]) &amp;&amp; is_array($param[2])) {
-                // 参数绑定
-                $this-&gt;bind($param[2]);
-            }
-            // 记录一个字段多次查询条件
-            $this-&gt;options['multi'][$logic][$field][] = $where[$field];
-        }
-        if (!empty($where)) {//进入
-            if (!isset($this-&gt;options['where'][$logic])) {//进入
-                $this-&gt;options['where'][$logic] = [];
-            }
-            if (is_string($field) &amp;&amp; $this-&gt;checkMultiField($field, $logic)) {
-                $where[$field] = $this-&gt;options['multi'][$logic][$field];
-            } elseif (is_array($field)) {
-                foreach ($field as $key =&gt; $val) {
-                    if ($this-&gt;checkMultiField($key, $logic)) {
-                        $where[$key] = $this-&gt;options['multi'][$logic][$key];
-                    }
-                }
-            }
-            $this-&gt;options['where'][$logic] = array_merge($this-&gt;options['where'][$logic], $where);
-            //array(1) { [0]=&gt; array(2) { [0]=&gt; string(3) &quot;exp&quot; [1]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; } } 
-        }
+    if (is_string($field) &amp;&amp; !empty($this-&gt;options['via']) &amp;&amp; !strpos($field, '.')) {
+        $field = $this-&gt;options['via'] . '.' . $field;
     }
 
-    /*
-    Query.php这里面经过where和parseWhereExp的处理后把数组存入了options['where'][$logic]里面，
-    不过这里处理后我们拼接的数据没有变，这样where()就处理好了，接着调用select()
-    */
+    if (is_string($field) &amp;&amp; preg_match('/[,=\&gt;\&lt;\'\&quot;\(\s]/', $field)) {//进入
+        $where[] = ['exp', $field];
+        // echo '&lt;pre&gt;';
+        // var_dump($where);
+        // echo '&lt;pre&gt;';
+        if (is_array($op)) {//跳出
+            // 参数绑定
+            $this-&gt;bind($op);
+        }
+    } elseif (is_null($op) &amp;&amp; is_null($condition)) {
+        if (is_array($field)) {
+            // 数组批量查询
+            $where = $field;
+            foreach ($where as $k =&gt; $val) {
+                $this-&gt;options['multi'][$logic][$k][] = $val;
+            }
+        } elseif ($field &amp;&amp; is_string($field)) {
+            // 字符串查询
+            $where[$field]                            = ['null', ''];
+            $this-&gt;options['multi'][$logic][$field][] = $where[$field];
+        }
+    } elseif (is_array($op)) {
+        $where[$field] = $param;
+    } elseif (in_array(strtolower($op), ['null', 'notnull', 'not null'])) {
+        // null查询
+        $where[$field]                            = [$op, ''];
+        $this-&gt;options['multi'][$logic][$field][] = $where[$field];
+    } elseif (is_null($condition)) {
+        // 字段相等查询
+        $where[$field]                            = ['eq', $op];
+        $this-&gt;options['multi'][$logic][$field][] = $where[$field];
+    } else {
+        $where[$field] = [$op, $condition, isset($param[2]) ? $param[2] : null];
+        if ('exp' == strtolower($op) &amp;&amp; isset($param[2]) &amp;&amp; is_array($param[2])) {
+            // 参数绑定
+            $this-&gt;bind($param[2]);
+        }
+        // 记录一个字段多次查询条件
+        $this-&gt;options['multi'][$logic][$field][] = $where[$field];
+    }
+    if (!empty($where)) {//进入
+        if (!isset($this-&gt;options['where'][$logic])) {//进入
+            $this-&gt;options['where'][$logic] = [];
+        }
+        if (is_string($field) &amp;&amp; $this-&gt;checkMultiField($field, $logic)) {
+            $where[$field] = $this-&gt;options['multi'][$logic][$field];
+        } elseif (is_array($field)) {
+            foreach ($field as $key =&gt; $val) {
+                if ($this-&gt;checkMultiField($key, $logic)) {
+                    $where[$key] = $this-&gt;options['multi'][$logic][$key];
+                }
+            }
+        }
+        $this-&gt;options['where'][$logic] = array_merge($this-&gt;options['where'][$logic], $where);
+        //array(1) { [0]=&gt; array(2) { [0]=&gt; string(3) &quot;exp&quot; [1]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; } } 
+    }
+}
+
+/*
+Query.php这里面经过where和parseWhereExp的处理后把数组存入了options['where'][$logic]里面，
+不过这里处理后我们拼接的数据没有变，这样where()就处理好了，接着调用select()
+*/
 </code></pre>
 
 <ul>
 <li>select()的处理</li>
 </ul>
 
-<pre><code>    /*
-    在select()中首先调用$this-&gt;parseExpress();来解析sql语句中的参数
-    然后调用tp5/thinkphp/library/db/Builder.php里的select()处理上面的参数，从而合成sql语句
-    */
-    //查找记录
-    public function select($data = null)
-    {
-        if ($data instanceof Query) {
-            return $data-&gt;select();
-        } elseif ($data instanceof \Closure) {
-            call_user_func_array($data, [ &amp; $this]);
-            $data = null;
-        }
-        // 分析查询表达式
-        $options = $this-&gt;parseExpress();//分析了表达式，把查的表、查的列、查询条件都存到$options
+<pre><code>/*
+在select()中首先调用$this-&gt;parseExpress();来解析sql语句中的参数
+然后调用tp5/thinkphp/library/db/Builder.php里的select()处理上面的参数，从而合成sql语句
+*/
+//查找记录
+public function select($data = null)
+{
+    if ($data instanceof Query) {
+        return $data-&gt;select();
+    } elseif ($data instanceof \Closure) {
+        call_user_func_array($data, [ &amp; $this]);
+        $data = null;
+    }
+    // 分析查询表达式
+    $options = $this-&gt;parseExpress();//分析了表达式，把查的表、查的列、查询条件都存到$options
 
-        if (false === $data) {
-            // 用于子查询 不查询只返回SQL
-            $options['fetch_sql'] = true;
-        } elseif (!is_null($data)) {
-            // 主键条件分析
-            $this-&gt;parsePkWhere($data, $options);
-        }
-
-        $resultSet = false;
-        if (empty($options['fetch_sql']) &amp;&amp; !empty($options['cache'])) {
-            // 判断查询缓存
-            $cache = $options['cache'];
-            unset($options['cache']);
-            $key       = is_string($cache['key']) ? $cache['key'] : md5(serialize($options) . serialize($this-&gt;bind));
-            $resultSet = Cache::get($key);
-        }
-        if (false === $resultSet) {//进入
-            // 生成查询SQL
-            //调用tp5/thinkphp/library/db/Builder.php里的select()处理，生成sql语句如下：
-            //$sql = &quot;SELECT * FROM `msg` WHERE  (  id=1) and 1=1 and (1)=(1)&quot;
-            $sql = $this-&gt;builder-&gt;select($options);
-            // 获取参数绑定
-            $bind = $this-&gt;getBind();
-            if ($options['fetch_sql']) {
-                // 获取实际执行的SQL语句
-                return $this-&gt;connection-&gt;getRealSql($sql, $bind);
-            }
-
-            $options['data'] = $data;//$data是空的
-
-            if ($resultSet = $this-&gt;trigger('before_select', $options)) {
-            } else {//进入，这里就执行了sql查询操作了，造成注入
-                // 执行查询操作
-                $resultSet = $this-&gt;query($sql, $bind, $options['master'], $options['fetch_pdo']);
-
-                if ($resultSet instanceof \PDOStatement) {
-                    // 返回PDOStatement对象
-                    return $resultSet;
-                }
-            }
-
-            if (isset($cache) &amp;&amp; false !== $resultSet) {
-                // 缓存数据集
-                $this-&gt;cacheData($key, $resultSet, $cache);
-            }
-        }
-
-        // 数据列表读取后的处理
-        if (!empty($this-&gt;model)) {
-            // 生成模型对象
-            $modelName = $this-&gt;model;
-            if (count($resultSet) &gt; 0) {
-                foreach ($resultSet as $key =&gt; $result) {
-                    /** @var Model $model */
-                    $model = new $modelName($result);
-                    $model-&gt;isUpdate(true);
-
-                    // 关联查询
-                    if (!empty($options['relation'])) {
-                        $model-&gt;relationQuery($options['relation']);
-                    }
-                    // 关联统计
-                    if (!empty($options['with_count'])) {
-                        $model-&gt;relationCount($model, $options['with_count']);
-                    }
-                    $resultSet[$key] = $model;
-                }
-                if (!empty($options['with'])) {
-                    // 预载入
-                    $model-&gt;eagerlyResultSet($resultSet, $options['with']);
-                }
-                // 模型数据集转换
-                $resultSet = $model-&gt;toCollection($resultSet);
-            } else {
-                $resultSet = (new $modelName)-&gt;toCollection($resultSet);
-            }
-        } elseif ('collection' == $this-&gt;connection-&gt;getConfig('resultset_type')) {
-            // 返回Collection对象
-            $resultSet = new Collection($resultSet);
-        }
-        // 返回结果处理
-        if (!empty($options['fail']) &amp;&amp; count($resultSet) == 0) {
-            $this-&gt;throwNotFound($options);
-        }
-        // var_dump($resultSet);
-        return $resultSet;
+    if (false === $data) {
+        // 用于子查询 不查询只返回SQL
+        $options['fetch_sql'] = true;
+    } elseif (!is_null($data)) {
+        // 主键条件分析
+        $this-&gt;parsePkWhere($data, $options);
     }
 
-    //分析表达式（可用于查询或者写入操作）
-    protected function parseExpress()
-    {
-        $options = $this-&gt;options;//将where()处理后的数据给options
-
-        // 获取数据表
-        if (empty($options['table'])) {//进入，得到查询的表名
-            $options['table'] = $this-&gt;getTable(); //string(3) &quot;msg&quot; 
+    $resultSet = false;
+    if (empty($options['fetch_sql']) &amp;&amp; !empty($options['cache'])) {
+        // 判断查询缓存
+        $cache = $options['cache'];
+        unset($options['cache']);
+        $key       = is_string($cache['key']) ? $cache['key'] : md5(serialize($options) . serialize($this-&gt;bind));
+        $resultSet = Cache::get($key);
+    }
+    if (false === $resultSet) {//进入
+        // 生成查询SQL
+        //调用tp5/thinkphp/library/db/Builder.php里的select()处理，生成sql语句如下：
+        //$sql = &quot;SELECT * FROM `msg` WHERE  (  id=1) and 1=1 and (1)=(1)&quot;
+        $sql = $this-&gt;builder-&gt;select($options);
+        // 获取参数绑定
+        $bind = $this-&gt;getBind();
+        if ($options['fetch_sql']) {
+            // 获取实际执行的SQL语句
+            return $this-&gt;connection-&gt;getRealSql($sql, $bind);
         }
 
-        if (!isset($options['where'])) {
-            $options['where'] = [];
-        } elseif (isset($options['view'])) {
-            // 视图查询条件处理
-            foreach (['AND', 'OR'] as $logic) {
-                if (isset($options['where'][$logic])) {
-                    foreach ($options['where'][$logic] as $key =&gt; $val) {
-                        if (array_key_exists($key, $options['map'])) {
-                            $options['where'][$logic][$options['map'][$key]] = $val;
-                            unset($options['where'][$logic][$key]);
-                        }
+        $options['data'] = $data;//$data是空的
+
+        if ($resultSet = $this-&gt;trigger('before_select', $options)) {
+        } else {//进入，这里就执行了sql查询操作了，造成注入
+            // 执行查询操作
+            $resultSet = $this-&gt;query($sql, $bind, $options['master'], $options['fetch_pdo']);
+
+            if ($resultSet instanceof \PDOStatement) {
+                // 返回PDOStatement对象
+                return $resultSet;
+            }
+        }
+
+        if (isset($cache) &amp;&amp; false !== $resultSet) {
+            // 缓存数据集
+            $this-&gt;cacheData($key, $resultSet, $cache);
+        }
+    }
+
+    // 数据列表读取后的处理
+    if (!empty($this-&gt;model)) {
+        // 生成模型对象
+        $modelName = $this-&gt;model;
+        if (count($resultSet) &gt; 0) {
+            foreach ($resultSet as $key =&gt; $result) {
+                /** @var Model $model */
+                $model = new $modelName($result);
+                $model-&gt;isUpdate(true);
+
+                // 关联查询
+                if (!empty($options['relation'])) {
+                    $model-&gt;relationQuery($options['relation']);
+                }
+                // 关联统计
+                if (!empty($options['with_count'])) {
+                    $model-&gt;relationCount($model, $options['with_count']);
+                }
+                $resultSet[$key] = $model;
+            }
+            if (!empty($options['with'])) {
+                // 预载入
+                $model-&gt;eagerlyResultSet($resultSet, $options['with']);
+            }
+            // 模型数据集转换
+            $resultSet = $model-&gt;toCollection($resultSet);
+        } else {
+            $resultSet = (new $modelName)-&gt;toCollection($resultSet);
+        }
+    } elseif ('collection' == $this-&gt;connection-&gt;getConfig('resultset_type')) {
+        // 返回Collection对象
+        $resultSet = new Collection($resultSet);
+    }
+    // 返回结果处理
+    if (!empty($options['fail']) &amp;&amp; count($resultSet) == 0) {
+        $this-&gt;throwNotFound($options);
+    }
+    // var_dump($resultSet);
+    return $resultSet;
+}
+
+//分析表达式（可用于查询或者写入操作）
+protected function parseExpress()
+{
+    $options = $this-&gt;options;//将where()处理后的数据给options
+
+    // 获取数据表
+    if (empty($options['table'])) {//进入，得到查询的表名
+        $options['table'] = $this-&gt;getTable(); //string(3) &quot;msg&quot; 
+    }
+
+    if (!isset($options['where'])) {
+        $options['where'] = [];
+    } elseif (isset($options['view'])) {
+        // 视图查询条件处理
+        foreach (['AND', 'OR'] as $logic) {
+            if (isset($options['where'][$logic])) {
+                foreach ($options['where'][$logic] as $key =&gt; $val) {
+                    if (array_key_exists($key, $options['map'])) {
+                        $options['where'][$logic][$options['map'][$key]] = $val;
+                        unset($options['where'][$logic][$key]);
                     }
                 }
             }
+        }
 
-            if (isset($options['order'])) {
-                // 视图查询排序处理
-                if (is_string($options['order'])) {
-                    $options['order'] = explode(',', $options['order']);
-                }
-                foreach ($options['order'] as $key =&gt; $val) {
-                    if (is_numeric($key)) {
-                        if (strpos($val, ' ')) {
-                            list($field, $sort) = explode(' ', $val);
-                            if (array_key_exists($field, $options['map'])) {
-                                $options['order'][$options['map'][$field]] = $sort;
-                                unset($options['order'][$key]);
-                            }
-                        } elseif (array_key_exists($val, $options['map'])) {
-                            $options['order'][$options['map'][$val]] = 'asc';
+        if (isset($options['order'])) {
+            // 视图查询排序处理
+            if (is_string($options['order'])) {
+                $options['order'] = explode(',', $options['order']);
+            }
+            foreach ($options['order'] as $key =&gt; $val) {
+                if (is_numeric($key)) {
+                    if (strpos($val, ' ')) {
+                        list($field, $sort) = explode(' ', $val);
+                        if (array_key_exists($field, $options['map'])) {
+                            $options['order'][$options['map'][$field]] = $sort;
                             unset($options['order'][$key]);
                         }
-                    } elseif (array_key_exists($key, $options['map'])) {
-                        $options['order'][$options['map'][$key]] = $val;
+                    } elseif (array_key_exists($val, $options['map'])) {
+                        $options['order'][$options['map'][$val]] = 'asc';
                         unset($options['order'][$key]);
                     }
+                } elseif (array_key_exists($key, $options['map'])) {
+                    $options['order'][$options['map'][$key]] = $val;
+                    unset($options['order'][$key]);
                 }
             }
         }
-
-        if (!isset($options['field'])) {//进入，设置查询的列名为*
-            $options['field'] = '*';
-        }
-
-        if (!isset($options['data'])) {//进入
-            $options['data'] = [];
-        }
-
-        if (!isset($options['strict'])) {//进入，bool(true)
-            $options['strict'] = $this-&gt;getConfig('fields_strict');
-        }
-
-        foreach (['master', 'lock', 'fetch_pdo', 'fetch_sql', 'distinct'] as $name) {
-            if (!isset($options[$name])) {//进入，$options[$name]置为false
-                $options[$name] = false;
-            }
-        }
-
-        foreach (['join', 'union', 'group', 'having', 'limit', 'order', 'force', 'comment'] as $name) {
-            if (!isset($options[$name])) {//进入，$options[$name]置为''
-                $options[$name] = '';
-            }
-        }
-
-        if (isset($options['page'])) {
-            // 根据页数计算limit
-            list($page, $listRows) = $options['page'];
-            $page                  = $page &gt; 0 ? $page : 1;
-            $listRows              = $listRows &gt; 0 ? $listRows : (is_numeric($options['limit']) ? $options['limit'] : 20);
-            $offset                = $listRows * ($page - 1);
-            $options['limit']      = $offset . ',' . $listRows;
-        }
-
-        $this-&gt;options = [];
-        // echo '&lt;pre&gt;';
-        //     var_dump($options);
-        // echo '&lt;pre&gt;';
-        return $options;
     }
+
+    if (!isset($options['field'])) {//进入，设置查询的列名为*
+        $options['field'] = '*';
+    }
+
+    if (!isset($options['data'])) {//进入
+        $options['data'] = [];
+    }
+
+    if (!isset($options['strict'])) {//进入，bool(true)
+        $options['strict'] = $this-&gt;getConfig('fields_strict');
+    }
+
+    foreach (['master', 'lock', 'fetch_pdo', 'fetch_sql', 'distinct'] as $name) {
+        if (!isset($options[$name])) {//进入，$options[$name]置为false
+            $options[$name] = false;
+        }
+    }
+
+    foreach (['join', 'union', 'group', 'having', 'limit', 'order', 'force', 'comment'] as $name) {
+        if (!isset($options[$name])) {//进入，$options[$name]置为''
+            $options[$name] = '';
+        }
+    }
+
+    if (isset($options['page'])) {
+        // 根据页数计算limit
+        list($page, $listRows) = $options['page'];
+        $page                  = $page &gt; 0 ? $page : 1;
+        $listRows              = $listRows &gt; 0 ? $listRows : (is_numeric($options['limit']) ? $options['limit'] : 20);
+        $offset                = $listRows * ($page - 1);
+        $options['limit']      = $offset . ',' . $listRows;
+    }
+
+    $this-&gt;options = [];
+    // echo '&lt;pre&gt;';
+    //     var_dump($options);
+    // echo '&lt;pre&gt;';
+    return $options;
+}
 </code></pre>
 
 <ul>
