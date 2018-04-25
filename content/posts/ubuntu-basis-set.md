@@ -72,10 +72,7 @@ reber@ubuntu:~$ apt-get install ibus-sunpinyin   #安装后重启系统
 ```bash
 sudo apt-get install apache2
 sudo apt-get install mysql-client mysql-server
-sudo apt-get install php5
-sudo apt-get install php5-gd php5-mysql
-sudo apt-get install libapache2-mod-php5
-sudo apt-get install libapache2-mod-auth-mysql 
+sudo apt-get install php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
 sudo chmod 777 /var/www   #为了方便
 ```
     
