@@ -118,6 +118,13 @@ $ docker run -itd ubuntu:14.04 ping 8.8.8.8
 -d：告诉Docker容器在后台运行(不能与--rm参数一起用)
 ```
 
+* 端口映射
+
+```
+#访问本地的8888端口就是访问容器的80端口
+$ docker run -itd -p 8888:80 ubuntu:14.04 /bin/bash
+```
+
 * 查看当前运行的容器
 
 ```bash
