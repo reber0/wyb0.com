@@ -109,8 +109,9 @@ ubuntu：这是容器立足的镜像
 * 后台运行容器
 
 ```bash
-$ docker run -itd ubuntu:14.04 ping 8.8.8.8
+$ docker run -itd ubuntu:14.04 /bin/bash
 1f665a3ccf4bab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11
+#$ docker run -itd ubuntu:14.04 ping 8.8.8.8
 #$ sudo docker run -itd ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
 
 解释：
