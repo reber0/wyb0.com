@@ -211,24 +211,27 @@ uppercase no
 
 
 TEXT
+${hr 5}
+Time:$alignr${time %Y.%m.%d}$alignc ${time %H:%M:%S}$alignr Week:${time %w}
+${hr 5}
+###############
 ${color red}SYSTEM ${hr 1}
-#Time:$alignr${time %Y.%m.%d}$alignc   ${time %H:%M:%S}$alignr   Week:${time %w}
 Hostname: $alignr$nodename
 Kernel: $alignr$kernel
 Machine:$alignr$machine
 Uptime: $alignr$uptime
 Temp: ${alignr}${acpitemp} °C
 Battery:$alignr${battery BAT0}
-#Battery:$alignr${battery_percent BAT0}%  
 ###############
 ${color green}NETWORK ${hr 1}
-IP:${addr eth0}
-GateWay:$gw_ip
+IP Address:${alignr}${addr eth0}
+GateWay:${alignr}$gw_ip
+DNS Server:${alignr}${nameserver}
 Down ${downspeed eth0} /s ${alignr}Up ${upspeed eth0} /s
 #${downspeedgraph eth0 25,107} ${alignr}${upspeedgraph eth0 25,107}
 Total ${totaldown eth0} ${alignr}Total ${totalup eth0}
 #############
-${color #9932CC}MEMORY ${hr 1}
+${color purple}MEMORY ${hr 1}
 Ram ${alignr}$mem / $memmax ($memperc%)
 ${membar 4}
 swap ${alignr}$swap / $swapmax ($swapperc%)
@@ -238,10 +241,9 @@ ${top_mem name 1}$alignr ${top_mem mem 1}
 ${top_mem name 2}$alignr ${top_mem mem 2}
 ${top_mem name 3}$alignr ${top_mem mem 3}
 ##############
-${color #ffd700}CPU ${hr 1}
+${color orange}CPU ${hr 1}
 Frequency: ${alignr}${freq dyn} MHz
 Processes: ${alignr}$processes ($running_processes running)
-Load: ${alignr}$loadavg
 CPU1 ${alignr}${cpu cpu1}%
 ${cpubar 4 cpu1}
 CPU2 ${alignr}${cpu cpu2}%
@@ -253,9 +255,9 @@ ${top name 3}$alignr${top cpu 3}
 ##############
 ${color grey}FILE SYSTEM ${hr 1}
 Disk I/O:$diskio
-Root: ${alignr}${fs_free /} / ${fs_size /}
+/root: ${alignr}${fs_free /} / ${fs_size /}
 ${fs_bar 4 /}
-Home: ${alignr}${fs_free /home} / ${fs_size /home}
+/home: ${alignr}${fs_free /home} / ${fs_size /home}
 ${fs_bar 4 /home}
 #############
 </code></pre>
