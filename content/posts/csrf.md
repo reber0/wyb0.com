@@ -88,9 +88,10 @@ http://www.aa.com/opt.php?id=135&act=del&name=Tom的链接
 然后将连接```http://www.bb.com/xxxx.html``` 发送给用户,诱使他点击链接,一旦他点击,则密码就会被修改
 
 ### 0x04 防御：
+* 验证Referer
 * 对于修改密码的表单可以要求输入原密码  
 * 二次确认(如删除用户、转账等重要操作弹窗要求用户确认)
 * Token认证  
     * GET操作请求：可以在Cookie中存储Token  
     * POST操作请求：可以在form表单中添加一个隐藏的input标签，value值为Token
-* 验证Referer
+    * 在header中添加自定义参数携带token
