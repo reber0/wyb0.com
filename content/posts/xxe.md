@@ -128,3 +128,4 @@ evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
 <br>
 #### Reference(侵删)：
 * [http://blog.csdn.net/u011721501/article/details/43775691](http://blog.csdn.net/u011721501/article/details/43775691)
+* [https://www.waitalone.cn/xxe-attack.html](https://www.waitalone.cn/xxe-attack.html)
