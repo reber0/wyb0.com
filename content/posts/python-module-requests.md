@@ -123,7 +123,7 @@ file = {'myfile':('bb.png',open('/home/reber/aa.png','rb'),'img/jpeg')}
 upload_url = "http://123.206.78.220/u.php"
 requests.post(upload_url, files=file)
 ```
-
+<br>
 ```
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
