@@ -65,6 +65,17 @@ url = 'https://www.aa.com'
 requests.get(url)   #出错，因为是https，验证了证书
 requests.get(url,verify=False) #正常，因为忽略了证书验证
 ```
+<br>
+```python
+#出现如下错误时解决方案：
+#InsecureRequestWarning: Unverified HTTPS request is being made. 
+#Adding certificate verification is strongly advised. 
+#See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+```
 
 ### 0x04 添加Cookie
 ```python
