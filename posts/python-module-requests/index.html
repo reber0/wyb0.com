@@ -180,6 +180,18 @@ requests.get(url)   #出错，因为是https，验证了证书
 requests.get(url,verify=False) #正常，因为忽略了证书验证
 </code></pre>
 
+<p><br></p>
+
+<pre><code class="language-python">#出现如下错误时解决方案：
+#InsecureRequestWarning: Unverified HTTPS request is being made. 
+#Adding certificate verification is strongly advised. 
+#See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+# 禁用安全请求警告
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+</code></pre>
+
 <h3 id="0x04-添加cookie">0x04 添加Cookie</h3>
 
 <pre><code class="language-python">import requests
@@ -227,6 +239,8 @@ file = {'myfile':('bb.png',open('/home/reber/aa.png','rb'),'img/jpeg')}
 upload_url = &quot;http://123.206.78.220/u.php&quot;
 requests.post(upload_url, files=file)
 </code></pre>
+
+<p><br></p>
 
 <pre><code>#!/usr/bin/env python
 #-*- coding:utf-8 -*-
