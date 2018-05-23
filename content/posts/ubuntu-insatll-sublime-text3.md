@@ -59,7 +59,8 @@ sudo vim /usr/bin/subl
 exec /opt/sublime_text/sublime_text "$@"  
 修改为  
 #!/bin/sh  
-LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so exec /opt/sublime_text/sublime_text "$@"
+LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so
+exec /opt/sublime_text/sublime_text "$@"
 ```
 
 5. 使用鼠标右键打开文件时能够使用中文输入  
