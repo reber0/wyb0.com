@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2016-2018 Reber. All Rights Reserved.</copyright>
-    <lastBuildDate>Mon, 16 Apr 2018 19:16:14 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 23 May 2018 11:14:51 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>SQL注入的一些tips</title>
+      <link>http://wyb0.com/posts/some-tips-for-sql-injection/</link>
+      <pubDate>Wed, 23 May 2018 11:14:51 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/some-tips-for-sql-injection/</guid>
+      <description>环境：MySQL 5.5.47
+0x00 基于时间的注入payload mysql&amp;gt; select if((select database()) like &amp;quot;rte%&amp;quot;,sleep(2),null); +---------------------------------------------------+ | if((select database()) like &amp;quot;rte%&amp;quot;,sleep(2),null) | +---------------------------------------------------+ | 0 | +---------------------------------------------------+ 1 row in set (2.00 sec) mysql&amp;gt; select if((select database())=&amp;quot;rteaaa&amp;quot;,sleep(2),666); +-----------------------------------------------+ | if((select database())=&amp;quot;rtest1&amp;quot;,sleep(2),666) | +-----------------------------------------------+ | 666 | +-----------------------------------------------+ 1 row in set (0.00 sec) mysql&amp;gt; select if((select database())=&amp;quot;rtest&amp;quot;,sleep(2),666); +----------------------------------------------+ | if((select database())=&amp;quot;rtest&amp;quot;,sleep(2),666) | +----------------------------------------------+ | 0 | +----------------------------------------------+ 1 row in set (2.00 sec)  0x01 注入点在Order by后面 mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by id into outfile &#39;C:\\Apps\\phpStudy\\WWW\\a.</description>
+    </item>
     
     <item>
       <title>ThinkPHP5的where函数</title>
@@ -1260,14 +1270,9 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
       
       <guid>http://wyb0.com/posts/injection-of-defense/</guid>
       <description>0x00 要做的事 也就是找到注入点然后修复
-0x01 防御方法  使用转义函数
-如：addslashes()和mysql_real_escape_string()
-在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件
-&amp;lt;?php //简单过滤 $filter = array(&amp;amp;$_GET,&amp;amp;$_POST,&amp;amp;$_COOKIE); foreach ($filter as $key =&amp;gt; $value){ foreach ($value as $k =&amp;gt; $v){ $filter[$key][$k] = mysql_real_escape_string($v); } } ?&amp;gt;  检查数据类型
-使用(int)或settype()等将数字等进行强制转换
-对邮箱、日期等也进行检查
- 使用预编译语句绑定变量(一般为防御SQL注入的最佳方式)
-&amp;lt;?php //预编译 $mysqli = new mysqli(&amp;quot;localhost&amp;quot;,&amp;quot;root&amp;quot;,&amp;quot;123456&amp;quot;,&amp;quot;share&amp;quot;); $mysqli-&amp;gt;query(&amp;quot;set names utf8&amp;quot;); $sql = &amp;quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&amp;quot;; $s = $mysqli-&amp;gt;prepare($sql); //绑定参数 $name = &amp;quot;Tom&amp;quot;; $sex = &amp;quot;M&amp;quot;; $age = 23; $s-&amp;gt;bind_param(&amp;quot;ssi&amp;quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&amp;gt;execute(); var_dump($result); $s-&amp;gt;close(); ?</description>
+0x01 防御方法  使用预编译语句绑定变量(比如php的mysqli、pdo)
+&amp;lt;?php //预编译 $mysqli = new mysqli(&amp;quot;localhost&amp;quot;,&amp;quot;root&amp;quot;,&amp;quot;123456&amp;quot;,&amp;quot;share&amp;quot;); $mysqli-&amp;gt;query(&amp;quot;set names utf8&amp;quot;); $sql = &amp;quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&amp;quot;; $s = $mysqli-&amp;gt;prepare($sql); //绑定参数 $name = &amp;quot;Tom&amp;quot;; $sex = &amp;quot;M&amp;quot;; $age = 23; $s-&amp;gt;bind_param(&amp;quot;ssi&amp;quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&amp;gt;execute(); var_dump($result); $s-&amp;gt;close(); ?&amp;gt;  使用存储过程(这里以SQLServer举例)
+  --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name=&#39;get_student_msg&#39; AND type=&#39;p&#39;) DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg &#39;xiaoli&#39;   使用转义函数</description>
     </item>
     
     <item>

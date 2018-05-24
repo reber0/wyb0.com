@@ -125,26 +125,7 @@
 <h3 id="0x01-防御方法">0x01 防御方法</h3>
 
 <ul>
-<li><p>使用转义函数<br />
-如：addslashes()和mysql_real_escape_string()<br />
-在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件</p>
-
-<pre><code class="language-php">&lt;?php
-//简单过滤
-$filter = array(&amp;$_GET,&amp;$_POST,&amp;$_COOKIE);
-foreach ($filter as $key =&gt; $value){
-    foreach ($value as $k =&gt; $v){
-        $filter[$key][$k] = mysql_real_escape_string($v);
-    }
-}
-?&gt;
-</code></pre></li>
-
-<li><p>检查数据类型<br />
-使用(int)或settype()等将数字等进行强制转换<br />
-对邮箱、日期等也进行检查</p></li>
-
-<li><p>使用预编译语句绑定变量(一般为防御SQL注入的最佳方式)</p>
+<li><p>使用预编译语句绑定变量(比如php的mysqli、pdo)</p>
 
 <pre><code class="language-php">&lt;?php
     //预编译
@@ -164,12 +145,49 @@ foreach ($filter as $key =&gt; $value){
 ?&gt;
 </code></pre></li>
 
-<li><p>其他</p>
+<li><p>使用存储过程(这里以SQLServer举例)</p></li>
+</ul>
 
-<pre><code>1.使用存储过程
-2.使用安全的函数和为数据库合理分配权限等
-3.使用框架
+<pre><code>--如果存在名为get_student_msg(相当于函数)的存储过程则删除
+IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p')
+    DROP PROCEDURE get_student_msg
+
+CREATE PROCEDURE get_student_msg --创建存储过程
+    @name VARCHAR(20) --声明全局变量
+AS
+    BEGIN
+        SELECT * from info
+        WHERE name=@name
+    END
+GO
+
+--创建好存储过程后在其他地方直接使用函数并传参就行了
+EXEC get_student_msg 'xiaoli'
+</code></pre>
+
+<ul>
+<li><p>使用转义函数<br />
+如：addslashes()和mysql_real_escape_string()<br />
+在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件</p>
+
+<pre><code class="language-php">&lt;?php
+//简单过滤
+$filter = array(&amp;$_GET,&amp;$_POST,&amp;$_COOKIE);
+foreach ($filter as $key =&gt; $value){
+    foreach ($value as $k =&gt; $v){
+        $filter[$key][$k] = mysql_real_escape_string($v);
+    }
+}
+?&gt;
 </code></pre></li>
+
+<li><p>检查数据类型</p>
+
+<ul>
+<li>使用(int)或settype()等将数字等进行强制转换，对邮箱、日期等也进行检查</li>
+</ul></li>
+
+<li><p>使用框架、为数据库合理分配权限等</p></li>
 </ul>
 
                 
@@ -239,7 +257,7 @@ foreach ($filter as $key =&gt; $value){
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(68)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(69)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -318,7 +336,7 @@ foreach ($filter as $key =&gt; $value){
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>12</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -542,13 +560,14 @@ foreach ($filter as $key =&gt; $value){
             <a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
         </li>
         <li style="list-style-type:none;">
-            <a href="http://www.y-hkl.top/" target="_blank">Y-HKL's Blog</a>
+            <a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
         </li>
         <li style="list-style-type:none;">
             <a href="http://s.yl0.org/" target="_blank">sòng•sec</a>
         </li>
     </ul>
 </div>
+
             </div>
         </div>
     </div>

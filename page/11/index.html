@@ -84,11 +84,67 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-simple-decode-ip-head/">Python简单解码IP头</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-03</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 解码IP头 Windows上运行时要以管理员身份运行
+代码可以解码IP头统计通信信息并保存到文本，同时统计数量
+#!/usr/bin/env python #-*- coding:utf-8 -*- import socket import os import sys import time import struct from ctypes import * host = &quot;10.22.114.114&quot; tcp_num = 0 udp_num = 0 icmp_num = 0 class IP(Structure): _fields_ = [ (&quot;ihl&quot;, c_ubyte,4), (&quot;version&quot;, c_ubyte,4), (&quot;tos&quot;, c_ubyte), (&quot;len&quot;, c_ushort), (&quot;id&quot;, c_ushort), (&quot;offset&quot;, c_ushort), (&quot;ttl&quot;, c_ubyte), (&quot;protocol_num&quot;,c_ubyte), (&quot;sum&quot;, c_ushort), (&quot;src&quot;, c_ulong), (&quot;dst&quot;, c_ulong) ] def __new__ (self,socket_buffer=None): return self.from_buffer_copy(socket_buffer) def __init__ (self,socket_buffer=None): self.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-simple-decode-ip-head/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-module-requests/">Python的requests模块</a></h2>
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-07-02</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -144,7 +200,7 @@
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-30</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -204,7 +260,7 @@
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-29</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -261,7 +317,7 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-28</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -317,7 +373,7 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-28</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -375,7 +431,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-25</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -431,7 +487,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-24</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -486,7 +542,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-23</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -521,14 +577,9 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
         0x00 要做的事 也就是找到注入点然后修复
-0x01 防御方法  使用转义函数
-如：addslashes()和mysql_real_escape_string()
-在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件
-&lt;?php //简单过滤 $filter = array(&amp;$_GET,&amp;$_POST,&amp;$_COOKIE); foreach ($filter as $key =&gt; $value){ foreach ($value as $k =&gt; $v){ $filter[$key][$k] = mysql_real_escape_string($v); } } ?&gt;  检查数据类型
-使用(int)或settype()等将数字等进行强制转换
-对邮箱、日期等也进行检查
- 使用预编译语句绑定变量(一般为防御SQL注入的最佳方式)
-&lt;?php //预编译 $mysqli = new mysqli(&quot;localhost&quot;,&quot;root&quot;,&quot;123456&quot;,&quot;share&quot;); $mysqli-&gt;query(&quot;set names utf8&quot;); $sql = &quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&quot;; $s = $mysqli-&gt;prepare($sql); //绑定参数 $name = &quot;Tom&quot;; $sex = &quot;M&quot;; $age = 23; $s-&gt;bind_param(&quot;ssi&quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&gt;execute(); var_dump($result); $s-&gt;close(); ?
+0x01 防御方法  使用预编译语句绑定变量(比如php的mysqli、pdo)
+&lt;?php //预编译 $mysqli = new mysqli(&quot;localhost&quot;,&quot;root&quot;,&quot;123456&quot;,&quot;share&quot;); $mysqli-&gt;query(&quot;set names utf8&quot;); $sql = &quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&quot;; $s = $mysqli-&gt;prepare($sql); //绑定参数 $name = &quot;Tom&quot;; $sex = &quot;M&quot;; $age = 23; $s-&gt;bind_param(&quot;ssi&quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&gt;execute(); var_dump($result); $s-&gt;close(); ?&gt;  使用存储过程(这里以SQLServer举例)
+  --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p') DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg 'xiaoli'   使用转义函数
     </p>
 
     
@@ -548,7 +599,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-22</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -598,64 +649,6 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/injection-of-error-based/">SQL注入之报错型注入</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-22</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 前提 一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用， 它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解  0x01 利用方式 报错注入只要套用公式即可，公式如下(第一个公式count(*)、floor()、rand()、group by不可或缺，后两个公式有32位的限制):
-?id=2&rsquo; and (select 1 from (select count(*),concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x from information_schema.tables group by x )a )--+
-?id=2&rsquo; and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)--+
-?id=1&rsquo; and extractvalue(1, concat(0x7e, (select @@version),0x7e))--+
-0x02 公式解析 floor()是取整数 rand()在0和1之间产生一个随机数 rand(0)*2将取0到2的随机数 floor(rand()*2)有两条记录就会报错 floor(rand(0)*2)记录需为3条以上，且3条以上必报错，返回的值是有规律的 count(*)是用来统计结果的，相当于刷新一次结果 group by对数据分组时会先看看虚拟表里有没有这个值,若没有就插入,若存在则count(*)加1 group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚表时会再执行一次  0x03 注入步骤  猜测闭合字符  猜测列数  尝试得到显示位  报错得到数据库个数  报错得到数据库名  报错得到表名  报错得到列名  得到列值   0x04 附上利用代码 #!
-    </p>
-
-    
-    <footer>
-        <a href="/posts/injection-of-error-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -698,7 +691,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(68)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(69)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -777,7 +770,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>12</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1001,13 +994,14 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
             <a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
         </li>
         <li style="list-style-type:none;">
-            <a href="http://www.y-hkl.top/" target="_blank">Y-HKL's Blog</a>
+            <a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
         </li>
         <li style="list-style-type:none;">
             <a href="http://s.yl0.org/" target="_blank">sòng•sec</a>
         </li>
     </ul>
 </div>
+
         </div>
     </div>
 </div>

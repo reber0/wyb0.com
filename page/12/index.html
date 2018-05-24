@@ -84,11 +84,69 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/injection-of-error-based/">SQL注入之报错型注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-22</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 前提 一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用， 它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解  0x01 利用方式 报错注入只要套用公式即可，公式如下(第一个公式count(*)、floor()、rand()、group by不可或缺，后两个公式有32位的限制):
+?id=2&rsquo; and (select 1 from (select count(*),concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x from information_schema.tables group by x )a )--+
+?id=2&rsquo; and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)--+
+?id=1&rsquo; and extractvalue(1, concat(0x7e, (select @@version),0x7e))--+
+0x02 公式解析 floor()是取整数 rand()在0和1之间产生一个随机数 rand(0)*2将取0到2的随机数 floor(rand()*2)有两条记录就会报错 floor(rand(0)*2)记录需为3条以上，且3条以上必报错，返回的值是有规律的 count(*)是用来统计结果的，相当于刷新一次结果 group by对数据分组时会先看看虚拟表里有没有这个值,若没有就插入,若存在则count(*)加1 group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚表时会再执行一次  0x03 注入步骤  猜测闭合字符  猜测列数  尝试得到显示位  报错得到数据库个数  报错得到数据库名  报错得到表名  报错得到列名  得到列值   0x04 附上利用代码 #!
+    </p>
+
+    
+    <footer>
+        <a href="/posts/injection-of-error-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/injection-of-union-select/">SQL注入之联合查询</a></h2>
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-21</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -140,7 +198,7 @@
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-20</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -202,7 +260,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-19</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -259,7 +317,7 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-19</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -309,7 +367,7 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-19</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -365,7 +423,7 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-19</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -415,7 +473,7 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-18</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -467,7 +525,7 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-18</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -532,7 +590,7 @@ vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行�
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2016-06-17</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -583,67 +641,6 @@ tomcat包可在这里下载   0x02 简单配置tomcat 0x03 启动tomcat 0x04 连
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-set-up-nginx-mysql-php/">Linux下搭建Nginx&#43;MySQL&#43;PHP</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-17</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal
-0x00 准备工作 首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++  0x01 安装mysql和php sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm  0x02 安装依赖  安装pcre、pcre-devel
-sudo yum install pcre pcre-devel
- 安装zlib、zlib-devel
-sudo yum install zlib zlib-devel
- 安装ssl
-sudo yum install openssl openssl-devel
-  0x03 安装Nginx 可在http://nginx.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-set-up-nginx-mysql-php/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -686,7 +683,7 @@ sudo yum install openssl openssl-devel
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(68)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(69)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -765,7 +762,7 @@ sudo yum install openssl openssl-devel
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>12</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -989,13 +986,14 @@ sudo yum install openssl openssl-devel
             <a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
         </li>
         <li style="list-style-type:none;">
-            <a href="http://www.y-hkl.top/" target="_blank">Y-HKL's Blog</a>
+            <a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
         </li>
         <li style="list-style-type:none;">
             <a href="http://s.yl0.org/" target="_blank">sòng•sec</a>
         </li>
     </ul>
 </div>
+
         </div>
     </div>
 </div>

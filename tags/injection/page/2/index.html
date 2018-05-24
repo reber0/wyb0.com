@@ -85,11 +85,67 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/injection/">SQL注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-19</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 含义 sql注入是将代码插入(拼接)到应用(用户)的输入参数中，之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击，
+总结起来就是攻击者将恶意代码拼接到sql语句并加以执行从而得到数据的过程。
+0x01 成因 SQl语句未对用户参数进行严格过滤  0x02 可引发注入的地方 其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入 常见的如下，按出现频率排序： 1. GET 2. POST 3. X-Forwarded-For 4. Cookie 5. User-Agent  0x03 注入分类 根据语法(较权威)： 1. 可联合查询注入: 只要页面有显示位即可使用，且注入速度很快 2. 报错型注入: 没有显示位但用echo &quot;mysql_error()&quot;输出了错误信息，速度很快，但是语句较复杂 3. 布尔型注入: 一次一个字节，速度慢，但只要有注入就能用 4. 基于时间延迟注入: 超级慢，比布尔型注入慢几倍，但是通用性较强 5. 可多语句查询: 只有SQL Server可以使用 根据类型： 1. 整形 2. 字符串型 3. 搜索型  0x04 查找注入点 在URL中： 1. and 1=1/and 1=2(整型) 2. 随即输入(整型) 3. -1/+1 回显上下页面(整型) 4. 单引号(字符型/整型) 5. and sleep(5) (判断页面返回时间) 在http头： 1.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/injection/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/various-parameter-types-injected/">各种参数类型注入</a></h2>
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2015-12-20</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -153,7 +209,7 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
 
         
         <div class="post-meta">
-            <div style="padding:5px 5px 2px 0px;">
+            <div style="padding:5px 5px 2px 5px;">
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>2015-12-04</time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -245,7 +301,7 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(68)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(69)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -324,7 +380,7 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>12</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -548,13 +604,14 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
             <a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
         </li>
         <li style="list-style-type:none;">
-            <a href="http://www.y-hkl.top/" target="_blank">Y-HKL's Blog</a>
+            <a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
         </li>
         <li style="list-style-type:none;">
             <a href="http://s.yl0.org/" target="_blank">sòng•sec</a>
         </li>
     </ul>
 </div>
+
             </div>
         </div>
     </div>
