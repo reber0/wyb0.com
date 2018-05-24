@@ -31,19 +31,22 @@ topics = ["Pentest"]
 使用(int)或settype()等将数字等进行强制转换  
 对邮箱、日期等也进行检查
 
-* 使用预编译语句绑定变量(一般为防御SQL注入的最佳方式)
+* 使用预编译(一般为防御SQL注入的最佳方式，如php的mysqli、pdo)
 ```php
     <?php
-        //预编译
         $mysqli = new mysqli("localhost","root","123456","share");
         $mysqli->query("set names utf8");
+        
+        //预编译
         $sql = "INSERT INTO test (name,sex,age) VALUE(?,?,?)";
         $s = $mysqli->prepare($sql);
+        
         //绑定参数
         $name = "Tom";
         $sex = "M";
         $age = 23;
         $s->bind_param("ssi",$name,$sex,$age);//ssi的意思是字符、字符、整型
+        
         //执行
         $result = $s->execute();
         var_dump($result);
@@ -53,7 +56,7 @@ topics = ["Pentest"]
 
 * 其他
 ```
-1.使用存储过程
+1.使用存储过程(如SQLServer的存储过程)
 2.使用安全的函数和为数据库合理分配权限等
 3.使用框架
 ```
