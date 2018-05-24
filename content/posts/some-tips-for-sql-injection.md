@@ -1,11 +1,13 @@
 +++
 date = "2018-05-23T11:14:51+08:00"
-description = "记录一些非常见的注入手法"
+description = "记录一些非常见的注入手法，或者说是mysql的一些特性"
 draft = false
 tags = ["injection"]
 title = "SQL注入的一些tips"
 topics = ["Pentest"]
 +++
+
+环境：MySQL 5.5.47
 
 ### 0x00 基于时间的注入payload
 ```
