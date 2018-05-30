@@ -571,6 +571,15 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
     </script>
 
     
+    <script type="text/javascript">
+    var aTagArr = [].slice.apply(document.getElementsByTagName("a"));
+
+    aTagArr.forEach(function (e, i) {
+        e.href.indexOf("_blank") > -1 ? e.target = "_blank" : null;
+    });
+    </script>
+
+    
     
 
 </body>

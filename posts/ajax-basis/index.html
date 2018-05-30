@@ -642,8 +642,18 @@ if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari
     </script>
 
     
+    <script type="text/javascript">
+    var aTagArr = [].slice.apply(document.getElementsByTagName("a"));
+
+    aTagArr.forEach(function (e, i) {
+        e.href.indexOf("_blank") > -1 ? e.target = "_blank" : null;
+    });
+    </script>
+
+    
     
 
 </body>
 </html>
+
 

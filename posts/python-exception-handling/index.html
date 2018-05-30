@@ -618,8 +618,18 @@ except Exception as e: #可捕获所有异常类型
     </script>
 
     
+    <script type="text/javascript">
+    var aTagArr = [].slice.apply(document.getElementsByTagName("a"));
+
+    aTagArr.forEach(function (e, i) {
+        e.href.indexOf("_blank") > -1 ? e.target = "_blank" : null;
+    });
+    </script>
+
+    
     
 
 </body>
 </html>
+
 

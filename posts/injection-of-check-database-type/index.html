@@ -637,8 +637,18 @@ ID=1 CHR(97) || CHR(110) || CHR(100) || CHR(32) || CHR(49) || CHR(61) || CHR(49)
     </script>
 
     
+    <script type="text/javascript">
+    var aTagArr = [].slice.apply(document.getElementsByTagName("a"));
+
+    aTagArr.forEach(function (e, i) {
+        e.href.indexOf("_blank") > -1 ? e.target = "_blank" : null;
+    });
+    </script>
+
+    
     
 
 </body>
 </html>
+
 

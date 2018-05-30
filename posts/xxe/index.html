@@ -723,8 +723,18 @@ evil.dtd中的内容为：&lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot; &g
     </script>
 
     
+    <script type="text/javascript">
+    var aTagArr = [].slice.apply(document.getElementsByTagName("a"));
+
+    aTagArr.forEach(function (e, i) {
+        e.href.indexOf("_blank") > -1 ? e.target = "_blank" : null;
+    });
+    </script>
+
+    
     
 
 </body>
 </html>
+
 
