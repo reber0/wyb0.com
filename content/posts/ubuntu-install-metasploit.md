@@ -2,7 +2,7 @@
 date = "2016-08-18T10:38:41+08:00"
 description = "在Ubuntu下安装渗透测试工具Metasploit"
 draft = false
-tags = ["tools"]
+tags = ["tools","intranet"]
 title = "Ubuntu下安装Metasploit"
 topics = ["Pentest"]
 
