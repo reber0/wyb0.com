@@ -107,10 +107,13 @@ Windows权限控制需要进行账户配置，新建一个Tomcat用户，并归�
 
 webapps为Web站点目录，将其中文件上传的文件夹设置为不可执行。
 
-#服务器后台管理
+#服务器后台管理，配置强口令
 $ vim /usr/local/tomcat/conf/tomcat-users.xml
   <role rolename="manager-gui"/>
-  <user username="tomcat" password="sdkfiewnksdhsfs" roles="manager-gui"/>
+  <user username="tomcat" password="sdkF!ieW~nk/sXfs" roles="manager-gui"/>
+#或者说删除默认应用
+即除了webapps下的ROOT目录，其他的都删除
+然后就是在ROOT文件夹下除了WEB-INF和META-INF外的文件都删除了
 ```
 
 * 服务器访问限制
