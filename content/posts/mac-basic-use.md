@@ -59,6 +59,7 @@ $ ln -s /Applications/MAMP/Library/bin/mysql /usr/local/bin/mysql
 ```
 # mac里面python自带easy_install
 $ sudo easy_install pip
+$ sudo pip install bs4 --user -U #安装第三方模块
 ```
 
 ### 0x09 安装go2shell
