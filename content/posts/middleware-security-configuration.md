@@ -41,12 +41,25 @@ Options FollowSymLinks
 windows也可以通过配置文件或者权限的设置达到上面设置的效果
 ```
 ```
-#错误重定向
-可以通过设置.htaccess文件达到目的
-比如：ErrorDocument 404 /404.html
+#错误重定向一
+$ sudo vim /etc/apache2/apache2.conf
+<Directory /var/www/>
+        Options Indexes FollowSymLinks
+        #AllowOverride None
+        AllowOverride All #设置如此
+        Require all granted
+</Directory>
+$ cat .htaccess
+ErrorDocument 404 /404.html
 
-RewriteEngine On：开启跳转，符合正则就跳转
-RewriteRule "tttt\.html$"  "404.html"
+#错误重定向二
+$ sudo vim /etc/apache2/apache2.conf
+LoadModule rewrite_module modules/mod_rewrite.so #去掉前面的注释符
+$ sudo a2enmod rewrite #开启跳转
+$ cat .htaccess
+ErrorDocument 404 /404.html
+RewriteEngine on
+RewriteRule "ttt\.html$" aa.html
 ```
 ```
 #隐藏apache版本号
