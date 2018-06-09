@@ -49,10 +49,14 @@ RewriteEngine On：开启跳转，符合正则就跳转
 RewriteRule "tttt\.html$"  "404.html"
 ```
 ```
-#隐藏版本号
-$ vim /etc/apache2/conf-available/security.conf
+#隐藏apache版本号
+$ sudo vim /etc/apache2/conf-available/security.conf
 ServerTokens Prod
 ServerSignature Off
+
+#隐藏php版本号
+$ sudo vim /etc/php5/apache2/php.ini
+expose_php =  Off
 ```
 ```
 #禁止执行脚本
