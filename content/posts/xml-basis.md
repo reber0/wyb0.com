@@ -43,7 +43,7 @@ topics = ["Other"]
 <!--文档类型定义-->
 <!DOCTYPE note [
   <!ELEMENT note (to,from,heading,body)>
-  <!ELEMENT to       (#PCDATA)>
+  <!ELEMENT to       (#PCDATA)> <!-- 定义to标签中元素的类型　-->
   <!ELEMENT from     (#PCDATA)>
   <!ELEMENT heading  (#PCDATA)>
   <!ELEMENT body     (#PCDATA)>
