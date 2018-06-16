@@ -598,14 +598,16 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
 6、xml具有自我描述性
 7、xml是对html的补充
 8、xml常用于简化数据的存储和共享
-例子：John给George的便签
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &lt;note&gt; //根元素 &lt;to&gt;George&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Don't forget the meeting!&lt;/body&gt; &lt;/note&gt;  0x01 XML树结构 1、必须有根节点
-2、根节点可以有子节点
-格式：
-&lt;root&gt; &lt;child&gt; &lt;subchild&gt;.....&lt;/subchild&gt; &lt;/child&gt; &lt;/root&gt;  例子：
-&lt;books&gt; &lt;book&gt; &lt;name&gt;Python黑帽子&lt;/name&gt; &lt;date&gt;2015&lt;/date&gt; &lt;price&gt;37￥&lt;/price&gt; &lt;description&gt; 用python写一些程序 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;Web安全深度剖析&lt;/name&gt; &lt;date&gt;2014&lt;/date&gt; &lt;price&gt;39￥&lt;/price&gt; &lt;description&gt; 讲述web渗透的基础知识 &lt;/description&gt; &lt;/book&gt; &lt;book&gt; &lt;name&gt;白帽子讲web安全&lt;/name&gt; &lt;date&gt;2013&lt;/date&gt; &lt;price&gt;44￥&lt;/price&gt; &lt;description&gt; 道哥力作 &lt;/description&gt; &lt;/book&gt; &lt;/books&gt;  0x02 XML语法规则 1、所有元素必有闭合标签
+0x01 XML语法规则 1、所有元素必有闭合标签
 2、标签对大小写敏感
 3、必须正确的嵌套
+4、XML必须有根元素，根节点可以有子节点
+5、XML的属性值必须加引号(能用子元素的就用子元素代替属性)
+6、空格会被保留
+7、XML以LF存储换行
+8、注释使用&lt;!-- --&gt;
+9、实体引用
+&amp;lt; &lt; 小于 &amp;gt; &gt; 大于 &amp;amp; &amp; 和号 &amp;apos; ' 单引号 &amp;quot; &quot; 引号  0x02 XML格式 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;!--xml声明--&gt; &lt;!--文档类型定义--&gt; &lt;!DOCTYPE note [ &lt;!ELEMENT note (to,from,heading,body)&gt; &lt;!ELEMENT to (#PCDATA)&gt; &lt;!-- 定义to标签中元素的类型　--&gt; &lt;!ELEMENT from (#PCDATA)&gt; &lt;!ELEMENT heading (#PCDATA)&gt; &lt;!ELEMENT body (#PCDATA)&gt; ]&gt; &lt;!--文档元素--&gt; &lt;note&gt; &lt;to&gt;Tom&lt;/to&gt; &lt;from&gt;John&lt;/from&gt; &lt;heading&gt;Reminder&lt;/heading&gt; &lt;body&gt;Hi,I’am John&lt;/body&gt; &lt;/note&gt;  0x03 XML示例 例子一：John给George的便签
     </p>
 
     

