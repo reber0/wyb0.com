@@ -40,41 +40,27 @@ import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.
 ### 0x02 Anaconda
 可以自动补全并提示语法，还可跳转到定义、使用等
 ![插件Anaconda设置](/img/post/sublime_anaconda_set.png)
+
 ![插件Anaconda设置默认选项](/img/post/sublime_anaconda_set_default.png)
+
 ![插件Anaconda设置用户选项](/img/post/sublime_anaconda_set_user.png)
+
 ![插件Anaconda处理补全问题](/img/post/sublime_anaconda_add_file.png)
 
 效果如下：
 ![插件Anaconda](/img/post/sublime_anaconda.png)
 
-### 0x03 Git
-在编辑器就可以执行git命令，有github的开发者必备
-![插件Git](/img/post/sublime_git.png)
-
-### 0x04 GitGutter
-在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率
-![插件GitGutter](/img/post/sublime_gitgutter.png)
-
-### 0x05 Markdown Preview
-可以在本地预览文件
-![插件Markdown Preview](/img/post/sublime_markdown_preview.png)
-![插件Markdown Preview预览](/img/post/sublime_markdown_preview_html.png)
-
-### 0x06 DocBlokr
-这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释
-![插件DocBlocr](/img/post/sublime_docblocr1.gif)
-![插件DocBlocr](/img/post/sublime_docblocr2.gif)
-
-### 0x07 AutoFileName
-快捷输入文件名
+### 0x03 AutoFileName
+快捷输入文件路径
 ![插件AutoFileName](/img/post/sublime_autofilename.png)
 
-### 0x08 Theme-Flatland和Theme-SoDaReloaded
-两个主题插件，安装好之后：首选项 -> 设置-用户，修改文件Packages/User/Preferences.sublime-settings
+### 0x04 主题Theme-SoDaReloaded
+两个主题插件，安装好之后：首选项 -> 设置-用户，修改文件Packages/User/Preferences.sublime-settings如下
 ```
 {
     "color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
     "font_size": 15,
+    "highlight_line": true,//光标所在行高亮显示
     "ignored_packages":
     [
         "Vintage"
@@ -88,21 +74,36 @@ import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.
 }
 ```
 
-### 0x09 Alignment
-插件安装好后选中要对齐的文本，然后按Ctrl+Alt+a即可对齐"=","+", "-", "&", "|", "<",">"等符号
-![插件Alignment](/img/post/sublime_alignment.gif)
-
-### 0x0A ConvertToUTF8
+### 0x05 ConvertToUTF8
 文件转码成utf-8
 
-### 0x0B IMESupport
+### 0x06 IMESupport
 解决Sublime Text中文输入法不能跟随光标的问题
 
-### 0x0C 光标所在行高亮显示
-首选项->设置-用户，在文件中添加 "highlight_line":true
+### 0x07 Git
+在编辑器就可以执行git命令，有github的开发者必备
+![插件Git](/img/post/sublime_git.png)
 
-### 0x0E 后记
-* 在安装插件时总出错提示"There are no packages available for installation"可以用上面提到的手动安装Package Control来解决，或者：
+### 0x08 GitGutter
+在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率
+![插件GitGutter](/img/post/sublime_gitgutter.png)
+
+### 0x09 Markdown Preview
+可以在本地预览文件
+![插件Markdown Preview](/img/post/sublime_markdown_preview.png)
+![插件Markdown Preview预览](/img/post/sublime_markdown_preview_html.png)
+
+### 0x0A DocBlokr
+这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释
+![插件DocBlocr](/img/post/sublime_docblocr1.gif)
+![插件DocBlocr](/img/post/sublime_docblocr2.gif)
+
+### 0x0B Alignment
+插件安装好后选中要对齐的文本，然后按Ctrl+Alt+a即可对齐```"=","+", "-", "&", "|", "<",">"```等符号
+![插件Alignment](/img/post/sublime_alignment.gif)
+
+### 0x0C 后记
+* 在安装插件时总出错提示```"There are no packages available for installation"```可以用上面提到的手动安装Package Control来解决，或者：
 ![后记1](/img/post/sublime_end1.png)
 
 * 有时不能通过Package Control下载插件，可以直接下载插件，然后放在下面图示的文件夹中，然后重启Sublime Text使插件生效即可：
