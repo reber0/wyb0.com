@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python的pycurl模块 - Reber's Blog</title>
+    <title>SQL注入之基于时间的注入 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,python,php,linux">
-    <meta name="description" content="">
+    <meta name="description" content="基于时间的SQL注入">
     <meta name="author" content="reber">
 
     
@@ -79,12 +79,12 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Python的pycurl模块</h2>
+                <h2>SQL注入之基于时间的注入</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2017-03-21</time>
+                        <time>2016-06-23</time>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     
 
@@ -96,7 +96,7 @@
                         
                             <i class="fa fa-folder fa-fw"></i>
                             
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
                             
                         
                         
@@ -106,7 +106,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
                             
                         
                         
@@ -118,87 +118,7 @@
                 
                 
 
-<h3 id="0x00-关于curl">0x00 关于cURL</h3>
-
-<p>cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。</p>
-
-<p>利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。</p>
-
-<h3 id="0x01-pycurl常见方法">0x01 pycurl常见方法</h3>
-
-<ul>
-<li>创建curl对象</li>
-</ul>
-
-<pre><code class="language-python">c = pycurl.Curl()    #创建一个curl对象 
-</code></pre>
-
-<ul>
-<li>设置请求</li>
-</ul>
-
-<pre><code class="language-python">c.setopt(pycurl.URL,&quot;http://www.baidu.com&quot;)      #指定请求的URL
-c.setopt(pycurl.CONNECTTIMEOUT, 5)    #连接的等待时间，设置为0则不等待
-c.setopt(pycurl.TIMEOUT, 5)           #请求超时时间
-c.setopt(pycurl.USERAGENT,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&quot;)    #配置User-Agent
-
-c.setopt(pycurl.NOPROGRESS, 0)        #是否屏蔽下载进度条，非0则屏蔽
-c.setopt(pycurl.MAXREDIRS, 5)         #指定HTTP重定向的最大数
-c.setopt(pycurl.FORBID_REUSE, 1)      #完成交互后强制断开连接，不重用
-c.setopt(pycurl.FRESH_CONNECT,1)      #强制获取新的连接，即替代缓存中的连接
-c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒
-
-c.setopt(pycurl.HEADERFUNCTION, getheader)   #将返回的HTTP HEADER定向到回调函数getheader
-c.setopt(pycurl.WRITEFUNCTION, getbody)      #将返回的内容定向到回调函数getbody
-c.setopt(pycurl.WRITEHEADER, fileobj)        #将返回的HTTP HEADER定向到fileobj文件对象
-c.setopt(pycurl.WRITEDATA, fileobj)          #将返回的HTML内容定向到fileobj文件对象
-</code></pre>
-
-<ul>
-<li>部分返回信息</li>
-</ul>
-
-<pre><code class="language-python">c.getinfo(pycurl.HTTP_CODE)         #返回的HTTP状态码
-c.getinfo(pycurl.HEADER_SIZE)       #HTTP头部大小
-c.getinfo(pycurl.TOTAL_TIME)        #传输结束所消耗的总时间
-c.getinfo(pycurl.NAMELOOKUP_TIME)   #DNS解析所消耗的时间
-c.getinfo(pycurl.CONNECT_TIME)      #建立连接所消耗的时间
-c.getinfo(pycurl.PRETRANSFER_TIME)  #从建立连接到准备传输所消耗的时间
-c.getinfo(pycurl.STARTTRANSFER_TIME)#从建立连接到传输开始消耗的时间
-c.getinfo(pycurl.REDIRECT_TIME)     #重定向所消耗的时间
-c.getinfo(pycurl.SIZE_UPLOAD)       #上传数据包大小
-c.getinfo(pycurl.SIZE_DOWNLOAD)     #下载数据包大小
-c.getinfo(pycurl.SPEED_DOWNLOAD)    #平均下载速度
-c.getinfo(pycurl.SPEED_UPLOAD)      #平均上传速度
-</code></pre>
-
-<h3 id="0x02-简单使用">0x02 简单使用</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import pycurl
-import StringIO
-
-buf = StringIO.StringIO()
-c = pycurl.Curl()
-c.setopt(pycurl.URL, &quot;http://127.0.0.1/site/range/sqli/sqli1.php&quot;)
-c.setopt(pycurl.TIMEOUT, 15)
-c.setopt(pycurl.FOLLOWLOCATION, 1) #允许跟踪来源
-c.setopt(pycurl.MAXREDIRS, 5)
-c.setopt(pycurl.SSL_VERIFYPEER, 0)
-c.setopt(pycurl.SSL_VERIFYHOST, 0)
-c.setopt(pycurl.USERAGENT,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&quot;)
-c.setopt(pycurl.WRITEFUNCTION, buf.write) #将返回的内容定向到回调函数write
-
-c.perform()
-status_code = c.getinfo(pycurl.HTTP_CODE)       #返回的HTTP状态码
-content_size = c.getinfo(pycurl.SIZE_DOWNLOAD)  #返回的数据的大小
-content =buf.getvalue()
-print status_code
-print content_size
-print content
-</code></pre>
+<h3 id="0x00-这里">0x00 这里</h3>
 
                 
                 <div style="padding:10px 1px;">
@@ -214,13 +134,13 @@ print content
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/vps-set-up-shadowsocks/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/injection-of-boolian-based/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/vps-set-up-shadowsocks/">在vps上搭建Shadowsocks</a>
+      <a href="http://wyb0.com/posts/injection-of-boolian-based/">SQL注入之布尔型注入</a>
     </nav>
     
   </div>
@@ -230,13 +150,13 @@ print content
   <div class="pure-u-10-24">
     
     <nav class="next">
-      <a href="http://wyb0.com/posts/xss-encode/">XSS中的编码</a>
+      <a href="http://wyb0.com/posts/injection-of-defense/">SQL注入之防御</a>
     </nav>
     
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
     
-    <a href="http://wyb0.com/posts/xss-encode/"><i class="fa fa-chevron-right"></i></a>
+    <a href="http://wyb0.com/posts/injection-of-defense/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>
