@@ -68,7 +68,7 @@ mysql> select id,name,title from msg where id=if(1=2,benchmark(10000000,md5(11))
 1 row in set (0.00 sec)
 ```
 
-### 0x03 简单注入
+### 0x04 简单注入
 
 1. 判断闭合字符(and 1=1／and 1=2)
 ![得到闭合字符](/img/post/sqli9-get-closed-character-1.png)
