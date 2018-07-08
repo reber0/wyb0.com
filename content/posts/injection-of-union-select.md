@@ -22,7 +22,7 @@ union可合并两个或多个select语句的结果集，前提是两个select必
 2. 判断数据库类型
 ![判断数据库类型](/img/post/sqli1_get_type_of_db.png)
 
-3. 猜解列数，得到显示位
+3. 猜解列数，得到显示位(从数据库中查询出来的数据有些会显示在页面中，显示的位置就是显示位)
 ![猜解列数](/img/post/sqli1_order_by.png)
 ![得到显示位](/img/post/sqli1_get_display_point.png)
 
