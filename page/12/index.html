@@ -84,6 +84,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/injection-of-time-based/">SQL注入之基于时间的注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-24</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 特点 当页面存在注入，但是没有显示位且不管怎么测试返回页面都没有变化，此时可以使用基于时间的盲注进行注入。 其实只要存在SQL注入就可以使用基于时间的盲注，利用范围比较广泛，但是可能受到网络带宽等因素的影响。  0x01 利用方式 整型注入的话可以直接: ?id=if(1=1,sleep(2),1) 字符型的话需要闭合: ?id=2' and if(1=1,sleep(2),1) and '1  0x02 相关函数  if(条件, 值1, 值2)
+当条件为真时返回值1，条件为假时返回值2
+ sleep()
+sleep()睡眠两秒
+ benchmark(count, expr)
+benchmark是用于测试函数性能的，它是将表达式expr执行count次，执行次数越多耗费时间越久
+  0x03 基于时间的注入payload mysql&gt; select if((select database()) like &quot;rte%&quot;,sleep(2),666); +---------------------------------------------------+ | if((select database()) like &quot;rte%&quot;,sleep(2),666) | +---------------------------------------------------+ | 0 | +---------------------------------------------------+ 1 row in set (2.00 sec) mysql&gt; select if((select database())=&quot;rteaaa&quot;,sleep(2),666); +-----------------------------------------------+ | if((select database())=&quot;rtest1&quot;,sleep(2),666) | +-----------------------------------------------+ | 666 | +-----------------------------------------------+ 1 row in set (0.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/injection-of-time-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/injection-of-boolian-based/">SQL注入之布尔型注入</a></h2>
 
         
@@ -575,71 +635,6 @@ and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and 
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-set-up-ftp/">Linux下搭建FTP</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-18</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal
-0x00 安装 yum install vsftpd
-0x01 配置  备份
-cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
- 编辑配置文件
-vim /etc/vsftpd/vsftpd.conf anonymous_enable=NO #设定不允许匿名访问 local_enable=YES #设定本地用户可以访问 chroot_list_enable=YES #使用户不能离开主目录 xferlog_file=/var/log/vsftpd.log #设定vsftpd的服务日志 ascii_upload_enable=YES ascii_download_enable=YES #设定支持ASCII pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证 # 并在尾部追加： guest_enable=YES #设定启用虚拟用户功能。 guest_username=ftp #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了 guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同  新增chroot_list并将ftp用户输入进去
-touch /etc/vsftpd/chroot_list
-echo ftp &gt;&gt; /etc/vsftpd/chroot_list
- 安装Berkeley DB工具用来对虚拟用户认证配置管理：
-yum install db4 db4-utils
- 创建用户账户文件
-vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行是密码 user2 #奇数行是用户名 666666 #偶数行是密码 user3 #奇数行是用户名 user3 #偶数行是密码  用Berkeley DB工具生成认证文件
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-set-up-ftp/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -682,7 +677,7 @@ vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行�
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(70)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(71)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -886,7 +881,7 @@ vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
-                <sup>4</sup>
+                <sup>5</sup>
             </p>
         
             <p style="display:inline-block;">

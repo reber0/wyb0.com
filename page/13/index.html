@@ -84,6 +84,71 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/linux-set-up-ftp/">Linux下搭建FTP</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-18</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        安装环境为：CentOS-6.5-x86_64-minimal
+0x00 安装 yum install vsftpd
+0x01 配置  备份
+cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
+ 编辑配置文件
+vim /etc/vsftpd/vsftpd.conf anonymous_enable=NO #设定不允许匿名访问 local_enable=YES #设定本地用户可以访问 chroot_list_enable=YES #使用户不能离开主目录 xferlog_file=/var/log/vsftpd.log #设定vsftpd的服务日志 ascii_upload_enable=YES ascii_download_enable=YES #设定支持ASCII pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证 # 并在尾部追加： guest_enable=YES #设定启用虚拟用户功能。 guest_username=ftp #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了 guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同  新增chroot_list并将ftp用户输入进去
+touch /etc/vsftpd/chroot_list
+echo ftp &gt;&gt; /etc/vsftpd/chroot_list
+ 安装Berkeley DB工具用来对虚拟用户认证配置管理：
+yum install db4 db4-utils
+ 创建用户账户文件
+vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行是密码 user2 #奇数行是用户名 666666 #偶数行是密码 user3 #奇数行是用户名 user3 #偶数行是密码  用Berkeley DB工具生成认证文件
+    </p>
+
+    
+    <footer>
+        <a href="/posts/linux-set-up-ftp/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/linux-set-up-tomcat-mysql-jsp/">Linux下搭建Tomcat&#43;MySQL&#43;JSP</a></h2>
 
         
@@ -603,68 +668,6 @@ sudo apt-get install conky
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/mysql-syntax/">MySQL语法</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-02</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Select语句的一般语法 1.SELECT [ALL|DISTINCT] &lt;目标列表达式&gt; [,&lt;目标列表达式&gt; ]... 2.FROM &lt;表名或视图名&gt; [,&lt;表名或视图名&gt; ]... 3.[ WHERE &lt;行条件表达式&gt; ] 4.[ GROUP BY &lt;列名1&gt; ,[列名2][,...][HAVING组条件表达式] ] 5.[ ORDER BY &lt;列名1&gt; ,[ASC|DESC][,...] ];  上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5，
-即先确定从哪个数据源查找，
-然后确定过滤条件，
-若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一步限制，
-然后将符合条件的列查询出来，
-最后对结果进行排序。
-select name as '名字',password as '密码' form user; select * from message where id between 2 and 6; select * from message where title like '%留言_'; //%匹配任意个字符,_匹配一个字符 select * from message where uid in (2,3,4); //删除2、3、4共3条数据  0x01 连接查询 [&lt;表名1&gt;.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/mysql-syntax/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -707,7 +710,7 @@ select name as '名字',password as '密码' form user; select * from message wh
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(70)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(71)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -911,7 +914,7 @@ select name as '名字',password as '密码' form user; select * from message wh
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
-                <sup>4</sup>
+                <sup>5</sup>
             </p>
         
             <p style="display:inline-block;">

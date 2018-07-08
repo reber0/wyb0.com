@@ -84,6 +84,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/sqlserver-bisis-use/">SQLServer的基本使用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-05-30</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/sqlserver">sqlserver</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 数据库 -- 创建数据库 CREATE DATABASE student; -- 选择数据库 USE student; -- 查看当前数据库 SELECT DB_NAME(); -- 查看当前数据库 SELECT DB_NAME(); -- 查看数据库版本 SELECT @@version;  0x01 数据表 -- 创建数据库表 CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT 'xiaoming', sex INT NOT NULL DEFAULT 1 ) -- 查看表结构 EXEC sp_help 'info'; -- 更新表结构 ALTER TABLE info add age int; -- 添加一列 ALTER TABLE info DROP COLUMN age; -- 删除一列 -- 插入数据 INSERT INTO info(name,sex) VALUES('xiaohong',0); -- 查看数据 SELECT * FROM dbo.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/sqlserver-bisis-use/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/mongodb-basis-use/">MongoDB的基本使用</a></h2>
 
         
@@ -583,56 +637,6 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/301-redirect/">301重定向</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-02-07</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%87%8D%E5%AE%9A%E5%90%91">重定向</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 目的 由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2  0x01 开启rewrite模块 $ sudo a2enmod rewrite  0x02 根目录下新建.htaccess： Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名  0x03 修改配置文件 # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt;  0x04 重启Apache $ sudo /etc/init.d/apache2 restart  
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -675,7 +679,7 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(70)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(71)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -879,7 +883,7 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
-                <sup>4</sup>
+                <sup>5</sup>
             </p>
         
             <p style="display:inline-block;">

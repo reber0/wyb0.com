@@ -84,6 +84,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/sensitive-information-leakage/">敏感信息泄露</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-28</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2">信息泄露</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 软件敏感信息 * 操作系统版本 可用namp扫描得知 * 中间件的类型、版本 http返回头 404报错页面 使用工具(如whatweb) * Web程序(cms类型及版本、敏感文件) 可用whatweb、cms_identify  0x01 Web敏感信息 * phpinfo()信息泄露 http://[ip]/test.php和http://[ip]/phpinfo.php * 测试页面泄露在外网 test.cgi、phpinfo.php、info.php等 * 编辑器备份文件泄露在外网 http://[ip]/.test.php.swp http://[ip]/test.php.bak http://[ip]/test.jsp.old http://[ip]/cgi~ 常见编辑器备份后缀 * 版本管理工具(如git)文件信息泄露 http://[ip]/.git/config http://[ip]/CVS/Entriesp http://[ip]/.svn/entriesp * HTTP认证泄露漏洞 http://[ip]/basic/index.php Web目录开启了HTTP Basic认证，但未限制IP，导致可暴力破解账号、密码 * 管理后台地址泄露 http://[ip]/login.php http://[ip]/admin.php http://[ip]/manager.php http://[ip]/admin_login.php * 泄露员工邮箱、分机号码 泄露邮箱及分机号码可被社工，也可生成字典 * 错误页面暴漏信息 mysql错误、php错误、暴漏cms版本等 * 探针文件 * robots.txt * phpMyAdmin * 网站源码备份文件(www.rar/sitename.tar.gz/web/zip等) * 其他  0x02 网络信息泄露 * DNS域传送漏洞 * 运维监控系统弱口令、网络拓扑泄露 zabbix弱口令、zabbix sql注入等  0x03 第三方软件应用 * github上源码、数据库、邮箱密码泄露 搜类似：smtp 163 password关键字 * 百度网盘被员工不小心上传敏感文件 * QQ群被员工不小心上传敏感文件  0x04 敏感信息搜集工具 https://github.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/sensitive-information-leakage/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/any-file-view-and-download-vulnerability/">任意文件查看与下载漏洞</a></h2>
 
         
@@ -591,56 +645,6 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/file-upload-vulnerabilities/">文件上传漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 文件上传漏洞 当文件上传时，若服务端脚本语言未对上传的文件进行严格验证和过滤，若恶意用户上传恶意的 脚本文件时，就有可能控制整个网站甚至是服务器，这就是文件上传漏洞。  0x01 权限 1. 后台权限：登陆了后台，可以进行一些操作、配置 2. 网站权限：获得了webshell，可以进行查看源代码等操作 3. 服务器权限：可以对服务器进行任意操作  0x02 漏洞分类 1. 配置不当可直接上传shell HTTP的PUT方法开启了 2. 文件解析漏洞导致文件执行 Web容器解析漏洞 3. 本地文件上传限制被绕过 BurpSuite抓包修改即可绕过 4. 服务端过滤不严或被绕过 使用了黑名单过滤 5. 文件路径截断上传 00截断等 6. 开源编辑器上传漏洞 如CKEditor(FCKeditor的新版)、eWebEditor的漏洞  0x03 利用条件 1. 首先,上传的文件能够被web容器解释执行。所以文件上传后的目录要是web容器所覆盖到的路径 2. 其次,用户能从web访问这个文件 3. 最后,用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容,则可能导致攻击失败  0x04 漏洞挖掘 1. 查找上传点，如图片、附件、头像的上传等 2. 找类似upload的目录、类似upload.php的文件 3. 找编辑器目录，如eWebEdirot、fckeditor、kingeditor等  0x05 常见可执行文件后缀 可用于绕过： php php2 php3 php5 phtml asp aspx ascx ashx cer asa jsp jspx jspf  
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -683,7 +687,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(70)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(71)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -887,7 +891,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
-                <sup>4</sup>
+                <sup>5</sup>
             </p>
         
             <p style="display:inline-block;">
