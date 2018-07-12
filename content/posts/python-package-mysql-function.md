@@ -177,23 +177,38 @@ if __name__ == '__main__':
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import urlparse
 import pymysql
 import contextlib
 
-mysql_info = {
-    'host': '192.168.188.134',
-    'port': 3306,
-    'user': 'root',
-    'password': 'root',
-    'db': 'msg',
-    'charset': 'utf8',
-    'cursorclass': pymysql.cursors.DictCursor,
-}
-
 class MySQLX(object):
+    def __init__(self, mysql_uri):
+        super(MySQLX, self).__init__()
+        self.mysql_uri = mysql_uri
+        self.mysql_info = self.mysql_parse_uri()
+
+    def mysql_parse_uri(self):
+        p = urlparse.urlparse(self.mysql_uri)
+        host = p.hostname
+        port = p.port
+        user = p.username
+        password = p.password
+        dbname = p.path.strip('/')
+        charset = urlparse.parse_qs(p.query)['charset'][0]
+
+        return {
+            'host': host,
+            'port': port,
+            'user': user,
+            'password': password,
+            'db': dbname,
+            'charset': charset,
+            'cursorclass': pymysql.cursors.DictCursor,
+        }
+
     @contextlib.contextmanager
     def init(self):
-        dbconn = pymysql.connect(**mysql_info)
+        dbconn = pymysql.connect(**self.mysql_info)
         cursor = dbconn.cursor()
         # dbconn = pymysql.connect(
         #     host=mysql_info.get('host'),
@@ -211,22 +226,24 @@ class MySQLX(object):
             cursor.close()
             dbconn.close()
 
-    def query(self, sql,arg=''):
+    def query(self, sql, arg=''):
         try:
             with self.init() as cursor:
                 if arg:
+
                     cursor.execute(sql,arg) #返回受影响行数
                 else:
                     cursor.execute(sql)
                 result = cursor.fetchall() #返回数据格式是[{},{}]
                 # result = cursor.fetchone() #返回数据格式是{}
                 return result
-        except Exception, e:
+        except Exception as e:
             print sql,str(e)
 
 if __name__ == '__main__':
-    sqlconn = MySQLX()
-    sql = "select ip,domain from `mag` where id=%s"
+    mysql_uri = "mysql+pymysql://root:root@localhost:3306/rtest?charset=utf8mb4"
+    sqlconn = MySQLX(mysql_uri)
+    sql = "select * from `msg` where id=%s"
     result = sqlconn.query(sql,"2")
     print result
 ```
