@@ -32,15 +32,15 @@ SQl语句未对用户参数进行严格过滤
 ### 0x03 注入分类
 ```
 根据语法(较权威)：
-1. 可联合查询注入:
+1. UNION query SQL injection(可联合查询注入):
 	只要页面有显示位即可使用，且注入速度很快
-2. 报错型注入:
+2. Error-based SQL injection(报错型注入):
 	没有显示位但用echo "mysql_error()"输出了错误信息，速度很快，但是语句较复杂
-3. 布尔型注入:
+3. Boolean-based blind SQL injection(布尔型注入):
 	一次一个字节，速度慢，但只要有注入就能用
-4. 基于时间延迟注入:
+4. Time-based blind SQL injection(基于时间延迟注入):
 	超级慢，比布尔型注入慢几倍，但是通用性较强
-5. 可多语句查询:
+5. Stacked queries SQL injection(堆叠注入/可多语句查询注入):
 	只有SQL Server可以使用
 
 根据类型：
