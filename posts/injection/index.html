@@ -126,54 +126,68 @@
 
 <h3 id="0x01-成因">0x01 成因</h3>
 
-<pre><code>SQl语句未对用户参数进行严格过滤
-</code></pre>
+<p>SQl语句未对用户参数进行严格过滤</p>
 
 <h3 id="0x02-可引发注入的地方">0x02 可引发注入的地方</h3>
 
-<pre><code>其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入
-常见的如下，按出现频率排序：
-1. GET
-2. POST
-3. X-Forwarded-For
-4. Cookie
-5. User-Agent
-</code></pre>
+<p>其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入，常见的如下，按出现频率排序：</p>
+
+<ul>
+<li>GET</li>
+<li>POST</li>
+<li>X-Forwarded-For</li>
+<li>Cookie</li>
+<li>User-Agent</li>
+</ul>
 
 <h3 id="0x03-注入分类">0x03 注入分类</h3>
 
-<pre><code>根据语法(较权威)：
-1. 可联合查询注入:
-    只要页面有显示位即可使用，且注入速度很快
-2. 报错型注入:
-    没有显示位但用echo &quot;mysql_error()&quot;输出了错误信息，速度很快，但是语句较复杂
-3. 布尔型注入:
-    一次一个字节，速度慢，但只要有注入就能用
-4. 基于时间延迟注入:
-    超级慢，比布尔型注入慢几倍，但是通用性较强
-5. 可多语句查询:
-    只有SQL Server可以使用
+<ul>
+<li><p>根据语法(较权威)</p>
 
-根据类型：
-1. 整形
-2. 字符串型
-3. 搜索型
-</code></pre>
+<ul>
+<li>UNION query SQL injection(可联合查询注入)<br />
+只要页面有显示位即可使用，且注入速度很快</li>
+<li>Error-based SQL injection(报错型注入)<br />
+没有显示位但用echo &ldquo;mysql_error()&ldquo;输出了错误信息，速度很快，但是语句较复杂</li>
+<li>Boolean-based blind SQL injection(布尔型注入)<br />
+一次一个字节，速度慢，但只要有注入就能用</li>
+<li>Time-based blind SQL injection(基于时间延迟注入)<br />
+超级慢，比布尔型注入慢几倍，但是通用性较强</li>
+<li>Stacked queries SQL injection(堆叠注入/可多语句查询注入)<br />
+只有SQL Server可以使用</li>
+</ul></li>
+
+<li><p>根据类型</p>
+
+<ul>
+<li>整形</li>
+<li>字符串型</li>
+<li>搜索型</li>
+</ul></li>
+</ul>
 
 <h3 id="0x04-查找注入点">0x04 查找注入点</h3>
 
-<pre><code>在URL中：
-1. and 1=1/and 1=2(整型)
-2. 随即输入(整型)
-3. -1/+1 回显上下页面(整型)
-4. 单引号(字符型/整型)
-5. and sleep(5) (判断页面返回时间)
+<ul>
+<li><p>在URL中</p>
 
-在http头：
-1. X-Forwarded-For
-2. Cookie
-3. User-Agent
-</code></pre>
+<ul>
+<li>and 1=1/and 1=2(整型)</li>
+<li>随即输入(整型)</li>
+<li>-1/+1 回显上下页面(整型)</li>
+<li>单引号(字符型/整型)</li>
+<li>and sleep(5) (判断页面返回时间)</li>
+</ul></li>
+
+<li><p>在http头</p>
+
+<ul>
+<li>X-Forwarded-For</li>
+<li>Cookie</li>
+<li>User-Agent</li>
+</ul></li>
+</ul>
 
                 
                 <div style="padding:10px 1px;">
