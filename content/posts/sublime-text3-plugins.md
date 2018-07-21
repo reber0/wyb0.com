@@ -75,7 +75,16 @@ import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.
 ```
 
 ### 0x05 ConvertToUTF8
-文件转码成utf-8
+将文件转码成UTF8编码(存储时还是原来的编码)
+
+当文件是其他编码，有时打开文件可能会有如下提示，安装插件Codecs33即可：
+```
+File: /Users/reber/Downloads/spider.py
+Encoding: GB2312
+Error: Codecs missing
+
+Please install Codecs33 plugin (https://github.com/seanliang/Codecs33/tree/osx).
+```
 
 ### 0x06 IMESupport
 解决Sublime Text中文输入法不能跟随光标的问题
