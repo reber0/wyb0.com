@@ -84,6 +84,64 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/php-package-mysql-function/">PHP之封装MySQL类</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-03</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 config.inc.php内容如下 &lt;?php return array( 'DB_HOST' =&gt; '192.168.188.134', 'DB_NAME' =&gt; 'scoreboard', 'DB_USER' =&gt; 'score', 'DB_PASS' =&gt; '123456', 'DB_CHARSET' =&gt; 'utf8', 'IS_LOG' =&gt; 1,//开启日志 'LOGFILEPATH' =&gt; '../log.txt'//日志路径 ); /* $database = require('./config.php'); echo $database['DB_TYPE']; //输出'DB_TYPE' */ ?&gt;  0x01 表设计如下 create database scoreboard; use scoreboard; drop table if exists users; create table users( id int not null auto_increment primary key, gid int not null default 'xiaoming' comment '组id', username varchar(20) not null default 'xiaoming' comment '用户名', password varchar(32) not null default '123456' comment '密码', sex varchar(2) not null default '0' comment '性别', totalscore int not null default '0' comment '个人总积分' ); drop table if exists share; create table share( id int not null auto_increment primary key, uid int not null, content varchar(1024) not null default 'content' comment '分享内容', comment varchar(1024) comment '点评', date varchar(15) not null default '20150101' comment '分享日期' ); drop table if exists score; create table score( id int not null auto_increment primary key, uid int not null default '0' comment '用户id', score int not null default '0' comment '用户单次积分', ); grant all privileges on scoreboard.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/php-package-mysql-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/php-mysql-common-function/">PHP之MySQL常用函数</a></h2>
 
         
@@ -621,62 +679,6 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/php-array/">PHP之数组</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-18</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 分类  索引数组 索引值从0开始，依次递增 关联数组 以字符串为索引，键和值对是无序组合，每个键都是唯一的  0x01 数组的定义 两种方法：
- 直接为数组元素赋值即可声明数组 使用array()函数声明数组
-&lt;?php // 1.直接为数组元素赋值即可声明数组 $contact_index[0] = 1; $contact_index[1] = &quot;高某&quot;; $contact_index[2] = &quot;A公司&quot;; $contact_index[3] = &quot;北京市&quot;; $contact_index[] = &quot;gao@a.com&quot;; var_dump($contact_index); $contact_key[&quot;ID&quot;] = &quot;2&quot;; $contact_key[&quot;姓名&quot;] = &quot;峰某&quot;; $contact_key[&quot;公司&quot;] = &quot;B公司&quot;; $contact_key[&quot;邮箱&quot;] = &quot;feng@b.com&quot;; var_dump($contact_key); // 2.使用array()函数声明数组 $contact_key_array = array( &quot;ID&quot; =&gt; 1; &quot;姓名&quot; =&gt; &quot;峰某&quot;; &quot;公司&quot; =&gt; &quot;B公司&quot;; &quot;邮箱&quot; =&gt; &quot;feng@b.com&quot;; ); var_dump($contact_key_array); ?&gt;   0x02 数组的遍历  for语句遍历数组 foreach语句遍历数组
-    </p>
-
-    
-    <footer>
-        <a href="/posts/php-array/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -719,7 +721,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(72)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(73)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -798,7 +800,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>14</sup>
+                <sup>15</sup>
             </p>
         
             <p style="display:inline-block;">
