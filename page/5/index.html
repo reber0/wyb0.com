@@ -84,6 +84,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/dirty-cow-vulnerabilities/">脏牛漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-10-22</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/intranet">intranet</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 测试环境 我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
+CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux [reber123@WYB ~]$ id uid=502(reber123) gid=502(reber123) groups=502(reber123)  0x01 创建文件 查看文件权限信息，可以看到属主为root，且只读，权限为0404
+[reber123@WYB ~]$ ls -al test -r-----r-- 1 root root 19 Oct 21 00:02 test [reber123@WYB ~]$ cat test this is not a test [reber123@WYB ~]$  0x02 编译、执行poc POC保存为a.c，编译为aaa
+[reber123@WYB ~]$ gcc -lpthread a.c -o aaa [reber123@WYB ~]$ ls aaa a.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/dirty-cow-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/code-execution-vulnerabilities-2/">代码执行漏洞(二)</a></h2>
 
         
@@ -588,65 +645,6 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/poc-framework-pocsuite/">POC框架Pocsuite</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-09-08</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/poc">poc</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于Pocsuite Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。
-0x01 简单介绍  安装  使用pip install pocsuite即可安装   常用参数  -u 指定一个目标url -f 指定一个存放目标url的文件 -r 指定一个存放poc的文件夹 &ndash;report 导出结果到html文件 &ndash;cookie 携带cookie &ndash;referer 修改referer &ndash;user-agent 修改UA  模式  执行一个poc有两种模式  --verify 漏洞验证模式(只是验证，不能更改服务器的东西) --attack 漏洞利用模式  示例  pocsuite -u &quot;http://www.xxxx.com&quot; -r poc_path/poc_name.py --atack   poc编写
- 可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类) 此时示例(对目标进行常见服务的测试，加载一类多个poc脚本)  pocsuite -u &quot;http://www.xxxx.com&quot; -r poc_path/server/ --verify   poc的命名规范
- 漏洞ID_版本号_漏洞类型(其中不能有大写字母，所有符号要改为&quot;_&quot;),大致如下：  _xxxx_struct2_2016_s2_016_code_execution.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/poc-framework-pocsuite/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -689,7 +687,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(71)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(72)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -813,7 +811,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/php" title="php">php</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">

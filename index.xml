@@ -6,10 +6,28 @@
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 Jun 2018 21:26:14 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 23 Jul 2018 00:09:17 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>关于PHP SESSION反序列化</title>
+      <link>http://wyb0.com/posts/php-session-unserialize/</link>
+      <pubDate>Mon, 23 Jul 2018 00:09:17 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/php-session-unserialize/</guid>
+      <description>0x00 环境 PHP：PHP Version 5.5.35
+System： Linux version 2.6.32-504.23.4.el6.x86_64 (Red Hat 4.4.7-11)
+Apache：Apache/2.2.15
+公司出了一些ctf，说要摸底，然后根据答题成绩来分配相应工作。。。。。
+其中有一道是php反序列化，直接用的就是 第三届4.29“安恒杯”网络安全技术大赛初赛第三个web题
+我比较菜，这里根据网上已有writeup做一下，记录一下
+0x00 PHP Session 序列化及反序列化处理器 php在session存储和读取时,都会有一个序列化和反序列化的过程，反序列化中会调用对象的magic方法,比如__destruct(),__wakeup()等
+PHP 内置了多种处理器用于存取 $_SESSION 数据，都会对数据进行序列化和反序列化，这几种处理器如下：
+--------------------------------------------------------------------------------------------- 处理器 |对应的存储格式 --------------------------------------------------------------------------------------------- php |键名 ＋ 竖线 ＋ 经过 serialize() 函数反序列处理的值 php_binary |键名的长度对应的ASCII字符 ＋ 键名 ＋ 经过 serialize() 函数反序列处理的值 php_serialize (php&amp;gt;=5.5.4) |经过 serialize() 函数反序列处理的数组 ---------------------------------------------------------------------------------------------  如果 PHP 在反序列化存储的 SESSION 数据时使用的处理器和序列化时使用的处理器不同，可能会导致数据无法正确反序列化，经过构造甚至可以执行代码
+0x01 环境设置 POST /phpinfo.php HTTP/1.1 Host: 10.11.11.11 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.</description>
+    </item>
     
     <item>
       <title>Struts 2相关漏洞payload</title>

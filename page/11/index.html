@@ -84,6 +84,59 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/windows2003-set-up-vpn/">Windows2003下搭建VPN</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-07</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 环境及要求 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器
+0x01 安装服务 0x02 配置并启用路由和远程访问 0x03 新增路由协议 0x04 新增接口 0x05 新增VPN用户 0x06 尝试连接VPN 
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/iptables-configure-dmz/">iptables简单配置DMZ</a></h2>
 
         
@@ -590,63 +643,6 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/injection-of-defense/">SQL注入之防御</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-24</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 要做的事 也就是找到注入点然后修复
-0x01 防御方法  使用预编译语句绑定变量(比如php的mysqli、pdo)
-&lt;?php //预编译 $mysqli = new mysqli(&quot;localhost&quot;,&quot;root&quot;,&quot;123456&quot;,&quot;share&quot;); $mysqli-&gt;query(&quot;set names utf8&quot;); $sql = &quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&quot;; $s = $mysqli-&gt;prepare($sql); //绑定参数 $name = &quot;Tom&quot;; $sex = &quot;M&quot;; $age = 23; $s-&gt;bind_param(&quot;ssi&quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&gt;execute(); var_dump($result); $s-&gt;close(); ?&gt;  使用存储过程(这里以SQLServer举例)
-  --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p') DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg 'xiaoli'   使用转义函数
-    </p>
-
-    
-    <footer>
-        <a href="/posts/injection-of-defense/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -689,7 +685,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(71)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(72)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -813,7 +809,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/php" title="php">php</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -85,6 +85,69 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/php-session-unserialize/">关于PHP SESSION反序列化</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-07-23</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 环境 PHP：PHP Version 5.5.35
+System： Linux version 2.6.32-504.23.4.el6.x86_64 (Red Hat 4.4.7-11)
+Apache：Apache/2.2.15
+公司出了一些ctf，说要摸底，然后根据答题成绩来分配相应工作。。。。。
+其中有一道是php反序列化，直接用的就是 第三届4.29“安恒杯”网络安全技术大赛初赛第三个web题
+我比较菜，这里根据网上已有writeup做一下，记录一下
+0x00 PHP Session 序列化及反序列化处理器 php在session存储和读取时,都会有一个序列化和反序列化的过程，反序列化中会调用对象的magic方法,比如__destruct(),__wakeup()等
+PHP 内置了多种处理器用于存取 $_SESSION 数据，都会对数据进行序列化和反序列化，这几种处理器如下：
+--------------------------------------------------------------------------------------------- 处理器 |对应的存储格式 --------------------------------------------------------------------------------------------- php |键名 ＋ 竖线 ＋ 经过 serialize() 函数反序列处理的值 php_binary |键名的长度对应的ASCII字符 ＋ 键名 ＋ 经过 serialize() 函数反序列处理的值 php_serialize (php&gt;=5.5.4) |经过 serialize() 函数反序列处理的数组 ---------------------------------------------------------------------------------------------  如果 PHP 在反序列化存储的 SESSION 数据时使用的处理器和序列化时使用的处理器不同，可能会导致数据无法正确反序列化，经过构造甚至可以执行代码
+0x01 环境设置 POST /phpinfo.php HTTP/1.1 Host: 10.11.11.11 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/php-session-unserialize/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/package-and-download-the-php-file/">打包下载php文件</a></h2>
 
         
@@ -607,62 +670,6 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/php-array/">PHP之数组</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-18</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 分类  索引数组 索引值从0开始，依次递增 关联数组 以字符串为索引，键和值对是无序组合，每个键都是唯一的  0x01 数组的定义 两种方法：
- 直接为数组元素赋值即可声明数组 使用array()函数声明数组
-&lt;?php // 1.直接为数组元素赋值即可声明数组 $contact_index[0] = 1; $contact_index[1] = &quot;高某&quot;; $contact_index[2] = &quot;A公司&quot;; $contact_index[3] = &quot;北京市&quot;; $contact_index[] = &quot;gao@a.com&quot;; var_dump($contact_index); $contact_key[&quot;ID&quot;] = &quot;2&quot;; $contact_key[&quot;姓名&quot;] = &quot;峰某&quot;; $contact_key[&quot;公司&quot;] = &quot;B公司&quot;; $contact_key[&quot;邮箱&quot;] = &quot;feng@b.com&quot;; var_dump($contact_key); // 2.使用array()函数声明数组 $contact_key_array = array( &quot;ID&quot; =&gt; 1; &quot;姓名&quot; =&gt; &quot;峰某&quot;; &quot;公司&quot; =&gt; &quot;B公司&quot;; &quot;邮箱&quot; =&gt; &quot;feng@b.com&quot;; ); var_dump($contact_key_array); ?&gt;   0x02 数组的遍历  for语句遍历数组 foreach语句遍历数组
-    </p>
-
-    
-    <footer>
-        <a href="/posts/php-array/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -706,7 +713,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/other" title="other">other(13)</a></li>
         
-            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(71)</a></li>
+            <li style="list-style-type:none;"><a href="http://wyb0.com/topics/pentest" title="pentest">pentest(72)</a></li>
         
             <li style="list-style-type:none;"><a href="http://wyb0.com/topics/php" title="php">php(12)</a></li>
         
@@ -830,7 +837,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/php" title="php">php</a>
-                <sup>11</sup>
+                <sup>12</sup>
             </p>
         
             <p style="display:inline-block;">
