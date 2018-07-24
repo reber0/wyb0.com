@@ -1,7 +1,7 @@
 +++
 title = "关于PHP SESSION反序列化"
 topics = ["Pentest"]
-tags = ["php"]
+tags = ["php","反序列化"]
 description = "基于第三届4.29“安恒杯”网络安全技术大赛初赛中的题，第三个web题，php反序列化漏洞"
 date = "2018-07-23T00:09:17+08:00"
 draft = false
