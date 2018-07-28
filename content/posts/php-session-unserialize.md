@@ -272,8 +272,8 @@ a:1:{s:152:"upload_progress_123|O:4:"foo1":1:{s:4:"varr";O:4:"foo2":2:{s:4:"varr
 
 <br>
 #### Reference(侵删)：
-* [PHP Session 序列化及反序列化处理器设置使用不当带来的安全隐患](http://drops.wooyun.org/tips/3909)
-* [安恒429|web 3 session反序列化](https://www.tuicool.com/articles/BfuayyI)
-* [有趣的php反序列化总结](http://www.mottoin.com/18436.html)
+* [PHP Session 序列化及反序列化处理器设置使用不当带来的安全隐患](http://drops.wooyun.org/tips/3909?_blank)
+* [安恒429|web 3 session反序列化](https://www.tuicool.com/articles/BfuayyI?_blank)
+* [有趣的php反序列化总结](http://www.mottoin.com/18436.html?_blank)
 
 
