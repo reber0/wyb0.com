@@ -655,67 +655,8 @@ $ rm -rf wordpress-4.5
         <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
       </a>
     </div>
-    <script type="text/javascript">
-    $.fn.goToTop = function () {
-        if ($(window).scrollTop()<400) {
-            $('#goToTop').hide(); 
-        }
-        $(window).scroll(function () {
-            if ($(this).scrollTop()>400) {
-                $('#goToTop').fadeIn();
-            } else {
-                $('#goToTop').fadeOut();
-            }
-        });
-        this.click(function () {
-            $('html,body').animate({scrollTop:0},800);
-            return false;
-        });
-    }
-    $(document).ready(function () {
-        $('#goToTop').goToTop();
-    });
-    </script>
 
-    
-    <script type="text/javascript">
-    $(document).ready(function(){
-        var alist = $('#tags p');
-        alist.each(function () {
-            var t = $(this);
-            var a = t.find('a');
-            var sup = parseInt(t.find('sup').text());
-            t.find('sup').hide();
-
-            if (0<sup && sup<6) {
-                a.addClass("text7");
-            } else if (5<sup && sup<11) {
-                a.addClass("text6");
-            } else if (10<sup && sup<16) {
-                a.addClass("text5");
-            } else if (15<sup && sup<21) {
-                a.addClass("text4");
-            } else if (20<sup && sup<26) {
-                a.addClass("text3");
-            } else if (25<sup && sup<31) {
-                a.addClass("text2");
-            } else if (30<sup && sup<36) {
-                a.addClass("text1");
-            } else {
-                a.addClass("text1");
-            }
-        });
-    });
-    </script>
-
-    
-    <script type="text/javascript">
-    var aTagArr = [].slice.apply(document.getElementsByTagName("a"));
-
-    aTagArr.forEach(function (e, i) {
-        e.href.indexOf("_blank") > -1 ? e.target = "_blank" : null;
-    });
-    </script>
+    <script src="/js/style.js"></script>
 
     
     
