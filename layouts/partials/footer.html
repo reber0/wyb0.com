@@ -62,7 +62,10 @@
     var aTagArr = [].slice.apply(document.getElementsByTagName("a"));
 
     aTagArr.forEach(function (e, i) {
-        e.href.indexOf("_blank") > -1 ? e.target = "_blank" : null;
+        if (e.href.indexOf("?_blank") > -1) {
+            e.target = "_blank";
+            e.href = e.href.substring(0,e.href.length - 7);
+        }
     });
     </script>
 
