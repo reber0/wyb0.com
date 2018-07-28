@@ -3,7 +3,7 @@ date = "2016-04-17T10:03:07+08:00"
 description = ""
 draft = false
 tags = ["linux"]
-title = "Linux之权限(重点)"
+title = "Linux之权限"
 topics = ["Linux"]
 
 +++
