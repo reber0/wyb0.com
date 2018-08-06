@@ -21,19 +21,20 @@ topics = ["Linux"]
 ### 0x01 SSH免密码登陆
 A主机免密码登陆B主机：
 ```
-A主机运行：
-    ssh-keygen -t rsa
-    会生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub
-    将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中
-注：
-    要确保B主机~/.ssh/authorized_keys权限为600
-    要确保B主机~/.ssh/文件夹权限为700
-    要确保上述两个文件属主是当前用户
+#A主机执行ssh-keygen -t rsa生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub
+#然后将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中即可
+#ssh-copy-id的功能就是将本机的公钥写入远端主机，也可以登录远端主机手工写入
+
+$ ssh-keygen -t rsa
+$ ssh-copy-id root@192.168.188.151
 ```
-![A主机生成密钥对](/img/post/ssh_no_pwd_login_create_keys.png)
-![将A主机产生的公钥写入B主机](/img/post/ssh_no_pwd_login_write_pub_key_to_b.png)
-![检查B主机authorized_keys权限](/img/post/ssh_no_pwd_login_check_authorized_keys_permissions.png)
 ![A主机免密码登陆主机B](/img/post/ssh_no_pwd_login_a_login_b.png)
+```
+若登陆B主机，手工写入自己的公钥的话：
+1、要确保B主机~/.ssh/authorized_keys权限为600
+2、要确保B主机~/.ssh/文件夹权限为700
+3、要确保上述两个文件属主是当前用户
+```
 
 ### 0x02 SSH反向连接
 主机A要通过SSH连接主机B：
