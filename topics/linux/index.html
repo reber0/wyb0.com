@@ -415,7 +415,7 @@ reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Pytho
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/linux-ssh-connect/">Linux下SSH连接</a></h2>
+        <h2><a href="http://wyb0.com/posts/linux-ssh-connect/">SSH免密登录及SSH隧道</a></h2>
 
         
         <div class="post-meta">
@@ -443,7 +443,9 @@ reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Pytho
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ssh">ssh</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ssh%E9%9A%A7%E9%81%93">SSH隧道</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91">端口转发</a>
                     
                 
                 
@@ -453,11 +455,15 @@ reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Pytho
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 SSH相关选项 -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，用于端口转发 -D socket5代理 -L tcp转发 -C 使用数据压缩，网速快时会影响速度  0x01 SSH免密码登陆 A主机免密码登陆B主机：
-#A主机执行ssh-keygen -t rsa生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub #然后将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中即可 #ssh-copy-id的功能就是将本机的公钥写入远端主机，也可以登录远端主机手工写入 $ ssh-keygen -t rsa $ ssh-copy-id root@192.168.188.151  若登陆B主机，手工写入自己的公钥的话： 1、要确保B主机~/.ssh/authorized_keys权限为600 2、要确保B主机~/.ssh/文件夹权限为700 3、要确保上述两个文件属主是当前用户  0x02 SSH反向连接 主机A要通过SSH连接主机B：
-B上先运行： ssh -NfR 8888:localhost:22 reber@A-IP 输入主机A的用户reber的密码后即可在A主机监听一个8888端口，它与主机B的22端口绑定  A主机运行： ssh root@127.0.0.1 -p 8888 输入本机的root的密码即可登入主机B的root用户  0x03 SSH Socks5代理 
+        0x00 SSH相关选项  -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，一般与-f连用，用于端口转发 -C 压缩传输的数据，网速快时会影响速度  
+ -L l_port:r_host:r_port(将本地机的某个端口转发到远端指定机器的指定端口) -R l_port:r_host:r_port(将远程主机的某个端口转发到本地端指定机器的指定端口) -D l_port (指定一个本地机器 &ldquo;动态的&rdquo; 应用程序端口转发，目前支持SOCKS4和SOCKS5协议)  0x01 环境 A主机: 外网IP 222.222.222.222，内网IP 无 B主机: 外网IP 123.123.123.123，内网IP 192.168.1.10 C主机: 外网IP 无， 内网IP 192.168.1.11  0x02 SSH 免密登陆 A主机免密码登陆B主机：
+#A主机执行ssh-keygen -t rsa生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub reber@ubuntu-linux:~$ ssh-keygen -t rsa #然后将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中即可 #ssh-copy-id的功能就是将本机的公钥写入远端主机，也可以登录远端主机手工写入 reber@ubuntu-linux:~$ ssh-copy-id root@123.123.123.123 The authenticity of host '123.123.123.123 (123.123.123.123)' can't be established. RSA key fingerprint is a7:46:e4:9a:18:65:4e:8e:0b:8a:22:15:7d:91:a7:7f.
     </p>
 
+    
+    <footer>
+        <a href="/posts/linux-ssh-connect/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
     
 </article>
 
@@ -866,7 +872,7 @@ sudo apt-get install conky
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/ssh" title="ssh">ssh</a>
+                <a href="http://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
                 <sup>1</sup>
             </p>
         
@@ -957,7 +963,7 @@ sudo apt-get install conky
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">
