@@ -49,19 +49,3 @@ topics = ["Pentest"]
 #### 3. hacker内网主机连接目标的内网主机
 ![hacker连接内网主机](/img/post/privilge_escalation_win_ew_hacker_remote_conn.png)
 ![hacker连接内网主机成功](/img/post/privilge_escalation_win_ew_hacker_remote_conn_success.png)
-
-### 0x05 Meterpreter
-* Hacker端生成payload
-![msf生成win反弹型的payload](/img/post/privilge_escalation_win_msf_creat_payload.png)
-
-* msf监听端口
-![设置metasploit监听端口](/img/post/privilge_escalation_win_set_metasploit_listen_port.png)
-
-* 目标主机运行exp
-![目标主机运行exp](/img/post/privilge_escalation_win_victim_run_exp.png)
-
-* msf收到新会话
-![msf收到目标主机的连接](/img/post/privilge_escalation_win_msf_get_conn.png)
-
-* msf执行命令
-![msf远程执行命令](/img/post/privilge_escalation_win_msf_exec_command.png)
