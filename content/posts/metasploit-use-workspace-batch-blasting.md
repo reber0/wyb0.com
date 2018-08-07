@@ -3,7 +3,7 @@ date = "2016-08-23T10:05:52+08:00"
 description = ""
 draft = false
 tags = ["tools","intranet"]
-title = "Metasploit的简单使用"
+title = "Metasploit利用workspace进行批量扫描爆破"
 topics = ["Pentest"]
 
 +++
