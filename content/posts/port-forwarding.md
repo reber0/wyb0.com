@@ -20,9 +20,9 @@ topics = ["Pentest"]
 ### 0x02 端口转发工具
 * lcx
 * htran
-* [EarthWorm](http://rootkiter.com/EarthWorm/)
+* [EarthWorm](http://rootkiter.com/EarthWorm/?_blank)
 * netsh
-* reGeorg
+* [reGeorg](https://github.com/sensepost/reGeorg?_blank)
 * meterpreter porfwd
 
 ### 0x03 lcx端口转发
