@@ -8,7 +8,19 @@ topics = ["Python","Pentest"]
 
 +++
 
-### 检测脚本如下
+### 0x00 weblogic返回状态
+weblogic的ssrf漏洞测试3种状态，返回如下：
+
+* 同网段不存在的主机
+![](/img/post/weblogic-check-host-down.png)
+
+* 同网段主机存活但端口不开放
+![](/img/post/weblogic-check-host-up-port-down.png)
+
+* 同网段主机存活且端口开放
+![](/img/post/weblogic-check-host-up-port-up.png)
+
+### 0x01 检测脚本如下
 ```python
 #!/usr/bin/env python  
 # -*- coding: utf-8 -*-
