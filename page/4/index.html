@@ -84,6 +84,61 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/vps-set-up-shadowsocks/">在vps上搭建Shadowsocks</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-03-10</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">Server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x01 安装与配置 环境：Ubuntu 14.04.1 LTS
+reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6) &quot;server_port&quot;:8388, # 监听的服务器端口 &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址 &quot;local_port&quot;:1080, # 本地端端口 &quot;password&quot;:&quot;mypassword&quot;, # 密码 #&quot;port_password&quot;: #{ # &quot;40001&quot;: &quot;password1&quot;, # &quot;40002&quot;: &quot;password2&quot;, # &quot;40003&quot;: &quot;password3&quot; #}, #&quot;_comment&quot;: #{ # &quot;40001&quot;: &quot;xiaoming&quot;, # &quot;40002&quot;: &quot;lilei&quot;, # &quot;40003&quot;: &quot;mike&quot; #} &quot;timeout&quot;:300, # 超时时间（秒） &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式 # 若Linux内核在3.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/vps-set-up-shadowsocks/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/multi-parameter-blasting-webshell/">利用多参数提高webshell爆破速度</a></h2>
 
         
@@ -593,60 +648,6 @@ mysql&gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(rand
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/ajax-request-and-response/">AJAX之XHR请求与响应</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-10-25</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/javascript">JavaScript</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ajax">ajax</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 GET请求 &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;test&lt;/title&gt; &lt;script type=&quot;text/javascript&quot;&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) { //创建对象 xmlhttp = new XMLHttpRequest(); } else { xmlhttp = new ActiveXObjece(&quot;Microsoft.XMLHTTP&quot;); } // readyState改变时，就会触发onreadystatechange事件 // readyState存有XMLHttpRequest的状态，为0-4，4表示请求已完成，且响应已就绪 // status为200代表ok，为404代表未找到页面 xmlhttp.onreadystatechange=function() { if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { // xmlhttp.responseText获取来自服务器的响应 document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;2.html?t=&quot;+Math.random(),true); //GET请求，改变readyState // xmlhttp.open(&quot;GET&quot;,&quot;2.html?name=test&amp;age=23&quot;,true); //GET发送信息 xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;AJAX&lt;/h2&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;Request data&lt;/button&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;/div&gt; &lt;/body&gt; &lt;/html&gt;  点击&rdquo;Request data&rdquo;时就会请求服务端的2.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/ajax-request-and-response/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -708,7 +709,7 @@ mysql&gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(rand
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(73)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(74)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -950,6 +951,11 @@ mysql&gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(rand
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
                 <sup>1</sup>
             </p>
         

