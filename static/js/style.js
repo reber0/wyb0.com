@@ -59,3 +59,14 @@ $(document).ready(function(){
         }
     });    
 });
+
+$(document).ready(function(){
+    var aTagArr = [].slice.apply(document.getElementsByTagName("img"));
+
+    aTagArr.forEach(function (e, i) {
+        if (/^\d{2}$/.test(e.alt)) {
+            e.style = "max-width:"+e.alt.toString()+"%;";
+        }
+    });    
+});
+
