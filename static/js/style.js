@@ -60,6 +60,7 @@ $(document).ready(function(){
     });    
 });
 
+// 添加markdown的img标签设置宽度的功能
 $(document).ready(function(){
     var aTagArr = [].slice.apply(document.getElementsByTagName("img"));
 
