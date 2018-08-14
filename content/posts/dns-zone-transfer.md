@@ -3,7 +3,7 @@ title = "DNS域传送漏洞"
 topics = ["Pentest"]
 tags = ["敏感信息泄露"]
 description = "在渗透测试中如果存在DNS域传送漏洞的话可以节省很多搜集域名的时间"
-date = "2018-08-14T13:58:33+08:00"
+date = "2017-11-20T13:58:33+08:00"
 draft = false
 +++
 
