@@ -1,5 +1,5 @@
 +++
-title = "SQL注入之基于时间的注入"
+title = "SQL注入之基于时间的注入(MySQL)"
 topics = ["Pentest"]
 tags = ["injection"]
 description = "基于时间的SQL注入"

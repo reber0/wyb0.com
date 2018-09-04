@@ -1,9 +1,9 @@
 +++
-date = "2016-06-25T10:25:11+08:00"
+date = "2016-06-24T15:32:34+08:00"
 description = ""
 draft = false
 tags = ["injection"]
-title = "SQL注入之宽字节注入"
+title = "SQL注入之宽字节注入(MySQL)"
 topics = ["Pentest"]
 
 +++
