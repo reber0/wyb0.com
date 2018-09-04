@@ -84,6 +84,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-thread/">Python的线程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-02-03</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/thread">thread</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。
+0x00 单线程 #!/usr/bin/env python # -*- coding: utf-8 -*- from time import time,ctime,sleep def music(arg): for x in range(2): print &quot;I'm listening to %s. %s&quot; % (arg,ctime()) sleep(1) def movie(arg): for x in range(2): print &quot;I'm watching %s. %s&quot; % (arg,ctime()) sleep(5) if __name__ == '__main__': start = int(time()) music(u'我') movie(u'可是') print &quot;All over time:%s&quot; % ctime() print &quot;Used time:%d&quot; % int(time()-start)  0x01 多线程 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep INDEX = 0 def http_get(sites): global INDEX while INDEX &lt; len(sites): url = sites[INDEX] INDEX += 1 resp = requests.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-thread/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-io-operation/">Python的IO操作</a></h2>
 
         
@@ -602,60 +659,6 @@ vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc1
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/cisco-switch-basic-configuration/">思科交换机基本配置</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2015-05-06</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87">网络设备</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 简单配置命令 Switch&gt;enable(配置交换机名称) Switch(config)#hostname S S(config)#enable password 222//(加密特权密码，密码为222) S(config)#no enable password //(取消enable密码) S(config)#enable secret 333//(设置后用show命令时不能看到密码) S(config)#no enable secret //(取消enable密码) S(config)#line vty 0 4//(有5个虚拟终端，即0-4) S(config-line)#password 444//(设置虚拟终端密码) S(config-line)#login//(使密码生效) S(config)#line console 0//(设置控制台密码) S(config-line)#password 111 S(config-line)#login S(config)#line con 0//(取消控制台密码) S(config-line)#no password S(config-line)#exec-timeout 5 30//(超时时间)(分、秒) S(config)#no ip domain-lookup//(禁止名称解析)  0x01 配置交换机管理IP、默认网关 S(config)#interface vlan 1 //(配置交换机管理IP、子网掩码) S(config-if)#ip address 192.168.1.1 255.255.255.0 S(config-if)#no shutdown S(config)# exit S(config)#ip default-gateway 192.168.1.250//(默认网关)  0x02 配置交换机的端口速率、端口双工模式 S(config)#//(端口双工模式) S(config)#interface f0/1 S(config-if)#duplex ? auto Enable AUTO duplex configuration full Force full duplex operation half Force half-duplex operation S(config-if)#duplex auto S(config-if)#speed ?
-    </p>
-
-    
-    <footer>
-        <a href="/posts/cisco-switch-basic-configuration/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -666,10 +669,10 @@ vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc1
             <a href="/page/17/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;18 / 18&nbsp;</span>
+        <span>&nbsp;18 / 19&nbsp;</span>
         
         
-            <i class="fa fa-chevron-right"></i>
+            <a href="/page/19/"><i class="fa fa-chevron-right"></i></a>
         
     </nav>
 
@@ -717,7 +720,7 @@ vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc1
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(74)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(75)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -809,7 +812,7 @@ vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc1
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>15</sup>
+                <sup>16</sup>
             </p>
         
             <p style="display:inline-block;">

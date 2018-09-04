@@ -84,6 +84,77 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/mysql-injection-error-based-theory-count-rand-groupby/">[转]MySQL报错注入原理分析(count()、rand()、group by)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-11-13</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        原文链接：http://drops.wooyun.org/tips/14312
+0x00 疑问 一直在用mysql数据库报错注入方法，但为何会报错？
+百度谷歌知乎了一番，发现大家都是把官网的结论发一下截图，然后执行sql语句证明一下结论，但是没有人去深入研究为什么rand不能和order by一起使用，也没彻底说明三者同时使用报错的原理。
+0x01 位置问题？ select count(*),(floor(rand(0)*2))x from information_schema.tables group by x;这是网上最常见的语句,目前位置看到的网上sql注入教程,floor 都是直接放count(*)后面，为了排除干扰，我们直接对比了两个报错语句，如下图
+由上面的图片，可以知道报错跟位置无关。
+0x02 绝对报错还是相对报错？ 是不是报错语句有了floor(rand(0)*2)以及其他几个条件就一定报错？其实并不是如此，我们先建建个表，新增一条记录看看，如下图： 确认表中只有一条记录后，再执行报错语句看看，如下图： 多次执行均未发现报错。
+然后我们新增一条记录。 然后再测试下报错语句 多次执行并没有报错
+OK 那我们再增加一条 执行报错语句 ok 成功报错
+由此可证明floor(rand(0)*2)报错是有条件的，记录必须3条以上，而且在3条以上必定报错，到底为何？请继续往下看。
+0x03 随机因子具有决定权么(rand()和rand(0)) 为了更彻底的说明报错原因，直接把随机因子去掉，再来一遍看看，先看一条记录的时候，如下图: 一条记录的话 无论执行多少次也不报错
+然后增加一条记录。
+两条记录的话 结果就变成不确定性了 随机出现报错。
+然后再插入一条
+三条记录之后，也和2条记录一样进行随机报错。
+由此可见报错和随机因子是有关联的，但有什么关联呢，为什么直接使用rand()，有两条记录的情况下就会报错，而且是有时候报错，有时候不报错，而rand(0)的时候在两条的时候不报错，在三条以上就绝对报错？我们继续往下看。
+0x04 不确定性与确定性 前面说过，floor(rand(0)*2)报错的原理是恰恰是由于它的确定性，这到底是为什么呢？从0x03我们大致可以猜想到，因为floor(rand()*2)不加随机因子的时候是随机出错的，而在3条记录以上用floor(rand(0)*2)就一定报错，由此可猜想floor(rand()*2)是比较随机的，不具备确定性因素，而floor(rand(0)*2)具备某方面的确定性。
+为了证明我们猜想，分别对floor(rand()*2)和floor(rand(0)*2)在多记录表中执行多次(记录选择10条以上)，在有12条记录表中执行结果如下图：
+mysql&gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(rand()*2) | +-----------------+ | 0 | | 0 | | 0 | | 0 | | 0 | | 0 | | 1 | | 0 | | 0 | | 0 | | 0 | | 0 | +-----------------+ 12 rows in set (0.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/mysql-injection-error-based-theory-count-rand-groupby/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/ajax-request-and-response/">AJAX之XHR请求与响应</a></h2>
 
         
@@ -589,66 +660,6 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-package-mysql-function/">Python封装MySQL类</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-09-12</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 安装 有两种，一个是MySQLdb，一个是pymysql
- 下载MySQL-python然后安装
- sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)  0x01 简单表设计如下 insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default '127.0.0.1' comment 'ip地址', domain varchar(100) not null default 'www.xx.com' comment '域名' ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges;  0x02 MySQLdb封装代码 #!
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-package-mysql-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -659,7 +670,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
             <a href="/page/4/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;5 / 18&nbsp;</span>
+        <span>&nbsp;5 / 19&nbsp;</span>
         
         
             <a href="/page/6/"><i class="fa fa-chevron-right"></i></a>
@@ -710,7 +721,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(74)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(75)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -802,7 +813,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>15</sup>
+                <sup>16</sup>
             </p>
         
             <p style="display:inline-block;">

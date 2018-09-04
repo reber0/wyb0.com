@@ -84,6 +84,70 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/command-execution-vulnerabilities/">命令执行漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-24</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C">命令执行</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 命令执行 应用有时需要调用一些执行系统命令的函数，如PHP中的system、exec、shell_exec、 passthru、popen、proc_popen等，当用户能控制这些函数中的参数时，就可以将恶意系统命令 拼接到正常命令中，从而造成命令执行攻击，这就是命令执行漏洞。  0x01 利用条件  应用调用执行系统命令的函数 将用户输入作为系统命令的参数拼接到了命令行中 没有对用户输入进行过滤或过滤不严  0x02 漏洞分类  代码层过滤不严
+商业应用的一些核心代码封装在二进制文件中，在web应用中通过system函数来调用：
+system(&ldquo;/bin/program --arg $arg&rdquo;); 系统的漏洞造成命令执行
+bash破壳漏洞(CVE-2014-6271)
+执行env x='() { :;}; echo vulnerable' bash -c &quot;echo this is a test&quot;后
+若输出vulnerable则证明存在漏洞 调用的第三方组件存在代码执行漏洞
+如WordPress中用来处理图片的ImageMagick组件
+JAVA中的命令执行漏洞(struts2/ElasticsearchGroovy等)
+ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行系统命令或读写文件 反弹shell 控制整个网站甚至控制服务器 进一步内网渗透 等等  0x04 漏洞挖掘 可以google hacking
+尝试：filetype:action或filetype:do来找struts2
+0x05 漏洞可能代码(以system为例) 1. system(&quot;$arg&quot;); //直接输入即可 2. system(&quot;/bin/prog $arg&quot;); //直接输入;ls 3. system(&quot;/bin/prog -p $arg&quot;); //和2一样 4.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/command-execution-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/file-upload-editor-upload-vulnerability/">文件上传之文本编辑器上传漏洞</a></h2>
 
         
@@ -577,63 +641,6 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-module-cmd/">Python的cmd模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-14</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于cmd模块 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
-0x01 cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  0x02 用cmd模块简单实现shell命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot; def __init__(self): Cmd.__init__(self) os.chdir(&quot;C:/Users/WYB_9/Desktop&quot;) hostName = socket.gethostname() self.prompt = &quot;reber@&quot; + hostName + &quot; &quot; + os.path.abspath('.') + &quot;\n$ &quot; def help_dir(self): print &quot;dir [path]&quot; def do_dir(self, arg): if not arg: print &quot;\n&quot;.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-module-cmd/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -644,7 +651,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
             <a href="/page/9/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;10 / 18&nbsp;</span>
+        <span>&nbsp;10 / 19&nbsp;</span>
         
         
             <a href="/page/11/"><i class="fa fa-chevron-right"></i></a>
@@ -695,7 +702,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(74)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(75)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -787,7 +794,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>15</sup>
+                <sup>16</sup>
             </p>
         
             <p style="display:inline-block;">
