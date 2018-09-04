@@ -22,15 +22,15 @@ information_schema的表columns中的列table_schema记录了所有数据库的�
 information_schema的表columns中的列table_name记录了所有数据库的表的名字
 information_schema的表columns中的列column_name记录了所有数据库的表的列的名字
 ```
-![information_schema的所有表](/img/post/information_schema_alltables.png)
+![50](/img/post/information_schema_alltables.png)
 
 ### 0x01 information_schema的SCHEMATA表
-![information_schema的SCHEMATA表](/img/post/information_schema_SCHEMATA.png)
+![80](/img/post/information_schema_SCHEMATA.png)
 
 ### 0x02 information_schema的TABLES表
-![information_schema的TABLES表](/img/post/information_schema_TABLES.png)
+![80](/img/post/information_schema_TABLES.png)
 ![information_schema的TABLES表的部分列](/img/post/information_schema.tables.png)
 
 ### 0x03 information_schema的COLUMNS表
-![information_schema的COLUMNS表](/img/post/information_schema_COLUMNS.png)
+![90](/img/post/information_schema_COLUMNS.png)
 ![information_schema的COLUMNS表的部分列](/img/post/information_schema.columns.png)
