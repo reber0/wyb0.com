@@ -3,28 +3,35 @@ date = "2016-08-08T08:28:27+08:00"
 description = ""
 draft = false
 tags = ["intranet"]
-title = "导出主机密码与开启3389"
+title = "导出Windows主机密码与开启3389"
 topics = ["Pentest"]
 
 +++
 
 ### 0x00 导出主机密码hash
-* 条件
+* 关于Windows的hash
+    * 早期IBM设计的LM Hash算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即NTLM Hash
+    * Windows hash由LM HASH和NT HASH两部分组成，形式为：用户名称:RID:LM-HASH值:NT-HASH值
+    * 存储Windows hash的sam文件位置为：C:\windows\system32\config\SAM
+
+* 导出hash条件
     * administrator以上权限
 
-* 工具
+* 导出hash工具
     * wce
     * gethash
     * hashdump
-
-* hash解密网站  
-    * http://www.objectif-securite.ch/ophcrack.php
+    * SAMInside
 
 * 上传工具得到hash
 ![查看是否为管理员以上权限](/img/post/privilge_escalation_win_view_whoami.png)
 ![上传wce](/img/post/privilge_escalation_win_upload_wce.png)
 ![得到hash](/img/post/privilge_escalation_win_get_hash.png)
-![解出密码](/img/post/privilge_escalation_win_get_pwd.png)
+
+* 在线网站解密hash
+    * LM Hash和NT Hash得到一个就可以解密，不过两个都得到的话解密的成功率会更高
+    * 可以在[http://www.objectif-securite.ch/ophcrack.php](http://www.objectif-securite.ch/ophcrack.php?_blank)解密
+    ![解出密码](/img/post/privilge_escalation_win_get_pwd.png)
 
 ### 0x01 导出主机密码
 * 条件
