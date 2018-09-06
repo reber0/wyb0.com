@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["server"]
 title = "Windows2003下搭建IIS+asp"
-topics = ["Windows", "Server"]
+topics = ["Server"]
 
 +++
 
