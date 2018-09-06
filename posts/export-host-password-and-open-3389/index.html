@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>导出主机密码与开启3389 - Reber's Blog</title>
+    <title>导出Windows主机密码与开启3389 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -79,7 +79,7 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>导出主机密码与开启3389</h2>
+                <h2>导出Windows主机密码与开启3389</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
@@ -121,31 +121,41 @@
 <h3 id="0x00-导出主机密码hash">0x00 导出主机密码hash</h3>
 
 <ul>
-<li><p>条件</p>
+<li><p>关于Windows的hash</p>
+
+<ul>
+<li>早期IBM设计的LM Hash算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即NTLM Hash</li>
+<li>Windows hash由LM HASH和NT HASH两部分组成，形式为：用户名称:RID:LM-HASH值:NT-HASH值</li>
+<li>存储Windows hash的sam文件位置为：C:\windows\system32\config\SAM</li>
+</ul></li>
+
+<li><p>导出hash条件</p>
 
 <ul>
 <li>administrator以上权限</li>
 </ul></li>
 
-<li><p>工具</p>
+<li><p>导出hash工具</p>
 
 <ul>
 <li>wce</li>
 <li>gethash</li>
 <li>hashdump</li>
-</ul></li>
-
-<li><p>hash解密网站</p>
-
-<ul>
-<li><a href="http://www.objectif-securite.ch/ophcrack.php">http://www.objectif-securite.ch/ophcrack.php</a></li>
+<li>SAMInside</li>
 </ul></li>
 
 <li><p>上传工具得到hash
 <img src="/img/post/privilge_escalation_win_view_whoami.png" alt="查看是否为管理员以上权限" />
 <img src="/img/post/privilge_escalation_win_upload_wce.png" alt="上传wce" />
-<img src="/img/post/privilge_escalation_win_get_hash.png" alt="得到hash" />
-<img src="/img/post/privilge_escalation_win_get_pwd.png" alt="解出密码" /></p></li>
+<img src="/img/post/privilge_escalation_win_get_hash.png" alt="得到hash" /></p></li>
+
+<li><p>在线网站解密hash</p>
+
+<ul>
+<li>LM Hash和NT Hash得到一个就可以解密，不过两个都得到的话解密的成功率会更高</li>
+<li>可以在<a href="http://www.objectif-securite.ch/ophcrack.php?_blank">http://www.objectif-securite.ch/ophcrack.php</a>解密
+<img src="/img/post/privilge_escalation_win_get_pwd.png" alt="解出密码" /></li>
+</ul></li>
 </ul>
 
 <h3 id="0x01-导出主机密码">0x01 导出主机密码</h3>

@@ -189,7 +189,7 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/export-host-password-and-open-3389/">导出主机密码与开启3389</a></h2>
+        <h2><a href="http://wyb0.com/posts/export-host-password-and-open-3389/">导出Windows主机密码与开启3389</a></h2>
 
         
         <div class="post-meta">
@@ -227,13 +227,14 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 导出主机密码hash  条件
- administrator以上权限  工具
- wce gethash hashdump  hash解密网站
- http://www.objectif-securite.ch/ophcrack.php  上传工具得到hash   0x01 导出主机密码  条件
+        0x00 导出主机密码hash  关于Windows的hash
+ 早期IBM设计的LM Hash算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即NTLM Hash Windows hash由LM HASH和NT HASH两部分组成，形式为：用户名称:RID:LM-HASH值:NT-HASH值 存储Windows hash的sam文件位置为：C:\windows\system32\config\SAM  导出hash条件
+ administrator以上权限  导出hash工具
+ wce gethash hashdump SAMInside  上传工具得到hash  在线网站解密hash
+ LM Hash和NT Hash得到一个就可以解密，不过两个都得到的话解密的成功率会更高 可以在http://www.objectif-securite.ch/ophcrack.php解密    0x01 导出主机密码  条件
  administrator以上权限 当前管理员没有注销登陆(可以通过query user命令看出)  工具
  mimikatz getpass  上传工具得到密码   0x02 开启3389  直接使用注册表  写一个批处理也行
-# 3389.bat内容如下： echo Windows Registry Editor Version 5.00&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server]&gt;&gt;3389.reg echo &quot;fDenyTSConnections&quot;=dword:00000000&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp]&gt;&gt;3389.reg echo &quot;PortNumber&quot;=dword:00000d3d&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp]&gt;&gt;3389.reg echo &quot;PortNumber&quot;=dword:00000d3d&gt;&gt;3389.reg regedit /s 3389.reg del 3389.
+# 3389.bat内容如下： echo Windows Registry Editor Version 5.00&gt;&gt;3389.reg echo [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server]&gt;&gt;3389.
     </p>
 
     
