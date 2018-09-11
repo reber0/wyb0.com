@@ -88,3 +88,8 @@ del 3389.reg
 del 3389.bat
 ```
 ![新建开3389的注册表](/img/post/privilge_escalation_win_new_file_3389_bat.png)
+
+
+<br>
+#### Reference(侵删)：
+![https://www.cnblogs.com/hiccup/p/4380298.html](https://www.cnblogs.com/hiccup/p/4380298.html?_blank)
