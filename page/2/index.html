@@ -83,6 +83,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/package-and-download-the-php-file/">打包下载php文件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-01-08</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 代码如下 &lt;?php function addFileToZip($zip,$zipname,$path){ $handler = opendir($path); while(($filename = readdir($handler))!==false) { if($filename != &quot;.&quot; &amp;&amp; $filename != &quot;..&quot; &amp;&amp; $filename!= $zipname){ if (is_dir($path.&quot;/&quot;.$filename)) { //如果读取的某个对象是文件夹，则递归 addFileToZip($zip,$zipname,$path.&quot;/&quot;.$filename); } else { $zip-&gt;addFile($path.&quot;/&quot;.$filename); } } } @closedir($path); } function tar($zipname,$path) { $zip = new ZipArchive(); //使用本类，linux需开启zlib，windows需取消php_zip.dll前的注释 if ($zip-&gt;open($zipname, ZipArchive::OVERWRITE) === TRUE) { addFileToZip($zip,$zipname,$path);$zip-&gt;close(); } else { exit('Unable to open file, or file creation failed!'); } } function download($zipname) { if(!file_exists($zipname)){ exit(&quot;Zip file does not exist!
+    </p>
+
+    
+    <footer>
+        <a href="/posts/package-and-download-the-php-file/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/xxe/">XXE漏洞</a></h2>
 
         
@@ -613,64 +667,6 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-module-mrq/">MRQ的使用</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-07-10</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。  0x01 设置mongo和redis 因为mrq依赖于redis和mongo，所以先安装设置下
- 安装redis  $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp; $ redis-cli &gt; auth reber_redis   安装mongo  可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &quot;deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-module-mrq/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -732,7 +728,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(75)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -829,7 +825,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -83,6 +83,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/redis-install/">Redis的安装</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-08-03</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/redis">redis</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于Redis Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。  0x01 安装 可在http://download.redis.io/releases/ 下载
+$ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install  0x02 产生的可执行文件 redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写)  0x03 配置文件 $ vim /opt/redis-3.2.3/redis.conf daemonize yes # 当值为yes时可以后台运行 bind 127.0.0.1 # 绑定ip，配置后只接受来自该ip的请求 port 6379 # 监听端口 timeout 300 # 客户端连接超时时间，单位为秒 loglevel notice # 日志等级分为4级，debug、verbose、notice、warning logfile &quot;/var/log/redis.log&quot; # 日志文件位置 databases 16 # 数据库数量 sava 900 1 # 设置数据库镜像的频率 dbfilename dump.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/redis-install/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/tomcat-deploy-war-package-to-getshell/">Tomcat部署War包getshell</a></h2>
 
         
@@ -588,57 +645,6 @@ array( //这个是字符串形式的数组，它并不是数组，而是字符�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/windows-proxifier-implement-global-proxy/">Windows下用Proxifier实现全局代理</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-24</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 环境 在windows下用Shadowsocks和Proxifier实现全局代理：
-System：Windows10 Pro x64 Shadowsocks：Shadowsocks v2.5.2.0 Proxifier：Proxifier Portable Edition v3.29  0x01 配置Shadowsocks 0x02 配置Proxifier  Proxifier添加代理服务  Proxifier添加规则  测试全局代理设置成功与否   
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -700,7 +706,7 @@ System：Windows10 Pro x64 Shadowsocks：Shadowsocks v2.5.2.0 Proxifier：Proxif
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(75)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -797,7 +803,7 @@ System：Windows10 Pro x64 Shadowsocks：Shadowsocks v2.5.2.0 Proxifier：Proxif
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">

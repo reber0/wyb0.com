@@ -83,6 +83,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/injection-of-check-database-type/">SQL注入之判断数据库类型</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-19</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 常见手段 扫描端口、指纹、抓包查看http头信息、在网址后面直接判断
+0x01 根据各数据库特有函数判断  Access:
+and (select count(*) from MSysAccessObjects)&gt;0 返回正常说明是access and exists(select count(*) from表) ID=1 and (select count (*) from sysobjects)&gt;0 返回异常 ID=1 and (select count (*) from msysobjects)&gt;0返回异常  SQLServer:
+and (select count(*) from sysobjects) &gt;0 返回正常说明是mssql ID=1 and (select count (*) from sysobjects)&gt;0 返回正常 ID=1 and (select count (*) from msysobjects)&gt;0返回异常 ID=1 and left(version(),1)=5%23 //红色字体也可能是4 ID=1 and exists(select id from sysobjects) ID=1 and len(user)&gt;0 ID=1 CHAR(97)+CHAR(110)+CHAR(100)+CHAR(32)+CHAR(49)+CHAR(61)+CHAR(49)  MySQL:
+    </p>
+
+    
+    <footer>
+        <a href="/posts/injection-of-check-database-type/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/mysql-database-table-information_schema/">MySQL的information_schema库</a></h2>
 
         
@@ -583,60 +640,6 @@ sudo yum install openssl openssl-devel
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-coding-style/">Python编写规范</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-12</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 代码编排 1.缩进：使用4个空格缩进 2.行长度：每行不要超过80个字符 3.空行：顶级定义之间空两行，如函数或类的定义，方法定义、类定义与第一个方法之间都应该空一行。 4.分号：行尾不要有分号，也不要用分号将两条命令放在一行,除非是： 1.长的导入模块语句。 2.注释里的URL. 3.可以使用圆括号实现隐式行连接  0x01文档编排 1.导入：模块注释-&gt;文档字符串-&gt;导入-&gt;模块全局变量-&gt;常量 导入顺序：标准库导入-&gt;第三方库导入-&gt;应用程序指定库导入 2.import:不要在一行中import多个库，一行中只导入一个  0x02 空格 1.不要在逗号、分号、冒号前加空格，但应在他们后面加(除了在行尾) 2.二元操作符(赋值、比较、布尔)两边都加空格 3.当&quot;=&quot;用于指示关键字参数或默认参数值是，不要再其两侧使用空格 4.&quot;,&quot;和&quot;#&quot;和&quot;=&quot;不需要对齐，因为空格会成为维护的负担  0x03 注释 总体原则，错误的注释不如没有注释。 注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。 1.块注释：在一段代码前增加的注释。在&quot;#&quot;后加一空格。段落之间以只有&quot;#&quot;的行间隔。 2.行注释，在一句代码后加注释。进来少使用. 3.绝不要描述代码. 假设阅读代码的人比你更懂Python, 他只是不知道你的代码要做什么.  0x04 文档描述 1.为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。 2.如果docstring要换行，参考如下例子 class SampleClass(object): &quot;&quot;&quot;Summary of class here. Longer class information.... Longer class information.... Attributes: likes_spam: A boolean indicating if we like SPAM or not. eggs: An integer count of the eggs we have laid. &quot;&quot;&quot; def __init__(self): &quot;&quot;&quot;Inits SampleClass with blah.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-coding-style/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -698,7 +701,7 @@ sudo yum install openssl openssl-devel
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(75)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -795,7 +798,7 @@ sudo yum install openssl openssl-devel
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">
