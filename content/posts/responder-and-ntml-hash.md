@@ -98,7 +98,7 @@ netcfg.exe -l \\host\share -c p -i foo
 ### 0x05 WPAD代理服务器抓取NTLM hash
 WPAD用于在windows中自动化的设置ie浏览器的代理，从Windows 2000开始该功能被默认开启。
 
-开启Responder的WPAD后，当PC使用ie浏览网站时即可抓取到NTLM hash
+开启Responder的WPAD后，当PC浏览网站时即可抓取到NTLM hash
 
 加-F参数即可开启WPAD抓取 hash，而且当主机重启时也能抓到NTLM hash
 
