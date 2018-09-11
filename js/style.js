@@ -1,26 +1,12 @@
-// 设置回到顶部
-$.fn.goToTop = function () {
-    if ($(window).scrollTop()<400) {
-        $('#goToTop').hide(); //滚动条距离顶端的距离小于showDistance是隐藏goToTop按钮
-    }
-    $(window).scroll(function () {
-        if ($(this).scrollTop()>400) {
-            $('#goToTop').fadeIn();
-        } else {
-            $('#goToTop').fadeOut();
-        }
-    });
-    this.click(function () {
-        $('html,body').animate({scrollTop:0},800);
-        return false;
-    });
-}
-$(document).ready(function () {
-    $('#goToTop').goToTop();
+
+$(document).ready(function(){
+    document.body.onselectstart=function(){return false;};// 禁止选中页面文字
+    tag_cloud_set(); // 标签云设置
+    markdown_a_tag_open_new_page(); // 添加markdown的a标签新页面打开的功能
+    markdown_img_tag_set_width(); // 添加markdown的img标签设置宽度的功能
 });
 
-// 标签云设置
-$(document).ready(function(){
+function tag_cloud_set() {
     var alist = $('#tags p');
     alist.each(function () {
         var t = $(this);
@@ -46,10 +32,9 @@ $(document).ready(function(){
             a.addClass("text1");
         }
     });
-});
+}
 
-// 添加markdown的a标签新页面打开的功能
-$(document).ready(function(){
+function markdown_a_tag_open_new_page() {
     var aTagArr = [].slice.apply(document.getElementsByTagName("a"));
 
     aTagArr.forEach(function (e, i) {
@@ -57,17 +42,36 @@ $(document).ready(function(){
             e.target = "_blank";
             e.href = e.href.substring(0,e.href.length - 7);
         }
-    });    
-});
+    });       
+}
 
-// 添加markdown的img标签设置宽度的功能
-$(document).ready(function(){
+function markdown_img_tag_set_width(){
     var aTagArr = [].slice.apply(document.getElementsByTagName("img"));
 
     aTagArr.forEach(function (e, i) {
         if (/^\d{2}$/.test(e.alt)) {
             e.style = "max-width:"+e.alt.toString()+"%;";
         }
-    });    
-});
+    });
+}
 
+// 设置回到顶部
+$.fn.goToTop = function () {
+    if ($(window).scrollTop()<400) {
+        $('#goToTop').hide(); //滚动条距离顶端的距离小于showDistance是隐藏goToTop按钮
+    }
+    $(window).scroll(function () {
+        if ($(this).scrollTop()>400) {
+            $('#goToTop').fadeIn();
+        } else {
+            $('#goToTop').fadeOut();
+        }
+    });
+    this.click(function () {
+        $('html,body').animate({scrollTop:0},800);
+        return false;
+    });
+}
+$(document).ready(function () {
+    $('#goToTop').goToTop();
+});

