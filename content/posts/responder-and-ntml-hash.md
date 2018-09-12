@@ -111,7 +111,23 @@ WPAD用于在windows中自动化的设置ie浏览器的代理，从Windows 2000�
 ![80](/img/post/20180911-210126.png)
 
 ### 0x06 使用hashcat解密
-安装hashcat：[https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going](https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank)
+* 安装hashcat(参考[这里](https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank))
+
+```bash
+$ git clone https://github.com/hashcat/hashcat.git
+$ mkdir -p hashcat/deps
+$ git clone https://github.com/KhronosGroup/OpenCL-Headers.git hashcat/deps/OpenCL
+$ cd hashcat
+$ make
+$ ./example0.sh
+$ ./hashcat
+```
+
+* 利用hashcat暴力猜解密码  
+-m：hash-type，5600对应NetNTLMv2
+![80](/img/post/20180912-232838.png)
+得到密码为123456
+![80](/img/post/20180912-233101.png)
 
 ### 0x07 通过NTLM中继攻击添加用户
 这里就用到了NTLM中继攻击，相当于是中间人攻击，攻击者获取高权限的主机的hash，然后将hash转发给低权限主机并执行命令
