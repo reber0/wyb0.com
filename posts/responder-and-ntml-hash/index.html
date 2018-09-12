@@ -246,7 +246,26 @@ netcfg.exe -l \\host\share -c p -i foo
 
 <h3 id="0x06-使用hashcat解密">0x06 使用hashcat解密</h3>
 
-<p>安装hashcat：<a href="https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank">https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going</a></p>
+<ul>
+<li>安装hashcat(参考<a href="https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank">这里</a>)</li>
+</ul>
+
+<pre><code class="language-bash">$ git clone https://github.com/hashcat/hashcat.git
+$ mkdir -p hashcat/deps
+$ git clone https://github.com/KhronosGroup/OpenCL-Headers.git hashcat/deps/OpenCL
+$ cd hashcat
+$ make
+$ ./example0.sh
+$ ./hashcat
+</code></pre>
+
+<ul>
+<li>利用hashcat暴力猜解密码<br />
+-m：hash-type，5600对应NetNTLMv2
+<img src="/img/post/20180912-232838.png" alt="80" />
+得到密码为123456
+<img src="/img/post/20180912-233101.png" alt="80" /></li>
+</ul>
 
 <h3 id="0x07-通过ntlm中继攻击添加用户">0x07 通过NTLM中继攻击添加用户</h3>
 
