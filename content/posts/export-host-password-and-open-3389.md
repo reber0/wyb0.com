@@ -49,7 +49,7 @@ topics = ["Pentest"]
 ![得到密码1](/img/post/privilge_escalation_win_getpass1.png)
 ![得到密码2](/img/post/privilge_escalation_win_getpass2.png)
 
-* 导出hash本地得到密码  
+* 导出NTLM Hash本地得到密码  
     若mimikatz和getpass这类软件被杀的话可以先用Procdump导出lsass.dmp，然后本地用mimikatz解密，Procdump是微软官方的软件，应该不会被杀
     * 导出文件dmp文件  
         * 上传Procdump.exe导出

