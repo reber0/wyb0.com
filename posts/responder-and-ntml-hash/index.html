@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>内网渗透之Responder与NTML hash - Reber's Blog</title>
+    <title>内网渗透之Responder与Net-NTML hash - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
     <meta name="description" content="获取windows的hash">
     <meta name="author" content="reber">
@@ -78,7 +78,7 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>内网渗透之Responder与NTML hash</h2>
+                <h2>内网渗透之Responder与Net-NTML hash</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
@@ -129,10 +129,17 @@
 <li><p>什么是Challenge-Response挑战/响应验证机制？</p>
 
 <ul>
-<li>Client输入username、password、domain，然后将密码hash后存在本地，并将username发送到Server</li>
+<li>Client输入username、password、domain，然后将用户名及密码hash后存在本地，并将username发送到Server</li>
 <li>DC生成一个16字节的随机数，即Challenge(挑战码)，然后传回Client</li>
 <li>Client收到Challenge后将密码hash和challenge混合hash，混合后的hash称为response，然后将challenge、response和username发送给Server</li>
 <li>Server将收到的3个值转发给DC，然后DC根据传过来的username到域控的账号数据库ntds.list找到对应的密码hash，将hash和Client传过来的challenge混合hash，将这个混合hash与Client传过来的response进行对比验证</li>
+</ul></li>
+
+<li><p>NTLM Hash与Net-NTLM Hash</p>
+
+<ul>
+<li>NTLM Hash通常是指Windows系统下Security Account Manager中保存的用户密码hash，通常可从Windows系统中的SAM文件和域控的NTDS.dit文件中获得所有用户的hash（比如用Mimikatz提取），“挑战/响应验证”中的用户名及密码hash就是NTLM Hash</li>
+<li>Net-NTLM Hash通常是指网络环境下NTLM认证中的hash，“挑战/响应验证”中的response中包含Net-NTLM hash，用Responder抓取的就是Net-NTLM Hash</li>
 </ul></li>
 
 <li><p>关于Responder<br />
@@ -151,7 +158,7 @@
 <li>被控主机：Ubuntu14.04（10.11.11.11）和目标机同一网段</li>
 </ul>
 
-<h3 id="0x02-通过smb服务获取ntlm-hash">0x02 通过SMB服务获取NTLM hash</h3>
+<h3 id="0x02-通过smb服务获取net-ntlm-hash">0x02 通过SMB服务获取Net-NTLM hash</h3>
 
 <p>对于SMB协议，客户端在连接服务端时，默认先使用本机的用户名和密码hash尝试登录，所以可以模拟SMB服务器从而截获hash，执行如下命令都可以得到hash</p>
 
@@ -209,21 +216,21 @@ netcfg.exe -l \\host\share -c p -i foo
 <img src="/img/post/20180911-124855.png" alt="90" /></li>
 </ul>
 
-<h3 id="0x03-通过文件包含获取ntlm-hash">0x03 通过文件包含获取NTLM hash</h3>
+<h3 id="0x03-通过文件包含获取net-ntlm-hash">0x03 通过文件包含获取Net-NTLM hash</h3>
 
 <ul>
 <li>被控主机执行：$ sudo python Responder.py -I eth0 -v
 <img src="/img/post/20180911-132027.png" alt="90" /></li>
 </ul>
 
-<h3 id="0x04-通过xss获取ntlm-hash">0x04 通过XSS获取NTLM hash</h3>
+<h3 id="0x04-通过xss获取net-ntlm-hash">0x04 通过XSS获取Net-NTLM hash</h3>
 
 <ul>
 <li>被控主机执行：$ sudo python Responder.py -I eth0 -v
 <img src="/img/post/20180911-163241.png" alt="80" /></li>
 </ul>
 
-<h3 id="0x05-wpad代理服务器抓取ntlm-hash">0x05 WPAD代理服务器抓取NTLM hash</h3>
+<h3 id="0x05-wpad代理服务器抓取net-ntlm-hash">0x05 WPAD代理服务器抓取Net-NTLM hash</h3>
 
 <p>WPAD用于在windows中自动化的设置ie浏览器的代理，从Windows 2000开始该功能被默认开启。</p>
 
@@ -237,7 +244,11 @@ netcfg.exe -l \\host\share -c p -i foo
 <img src="/img/post/20180911-210126.png" alt="80" /></li>
 </ul>
 
-<h3 id="0x06-通过ntlm中继攻击添加用户">0x06 通过NTLM中继攻击添加用户</h3>
+<h3 id="0x06-使用hashcat解密">0x06 使用hashcat解密</h3>
+
+<p>安装hashcat：<a href="https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank">https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going</a></p>
+
+<h3 id="0x07-通过ntlm中继攻击添加用户">0x07 通过NTLM中继攻击添加用户</h3>
 
 <p>这里就用到了NTLM中继攻击，相当于是中间人攻击，攻击者获取高权限的主机的hash，然后将hash转发给低权限主机并执行命令</p>
 
@@ -360,6 +371,7 @@ reber@ubuntu:~/Responder/tools$
 <li><a href="https://osandamalith.com/2017/03/24/places-of-interest-in-stealing-netntlm-hashes?_blank">https://osandamalith.com/2017/03/24/places-of-interest-in-stealing-netntlm-hashes</a></li>
 <li><a href="https://medium.com/@canavaroxum/xxe-on-windows-system-then-what-76d571d66745?_blank">https://medium.com/@canavaroxum/xxe-on-windows-system-then-what-76d571d66745</a></li>
 <li><a href="https://www.anquanke.com/post/id/85004?_blank">https://www.anquanke.com/post/id/85004</a></li>
+<li><a href="https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank">https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going</a></li>
 </ul>
 
                 
