@@ -121,12 +121,12 @@
 
 <h3 id="0x00-为二进制文件添加s权限从而提升为root权限">0x00 为二进制文件添加s权限从而提升为root权限</h3>
 
-<ol>
+<ul>
 <li>写sudoers添加用户  <code>//最佳方案</code><br /></li>
 <li>vim /etc/passwd    <code>//将uid和gid改为0</code></li>
 <li>vim /etc/shadow    <code>//密文覆盖</code><br /></li>
 <li>vim root .ssh/证书文件   <code>.ssh这个文件夹和证书的权限要正确，要和原来一致</code></li>
-</ol>
+</ul>
 
 <h3 id="0x01-suid主要作用可以是留后门">0x01 SUID主要作用可以是留后门</h3>
 
@@ -164,6 +164,12 @@ uid=500(wyb) gid=0(root) groups=0(root)
 [wyb@localhost root]$ ls
 anaconda-ks.cfg  install.log  install.log.syslog
 </code></pre></li>
+</ul>
+
+<h3 id="0x02-查找拥有s权限的文件">0x02 查找拥有s权限的文件</h3>
+
+<ul>
+<li>find / -perm -u=s -type f 2&gt;/dev/null</li>
 </ul>
 
                 
