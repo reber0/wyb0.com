@@ -36,7 +36,7 @@ class Index
     }
 }
 ```
-访问```http://127.0.0.1/Source/tp5/home/index/testdb/id/1```时返回的语句分别如下：
+where函数接收字符串和数组时，访问```http://127.0.0.1/Source/tp5/home/index/testdb/id/1```执行的SQL语句分别如下：
 ```
 SELECT * FROM `msg` WHERE ( id=1 )
 
@@ -44,23 +44,22 @@ SELECT * FROM `msg` WHERE `id` = 1
 ```
 前者存在注入，如下：
 ![and 1=1](/img/post/tp5_where_str1.png)
-<br>
-![and 1=2](/img/post/tp5_where_str2.png)
+![60](/img/post/tp5_where_str2.png)
 主要调用文件及函数顺序如下：
 ```php
-tp5/thinkphp/library/think/db/Query.php __construct()
-tp5/thinkphp/library/db/Builder.php __construct()
-tp5/thinkphp/library/think/db/Query.php where()
-tp5/thinkphp/library/think/db/Query.php select()
-tp5/thinkphp/library/db/Builder.php select()
-tp5/thinkphp/library/think/db/Query.php query()
+tp5/thinkphp/library/think/db/Query.php  __construct()
+tp5/thinkphp/library/db/Builder.php      __construct()
+tp5/thinkphp/library/think/db/Query.php  where()
+tp5/thinkphp/library/think/db/Query.php  select()
+tp5/thinkphp/library/db/Builder.php      select()
+tp5/thinkphp/library/think/db/Query.php  query()
 ```
 
 ### 0x02 简单分析
 执行语句为：$msg->where()->select()，主要涉及到两个文件：  
-tp5/thinkphp/library/think/db/Query.php和p5/thinkphp/library/db/Builder.php
+tp5/thinkphp/library/think/db/Query.php和tp5/thinkphp/library/db/Builder.php
 
-* where()的处理
+* where()的处理（调用到Query.php文件中的函数）
 
 ```
 //指定AND查询条件
@@ -151,11 +150,11 @@ Query.php这里面经过where和parseWhereExp的处理后把数组存入了optio
 */
 ```
 
-* select()的处理
+* select()的处理（调用到Query.php和Builder.php文件中的函数）
 
 ```
 /*
-在select()中首先调用$this->parseExpress();来解析sql语句中的参数
+在Query.php的select()函数中首先调用$this->parseExpress();来解析sql语句中的参数
 然后调用tp5/thinkphp/library/db/Builder.php里的select()处理上面的参数，从而合成sql语句
 */
 //查找记录
@@ -188,7 +187,7 @@ public function select($data = null)
     }
     if (false === $resultSet) {//进入
         // 生成查询SQL
-        //调用tp5/thinkphp/library/db/Builder.php里的select()处理，生成sql语句如下：
+        //这里调用tp5/thinkphp/library/db/Builder.php里的select()处理，生成sql语句如下：
         //$sql = "SELECT * FROM `msg` WHERE  (  id=1) and 1=1 and (1)=(1)"
         $sql = $this->builder->select($options);
         // 获取参数绑定
