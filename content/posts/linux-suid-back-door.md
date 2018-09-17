@@ -11,10 +11,10 @@ topics = ["Pentest"]
 SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制
 
 ### 0x00 为二进制文件添加s权限从而提升为root权限
-1. 写sudoers添加用户  `//最佳方案`  
-2. vim /etc/passwd    `//将uid和gid改为0`
-3. vim /etc/shadow    `//密文覆盖`  
-4. vim root .ssh/证书文件   `.ssh这个文件夹和证书的权限要正确，要和原来一致`
+* 写sudoers添加用户  `//最佳方案`  
+* vim /etc/passwd    `//将uid和gid改为0`
+* vim /etc/shadow    `//密文覆盖`  
+* vim root .ssh/证书文件   `.ssh这个文件夹和证书的权限要正确，要和原来一致`
 
 ### 0x01 SUID主要作用可以是留后门
 * 在root权限下给usermod一个s权限
@@ -50,3 +50,6 @@ uid=500(wyb) gid=0(root) groups=0(root)
 [wyb@localhost root]$ ls
 anaconda-ks.cfg  install.log  install.log.syslog
 ```
+
+### 0x02 查找拥有s权限的文件
+* find / -perm -u=s -type f 2>/dev/null
