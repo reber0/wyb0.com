@@ -12,14 +12,14 @@ topics = ["Pentest"]
 
 ### 0x00 注册账号
 先得到一个临时邮箱，然后注册账号
-![xss实例申请临时邮箱](/img/post/xss_example_get_temporary_email.png)
+![65](/img/post/xss_example_get_temporary_email.png)
 
-![xss实例注册账号](/img/post/xss_example_register.png)
+![35](/img/post/xss_example_register.png)
 
 ### 0x01 找输入输出点
-![xss实例添加关注](/img/post/xss_example_add_topic.png)
+![40](/img/post/xss_example_add_topic.png)
 
-![xss实例输入输出点](/img/post/xss_example_input_output_point.png)
+![80](/img/post/xss_example_input_output_point.png)
 
 ### 0x02 尝试构造payload
 payload用如下的即可：
@@ -28,7 +28,7 @@ payload用如下的即可：
 "><script>alert(1)</script><a
 ```
 但是这个要在点击删除时payload才起作用
-![xss实例payload test](/img/post/xss_example_payload_test.png)
+![40](/img/post/xss_example_payload_test.png)
 ```
 也可用<img src=1 onerror=alert(1) />自动加载，但也要点击删除按钮才能起作用  
 但是我们若想充分利用则需要远程加载自己的js
@@ -63,10 +63,10 @@ a=document.createE/*
 ```
 
 * 查找
-![xss实例发现网站自己的加载js的函数](/img/post/xss_example_find_loadjs.png)
+![50](/img/post/xss_example_find_loadjs.png)
 
 * 构造payload
-![xss实例使用js短网址](/img/post/xss_example_short_url.png)
+![45](/img/post/xss_example_short_url.png)
 
 ```
 使用如下payload：
@@ -76,4 +76,4 @@ a=document.createE/*
 ```
 
 ### 0x04 得到Cookie
-![xss实例得到Cookie](/img/post/xss_example_get_cookie.png)
+![70](/img/post/xss_example_get_cookie.png)
