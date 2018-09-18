@@ -15,7 +15,7 @@ draft = false
 早期IBM设计的LM Hash算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即NTLM Hash
 
 * 什么是Challenge-Response挑战/响应验证机制？  
-    * Client输入username、password、domain，然后将用户名及密码hash后存在本地，并将username发送到Server
+    * Client输入username、password、domain，然后将用户名及密码hash后存在本地，并将username发送到 DC
     * DC生成一个16字节的随机数，即Challenge(挑战码)，然后传回Client
     * Client收到Challenge后将密码hash和challenge混合hash，混合后的hash称为response，然后将challenge、response和username发送给Server
     * Server将收到的3个值转发给DC，然后DC根据传过来的username到域控的账号数据库ntds.list找到对应的密码hash，将hash和Client传过来的challenge混合hash，将这个混合hash与Client传过来的response进行对比验证
