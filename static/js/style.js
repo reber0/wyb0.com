@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-    document.body.onselectstart=function(){return false;};// 禁止选中页面文字
+    //document.body.onselectstart=function(){return false;};// 禁止选中页面文字
     tag_cloud_set(); // 标签云设置
     markdown_a_tag_open_new_page(); // 添加markdown的a标签新页面打开的功能
     markdown_img_tag_set_width(); // 添加markdown的img标签设置宽度的功能
