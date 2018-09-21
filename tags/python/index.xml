@@ -57,7 +57,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
       <pubDate>Sat, 15 Apr 2017 18:49:37 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/python-module-tqdm/</guid>
-      <description> 0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers[&#39;Content-Length&#39;])/1024 with open(name, &amp;quot;wb&amp;quot;) as f: print &amp;quot;total: &amp;quot;,content_size,&#39;k&#39; for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit=&#39;k&#39;): f.write(data) print &amp;quot;done &amp;quot;+name if __name__ == &#39;__main__&#39;: url = &amp;quot;http://127.0.0.1/Video.mp4&amp;quot; name = url.split(&#39;/&#39;)[-1] get_vedio(url,name)  </description>
+      <description>0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber &amp;lt;1070018473@qq.com&amp;gt; import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers[&#39;Content-Length&#39;])/1024/1024 with open(name, &amp;quot;wb&amp;quot;) as f: print &amp;quot;download file {}, total size: {}M&amp;quot;.format(name,content_size) for data in tqdm(iterable=resp.iter_content(1024*1024),total=content_size,unit=&#39;M&#39;): f.write(data) def get_content(filename): data = [] with open(filename) as f: lines = f.readlines() for line in lines: data.append(line.strip()) return data if __name__ == &#39;__main__&#39;: urls = get_content(&#39;urls.</description>
     </item>
     
     <item>

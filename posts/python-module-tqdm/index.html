@@ -122,30 +122,39 @@
 <h3 id="0x00-作用">0x00 作用</h3>
 
 <p>在下载大文件时以进度条的形式显示下载进度，如下图所示：
-<img src="/img/post/tqdm_progress_bar.png" alt="下载进度条" /></p>
+<img src="/img/post/tqdm_progress_bar.png" alt="80" /></p>
 
 <h3 id="0x01-代码">0x01 代码</h3>
 
 <pre><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# code by reber &lt;1070018473@qq.com&gt;
 
 import requests
 from tqdm import tqdm
 
 def get_vedio(url,name):
     resp = requests.get(url=url,stream=True)
-    content_size = int(resp.headers['Content-Length'])/1024
+    content_size = int(resp.headers['Content-Length'])/1024/1024
     with open(name, &quot;wb&quot;) as f:
-        print &quot;total: &quot;,content_size,'k'
-        for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit='k'):
+        print &quot;download file {}, total size: {}M&quot;.format(name,content_size)
+        for data in tqdm(iterable=resp.iter_content(1024*1024),total=content_size,unit='M'):
             f.write(data)
-        print &quot;done &quot;+name
 
+def get_content(filename):
+    data = []
+    with open(filename) as f:
+        lines = f.readlines()
+        for line in lines:
+            data.append(line.strip())
+    return data
 
 if __name__ == '__main__':
-    url = &quot;http://127.0.0.1/Video.mp4&quot;
-    name = url.split('/')[-1]
-    get_vedio(url,name)
+    urls = get_content('urls.txt')
+    for url in urls:
+        name = url.split('/')[-1]
+        turl = &quot;http://video.xxxxxxx.com/&quot;+url
+        get_vedio(turl,name)
 </code></pre>
 
                 
