@@ -16,22 +16,31 @@ topics = ["Python"]
 ```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# code by reber <1070018473@qq.com>
 
 import requests
 from tqdm import tqdm
 
 def get_vedio(url,name):
     resp = requests.get(url=url,stream=True)
-    content_size = int(resp.headers['Content-Length'])/1024
+    content_size = int(resp.headers['Content-Length'])/1024/1024
     with open(name, "wb") as f:
-        print "total: ",content_size,'k'
-        for data in tqdm(iterable=resp.iter_content(1024),total=content_size,unit='k'):
+        print "download file {}, total size: {}M".format(name,content_size)
+        for data in tqdm(iterable=resp.iter_content(1024*1024),total=content_size,unit='M'):
             f.write(data)
-        print "done "+name
 
+def get_content(filename):
+    data = []
+    with open(filename) as f:
+        lines = f.readlines()
+        for line in lines:
+            data.append(line.strip())
+    return data
 
 if __name__ == '__main__':
-    url = "http://127.0.0.1/Video.mp4"
-    name = url.split('/')[-1]
-    get_vedio(url,name)
+    urls = get_content('urls.txt')
+    for url in urls:
+        name = url.split('/')[-1]
+        turl = "http://video.xxxxxxx.com/"+url
+        get_vedio(turl,name)
 ```
