@@ -301,6 +301,64 @@ simplexml_load_string.php
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/docker-compose/">Docker之Docker Compose</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-10-05</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于docker compose 可以把docker-compose当作docker命令的封装，它是一个用来把 docker 自动化的东西，docker-compose可以一次性管理多个容器，通常用于需要多个容器相互配合来完成某项任务的场景。
+0x01 安装与卸载 https://docs.docker.com/compose/install
+0x02 一些常用命令  构建容器：docker-compose up -d 启动容器：docker-compose start 停止容器：docker-compose stop 重启容器：docker-compose restart kill容器：docker-compose kill 删除容器：docker-compose rm bash连接容器：docker-compose exec [services_name] bash 执行一条命令：docker-compose run [services_name] [command]  0x03 docker-compose简单应用  结构
+. ├── Dockerfile ├── docker-compose.yml └── src ├── app.py └── sources.list 1 directory, 4 files  Dockerfile
+FROM ubuntu:14.04.4 MAINTAINER reber &lt;1070018473@qq.com&gt; COPY ./src /code #将data挂载到容器的code WORKDIR /code RUN cp sources.list /etc/apt/sources.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/docker-compose/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/docker-volume/">Docker之数据卷</a></h2>
 
         
@@ -604,69 +662,6 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/python-read-and-write-xml/">使用Python读写xml文件</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-07-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xml">xml</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 解析XML的方法  SAX (simple API for XML)
-python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析XML的过程中触发一个个的事件并调用用户定义的回调函数来处理XML文件。
- DOM(Document Object Model)
-将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
- ElementTree(元素树)
-ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
-   我在这里使用ElementTree  0x01 Element对象的属性 每个Element对象都具有以下属性：
- tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）  &gt;&gt;&gt; from xml.etree import ElementTree as ET &gt;&gt;&gt; xml = &quot;&quot;&quot;&lt;books&gt; ... &lt;book id='37476'&gt;aaaa&lt;/book&gt; ... &lt;book id='83727'&gt;bbbb&lt;/book&gt; ... &lt;/books&gt;&quot;&quot;&quot; &gt;&gt;&gt; root = ET.fromstring(xml) &gt;&gt;&gt; root.tag 'books' &gt;&gt;&gt; child = root.getchildren() &gt;&gt;&gt; child [&lt;Element 'book' at 0x106f59410&gt;, &lt;Element 'book' at 0x106f59450&gt;] &gt;&gt;&gt; child[0].
-    </p>
-
-    
-    <footer>
-        <a href="/posts/python-read-and-write-xml/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -713,7 +708,7 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/linux" title="linux">linux(25)</a>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -800,7 +795,7 @@ ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
-                <sup>4</sup>
+                <sup>5</sup>
             </p>
         
             <p style="display:inline-block;">

