@@ -5,8 +5,9 @@ draft = false
 tags = ["linux"]
 title = "Mac基础设置"
 topics = ["Other"]
-
 +++
+
+macOS Sierra 10.12.6
 
 ### 0x00 安装brew
 ```
