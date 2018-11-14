@@ -83,6 +83,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/python-cnd-check/">Python实现CDN的判断</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-12-23</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 什么是CDN CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。  0x01 判断方法  可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息  0x02 代码 首先安装dnspython这个第三方模块：pip install dnspython
+#!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.netloc # print url rsv = dns.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-cnd-check/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-module-openpyxl/">Python的openpyxl模块</a></h2>
 
         
@@ -605,60 +662,6 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/package-sqlmapapi-common-function/">SqlmapApi常用方法封装</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-09-21</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/tools">tools</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import threading import requests import json from time import sleep class Sqli(threading.Thread): &quot;&quot;&quot;docstring for AutoSqli&quot;&quot;&quot; def __init__(self, server, target, data='', referer='', cookie=''): threading.Thread.__init__(self) self.server = server[0:-1] if server[-1]=='/' else server self.target = target self.data = data self.referer = referer self.cookie = cookie self.taskid = '' self.data def new_task(self): url = &quot;{}/task/new&quot;.format(self.server) self.taskid = json.loads(requests.get(url).text)['taskid'] if len(self.taskid)&gt;0: print &quot;Create new task,taskid is: %s&quot; % self.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/package-sqlmapapi-common-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -720,7 +723,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(77)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -932,7 +935,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
-                <sup>4</sup>
+                <sup>5</sup>
             </p>
         
             <p style="display:inline-block;">
