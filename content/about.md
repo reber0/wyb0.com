@@ -5,7 +5,10 @@ title = "About"
 sidemenu = "true"
 +++
 
-### Contact
+### E-mail
+- reber0#163.com
+
+### WeChat and QQ
 <div style="width:350px;margin-left:40px;margin-top:10px;">
     <div style="float:left">
         <img src="/img/wx.png" style="width:150px;height:150px;" title="添加微信">
