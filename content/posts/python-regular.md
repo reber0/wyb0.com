@@ -11,14 +11,14 @@ topics = ["Python"]
 ### 0x00 正则表达式
 正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串
 
-### 0x01 原子字符
-![正则的原子字符](/img/post/regular_atomic_character.png)
+### 0x01 符号
+![75](/img/post/regular_atomic_character.png)
 
-### 0x02 元字符
-![正则的元字符](/img/post/regular_metacharacters.png)
+### 0x02 特殊字符
+![75](/img/post/regular_metacharacters.png)
 
-### 0x03 修饰符
-![正则的修饰符](/img/post/regular_modifier.png)
+### 0x03 常用的模块属性
+![75](/img/post/regular_modifier.png)
 
 ### 0x04 re模块
 由于Pyton的字符串本身也用\转义，强烈建议使用r前缀
