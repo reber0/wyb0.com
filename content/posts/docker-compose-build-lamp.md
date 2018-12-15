@@ -66,7 +66,7 @@ services:
     mem_limit: 1024m #最大内存使用不超过1024m
 ```
 
-### 0x02 Dockerfile
+### 0x03 Dockerfile
 ```
 FROM ubuntu:14.04.4
 MAINTAINER reber <1070018473@qq.com>
@@ -89,7 +89,7 @@ CMD ["/data/init.sh"]
 #ENTRYPOINT ["tail","-f","/dev/null"]
 ```
 
-### 0x03 conf/my.cnf
+### 0x04 conf/my.cnf
 ```
 [mysqld]
 user=mysql
@@ -104,7 +104,7 @@ default-character-set=utf8
 default-character-set=utf8
 ```
 
-### 0x04 src/sources.list
+### 0x05 src/sources.list
 ```
 deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
 deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
@@ -118,7 +118,7 @@ deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted univer
 deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
 ```
 
-### 0x05 src/init.sh
+### 0x06 src/init.sh
 ```
 #!/bin/bash
 
@@ -126,7 +126,7 @@ service apache2 restart
 tail -f /dev/null
 ```
 
-### 0x05 www/index.php
+### 0x07 www/index.php
 ```
 <?php
     //因为使用了links，所以在apache这个容器中可以直接用"mymysql"字符连接数据库，
@@ -140,5 +140,5 @@ tail -f /dev/null
 ?>
 ```
 
-### 0x06 启动后访问
+### 0x08 启动后访问
 ![80](/img/post/20181215-231620.png)
