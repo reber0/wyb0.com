@@ -82,7 +82,7 @@ RUN cp sources.list /etc/apt/sources.list && apt-get update
 RUN apt-get install -y apache2
 RUN apt-get install -y php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
 
-cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #设定时区
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #设定时区
 
 WORKDIR /var/www/html
 
