@@ -177,7 +177,7 @@ services:
     mem_limit: 1024m #最大内存使用不超过1024m
 </code></pre>
 
-<h3 id="0x02-dockerfile">0x02 Dockerfile</h3>
+<h3 id="0x03-dockerfile">0x03 Dockerfile</h3>
 
 <pre><code>FROM ubuntu:14.04.4
 MAINTAINER reber &lt;1070018473@qq.com&gt;
@@ -200,7 +200,7 @@ CMD [&quot;/data/init.sh&quot;]
 #ENTRYPOINT [&quot;tail&quot;,&quot;-f&quot;,&quot;/dev/null&quot;]
 </code></pre>
 
-<h3 id="0x03-conf-my-cnf">0x03 conf/my.cnf</h3>
+<h3 id="0x04-conf-my-cnf">0x04 conf/my.cnf</h3>
 
 <pre><code>[mysqld]
 user=mysql
@@ -215,7 +215,7 @@ default-character-set=utf8
 default-character-set=utf8
 </code></pre>
 
-<h3 id="0x04-src-sources-list">0x04 src/sources.list</h3>
+<h3 id="0x05-src-sources-list">0x05 src/sources.list</h3>
 
 <pre><code>deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
 deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
@@ -229,7 +229,7 @@ deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted univer
 deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
 </code></pre>
 
-<h3 id="0x05-src-init-sh">0x05 src/init.sh</h3>
+<h3 id="0x06-src-init-sh">0x06 src/init.sh</h3>
 
 <pre><code>#!/bin/bash
 
@@ -237,7 +237,7 @@ service apache2 restart
 tail -f /dev/null
 </code></pre>
 
-<h3 id="0x05-www-index-php">0x05 www/index.php</h3>
+<h3 id="0x07-www-index-php">0x07 www/index.php</h3>
 
 <pre><code>&lt;?php
     //因为使用了links，所以在apache这个容器中可以直接用&quot;mymysql&quot;字符连接数据库，
@@ -251,7 +251,7 @@ tail -f /dev/null
 ?&gt;
 </code></pre>
 
-<h3 id="0x06-启动后访问">0x06 启动后访问</h3>
+<h3 id="0x08-启动后访问">0x08 启动后访问</h3>
 
 <p><img src="/img/post/20181215-231620.png" alt="80" /></p>
 
