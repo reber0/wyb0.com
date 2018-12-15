@@ -6,10 +6,22 @@
     <description>Recent content in Linux on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Nov 2018 20:10:23 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 15 Dec 2018 22:51:04 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/topics/linux/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>使用docker-compose构造LAMP环境</title>
+      <link>http://wyb0.com/posts/docker-compose-build-lamp/</link>
+      <pubDate>Sat, 15 Dec 2018 22:51:04 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/docker-compose-build-lamp/</guid>
+      <description>0x00 实现功能 使用docker-compose构造LAMP环境，其中日志、mysql数据库、mysql配置文件、网站文件均持久化存储到本机。
+apache、php通过Dockerfile构造，Dockerfile拉取ubuntu镜像，然后安装apache2和php。
+mysql的话通过docker的links连接mysql:5.5这个镜像当作数据库。
+0x01 文件构造 ➜ tree apache apache ├── Dockerfile ├── conf │ └── my.cnf ├── docker-compose.yml ├── log │ ├── apache │ └── mysql ├── mysql ├── src │ ├── init.sh │ └── sources.list └── www └── index.php 7 directories, 6 files  0x02 docker-compose.yml version: &#39;3&#39; services: apache: image: ubuntu:apache #镜像名为ubuntu，tag为apache container_name: apache #运行后生成的容器名字为apache build: . #使用当前路径下的Dockerfile构造镜像 ports: - &amp;quot;80:80&amp;quot; volumes: - ./www:/var/www/html - .</description>
+    </item>
     
     <item>
       <title>Docker之Docker Compose</title>

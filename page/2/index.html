@@ -83,6 +83,65 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/msf-simple-elevate-privileges/">Metasploit简单提权</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2018-02-26</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/tools">tools</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/intranet">intranet</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 前提 虚拟机有一个shell：http://10.11.11.20/a.php，物理机IP是211.222.222.72
+外网安装msf的主机：外网IP是114.115.123.123，内网IP是192.168.0.195
+0x01 查看主机基本信息 菜刀连接shell，终端执行systeminfo
+C:\Apps\phpStudy\WWW\&gt; systeminfo 主机名: REBER-WIN7 OS 名称: Microsoft Windows 7 专业版 OS 版本: 6.1.7600 ��ȱ Build 7600 OS 制造商: Microsoft Corporation OS 配置: 独立服务器 OS 构件类型: Multiprocessor Free 注册的所有人: reber 注册的组织: 产品 ID: 00371-868-0000007-85272 初始安装日期: 2017/12/26, 7:23:00 系统启动时间: 2018/2/26, 9:52:14 系统制造商: Parallels Software International Inc. 系统型号: Parallels Virtual Platform 系统类型: x64-based PC 处理器: 安装了 1 个处理器。 [01]: Intel64 Family 6 Model 70 Stepping 1 GenuineIntel ~2495 Mhz BIOS 版本: Parallels Software International Inc.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/msf-simple-elevate-privileges/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/win-terminal-download-and-exec-remote-file/">Windows终端下载文件和执行远程文件</a></h2>
 
         
@@ -584,63 +643,6 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/docker-basis/">Docker初识</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-08-15</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于Docker  Docker中的镜像类似VM的快照，容器类似虚拟机，使用镜像创建容器类似于使用快照创建虚拟机。 Docker中运行应用的是容器，容器的创建和销毁在秒级就能完成。 Docker使用了AUFS，可以以递进的方式创建&rdquo;VM&rdquo;，一个&rdquo;VM&rdquo;叠在另一个&rdquo;VM&rdquo;上，就像使用git增量开发一样。 软件的运行环境（image）和软件本身（container）分离，和数据也分离。  学习Docker需要了解4个概念：镜像、容器、数据卷、链接
-0x01 镜像image  Docker Images 只是一个只读模板，用来运行Docker容器，可以在Docker hub(官方镜像库)下载。 镜像拥有唯一ID(比如：72c989e2d109)以及一个供人阅读的名字和标签对(比如：ubuntu:latest)。 镜像必须完全可移植,Docker不允许例外。  0x02 容器container  可以在一个镜像的基础上创建多个容器，每个容器相互独立。 容器也拥有唯一ID以及一个供人阅读的名字。 容器被启动时会被分配一个随机的私有IP，其他容器可以通过这个IP与它进行通信。 Docker允许公开容器的特定端口。 一个容器一个进程，容器设计本意是用来运行一个应用的而非一台机器。 容器应该是短暂和一次性的。 Docker镜像层对于容器来说，是只读的，容器对于文件的写操作绝对不会作用在镜像中。  0x03 数据卷  数据卷表现为容器内的空间，但实际保存在容器外，你可以在不影响数据的情况下销毁、重建、修改、丢弃容器。 Docker允许你定义应用和数据部分，并提供工具让你可以将它们分开。  0x04 链接  Docker允许你在创建一个新容器时引用其它现存容器，在你刚创建的容器里被引用的容器将获得一个你指定的别名，我们就说这两个容器被链接在了一起。 若DB容器已经在运行，我们可以创建一个Web服务器容器，并在创建时引用这个DB容器，可以给它起个别名(比如dbapp)，在新创建的Web服务器容器中，可以在任何时候使用主机名dbapp与DB容器进行通信。  0x05 镜像与容器关系  Docker镜像是一个文件，属于静态的内容；Docker容器属于动态的内容，可以把容器理解为一个或多个运行进程。 Docker可以通过解析Docker镜像的json文件，获知应该在这个镜像之上运行什么样的进程，应该为进程配置怎么样的环境变量。 Docker守护进程手握Docker镜像的json文件，它为容器配置相应的环境并真正运行Docker镜像所指定的进程，从而完成Docker容器的真正创建。 当Docker容器运行起来之后，Docker镜像json文件就失去作用了。此时Docker镜像的绝大部分作用就是：为Docker容器提供一个文件系统的视角，供容器内部的进程访问文件资源。  0x06 Docker有三个组件和三个基本元素  三个组件
- Docker Daemon 运行于主机上，处理服务请求，是用于管理容器的后台进程，上面有一些api接口。 Docker Client 用于操作容器，它是Deamon的api接口(如docker start、docker rm等)的封装。 Docker Index 是中央registry，支持拥有公有与私有访问权限的Docker容器镜像的备份。  三个基本要素
- Docker Images 是一个只读模板，用来运行Docker容器。 Docker Containers 负责应用程序的运行，包括操作系统、用户添加的文件以及元数据。 DockerFile 是文件指令集，用来说明如何自动创建Docker镜像。   0x07 Docker的运行原理  Docker使用以下操作系统的功能来提高容器技术效率
-    </p>
-
-    
-    <footer>
-        <a href="/posts/docker-basis/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -687,7 +689,7 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(27)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -774,7 +776,7 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
-                <sup>5</sup>
+                <sup>6</sup>
             </p>
         
             <p style="display:inline-block;">
