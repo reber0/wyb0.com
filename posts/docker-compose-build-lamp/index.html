@@ -182,10 +182,9 @@ services:
 <pre><code>FROM ubuntu:14.04.4
 MAINTAINER reber &lt;1070018473@qq.com&gt;
 
-#定义会被容器自动执行的目录
-ENV AUTO_RUN_DIR /apache_init.d
-#定义shell文件名
-ENV INIT_SHELL init.sh
+
+ENV AUTO_RUN_DIR /apache_init.d #定义会被容器自动执行的目录
+ENV INIT_SHELL init.sh #定义shell文件名
 
 COPY ./src /data
 WORKDIR /data
@@ -193,6 +192,8 @@ RUN chmod +x init.sh
 RUN cp sources.list /etc/apt/sources.list &amp;&amp; apt-get update
 RUN apt-get install -y apache2
 RUN apt-get install -y php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
+
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #设定时区
 
 WORKDIR /var/www/html
 
