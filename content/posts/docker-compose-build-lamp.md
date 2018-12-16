@@ -58,7 +58,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./conf/my.cnf:/etc/my.cnf
+      - ./conf/my.cnf:/etc/mysql/my.cnf
       - ./mysql:/var/lib/mysql
       - ./log/mysql:/var/log/mysql
     environment: #设置环境变量
