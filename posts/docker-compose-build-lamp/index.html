@@ -241,8 +241,8 @@ tail -f /dev/null
 <h3 id="0x07-www-index-php">0x07 www/index.php</h3>
 
 <pre><code>&lt;?php
-    //因为使用了links，所以在apache这个容器中可以直接用&quot;mymysql&quot;字符连接数据库，
-    //使用links后其实就是在apache这个容器的hosts文件中添加了&quot;mymysql&quot;字符到mysql容器的ip的映射
+    //因为使用了links，所以在apache这个容器中可以直接用&quot;mymysql&quot;字符连接数据库，使用links后的
+    //效果可以理解为(实际上没有)在apache这个容器的hosts文件中添加了&quot;mymysql&quot;字符到mysql容器的ip的映射
     $link = mysql_connect(&quot;mymysql&quot;, &quot;root&quot;, &quot;root&quot;);
     if(!$link)
         die('Could not connect: ' . mysql_error());
