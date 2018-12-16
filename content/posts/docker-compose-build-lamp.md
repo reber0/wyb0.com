@@ -130,8 +130,8 @@ tail -f /dev/null
 ### 0x07 www/index.php
 ```
 <?php
-    //因为使用了links，所以在apache这个容器中可以直接用"mymysql"字符连接数据库，
-    //使用links后其实就是在apache这个容器的hosts文件中添加了"mymysql"字符到mysql容器的ip的映射
+    //因为使用了links，所以在apache这个容器中可以直接用"mymysql"字符连接数据库，使用links后的
+    //效果可以理解为(实际上没有)在apache这个容器的hosts文件中添加了"mymysql"字符到mysql容器的ip的映射
     $link = mysql_connect("mymysql", "root", "root");
     if(!$link)
         die('Could not connect: ' . mysql_error());
