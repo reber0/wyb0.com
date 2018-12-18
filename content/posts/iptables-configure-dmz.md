@@ -70,7 +70,7 @@ iptables -A INPUT -m state --state INVALID -j DROP
 iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -i eth0 -p tcp –m multiport --dports 20,21 -j ACCEPT
+iptables -A INPUT -i eth0 -p tcp -m multiport --dports 20,21 -j ACCEPT
 iptables -A INPUT -i eth2 -s 192.168.1.0/24 -j ACCEPT
 #********************************************************************
 #OUTPUT：
