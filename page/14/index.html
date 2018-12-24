@@ -83,65 +83,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/linux-set-up-tomcat-mysql-jsp/">Linux下搭建Tomcat&#43;MySQL&#43;JSP</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-17</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal
-0x00 安装mysql $ sudo yum install mysql mysql-server mysql-devel
-0x01 安装jdk和tomcat  创建安装jdk和tomcat的文件夹  下载安装包并解压安装
-jdk包可在这里下载
-tomcat包可在这里下载   0x02 简单配置tomcat 0x03 启动tomcat 0x04 连接数据库 驱动可在这里下载 $ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
-&lt;%@page contentType=&quot;text/html;charset=utf-8&quot; import=&quot;java.sql.*&quot; %&gt; &lt;% String driver = &quot;com.mysql.jdbc.Driver&quot;; String url = &quot;jdbc:mysql://localhost:3306/tomcat&quot;; //数据库web String user = &quot;tomcat&quot;; String password = &quot;123456&quot;; try { Class.forName(driver); Connection conn = DriverManager.getConnection(url, user, password); if(!conn.isClosed()) out.println(&quot;数据库连接成功！&quot;); conn.close(); } catch(ClassNotFoundException e) { out.println(&quot;找不到驱动程序&quot;); e.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-set-up-tomcat-mysql-jsp/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/linux-set-up-nginx-mysql-php/">Linux下搭建Nginx&#43;MySQL&#43;PHP</a></h2>
 
         
@@ -664,6 +605,58 @@ select name as '名字',password as '密码' form user; select * from message wh
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/win-and-ubuntu-partition/">win/ubuntu双系统分区设置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-31</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/windows">Windows</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">操作系统</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         win10和ubuntu双系统分区设置  硬盘采用uefi格式 硬盘首部留400M空间，是FAT16的格式，用来存放win的引导信息 在硬盘末尾给ubuntu划分50G左右空间 ubuntu的/分区，格式为ext4，空间为40G ubuntu的/home分区，格式为ext4，空间为10G ubuntu的/boot分区，格式为ext4,空间为200M ubuntu的/swap分区，格式为swap，空间为200M ubuntu的引导分区为/boot  
+    </p>
+
+    
+</article>
+
+
+            
 
             
 
@@ -877,7 +870,7 @@ select name as '名字',password as '密码' form user; select * from message wh
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
-                <sup>3</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">

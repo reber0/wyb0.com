@@ -34,13 +34,15 @@ yum install httpd  安装MySQL
     </item>
     
     <item>
-      <title>Redis的安装</title>
-      <link>http://wyb0.com/posts/redis-install/</link>
-      <pubDate>Wed, 03 Aug 2016 00:00:48 +0800</pubDate>
+      <title>Redis的简单使用</title>
+      <link>http://wyb0.com/posts/redis-bisis-use/</link>
+      <pubDate>Wed, 03 Aug 2016 11:02:20 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/redis-install/</guid>
-      <description>0x00 关于Redis Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。  0x01 安装 可在http://download.redis.io/releases/ 下载
-$ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install  0x02 产生的可执行文件 redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写)  0x03 配置文件 $ vim /opt/redis-3.2.3/redis.conf daemonize yes # 当值为yes时可以后台运行 bind 127.0.0.1 # 绑定ip，配置后只接受来自该ip的请求 port 6379 # 监听端口 timeout 300 # 客户端连接超时时间，单位为秒 loglevel notice # 日志等级分为4级，debug、verbose、notice、warning logfile &amp;quot;/var/log/redis.log&amp;quot; # 日志文件位置 databases 16 # 数据库数量 sava 900 1 # 设置数据库镜像的频率 dbfilename dump.</description>
+      <guid>http://wyb0.com/posts/redis-bisis-use/</guid>
+      <description>0x00 关于Redis Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。  0x01 安装  Linux下安装Redis 可在http://download.redis.io/releases/ 下载
+$ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install  Windows下安装Redis 下载：点此下载
+  安装后添加环境变量
+添加为系统服务： redis-server.exe --service-install redis.windows.conf --loglevel verbose 启动服务： redis-server.exe --service-start 关闭服务： redis-server.exe --service-stop 为Redis添加密码： 打开安装目录下的文件redis.windows-service.conf， 找到requirepass，配置为requirepass mypassword，然后重启redis 此时仍然可以连接上，但是执行命令时会提示没权限 带密码连接Redis： redis-cli.exe -h 127.0.0.1 -p 6379 -a mypassword  0x02 产生的可执行文件 redis-server：redis服务器启动程序 redis-cli：redis命令行工具，也可为客户端 redis-stat：redis状态检测工具 redis-benchmark：redis性能检测工具(读写)  0x03 配置文件 $ vim /opt/redis-3.</description>
     </item>
     
     <item>

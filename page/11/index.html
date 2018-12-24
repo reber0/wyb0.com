@@ -83,57 +83,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/vmware-install-vm-tools/">虚拟机下安装vm-tools</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA">虚拟机</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         vm-tools安装后可以在客户机和虚拟机间双向复制文件
-0x00 安装 0x01 Kali2.0 一般安装的话按照上面的步骤即可安装成功，但是Kali2.0不行，可以用如下方法安装： 安装后可以终端输入：dpkg-reconfigure locales，在弹出的界面选择zh_CN.UTF-8设置语言为中文 可以用vim /root/.config/user-dirs.dirs将&quot;桌面&quot;修改为&quot;Desktop&quot;  
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/xss-example/">XSS实例</a></h2>
 
         
@@ -632,6 +581,62 @@ DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/python-simple-decode-ip-head/">Python简单解码IP头</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-03</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 解码IP头 Windows上运行时要以管理员身份运行
+代码可以解码IP头统计通信信息并保存到文本，同时统计数量
+#!/usr/bin/env python #-*- coding:utf-8 -*- import socket import os import sys import time import struct from ctypes import * host = &quot;10.22.114.114&quot; tcp_num = 0 udp_num = 0 icmp_num = 0 class IP(Structure): _fields_ = [ (&quot;ihl&quot;, c_ubyte,4), (&quot;version&quot;, c_ubyte,4), (&quot;tos&quot;, c_ubyte), (&quot;len&quot;, c_ushort), (&quot;id&quot;, c_ushort), (&quot;offset&quot;, c_ushort), (&quot;ttl&quot;, c_ubyte), (&quot;protocol_num&quot;,c_ubyte), (&quot;sum&quot;, c_ushort), (&quot;src&quot;, c_ulong), (&quot;dst&quot;, c_ulong) ] def __new__ (self,socket_buffer=None): return self.from_buffer_copy(socket_buffer) def __init__ (self,socket_buffer=None): self.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-simple-decode-ip-head/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -845,7 +850,7 @@ DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
-                <sup>3</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">

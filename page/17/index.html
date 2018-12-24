@@ -83,62 +83,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/linux-text-processing/">Linux之文本处理</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        这里介绍3种方式：awk、grep、sed
-0x00 awk处理文本(最常用) 作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化 awk命令格式：awk [F filed-separator] 'commands' input-fiel(s) 参数-F：可以添加任意的分割符，比较重要 awk工作流程是这样的： 读入有'\n'换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&quot;空白键&quot; 或 &quot;[tab]键&quot;。   入门示例：
-[wyb@localhost temp]$ head -n 5 /etc/passwd root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin adm:x:3:4:adm:/var/adm:/sbin/nologin lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{print $1}' #输出第1列，域分隔符为： root bin daemon adm lp [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{pri nt &quot;id:&quot;$1&quot;\tshell:&quot;$7}' #输出第1、7列且给予列名 id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' 'BEGIN {print &quot;====begin=====&quot;} {print &quot;id:&quot;$1&quot;\tshell:&quot;$7} END {print &quot;====end====&quot;}' ====begin===== id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin ====end==== [wyb@localhost temp]$ awk -F: '/root/' /etc/passwd #搜索含有root关键字的所有行 root:x:0:0:root:/root:/bin/bash operator:x:11:0:operator:/root:/sbin/nologin [wyb@localhost temp]$ awk -F: '/root/{print $7}' /etc/passwd #匹配root并输出对应shell /bin/bash /sbin/nologin [wyb@localhost temp]$ awk -F: '/^root/' /etc/passwd #匹配以root开头的行 root:x:0:0:root:/root:/bin/bash  内置变量：   ARGC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;命令行参数个数 ARGV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;命令行参数排列 ENVIRON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持队列中系统环境变量的使用 FILENAME&nbsp;&nbsp;&nbsp;awk浏览的文件名 FNR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览文件的记录数 FS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设置输入域分隔符，等价于命令行 -F选项 NF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览记录的域的个数 NR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已读的记录数 OFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出域分隔符 ORS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出记录分隔符 RS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;控制记录分隔符
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-text-processing/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/linux-compression-software/">Linux之压缩</a></h2>
 
         
@@ -651,6 +595,65 @@ DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  0x02 打开ip
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/linux-permission-settings/">Linux之权限</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-04-17</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        主要有三种参数：rwx 对于文件来说：分别是读/写/执行
+对于目录来说：r读目录结构；w操作目录结构；x进入目录
+如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh
+若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中
+0x00 文件权限  chmod -x
+[root@localhost tmp]# ls -l total 0 -rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# chmod -x a.txt 去除ugo的x权限 [root@localhost tmp]# ls -l total 0 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# ls -l a.txt -rwxrw-rw-. 1 root root 9 Apr 16 20:42 a.txt [root@localhost tmp]# cat a.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/linux-permission-settings/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -864,7 +867,7 @@ DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  0x02 打开ip
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
-                <sup>3</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">
