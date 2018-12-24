@@ -4,7 +4,7 @@ description = "网上看到的,感觉挺好,所以就记录一下,俄罗斯某�
 draft = false
 tags = ["miscellanea"]
 title = "[转]短"
-topics = ["Miscellanea"]
+topics = ["Other"]
 
 +++
 

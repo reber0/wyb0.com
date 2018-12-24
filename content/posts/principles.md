@@ -4,7 +4,7 @@ description = "来源于网络"
 draft = false
 tags = ["miscellanea"]
 title = "准则"
-topics = ["Miscellanea"]
+topics = ["Other"]
 
 +++
 
