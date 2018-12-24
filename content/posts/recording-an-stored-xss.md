@@ -3,7 +3,7 @@ date = "2016-07-17T23:30:54+08:00"
 description = ""
 draft = false
 tags = ["xss"]
-title = "XSS实例"
+title = "一次存储型XSS利用实例"
 topics = ["Pentest"]
 
 +++
