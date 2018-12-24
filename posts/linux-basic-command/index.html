@@ -248,9 +248,12 @@ nslookup www.baidu.com   //返回一些信息
 <pre><code>ping -c 3 www.baidu.com   //指定ping百度3次
 </code></pre>
 
-<h3 id="0x0b-last-查看近期的登陆信息">0x0B last：查看近期的登陆信息</h3>
+<h3 id="0x0b-last-finger-查看近期的登陆信息">0x0B last/finger：查看近期的登陆信息</h3>
 
 <pre><code>[root@localhost ~]# last
+</code></pre>
+
+<pre><code>[root@localhost ~]# finger
 </code></pre>
 
 <h3 id="0x0c-find-查找文件">0x0C find：查找文件</h3>
@@ -376,26 +379,129 @@ sudo mkfs.ext3 /dev/sdb1
 mount -t ext3 -o rw /dev/sdb1 /home/aaa  //-o指定权限
 </code></pre>
 
-<h3 id="0x13-finger">0x13 finger</h3>
-
-<pre><code>finger可以查看用户登录情况
-</code></pre>
-
-<h3 id="0x14-时间同步">0x14 时间同步</h3>
+<h3 id="0x13-时间同步">0x13 时间同步</h3>
 
 <pre><code>ntpdate time.nist.gov //需要root权限
 </code></pre>
 
-<h3 id="0x15-下载">0x15 下载</h3>
+<h3 id="0x14-下载">0x14 下载</h3>
 
 <pre><code>$ curl -o aa.xml http://wyb0.com/index.xml #可以访问网页，它同时还保存了文件，文件名为aa.xml
 $ wget http://wyb0.com/index.xml #下载的文件名为index.xml
 </code></pre>
 
-<h3 id="0x16-环境变量">0x16 环境变量</h3>
+<h3 id="0x15-环境变量">0x15 环境变量</h3>
 
 <pre><code>$ env
 </code></pre>
+
+<h3 id="0x16-压缩与解压缩">0x16 压缩与解压缩</h3>
+
+<ul>
+<li><p>tar</p>
+
+<ul>
+<li><p>tar主要参数</p>
+
+<pre><code class="language-bash"># 主要参数
+-c  创建一个新的压缩文件
+-x  解压
+-t  查看压缩文件的内容
+-f  指定档案文件的名字
+-v  显示过程信息
+-r  增加文件到指定的包
+-C  指定解压后的路径
+-z  使用gzip
+-j  使用bzip2
+-Z  使用compress
+</code></pre></li>
+
+<li><p>tar示例</p>
+
+<pre><code class="language-bash"># tar用法示例
+$ ls
+aaa
+$ tar -cvf 1.tar aaa/   #打包不压缩
+aaa/
+aaa/b.txt
+aaa/c.txt
+aaa/test.txt
+aaa/a.txt
+$ tar -zcvf 1.tar.gz aaa/   #打包且以gzip压缩
+aaa/
+aaa/b.txt
+aaa/c.txt
+aaa/test.txt
+aaa/a.txt
+$ tar -jcvf 1.tar.bz2 aaa/  #打包且以bzip2压缩
+aaa/
+aaa/b.txt
+aaa/c.txt
+aaa/test.txt
+aaa/a.txt
+tar -zxvf aa.tar.gz /home/aaa --exclude=dir  #排除目录
+$ ls -l
+total 24
+-rw-r--r--. 1 wyb root 10240 Apr 19 07:47 1.tar
+-rw-r--r--. 1 wyb root   265 Apr 19 07:48 1.tar.bz2
+-rw-r--r--. 1 wyb root   253 Apr 19 07:48 1.tar.gz
+drwxr-xr-x. 2 wyb root  4096 Apr 19 07:22 aaa
+$ file 1.tar.gz     #查看文件类型
+1.tar.gz: gzip compressed data, from Unix, last modified: Tue Apr 19 07:48:01 2016
+$ tar -ztvf 1.tar.gz    #查看压缩包内容
+drwxr-xr-x wyb/root          0 2016-04-19 07:22 aaa/
+-rw-r--r-- wyb/root          0 2016-04-19 05:05 aaa/b.txt
+-rw-r--r-- wyb/root          0 2016-04-19 05:05 aaa/c.txt
+-rw-r--r-- wyb/root         84 2016-04-19 05:50 aaa/test.txt
+-rw-r--r-- wyb/root          0 2016-04-19 05:05 aaa/a.txt
+$ ls
+1.tar  1.tar.bz2  1.tar.gz  aaa
+$ rm -rf aaa/
+$ ls
+1.tar  1.tar.bz2  1.tar.gz
+$ tar -zxvf 1.tar.gz    #解压到当前目录
+aaa/
+aaa/b.txt
+aaa/c.txt
+aaa/test.txt
+aaa/a.txt
+$ ls
+1.tar  1.tar.bz2  1.tar.gz  aaa
+$ ls aaa/
+a.txt  b.txt  c.txt  test.txt
+$ ls /tmp/
+111.txt  aa
+$ tar -zxvf 1.tar.gz -C /tmp/aa #解压到指定路径
+aaa/
+aaa/b.txt
+aaa/c.txt
+aaa/test.txt
+aaa/a.txt
+</code></pre></li>
+</ul></li>
+
+<li><p>zip</p>
+
+<pre><code># zip用法示例
+[reber@localhost ~]$ ls aaa/
+a.txt  b.txt  c.txt
+[reber@localhost ~]$ zip -re aaa.zip aaa/   #加密压缩
+Enter password: 
+Verify password: 
+adding: aaa/ (stored 0%)
+adding: aaa/b.txt (stored 0%)
+adding: aaa/c.txt (stored 0%)
+adding: aaa/a.txt (stored 0%)
+[reber@localhost ~]$ rm aaa/*
+[reber@localhost ~]$ ls aaa/
+[reber@localhost ~]$ unzip aaa.zip   #解压缩
+Archive:  aaa.zip
+[aaa.zip] aaa/b.txt password: 
+extracting: aaa/b.txt         
+extracting: aaa/c.txt               
+extracting: aaa/a.txt
+</code></pre></li>
+</ul>
 
                 
                 <div style="padding:10px 1px;">
@@ -457,7 +563,7 @@ $ wget http://wyb0.com/index.xml #下载的文件名为index.xml
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/linux" title="linux">linux(27)</a>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -574,7 +680,7 @@ $ wget http://wyb0.com/index.xml #下载的文件名为index.xml
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
-                <sup>12</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">
