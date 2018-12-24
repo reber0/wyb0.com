@@ -1504,18 +1504,6 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
     </item>
     
     <item>
-      <title>SQL注入之判断数据库类型</title>
-      <link>http://wyb0.com/posts/injection-of-check-database-type/</link>
-      <pubDate>Sun, 19 Jun 2016 22:15:52 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/injection-of-check-database-type/</guid>
-      <description>0x00 常见手段 扫描端口、指纹、抓包查看http头信息、在网址后面直接判断
-0x01 根据各数据库特有函数判断  Access:
-and (select count(*) from MSysAccessObjects)&amp;gt;0 返回正常说明是access and exists(select count(*) from表) ID=1 and (select count (*) from sysobjects)&amp;gt;0 返回异常 ID=1 and (select count (*) from msysobjects)&amp;gt;0返回异常  SQLServer:
-and (select count(*) from sysobjects) &amp;gt;0 返回正常说明是mssql ID=1 and (select count (*) from sysobjects)&amp;gt;0 返回正常 ID=1 and (select count (*) from msysobjects)&amp;gt;0返回异常 ID=1 and left(version(),1)=5%23 //红色字体也可能是4 ID=1 and exists(select id from sysobjects) ID=1 and len(user)&amp;gt;0 ID=1 CHAR(97)+CHAR(110)+CHAR(100)+CHAR(32)+CHAR(49)+CHAR(61)+CHAR(49)  MySQL:</description>
-    </item>
-    
-    <item>
       <title>MySQL的information_schema库</title>
       <link>http://wyb0.com/posts/mysql-database-table-information_schema/</link>
       <pubDate>Sun, 19 Jun 2016 20:18:48 +0800</pubDate>
