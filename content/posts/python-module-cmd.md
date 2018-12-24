@@ -143,4 +143,4 @@ if __name__ == '__main__':
 ```
 
 ### 0x03 程序执行结果如下
-![cmd简单实现shell运行结果](/img/post/cmd_results_sample.png)
+![60](/img/post/cmd_results_sample.png)
