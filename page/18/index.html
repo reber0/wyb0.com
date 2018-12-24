@@ -548,70 +548,6 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/various-parameter-types-injected/">各种参数类型注入</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2015-12-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 分类 根据注入时提交的变量参数类型，SQL注入点有不同的分类，不同的注入点，其注入时需要注意的事项也有所不同。按提交参数类型，SQL注入点主要分为下面3种：即数字型注入点、字符型注入点和搜索型注入点
-0x01 数字型注入点 形如&rdquo;http://www.xxx.com/a.asp?ID=55&quot; ，这类注入的参数是&rdquo;数字&rdquo;，因此称为&rdquo;数字型注入点&rdquo;。 此类注入点提交的SQL语句，其原形大致为：select * from 表名 where 字段=55
-当提交&rdquo;http://www.xxx.com/a.asp?ID=55 And [查询条件]&ldquo;时，向数据库提交的完整SQL语句为：
-select * from 表名 where 字段=55 and [查询条件]
-0x02 字符型注入点 形如&rdquo;http://www.xxx.com/a.asp?Class=0123&quot;这类注入的参数是&quot;字符&quot;，称为&quot;字符型&quot;注入点。
-此类注入点提交的 SQL 语句，其原形大致为：
-select * from 表名 where 字段=&lsquo;日期&rsquo;
-当提交&rdquo;http://www.xxx.com/a.asp?Class=日期 And [查询条件]&ldquo;时，向数据库提交的SQL语句为：
-select * from 表名 where 字段=&lsquo;日期&rsquo; and [查询条件]
-0x03 搜索型注入点 这是一类特殊的注入类型。
-这类注入主要是指在进行数据搜索时没过滤搜索参数，一般在链接地址中有&rdquo;keyword=关键字&rdquo;，有的不显示的链接地址，而是直接通过搜索框表单提交。
-此类注入点提交的 SQL 语句，其原形大致为：
-select * from 表名 where 字段 like &lsquo;%关键字%&rsquo;
-当我们提交注入参数为&rdquo;keyword=&lsquo;and[查询条件] and &lsquo;%&rsquo;=&lsquo;,则向数据库提交的完整SQL语句为：
-select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &lsquo;%&rsquo;=&lsquo;%&rsquo;
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/injection-of-asp-in-the-cookie/">ASP联合注入(Cookie处)</a></h2>
 
         
@@ -658,6 +594,62 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
  可以利用注入中转 可以利用sqlmap   0x01 用注入中转进行Cookie注入  目标：http://localhost:81/2/shownews.asp?id=183
  打开注入中转这个工具，填入相应参数，然后点击生成ASP，将生成的asp文件(jmCook.asp)放入你自己搭建的网站内后即可进行注入  提交localhost:81/jmCook.asp?jmdcw=183 order by猜测字段数
  提交localhost:81/jmCook.asp?jmdcw=183 UNION SELECT 1,2,3,4 from XXX猜测表名  猜测内容   0x02 用sqlmap进行Cookie注入  sqlmap验证存在Cookie注入  猜表名  猜列名  猜字段内容   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/set-up-dns-server/">搭建DNS服务器</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2015-07-14</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">Server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         环境：虚拟机rhel-server-6.2
+0x00 搭建流程  安装DNS服务器 配置DNS主配置文件 配置DNS正反向解析区域数据文件 启动DNS服务器进行测试  0x01 安装DNS服务  挂载光盘
+用mount -o,loop /dev/cdrom /mnt/cdrom命令挂载光盘
+ 配置yum源，安装BIND(用命令yum install bind*安装) 安装结果如下：  进行配置
+vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc1921.zones中定义区域  配置正反向解析文件
+分别配置wyb.cn.hosts和wyb.cn.rev   0x02 验证 用service named start命令启动DNS
+用nslookup命令进行验证，先查看当前采用那台DNS解析，测试反向资源记录以及正反向解析 
     </p>
 
     
@@ -721,7 +713,7 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(77)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -813,7 +805,7 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>16</sup>
+                <sup>15</sup>
             </p>
         
             <p style="display:inline-block;">

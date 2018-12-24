@@ -211,31 +211,13 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
 一次一个字节，速度慢，但只要有注入就能用 Time-based blind SQL injection(基于时间延迟注入)
 超级慢，比布尔型注入慢几倍，但是通用性较强 Stacked queries SQL injection(堆叠注入/可多语句查询注入)
 只有SQL Server可以使用  根据类型
- 整形 字符串型 搜索型   0x04 查找注入点  在URL中
+ 整形
+形如&amp;quot;a.asp?ID=55&amp;quot;，这类注入的参数是&amp;rdquo;数字&amp;rdquo;，因此称为&amp;rdquo;数字型注入点&amp;rdquo;。 字符串型
+形如&amp;quot;b.asp?name=xiaoming&amp;quot;这类注入的参数是&amp;rdquo;字符&amp;rdquo;，称为&amp;rdquo;字符型&amp;rdquo;注入点。
+ 搜索型
+指在进行数据搜索时没过滤搜索参数，直接通过搜索框表单提交。
+   0x04 查找注入点  在URL中
  and 1=1/and 1=2(整型) 随即输入(整型) -1/+1 回显上下页面(整型) 单引号(字符型/整型) and sleep(5) (判断页面返回时间)  在http头</description>
-    </item>
-    
-    <item>
-      <title>各种参数类型注入</title>
-      <link>http://wyb0.com/posts/various-parameter-types-injected/</link>
-      <pubDate>Sun, 20 Dec 2015 20:08:47 +0800</pubDate>
-      
-      <guid>http://wyb0.com/posts/various-parameter-types-injected/</guid>
-      <description>0x00 分类 根据注入时提交的变量参数类型，SQL注入点有不同的分类，不同的注入点，其注入时需要注意的事项也有所不同。按提交参数类型，SQL注入点主要分为下面3种：即数字型注入点、字符型注入点和搜索型注入点
-0x01 数字型注入点 形如&amp;rdquo;http://www.xxx.com/a.asp?ID=55&amp;quot; ，这类注入的参数是&amp;rdquo;数字&amp;rdquo;，因此称为&amp;rdquo;数字型注入点&amp;rdquo;。 此类注入点提交的SQL语句，其原形大致为：select * from 表名 where 字段=55
-当提交&amp;rdquo;http://www.xxx.com/a.asp?ID=55 And [查询条件]&amp;ldquo;时，向数据库提交的完整SQL语句为：
-select * from 表名 where 字段=55 and [查询条件]
-0x02 字符型注入点 形如&amp;rdquo;http://www.xxx.com/a.asp?Class=0123&amp;quot;这类注入的参数是&amp;quot;字符&amp;quot;，称为&amp;quot;字符型&amp;quot;注入点。
-此类注入点提交的 SQL 语句，其原形大致为：
-select * from 表名 where 字段=&amp;lsquo;日期&amp;rsquo;
-当提交&amp;rdquo;http://www.xxx.com/a.asp?Class=日期 And [查询条件]&amp;ldquo;时，向数据库提交的SQL语句为：
-select * from 表名 where 字段=&amp;lsquo;日期&amp;rsquo; and [查询条件]
-0x03 搜索型注入点 这是一类特殊的注入类型。
-这类注入主要是指在进行数据搜索时没过滤搜索参数，一般在链接地址中有&amp;rdquo;keyword=关键字&amp;rdquo;，有的不显示的链接地址，而是直接通过搜索框表单提交。
-此类注入点提交的 SQL 语句，其原形大致为：
-select * from 表名 where 字段 like &amp;lsquo;%关键字%&amp;rsquo;
-当我们提交注入参数为&amp;rdquo;keyword=&amp;lsquo;and[查询条件] and &amp;lsquo;%&amp;rsquo;=&amp;lsquo;,则向数据库提交的完整SQL语句为：
-select * from 表名 where 字段 like &amp;lsquo;%&amp;rsquo; and [查询条件] and &amp;lsquo;%&amp;rsquo;=&amp;lsquo;%&amp;rsquo;</description>
     </item>
     
     <item>
