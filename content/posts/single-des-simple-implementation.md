@@ -3,7 +3,7 @@ date = "2015-05-22T16:52:55+08:00"
 description = ""
 draft = false
 tags = ["des", "C语言"]
-title = "单重DES的简单实现"
+title = "利用C语言简单实现单重DES"
 topics = ["Other"]
 
 +++
