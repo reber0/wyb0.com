@@ -3,7 +3,7 @@ date = "2015-12-04T19:42:19+08:00"
 description = ""
 draft = false
 tags = ["injection"]
-title = "ASP简单Cookie注入"
+title = "ASP联合注入(Cookie处)"
 topics = ["Pentest"]
 
 +++
