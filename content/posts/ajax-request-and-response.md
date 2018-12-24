@@ -59,7 +59,7 @@ if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari
 }
 ```
 
-### 0x00 GET请求
+### 0x03 利用XHR进行GET请求
 ```
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +100,7 @@ if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari
 ```
 点击"Request data"时就会请求服务端的2.html
 
-### 0x01 POST请求
+### 0x04 利用XHR进行POST请求
 ```
 // 简单的POST请求
 xmlhttp.open("POST","demo_post.html",true);
@@ -112,7 +112,7 @@ xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send("fname=Henry&lname=Ford");
 ```
 
-### 0x02 简单封装
+### 0x05 简单封装XHR
 ```
 function createXHR () {
     var request = false;
