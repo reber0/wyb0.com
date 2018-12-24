@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pentest - Reber's Blog</title>
+    <title>ASP联合注入(Cookie处) - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
-    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="description" content="">
     <meta name="author" content="reber">
 
     
@@ -74,421 +74,140 @@
     </ul>
 </div>
 
-    
+
     <div class="main">
         <div class="left">
-            
+            <div>
+                <h2>ASP联合注入(Cookie处)</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>2015-12-04</time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
             <div class="content">
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/theharvester-blasting-email/">使用theHarvester得到邮箱</a></h2>
+                
 
+<h3 id="0x00-cookie注入的使用">0x00 Cookie注入的使用</h3>
+
+<ul>
+<li><p>三大Web提交方式</p>
+
+<ul>
+<li>GET：直接在浏览器上面访问地址<br /></li>
+<li>POST：提交表单(会员注册、文件上传等)<br /></li>
+<li>COOKIE：访问网站下面自带的身份验证的值</li>
+</ul></li>
+
+<li><p>Cookie注入利用时机<br />
+当用普通注入时，采用and 1=1时出现错误提示(如下图)，普通的注入就没办法了，可以尝试大小写，编码等绕过，若过滤严谨，无法绕过，这时就可以采用cookie注入。
+<img src="/img/post/cookie_injection_conditions.png" alt="Cookie注入条件" /></p></li>
+
+<li><p>利用方法</p>
+
+<ul>
+<li>可以利用注入中转</li>
+<li>可以利用sqlmap</li>
+</ul></li>
+</ul>
+
+<h3 id="0x01-用注入中转进行cookie注入">0x01 用注入中转进行Cookie注入</h3>
+
+<ul>
+<li><p>目标：<a href="http://localhost:81/2/shownews.asp?id=183">http://localhost:81/2/shownews.asp?id=183</a></p></li>
+
+<li><p>打开注入中转这个工具，填入相应参数，然后点击生成ASP，将生成的asp文件(jmCook.asp)放入你自己搭建的网站内后即可进行注入
+<img src="/img/post/cookie_injection_create_asp.png" alt="注入中转生成asp文件" /></p></li>
+
+<li><p>提交localhost:81/jmCook.asp?jmdcw=183 order by猜测字段数</p></li>
+
+<li><p>提交localhost:81/jmCook.asp?jmdcw=183 UNION SELECT 1,2,3,4 from XXX猜测表名
+<img src="/img/post/cookie_injection_get_display_point.png" alt="得到显示位" /></p></li>
+
+<li><p>猜测内容
+<img src="/img/post/cookie_injection_get_content.png" alt="得到数据" /></p></li>
+</ul>
+
+<h3 id="0x02-用sqlmap进行cookie注入">0x02 用sqlmap进行Cookie注入</h3>
+
+<ul>
+<li><p>sqlmap验证存在Cookie注入
+<img src="/img/post/cookie_injection_sqlmap_test1.png" alt="sqlmap验证存在漏洞1" />
+<img src="/img/post/cookie_injection_sqlmap_test2.png" alt="sqlmap验证存在漏洞2" /></p></li>
+
+<li><p>猜表名
+<img src="/img/post/cookie_injection_sqlmap_get_table_name1.png" alt="sqlmap猜表名1" />
+<img src="/img/post/cookie_injection_sqlmap_get_table_name2.png" alt="sqlmap猜表名2" /></p></li>
+
+<li><p>猜列名
+<img src="/img/post/cookie_injection_sqlmap_get_column_name1.png" alt="sqlmap猜列名1" />
+<img src="/img/post/cookie_injection_sqlmap_get_column_name2.png" alt="sqlmap猜列名2" /></p></li>
+
+<li><p>猜字段内容
+<img src="/img/post/cookie_injection_sqlmap_get_column_value1.png" alt="sqlmap猜字段内容1" />
+<img src="/img/post/cookie_injection_sqlmap_get_column_value2.png" alt="sqlmap猜字段内容2" /></p></li>
+</ul>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
         
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-12</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/tools">tools</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 软件 使用theHarvester搜集邮箱 使用dnsenum得到邮箱服务器域名 使用nmap查看端口开启情况 使用Hydra进行弱口令猜解  0x01 设置Shadowsocks为全局模式: 0x02 得到邮箱 可在theHarvester下载theHarvester，得到邮箱后做成字典user.txt 0x03 得到邮箱服务器域名 0x04 nmap确认端口开启 0x05 Hydra爆密码 0x06 尝试登陆 
-    </p>
-
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/nessus-install/">Nessus的安装</a></h2>
-
+        <nav class="prev">
+            <a href="http://wyb0.com/posts/set-up-dns-server/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;搭建DNS服务器
+            </a>
+        </nav>
         
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-11</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/tools">tools</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 下载Nessus的deb安装包: 去【这里】，选择家庭版，然后下载对应的安装包 0x01 本地安装nessus: 0x02 执行后续安装步骤:  启动nessus  web访问nessus服务  设置账户和密码  申请code，可以在【这里】申请  去邮箱查找code  将code填入，然后等待插件的下载   0x03 登陆Nessus: 
-    </p>
-
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/nmap-mind-mapping/">Nmap思维导图</a></h2>
-
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
         
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-05-10</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/tools">tools</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         nmap思维导图如下： 
-    </p>
-
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-install-ettercap/">Linux之安装ettercap</a></h2>
-
+        <nav class="next">
+            <a href="http://wyb0.com/posts/various-parameter-types-injected/">
+                各种参数类型注入&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
         
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-19</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 准备 操作系统：CentOS 首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了 执行：sudo yum groupinstall &quot;Development tools&quot; #源码安装软件就需要安装这个 使用wget下载ettercap源码  0x01 查看需要的依赖项 [wyb@localhost ettercap-0.8.2]$ vim INSTALL #### Bundled libraries Ettercap now bundles the following libraries with the source distribution: libnet 1.1.6 curl 7.41.0 luajit 2.0.3 check 0.9.14 [wyb@localhost ettercap-0.8.2]$ cd bundled_deps/ [wyb@localhost bundled_deps]$ ls check curl libnet luajit  0x02 安装依赖包  安装check
-[wyb@localhost check]$ cd check-0.9.14 [wyb@localhost check-0.9.14]$ ls [wyb@localhost check-0.9.14]$ ./configure [wyb@localhost check-0.9.14]$ make [wyb@localhost check-0.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-install-ettercap/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-suid-back-door/">Linux之SUID后门</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-18</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%90%8E%E9%97%A8">后门</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制
-0x00 为二进制文件添加s权限从而提升为root权限  写sudoers添加用户 //最佳方案
- vim /etc/passwd //将uid和gid改为0 vim /etc/shadow //密文覆盖
- vim root .ssh/证书文件 .ssh这个文件夹和证书的权限要正确，要和原来一致  0x01 SUID主要作用可以是留后门  在root权限下给usermod一个s权限
-# which usermod #得到usermod的路径 /usr/sbin/usermod # chmod u+s /usr/sbin/usermod # ls -l /usr/sbin/usermod -rwsr-x---. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  usermod给其他人一个x权限
-[root@localhost ~]# chmod o+x /usr/sbin/usermod [root@localhost ~]# ls -l /usr/sbin/usermod -rwsr-x--x. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  切换到普通用户wyb
-[wyb@localhost ~]$ id wyb uid=500(wyb) gid=500(wyb) groups=500(wyb) [wyb@localhost ~]$ usermod -g root wyb [wyb@localhost ~]$ id wyb uid=500(wyb) gid=0(root) groups=0(root) [wyb@localhost ~]$ exit  验证
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-suid-back-door/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/various-parameter-types-injected/">各种参数类型注入</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2015-12-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 分类 根据注入时提交的变量参数类型，SQL注入点有不同的分类，不同的注入点，其注入时需要注意的事项也有所不同。按提交参数类型，SQL注入点主要分为下面3种：即数字型注入点、字符型注入点和搜索型注入点
-0x01 数字型注入点 形如&rdquo;http://www.xxx.com/a.asp?ID=55&quot; ，这类注入的参数是&rdquo;数字&rdquo;，因此称为&rdquo;数字型注入点&rdquo;。 此类注入点提交的SQL语句，其原形大致为：select * from 表名 where 字段=55
-当提交&rdquo;http://www.xxx.com/a.asp?ID=55 And [查询条件]&ldquo;时，向数据库提交的完整SQL语句为：
-select * from 表名 where 字段=55 and [查询条件]
-0x02 字符型注入点 形如&rdquo;http://www.xxx.com/a.asp?Class=0123&quot;这类注入的参数是&quot;字符&quot;，称为&quot;字符型&quot;注入点。
-此类注入点提交的 SQL 语句，其原形大致为：
-select * from 表名 where 字段=&lsquo;日期&rsquo;
-当提交&rdquo;http://www.xxx.com/a.asp?Class=日期 And [查询条件]&ldquo;时，向数据库提交的SQL语句为：
-select * from 表名 where 字段=&lsquo;日期&rsquo; and [查询条件]
-0x03 搜索型注入点 这是一类特殊的注入类型。
-这类注入主要是指在进行数据搜索时没过滤搜索参数，一般在链接地址中有&rdquo;keyword=关键字&rdquo;，有的不显示的链接地址，而是直接通过搜索框表单提交。
-此类注入点提交的 SQL 语句，其原形大致为：
-select * from 表名 where 字段 like &lsquo;%关键字%&rsquo;
-当我们提交注入参数为&rdquo;keyword=&lsquo;and[查询条件] and &lsquo;%&rsquo;=&lsquo;,则向数据库提交的完整SQL语句为：
-select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &lsquo;%&rsquo;=&lsquo;%&rsquo;
-    </p>
-
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/injection-of-asp-in-the-cookie/">ASP联合注入(Cookie处)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2015-12-04</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 Cookie注入的使用  三大Web提交方式
- GET：直接在浏览器上面访问地址
- POST：提交表单(会员注册、文件上传等)
- COOKIE：访问网站下面自带的身份验证的值  Cookie注入利用时机
-当用普通注入时，采用and 1=1时出现错误提示(如下图)，普通的注入就没办法了，可以尝试大小写，编码等绕过，若过滤严谨，无法绕过，这时就可以采用cookie注入。  利用方法
- 可以利用注入中转 可以利用sqlmap   0x01 用注入中转进行Cookie注入  目标：http://localhost:81/2/shownews.asp?id=183
- 打开注入中转这个工具，填入相应参数，然后点击生成ASP，将生成的asp文件(jmCook.asp)放入你自己搭建的网站内后即可进行注入  提交localhost:81/jmCook.asp?jmdcw=183 order by猜测字段数
- 提交localhost:81/jmCook.asp?jmdcw=183 UNION SELECT 1,2,3,4 from XXX猜测表名  猜测内容   0x02 用sqlmap进行Cookie注入  sqlmap验证存在Cookie注入  猜表名  猜列名  猜字段内容   
-    </p>
-
-    
-</article>
-
-
-                
-
-                
-
-    
-    
-    <nav class="pagination" role="pagination">
-        
-            <a href="/topics/pentest/page/7/"><i class="fa fa-chevron-left"></i></a>
-        
-
-        <span>&nbsp;8 / 8&nbsp;</span>
-        
-        
-            <i class="fa fa-chevron-right"></i>
-        
-    </nav>
-
+    </div>
+</div>
 
             </div>
         </div>
@@ -879,7 +598,7 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
         </div>
     </div>
 
-    <br><br>
+    <br>
     
 <div class="foot">
     <div class="copyright">
@@ -910,3 +629,5 @@ select * from 表名 where 字段 like &lsquo;%&rsquo; and [查询条件] and &l
 
 </body>
 </html>
+
+
