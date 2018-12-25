@@ -83,6 +83,69 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/ubuntu-push-blog-to-github/">Ubuntu下向github推送博客</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2016-05-09</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/git">Git</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/git">git</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        环境：Ubuntu14.4
+0x00 安装hugo和git 0x01 生成密钥，将密钥添加到github $ cd ~ $ ssh-keygen -t rsa -b 2048 -C &quot;123456@qq.com&quot; $ cd ~/.ssh/ $ cat id_rsa.pub # 将公钥添加到 github  0x02 配置本地用户和邮箱 git config --global user.name &quot;reber-9&quot; git config --global user.email &quot;123456@qq.com&quot;  0x03 验证密钥是否添加成功 ssh -T git@github.com
+0x04 克隆远程工程 git clone https://github.com/reber-9/reber-9.com.git
+0x05 添加CNAME cd ~/reber-9.com/
+echo &ldquo;reber-9.com&rdquo; &gt;&gt; static/CNAME
+0x06 更新 更新origin remote的master分支：
+git pull origin master
+获取服务端的改动：
+git fetch
+0x07 生成html文档，然后创建分支，进行同步 $ mkdir public $ cd public/ $ git init $ git checkout --orphan gh-pages $ git remote add origin git@github.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/ubuntu-push-blog-to-github/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/ubuntu-build-blog-in-github/">Ubuntu下用github搭建博客</a></h2>
 
         
@@ -602,68 +665,6 @@ xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/linux-service-and-planning-tasks/">Linux之服务和计划任务</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2016-04-19</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 服务： 在后台运行的软件就叫服务，参数一般为：start/stop/restart
- apache启动后默认降权
-service httpd start实际调用的是/etc/init.d/httpd这个shell脚本 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d [wyb@localhost ~]$ ls -al /etc/init.d lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&gt; rc.d/init.d  添加服务
-将脚本放在/etc/init.d/下即可
- 若要自启则
-chkconfig --list //查看chk管理的自启动项 chkconfig --add httpd 添加到chk管理里面 chkconfig --del httpd 将httpd移出chk管理 chkcofnig --level 35 httpd on init的345将开启 chkcofnig --level 345 httpd off /etc/rc.d/rc3.d和rc5.d里将有httpd   0x01 计划任务 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件
-cron每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟
-任务格式：分(0-59) 时 日 月 周(0-6) 命令
- 添加任务第一种方法  crontab -e //任何权限都可以运行这个命令，针对某个用户 [wyb@localhost spool]$ crontab -e //进入编辑，实际是写入到/var/spool/cron/username这个文件中 no crontab for wyb - using an empty one */1 * * * * date &gt;&gt; /tmp/date.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/linux-service-and-planning-tasks/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -695,7 +696,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/database" title="database">database(10)</a>
+                <a href="http://wyb0.com/topics/database" title="database">database(11)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -853,6 +854,11 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
                 <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">

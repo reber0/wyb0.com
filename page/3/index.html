@@ -83,6 +83,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/docker-dockerfile/">Docker之Dockerfile</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>2017-08-18</time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        操作系统：Ubuntu14.04.1
+Docker版本：Docker version 17.06.0-ce, build 02c1d87
+0x00 Dockerfile Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令， 每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。 让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。  0x01 Dockerfile基本指令 FROM &lt;image name&gt;：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie) MAINTAINER &lt;author name&gt;：设置该镜像的作者 COPY &lt;source&gt; &lt;dest&gt;：复制文件，dest要以 / 结尾 WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效 RUN &lt;command&gt;：在shell执行命令 EXPOSE port1 port2：容器运行时监听的端口 CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组) ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组) ENV &lt;key&gt; &lt;value&gt;：设置环境变量 USER &lt;uid&gt;：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root VOLUME ['/data']：授权访问从容器内到主机的目录  CMD与ENTRYPOINT的区别：
+#docker run ubuntu:test会执行/bin/echo 'this is test' CMD ['/bin/echo','this is test'] #docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test' ENTRYPOINT ['/bin/echo','entrypoint test'] #docker run ubuntu:test start即执行/etc/init.d/mysql start，CMD中的默认参数会被覆盖 ENTRYPOINT ['/etc/init.d/mysql'] CMD [&quot;restart&quot;]#CMD中的值会作为ENTRYPOINT的默认参数  0x02 实例  Dockerfile  reber@wyb:~/range$ cat Dockerfile FROM ubuntu:14.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/docker-dockerfile/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/docker-image-and-container/">Docker之镜像与容器</a></h2>
 
         
@@ -615,61 +672,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/mongodb-basis-use/">MongoDB的基本使用</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-05-25</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mongodb">mongodb</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 角色和权限 Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：
- 数据库用户角色  read：允许用户读取指定数据库 readWrite：允许用户读写指定数据库  数据库管理角色  dbOwner：包含readWrite、dbAdmin、userAdmin dbAdmin：允许用户在指定数据库中对集合、文档等操作 userAdmin：允许用户向system.users集合写入，可以在指定数据库里创建、删除和管理用户  集群管理角色  clusterAdmin：只在admin数据库中可用，包含clusterManager、clusterMonitor、hostManager clusterManager： clusterMonitor： hostManager  备份和恢复角色  backup restore  所有数据库角色  readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限 readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限 dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限 userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限  超级用户角色  root：只在admin数据库中可用。超级账号，超级权限  内部角色  __system   0x01 创建用户 #创建管理员用户 &gt; use admin switched to db admin &gt; db.createUser({ ... user:&quot;root&quot;, ... pwd:&quot;root123&quot;, ... roles:[{&quot;role&quot;:&quot;root&quot;,&quot;db&quot;:&quot;admin&quot;}] ... }) Successfully added user: { &quot;user&quot; : &quot;root&quot;, &quot;roles&quot; : [ { &quot;role&quot; : &quot;root&quot;, &quot;db&quot; : &quot;admin&quot; } ] } &gt; db.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/mongodb-basis-use/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -701,7 +703,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/database" title="database">database(10)</a>
+                <a href="http://wyb0.com/topics/database" title="database">database(11)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -859,6 +861,11 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
                 <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
