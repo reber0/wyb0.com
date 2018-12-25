@@ -180,7 +180,7 @@ SQL>
 
     13 rows selected.
     ```
-给用户授予权限
+给用户授予权限(也可以创建有相应权限的角色然后授予角色)
     ```sql
     SQL> grant connect,resource to utest; --赋予用户角色，Oracle有dba、connect、resource这3个角色
     SQL> select * from session_privs; --查看当前用户的权限
@@ -200,11 +200,6 @@ SQL>
 
     10 rows selected.
 
-    SQL> revoke connect,resource from utest; --移除用户角色
-
-    SQL> grant create session,unlimited tablespace,create table,create view,create any index,create sequence,create type to utest; --赋予用户的系统权限
-    SQL> revoke create session,unlimited tablespace,create table,create view,create any index,create sequence,create type from utest; --撤回用户的系统权限
-    
     --在db_test_data这个表空间下创建表tuser，不加tablespace db_test_data的话默认创建在SYSTEM这个表空间下
     SQL> create table tuser(
       2  id int not null primary key,
@@ -213,9 +208,19 @@ SQL>
       5  ) tablespace db_test_data; 
 
     Table created.
+    ```
+<br>
+    ```sql
+    --移除用户角色
+    revoke connect,resource from utest;
+
+    --赋予用户系统权限
+    grant create session,unlimited tablespace,create table,create view,create any index,create sequence,create type to utest;
+    --撤回用户系统权限
+    revoke create session,unlimited tablespace,create table,create view,create any index,create sequence,create type from utest;
 
     --赋予用户对象权限
-    SQL> grant select,insert,update,index,preferences on user to utest;
+    grant select,insert,update,index,preferences on msg to utest;
     ```
 
 * 删除用户
