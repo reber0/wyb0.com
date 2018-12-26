@@ -235,7 +235,15 @@ SQL>
     ```sql
     SQL> conn utest/ptest@127.0.0.1/xe --切换用户
     Connected.
-    
+
+    --查看当前用户的角色
+    SQL> select role from session_roles;
+
+    ROLE
+    ------------------------------
+    CONNECT
+    RESOURCE
+
     --查看当前用户的角色所包含的权限
     SQL> select * from role_sys_privs;
 
