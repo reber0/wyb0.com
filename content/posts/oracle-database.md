@@ -344,7 +344,7 @@ SQL>
     TABLE_NAME             TABLESPACE_NAME
     ---------------------- ----------------------
     TUSER                  DB_TEST_DATA
-    TMSG.                  DB_TEST_DATA
+    TMSG                   DB_TEST_DATA
 
     SQL> insert into tuser(id,username,password) values(1,'aaa','123456');
 
