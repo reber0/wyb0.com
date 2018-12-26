@@ -369,7 +369,15 @@ drop user utest cascade;
 
 <pre><code class="language-sql">SQL&gt; conn utest/ptest@127.0.0.1/xe --切换用户
 Connected.
-    
+
+--查看当前用户的角色
+SQL&gt; select role from session_roles;
+
+ROLE
+------------------------------
+CONNECT
+RESOURCE
+
 --查看当前用户的角色所包含的权限
 SQL&gt; select * from role_sys_privs;
 
