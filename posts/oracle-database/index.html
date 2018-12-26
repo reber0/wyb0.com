@@ -265,19 +265,6 @@ DB_TEST_DATA           ONLINE
 DB_TEST_TEMP           ONLINE
 
 7 rows selected.
-</code></pre>
-
-<p><br></p>
-
-<pre><code class="language-sql">--删除空的表空间，但是不包含物理文件
-drop tablespace tablespace_name;
---删除空的表空间，包含物理文件
-drop tablespace tablespace_name including datafiles;
-
---删除非空表空间，但是不包含物理文件
-drop tablespace tablespace_name including contents;
---删除非空表空间，包含物理文件
-drop tablespace tablespace_name including contents and datafiles;
 </code></pre></li>
 
 <li><p>创建用户并把刚创建的表空间指定给它</p>
@@ -308,34 +295,55 @@ HR                                USERS                TEMP
 13 rows selected.
 </code></pre>
 
-<p>给用户授予权限(也可以创建有相应权限的角色然后授予角色)</p>
+<p><br></p>
 
-<pre><code class="language-sql">SQL&gt; grant connect,resource to utest; --赋予用户角色，Oracle有dba、connect、resource这3个角色
-SQL&gt; select * from session_privs; --查看当前用户的权限
+<pre><code class="language-sql">--删除空的表空间，但是不包含物理文件
+drop tablespace tablespace_name;
+--删除空的表空间，包含物理文件
+drop tablespace tablespace_name including datafiles;
 
-PRIVILEGE
-----------------------------------------
-CREATE SESSION
-UNLIMITED TABLESPACE
-CREATE TABLE
-CREATE CLUSTER
-CREATE SEQUENCE
-CREATE PROCEDURE
-CREATE TRIGGER
-CREATE TYPE
-CREATE OPERATOR
-CREATE INDEXTYPE
+--删除非空表空间，但是不包含物理文件
+drop tablespace tablespace_name including contents;
+--删除非空表空间，包含物理文件
+drop tablespace tablespace_name including contents and datafiles;
+</code></pre></li>
+</ul>
 
-10 rows selected.
+<h3 id="0x05-用户及表权限操作">0x05 用户及表权限操作</h3>
+
+<ul>
+<li><p>给用户授予权限(也可以创建有相应权限的角色然后授予角色)</p>
+
+<pre><code class="language-sql">--赋予用户角色，Oracle有dba、connect、resource这3个角色
+SQL&gt; grant connect,resource to utest;
+
+Grant succeeded.
+
+--赋予用户系统权限，有create session,unlimited tablespace,create table,create view,create any index,create sequence,create type等
+SQL&gt; grant create view,create any index to utest;
+
+Grant succeeded.
 
 --在db_test_data这个表空间下创建表tuser，不加tablespace db_test_data的话默认创建在SYSTEM这个表空间下
 SQL&gt; create table tuser(
   2  id int not null primary key,
   3  username varchar(10) not null,
   4  password varchar(32) not null
-  5  ) tablespace db_test_data; 
+  5  ) tablespace db_test_data;
 
 Table created.
+
+--查看表空间DB_TEST_DATA的表，这里的表空间需要大写
+SQL&gt; select table_name from user_tables where tablespace_name='DB_TEST_DATA';
+
+TABLE_NAME
+------------------------------
+TUSER
+
+--赋予用户对象权限，有select,insert,alter,update,delete,index,preferences等
+SQL&gt; grant select,insert,update,delete on tuser to utest;
+
+Grant succeeded.
 </code></pre>
 
 <p><br></p>
@@ -343,36 +351,86 @@ Table created.
 <pre><code class="language-sql">--移除用户角色
 revoke connect,resource from utest;
 
---赋予用户系统权限
-grant create session,unlimited tablespace,create table,create view,create any index,create sequence,create type to utest;
 --撤回用户系统权限
-revoke create session,unlimited tablespace,create table,create view,create any index,create sequence,create type from utest;
+revoke create view,create any index from utest;
 
---赋予用户对象权限
-grant select,insert,update,index,preferences on msg to utest;
-</code></pre></li>
+--撤回用户对象权限
+revoke select,insert,update,delete on tuser from utest;
 
-<li><p>删除用户</p>
-
-<pre><code class="language-sql">drop user utest cascade;
+--删除用户
+drop user utest cascade;
 </code></pre></li>
 </ul>
 
-<h3 id="0x05-数据表操作">0x05 数据表操作</h3>
+<h3 id="0x06-切换用户">0x06 切换用户</h3>
 
 <ul>
-<li><p>重新连接表空间，然后查看当前用户的表空间</p>
+<li><p>查看相关权限</p>
 
-<pre><code class="language-sql">[22:32 reber@wyb in ~/Downloads]
-➜  sqlplus utest/ptest@127.0.0.1/xe
+<pre><code class="language-sql">SQL&gt; conn utest/ptest@127.0.0.1/xe --切换用户
+Connected.
+    
+--查看当前用户的角色所包含的权限
+SQL&gt; select * from role_sys_privs;
 
-SQL*Plus: Release 12.2.0.1.0 Production on Tue Dec 25 22:33:05 2018
+ROLE             PRIVILEGE            ADM
+---------------- -------------------- -------
+RESOURCE         CREATE SEQUENCE      NO
+RESOURCE         CREATE TRIGGER       NO
+RESOURCE         CREATE CLUSTER       NO
+RESOURCE         CREATE PROCEDURE     NO
+RESOURCE         CREATE TYPE          NO
+CONNECT          CREATE SESSION       NO
+RESOURCE         CREATE OPERATOR      NO
+RESOURCE         CREATE TABLE         NO
+RESOURCE         CREATE INDEXTYPE     NO
 
-Copyright (c) 1982, 2017, Oracle.  All rights reserved.
+9 rows selected.
 
+--当前用户的系统权限
+SQL&gt; select * from user_sys_privs;
 
-Connected to:
-Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+USERNAME        PRIVILEGE                 ADM
+--------------- ------------------------- ----------
+UTEST           CREATE VIEW               NO
+UTEST           UNLIMITED TABLESPACE      NO
+UTEST           CREATE ANY INDEX          NO
+
+--当前用户的对象权限
+SQL&gt; select grantee,privilege from user_tab_privs;
+
+GRANTEE          PRIVILEGE
+---------------- ---------------
+UTEST            UPDATE
+UTEST            SELECT
+UTEST            INSERT
+UTEST            DELETE
+
+--查看当前用户的全部权限
+SQL&gt; select * from session_privs;
+
+PRIVILEGE
+---------------------------
+CREATE SESSION
+UNLIMITED TABLESPACE
+CREATE TABLE
+CREATE CLUSTER
+CREATE ANY INDEX
+CREATE VIEW
+CREATE SEQUENCE
+CREATE PROCEDURE
+CREATE TRIGGER
+CREATE TYPE
+CREATE OPERATOR
+CREATE INDEXTYPE
+
+12 rows selected.
+</code></pre></li>
+
+<li><p>查看当前用户的表空间</p>
+
+<pre><code class="language-sql">SQL&gt; conn utest/ptest@127.0.0.1/xe
+Connected.
 
 SQL&gt; select tablespace_name from user_tablespaces;
 
@@ -399,11 +457,13 @@ SQL&gt;
 
 <li><p>创建表、查看当前用户的表</p>
 
-<pre><code class="language-sql">SQL&gt; create table tuser1(
+<pre><code class="language-sql">SQL&gt; conn utest/ptest@127.0.0.1/xe
+Connected.
+
+SQL&gt; create table tmsg(
   2  id int not null primary key,
-  3  username varchar(10) not null,
-  4  password varchar(32) not null
-  5  );
+  3  title varchar(20) not null,
+  4  content varchar(100) not null);
 
 Table created.
 
@@ -412,7 +472,7 @@ SQL&gt; select table_name,tablespace_name from user_tables;
 TABLE_NAME             TABLESPACE_NAME
 ---------------------- ----------------------
 TUSER                  DB_TEST_DATA
-TUSER1                 DB_TEST_DATA
+TMSG.                  DB_TEST_DATA
 
 SQL&gt; insert into tuser(id,username,password) values(1,'aaa','123456');
 
