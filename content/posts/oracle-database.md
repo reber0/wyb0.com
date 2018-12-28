@@ -7,11 +7,17 @@ date = "2018-12-25T23:34:56+08:00"
 draft = false
 +++
 
-### 0x00 Oracle组成
-完整的Oracle数据库通常由两部分组成：Oracle数据库和数据库实例。
-
-* 数据库是一系列物理文件的集合（数据文件，控制文件，联机日志，参数文件等）；
-* Oracle数据库实例则是一组Oracle后台进程/线程以及在服务器分配的共享内存区。
+### 0x00 关于Oracle
+* 完整的Oracle数据库通常由两部分组成：Oracle数据库和数据库实例。
+* 数据库是一系列物理文件的集合（数据文件，控制文件，联机日志，参数文件等）
+* Oracle数据库实例则是一组Oracle后台进程/线程以及在服务器分配的共享内存区
+* 关于部分视图
+    * ```DBA/ALL/USER/V_$/GV_$/SESSION/INDEX```开头的绝大部分都是视图
+    * DBA_TABLES意为DBA拥有的或可以访问的所有的关系表。
+    * ALL_TABLES意为某一用户拥有的或有权限访问的所有的关系表。
+    * USER_TABLES意为某一用户所拥有的所有的关系表。
+    * 当某一用户本身就为数据库DBA时，DBA_TABLES与ALL_TABLES等价。
+    * ```DBA_TABLES >= ALL_TABLES >= USER_TABLES```
 
 ### 0x01 关于实例
 * 在启动Oracle数据库服务器时，实际上是在服务器的内存中创建一个Oracle实例（即在服务器内存中分配共享内存并创建相关的后台内存）
@@ -21,10 +27,10 @@ draft = false
 
 ### 0x02 关于表空间(可以理解为mysql中的数据库)
 * Oracle数据库是通过表空间来存储物理表的，一个数据库实例可以有N个表空间，一个表空间下可以有N张表。
-* 表空间(tablespace)是数据库的逻辑划分，每个数据库至少有一个表空间（称作SYSTEM表空间）
-* 一般使用一些附加表空间来划分用户和应用程序。例如：USER表空间供一般用户使用，RBS表空间供回滚段使用。一个表空间只能属于一个数据库。
+* 用户和表空间是多对多的关系，但是一般创建用户时会指定一个默认表空间。
+* 表空间是数据库中最大的逻辑单位，一个表空间可以包含多个数据文件，而一个数据文件只能隶属一个表空间。
 
-### 0x03 安装
+### 0x03 搭建Oracle环境
 使用docker拉取Oracle数据库并且运行
 ```
 [23:36 reber@wyb in ~]
@@ -93,8 +99,8 @@ SQL>
 ### 0x04 表空间操作
 * 查看表空间
     ```sql
-    --下面的表空间每个用户都有，类似mysql的information_schema和mysql数据库
-    SQL> select tablespace_name,status from dba_tablespaces;
+    --下面的表空间每个用户都默认存在
+    SQL> select tablespace_name,status from user_tablespaces;
 
     TABLESPACE_NAME                STATUS
     ------------------------------ ---------
@@ -127,7 +133,7 @@ SQL>
     Tablespace created.
 
     -- 再次查看表空间
-    SQL> select tablespace_name,status from dba_tablespaces;
+    SQL> select tablespace_name,status from user_tablespaces;
 
     TABLESPACE_NAME        STATUS
     ---------------------- ---------
@@ -141,47 +147,33 @@ SQL>
 
     7 rows selected.
     ```
-* 创建用户并把刚创建的表空间指定给它
+* 创建用户并指定表空间的映射
     ```sql
     SQL> create user utest identified by ptest
       2  default tablespace db_test_data --默认用户表空间
       3  temporary tablespace db_test_temp; --默认临时表空间
 
-    --查看用户表
-    SQL> select username,password,default_tablespace,temporary_tablespace from dba_users;
+    --dba权限查看用户
+    SQL> select username,default_tablespace,temporary_tablespace from dba_users;
 
-    USERNAME             PASSWORD     DEFAULT_TABLESPACE   TEMPORARY_TABLESPACE
-    -------------------- ------------ -------------------- --------------------
-    UTEST                             DB_TEST_DATA         DB_TEST_TEMP
-    SYS                               SYSTEM               TEMP
-    ANONYMOUS                         SYSAUX               TEMP
-    SYSTEM                            SYSTEM               TEMP
-    APEX_PUBLIC_USER                  SYSTEM               TEMP
-    APEX_040000                       SYSAUX               TEMP
-    XS$NULL                           SYSTEM               TEMP
-    OUTLN                             SYSTEM               TEMP
-    FLOWS_FILES                       SYSAUX               TEMP
-    MDSYS                             SYSAUX               TEMP
-    CTXSYS                            SYSAUX               TEMP
-    XDB                               SYSAUX               TEMP
-    HR                                USERS                TEMP
+    USERNAME             DEFAULT_TABLESPACE   TEMPORARY_TABLESPACE
+    -------------------- -------------------- --------------------
+    UTEST                DB_TEST_DATA         DB_TEST_TEMP
+    SYS                  SYSTEM               TEMP
+    ANONYMOUS            SYSAUX               TEMP
+    SYSTEM               SYSTEM               TEMP
+    APEX_PUBLIC_USER     SYSTEM               TEMP
+    APEX_040000          SYSAUX               TEMP
+    XS$NULL              SYSTEM               TEMP
+    OUTLN                SYSTEM               TEMP
+    FLOWS_FILES          SYSAUX               TEMP
+    MDSYS                SYSAUX               TEMP
+    CTXSYS               SYSAUX               TEMP
+    XDB                  SYSAUX               TEMP
+    HR                   USERS                TEMP
 
     13 rows selected.
     ```
-<br>
-    ```sql
-    --删除空的表空间，但是不包含物理文件
-    drop tablespace tablespace_name;
-    --删除空的表空间，包含物理文件
-    drop tablespace tablespace_name including datafiles;
-
-    --删除非空表空间，但是不包含物理文件
-    drop tablespace tablespace_name including contents;
-    --删除非空表空间，包含物理文件
-    drop tablespace tablespace_name including contents and datafiles;
-    ```
-
-### 0x05 用户及表权限操作
 * 给用户授予权限(也可以创建有相应权限的角色然后授予角色)
     ```sql
     --赋予用户角色，Oracle有dba、connect、resource这3个角色
@@ -203,37 +195,54 @@ SQL>
 
     Table created.
 
-    --查看表空间DB_TEST_DATA的表，这里的表空间需要大写
-    SQL> select table_name from user_tables where tablespace_name='DB_TEST_DATA';
+    --创建的对比的表，这个表在下面不会授权给用户utest
+    SQL> create table temp(
+      2  id int not null primary key,
+      3  tmp varchar(5) not null
+      4  ) tablespace db_test_data;
 
-    TABLE_NAME
-    ------------------------------
-    TUSER
+    Table created.
+
+    --查看当前用户在表空间DB_TEST_DATA有权限查看的表，这里的表空间需要大写
+    SQL> select table_name,owner from all_tables where tablespace_name='DB_TEST_DATA';
+    TABLE_NAME        OWNER
+    ----------------- ---------
+    TUSER             SYSTEM
+    TEMP              SYSTEM
 
     --赋予用户对象权限，有select,insert,alter,update,delete,index,preferences等
+    --这里是赋予utest增删改查SYSTEM的tuser表的权限，如果不赋予的话utest对tuser就没有操作权限
     SQL> grant select,insert,update,delete on tuser to utest;
 
     Grant succeeded.
     ```
 <br>
     ```sql
-    --移除用户角色
-    revoke connect,resource from utest;
+    --删除空的表空间，不包含物理文件
+    drop tablespace tablespace_name;
+    --删除空的表空间，包含物理文件
+    drop tablespace tablespace_name including datafiles;
 
+    --删除非空表空间，不包含物理文件
+    drop tablespace tablespace_name including contents;
+    --删除非空表空间，包含物理文件
+    drop tablespace tablespace_name including contents and datafiles;
+
+    --移除用户角色权限
+    revoke connect,resource from utest;
     --撤回用户系统权限
     revoke create view,create any index from utest;
-
     --撤回用户对象权限
     revoke select,insert,update,delete on tuser from utest;
-
     --删除用户
     drop user utest cascade;
     ```
 
-### 0x06 切换用户
+### 0x05 切换到用户utest
 * 查看相关权限
     ```sql
-    SQL> conn utest/ptest@127.0.0.1/xe --切换用户
+    --切换用户
+    SQL> conn utest/ptest@127.0.0.1/xe
     Connected.
 
     --查看当前用户的角色
@@ -302,9 +311,6 @@ SQL>
     ```
 * 查看当前用户的表空间
     ```sql
-    SQL> conn utest/ptest@127.0.0.1/xe
-    Connected.
-
     SQL> select tablespace_name from user_tablespaces;
 
     TABLESPACE_NAME
@@ -327,11 +333,9 @@ SQL>
 
     SQL>
     ```
-* 创建表、查看当前用户的表
+* 表与数据操作
     ```sql
-    SQL> conn utest/ptest@127.0.0.1/xe
-    Connected.
-
+    --创建自己的表，这里没有指定，则用默认表空间DB_TEST_DATA
     SQL> create table tmsg(
       2  id int not null primary key,
       3  title varchar(20) not null,
@@ -339,22 +343,34 @@ SQL>
 
     Table created.
 
-    SQL> select table_name,tablespace_name from user_tables;
+    --再次查看当前用户在表空间DB_TEST_DATA有权限查看的表，tuser表给了权限可以查到，temp表没有给权限所以查不到
+    SQL> select table_name,owner from all_tables where tablespace_name='DB_TEST_DATA';
+    TABLE_NAME        OWNER
+    ----------------- ---------
+    TUSER             SYSTEM
+    TMSG              UTEST
 
-    TABLE_NAME             TABLESPACE_NAME
-    ---------------------- ----------------------
-    TUSER                  DB_TEST_DATA
-    TMSG                   DB_TEST_DATA
-
-    SQL> insert into tuser(id,username,password) values(1,'aaa','123456');
+    --向表tuser插入数据，表是system的，所以需要加system.
+    SQL> insert into system.tuser(id,username,password) values(1,'aaa','123456');
 
     1 row created.
 
-    SQL> select * from tuser;
+    --向tmsg插入数据，表是当前用户utest的，这里其实也是utest.tmsg，不过默认缺省了utest.
+    SQL> insert into tmsg(id,title,content) values(1,'hi','hello,world!');
 
-            ID USERNAME   PASSWORD
-    ---------- ---------- --------------------------------
-             1 aaa        123456
+    1 row created.
+
+    SQL> select * from system.tuser;
+
+        ID  USERNAME     PASSWORD
+    ------- ------------ -------------------
+          1 aaa          123456
+
+    SQL> select * from tmsg;
+
+        ID  TITLE        CONTENT
+    ------- ------------ -------------------
+          1 hi           hello,world!
 
     SQL>
     ```
