@@ -121,10 +121,9 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Oracle组成 完整的Oracle数据库通常由两部分组成：Oracle数据库和数据库实例。
- 数据库是一系列物理文件的集合（数据文件，控制文件，联机日志，参数文件等）； Oracle数据库实例则是一组Oracle后台进程/线程以及在服务器分配的共享内存区。  0x01 关于实例  在启动Oracle数据库服务器时，实际上是在服务器的内存中创建一个Oracle实例（即在服务器内存中分配共享内存并创建相关的后台内存） 我们访问Oracle都是访问一个实例，通过Oracle数据库实例来访问和控制磁盘中的数据文件 Oracle实例如果关联了数据库文件，就是可以访问的，如果没有，就会得到实例不可用的错误 实例名指的是用于响应某个数据库操作的数据库管理系统的名称，它同时也叫SID，连接数据库时就会用到这个SID，如：jdbc:oracle:thin:@localhost:1521:orcl（orcl就为数据库实例名）  0x02 关于表空间(可以理解为mysql中的数据库)  Oracle数据库是通过表空间来存储物理表的，一个数据库实例可以有N个表空间，一个表空间下可以有N张表。 表空间(tablespace)是数据库的逻辑划分，每个数据库至少有一个表空间（称作SYSTEM表空间） 一般使用一些附加表空间来划分用户和应用程序。例如：USER表空间供一般用户使用，RBS表空间供回滚段使用。一个表空间只能属于一个数据库。  0x03 安装 使用docker拉取Oracle数据库并且运行
+        0x00 关于Oracle  完整的Oracle数据库通常由两部分组成：Oracle数据库和数据库实例。 数据库是一系列物理文件的集合（数据文件，控制文件，联机日志，参数文件等） Oracle数据库实例则是一组Oracle后台进程/线程以及在服务器分配的共享内存区 关于部分视图  DBA/ALL/USER/V_$/GV_$/SESSION/INDEX开头的绝大部分都是视图 DBA_TABLES意为DBA拥有的或可以访问的所有的关系表。 ALL_TABLES意为某一用户拥有的或有权限访问的所有的关系表。 USER_TABLES意为某一用户所拥有的所有的关系表。 当某一用户本身就为数据库DBA时，DBA_TABLES与ALL_TABLES等价。 DBA_TABLES &gt;= ALL_TABLES &gt;= USER_TABLES   0x01 关于实例  在启动Oracle数据库服务器时，实际上是在服务器的内存中创建一个Oracle实例（即在服务器内存中分配共享内存并创建相关的后台内存） 我们访问Oracle都是访问一个实例，通过Oracle数据库实例来访问和控制磁盘中的数据文件 Oracle实例如果关联了数据库文件，就是可以访问的，如果没有，就会得到实例不可用的错误 实例名指的是用于响应某个数据库操作的数据库管理系统的名称，它同时也叫SID，连接数据库时就会用到这个SID，如：jdbc:oracle:thin:@localhost:1521:orcl（orcl就为数据库实例名）  0x02 关于表空间(可以理解为mysql中的数据库)  Oracle数据库是通过表空间来存储物理表的，一个数据库实例可以有N个表空间，一个表空间下可以有N张表。 用户和表空间是多对多的关系，但是一般创建用户时会指定一个默认表空间。 表空间是数据库中最大的逻辑单位，一个表空间可以包含多个数据文件，而一个数据文件只能隶属一个表空间。  0x03 搭建Oracle环境 使用docker拉取Oracle数据库并且运行
 [23:36 reber@wyb in ~] ➜ docker pull alexeiled/docker-oracle-xe-11g [23:36 reber@wyb in ~] ➜ docker run --rm -tid --shm-size=2g -p 1521:1521 -p 8080:8080 alexeiled/docker-oracle-xe-11g  然后在www.oracle.com下载链接Oracle的客户端：instantclient-basic-macos、instantclient-sqlplus-macos
-[15:41 reber@wyb in ~/Downloads] ➜ unzip instantclient-basic-macos.x64-12.2.0.1.0-2.zip Archive: instantclient-basic-macos.x64-12.2.0.1.0-2.zip inflating: instantclient_12_2/BASIC_README inflating: instantclient_12_2/adrci inflating: instantclient_12_2/genezi linking: instantclient_12_2/libclntsh.dylib -&gt; libclntsh.dylib.12.1 inflating: instantclient_12_2/libclntsh.
+[15:41 reber@wyb in ~/Downloads] ➜ unzip instantclient-basic-macos.
     </p>
 
     
