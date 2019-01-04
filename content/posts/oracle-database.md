@@ -1,5 +1,5 @@
 +++
-title = "Oracle数据库"
+title = "Oracle数据库简单使用"
 topics = ["Database"]
 tags = ["oracle"]
 description = "我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。"
