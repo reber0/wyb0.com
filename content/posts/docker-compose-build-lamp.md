@@ -2,17 +2,19 @@
 title = "使用docker-compose构造LAMP环境"
 topics = ["Linux"]
 tags = ["docker"]
-description = "使用docker-compose构造LAMP环境，其中日志、mysql数据、mysql配置文件、网站文件均为持久化存储。"
+description = "使用docker-compose构造LAMP环境，其中mysql数据、mysql配置文件、网站文件均为持久化存储。"
 date = "2018-12-15T22:51:04+08:00"
 draft = false
 +++
 
 ### 0x00 实现功能
-使用docker-compose构造LAMP环境，其中日志、mysql数据库、mysql配置文件、网站文件均持久化存储到本机。
+使用docker-compose构造LAMP环境，其中mysql数据库、mysql配置文件、网站文件均持久化存储到本机。
 
 apache、php通过Dockerfile构造，Dockerfile拉取ubuntu镜像，然后安装apache2和php。
 
 mysql的话通过docker的links连接mysql:5.5这个镜像当作数据库。
+
+具体文件参见：[https://github.com/reber0/docker_env](https://github.com/reber0/docker_env?_blank)
 
 ### 0x01 文件构造
 ```
@@ -22,17 +24,14 @@ apache
 ├── conf
 │   └── my.cnf
 ├── docker-compose.yml
-├── log
-│   ├── apache
-│   └── mysql
 ├── mysql
 ├── src
 │   ├── init.sh
 │   └── sources.list
-└── www
+└── web
     └── index.php
 
-7 directories, 6 files
+4 directories, 6 files
 ```
 
 ### 0x02 docker-compose.yml
@@ -44,36 +43,31 @@ services:
     container_name: apache #运行后生成的容器名字为apache
     build: . #使用当前路径下的Dockerfile构造镜像
     ports:
-      - "80:80"
+      - "81:80"
     volumes:
       - ./www:/var/www/html
-      - ./log/apache:/var/log/apache2
     links:
-      - mysql
-    mem_limit: 1024m #最大内存使用不超过1024m
+      - mymysql
+    environment: #设置环境变量
+      - TZ=Asia/Shanghai #设定时区
     restart: always #容器重启策略：当容器终止退出后，总是重启容器，默认策略。
   mymysql:
     image: mysql:5.5 #拉取mysql:5.5
     container_name: mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
-      - ./conf/my.cnf:/etc/mysql/my.cnf
       - ./mysql:/var/lib/mysql
-      - ./log/mysql:/var/log/mysql
-    environment: #设置环境变量
+      - ./conf/my.cnf:/etc/mysql/my.cnf
+    environment:
       - MYSQL_ROOT_PASSWORD=root #mysql密码为root
-    mem_limit: 1024m #最大内存使用不超过1024m
+      - TZ=Asia/Shanghai
 ```
 
 ### 0x03 Dockerfile
-```
+```bash
 FROM ubuntu:14.04.4
 MAINTAINER reber <1070018473@qq.com>
-
-
-ENV AUTO_RUN_DIR /apache_init.d #定义会被容器自动执行的目录
-ENV INIT_SHELL init.sh #定义shell文件名
 
 COPY ./src /data
 WORKDIR /data
@@ -81,8 +75,6 @@ RUN chmod +x init.sh
 RUN cp sources.list /etc/apt/sources.list && apt-get update
 RUN apt-get install -y apache2
 RUN apt-get install -y php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
-
-RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #设定时区
 
 WORKDIR /var/www/html
 
@@ -92,17 +84,24 @@ CMD ["/data/init.sh"]
 
 ### 0x04 conf/my.cnf
 ```
+[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set=utf8
+
 [mysqld]
-user=mysql
-default-storage-engine=INNODB
+user            = mysql
+port            = 3306
+datadir         = /var/lib/mysql
+skip-host-cache
+skip-name-resolve
 character-set-server=utf8
 init_connect='SET NAMES utf8'
 
-[client]
-default-character-set=utf8
-
 [mysql]
 default-character-set=utf8
+
+!includedir /etc/mysql/conf.d/
 ```
 
 ### 0x05 src/sources.list
@@ -120,7 +119,7 @@ deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted unive
 ```
 
 ### 0x06 src/init.sh
-```
+```bash
 #!/bin/bash
 
 service apache2 restart
