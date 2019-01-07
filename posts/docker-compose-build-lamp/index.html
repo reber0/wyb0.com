@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>使用docker-compose构造LAMP环境 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
-    <meta name="description" content="使用docker-compose构造LAMP环境，其中日志、mysql数据、mysql配置文件、网站文件均为持久化存储。">
+    <meta name="description" content="使用docker-compose构造LAMP环境，其中mysql数据、mysql配置文件、网站文件均为持久化存储。">
     <meta name="author" content="reber">
 
     
@@ -119,11 +119,13 @@
 
 <h3 id="0x00-实现功能">0x00 实现功能</h3>
 
-<p>使用docker-compose构造LAMP环境，其中日志、mysql数据库、mysql配置文件、网站文件均持久化存储到本机。</p>
+<p>使用docker-compose构造LAMP环境，其中mysql数据库、mysql配置文件、网站文件均持久化存储到本机。</p>
 
 <p>apache、php通过Dockerfile构造，Dockerfile拉取ubuntu镜像，然后安装apache2和php。</p>
 
 <p>mysql的话通过docker的links连接mysql:5.5这个镜像当作数据库。</p>
+
+<p>具体文件参见：<a href="https://github.com/reber0/docker_env?_blank">https://github.com/reber0/docker_env</a></p>
 
 <h3 id="0x01-文件构造">0x01 文件构造</h3>
 
@@ -133,17 +135,14 @@ apache
 ├── conf
 │   └── my.cnf
 ├── docker-compose.yml
-├── log
-│   ├── apache
-│   └── mysql
 ├── mysql
 ├── src
 │   ├── init.sh
 │   └── sources.list
-└── www
+└── web
     └── index.php
 
-7 directories, 6 files
+4 directories, 6 files
 </code></pre>
 
 <h3 id="0x02-docker-compose-yml">0x02 docker-compose.yml</h3>
@@ -155,36 +154,31 @@ services:
     container_name: apache #运行后生成的容器名字为apache
     build: . #使用当前路径下的Dockerfile构造镜像
     ports:
-      - &quot;80:80&quot;
+      - &quot;81:80&quot;
     volumes:
       - ./www:/var/www/html
-      - ./log/apache:/var/log/apache2
     links:
-      - mysql
-    mem_limit: 1024m #最大内存使用不超过1024m
+      - mymysql
+    environment: #设置环境变量
+      - TZ=Asia/Shanghai #设定时区
     restart: always #容器重启策略：当容器终止退出后，总是重启容器，默认策略。
   mymysql:
     image: mysql:5.5 #拉取mysql:5.5
     container_name: mysql
     ports:
-      - &quot;3306:3306&quot;
+      - &quot;3307:3306&quot;
     volumes:
-      - ./conf/my.cnf:/etc/mysql/my.cnf
       - ./mysql:/var/lib/mysql
-      - ./log/mysql:/var/log/mysql
-    environment: #设置环境变量
+      - ./conf/my.cnf:/etc/mysql/my.cnf
+    environment:
       - MYSQL_ROOT_PASSWORD=root #mysql密码为root
-    mem_limit: 1024m #最大内存使用不超过1024m
+      - TZ=Asia/Shanghai
 </code></pre>
 
 <h3 id="0x03-dockerfile">0x03 Dockerfile</h3>
 
-<pre><code>FROM ubuntu:14.04.4
+<pre><code class="language-bash">FROM ubuntu:14.04.4
 MAINTAINER reber &lt;1070018473@qq.com&gt;
-
-
-ENV AUTO_RUN_DIR /apache_init.d #定义会被容器自动执行的目录
-ENV INIT_SHELL init.sh #定义shell文件名
 
 COPY ./src /data
 WORKDIR /data
@@ -192,8 +186,6 @@ RUN chmod +x init.sh
 RUN cp sources.list /etc/apt/sources.list &amp;&amp; apt-get update
 RUN apt-get install -y apache2
 RUN apt-get install -y php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
-
-RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime #设定时区
 
 WORKDIR /var/www/html
 
@@ -203,17 +195,24 @@ CMD [&quot;/data/init.sh&quot;]
 
 <h3 id="0x04-conf-my-cnf">0x04 conf/my.cnf</h3>
 
-<pre><code>[mysqld]
-user=mysql
-default-storage-engine=INNODB
+<pre><code>[client]
+port            = 3306
+socket          = /var/run/mysqld/mysqld.sock
+default-character-set=utf8
+
+[mysqld]
+user            = mysql
+port            = 3306
+datadir         = /var/lib/mysql
+skip-host-cache
+skip-name-resolve
 character-set-server=utf8
 init_connect='SET NAMES utf8'
 
-[client]
-default-character-set=utf8
-
 [mysql]
 default-character-set=utf8
+
+!includedir /etc/mysql/conf.d/
 </code></pre>
 
 <h3 id="0x05-src-sources-list">0x05 src/sources.list</h3>
@@ -232,7 +231,7 @@ deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted unive
 
 <h3 id="0x06-src-init-sh">0x06 src/init.sh</h3>
 
-<pre><code>#!/bin/bash
+<pre><code class="language-bash">#!/bin/bash
 
 service apache2 restart
 tail -f /dev/null

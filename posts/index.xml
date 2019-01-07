@@ -64,10 +64,11 @@ py一下了吧，前端有js进行加密，可以本地写文件生成加密后�
       <pubDate>Sat, 15 Dec 2018 22:51:04 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/docker-compose-build-lamp/</guid>
-      <description>0x00 实现功能 使用docker-compose构造LAMP环境，其中日志、mysql数据库、mysql配置文件、网站文件均持久化存储到本机。
+      <description>0x00 实现功能 使用docker-compose构造LAMP环境，其中mysql数据库、mysql配置文件、网站文件均持久化存储到本机。
 apache、php通过Dockerfile构造，Dockerfile拉取ubuntu镜像，然后安装apache2和php。
 mysql的话通过docker的links连接mysql:5.5这个镜像当作数据库。
-0x01 文件构造 ➜ tree apache apache ├── Dockerfile ├── conf │ └── my.cnf ├── docker-compose.yml ├── log │ ├── apache │ └── mysql ├── mysql ├── src │ ├── init.sh │ └── sources.list └── www └── index.php 7 directories, 6 files  0x02 docker-compose.yml version: &#39;3&#39; services: apache: image: ubuntu:apache #镜像名为ubuntu，tag为apache container_name: apache #运行后生成的容器名字为apache build: . #使用当前路径下的Dockerfile构造镜像 ports: - &amp;quot;80:80&amp;quot; volumes: - ./www:/var/www/html - .</description>
+具体文件参见：https://github.com/reber0/docker_env
+0x01 文件构造 ➜ tree apache apache ├── Dockerfile ├── conf │ └── my.cnf ├── docker-compose.yml ├── mysql ├── src │ ├── init.sh │ └── sources.list └── web └── index.php 4 directories, 6 files  0x02 docker-compose.yml version: &#39;3&#39; services: apache: image: ubuntu:apache #镜像名为ubuntu，tag为apache container_name: apache #运行后生成的容器名字为apache build: . #使用当前路径下的Dockerfile构造镜像 ports: - &amp;quot;81:80&amp;quot; volumes: - ./www:/var/www/html links: - mymysql environment: #设置环境变量 - TZ=Asia/Shanghai #设定时区 restart: always #容器重启策略：当容器终止退出后，总是重启容器，默认策略。 mymysql: image: mysql:5.</description>
     </item>
     
     <item>
