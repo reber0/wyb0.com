@@ -164,7 +164,7 @@ ubuntu              latest              1d9c17228a9e        11 days ago         
 <li><p>运行容器(exit后容器就停止了)</p>
 
 <ul>
-<li>&ndash;rm：告诉Docker一旦运行的容器停止就删除容器</li>
+<li>--rm：告诉Docker一旦运行的容器停止就删除容器</li>
 <li>-ti：告诉Docker分配一个伪终端并进入交互模式(这将进入容器内)</li>
 <li>ubuntu:14.04 是容器立足的镜像</li>
 <li>/bin/bash：shell</li>
@@ -324,11 +324,7 @@ $ docker rm 39b5bab299be
 <li>删除所有容器(只能删除停止运行的)</li>
 </ul>
 
-<pre><code class="language-bash">$ docker kill $(docker ps -aq)
-370425339ff8
-3e4c995326c0
-6f9d8dea6aa0
-$ docker rm $(docker ps -aq)
+<pre><code class="language-bash">$ docker rm $(docker ps -aq)
 39b5bab299be
 3e4c995326c0
 6f9d8dea6aa0
