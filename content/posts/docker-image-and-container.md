@@ -200,64 +200,93 @@ $ docker rm $(docker ps -aq)
 ```
 
 ### 0x02 打包镜像及容器
-* 打包镜像
-    * 提交新的镜像
-    ```
-    #类似于github的commit，可以先运行一个容器，安装一些基础的应用，如ssh之类的
-    #然后将其commit，假如容器id为1d9c17228a9e，我们可以在进入容器安装ssh后commit
-    #产生的镜像ubuntu:ssh_install就是安装了ssh的新镜像
-    $ docker commit 1d9c17228a9e ubuntu:ssh_install
-    $ docker images
-    REPOSITORY    TAG          IMAGE ID        CREATED        SIZE
-    ubuntu        ssh_install  9e01bfa580bb    1 weeks ago    190MB
-    ubuntu        latest       1d9c17228a9e    2 weeks ago    120MB
-    ubuntu        14.04        54333f1de4ed    2 weeks ago    188MB
-    ```
+* 打包(save和export)
 
-    * 打包镜像
-    ```bash
-    #将安装了ssh的ubuntu打包
-    $ docker save 9e01bfa580bb > /home/reber/ubuntu.tar
-    ```
+```
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              14.04               7e4b16ae8b23        11 days ago         188MB
+$ docker run -itd -p 2222:22 ubuntu:14.04 /bin/bash
+5a3ce7d8d5b55264c75f943c4fc8b10fda172f2d58c1b5cacd27ce688d180a77
 
-    * 加载镜像
-    ```bash
-    $ docker load < ./ubuntu.tar
-    1b0c71361973: Loading layer  196.9MB/196.9MB
-    150e95c79e16: Loading layer  209.9kB/209.9kB
-    1ae9c3d1e0b7: Loading layer  7.168kB/7.168kB
-    4622ee8f36ae: Loading layer  4.608kB/4.608kB
-    4455b4d81934: Loading layer  3.072kB/3.072kB
-    Loaded image ID: sha256:54333f1de4ed2730bea18e49605b2ea8f8a2689db213ece94db6ccbc8cf279a6
-    $ docker images
-    REPOSITORY    TAG       IMAGE ID        CREATED        SIZE
-    centos        7         328edcd84f1b    7 days ago     193MB
-    <none>        <none>    54333f1de4ed    3 weeks ago    188MB
-    ```
+# 一般可以在容器中安装一些常用的基础软件，如ssh、vim等，然后打包以后使用，这里连接容器安装ssh
+$ docker exec -it 5a3ce7d8d5b5 /bin/bash
+root@5a3ce7d8d5b5:/# apt-get install openssh-server
+root@5a3ce7d8d5b5:/# exit
 
-    * 给镜像打标签
-    ```bash
-    $ docker tag 54333f1de4ed ubuntu:14.04
-    $ docker images
-    REPOSITORY    TAG      IMAGE ID        CREATED        SIZE
-    centos        7        328edcd84f1b    7 days ago     193MB
-    ubuntu        14.04    54333f1de4ed    3 weeks ago    188MB
-    ```
+# commit安装ssh后的容器，产生镜像
+$ docker commit 5a3ce7d8d5b5 ubuntu:ssh_install
+sha256:cae40fb01d1fd1cae5589be8725dca89c11fb975dbf24fcabdc5cad9531e7c70
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              ssh_install         cae40fb01d1f        3 seconds ago       243MB
+ubuntu              14.04               7e4b16ae8b23        11 days ago         188MB
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                  NAMES
+5a3ce7d8d5b5        ubuntu:14.04        "/bin/bash"         18 minutes ago      Up 18 minutes       0.0.0.0:2222->22/tcp   loving_bose
+```
+```
+# docker save <IMAGE ID> > save.tar，使用安装ssh后并commit的镜像id
+$ docker save cae40fb01d1f > save.tar
+# docker export <CONTAINER ID> > export.tar，使用安装ssh后的容器id
+$ docker export 5a3ce7d8d5b5 > export.tar
 
-* 打包容器
-    * 导出容器(导出的其实是镜像)
-    ```bash
-    $ docker export df2a7e881c8a > ./ubuntu_container.tar
-    ```
+#save镜像后体积变大，export容器后体积变小
+$ du -h *.tar
+245M    save.tar
+221M    export.tar
+```
 
-    * 导入容器
-    ```
-    $ docker import ./ubuntu_container.tar
-    $ docker images
-    REPOSITORY    TAG       IMAGE ID        CREATED               SIZE
-    <none>        <none>    499df17f51e7    About a minute ago    175MB
-    $ docker tag 499df17f51e7 ubuntu:container
-    ```
+* 删除现有镜像后重新导入刚才保存的镜像(load和import)
+
+```bash
+$ docker load < save.tar
+a1dfb45ac02d: Loading layer [=======================================>]    197MB/197MB
+cbafb465c00d: Loading layer [=======================================>]  209.9kB/209.9kB
+382d42470bcc: Loading layer [=======================================>]  7.168kB/7.168kB
+74decbb2e028: Loading layer [=======================================>]  3.072kB/3.072kB
+95d4db8f1e96: Loading layer [=======================================>]  59.22MB/59.22MB
+Loaded image ID: sha256:cae40fb01d1fd1cae5589be8725dca89c11fb975dbf24fcabdc5cad9531e7c70
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+<none>              <none>              cae40fb01d1f        11 minutes ago      243MB
+$ docker tag cae40fb01d1f ubuntu:save_load #给镜像cae40fb01d1f打tag
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              save_load           cae40fb01d1f        12 minutes ago      243MB
+```
+```
+$ docker import export.tar
+sha256:57275c69a2a3a9527086f2563426170c4ec7bed0a1bc3ee10fcedb17b31cee41
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+<none>              <none>              57275c69a2a3        27 seconds ago      218MB
+ubuntu              save_load           cae40fb01d1f        13 minutes ago      243MB
+$ docker tag 57275c69a2a3 ubuntu:export_import
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE
+ubuntu              export_import       57275c69a2a3        About a minute ago   218MB
+ubuntu              save_load           cae40fb01d1f        14 minutes ago       243MB
+```
+```
+# 容器打包的镜像包丢失历史和层，镜像打包的镜像包没有丢失
+➜  ~ docker history 57275c69a2a3
+IMAGE               CREATED              CREATED BY    SIZE      COMMENT
+57275c69a2a3        About a minute ago                 218MB     Imported from -
+➜  ~ docker history cae40fb01d1f
+IMAGE           CREATED           CREATED BY                                SIZE     COMMENT
+cae40fb01d1f    14 minutes ago    /bin/bash                                 55.3MB
+<missing>       11 days ago       /bin/sh -c #(nop)  CMD ["/bin/bash"]      0B
+<missing>       11 days ago       /bin/sh -c mkdir -p /run/systemd && ec…   7B
+<missing>       11 days ago       /bin/sh -c rm -rf /var/lib/apt/lists/*    0B
+<missing>       11 days ago       /bin/sh -c set -xe   && echo '#!/bin/s…   195kB
+<missing>       11 days ago       /bin/sh -c #(nop) ADD file:c860cba1b1c…   188MB
+```
+
+* 总结
+    * 使用save和export生成的其实<f>都是镜像包</f>，save.tar和export.tar导入后生成的容器中都有ssh
+    * save镜像后体积变大，export容器后体积变小
+    * 打包容器后的包会丢失历史和层(layer)，打包镜像后的包不会丢失历史和层(layer)
 
 ### 0x03 查看镜像或容器的底层信息(IP、端口绑定、配置信息等)
 ```bash
@@ -285,3 +314,7 @@ ubuntu              ping                2937b5ab38d7        7 seconds ago       
 ubuntu              14.04               7e4b16ae8b23        11 days ago         188MB
 ubuntu              latest              1d9c17228a9e        11 days ago         86.7MB
 ```
+
+<br />
+#### Reference(侵删)：
+* [https://my.oschina.net/zjzhai/blog/225112](https://my.oschina.net/zjzhai/blog/225112?_blank)
