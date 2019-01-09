@@ -193,10 +193,6 @@ $ docker rm 39b5bab299be
 * 删除所有容器(只能删除停止运行的)
 
 ```bash
-$ docker kill $(docker ps -aq)
-370425339ff8
-3e4c995326c0
-6f9d8dea6aa0
 $ docker rm $(docker ps -aq)
 39b5bab299be
 3e4c995326c0
