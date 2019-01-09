@@ -305,7 +305,7 @@ Docker版本：Docker version 17.06.0-ce, build 02c1d87
       <guid>http://wyb0.com/posts/docker-image-and-container/</guid>
       <description>操作系统：Ubuntu14.04.1
 Docker版本：Docker version 17.06.0-ce, build 02c1d87
-0x00 镜像操作  下载镜像  #一般容器的id和name可以互换 $ docker search ubuntu #从公共registry搜索镜像 $ docker pull ubuntu #从公共registry下载镜像 $ docker pull ubuntu:14.04   查看当前系统镜像  $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.04 54333f1de4ed 2 weeks ago 188MB   提交新的镜像  #首先运行一个容器，容器id为50b74968229a $ docker commit 50b74968229a ubuntu:add_file $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu add_file 9e01bfa580bb 1 weeks ago 190MB ubuntu latest 14f60031763d 2 weeks ago 120MB ubuntu 14.</description>
+0x00 镜像操作  下载镜像  #一般镜像、容器的id和name可以互换 $ docker search ubuntu #从公共registry搜索镜像 $ docker pull ubuntu #从公共registry下载镜像 $ docker pull ubuntu:14.04   查看当前系统镜像  $ docker images REPOSITORY TAG IMAGE ID CREATED SIZE ubuntu 14.04 7e4b16ae8b23 11 days ago 188MB ubuntu latest 1d9c17228a9e 11 days ago 86.7MB   查看镜像层组成  $ docker history ubuntu:14.04 # ubuntu:14.04可以用7e4b16ae8b23替代，用id和images_name:tag效果一样   删除镜像(删除镜像前要先删除上面的容器)  $ docker rmi ubuntu:latest # 也可docker rmi 1d9c17228a9e  0x01 容器操作  运行容器(exit后容器就停止了)</description>
     </item>
     
     <item>
