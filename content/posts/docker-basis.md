@@ -113,7 +113,6 @@ $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ub
 $ sudo apt-get update
 $ sudo apt-get install docker-ce
 
-
 $ sudo docker info #查看是否安装成功
 ```
 
@@ -129,3 +128,7 @@ $ sudo gpasswd -a ${USER} docker
 $ sudo service docker restart
 $ newgrp - docker
 ```
+
+<br />
+#### Reference(侵删)：
+* [https://docs.docker.com/install/](https://docs.docker.com/install/?_blank)
