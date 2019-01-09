@@ -46,7 +46,7 @@ $ docker rmi ubuntu:latest # 也可docker rmi 1d9c17228a9e
 
 ### 0x01 容器操作
 * 运行容器(exit后容器就停止了)
-    * --rm：告诉Docker一旦运行的容器停止就删除容器
+    * -\-rm：告诉Docker一旦运行的容器停止就删除容器
     * -ti：告诉Docker分配一个伪终端并进入交互模式(这将进入容器内)
     * ubuntu:14.04 是容器立足的镜像
     * /bin/bash：shell
