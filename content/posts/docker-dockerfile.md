@@ -158,13 +158,12 @@ ERROR: 1050  Table 'plugin' already exists
 190110  5:05:50 [ERROR] Can't open the mysql.plugin table. Please run mysql_upgrade to create it.
 190110  5:05:51 [ERROR] Fatal error: Can't open and lock privilege tables: Got error 140 from storage engine
 ```
-解决方案是在启动mysql的语句前执行 "find /var/lib/mysql -type f -exec touch {} \;" 参考：
+解决方案：  
+在启动mysql的语句前执行 ```"find /var/lib/mysql -type f -exec touch {} \;"``` (init.sh中已经加了)  
+参考：[https://github.com/docker/for-linux/issues/72](https://github.com/docker/for-linux/issues/72?_blank)和[https://github.com/parsa-epfl/cloudsuite/pull/99](https://github.com/parsa-epfl/cloudsuite/pull/99?_blank)
 
-[https://github.com/docker/for-linux/issues/72](https://github.com/docker/for-linux/issues/72?_blank)
-
-[https://github.com/parsa-epfl/cloudsuite/pull/99](https://github.com/parsa-epfl/cloudsuite/pull/99?_blank)
-
-
+重新build容器，查看log，启动成功
+![](/img/post/20190110-141535.png)
 
 ### 0x04 注意事项
 * 使用缓存
