@@ -117,8 +117,8 @@
                 
                 
 
-<p>操作系统：Ubuntu14.04.1<br />
-Docker版本：Docker version 17.06.0-ce, build 02c1d87</p>
+<p>操作系统：macOS Sierra 10.12.6<br />
+Docker版本：Docker version 18.09.0, build 4d60db4</p>
 
 <h3 id="0x00-dockerfile">0x00 Dockerfile</h3>
 
@@ -150,9 +150,9 @@ CMD ['/bin/echo','this is test']
 #docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test'
 ENTRYPOINT ['/bin/echo','entrypoint test']
 
-#docker run ubuntu:test start即执行/etc/init.d/mysql start，CMD中的默认参数会被覆盖
+#docker run ubuntu:test init即执行/etc/init.d/mysql init，CMD中的默认参数会被覆盖
 ENTRYPOINT ['/etc/init.d/mysql']
-CMD [&quot;restart&quot;]#CMD中的值会作为ENTRYPOINT的默认参数
+CMD [&quot;reinit&quot;]#CMD中的值会作为ENTRYPOINT的默认参数
 </code></pre>
 
 <h3 id="0x02-实例">0x02 实例</h3>
@@ -161,10 +161,10 @@ CMD [&quot;restart&quot;]#CMD中的值会作为ENTRYPOINT的默认参数
 range
 ├── Dockerfile
 └── src
+    ├── init.sh
     ├── privileges.sql
     ├── range.zip
-    ├── sources.list
-    └── start.sh
+    └── sources.list
 
 1 directory, 5 files
 </code></pre>
@@ -179,26 +179,24 @@ MAINTAINER reber
 
 ENV MYSQL_ALLOW_EMPTY_PASSWORD yes
 
-COPY src/sources.list /etc/apt/sources.list
-RUN apt-get update &amp;&amp; apt-get upgrade -y
+COPY ./src /data
+WORKDIR /data
+RUN chmod +x init.sh
+RUN cp sources.list /etc/apt/sources.list &amp;&amp; apt-get update &amp;&amp; apt-get upgrade -y
+RUN apt-get install -y apache2 mysql-server mysql-client php5
+RUN apt-get install -y php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
+RUN apt-get clean
 
-COPY src/range.zip /tmp/
-COPY src/privileges.sql /tmp/
-
-RUN apt-get install -y apache2 mysql-server mysql-client php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql unzip &amp;&amp; apt-get clean
+RUN apt-get install -y zip
+RUN set -x \
+    &amp;&amp; unzip -x /data/range.zip -d /var/www/html \
+    &amp;&amp; chmod 777 /var/www/html/range/upload/uploads \
+    &amp;&amp; chmod 777 /var/www/html/range/xss_platform/upload
 
 WORKDIR /var/www/html
-RUN set -x \
-    &amp;&amp; unzip -x /tmp/range.zip -d ./ \
-    &amp;&amp; chmod 777 ./range/upload/uploads \
-    &amp;&amp; chmod 777 ./range/xss_platform/upload
-
 EXPOSE 80
 
-COPY src/start.sh /start.sh
-RUN chmod +x /start.sh
-ENTRYPOINT [&quot;/start.sh&quot;]
-CMD [&quot;--help&quot;]
+CMD [&quot;/data/init.sh&quot;]
 </code></pre>
 
 <ul>
@@ -229,15 +227,15 @@ deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted unive
 </code></pre>
 
 <ul>
-<li>src/start.sh</li>
+<li>src/init.sh</li>
 </ul>
 
-<pre><code class="language-bash">reber@wyb:~/range$ cat src/start.sh
+<pre><code class="language-bash">reber@wyb:~/range$ cat src/init.sh
 #!/bin/bash
 set -x
 
 echo 'start mysql'
-/etc/init.d/mysql start
+find /var/lib/mysql -type f -exec touch {} \; &amp;&amp; /etc/init.d/mysql start
 sleep 3
 
 echo 'import rtest.sql'
@@ -245,9 +243,9 @@ mysql &lt; /var/www/html/range/rtest.sql
 sleep 3
 
 echo 'set password'
-mysql &lt; /tmp/privileges.sql
+mysql &lt; /data/privileges.sql
 
-/etc/init.d/mysql restart
+find /var/lib/mysql -type f -exec touch {} \; &amp;&amp; /etc/init.d/mysql restart
 /etc/init.d/apache2 restart
 
 echo 'set success'
@@ -257,17 +255,29 @@ echo 'set success'
 
 <h3 id="0x03-构建镜像">0x03 构建镜像</h3>
 
-<pre><code class="language-bash">reber@wyb:~/range$ ls
-Dockerfile  src
-reber@wyb:~/range$ ls src
-range.zip  sources.list  start.sh
-
-#构建镜像
+<pre><code class="language-bash">#构建镜像
 reber@wyb:~/range$ docker build -t range:v1.0 .
 
 #运行容器，并将容器的80端口转到宿主机的8888端口
-reber@wyb:~/range$ docker run -itd -p 8888:80 range:v1.0
+reber@wyb:~/range$ docker run -itd --name range_test -p 8888:80 range:v1.0
 </code></pre>
+
+<p>运行时mysql没有启动，进容器查看日志如下：</p>
+
+<pre><code class="language-ini">root@d31d5d70fd29:/var/www/html# cat /var/log/mysql/error.log|grep 'ERROR'
+ERROR: 1064  You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ALTER TABLE user ADD column Show_view_priv enum('N','Y') CHARACTER SET utf8 NOT ' at line 1
+190110  5:04:54 [ERROR] Aborting
+ERROR: 1050  Table 'plugin' already exists
+190110  5:04:58 [ERROR] Aborting
+190110  5:05:50 [ERROR] Can't open the mysql.plugin table. Please run mysql_upgrade to create it.
+190110  5:05:51 [ERROR] Fatal error: Can't open and lock privilege tables: Got error 140 from storage engine
+</code></pre>
+
+<p>解决方案是在启动mysql的语句前执行 &ldquo;find /var/lib/mysql -type f -exec touch {} \;&rdquo; 参考：</p>
+
+<p><a href="https://github.com/docker/for-linux/issues/72?_blank">https://github.com/docker/for-linux/issues/72</a></p>
+
+<p><a href="https://github.com/parsa-epfl/cloudsuite/pull/99?_blank">https://github.com/parsa-epfl/cloudsuite/pull/99</a></p>
 
 <h3 id="0x04-注意事项">0x04 注意事项</h3>
 
@@ -305,7 +315,7 @@ RUN apt-get upgrade -y #尽量不要upgrade
 
 <p>应该使用数组语法，两者可以结合使用</p>
 
-<pre><code>ENTRYPOINT [&quot;/start.sh&quot;] #docker run的参数将传递给start.sh
+<pre><code>ENTRYPOINT [&quot;/init.sh&quot;] #docker run的参数将传递给init.sh
 CMD [&quot;--help&quot;] #若没有参数传递则显示帮助文档
 </code></pre>
 
