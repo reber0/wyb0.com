@@ -8,8 +8,8 @@ topics = ["Linux"]
 
 +++
 
-操作系统：Ubuntu14.04.1  
-Docker版本：Docker version 17.06.0-ce, build 02c1d87
+操作系统：macOS Sierra 10.12.6   
+Docker版本：Docker version 18.09.0, build 4d60db4
 
 ### 0x00 Dockerfile
 ```
@@ -41,9 +41,9 @@ CMD ['/bin/echo','this is test']
 #docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test'
 ENTRYPOINT ['/bin/echo','entrypoint test']
 
-#docker run ubuntu:test start即执行/etc/init.d/mysql start，CMD中的默认参数会被覆盖
+#docker run ubuntu:test init即执行/etc/init.d/mysql init，CMD中的默认参数会被覆盖
 ENTRYPOINT ['/etc/init.d/mysql']
-CMD ["restart"]#CMD中的值会作为ENTRYPOINT的默认参数
+CMD ["reinit"]#CMD中的值会作为ENTRYPOINT的默认参数
 ```
 
 ### 0x02 实例
@@ -52,10 +52,10 @@ reber@wyb:~$ tree range
 range
 ├── Dockerfile
 └── src
+    ├── init.sh
     ├── privileges.sql
     ├── range.zip
-    ├── sources.list
-    └── start.sh
+    └── sources.list
 
 1 directory, 5 files
 ```
@@ -69,26 +69,24 @@ MAINTAINER reber
 
 ENV MYSQL_ALLOW_EMPTY_PASSWORD yes
 
-COPY src/sources.list /etc/apt/sources.list
-RUN apt-get update && apt-get upgrade -y
+COPY ./src /data
+WORKDIR /data
+RUN chmod +x init.sh
+RUN cp sources.list /etc/apt/sources.list && apt-get update && apt-get upgrade -y
+RUN apt-get install -y apache2 mysql-server mysql-client php5
+RUN apt-get install -y php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
+RUN apt-get clean
 
-COPY src/range.zip /tmp/
-COPY src/privileges.sql /tmp/
-
-RUN apt-get install -y apache2 mysql-server mysql-client php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql unzip && apt-get clean
+RUN apt-get install -y zip
+RUN set -x \
+    && unzip -x /data/range.zip -d /var/www/html \
+    && chmod 777 /var/www/html/range/upload/uploads \
+    && chmod 777 /var/www/html/range/xss_platform/upload
 
 WORKDIR /var/www/html
-RUN set -x \
-    && unzip -x /tmp/range.zip -d ./ \
-    && chmod 777 ./range/upload/uploads \
-    && chmod 777 ./range/xss_platform/upload
-
 EXPOSE 80
 
-COPY src/start.sh /start.sh
-RUN chmod +x /start.sh
-ENTRYPOINT ["/start.sh"]
-CMD ["--help"]
+CMD ["/data/init.sh"]
 ```
 
 * src/privileges.sql
@@ -116,15 +114,15 @@ deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted univer
 deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
 ```
 
-* src/start.sh
+* src/init.sh
 
 ```bash
-reber@wyb:~/range$ cat src/start.sh
+reber@wyb:~/range$ cat src/init.sh
 #!/bin/bash
 set -x
 
 echo 'start mysql'
-/etc/init.d/mysql start
+find /var/lib/mysql -type f -exec touch {} \; && /etc/init.d/mysql start
 sleep 3
 
 echo 'import rtest.sql'
@@ -132,9 +130,9 @@ mysql < /var/www/html/range/rtest.sql
 sleep 3
 
 echo 'set password'
-mysql < /tmp/privileges.sql
+mysql < /data/privileges.sql
 
-/etc/init.d/mysql restart
+find /var/lib/mysql -type f -exec touch {} \; && /etc/init.d/mysql restart
 /etc/init.d/apache2 restart
 
 echo 'set success'
@@ -144,17 +142,29 @@ echo 'set success'
 
 ### 0x03 构建镜像
 ```bash
-reber@wyb:~/range$ ls
-Dockerfile  src
-reber@wyb:~/range$ ls src
-range.zip  sources.list  start.sh
-
 #构建镜像
 reber@wyb:~/range$ docker build -t range:v1.0 .
 
 #运行容器，并将容器的80端口转到宿主机的8888端口
-reber@wyb:~/range$ docker run -itd -p 8888:80 range:v1.0
+reber@wyb:~/range$ docker run -itd --name range_test -p 8888:80 range:v1.0
 ```
+运行时mysql没有启动，进容器查看日志如下：
+```ini
+root@d31d5d70fd29:/var/www/html# cat /var/log/mysql/error.log|grep 'ERROR'
+ERROR: 1064  You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ALTER TABLE user ADD column Show_view_priv enum('N','Y') CHARACTER SET utf8 NOT ' at line 1
+190110  5:04:54 [ERROR] Aborting
+ERROR: 1050  Table 'plugin' already exists
+190110  5:04:58 [ERROR] Aborting
+190110  5:05:50 [ERROR] Can't open the mysql.plugin table. Please run mysql_upgrade to create it.
+190110  5:05:51 [ERROR] Fatal error: Can't open and lock privilege tables: Got error 140 from storage engine
+```
+解决方案是在启动mysql的语句前执行 "find /var/lib/mysql -type f -exec touch {} \;" 参考：
+
+[https://github.com/docker/for-linux/issues/72](https://github.com/docker/for-linux/issues/72?_blank)
+
+[https://github.com/parsa-epfl/cloudsuite/pull/99](https://github.com/parsa-epfl/cloudsuite/pull/99?_blank)
+
+
 
 ### 0x04 注意事项
 * 使用缓存
@@ -183,6 +193,6 @@ Docker镜像应该能在任何主机上运行，所以不要通过Dockerfile映�
 
 应该使用数组语法，两者可以结合使用
 ```
-ENTRYPOINT ["/start.sh"] #docker run的参数将传递给start.sh
+ENTRYPOINT ["/init.sh"] #docker run的参数将传递给init.sh
 CMD ["--help"] #若没有参数传递则显示帮助文档
 ```
