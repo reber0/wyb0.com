@@ -65,9 +65,7 @@ range
 ```bash
 reber@wyb:~/range$ cat Dockerfile
 FROM ubuntu:14.04
-MAINTAINER reber
-
-ENV MYSQL_ALLOW_EMPTY_PASSWORD yes
+MAINTAINER reber <1070018473@qq.com>
 
 COPY ./src /data
 WORKDIR /data
