@@ -20,7 +20,7 @@ Docker镜像是由多个文件系统(只读层)叠加而成的。
 * 在Dockerfile中直接指定数据卷
 ```
 
-### 0x01 docker run挂载Volume(使用-v参数)
+### 0x01 通过docker run挂载Volume(使用-v参数)
 * 不指定主机目录
 
 ```bash
@@ -40,6 +40,7 @@ $ docker inspect -f {{.Mounts}} v_test
 * 指定主机目录(只能通过-v参数实现，Dockerfile不行)
 
 ```bash
+# 本机的/home/var/docker_data和容器的/data对应
 $ docker run -itd -v /home/var/docker_data:/data debian:jessie /bin/bash
 root@d853c4ca7632:/# exit
 exit
@@ -52,7 +53,7 @@ $ docker inspect -f {{.Mounts}} d853c4ca7632
 ```
 # 本机创建文件，容器中就会同时出现
 #宿主机创建文件
-$ sudo touch /var/lib/docker/volumes/8f39f7de0f851e0bfbcfdd4561fbb20484f01f864ceb09bdcdf743e068/_data/a.txt
+$ sudo touch /home/var/docker_data/a.txt
 
 #容器可以查看到文件同样被创建
 root@8e1ccd30fe33:/# ls data/
