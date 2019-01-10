@@ -47,7 +47,18 @@ CMD ["restart"]#CMD中的值会作为ENTRYPOINT的默认参数
 ```
 
 ### 0x02 实例
-![文件结构](/img/post/dockerfile.png)
+```bash
+reber@wyb:~$ tree range
+range
+├── Dockerfile
+└── src
+    ├── privileges.sql
+    ├── range.zip
+    ├── sources.list
+    └── start.sh
+
+1 directory, 5 files
+```
 
 * Dockerfile
 
