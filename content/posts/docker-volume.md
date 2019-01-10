@@ -86,3 +86,7 @@ $ docker inspect -f {{.Mounts}} 65aedf9c2ee1
 ```bash
 docker rm -v d145e8c6f874 #删除容器时一起删除数据
 ```
+
+<br />
+#### Reference(侵删)：
+* [http://dockone.io/article/128](http://dockone.io/article/128?_blank)
