@@ -1,5 +1,5 @@
 +++
-title = "SQL Server注入"
+title = "SQL注入tips(SQL Server)"
 topics = ["Pentest"]
 tags = ["injection"]
 description = "SQL Server注入常见的一些注入手法"
