@@ -1,5 +1,5 @@
 +++
-title = "SQL注入小结(Oracle)"
+title = "SQL注入tips(Oracle)"
 topics = ["Pentest"]
 tags = ["injection","oracle"]
 description = "前几天渗透测试时遇到了Oracle的注入，这里简单总结一下Oracle中的SQL注入常见的利用手法：联合查询注入、报错型注入、布尔型注入、无返回值的盲注"
