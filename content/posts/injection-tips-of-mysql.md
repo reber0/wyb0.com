@@ -3,7 +3,7 @@ date = "2018-05-23T11:14:51+08:00"
 description = "记录一些非常见的注入手法，或者说是mysql的一些特性"
 draft = false
 tags = ["injection"]
-title = "SQL注入的一些tips"
+title = "SQL注入tips(MySQL)"
 topics = ["Pentest"]
 +++
 
