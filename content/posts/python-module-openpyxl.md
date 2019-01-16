@@ -22,7 +22,8 @@ topics = ["Python"]
 
 from openpyxl import load_workbook
 
-wb = load_workbook(filename='aa.xlsx')
+#设置data_only=True，否则如果文件中有计算公式的话读出来的是公式不是数值
+wb = load_workbook(filename='aa.xlsx',data_only=True) 
 
 sheetnames = wb.get_sheet_names() #获得所有表名
 print u"存在表：%s" % sheetnames
