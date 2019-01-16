@@ -14,7 +14,7 @@ topics = ["Python"]
 这个模块可以让你读写excel文件
 
 ### 0x01 读取数据
-![excel数据](/img/post/openpyxl_excel.png)
+![40](/img/post/openpyxl_excel.png)
 代码如下：
 ```
 #!/usr/bin/env python
@@ -48,7 +48,7 @@ for x in range(1,rows+1):
 ```
 
 结果如下：
-![excel数据提取结果](/img/post/openpyxl_result.png)
+![40](/img/post/openpyxl_result.png)
 
 ### 0x02 写入数据
 代码如下：
@@ -81,4 +81,56 @@ wb.save(filename='test.xlsx') # 保存数据
 ```
 
 结果如下：
-![向excel写入数据](/img/post/openpyxl_write.png)
+![50](/img/post/openpyxl_write.png)
+
+### 0x03 实际案例
+```ini
+$ ls
+111.txt 222.txt t2x.py
+$ cat 111.txt
+aaa--111--AAA
+bbb--222--BBB
+ccc--333--CCC
+ddd--444--DDD
+$ cat 222.txt
+hello--xiaoming--hello,world!
+test--xiaohua--This is a test message.
+weather--lihua--It will be sunny tomorrow.
+```
+以-\-进行分割，写入xlsx
+```
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# code by reber <1070018473@qq.com>
+
+from openpyxl import Workbook
+
+def write2xlsx():
+    def get_content(filename):
+        data = []
+        with open(filename) as f:
+            lines = f.readlines()
+            for line in lines:
+                data.append(line.strip().split('--'))
+        return data
+
+    def write2sheet(ws,filename):
+        data = get_content(filename)
+        # print data
+        for x in range(1,len(data)+1): #第几行
+            for y in xrange(1,4): #第几列
+                print data[x-1][y-1],
+                _ = ws.cell(row=x,column=y,value=data[x-1][y-1])
+            print
+
+    wb = Workbook()
+    fs = ['111.txt','222.txt']
+    for filename in fs:
+        sheet_name = filename.split('.')[0]
+        ws = wb.create_sheet(title=sheet_name)
+        write2sheet(ws, filename)
+    wb.save(filename='test.xlsx')
+
+write2xlsx()
+```
+![60](/img/post/20190116-123847.png)
