@@ -125,9 +125,9 @@ def write2xlsx():
 
     wb = Workbook()
     fs = ['111.txt','222.txt']
-    for filename in fs:
+    for index,filename in enumerate(fs):
         sheet_name = filename.split('.')[0]
-        ws = wb.create_sheet(title=sheet_name)
+        ws = wb.create_sheet(title=sheet_name,index=index)
         write2sheet(ws, filename)
     wb.save(filename='test.xlsx')
 
