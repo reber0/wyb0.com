@@ -8,12 +8,19 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>{{ .Title }}</h2>
+                <!-- <h2>{{ .Title }}</h2> -->
                 <!-- 文章的时间、分类/标签的图标 -->
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
-                        <i class="fa fa-calendar fa-fw"></i>
-                        <time>{{ with .Site.Params.DateFormat }}{{ $.Date.Format . }}{{ else }}{{ .Date.Format "02 Jan 2006, 15:04" }}{{ end }}</time>
+                        <br>
+<!--                         <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            {{ with .Site.Params.DateFormat }}
+                                {{ $.Date.Format . }}
+                            {{ else }}
+                                {{ .Date.Format "2006-01-02" }}
+                            {{ end }}
+                        </time> -->
                         &nbsp;&nbsp;&nbsp;&nbsp;
                     <!-- </div> -->
 
@@ -47,7 +54,7 @@
                 
                 {{ .Content }}
                 
-                <div style="padding:10px 1px;">
+<!--                 <div style="padding:10px 1px;">
                     <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
                     <script>
                         var link = decodeURI(window.location.href);
@@ -56,7 +63,7 @@
                     </script>
                 </div>
 
-                {{ partial "prev_next_post.html" . }}
+                {{ partial "prev_next_post.html" . }} -->
             </div>
         </div>
         <div class="right">
