@@ -104,9 +104,9 @@ vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行�
 0x00 安装mysql $ sudo yum install mysql mysql-server mysql-devel
 0x01 安装jdk和tomcat  创建安装jdk和tomcat的文件夹  下载安装包并解压安装
 jdk包可在这里下载
-tomcat包可在这里下载 为java添加环境变量
-$ tail -n 3 /etc/profile export JAVA_HOME=&amp;quot;/opt/jdk1.8.0_91&amp;quot; export CLASSPATH=.:$JAVA_HOME/lib export PATH=$JAVA_BIN/bin:$PATH    0x02 简单配置tomcat 0x03 启动tomcat 0x04 连接数据库 驱动可在这里下载 $ vim /opt/tomcat/apache-tomcat-8.0.36/webapps/ROOT/a.jsp
-&amp;lt;%@page contentType=&amp;quot;text/html;charset=utf-8&amp;quot; import=&amp;quot;java.sql.*&amp;quot; %&amp;gt; &amp;lt;% String driver = &amp;quot;com.mysql.jdbc.Driver&amp;quot;; String url = &amp;quot;jdbc:mysql://localhost:3306/tomcat&amp;quot;; //数据库web String user = &amp;quot;tomcat&amp;quot;; String password = &amp;quot;123456&amp;quot;; try { Class.forName(driver); Connection conn = DriverManager.</description>
+tomcat包可在这里下载 为java添加环境变量并设置命令链接符 ```bash $ tail -n 3 /etc/profile export JAVA_HOME=&amp;ldquo;/opt/jdk1.8.0_91&amp;rdquo; export CLASSPATH=.:$JAVA_HOME/lib export PATH=$JAVA_BIN/bin:$PATH
+  $ sudo update-alternatives &amp;ndash;install /usr/bin/java java /opt/jdk1.8.0_91/bin/java 1 $ sudo update-alternatives &amp;ndash;install /usr/bin/javac javac /opt/jdk1.8.0_91/bin/javac 1 $ sudo update-alternatives &amp;ndash;set java /opt/jdk1.8.0_91/bin/java $ sudo update-alternatives &amp;ndash;set javac /opt/jdk1.8.0_91/bin/javac
+![验证jdk是否设置成功.png](/img/post/java_version.png) ### 0x02 简单配置tomcat ![简单配置tomcat1.png](/img/post/config_tomcat.png) ### 0x03 启动tomcat !</description>
     </item>
     
     <item>
