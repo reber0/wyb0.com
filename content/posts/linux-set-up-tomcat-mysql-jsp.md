@@ -25,7 +25,13 @@ jdk包可在[这里](http://www.oracle.com/technetwork/java/javase/downloads/jdk
 tomcat包可在[这里](http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz)下载
 ![下载tomcat安装包.png](/img/post/download_tomcat.png)
 ![复制解压后的安装包到/opt下对应目录.png](/img/post/cp_jdk_tomcat_to_opt.png)
-![为java添加环境变量.png](/img/post/add_java_env.png)
+为java添加环境变量
+```bash
+$ tail -n 3 /etc/profile
+export JAVA_HOME="/opt/jdk1.8.0_91"
+export CLASSPATH=.:$JAVA_HOME/lib
+export PATH=$JAVA_BIN/bin:$PATH
+```
 ![验证jdk是否设置成功.png](/img/post/java_version.png)
 
 ### 0x02 简单配置tomcat
