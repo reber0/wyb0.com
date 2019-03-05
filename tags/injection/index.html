@@ -381,11 +381,11 @@ py一下了吧，前端有js进行加密，可以本地写文件生成加密后�
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于thinkphp5的where函数 年前公司委托别的公司开发一个网站，使用的是ThinkPHP5.0，存在一个注入漏洞，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
+        0x00 关于thinkphp5的where函数 年前公司委托别的公司开发一个网站，使用的是ThinkPHP 5.0.13，存在一个注入漏洞，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
 0x01 示例代码 tp5/application/home/controller/Index.php
 &lt;?php namespace app\home\controller; use think\Db; class Index { public function testDb() { $msg = db('msg'); $id = input('param.id',1); //不存在id的话默认为1 $where = &quot;id=&quot;.$id; $result = $msg-&gt;where($where)-&gt;select(); // $result = $msg-&gt;where(['id'=&gt;$id])-&gt;select(); echo $msg-&gt;getLastSql(); echo '&lt;br/&gt;&lt;br/&gt;'; echo var_dump($result); } }  where函数接收字符串和数组时，访问http://127.0.0.1/Source/tp5/home/index/testdb/id/1执行的SQL语句分别如下：
 SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存在注入，如下： 主要调用文件及函数顺序如下：
-tp5/thinkphp/library/think/db/Query.php __construct() tp5/thinkphp/library/db/Builder.php __construct() tp5/thinkphp/library/think/db/Query.php where() tp5/thinkphp/library/think/db/Query.
+tp5/thinkphp/library/think/db/Query.php __construct() tp5/thinkphp/library/db/Builder.php __construct() tp5/thinkphp/library/think/db/Query.
     </p>
 
     
