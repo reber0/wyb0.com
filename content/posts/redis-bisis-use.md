@@ -85,18 +85,20 @@ $ vim /opt/redis-3.2.3/redis.conf
 $ redis-server /opt/redis-3.2.3/redis.conf  # 启动服务
 $ ps -aux | grep redis
 ```
-在另外一个机器上用redis-cli连接刚搭建的服务器：
-![连接redis并创建文件](/img/post/redis_install_conn_and_write_file.png)
 
-![访问redis创建的文件](/img/post/redis_install_visit_file.png)
-
-### 0x05 连接Redis
 ```cs
 # 客户端连接
 $ redis-cli
 
 # 连接远程redis
 $ redis-cli -h host -p port -a password
+/*
+$ redis-cli -h host -p port
+127.0.0.1:6379> keys *
+(error) NOAUTH Authentication required.
+127.0.0.1:6379> auth password
+OK
+*/
 
 # 查看所有键值
 127.0.0.1:6379> keys *
