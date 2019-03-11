@@ -34,7 +34,7 @@ Mongo的授权采用了角色授权的方法，每个用户都有一组权限，
 * 超级用户角色
     * root：只在admin数据库中可用。超级账号，超级权限
 * 内部角色
-    * __system
+    * \__system
 
 ### 0x01 创建用户
 ```
@@ -181,6 +181,8 @@ WriteResult({ "nInserted" : 1 })
 ... })
 
 #查询文档
+> db.student.findOne()
+{ "_id" : ObjectId("59267f1c7e72bcd757917260"), "name" : "xiaoming", "sex" : 1 }
 > db.student.find()
 { "_id" : ObjectId("59267f1c7e72bcd757917260"), "name" : "xiaoming", "sex" : 1 }
 { "_id" : ObjectId("59267f397e72bcd757917261"), "name" : "xiaohong", "sex" : 0 }
