@@ -125,24 +125,27 @@
 
 <h3 id="0x00-redis的未授权访问">0x00 Redis的未授权访问</h3>
 
-<p>若Redis服务器对公网开放，且未启用认证，则攻击者可以未授权访问服务器。
-若Redis以root身份运行，黑客可以给root账户写入SSH公钥文件，通过SSH登录受害服务器。</p>
+<p>若Redis服务器对公网开放，且未启用认证，则攻击者可以未授权访问服务器。</p>
 
-<h3 id="0x01-向redis服务器上传ssh公钥">0x01 向Redis服务器上传SSH公钥</h3>
+<p>若Redis以root身份运行，黑客可以给root账户写入SSH公钥文件，通过SSH登录受害服务器。</p>
 
-<p><img src="/img/post/redis_unauthorized_access_create_keys.png" alt="本地生成SSH密钥对" /></p>
+<h3 id="0x01-写shell">0x01 写shell</h3>
 
-<p><img src="/img/post/redis_unauthorized_access_export_pubkey.png" alt="本地生成SSH密钥对" /></p>
+<p>连接目标主机的redis写文件
+<img src="/img/post/redis_install_conn_and_write_file.png" alt="65" />
+<img src="/img/post/redis_install_visit_file.png" alt="60" /></p>
 
-<p><img src="/img/post/redis_unauthorized_access_write_pubkey.png" alt="将本地生成的公钥写到对方服务器上" /></p>
+<h3 id="0x02-向redis服务器上传ssh公钥">0x02 向Redis服务器上传SSH公钥</h3>
 
-<p><img src="/img/post/redis_unauthorized_access_use_sshkey_login.png" alt="本地通过私钥登陆对方服务器" /></p>
+<p><img src="/img/post/redis_unauthorized_access_create_keys.png" alt="60" />
+<img src="/img/post/redis_unauthorized_access_export_pubkey.png" alt="60" />
+<img src="/img/post/redis_unauthorized_access_write_pubkey.png" alt="60" />
+<img src="/img/post/redis_unauthorized_access_use_sshkey_login.png" alt="75" /></p>
 
-<h3 id="0x02-通过计划任务反弹shell">0x02 通过计划任务反弹shell</h3>
+<h3 id="0x03-通过计划任务反弹shell">0x03 通过计划任务反弹shell</h3>
 
-<p><img src="/img/post/redis_unauthorized_access_write_cron.png" alt="通过Redis向对方服务器写计划任务反弹shell" /></p>
-
-<p><img src="/img/post/redis_unauthorized_access_listen_port.png" alt="本地监听服务器反弹的那个端口" /></p>
+<p><img src="/img/post/redis_unauthorized_access_write_cron.png" alt="65" />
+<img src="/img/post/redis_unauthorized_access_listen_port.png" alt="65" /></p>
 
                 
                 <div style="padding:10px 1px;">

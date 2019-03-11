@@ -206,18 +206,18 @@ $ redis-server /opt/redis-3.2.3/redis.conf  # 启动服务
 $ ps -aux | grep redis
 </code></pre>
 
-<p>在另外一个机器上用redis-cli连接刚搭建的服务器：
-<img src="/img/post/redis_install_conn_and_write_file.png" alt="连接redis并创建文件" /></p>
-
-<p><img src="/img/post/redis_install_visit_file.png" alt="访问redis创建的文件" /></p>
-
-<h3 id="0x05-连接redis">0x05 连接Redis</h3>
-
 <pre><code class="language-cs"># 客户端连接
 $ redis-cli
 
 # 连接远程redis
 $ redis-cli -h host -p port -a password
+/*
+$ redis-cli -h host -p port
+127.0.0.1:6379&gt; keys *
+(error) NOAUTH Authentication required.
+127.0.0.1:6379&gt; auth password
+OK
+*/
 
 # 查看所有键值
 127.0.0.1:6379&gt; keys *
