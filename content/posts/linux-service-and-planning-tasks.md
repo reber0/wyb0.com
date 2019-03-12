@@ -74,7 +74,10 @@ vim /etc/crontab会以root权限执行，不推荐使用
 ```
 [wyb@localhost tmp]$ sudo cat /var/spool/cron/wyb   //用户的计划任务
 */1 * * * * date >> /tmp/date.txt
-[wyb@localhost tmp]$ sudo tail -5 /etc/crontab   //系统计划任务
+[wyb@localhost tmp]$ sudo tail -8 /etc/crontab   //系统计划任务
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
 # |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
 # |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
 # |  |  |  |  |
@@ -85,9 +88,13 @@ vim /etc/crontab会以root权限执行，不推荐使用
 [wyb@localhost tmp]$ crontab -r   //移除用户所有计划任务，不能移除系统定的计划任务，即不能移除在/etc/crontab中的任务
 [wyb@localhost tmp]$ crontab -l
 no crontab for wyb
-[wyb@localhost tmp]$ sudo tail -3 /etc/crontab 
+[wyb@localhost tmp]$ sudo tail -8 /etc/crontab 
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
 # |  |  |  |  |
 # *  *  *  *  * user-name command to be executed
 */1 * * * * wyb date >> /tmp/wyb.txt
-[wyb@localhost tmp]$ 
 ```
