@@ -24,35 +24,32 @@ import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.
     * 重启Sublime Text
 * 使用方法
     * Ctrl+Shift+P调出菜单然后选择相应操作
-    ![插件Package Control1](/img/post/sublime_package_control1.png)
+    ![40](/img/post/sublime_package_control1.png)
 
     * Preferences -> Package Control也可调出
-    ![插件Package Control2](/img/post/sublime_package_control2.png)
+    ![20](/img/post/sublime_package_control2.png)
 
     * 选择Install Package后可以输入想安装的插件名搜索安装
-    ![插件安装](/img/post/sublime_install.png)
+    ![50](/img/post/sublime_install.png)
 
 ### 0x01 Emmet
 前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装)
-![插件Emmet](/img/post/sublime_emmet.png)
-[![](/img/post/sublime_emmet_demo.png)](http://emmet.io/)
+![40](/img/post/sublime_emmet.png)
+[![40](/img/post/sublime_emmet_demo.png)](http://emmet.io/?_blank)
 
 ### 0x02 Anaconda
 可以自动补全并提示语法，还可跳转到定义、使用等
-![插件Anaconda设置](/img/post/sublime_anaconda_set.png)
-
-![插件Anaconda设置默认选项](/img/post/sublime_anaconda_set_default.png)
-
-![插件Anaconda设置用户选项](/img/post/sublime_anaconda_set_user.png)
-
-![插件Anaconda处理补全问题](/img/post/sublime_anaconda_add_file.png)
+![55](/img/post/sublime_anaconda_set.png)
+![55](/img/post/sublime_anaconda_set_default.png)
+![60](/img/post/sublime_anaconda_set_user.png)
+![70](/img/post/sublime_anaconda_add_file.png)
 
 效果如下：
-![插件Anaconda](/img/post/sublime_anaconda.png)
+![55](/img/post/sublime_anaconda.png)
 
 ### 0x03 AutoFileName
 快捷输入文件路径
-![插件AutoFileName](/img/post/sublime_autofilename.png)
+![50](/img/post/sublime_autofilename.png)
 
 ### 0x04 主题Theme-SoDaReloaded
 两个主题插件，安装好之后：首选项 -> 设置-用户，修改文件Packages/User/Preferences.sublime-settings如下
@@ -91,16 +88,23 @@ Please install Codecs33 plugin (https://github.com/seanliang/Codecs33/tree/osx).
 
 ### 0x07 Git
 在编辑器就可以执行git命令，有github的开发者必备
-![插件Git](/img/post/sublime_git.png)
+![40](/img/post/sublime_git.png)
 
 ### 0x08 GitGutter
 在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率
-![插件GitGutter](/img/post/sublime_gitgutter.png)
+![30](/img/post/sublime_gitgutter.png)
+有时候卡顿，首选项→插件设置→GitGutter→Setting User
+```
+{
+    "non_blocking" : "true",
+    "live_mode" : "false"
+}
+```
 
 ### 0x09 Markdown Preview
 可以在本地预览文件
-![插件Markdown Preview](/img/post/sublime_markdown_preview.png)
-![插件Markdown Preview预览](/img/post/sublime_markdown_preview_html.png)
+![40](/img/post/sublime_markdown_preview.png)
+![45](/img/post/sublime_markdown_preview_html.png)
 
 ### 0x0A DocBlokr
 这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释
@@ -109,11 +113,11 @@ Please install Codecs33 plugin (https://github.com/seanliang/Codecs33/tree/osx).
 
 ### 0x0B Alignment
 插件安装好后选中要对齐的文本，然后按Ctrl+Alt+a即可对齐```"=","+", "-", "&", "|", "<",">"```等符号
-![插件Alignment](/img/post/sublime_alignment.gif)
+![20](/img/post/sublime_alignment.gif)
 
 ### 0x0C 后记
 * 在安装插件时总出错提示```"There are no packages available for installation"```可以用上面提到的手动安装Package Control来解决，或者：
-![后记1](/img/post/sublime_end1.png)
+![40](/img/post/sublime_end1.png)
 
 * 有时不能通过Package Control下载插件，可以直接下载插件，然后放在下面图示的文件夹中，然后重启Sublime Text使插件生效即可：
-![后记2](/img/post/sublime_end2.png)
+![40](/img/post/sublime_end2.png)
