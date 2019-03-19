@@ -137,18 +137,22 @@ namespace app\home\controller;
 use think\Db;
 
 class Index
-{
+{   
+    //http://127.0.0.1/Source/tp5/home/index/testdb/id/1
     public function testDb()
     {
+        // 调用 tp5/thinkphp/library/think/Db.php 的 connect() 函数 初始化数据库，并取得数据库类实例
         $msg = db('msg');
 
         $id = input('param.id',1); //不存在id的话默认为1
-        $where = &quot;id=&quot;.$id;
-        $result = $msg-&gt;where($where)-&gt;select();
+
+        //在Db.php中use think\db\Query; $msg-&gt;where()则调用了Query.php中的where函数进入查询流程
+        $result = $msg-&gt;where(&quot;id=&quot;.$id)-&gt;select();
         // $result = $msg-&gt;where(['id'=&gt;$id])-&gt;select();
 
+        echo '&lt;br/&gt;&lt;hr/&gt;执行的sql语句：';
         echo $msg-&gt;getLastSql();
-        echo '&lt;br/&gt;&lt;br/&gt;';
+        echo '&lt;br/&gt;最终得到的结果：';
         echo var_dump($result);
     }
 }
@@ -161,26 +165,27 @@ class Index
 SELECT * FROM `msg` WHERE `id` = 1
 </code></pre>
 
-<p>前者存在注入，如下：
-<img src="/img/post/tp5_where_str1.png" alt="and 1=1" />
-<img src="/img/post/tp5_where_str2.png" alt="60" />
+<p>前者存在注入，当payload为: <f>) and 1=1 and (1)=(1</f>时判断返回如下：
+<img src="/img/post/tp5_where_str1.png" alt="80" />
+<img src="/img/post/tp5_where_str2.png" alt="45" />
 主要调用文件及函数顺序如下：</p>
 
-<pre><code class="language-php">tp5/thinkphp/library/think/db/Query.php  __construct()
-tp5/thinkphp/library/db/Builder.php      __construct()
-tp5/thinkphp/library/think/db/Query.php  where()
-tp5/thinkphp/library/think/db/Query.php  select()
-tp5/thinkphp/library/db/Builder.php      select()
-tp5/thinkphp/library/think/db/Query.php  query()
+<pre><code class="language-html">调用 tp5/thinkphp/library/think/Db.php 的 connect() 函数 初始化数据库，并取得数据库类实例
+
+调用 tp5/thinkphp/library/think/db/Query.php 的 __construct() 函数
+    ==&gt;调用 tp5/thinkphp/library/think/db/Builder.php 的 __construct() 函数
+
+调用 tp5/thinkphp/library/think/db/Query.php 的 where() 函数
+调用 tp5/thinkphp/library/think/db/Query.php 的 select() 函数
+    ==&gt;调用 tp5/thinkphp/library/think/db/Query.php 的 parseExpress 函数进行相关解析
+    ==&gt;调用 tp5/thinkphp/library/think/db/Builder.php 的 select() 函数得到最终执行的sql语句
+    ==&gt;调用 tp5/thinkphp/library/think/db/Query.php 的 query() 函数
 </code></pre>
 
-<h3 id="0x02-简单分析">0x02 简单分析</h3>
-
-<p>执行语句为：$msg-&gt;where()-&gt;select()，主要涉及到两个文件：<br />
-tp5/thinkphp/library/think/db/Query.php和tp5/thinkphp/library/db/Builder.php</p>
+<h3 id="0x02-调用流程中where的处理">0x02 调用流程中where的处理</h3>
 
 <ul>
-<li>where()的处理（调用到Query.php文件中的函数）</li>
+<li>tp5/thinkphp/library/think/db/Query.php 的 where()</li>
 </ul>
 
 <pre><code>//指定AND查询条件
@@ -264,22 +269,27 @@ protected function parseWhereExp($logic, $field, $op, $condition, $param = [])
         //array(1) { [0]=&gt; array(2) { [0]=&gt; string(3) &quot;exp&quot; [1]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; } } 
     }
 }
-
-/*
-Query.php这里面经过where和parseWhereExp的处理后把数组存入了options['where'][$logic]里面，
-不过这里处理后我们拼接的数据没有变，这样where()就处理好了，接着调用select()
-*/
 </code></pre>
 
+<p>Query.php这里面经过where和parseWhereExp的处理后把数组存入了<code>options['where'][$logic]</code>里面</p>
+
+<p>不过这里处理后我们拼接的数据没有变，这样where()就处理好了，接着调用select()</p>
+
+<h3 id="0x03-调用流程中select的处理-这里就query得到结果了">0x03 调用流程中select的处理(这里就query得到结果了)</h3>
+
+<p>流程的话分三步：</p>
+
+<p>1、解析参数：在tp5/thinkphp/library/db/Query.php的select()函数中调用$this-&gt;parseExpress(); 进行表达式的解析</p>
+
+<p>2、生成sql语句：在tp5/thinkphp/library/db/Query.php的select()函数中调用Builder.php里的select()处理上面解析后的参数最终生成sql语句</p>
+
+<p>3、执行sql语句：在tp5/thinkphp/library/db/Query.php的select()函数中调用$this-&gt;query()得到结果</p>
+
 <ul>
-<li>select()的处理（调用到Query.php和Builder.php文件中的函数）</li>
+<li>解析参数(tp5/thinkphp/library/db/Query.php)</li>
 </ul>
 
-<pre><code>/*
-在Query.php的select()函数中首先调用$this-&gt;parseExpress();来解析sql语句中的参数
-然后调用tp5/thinkphp/library/db/Builder.php里的select()处理上面的参数，从而合成sql语句
-*/
-//查找记录
+<pre><code>//查找记录
 public function select($data = null)
 {
     if ($data instanceof Query) {
@@ -312,9 +322,11 @@ public function select($data = null)
         //这里调用tp5/thinkphp/library/db/Builder.php里的select()处理，生成sql语句如下：
         //$sql = &quot;SELECT * FROM `msg` WHERE  (  id=1) and 1=1 and (1)=(1)&quot;
         $sql = $this-&gt;builder-&gt;select($options);
+        //echo &quot;&lt;br&gt;最终生成的sql语句：&quot;.$sql.&quot;&lt;br&gt;&quot;;
+
         // 获取参数绑定
         $bind = $this-&gt;getBind();
-        if ($options['fetch_sql']) {
+        if ($options['fetch_sql']) {//跳过
             // 获取实际执行的SQL语句
             return $this-&gt;connection-&gt;getRealSql($sql, $bind);
         }
@@ -324,6 +336,7 @@ public function select($data = null)
         if ($resultSet = $this-&gt;trigger('before_select', $options)) {
         } else {//进入，这里就执行了sql查询操作了，造成注入
             // 执行查询操作
+            //调用 tp5/thinkphp/library/think/db/Connection.php 的 query() 函数
             $resultSet = $this-&gt;query($sql, $bind, $options['master'], $options['fetch_pdo']);
 
             if ($resultSet instanceof \PDOStatement) {
@@ -338,39 +351,10 @@ public function select($data = null)
         }
     }
 
-    // 数据列表读取后的处理
-    if (!empty($this-&gt;model)) {
-        // 生成模型对象
-        $modelName = $this-&gt;model;
-        if (count($resultSet) &gt; 0) {
-            foreach ($resultSet as $key =&gt; $result) {
-                /** @var Model $model */
-                $model = new $modelName($result);
-                $model-&gt;isUpdate(true);
+    /*
+    省略部分代码
+    */
 
-                // 关联查询
-                if (!empty($options['relation'])) {
-                    $model-&gt;relationQuery($options['relation']);
-                }
-                // 关联统计
-                if (!empty($options['with_count'])) {
-                    $model-&gt;relationCount($model, $options['with_count']);
-                }
-                $resultSet[$key] = $model;
-            }
-            if (!empty($options['with'])) {
-                // 预载入
-                $model-&gt;eagerlyResultSet($resultSet, $options['with']);
-            }
-            // 模型数据集转换
-            $resultSet = $model-&gt;toCollection($resultSet);
-        } else {
-            $resultSet = (new $modelName)-&gt;toCollection($resultSet);
-        }
-    } elseif ('collection' == $this-&gt;connection-&gt;getConfig('resultset_type')) {
-        // 返回Collection对象
-        $resultSet = new Collection($resultSet);
-    }
     // 返回结果处理
     if (!empty($options['fail']) &amp;&amp; count($resultSet) == 0) {
         $this-&gt;throwNotFound($options);
@@ -471,7 +455,7 @@ protected function parseExpress()
 </code></pre>
 
 <ul>
-<li>tp5/thinkphp/library/db/Builder.php里的select()处理</li>
+<li>生成SQL语句(tp5/thinkphp/library/db/Builder.php)</li>
 </ul>
 
 <pre><code>//生成查询SQL
@@ -495,7 +479,6 @@ public function select($options = [])
             $this-&gt;parseComment($options['comment']),
             $this-&gt;parseForce($options['force']),
         ], $this-&gt;selectSql);
-    // var_dump($sql);
     return $sql;
 }
 
@@ -503,7 +486,7 @@ public function select($options = [])
 protected function parseWhere($where, $options)
 {
     $whereStr = $this-&gt;buildWhere($where, $options);//( id=1) and 1=1 and (1)=(1 )
-    if (!empty($options['soft_delete'])) {
+    if (!empty($options['soft_delete'])) {//跳过
         // 附加软删除条件
         list($field, $condition) = $options['soft_delete'];
 
@@ -521,30 +504,29 @@ public function buildWhere($where, $options)
         $where = [];
     }
 
-    if ($where instanceof Query) {
+    if ($where instanceof Query) {//跳过
         return $this-&gt;buildWhere($where-&gt;getOptions('where'), $options);
     }
 
     $whereStr = '';
     $binds    = $this-&gt;query-&gt;getFieldsBind($options['table']);
-    //array(4) { [&quot;id&quot;]=&gt; int(1) [&quot;name&quot;]=&gt; int(2) [&quot;title&quot;]=&gt; int(2) [&quot;content&quot;]=&gt; int(2) }
+    //$binds 为 array(4) { [&quot;id&quot;]=&gt; int(1) [&quot;name&quot;]=&gt; int(2) [&quot;title&quot;]=&gt; int(2) [&quot;content&quot;]=&gt; int(2) }
 
-/*
-$where结构如下：
-array(1) {
-  [&quot;AND&quot;]=&gt;
-  array(1) {
-    [0]=&gt;
-    array(2) {
-      [0]=&gt;
-      string(3) &quot;exp&quot;
-      [1]=&gt;
-      string(24) &quot;id=1) and 1=1 and (1)=(1&quot;
+    /*
+    $where结构如下：
+    array(1) {
+      [&quot;AND&quot;]=&gt;
+      array(1) {
+        [0]=&gt;
+        array(2) {
+          [0]=&gt;
+          string(3) &quot;exp&quot;
+          [1]=&gt;
+          string(24) &quot;id=1) and 1=1 and (1)=(1&quot;
+        }
+      }
     }
-  }
-}
-*/
-
+    */
     foreach ($where as $key =&gt; $val) {//$key为AND
         $str = [];
         foreach ($val as $field =&gt; $value) {//$field为0
@@ -576,15 +558,15 @@ array(1) {
                 // 对字段使用表达式查询
                 $field = is_string($field) ? $field : '';//$field为''
 
-/*
-* 传递到parseWhereItem的参数如下：
-* $field为''
-* $value为array(2) { [0]=&gt; string(3) &quot;exp&quot; [1]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; }
-* $key为AND
-* $binds为array(4) { [&quot;id&quot;]=&gt; int(1) [&quot;name&quot;]=&gt; int(2) [&quot;title&quot;]=&gt; int(2) [&quot;content&quot;]=&gt; int(2) }
-*/
+                /*
+                * 传递到parseWhereItem的参数如下：
+                * $field为 ''
+                * $value为 array(2) { [0]=&gt; string(3) &quot;exp&quot; [1]=&gt; string(24) &quot;id=1) and 1=1 and (1)=(1&quot; }
+                *   $key为 AND
+                * $binds为 array(4) { [&quot;id&quot;]=&gt; int(1) [&quot;name&quot;]=&gt; int(2) [&quot;title&quot;]=&gt; int(2) [&quot;content&quot;]=&gt; int(2) }
+                */
                 $str[] = ' ' . $key . ' ' . $this-&gt;parseWhereItem($field, $value, $key, $options, $binds);
-                // var_dump($str); //$str为array(1) { [0]=&gt; string(34) &quot; AND ( id=1) and 1=1 and (1)=(1 )&quot; } 
+                // $str为array(1) { [0]=&gt; string(34) &quot; AND ( id=1) and 1=1 and (1)=(1 )&quot; } 
             }
         }
         
@@ -592,8 +574,7 @@ array(1) {
         $whereStr .= empty($whereStr) ? substr(implode(' ', $str), strlen($key) + 1) : implode(' ', $str);
     }
 
-    // echo $whereStr.'&lt;br&gt;&lt;br&gt;';//最后输出( id=1) and 1=1 and (1)=(1 )
-    return $whereStr;
+    return $whereStr;//最后输出( id=1) and 1=1 and (1)=(1 )
 }
 
 // where子单元分析
@@ -633,7 +614,8 @@ protected function parseWhereItem($field, $val, $rule = '', $options = [], $bind
             throw new Exception('where express error:' . $exp);
         }
     }
-    $bindName = $bindName ?: 'where_' . str_replace(['.', '-'], '_', $field);//where_
+    $bindName = $bindName ?: 'where_' . str_replace(['.', '-'], '_', $field);
+    // $bindName 是 where_
     if (preg_match('/\W/', $bindName)) {
         // 处理带非单词字符的字段名
         $bindName = md5($bindName);
@@ -679,68 +661,12 @@ protected function parseWhereItem($field, $val, $rule = '', $options = [], $bind
     } elseif ('EXP' == $exp) {//进入
         // 表达式查询
         //$key为''，$value为id=1) and 1=1 and (1)=(1
-        $whereStr .= '( ' . $key . ' ' . $value . ' )';
         //到此结束，$whereStr为(  id=1) and 1=1 and (1)=(1 )
+        $whereStr .= '( ' . $key . ' ' . $value . ' )';
+
     } elseif (in_array($exp, ['NOT NULL', 'NULL'])) {
         // NULL 查询
         $whereStr .= $key . ' IS ' . $exp;
-    } elseif (in_array($exp, ['NOT IN', 'IN'])) {
-        // IN 查询
-        if ($value instanceof \Closure) {
-            $whereStr .= $key . ' ' . $exp . ' ' . $this-&gt;parseClosure($value);
-        } else {
-            $value = array_unique(is_array($value) ? $value : explode(',', $value));
-            if (array_key_exists($field, $binds)) {
-                $bind  = [];
-                $array = [];
-                $i     = 0;
-                foreach ($value as $v) {
-                    $i++;
-                    if ($this-&gt;query-&gt;isBind($bindName . '_in_' . $i)) {
-                        $bindKey = $bindName . '_in_' . uniqid() . '_' . $i;
-                    } else {
-                        $bindKey = $bindName . '_in_' . $i;
-                    }
-                    $bind[$bindKey] = [$v, $bindType];
-                    $array[]        = ':' . $bindKey;
-                }
-                $this-&gt;query-&gt;bind($bind);
-                $zone = implode(',', $array);
-            } else {
-                $zone = implode(',', $this-&gt;parseValue($value, $field));
-            }
-            $whereStr .= $key . ' ' . $exp . ' (' . (empty($zone) ? &quot;''&quot; : $zone) . ')';
-        }
-    } elseif (in_array($exp, ['NOT BETWEEN', 'BETWEEN'])) {
-        // BETWEEN 查询
-        $data = is_array($value) ? $value : explode(',', $value);
-        if (array_key_exists($field, $binds)) {
-            if ($this-&gt;query-&gt;isBind($bindName . '_between_1')) {
-                $bindKey1 = $bindName . '_between_1' . uniqid();
-                $bindKey2 = $bindName . '_between_2' . uniqid();
-            } else {
-                $bindKey1 = $bindName . '_between_1';
-                $bindKey2 = $bindName . '_between_2';
-            }
-            $bind = [
-                $bindKey1 =&gt; [$data[0], $bindType],
-                $bindKey2 =&gt; [$data[1], $bindType],
-            ];
-            $this-&gt;query-&gt;bind($bind);
-            $between = ':' . $bindKey1 . ' AND :' . $bindKey2;
-        } else {
-            $between = $this-&gt;parseValue($data[0], $field) . ' AND ' . $this-&gt;parseValue($data[1], $field);
-        }
-        $whereStr .= $key . ' ' . $exp . ' ' . $between;
-    } elseif (in_array($exp, ['NOT EXISTS', 'EXISTS'])) {
-        // EXISTS 查询
-        if ($value instanceof \Closure) {
-            $whereStr .= $exp . ' ' . $this-&gt;parseClosure($value);
-        } else {
-            $whereStr .= $exp . ' (' . $value . ')';
-        }
-    } elseif (in_array($exp, ['&lt; TIME', '&gt; TIME', '&lt;= TIME', '&gt;= TIME'])) {
-        $whereStr .= $key . ' ' . substr($exp, 0, 2) . ' ' . $this-&gt;parseDateTime($value, $field, $options, $bindName, $bindType);
     } elseif (in_array($exp, ['BETWEEN TIME', 'NOT BETWEEN TIME'])) {
         if (is_string($value)) {
             $value = explode(',', $value);
@@ -750,6 +676,17 @@ protected function parseWhereItem($field, $val, $rule = '', $options = [], $bind
     }
     // var_dump($whereStr);
     return $whereStr;
+}
+</code></pre>
+
+<ul>
+<li>执行sql语句(tp5/thinkphp/library/db/Query.php)</li>
+</ul>
+
+<pre><code>//执行查询 返回数据集
+public function query($sql, $bind = [], $master = false, $class = false)
+{
+    return $this-&gt;connection-&gt;query($sql, $bind, $master, $class);
 }
 </code></pre>
 
