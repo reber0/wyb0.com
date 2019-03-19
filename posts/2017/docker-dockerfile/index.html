@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker之Dockerfile - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="Dockerfile中写的是一条条指令，你可以通过Dockerfile更简单的构造自己的环境">
+    <meta name="author" content="reber">
+
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/fonts-googleapis.css">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+
+    
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>Docker之Dockerfile</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            
+                                2017-08-18
+                            
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<p>操作系统：macOS Sierra 10.12.6<br />
+Docker版本：Docker version 18.09.0, build 4d60db4</p>
+
+<h3 id="0x00-dockerfile">0x00 Dockerfile</h3>
+
+<pre><code>Dockerfile里面其实是一条条的指令，Docker会把Dockerfile的指令翻译为linux命令，
+每一条指令都会创建一个镜像，下一条指令将在这个镜像的基础上进行修改操作后再生成一个镜像。
+让你可以对下载好的镜像进行一些操作(比如安装软件、向镜像复制文件等)，从而构造定制化的镜像。
+</code></pre>
+
+<h3 id="0x01-dockerfile基本指令">0x01 Dockerfile基本指令</h3>
+
+<pre><code class="language-bash">FROM &lt;image name&gt;：指定新的镜像基于什么创建(可以尝试使用alpine:latest和debian:jessie)
+MAINTAINER &lt;author name&gt;：设置该镜像的作者
+COPY &lt;source&gt; &lt;dest&gt;：复制文件，dest要以 / 结尾
+WORKDIR /path/to/workdir：相当于切换目录，对RUN、CMD、和ENTRYPOINT生效
+RUN &lt;command&gt;：在shell执行命令
+EXPOSE port1 port2：容器运行时监听的端口
+CMD：容器默认的执行命令，Dockerfile只允许使用一次CMD命令(使用数组)
+ENTRYPOINT：类似于CMD，Dockerfile只允许使用一次(使用数组)
+ENV &lt;key&gt; &lt;value&gt;：设置环境变量
+USER &lt;uid&gt;：镜像正在运行时设置一个uid，即设定启动容器的用户，默认为root
+VOLUME ['/data']：授权访问从容器内到主机的目录
+</code></pre>
+
+<p>CMD与ENTRYPOINT的区别：</p>
+
+<pre><code class="language-bash">#docker run ubuntu:test会执行/bin/echo 'this is test'
+CMD ['/bin/echo','this is test']
+
+#docker run ubuntu:test会执行/bin/echo 'entrypoint test'，会输出'entrypoint test'
+ENTRYPOINT ['/bin/echo','entrypoint test']
+
+#docker run ubuntu:test init即执行/etc/init.d/mysql init，CMD中的默认参数会被覆盖
+ENTRYPOINT ['/etc/init.d/mysql']
+CMD [&quot;reinit&quot;]#CMD中的值会作为ENTRYPOINT的默认参数
+</code></pre>
+
+<h3 id="0x02-实例">0x02 实例</h3>
+
+<pre><code class="language-bash">reber@wyb:~$ tree range
+range
+├── Dockerfile
+└── src
+    ├── init.sh
+    ├── privileges.sql
+    ├── range.zip
+    └── sources.list
+
+1 directory, 5 files
+</code></pre>
+
+<ul>
+<li>Dockerfile</li>
+</ul>
+
+<pre><code class="language-bash">reber@wyb:~/range$ cat Dockerfile
+FROM ubuntu:14.04
+MAINTAINER reber &lt;1070018473@qq.com&gt;
+
+COPY ./src /data
+WORKDIR /data
+RUN chmod +x init.sh
+RUN cp sources.list /etc/apt/sources.list &amp;&amp; apt-get update &amp;&amp; apt-get upgrade -y
+RUN apt-get install -y apache2 mysql-server mysql-client php5
+RUN apt-get install -y php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
+RUN apt-get clean
+
+RUN apt-get install -y zip
+RUN set -x \
+    &amp;&amp; unzip -x /data/range.zip -d /var/www/html \
+    &amp;&amp; chmod 777 /var/www/html/range/upload/uploads \
+    &amp;&amp; chmod 777 /var/www/html/range/xss_platform/upload
+
+WORKDIR /var/www/html
+EXPOSE 80
+
+CMD [&quot;/data/init.sh&quot;]
+</code></pre>
+
+<ul>
+<li>src/privileges.sql</li>
+</ul>
+
+<pre><code class="language-sql">reber@wyb:~/range$ cat src/privileges.sql
+use mysql;
+UPDATE user SET password=PASSWORD('root') where USER='root';
+FLUSH PRIVILEGES;
+</code></pre>
+
+<ul>
+<li>src/sources.list</li>
+</ul>
+
+<pre><code class="language-bash">reber@wyb:~/range$ cat src/sources.list
+deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+deb http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
+deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
+</code></pre>
+
+<ul>
+<li>src/init.sh</li>
+</ul>
+
+<pre><code class="language-bash">reber@wyb:~/range$ cat src/init.sh
+#!/bin/bash
+set -x
+
+echo 'start mysql'
+find /var/lib/mysql -type f -exec touch {} \; &amp;&amp; /etc/init.d/mysql start
+sleep 3
+
+echo 'import rtest.sql'
+mysql &lt; /var/www/html/range/rtest.sql
+sleep 3
+
+echo 'set password'
+mysql &lt; /data/privileges.sql
+
+find /var/lib/mysql -type f -exec touch {} \; &amp;&amp; /etc/init.d/mysql restart
+/etc/init.d/apache2 restart
+
+echo 'set success'
+
+/usr/bin/tail -f /dev/null
+</code></pre>
+
+<h3 id="0x03-构建镜像">0x03 构建镜像</h3>
+
+<pre><code class="language-bash">#构建镜像
+reber@wyb:~/range$ docker build -t range:v1.0 .
+
+#运行容器，并将容器的80端口转到宿主机的8888端口
+reber@wyb:~/range$ docker run -itd --name range_test -p 8888:80 range:v1.0
+</code></pre>
+
+<p>运行时mysql没有启动，进容器查看日志如下：</p>
+
+<pre><code class="language-ini">root@d31d5d70fd29:/var/www/html# cat /var/log/mysql/error.log|grep 'ERROR'
+ERROR: 1064  You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ALTER TABLE user ADD column Show_view_priv enum('N','Y') CHARACTER SET utf8 NOT ' at line 1
+190110  5:04:54 [ERROR] Aborting
+ERROR: 1050  Table 'plugin' already exists
+190110  5:04:58 [ERROR] Aborting
+190110  5:05:50 [ERROR] Can't open the mysql.plugin table. Please run mysql_upgrade to create it.
+190110  5:05:51 [ERROR] Fatal error: Can't open and lock privilege tables: Got error 140 from storage engine
+</code></pre>
+
+<p>解决方案：<br />
+在启动mysql的语句前执行 <code>&quot;find /var/lib/mysql -type f -exec touch {} \;&quot;</code> (init.sh中已经加了)<br />
+参考：<a href="https://github.com/docker/for-linux/issues/72?_blank">https://github.com/docker/for-linux/issues/72</a>和<a href="https://github.com/parsa-epfl/cloudsuite/pull/99?_blank">https://github.com/parsa-epfl/cloudsuite/pull/99</a></p>
+
+<p>重新build容器，查看log，启动成功
+<img src="/img/post/20190110-141535.png" alt="" /></p>
+
+<h3 id="0x04-注意事项">0x04 注意事项</h3>
+
+<ul>
+<li>使用缓存</li>
+</ul>
+
+<p>因为每条指令都会创建一个镜像，若一个镜像已经存在的话则不会重新执行指令创建新镜像，而是直接使用。<br />
+为有效的利用已存在的镜像，应保持Dockerfile的一致性，尽量在末尾修改，比如说前几行都如下设置：</p>
+
+<pre><code>FROM ubuntu:14.04
+
+MAINTAINER reber &lt;1070018473@qq.com&gt;
+
+RUN echo &quot;deb http://archive.ubuntu.com/ubuntu precise main universe&quot; &gt; /etc/apt/sourse.list
+RUN apt-get update
+RUN apt-get upgrade -y #尽量不要upgrade
+</code></pre>
+
+<ul>
+<li>使用标签</li>
+</ul>
+
+<p>始终使用-t参数给镜像打标签：docker build -t ubuntu:range1 .</p>
+
+<ul>
+<li>公开端口</li>
+</ul>
+
+<p>Docker镜像应该能在任何主机上运行，所以不要通过Dockerfile映射共有端口，只映射私有端口：EXPOSE 80</p>
+
+<ul>
+<li>CMD与ENTRYPOINT</li>
+</ul>
+
+<p>应该使用数组语法，两者可以结合使用</p>
+
+<pre><code>ENTRYPOINT [&quot;/init.sh&quot;] #docker run的参数将传递给init.sh
+CMD [&quot;--help&quot;] #若没有参数传递则显示帮助文档
+</code></pre>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="http://wyb0.com/posts/2017/docker-image-and-container/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;Docker之镜像与容器
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="http://wyb0.com/posts/2017/docker-volume/">
+                Docker之数据卷&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single.html" class="single">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/database" title="database">database(11)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>16</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/module" title="module">module</a>
+                <sup>14</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>33</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="http://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="//js.users.51.la/19363536.js"></script>
+        <a href="https://www.51.la/?19363536" target="_blank" title="51.La 网站流量统计系统">网站统计</a>
+        
+        <script type="text/javascript" src="//quote.51.la/q?id=19363536&mb=1"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

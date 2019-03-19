@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHP之基础 - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="">
+    <meta name="author" content="reber">
+
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/fonts-googleapis.css">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+
+    
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>PHP之基础</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            
+                                2016-05-15
+                            
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<h3 id="0x00-php的作用">0x00 PHP的作用</h3>
+
+<pre><code>1. 收集表单数据
+2. 生成动态网页
+3. 字符串处理
+4. 动态输出图片
+5. 处理服务器端文件系统
+6. 编写数据库支持的网页
+7. 会话跟踪控制
+8. 处理XML文件
+9. 支持大量的网络协议
+10. 服务器端的其他相关操作
+</code></pre>
+
+<h3 id="0x01-php代码嵌入位置">0x01 PHP代码嵌入位置</h3>
+
+<p>可以将PHP语言嵌入到扩展名为.php的HTML文件中的任何位置，只要在文件中使用<code>&quot;&lt;?php&quot;</code>起始符和终止符<code>&quot;?&gt;&quot;</code>就会开启PHP模式，在PHP模式中写入PHP语句即可将PHP语言嵌入到HTML文件中。</p>
+
+<h3 id="0x02-解读开始和结束标记">0x02 解读开始和结束标记</h3>
+
+<pre><code class="language-php">1. &lt;?php ?&gt;
+2. &lt;script language=&quot;php&quot;&gt;&lt;/script&gt;
+3. &lt;? ?&gt;
+4. &lt;% %&gt;
+//前两种总是可用，第3、4种要在php.ini中开启short_open_tag和asp_tags
+
+//双引号中的变量可以被解析，单引号中的变量不能被解析
+</code></pre>
+
+<h3 id="0x03-指令分割符及空白符及注释符">0x03 指令分割符及空白符及注释符</h3>
+
+<ul>
+<li>一段代码中除了最后一行其他每句都要用分号结束（推荐每句都用分号结束）</li>
+<li>空白符(空格、tab制表符、换行)会被php引擎忽略</li>
+<li>注释符</li>
+</ul>
+
+<pre><code>1. 若觉得代码不合适则可以注释，但不要急于删除
+2. 注释的目的在于说明程序
+3. 注释对调试和编写程序可以起到很好的帮助作用
+4. PHP注释符有：&quot;/**/&quot;、&quot;//&quot;、&quot;#&quot;
+</code></pre>
+
+<h3 id="0x04-运算符">0x04 运算符</h3>
+
+<pre><code>* 算数运算符：&quot;+&quot;、&quot;-&quot;、&quot;*&quot;、&quot;/&quot;、&quot;%&quot;
+* 赋值运算符：&quot;=&quot;、&quot;+=&quot;、&quot;-=&quot;、&quot;*=&quot;、&quot;/=&quot;、&quot;%=&quot;
+* 字符串运算符：&quot;.&quot;、&quot;.=&quot;
+* 递增/递减运算符：&quot;++$a&quot;、&quot;$a++(先赋值再++)&quot;、&quot;--$a&quot;、&quot;$a--&quot;
+* 比较运算符
+    * ==   等于
+    * ===  全等(完全相同)
+    * !=   不等于
+    * &lt;&gt;   不等于
+    * !==  不全等(完全不同)
+    * &gt;    大于
+    * &lt;    小于
+    * &gt;=   大于或等于
+    * &lt;=   小于或等于
+* 逻辑运算符
+    * and  都为true则返回true
+    * or   至少有一个为true则返回true
+    * xor  有且仅有一个为true则返回true
+    * &amp;&amp;   都为true则返回true
+    * ||   至少有一个为true则返回true
+    * !    不为true则返回true
+* 数组运算符
+    * +    联合但不覆盖重复的键
+    * ==   拥有相同键/值对则返回true
+    * ===  拥有相同键/值对，且顺序相同、类型相同则返回true
+    * !=   不等于则返回true
+    * &lt;&gt;   不等于则返回true
+    * !==  完全不同则返回true
+</code></pre>
+
+<h3 id="0x05-数据类型">0x05 数据类型</h3>
+
+<ul>
+<li><p>变量类型</p>
+
+<ol>
+<li>布尔型(boolean,true,false)</li>
+<li>整型(integer)</li>
+<li>浮点型(float和double)</li>
+<li>字符串(string)</li>
+<li>数组(array)</li>
+<li>对象(object)</li>
+<li>资源类型(resource)</li>
+<li>NULL类型</li>
+<li>伪类型(mixed,number,callback)</li>
+</ol></li>
+
+<li><p>布尔类型<br />
+以下会被认为是FALSE，其他所有值都被认为是TRUE(包括任何资源)</p>
+
+<ol>
+<li>布尔值FALSE</li>
+<li>整型值0(零)为假，-1和其他非零值都是TRUE</li>
+<li>浮点型0.0</li>
+<li>空白字符串和字符串“0”</li>
+<li>没有成员变量的数组</li>
+<li>没有单元的对象(仅适用于PHP4)</li>
+</ol></li>
+
+<li><p>NULL类型</p>
+
+<ol>
+<li>NULL不区分大小写</li>
+<li>NULL类型唯一可能的值就是NULL</li>
+<li>NULL不代表空格、不代表零、不代表空字符串，而是表示一个变量的值为空</li>
+<li>将变量直接赋值为NULL则为NULL</li>
+<li>声明的变量尚未被赋值则为NULL</li>
+<li>被unset()函数销毁的变量为NULL</li>
+</ol></li>
+</ul>
+
+<h3 id="0x06-类型转换">0x06 类型转换</h3>
+
+<ol>
+<li>自动类型转换
+
+<ol>
+<li>有布尔值参与运算，则TRUE转换为整型1,FALSE为0,然后再运算</li>
+<li>有NULL值参与的运算，NULL值转换为整型0,再参与运算</li>
+<li>整型和float型参与运算则先把interger型转换为float型再运算</li>
+<li>字符串和数字型数据参与运算时，字符串先转换为数字再参与运算</li>
+</ol></li>
+<li>强制类型转换
+
+<ol>
+<li>变量前添加(int)、(float)、(string)、(bool)等</li>
+<li>用函数intval()、floatval()、strval()</li>
+<li>用函数settype()</li>
+</ol></li>
+</ol>
+
+<h3 id="0x07-变量引用">0x07 变量引用</h3>
+
+<pre><code class="language-php">&lt;?php
+    $a = 123;
+    $b = $a;
+    $a = 456;   //此时$a为456,$b为123
+    $c = &amp;$b;
+    $b = 111;  //此时$b和$c都是111
+?&gt;
+</code></pre>
+
+<h3 id="0x08-可变变量">0x08 可变变量</h3>
+
+<pre><code class="language-php">&lt;?php
+    $a = 'hello';
+    $$a = 'world';  //此时$a的值hello就相当于$$a的键
+    echo &quot;$a $hello&quot;; //输出hello world
+?&gt;
+</code></pre>
+
+<h3 id="0x09-命名规则">0x09 命名规则</h3>
+
+<pre><code>//类中的命名规则
+1.类名使用大写字母开头的单词(如CapWords, 即Pascal风格)
+2.类的属性命名以字符'm'为前缀，其他用Pascal风格，如 $mStudentName
+3.类的方法名除了第一个字母小写外其他采用Pascal风格且命名有意义，如function getTeacherName(){}
+4.方法的参数名除了第一个字母小写外其他采用Pascal风格，如 function setName($firstName、$secondName){}
+
+//一般变量命名规则
+1.变量名开头是字母或下划线，后面跟任意数量的数字、字母、下划线，变量名中间不能有空格
+2.所有字母都使用小写，使用'_'作为每个词的分界，如: $msg_error、$chk_pwd
+3.临时变量通常被取名为i、j、k、m、n 且它们一般用于整型，而c、d、e、s 它们一般用于字符型
+4.实例变量前面需要一个下划线，首单次小写，其余单词首字母大写
+
+//其他变量命名规则
+1.引用变量要带有前缀'r'，如: &amp;$rExam
+2.全局变量应该带有前缀'g'，如: global $gTest
+3.静态变量应该带有前缀's'，如: $sStatus
+4.函数名称都使用小写字母，多个单词使用'_'来分割，如: function this_good_idear(){}
+</code></pre>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="http://wyb0.com/posts/2016/theharvester-blasting-email/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;使用theHarvester得到邮箱
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="http://wyb0.com/posts/2016/php-array/">
+                PHP之数组&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single.html" class="single">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/database" title="database">database(11)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>16</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/module" title="module">module</a>
+                <sup>14</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>33</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="http://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="//js.users.51.la/19363536.js"></script>
+        <a href="https://www.51.la/?19363536" target="_blank" title="51.La 网站流量统计系统">网站统计</a>
+        
+        <script type="text/javascript" src="//quote.51.la/q?id=19363536&mb=1"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

@@ -13,19 +13,19 @@
     
     <item>
       <title>SQLServer存储过程</title>
-      <link>http://wyb0.com/posts/sqlserver-stored-procedure/</link>
+      <link>http://wyb0.com/posts/2017/sqlserver-stored-procedure/</link>
       <pubDate>Tue, 30 May 2017 13:16:18 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/sqlserver-stored-procedure/</guid>
+      <guid>http://wyb0.com/posts/2017/sqlserver-stored-procedure/</guid>
       <description>0x00 数据表结构 CREATE DATABASE student; CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT &#39;xiaoming&#39;, sex INT NOT NULL DEFAULT 1, age INT NOT NULL DEFAULT 0, hight INT NOT NULL DEFAULT 0 ) INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaohong&#39;,0,23,165); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaogang&#39;,1,24,175); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoliu&#39;,1,21,160); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaozhang&#39;,1,19,165); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoli&#39;,1,23,170); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaohua&#39;,0,23,160); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoming&#39;,1,21,165); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaowang&#39;,1,23,166); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaojuan&#39;,0,21,159);  0x01 存储过程 --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name=&#39;get_student_msg&#39; AND type=&#39;p&#39;) DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg &#39;xiaoli&#39;  0x02 使用游标的存储过程 -- 使用DECLARE声明局部变量，一般在函数和存储过程中使用 DECLARE @name VARCHAR(20) DECLARE @sex INT DECLARE @age INT DECLARE @hight INT DECLARE stu_cursor CURSOR FOR --定义游标，后面跟sql语句 SELECT name,sex,age,hight --使用游标的对象(根据需要写select语句) FROM dbo.</description>
     </item>
     
     <item>
       <title>SQLServer的基本使用</title>
-      <link>http://wyb0.com/posts/sqlserver-bisis-use/</link>
+      <link>http://wyb0.com/posts/2017/sqlserver-bisis-use/</link>
       <pubDate>Tue, 30 May 2017 12:53:41 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/sqlserver-bisis-use/</guid>
+      <guid>http://wyb0.com/posts/2017/sqlserver-bisis-use/</guid>
       <description>0x00 数据库 -- 创建数据库 CREATE DATABASE student; -- 选择数据库 USE student; -- 查看当前数据库 SELECT DB_NAME(); -- 查看当前数据库 SELECT DB_NAME(); -- 查看数据库版本 SELECT @@version;  0x01 数据表 -- 创建数据库表 CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT &#39;xiaoming&#39;, sex INT NOT NULL DEFAULT 1 ) -- 查看表结构 EXEC sp_help &#39;info&#39;; -- 更新表结构 ALTER TABLE info add age int; -- 添加一列 ALTER TABLE info DROP COLUMN age; -- 删除一列 -- 插入数据 INSERT INTO info(name,sex) VALUES(&#39;xiaohong&#39;,0); -- 查看数据 SELECT * FROM dbo.</description>
     </item>
     

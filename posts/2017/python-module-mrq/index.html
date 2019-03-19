@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRQ的使用 - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="MRQ是基于Redis、Mongo和gevent的分布式任务队列">
+    <meta name="author" content="reber">
+
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/fonts-googleapis.css">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+
+    
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>MRQ的使用</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            
+                                2017-07-10
+                            
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<h3 id="0x00-mrq">0x00 MRQ</h3>
+
+<ul>
+<li>MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。</li>
+<li>MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。</li>
+<li>MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。</li>
+</ul>
+
+<h3 id="0x01-设置mongo和redis">0x01 设置mongo和redis</h3>
+
+<p>因为mrq依赖于redis和mongo，所以先安装设置下</p>
+
+<ul>
+<li>安装redis</li>
+</ul>
+
+<pre><code class="language-bash">$ sudo apt-get install redis-server
+$ netstat -nlt|grep 6379
+$ sudo /etc/init.d/redis-server status
+</code></pre>
+
+<pre><code class="language-bash">$ sudo /etc/init.d/redis-server stop
+$ sudo vim /etc/redis/redis.conf
+    #bind 127.0.0.1
+    requirepass reber_redis
+$ sudo redis-server /etc/redis/redis.conf &amp;
+$ redis-cli
+&gt; auth reber_redis
+</code></pre>
+
+<ul>
+<li>安装mongo</li>
+</ul>
+
+<p>可以参考：<a href="https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/">https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/</a></p>
+
+<pre><code class="language-bash">$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+$ echo &quot;deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse&quot; | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+$ sudo apt-get update
+$ sudo apt-get install -y mongodb-org
+$ ps -aux|grep mongodb
+$ netstat -nlt|grep 27017
+</code></pre>
+
+<p><br /></p>
+
+<pre><code class="language-bash">$ mongo
+&gt; use admin
+switched to db admin
+&gt; db.createUser({user:'root',pwd:'root',roles:[{role:'root',db:'admin'}]})
+Successfully added user: {
+        &quot;user&quot; : &quot;root&quot;,
+        &quot;roles&quot; : [
+                {
+                        &quot;role&quot; : &quot;root&quot;,
+                        &quot;db&quot; : &quot;admin&quot;
+                }
+        ]
+}
+&gt; db.auth('root','root')
+1
+&gt; use mrq
+switched to db mrq
+&gt; db.createUser({user:'reber_mrq_u',pwd:'reber_mrq_p',roles:[{role:'dbOwner',db:'mrq'}]})
+Successfully added user: {
+        &quot;user&quot; : &quot;reber_mrq_u&quot;,
+        &quot;roles&quot; : [
+                {
+                        &quot;role&quot; : &quot;dbOwner&quot;,
+                        &quot;db&quot; : &quot;mrq&quot;
+                }
+        ]
+}
+&gt; db.auth('reber_mrq_u','reber_mrq_p')
+&gt; db.shutdownServer()
+</code></pre>
+
+<p><br /></p>
+
+<pre><code class="language-bash">$ sudo vim /etc/mongod.conf
+storage:
+  dbPath: /var/lib/mongodb
+  journal:
+    enabled: true
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+net:
+  port: 27017
+  #bindIp: 127.0.0.1
+security:
+  authorization: enabled
+$ sudo mongod --config /etc/mongod.conf &amp;
+$ mongo
+MongoDB shell version v3.4.6
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.4.6
+&gt; use mrq
+switched to db mrq
+&gt; db.auth('reber_mrq_u','reber_mrq_p')
+1
+</code></pre>
+
+<h3 id="0x02-案例代码">0x02 案例代码</h3>
+
+<pre><code>$ mkdir mrqtest &amp;&amp; cd mrqtest
+$ touch __init__.py
+$ touch scheduler.py
+$ touch tasks_push.py
+$ touch dotask.py
+$ touch worker.sh &amp;&amp; chmod 777 worker.sh
+</code></pre>
+
+<ul>
+<li>scheduler.py</li>
+</ul>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;定期推送执行任务&quot;&quot;&quot;
+
+import time
+import random
+
+class Scheduler(object):
+    &quot;&quot;&quot;
+    docstring for Scheduler
+    参考的saline表哥的代码
+    &quot;&quot;&quot;
+    def __init__(self, interval, mongodb_uri, redis_uri):
+        super(Scheduler, self).__init__()
+        self.interval = interval
+        self.mongodb_uri = mongodb_uri
+        self.redis_uri = redis_uri
+
+    def exec_push_work(self):
+        import subprocess
+
+        for task in ['task1', 'task2']:
+            data = random.randint(1000, 9999)
+            command = &quot;mrq-run --queue {task} tasks_push.{task} '{data}' \
+                    --default_job_max_retries=3 --mongodb={mongodb_uri} \
+                    --redis={redis_uri}&quot;.format(task=task, data=data, 
+                    mongodb_uri=self.mongodb_uri, redis_uri=self.redis_uri)
+
+            subprocess.Popen(command, shell=True,stdout=subprocess.PIPE, 
+                            stderr=subprocess.STDOUT)
+
+    def run(self):
+        while True:
+            self.exec_push_work()
+            # 每隔20秒推送一次任务
+            time.sleep(self.interval)
+
+
+if __name__ == '__main__':
+    interval = 20
+    mongodb_uri = 'mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq'
+    redis_uri = 'redis://reber_redis@127.0.0.1:6379/0'
+
+    scheduler = Scheduler(interval,mongodb_uri,redis_uri)
+    scheduler.run()
+</code></pre>
+
+<ul>
+<li>tasks_push.py</li>
+</ul>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;执行任务时调用的就是这个文件中类中的run函数&quot;&quot;&quot;
+
+from mrq.task import Task
+from dotask import do_task1,do_task2
+
+class task1(Task):
+
+    def run(self, params):
+        result = do_task1(params)
+        return result
+
+class task2(Task):
+
+    def run(self, params):
+        result = do_task2(params)
+        return result
+</code></pre>
+
+<ul>
+<li>dotask.py</li>
+</ul>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;执行任务的具体函数&quot;&quot;&quot;
+
+def do_task1(params):
+    return &quot;task1:{}&quot;.format(params)
+
+def do_task2(params):
+    return &quot;task2:{}&quot;.format(params)
+</code></pre>
+
+<ul>
+<li>worker.sh</li>
+</ul>
+
+<pre><code>#!/bin/bash
+
+mrq-worker task1 --greenlets 5 --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq --redis redis://reber_redis@127.0.0.1:6379/0 &amp;
+
+mrq-worker task2 --greenlets 5 --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq --redis redis://reber_redis@127.0.0.1:6379/0 &amp;
+</code></pre>
+
+<h3 id="0x03-修改mrq库的代码">0x03 修改MRQ库的代码</h3>
+
+<pre><code class="language-python">#mrq中坑爹的数据库链接，当指定密码连接redis时一直提示没有权限😂，
+#原因是mrp/context.py中格式化redis的连接参数时使用的是import urllib.parse，
+#它是urlparse库的改进版，是Python3.0中的，但是我本地是Python2.7的，没有urllib.parse
+
+#修改/Library/Python/2.7/site-packages/mrq/context.py，自己添加个函数解析下：
+def redis_parse_uri(uri):
+    SCHEME = 'redis://'
+    SCHEME_LEN = len(SCHEME)
+    DEFAULT_PORT = 6379
+
+    host = None
+    port = None
+    path = None
+    password = None
+
+    scheme_free = uri[SCHEME_LEN:]
+
+    idx = scheme_free.rfind('/')
+    if idx == -1:
+        host_part = scheme_free
+    else:
+        path = scheme_free[idx:]
+        host_part = scheme_free[:idx]
+
+    idx = host_part.find('@')
+    if idx == -1:
+        hosts = host_part
+    else:
+        password = host_part[:idx]
+        hosts = host_part[idx+1:]
+
+    idx = hosts.find(':')
+    if idx == -1:
+        host = hosts
+        port = DEFAULT_PORT
+    else:
+        host = hosts.split(':')[0]
+        port = int(hosts.split(':')[1])
+
+    return {
+        'host': host,
+        'port': port,
+        'path': path,
+        'password': password
+    }
+
+def _connections_factory(attr):
+    &quot;&quot;&quot;找到这里改下&quot;&quot;&quot;
+    # urllib.parse.uses_netloc.append('redis')
+    # redis_url = urllib.parse.urlparse(config_obj)
+    redis_url = redis_parse_uri(config_obj)
+
+    log.info(&quot;%s: Connecting to Redis at %s...&quot; %
+             (attr, redis_url.get('host')))
+
+    redis_pool = pyredis.BlockingConnectionPool(
+        host=redis_url.get('host'),
+        port=redis_url.get('port'),
+        db=int((redis_url.get('path') or &quot;&quot;).replace(&quot;/&quot;, &quot;&quot;) or &quot;0&quot;),
+        password=redis_url.get('password'),
+        max_connections=int(config.get(&quot;redis_max_connections&quot;)),
+        timeout=int(config.get(&quot;redis_timeout&quot;)),
+        decode_responses=True
+    )
+</code></pre>
+
+<h3 id="0x04-执行">0x04 执行</h3>
+
+<ul>
+<li>清空数据库</li>
+</ul>
+
+<p><img src="/img/post/mrq_clear_db.png" alt="清空数据库" /></p>
+
+<ul>
+<li>启动mrq-dashboard</li>
+</ul>
+
+<pre><code class="language-bash">$ mrq-dashboard --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq --redis redis://reber_redis@127.0.0.1:6379/0
+
+#--mongodb和--redis均以uri格式指定连接数据库的信息
+#执行完访问 http://127.0.0.1:5555 即可
+</code></pre>
+
+<p><img src="/img/post/mrq_dashboard.png" alt="启动mrq-dashboard" /></p>
+
+<ul>
+<li>执行workers.sh</li>
+</ul>
+
+<pre><code>$ cd mrqtest
+$ ./worker.sh
+#这里会创建两个worker，名字为task1和task2
+</code></pre>
+
+<p><img src="/img/post/mrq_run_workers_dashboad.png" alt="启动mrq-dashboard后查看dashboad" /></p>
+
+<p><img src="/img/post/mrq_dashboard_jobs1.png" alt="未添加任务时jobs为空" /></p>
+
+<ul>
+<li>执行scheduler.py从而推送任务</li>
+</ul>
+
+<pre><code>$ cd mrqtest
+$ python scheduler.py
+</code></pre>
+
+<p><img src="/img/post/mrq_push_task.png" alt="添加任务" /></p>
+
+<p><img src="/img/post/mrq_dashboard_jobs2.png" alt="添加任务后查看jobs" /></p>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="http://wyb0.com/posts/2017/ajax-cross-domain/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;AJAX之跨域
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="http://wyb0.com/posts/2017/python-read-and-write-xml/">
+                使用Python读写xml文件&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single.html" class="single">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/database" title="database">database(11)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>16</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/module" title="module">module</a>
+                <sup>14</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>33</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="http://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="//js.users.51.la/19363536.js"></script>
+        <a href="https://www.51.la/?19363536" target="_blank" title="51.La 网站流量统计系统">网站统计</a>
+        
+        <script type="text/javascript" src="//quote.51.la/q?id=19363536&mb=1"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

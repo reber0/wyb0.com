@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker之镜像与容器 - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="Docker中镜像以及容器的添加、删除等操作">
+    <meta name="author" content="reber">
+
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/fonts-googleapis.css">
+
+    
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+
+    
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="/js/jquery.min.js"></script>
+
+</head>
+<body>
+
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>Docker之镜像与容器</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            
+                                2017-08-18
+                            
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<p>操作系统：Ubuntu14.04.1<br />
+Docker版本：Docker version 17.06.0-ce, build 02c1d87</p>
+
+<h3 id="0x00-镜像操作">0x00 镜像操作</h3>
+
+<ul>
+<li>下载镜像</li>
+</ul>
+
+<pre><code class="language-bash">#一般镜像、容器的id和name可以互换
+
+$ docker search ubuntu #从公共registry搜索镜像
+
+$ docker pull ubuntu #从公共registry下载镜像
+$ docker pull ubuntu:14.04
+</code></pre>
+
+<ul>
+<li>查看当前系统镜像</li>
+</ul>
+
+<pre><code class="language-bash">$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              14.04               7e4b16ae8b23        11 days ago         188MB
+ubuntu              latest              1d9c17228a9e        11 days ago         86.7MB
+</code></pre>
+
+<ul>
+<li>查看镜像层组成</li>
+</ul>
+
+<pre><code class="language-bash">$ docker history ubuntu:14.04 # ubuntu:14.04可以用7e4b16ae8b23替代，用id和images_name:tag效果一样
+</code></pre>
+
+<ul>
+<li>删除镜像(删除镜像前要先删除上面的容器)</li>
+</ul>
+
+<pre><code class="language-bash">$ docker rmi ubuntu:latest # 也可docker rmi 1d9c17228a9e
+</code></pre>
+
+<h3 id="0x01-容器操作">0x01 容器操作</h3>
+
+<ul>
+<li><p>运行容器(exit后容器就停止了)</p>
+
+<ul>
+<li>--rm：告诉Docker一旦运行的容器停止就删除容器</li>
+<li>-ti：告诉Docker分配一个伪终端并进入交互模式(这将进入容器内)</li>
+<li>ubuntu:14.04 是容器立足的镜像</li>
+<li>/bin/bash：shell</li>
+</ul>
+
+<pre><code class="language-bash">$ docker run --rm -it ubuntu:14.04 /bin/bash
+root@172c8d8b0671:/# ls
+bin   dev  home  lib64  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media  opt  root  sbin  sys  usr
+root@172c8d8b0671:/# exit
+exit
+</code></pre></li>
+
+<li><p>后台运行容器</p>
+
+<ul>
+<li>-d：告诉Docker容器在后台运行(不能与&ndash;rm参数一起用)</li>
+</ul>
+
+<pre><code class="language-bash">$ docker run -itd ubuntu:14.04 /bin/bash
+6f9d8dea6aa0e984e725802e3e49685ea040a21defa9a9d5e8db644076bbb42b
+$ docker run -itd 7e4b16ae8b23 ping 8.8.8.8
+3e4c995326c0757d7e83daa72034d472e4f988cb553e9a85acd0bec06a666d60
+$ sudo docker run -itd ubuntu:14.04 /bin/sh -c &quot;while true; do echo hello world; sleep 1; done&quot;
+39b5bab299be909e2b1cdc3629d7c7fe2b5375348dfff498be58b4b0a0108676
+</code></pre></li>
+
+<li><p>查看当前运行的容器</p></li>
+</ul>
+
+<pre><code class="language-bash">$ docker ps #只显示正在运行的容器
+CONTAINER ID   IMAGE          COMMAND                 CREATED         STATUS        PORTS  NAMES
+39b5bab299be   ubuntu:14.04   &quot;/bin/sh -c 'while t…&quot;  4 seconds ago   Up 4 seconds         distracted_wescoff
+3e4c995326c0   7e4b16ae8b23   &quot;ping 8.8.8.8&quot;          6 seconds ago   Up 5 seconds         sad_payne
+6f9d8dea6aa0   ubuntu:14.04   &quot;/bin/bash&quot;             9 seconds ago   Up 8 seconds         inspiring_keller
+
+$ docker ps -a #显示所有的容器，包括停止的
+</code></pre>
+
+<ul>
+<li>向容器发送命令</li>
+</ul>
+
+<pre><code>$ docker exec -ti sad_payne whoami
+root
+$ docker exec -ti sad_payne uname -a
+Linux 8e4f11f295e2 4.9.125-linuxkit #1 SMP Fri Sep 7 08:20:28 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+</code></pre>
+
+<ul>
+<li>进入容器</li>
+</ul>
+
+<pre><code class="language-bash">$ docker exec -it sad_payne /bin/bash
+root@3e4c995326c0:/# ps -aux |grep ping
+root         1  0.0  0.0   6520   792 pts/0    Ss+  13:00   0:00 ping 8.8.8.8
+root        22  0.0  0.0   8880   736 pts/1    S+   13:25   0:00 grep --color=auto ping
+</code></pre>
+
+<ul>
+<li>查看容器日志</li>
+</ul>
+
+<pre><code class="language-bash">$ docker logs 39b5bab299be|head -n 5
+hello world
+hello world
+hello world
+hello world
+hello world
+
+$ docker logs 3e4c995326c0|head -n 5
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=127 time=56.3 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=127 time=58.6 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=127 time=56.4 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=127 time=57.0 ms
+</code></pre>
+
+<ul>
+<li>端口映射</li>
+</ul>
+
+<pre><code>#访问本地的8888端口就是访问容器的80端口
+$ docker run -itd -p 8888:80 ubuntu:14.04 /bin/bash
+4411d8092cffe5ae7e52dfaa9a4f434f31fdc32c68c4b712092851e1209d2683
+$ netstat -anlt
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address   Foreign Address   State       PID/Program name
+tcp        0      0 0.0.0.0:22      0.0.0.0:*         LISTEN      11053/sshd
+tcp        0      0 127.0.0.1:3306  0.0.0.0:*         LISTEN      1204/mysqld
+tcp6       0      0 :::22           :::*              LISTEN      11053/sshd
+tcp6       0      0 :::8888         :::*              LISTEN      14691/docker-proxy
+tcp6       0      0 :::80           :::*              LISTEN      1477/apache2
+</code></pre>
+
+<ul>
+<li>查看容器的端口映射</li>
+</ul>
+
+<pre><code class="language-bash">$ docker port 4411d8092cff
+80/tcp -&gt; 0.0.0.0:8888
+</code></pre>
+
+<ul>
+<li>查看容器的进程信息</li>
+</ul>
+
+<pre><code class="language-bash">$ docker top 4411d8092cff
+</code></pre>
+
+<ul>
+<li>从宿主机向容器复制数据</li>
+</ul>
+
+<pre><code class="language-bash">$ docker cp a.txt 4411d8092cff:/root/
+$ docker exec -it 4411d8092cff /bin/bash
+root@4411d8092cff:/# touch /root/abc.txt
+root@4411d8092cff:/# ls /root/
+123.txt  a.txt  abc.txt
+</code></pre>
+
+<ul>
+<li>从容器向宿主机复制数据</li>
+</ul>
+
+<pre><code class="language-bash">$ docker cp 4411d8092cff:/root/abc.txt ./
+$ ls
+123.txt  abc.txt  a.txt  Desktop
+</code></pre>
+
+<ul>
+<li>查看容器的文件变化</li>
+</ul>
+
+<pre><code class="language-bash">$ docker diff 4411d8092cff
+C /root
+A /root/.bash_history
+A /root/123.txt
+A /root/a.txt
+A /root/abc.txt
+</code></pre>
+
+<ul>
+<li>停止/启动容器</li>
+</ul>
+
+<pre><code class="language-bash">$ docker stop 4411d8092cff
+4411d8092cff
+#docker kill 4411d8092cff
+$ docker start 4411d8092cff
+4411d8092cff
+</code></pre>
+
+<ul>
+<li>删除容器(容器需要先停止才能删除)</li>
+</ul>
+
+<pre><code class="language-bash">$ docker rm 39b5bab299be
+Error response from daemon: You cannot remove a running container 4411d8092cffab2e1a901727e3eef9140e713f3a4699c55c0e67f8666cca5d11. Stop the container before attempting removal or force remove
+$ docker kill 39b5bab299be
+39b5bab299be
+$ docker rm 39b5bab299be
+39b5bab299be
+</code></pre>
+
+<ul>
+<li>删除所有容器(只能删除停止运行的)</li>
+</ul>
+
+<pre><code class="language-bash">$ docker rm $(docker ps -aq)
+39b5bab299be
+3e4c995326c0
+6f9d8dea6aa0
+</code></pre>
+
+<h3 id="0x02-打包镜像及容器">0x02 打包镜像及容器</h3>
+
+<ul>
+<li>打包(save和export)</li>
+</ul>
+
+<pre><code>$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              14.04               7e4b16ae8b23        11 days ago         188MB
+$ docker run -itd -p 2222:22 ubuntu:14.04 /bin/bash
+5a3ce7d8d5b55264c75f943c4fc8b10fda172f2d58c1b5cacd27ce688d180a77
+
+# 一般可以在容器中安装一些常用的基础软件，如ssh、vim等，然后打包以后使用，这里连接容器安装ssh
+$ docker exec -it 5a3ce7d8d5b5 /bin/bash
+root@5a3ce7d8d5b5:/# apt-get install openssh-server
+root@5a3ce7d8d5b5:/# exit
+
+# commit安装ssh后的容器，产生镜像
+$ docker commit 5a3ce7d8d5b5 ubuntu:ssh_install
+sha256:cae40fb01d1fd1cae5589be8725dca89c11fb975dbf24fcabdc5cad9531e7c70
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              ssh_install         cae40fb01d1f        3 seconds ago       243MB
+ubuntu              14.04               7e4b16ae8b23        11 days ago         188MB
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                  NAMES
+5a3ce7d8d5b5        ubuntu:14.04        &quot;/bin/bash&quot;         18 minutes ago      Up 18 minutes       0.0.0.0:2222-&gt;22/tcp   loving_bose
+</code></pre>
+
+<pre><code># docker save &lt;IMAGE ID&gt; &gt; save.tar，使用安装ssh后并commit的镜像id
+$ docker save cae40fb01d1f &gt; save.tar
+# docker export &lt;CONTAINER ID&gt; &gt; export.tar，使用安装ssh后的容器id
+$ docker export 5a3ce7d8d5b5 &gt; export.tar
+
+#save镜像后体积变大，export容器后体积变小
+$ du -h *.tar
+245M    save.tar
+221M    export.tar
+</code></pre>
+
+<ul>
+<li>删除现有镜像后重新导入刚才保存的镜像(load和import)</li>
+</ul>
+
+<pre><code class="language-bash">$ docker load &lt; save.tar
+a1dfb45ac02d: Loading layer [=======================================&gt;]    197MB/197MB
+cbafb465c00d: Loading layer [=======================================&gt;]  209.9kB/209.9kB
+382d42470bcc: Loading layer [=======================================&gt;]  7.168kB/7.168kB
+74decbb2e028: Loading layer [=======================================&gt;]  3.072kB/3.072kB
+95d4db8f1e96: Loading layer [=======================================&gt;]  59.22MB/59.22MB
+Loaded image ID: sha256:cae40fb01d1fd1cae5589be8725dca89c11fb975dbf24fcabdc5cad9531e7c70
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+&lt;none&gt;              &lt;none&gt;              cae40fb01d1f        11 minutes ago      243MB
+$ docker tag cae40fb01d1f ubuntu:save_load #给镜像cae40fb01d1f打tag
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              save_load           cae40fb01d1f        12 minutes ago      243MB
+</code></pre>
+
+<pre><code>$ docker import export.tar
+sha256:57275c69a2a3a9527086f2563426170c4ec7bed0a1bc3ee10fcedb17b31cee41
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+&lt;none&gt;              &lt;none&gt;              57275c69a2a3        27 seconds ago      218MB
+ubuntu              save_load           cae40fb01d1f        13 minutes ago      243MB
+$ docker tag 57275c69a2a3 ubuntu:export_import
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE
+ubuntu              export_import       57275c69a2a3        About a minute ago   218MB
+ubuntu              save_load           cae40fb01d1f        14 minutes ago       243MB
+</code></pre>
+
+<pre><code># 容器打包的镜像包丢失历史和层，镜像打包的镜像包没有丢失
+➜  ~ docker history 57275c69a2a3
+IMAGE               CREATED              CREATED BY    SIZE      COMMENT
+57275c69a2a3        About a minute ago                 218MB     Imported from -
+➜  ~ docker history cae40fb01d1f
+IMAGE           CREATED           CREATED BY                                SIZE     COMMENT
+cae40fb01d1f    14 minutes ago    /bin/bash                                 55.3MB
+&lt;missing&gt;       11 days ago       /bin/sh -c #(nop)  CMD [&quot;/bin/bash&quot;]      0B
+&lt;missing&gt;       11 days ago       /bin/sh -c mkdir -p /run/systemd &amp;&amp; ec…   7B
+&lt;missing&gt;       11 days ago       /bin/sh -c rm -rf /var/lib/apt/lists/*    0B
+&lt;missing&gt;       11 days ago       /bin/sh -c set -xe   &amp;&amp; echo '#!/bin/s…   195kB
+&lt;missing&gt;       11 days ago       /bin/sh -c #(nop) ADD file:c860cba1b1c…   188MB
+</code></pre>
+
+<ul>
+<li>总结
+
+<ul>
+<li>使用save和export生成的其实<f>都是镜像包</f>，save.tar和export.tar导入后生成的容器中都有ssh</li>
+<li>save镜像后体积变大，export容器后体积变小</li>
+<li>打包容器后的包会丢失历史和层(layer)，打包镜像后的包不会丢失历史和层(layer)</li>
+</ul></li>
+</ul>
+
+<h3 id="0x03-查看镜像或容器的底层信息-ip-端口绑定-配置信息等">0x03 查看镜像或容器的底层信息(IP、端口绑定、配置信息等)</h3>
+
+<pre><code class="language-bash">$ docker inspect 65987aa8f0cb
+</code></pre>
+
+<h3 id="0x04-例子">0x04 例子</h3>
+
+<pre><code class="language-bash">$ docker kill $(docker ps -aq)
+e5b5aaed385b
+$ docker rm $(docker ps -aq)
+e5b5aaed385b
+$ exec_ping=$(docker run -itd ubuntu:14.04 ping 8.8.8.8)
+$ echo $exec_ping
+5af570b6abef143f409110d413fbc84a03120255181c1acfe1e21a23be8697d4
+$ docker logs $exec_ping | head -n 3
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=127 time=56.3 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=127 time=56.0 ms
+$ docker commit $exec_ping ubuntu:ping
+sha256:2937b5ab38d7d1329e749bb585e99d5f9067ae8a531b777fa604228c2a7b7c30
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              ping                2937b5ab38d7        7 seconds ago       188MB
+ubuntu              14.04               7e4b16ae8b23        11 days ago         188MB
+ubuntu              latest              1d9c17228a9e        11 days ago         86.7MB
+</code></pre>
+
+<p><br /></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="https://my.oschina.net/zjzhai/blog/225112?_blank">https://my.oschina.net/zjzhai/blog/225112</a></li>
+</ul>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="http://wyb0.com/posts/2017/docker-basis/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;Docker初识
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="http://wyb0.com/posts/2017/docker-dockerfile/">
+                Docker之Dockerfile&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single.html" class="single">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/database" title="database">database(11)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="http://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>16</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/module" title="module">module</a>
+                <sup>14</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/python" title="python">python</a>
+                <sup>33</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>10</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>5</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%84%91%e5%9b%be" title="脑图">脑图</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="http://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="//js.users.51.la/19363536.js"></script>
+        <a href="https://www.51.la/?19363536" target="_blank" title="51.La 网站流量统计系统">网站统计</a>
+        
+        <script type="text/javascript" src="//quote.51.la/q?id=19363536&mb=1"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="http://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

