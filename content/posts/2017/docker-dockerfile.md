@@ -184,7 +184,7 @@ RUN apt-get upgrade -y #尽量不要upgrade
 
 * 公开端口
 
-Docker镜像应该能在任何主机上运行，所以不要通过Dockerfile映射共有端口，只映射私有端口：EXPOSE 80
+Docker镜像应该能在任何主机上运行，所以不要通过Dockerfile映射公有端口，只映射私有端口：EXPOSE 80
 
 * CMD与ENTRYPOINT
 
