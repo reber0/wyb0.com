@@ -7,6 +7,12 @@ date = "2018-09-04T10:09:17+08:00"
 draft = false
 +++
 
+<!--
+ * @Author: reber
+ * @Mail: 1070018473@qq.com
+ * @Date: 2019-09-04 10:45:01
+ * @LastEditTime: 2019-05-08 15:16:14
+ -->
 ### 0x00 基础信息探测
 ```sql
 @@VERSION,@@SERVERNAME,@@SERVICENAME;
@@ -37,7 +43,7 @@ ORIGINAL_LOGIN();
 ### 0x01 判断是否为sa权限
 ![75](/img/post/20180904-105516.png)
 
-### 0x02 进行注入
+### 0x02 报错注入
 * 得到所有数据库名字
 ![75](/img/post/20180904-110306.png)
 ```
