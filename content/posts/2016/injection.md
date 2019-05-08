@@ -7,6 +7,12 @@ title = "SQL注入"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: 1070018473@qq.com
+ * @Date: 2016-06-19 10:45:01
+ * @LastEditTime: 2019-05-08 15:25:50
+ -->
 
 ### 0x00 含义
 sql注入是将代码插入(拼接)到应用(用户)的输入参数中，之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击，
@@ -35,8 +41,8 @@ SQl语句未对用户参数进行严格过滤
         一次一个字节，速度慢，但只要有注入就能用
     * Time-based blind SQL injection(基于时间延迟注入)  
         超级慢，比布尔型注入慢几倍，但是通用性较强
-    * Stacked queries SQL injection(堆叠注入/可多语句查询注入)  
-        只有SQL Server可以使用
+    * Stacked queries SQL injection(堆叠注入)  
+        只有SQL Server可以使用(可多语句查询注入)
 
 * 根据类型
     * 整形  
