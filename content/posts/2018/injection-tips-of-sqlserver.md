@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: 1070018473@qq.com
  * @Date: 2019-09-04 10:45:01
- * @LastEditTime: 2019-05-08 15:24:53
+ * @LastEditTime: 2019-05-08 16:09:15
  -->
 ### 0x00 基础信息探测
 ```sql
@@ -40,7 +40,15 @@ ORIGINAL_LOGIN();
 --sa
 ```
 
-### 0x01 报错注入
+### 0x01 利用报错注入数据
+* 判断存在注入
+
+```
+select * from msg where id=1 and 11=(select case when(1=1) then 11 else 2 end);
+
+select * from msg where id=1 and 11=(select case when(1=2) then 11 else 2 end);
+```
+
 * 判断是否为sa权限
 ![55](/img/post/20180904-105516.png)
 
