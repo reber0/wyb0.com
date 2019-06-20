@@ -7,8 +7,14 @@ title = "Tomcat部署War包getshell"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-06-20 12:47:17
+ -->
 
-### 0x00 关于War包
+### 0x00 关于 War 包
 ```
 War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码,
 以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布
@@ -16,20 +22,24 @@ War包一般是进行Web开发时一个网站Project下的所有代码,包括前
 服务器启动时,War包也会随之被解压后自动部署。
 ```
 
-### 0x01 上传War包GetShell
+### 0x01 上传 War 包 GetShell
 * 找到后台猜密码然后登录
-![Tomcat后台](/img/post/tomcat_vul_background.png)
-![Tomcat后台登录](/img/post/tomcat_vul_login.png)
-![Tomcat后台登录成功](/img/post/tomcat_vul_war_login_success.png)
+![70](/img/post/tomcat_vul_background.png)
+![40](/img/post/tomcat_vul_login.png)
+![30](/img/post/tomcat_vul_war_login_success.png)
 
-* 上传War包  
-先将jsp大马压缩为zip，再将zip后缀改名为war，然后上传war包
-![Tomcat上传War包](/img/post/tomcot_vul_put_war.png)
-![Tomcat上传War包成功](/img/post/tomcot_vul_put_war_success.png)
-![Tomcat部署War包后访问shell1](/img/post/tomcot_vul_visit_shell1.png)
-![Tomcat部署War包后访问shell2](/img/post/tomcot_vul_visit_shell2.png)
+* 上传 War 包
 
-### 0x02漏洞防御
+运行 jar -cf job.war ./job.jsp 生成 war 包
+
+或者先将 jsp 大马压缩为 zip，再将 zip 后缀改名为 war ，然后上传 war 包
+
+![50](/img/post/tomcot_vul_put_war.png)
+![40](/img/post/tomcot_vul_put_war_success.png)
+![60](/img/post/tomcot_vul_visit_shell1.png)
+![60](/img/post/tomcot_vul_visit_shell2.png)
+
+### 0x02 漏洞防御
 * 后台使用强密码
 * 删除Tomcat下的manager文件夹
 
