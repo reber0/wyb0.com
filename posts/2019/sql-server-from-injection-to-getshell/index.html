@@ -4,9 +4,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>从SQL Server报错注入到getshell - Reber's Blog</title>
+    <title>从 SQL Server 注入到 getshell - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
-    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="description" content="SQLServer 多语句查询 SQL 注入，读网站路径然后写 shell">
     <meta name="author" content="reber">
     <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
     <!--[if lte IE 8]>
@@ -61,7 +61,7 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>从SQL Server报错注入到getshell</h2>
+                <h2>从 SQL Server 注入到 getshell</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
@@ -92,7 +92,9 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/pentest">pentest</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/pentest">pentest</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/getshell">getshell</a>
                             
                         
                         
@@ -108,7 +110,7 @@
  * @Author: reber
  * @Mail: 1070018473@qq.com
  * @Date: 2019-03-02 10:45:01
- * @LastEditTime: 2019-05-08 15:33:55
+ * @LastEditTime: 2019-07-01 20:43:45
  -->
 
 <h3 id="0x00-目标情况">0x00 目标情况</h3>
@@ -447,7 +449,7 @@ IF(UNICODE(SUBSTRING((SELECT MIN(ISNULL(CAST(tmp1 AS NVARCHAR(4000)),CHAR(32))) 
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
-                <sup>2</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">
