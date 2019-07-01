@@ -1,7 +1,7 @@
 +++
 title = "从SQL Server报错注入到getshell"
 topics = ["Pentest"]
-tags = ["pentest"]
+tags = ["pentest","getshell"]
 description = "我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。"
 date = "2019-03-02T20:23:35+08:00"
 draft = false
@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: 1070018473@qq.com
  * @Date: 2019-03-02 10:45:01
- * @LastEditTime: 2019-05-08 15:33:55
+ * @LastEditTime: 2019-07-01 20:41:15
  -->
 ### 0x00 目标情况
 * 一个web站点111.\*.\*.63，只有一个登陆框，测试了没有注入，没有弱口令
