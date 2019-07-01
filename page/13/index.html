@@ -66,6 +66,68 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2016/injection-of-boolian-based/">SQL注入之布尔型注入(MySQL)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-06-23
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 特点 当页面存在注入，但是没有显示位，且没有用echo &quot;mysql_error()&quot;输出错误信息时可以用， 它一次只能猜测一个字节，速度慢，但是只要存在注入就能用  0x01 利用方式 用and连接前后语句：www.xxx.com/aa.php?id=1 and (注入语句) --+ 根据返回页面是否相同来得到数据  0x02 注入步骤  找到注入点，判断闭合字符  尝试猜解列数，得到显示位  得到数据库名 最终得到第五个数据库名为security
+ 得到表名 最终依次猜的表名为users
+ 得到列名 同理最终得到第2列列名为username，第3列列名为password
+ 得到列值 依次得到为admin4，同理可得其他数据
+  0x04 附上python脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber &lt;1070018473@qq.com&gt; __author__=&quot;reber&quot; import sys import requests import binascii import hashlib from pyfiglet import figlet_format from optparse import OptionParser def get_md5_html(url): html = requests.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/injection-of-boolian-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2016/injection-of-error-based/">SQL注入之报错型注入(MySQL)</a></h2>
 
         
@@ -617,71 +679,6 @@ tomcat包可在这里下载 为java添加环境变量并设置命令链接符 ``
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/linux-set-up-nginx-mysql-php/">Linux下搭建Nginx&#43;MySQL&#43;PHP</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-06-17
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        安装环境为：CentOS-6.5-x86_64-minimal
-0x00 准备工作 首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++  0x01 安装mysql和php sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm  0x02 安装依赖  安装pcre、pcre-devel
-sudo yum install pcre pcre-devel
- 安装zlib、zlib-devel
-sudo yum install zlib zlib-devel
- 安装ssl
-sudo yum install openssl openssl-devel
-  0x03 安装Nginx 可在http://nginx.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/linux-set-up-nginx-mysql-php/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -739,7 +736,7 @@ sudo yum install openssl openssl-devel
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(76)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(77)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -816,7 +813,7 @@ sudo yum install openssl openssl-devel
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">
