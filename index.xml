@@ -6,10 +6,26 @@
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Jun 2019 17:57:32 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jul 2019 18:09:49 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python 的协程</title>
+      <link>http://wyb0.com/posts/2019/python-coroutine/</link>
+      <pubDate>Thu, 04 Jul 2019 18:09:49 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/2019/python-coroutine/</guid>
+      <description>0x00 协程的优势 协程拥有极高的执行效率，因为子程序切换不是线程切换，而是由程序自身控制，因此没有线程切换的开销。和多线程比，线程数量越多，协程的性能优势就越明显。
+不需要多线程的锁机制，因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多
+0x01 Python中的协程 协程也就是微线程，python 的 generator(生成器) 中的 yield 可以一定程度上实现协程
+在 generator 中，我们不但可以通过 for 循环来迭代，还可以不断调用 next() 函数获取由 yield 语句返回的下一个值。
+但是 Python 的 yield 不但可以返回一个值，它还可以接收调用者发出的参数。 0x02 使用 gevent python 中可以通过 generator 实现协程，但是不完全，第三方的 gevent 为 Python 提供了比较完善的协程支持，gevent 可以通过 monkey patch 动态的修改 Python 自带的一些标准库
+由于 IO 操作(比如访问网络)非常耗时，经常使程序处于等待状态，而 gevent 可以为我们自动切换协程，再在适当的时候切换回来继续执行，这就保证总有 greenlet 在运行，而不是等待 IO
+使用 gevent 可以获得极高的并发性能，但 gevent 只能在 Unix/Linux 下运行，在 Windows 下不保证正常安装和运行 下面 3 个网络操作是并发执行的，且结束顺序不同，但只有一个线程
+from gevent import monkey; monkey.patch_all() import requests import gevent def get_resp_size(url): print(&#39;GET: %s&#39; % url) html = requests.</description>
+    </item>
     
     <item>
       <title>致远 OA A8 协同管理软件 getshell POC&amp;EXP</title>

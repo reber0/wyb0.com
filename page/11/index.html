@@ -66,6 +66,65 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2016/file-upload-simple-to-bypass/">文件上传漏洞常见绕过手法</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-07-20
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 一般防止上传漏洞手法 1、客户端检测：客户端使用JavaScript检测，在文件未上传时，就对文件进行验证 //任何客户端的验证都是不安全的，客户端验证目的是防止用户输入错误、减少 //服务器开销，而服务端验证才可以真正防御攻击者。 2、服务器端检测：服务端脚本一般会检测文件的MIME类型，检测文件扩展名是否合法  0x01 客户端检测 客户端验证代码形如下：
+&lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;图片上传&lt;/title&gt; &lt;script type=&quot;text/javascript&quot;&gt; function checkFile(){ var flag = false; var str = document.getElementById(&quot;file&quot;).value; str = str.substring(str.lastIndexOf('.') + 1); var arr = new Array('png','bmp','gif','jpg'); for (var i=0;i&lt;arr.length;i++){ if(str==arr[i]){ flag = true; } } if(!flag){ alert('文件不合法！'); } return flag; } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;form action=&quot;upload.php&quot; method=&quot;post&quot; onsubmit=&quot;checkFile()&quot; enctype=&quot;multipart/form-data&quot;&gt; &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot; /&gt;&lt;br/&gt; &lt;input type=&quot;submit&quot; value=&quot;提交&quot; name=&quot;submit&quot; /&gt; &lt;/form&gt; &lt;/body&gt; &lt;/html&gt;  接收文件的脚本upload.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/file-upload-simple-to-bypass/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2016/file-upload-and-file-parse-vuln/">文件上传漏洞与文件解析漏洞</a></h2>
 
         
@@ -585,66 +644,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/iptables-configure-dmz/">iptables简单配置DMZ</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-07-05
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/dmz">dmz</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 要求  内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网  0x01 拓扑 0x02 个主机IP信息 内网网段为：192.168.1.0/24
-DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容如下：
-#!/bin/bash iptables –F #清空此表中的规则 iptables –X #清空此表中的自定义规则 iptables –Z #清空此表中的计数器为0 iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP iptables -F -t nat iptables -X -t nat iptables -Z -t nat iptables -t nat -P PREROUTING ACCEPT iptables -t nat -P POSTROUTING ACCEPT iptables -t nat -P OUTPUT ACCEPT #添加必要的模块 modprobe ip_nat_ftp modprobe iptable_nat modprobe ip_conntrack modprobe ip_conntrack_ftp #开启转发功能 echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward #******************************************************************** #PREROUTING： iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/iptables-configure-dmz/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -712,7 +711,7 @@ DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -864,7 +863,7 @@ DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>33</sup>
+                <sup>34</sup>
             </p>
         
             <p style="display:inline-block;">
