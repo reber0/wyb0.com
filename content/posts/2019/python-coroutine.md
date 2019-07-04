@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-07-04 18:09:49
- * @LastEditTime: 2019-07-04 21:26:16
+ * @LastEditTime: 2019-07-04 21:31:56
  -->
 ### 0x00 协程的优势
 协程拥有极高的执行效率，因为子程序切换不是线程切换，而是由程序自身控制，因此没有线程切换的开销。和多线程比，线程数量越多，协程的性能优势就越明显。
@@ -286,8 +286,6 @@ callback Done after 2s
 callback Done after 4s
 ^Cuser aborted!
 ```
-
-
 
 <br>
 #### Reference(侵删)：
