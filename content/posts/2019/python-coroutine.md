@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-07-04 18:09:49
- * @LastEditTime: 2019-07-04 21:31:56
+ * @LastEditTime: 2019-07-06 11:57:51
  -->
 ### 0x00 协程的优势
 协程拥有极高的执行效率，因为子程序切换不是线程切换，而是由程序自身控制，因此没有线程切换的开销。和多线程比，线程数量越多，协程的性能优势就越明显。
@@ -251,7 +251,7 @@ def callback(future):
 
 def start_loop(loop):
     asyncio.set_event_loop(loop)
-    loop.run_forever()
+    loop.run_forever() # 和 run_until_complete 作用一样，不过这个在协程运行完后不会停止
 
 def run():
     # 在子线程中运行协程loop
