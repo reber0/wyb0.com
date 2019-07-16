@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-07-04 18:09:49
- * @LastEditTime: 2019-07-11 09:20:48
+ * @LastEditTime: 2019-07-16 14:53:59
  -->
 ### 0x00 协程的优势
 协程拥有极高的执行效率，因为子程序切换不是线程切换，而是由程序自身控制，因此没有线程切换的开销。和多线程比，线程数量越多，协程的性能优势就越明显。
@@ -153,7 +153,8 @@ def callback(future):
 def run1():
     loop = asyncio.get_event_loop() # 定义一个事件loop
     coroutine = do_some_work(2) # 定义协程对象，它不能直接运行
-    # 将协程加入到事件循环 loop：其实 run_until_complete 内部将协程包装成了一个任务(task)对象了
+    # run_unitl_complete() 需要传入一个 Future 对象
+    # 若传入协程的话 run_unitl_complete 内部会将协程包装成一个任务(task)对象
     # task 对象是 Future 类的子类，保存了协程运行后的状态，用于未来获取协程的结果
     result = loop.run_until_complete(coroutine)
     print(result)
@@ -162,8 +163,8 @@ def run1():
 def run2():
     loop = asyncio.get_event_loop() # 定义一个事件loop
     coroutine = do_some_work(1) # 定义协程对象，它不能直接运行
-    task = loop.create_task(coroutine) # 创建 task
-    # task = asyncio.ensure_future(coroutine) # 也可以使用asyncio.ensure_future创建 task
+    task = loop.create_task(coroutine) # 创建协程 task
+    # task = asyncio.ensure_future(coroutine) # 也可以使用 ensure_future() 直接创建 Future 对象
     task.add_done_callback(callback) # 回调函数，获取task的返回值
     loop.run_until_complete(task) # 将task加入到事件循环 loop
     loop.close()
@@ -200,7 +201,9 @@ def run2():
     for task in tasks:
         task.add_done_callback(callback)
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(asyncio.wait(tasks))
+    # wait 返回完成的和未完成的任务
+    done, pending = loop.run_until_complete(asyncio.wait(tasks))
+    # results = loop.run_until_complete(asyncio.gather(*tasks))
     loop.close()
 ```
 
@@ -301,22 +304,23 @@ class PortScan(object):
         self.rate = rate
         self.all_ports = all_ports
         self.open_list = {}
-        self.common_port = "21,22,23,25,53,69,80,81,82,83,84,85,86,87,88,89,110,111,135,139,143,443,445,465,513,873,993,995,1080,1158,1433,1521,1533,1863,2049,2100,3128,3306,3307,3308,3389,3690,5000,5432,5900,6379,7001,8000,8001,8002,8003,8004,8005,8006,8007,8008,8009,8010,8011,8012,8013,8014,8015,8016,8017,8018,8019,8020,8021,8022,8023,8024,8025,8026,8027,8028,8029,8030,8031,8032,8033,8034,8035,8036,8037,8038,8039,8040,8041,8042,8043,8044,8045,8046,8047,8048,8049,8050,8051,8052,8053,8054,8055,8056,8057,8058,8059,8060,8061,8062,8063,8064,8065,8066,8067,8068,8069,8070,8071,8072,8073,8074,8075,8076,8077,8078,8079,8080,8081,8082,8083,8084,8085,8086,8087,8088,8089,8090,8888,9000,9080,9090,9200,9300,9418,11211,27017,27018,27019,50060"
+        self.common_port = "21,22,23,25,53,69,80,81,82,83,84,85,86,87,88,89,110,111,135,139,143,161,389,443,445,465,513,873,993,995,1080,1099,1158,1433,1521,1533,1863,2049,2100,2181,3128,3306,3307,3308,3389,3690,5000,5432,5900,6379,7001,8000,8001,8002,8003,8004,8005,8006,8007,8008,8009,8010,8011,8012,8013,8014,8015,8016,8017,8018,8019,8020,8021,8022,8023,8024,8025,8026,8027,8028,8029,8030,8031,8032,8033,8034,8035,8036,8037,8038,8039,8040,8041,8042,8043,8044,8045,8046,8047,8048,8049,8050,8051,8052,8053,8054,8055,8056,8057,8058,8059,8060,8061,8062,8063,8064,8065,8066,8067,8068,8069,8070,8071,8072,8073,8074,8075,8076,8077,8078,8079,8080,8081,8082,8083,8084,8085,8086,8087,8088,8089,8090,8888,9000,9080,9090,9200,9300,9418,11211,27017,27018,27019,50060"
 
-    async def async_port_check(self, ip_port):
-        ip,port = ip_port
-        conn = asyncio.open_connection(ip, port)
-        try:
-            reader, writer = await asyncio.wait_for(conn, timeout=10)
-            return (ip, port, 'open')
-        except Exception as e:
-            # print(e)
-            return (ip, port, 'close')
+    async def async_port_check(self, semaphore, ip_port):
+        async with semaphore:
+            ip,port = ip_port
+            conn = asyncio.open_connection(ip, port)
+            try:
+                reader, writer = await asyncio.wait_for(conn, timeout=10)
+                return (ip, port, 'open')
+            except Exception as e:
+                # print(e)
+                return (ip, port, 'close')
 
     def callback(self, future):
         ip,port,status = future.result()
         if status == "open":
-            # print(ip,port,status)
+            print(ip,port,status)
             try:
                 if ip in self.open_list:
                     self.open_list[ip].append(port)
@@ -327,41 +331,22 @@ class PortScan(object):
         else:
             pass
 
-    def start_loop(self, loop):
-        asyncio.set_event_loop(loop)
-        loop.run_forever()
-
     def async_tcp_port_scan(self):
         ports = [port for port in range(11,65535)] if self.all_ports else self.common_port.split(',')
+        ip_port_list = [(ip,int(port)) for ip in self.ip_list for port in ports]
 
-        _ip_port_list = [(ip,int(port)) for ip in ip_list for port in ports]
-        ip_port_list = [_ip_port_list[i:i+self.rate] for i in range(0,len(_ip_port_list),self.rate)]
+        sem = asyncio.Semaphore(self.rate) # 限制并发量
+        loop = asyncio.get_event_loop()
 
-        # print(ip_port_list)
-        sub_loop = asyncio.new_event_loop()
-        thread = threading.Thread(target=self.start_loop, args=(sub_loop,))
-        thread.setDaemon(True)
-        thread.start()
+        tasks = list()
+        for ip_port in ip_port_list:
+            task = asyncio.ensure_future(self.async_port_check(sem, ip_port))
+            task.add_done_callback(self.callback)
+            tasks.append(task)
 
-        try:
-            print("async port scan...")
-            for ip_ports in ip_port_list:
-                ip = ip_ports[0][0]
-                if self.all_ports:
-                    msg = "scan ip: {} port: {}~{}".format(ip,ip_ports[0][-1],ip_ports[-1][-1])
-                    print(msg)
-                else:
-                    msg = "scan ip: {} port: {}".format(ip,self.common_port)
-                    print(msg)
-                for ip_port in ip_ports:
-                    future = asyncio.run_coroutine_threadsafe(self.async_port_check(ip_port), sub_loop)
-                    future.add_done_callback(self.callback)
-                time.sleep(3)
-        except Exception as e:
-            print(e)
-        finally:
-            sub_loop.stop()
-            print(self.open_list)
+        loop.run_until_complete(asyncio.wait(tasks))
+
+        print(self.open_list)
 
 
 if __name__ == '__main__':
@@ -376,42 +361,12 @@ if __name__ == '__main__':
 ```
 ```
 ➜  python3 tmp.py
-async port scan...
-scan ip: 59.108.35.198 port: 11~2010
-scan ip: 59.108.35.198 port: 2011~4010
-scan ip: 59.108.35.198 port: 4011~6010
-scan ip: 59.108.35.198 port: 6011~8010
-scan ip: 59.108.35.198 port: 8011~10010
-scan ip: 59.108.35.198 port: 10011~12010
-scan ip: 59.108.35.198 port: 12011~14010
-scan ip: 59.108.35.198 port: 14011~16010
-scan ip: 59.108.35.198 port: 16011~18010
-scan ip: 59.108.35.198 port: 18011~20010
-scan ip: 59.108.35.198 port: 20011~22010
-scan ip: 59.108.35.198 port: 22011~24010
-scan ip: 59.108.35.198 port: 24011~26010
-scan ip: 59.108.35.198 port: 26011~28010
-scan ip: 59.108.35.198 port: 28011~30010
-scan ip: 59.108.35.198 port: 30011~32010
-scan ip: 59.108.35.198 port: 32011~34010
-scan ip: 59.108.35.198 port: 34011~36010
-scan ip: 59.108.35.198 port: 36011~38010
-scan ip: 59.108.35.198 port: 38011~40010
-scan ip: 59.108.35.198 port: 40011~42010
-scan ip: 59.108.35.198 port: 42011~44010
-scan ip: 59.108.35.198 port: 44011~46010
-scan ip: 59.108.35.198 port: 46011~48010
-scan ip: 59.108.35.198 port: 48011~50010
-scan ip: 59.108.35.198 port: 50011~52010
-scan ip: 59.108.35.198 port: 52011~54010
-scan ip: 59.108.35.198 port: 54011~56010
-scan ip: 59.108.35.198 port: 56011~58010
-scan ip: 59.108.35.198 port: 58011~60010
-scan ip: 59.108.35.198 port: 60011~62010
-scan ip: 59.108.35.198 port: 62011~64010
-scan ip: 59.108.35.198 port: 64011~65534
-{'59.108.35.198': [22, 80, 8888]}
-Time: 103.69002890586853
+59.108.35.198 22 open
+59.108.35.198 80 open
+59.108.35.198 8888 open
+59.108.35.198 50050 open
+{'59.108.35.198': [22, 80, 8888, 50050]}
+Time: 49.96410322189331
 ```
 
 <br>
