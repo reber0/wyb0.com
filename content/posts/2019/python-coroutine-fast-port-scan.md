@@ -1,4 +1,4 @@
-f+++
++++
 title = "利用 Python 的协程进行快速端口扫描"
 topics = ["Python"]
 tags = ["python"]
@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-07-04 18:09:49
- * @LastEditTime: 2019-07-25 12:02:47
+ * @LastEditTime: 2019-07-25 12:09:28
  -->
 ### 0x00 协程的优势
 协程拥有极高的执行效率，因为子程序切换不是线程切换，而是由程序自身控制，因此没有线程切换的开销。和多线程比，线程数量越多，协程的性能优势就越明显。
