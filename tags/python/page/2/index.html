@@ -67,70 +67,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/python-package-mysql-function/">Python封装MySQL类</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-09-12
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/database">Database</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mysql">mysql</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 安装 有两种，一个是MySQLdb，一个是pymysql
- 下载MySQL-python然后安装
- sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)  0x01 简单表设计如下 insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default '127.0.0.1' comment 'ip地址', domain varchar(100) not null default 'www.xx.com' comment '域名' ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges;  0x02 MySQLdb封装代码 #!
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-package-mysql-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/python-blasting-secondary-domain/">Python爆破二级域名</a></h2>
 
         
@@ -663,6 +599,64 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
 
 
                 
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-module-paramiko/">Python的paramiko模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-07-14
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 安装 直接pip install paramiko安装
+或者去http://www.paramiko.org/ 下载
+0x01 执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&quot;192.168.188.134&quot;,22,&quot;reber&quot;,&quot;123456&quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&quot;ls -l&quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  0x02 上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&quot;192.168.188.134&quot;,22)) ftp.connect(username=&quot;reber&quot;,password=&quot;123456&quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\a.txt' sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\WYB_9\\Desktop\\system.log remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\system.log' sftp.get(remotepath, localpath) ftp.close()  
+    </p>
+
+    
+</article>
+
+
+                
 
                 
 
@@ -730,7 +724,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -887,7 +881,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

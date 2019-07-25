@@ -66,64 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/cgi-and-fastcgi-and-php-fpm/">CGI与FastCGI与PHP-FPM</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-08-02
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/cgi">cgi</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x01 CGI协议 中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议
-0x02 FastCGI 服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低
-fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等
-0x03 FastCGI工作流程 一般情况下，FastCGI的整个工作流程是这样的：
- Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module) FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待WebServer的连接。 当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。 Web server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。 FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。在CGI模式中，php-cgi在此便退出了。  0x04 PHP-FPM  php-fpm就是fastcgi的实现，是一个php fastcgi进程管理器 php-fpm在php5.2之后默认添加 千万不要把fastcgi端口对公网暴露  
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/burpsuite-intruder-module/">BurpSuite的Intruder模块</a></h2>
 
         
@@ -671,6 +613,63 @@ ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/file-upload-editor-upload-vulnerability/">文件上传之文本编辑器上传漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-07-21
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 文本编辑器 常见的文本编辑器有CKEditor、eWebEditor、UEditor、KindEditor、xhEditor等，它们的功能类似且都有图片上传、视频上传、远程下载等功能，这类文本编辑器也称为富文本编辑器。
+0x01 FCKeditor 下面以FCKeditor(现名为CKEditor)为例：
+1、敏感信息暴漏 * 查看版本信息 /FCKeditor/editor/dialog/fck_about.html * 默认上传页面 /FCKeditor/editor/filemanager/browser/default/browser.html /FCKeditor/editor/filemanager/browser/default/connectors/test.html /FCKeditor/editor/filemanager/upload/test.html /FCKeditor/editor/filemanager/connectors/test.html /FCKeditor/editor/filemanager/connectors/uploadtest.html * 其他敏感文件 /FCKeditor/editor/filemanager/connectors/aspx/connector.html /FCKeditor/editor/filemanager/connectors/asp/connector.html /FCKeditor/editor/filemanager/connectors/php/connector.php 2、黑名单策略错误 FCKeditor&lt;=2.4.3版本采用的是有弊端的黑名单策略，可以采用asa、cer等扩展名 3、任意文件上传漏洞 FCKeditor的2.4.2及以下本本的黑名单配置信息里没有定义类型Media，直接构造html表单就行， 在form中的action=&quot;http://22.22.22.22/fckeditor/editor/filemanager/upload/php/upload.php?Type=Media&quot; 即可，然后上传  0x02 eWebEditor 1、默认后台 2.80以前为：ewebeditor/admin_login.asp 2.80以后为：admin/login.asp 2、默认账号密码 admin admin888 3、数据库地址 默认数据库地址 ewebeditor/db/ewebeditor.mdb 常用数据库地址 ewebeditor/db/ewebeditor.asa ewebeditor/db/ewebeditor.asa ewebeditor/db/#ewebeditor.asa ewebeditor/db/#ewebeditor.mdb ewebeditor/db/!@#ewebeditor.asp ewebeditor/db/ewebeditor1033.mdb asp asa为后缀的数据库下载下来后改为mdb  
+Reference(侵删)：  http://navisec.it/编辑器漏洞手册/  
+    </p>
+
+    
+</article>
+
+
+            
 
             
 
@@ -738,7 +737,7 @@ ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -895,7 +894,7 @@ ThinkPHP命令执行  0x03 漏洞危害  继承Web服务程序的权限去执行
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

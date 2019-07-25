@@ -66,69 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/linux-permission-settings/">Linux之权限</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-04-17
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        主要有三种参数：rwx 对于文件来说：分别是读/写/执行
-对于目录来说：r读目录结构；w操作目录结构；x进入目录
-如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh
-若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中
-0x00 文件权限  chmod -x
-[root@localhost tmp]# ls -l total 0 -rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# chmod -x a.txt 去除ugo的x权限 [root@localhost tmp]# ls -l total 0 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# ls -l a.txt -rwxrw-rw-. 1 root root 9 Apr 16 20:42 a.txt [root@localhost tmp]# cat a.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/linux-permission-settings/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/linux-vim/">Linux之vim</a></h2>
 
         
@@ -680,6 +617,67 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/">ASP联合注入(Cookie处)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2015-12-04
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 Cookie注入的使用  三大Web提交方式
+ GET：直接在浏览器上面访问地址
+ POST：提交表单(会员注册、文件上传等)
+ COOKIE：访问网站下面自带的身份验证的值  Cookie注入利用时机
+当用普通注入时，采用and 1=1时出现错误提示(如下图)，普通的注入就没办法了，可以尝试大小写，编码等绕过，若过滤严谨，无法绕过，这时就可以采用cookie注入。  利用方法
+ 可以利用注入中转 可以利用sqlmap   0x01 用注入中转进行Cookie注入  目标：http://localhost:81/2/shownews.asp?id=183
+ 打开注入中转这个工具，填入相应参数，然后点击生成ASP，将生成的asp文件(jmCook.asp)放入你自己搭建的网站内后即可进行注入  提交localhost:81/jmCook.asp?jmdcw=183 order by猜测字段数
+ 提交localhost:81/jmCook.asp?jmdcw=183 UNION SELECT 1,2,3,4 from XXX猜测表名  猜测内容   0x02 用sqlmap进行Cookie注入  sqlmap验证存在Cookie注入  猜表名  猜列名  猜字段内容   
+    </p>
+
+    
+</article>
+
+
+            
 
             
 
@@ -747,7 +745,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -904,7 +902,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

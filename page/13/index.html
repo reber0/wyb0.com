@@ -66,65 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/injection-of-wide-byte/">SQL注入之宽字节注入(MySQL)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-06-24
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 应用场景 在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被&quot;\&quot;转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。
-0x01 测试代码 &lt;?php $conn = mysql_connect('localhost','root','root'); mysql_select_db('messages',$conn); if (isset($_GET['id'])) { $id = addslashes($_GET['id']); //转义id $sql = &quot;select * from msg where id='$id';&quot;; echo $sql.&quot;&lt;br /&gt;&quot;; $result = mysql_query($sql); $rows = @mysql_fetch_assoc($result); if ($rows) { echo '&lt;table align=&quot;left&quot; border=&quot;1&quot;&gt;'; foreach ($rows as $key =&gt; $value) { echo '&lt;tr align=&quot;lift&quot; height=&quot;30&quot;&gt;'; echo '&lt;td&gt;'.$key.'----'.$value.'&lt;/td&gt;'; echo '&lt;/tr&gt;'; } echo '&lt;/table&gt;'; } else { echo mysql_error(); } } else { echo &quot;please input id.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/injection-of-wide-byte/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/injection-of-time-based/">SQL注入之基于时间的注入(MySQL)</a></h2>
 
         
@@ -669,6 +610,75 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/linux-set-up-ftp/">Linux下搭建FTP</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-06-18
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        安装环境为：CentOS-6.5-x86_64-minimal
+0x00 安装 yum install vsftpd
+0x01 配置  备份
+cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
+ 编辑配置文件
+vim /etc/vsftpd/vsftpd.conf anonymous_enable=NO #设定不允许匿名访问 local_enable=YES #设定本地用户可以访问 chroot_list_enable=YES #使用户不能离开主目录 xferlog_file=/var/log/vsftpd.log #设定vsftpd的服务日志 ascii_upload_enable=YES ascii_download_enable=YES #设定支持ASCII pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证 # 并在尾部追加： guest_enable=YES #设定启用虚拟用户功能。 guest_username=ftp #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了 guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同  新增chroot_list并将ftp用户输入进去
+touch /etc/vsftpd/chroot_list
+echo ftp &gt;&gt; /etc/vsftpd/chroot_list
+ 安装Berkeley DB工具用来对虚拟用户认证配置管理：
+yum install db4 db4-utils
+ 创建用户账户文件
+vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行是密码 user2 #奇数行是用户名 666666 #偶数行是密码 user3 #奇数行是用户名 user3 #偶数行是密码  用Berkeley DB工具生成认证文件
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/linux-set-up-ftp/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -736,7 +746,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -893,7 +903,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

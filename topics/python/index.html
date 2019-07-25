@@ -67,71 +67,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2019/python-coroutine/">Python 的协程</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2019-07-04
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 协程的优势 协程拥有极高的执行效率，因为子程序切换不是线程切换，而是由程序自身控制，因此没有线程切换的开销。和多线程比，线程数量越多，协程的性能优势就越明显。
-不需要多线程的锁机制，因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多
-0x01 Python中的协程 协程也就是微线程，python 的 generator(生成器) 中的 yield 可以一定程度上实现协程
-在 generator 中，我们不但可以通过 for 循环来迭代，还可以不断调用 next() 函数获取由 yield 语句返回的下一个值。
-但是 Python 的 yield 不但可以返回一个值，它还可以接收调用者发出的参数。 0x02 使用 gevent python 中可以通过 generator 实现协程，但是不完全，第三方的 gevent 为 Python 提供了比较完善的协程支持，gevent 可以通过 monkey patch 动态的修改 Python 自带的一些标准库
-由于 IO 操作(比如访问网络)非常耗时，经常使程序处于等待状态，而 gevent 可以为我们自动切换协程，再在适当的时候切换回来继续执行，这就保证总有 greenlet 在运行，而不是等待 IO
-使用 gevent 可以获得极高的并发性能，但 gevent 只能在 Unix/Linux 下运行，在 Windows 下不保证正常安装和运行 下面 3 个网络操作是并发执行的，且结束顺序不同，但只有一个线程
-from gevent import monkey; monkey.patch_all() import requests import gevent def get_resp_size(url): print('GET: %s' % url) html = requests.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2019/python-coroutine/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2018/python-run-cmd/">Python中执行系统命令</a></h2>
 
         
@@ -682,6 +617,64 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
 
                 
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-implement-agent/">Python实现代理</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-09-13
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 帮助信息 0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- 'This is a proxy' __author__ = 'xxx' import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s) text = b''.join([x if 0x20 &lt;= ord(x) &lt; 0x7F else b'.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-implement-agent/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
 
                 
 
@@ -749,7 +742,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -906,7 +899,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">
