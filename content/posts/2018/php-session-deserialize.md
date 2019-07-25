@@ -1,12 +1,18 @@
 +++
-title = "关于PHP SESSION反序列化"
+title = "关于 PHP SESSION 反序列化"
 topics = ["Pentest"]
-tags = ["php","反序列化"]
+tags = ["php","deserialize"]
 description = "基于第三届4.29“安恒杯”网络安全技术大赛初赛中的题，第三个web题，php反序列化漏洞"
 date = "2018-07-23T00:09:17+08:00"
 draft = false
 +++
 
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-07-25 12:40:37
+ -->
 ### 0x00 环境
 公司出了一些ctf，说要摸底，然后根据答题成绩来分配相应工作。。。。。 
 
