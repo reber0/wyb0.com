@@ -2,11 +2,17 @@
 date = "2016-07-24T14:32:51+08:00"
 description = ""
 draft = false
-tags = ["命令执行"]
+tags = ["rce"]
 title = "命令执行漏洞"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-07-25 12:25:56
+ -->
 
 ### 0x00 命令执行
 ```

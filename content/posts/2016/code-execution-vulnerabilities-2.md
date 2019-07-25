@@ -2,11 +2,17 @@
 date = "2016-10-14T13:16:32+08:00"
 description = ""
 draft = false
-tags = ["代码执行"]
+tags = ["rce"]
 title = "代码执行漏洞(二)"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-07-25 12:22:58
+ -->
 
 #### 接着上一篇：[代码执行漏洞(一)](/posts/code-execution-vulnerabilities/)
 

@@ -2,11 +2,17 @@
 date = "2017-04-16T17:44:01+08:00"
 description = ""
 draft = false
-tags = ["代码执行"]
-title = "Struts2 046"
+tags = ["rce"]
+title = "Struts2-046 EXP"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-07-25 12:24:22
+ -->
 
 ### Struts2 046
 前段时间写的struts2 046检测脚本，代码如下：
