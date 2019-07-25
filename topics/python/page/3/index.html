@@ -67,6 +67,63 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-module-optparse/">Python的optparse模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-08-16
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 关于optparse模块 python2.3之后添加的模块optparse是专门用来处理命令行选项的
+import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] domaion', version='%prog 1.2') parser.add_option('-b', '--bug', dest='isbug', default=False, action='store_true', help='Whether open the debug mode, default is false') parser.add_option('-u', '--url', dest='url', default=None, action='store', type='string', help='target url') parser.add_option('-n','--number', dest='num', default=10, type='int', help='the number, default is 10') (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message  0x01 说明 在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action='store'，可以不用写 action='store_true'使用参数时将布尔值true存储到dest指定的变量中 action='store_false'使用参数时将布尔值false存储到dest指定的变量中  
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2016/python-module-scapy/">Python的scapy模块简单使用</a></h2>
 
         
@@ -593,71 +650,6 @@ python2中的字符串一般包含两种类型：str和unicode str：str为ascii
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/python-regular/">Python的正则</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-02-05
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E6%AD%A3%E5%88%99">正则</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 正则表达式 正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串
-0x01 符号 0x02 特殊字符 0x03 常用的模块属性 0x04 re模块 由于Pyton的字符串本身也用\转义，强烈建议使用r前缀
- 函数match()
-这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None  函数search()
-这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None  函数findall()和finditer()
-re.findall()将以列表的形式返回所有能匹配到的字符
-re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数sub()
-这个函数会对字符串进行匹配，然后替换，可以指定替换次数  函数split()
-这个函数会以正则来分割字符串，以列表样式返回  函数compile()
-这个函数可以编译正则，提高匹配速度   0x05 提取子串 根据正则可以匹配字符然后提取出来，用括号表示要提取的分组 0x06 贪婪匹配 正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&rdquo;？&rdquo;来抑制贪婪匹配 
-    </p>
-
-    
-</article>
-
-
-                
 
                 
 
@@ -725,7 +717,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -882,7 +874,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>33</sup>
+                <sup>34</sup>
             </p>
         
             <p style="display:inline-block;">
