@@ -2,11 +2,17 @@
 date = "2016-04-18T20:03:07+08:00"
 description = ""
 draft = false
-tags = ["后门"]
+tags = ["backdoor"]
 title = "Linux之SUID后门"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-07-25 12:29:33
+ -->
 
 SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制
 

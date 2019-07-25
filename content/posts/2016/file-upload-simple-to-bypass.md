@@ -2,11 +2,17 @@
 date = "2016-07-20T17:04:44+08:00"
 description = ""
 draft = false
-tags = ["文件上传"]
+tags = ["fileupload"]
 title = "文件上传漏洞常见绕过手法"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-07-25 12:31:04
+ -->
 
 ### 0x00 一般防止上传漏洞手法
 ```

@@ -2,11 +2,17 @@
 date = "2016-07-20T11:30:53+08:00"
 description = ""
 draft = false
-tags = ["文件上传"]
+tags = ["fileupload"]
 title = "文件上传漏洞与文件解析漏洞"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-07-25 12:30:55
+ -->
 
 ### 0x00 文件上传漏洞
 ```bash
