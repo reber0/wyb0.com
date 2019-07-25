@@ -2,11 +2,17 @@
 date = "2016-07-25T23:32:52+08:00"
 description = ""
 draft = false
-tags = ["反序列化"]
+tags = ["deserialize"]
 title = "PHP反序列化漏洞"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-07-25 12:36:08
+ -->
 
 ### 0x00 关于反序列化漏洞
 序列化：使用函数serialize()可将实例序列化为字符串  
