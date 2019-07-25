@@ -548,7 +548,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/python-module-logging/">Python的logging模块</a></h2>
+        <h2><a href="http://wyb0.com/posts/2016/python-module-logging-and-colorlog/">Python 中通过 logging 和 colorlog 模块记录日志</a></h2>
 
         
         <div class="post-meta">
@@ -592,12 +592,12 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 使用流程  创建一个logger 创建一个handler，用于写入日志文件 定义handler的输出格式 将handler添加到logger 记录日志  0x01 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- import logging class MyLog(object): &quot;&quot;&quot;docstring for MyLog&quot;&quot;&quot; def __init__(self, logfile, loglevel, logger): super(MyLog, self).__init__() # 创建一个logger self.logger = logging.getLogger(logger) self.logger.setLevel(logging.DEBUG) # 创建一个用于写入日志文件的handler fh = logging.FileHandler(logfile) fh.setLevel(logging.DEBUG) # 只要是写入文件的等级都为DEBUG，也可以设置为loglevel formatterf = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') fh.setFormatter(formatterf) # 创建一个用于输出到控制台的handler ch = logging.StreamHandler() ch.setLevel(loglevel) formatterc = logging.Formatter('%(asctime)s - %(message)s') ch.setFormatter(formatterc) # 将handler添加到logger self.
+        0x00 使用流程  创建一个 logger 创建相关 handler，同时定义 handler 的输出格式 将 handler 添加到 logger 使用 logger 记录日志  0x01 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- ''' @Author: reber @Mail: reber0ask@qq.com @Date: 2019-07-16 22:31:00 @LastEditTime: 2019-07-24 09:52:15 ''' import logging import colorlog class MyLog(object): def __init__(self, logfile, loglevel, logger): # 创建一个 logger self.logger = colorlog.getLogger(logger) # self.logger.setLevel(logging.INFO) self.logger.setLevel(logging.DEBUG) # 创建相关 hander fh = self.__file_hander(logfile) sh = self.__stream_hander(loglevel) # 将 handler 添加到 logger self.
     </p>
 
     
     <footer>
-        <a href="/posts/2016/python-module-logging/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/2016/python-module-logging-and-colorlog/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
