@@ -10,7 +10,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-07-27 18:15:25
- * @LastEditTime: 2019-07-27 23:03:40
+ * @LastEditTime: 2019-07-27 23:07:03
 -->
 
 ### 0x00 先说前提
@@ -35,7 +35,7 @@ draft = false
 ### 0x02 数据中转
 本来昨天我已经放弃了的, 结果今天上午小伙伴又找我了, 说还没有整好, 又看了一通 js, 仍然无解, 看不懂。。。
 
-想起来昨天有个大佬说过可以中转数据, 用 PhantomJS + flask 这样、那样、再这样, 然后就可以用 sqlmap 跑了
+想起昨天有个大佬说用 PhantomJS + flask 这样、那样、再这样, 中转数据就可以用 sqlmap 跑了, emmmmm。。。
 
 <div style="display: flex;align-items: center;justify-content: center;">
     <img src="/img/post/Xnip2019-07-27_20-01-02.png" style="width: 50%;height: 50%;" />
