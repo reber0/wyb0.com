@@ -66,6 +66,68 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-multi-threaded-weak-password-blasting/">Python实现多线程弱口令爆破</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-08-26
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%88%86%E7%A0%B4">爆破</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- 'this script can bruter ftp/ssh/mysql' __author__ = 'reber' import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类################# class CommonFun(object): &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot; def __init__(self): super(CommonFun, self).__init__() def set_log(self,lname): logger = logging.getLogger(lname) logger.setLevel(logging.DEBUG) ch = logging.StreamHandler() ch.setLevel(logging.DEBUG) formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') ch.setFormatter(formatter) logger.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-multi-threaded-weak-password-blasting/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2016/python-exception-handling/">Python的异常处理</a></h2>
 
         
@@ -583,68 +645,6 @@ yum install httpd  安装MySQL
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/linux-ssh-connect/">SSH免密登录及SSH隧道</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-08-10
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ssh%E9%9A%A7%E9%81%93">SSH隧道</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91">端口转发</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 SSH相关选项  -V 显示版本 -f 输入密码后进入后台模式 -N 不执行远程命令，一般与-f连用，用于端口转发 -C 压缩传输的数据，网速快时会影响速度  
- -L l_port:r_host:r_port(将本地机的某个端口转发到远端指定机器的指定端口) -R l_port:r_host:r_port(将远程主机的某个端口转发到本地端指定机器的指定端口) -D l_port (指定一个本地机器 &ldquo;动态的&rdquo; 应用程序端口转发，目前支持SOCKS4和SOCKS5协议)  0x01 环境 A主机: 外网IP 222.222.222.222，内网IP 无 B主机: 外网IP 123.123.123.123，内网IP 192.168.1.10 C主机: 外网IP 无， 内网IP 192.168.1.11  0x02 SSH 免密登陆 A主机免密码登陆B主机：
-#A主机执行ssh-keygen -t rsa生成两个文件~/.ssh/id_rsa和~/.ssh/id_rsa.pub reber@ubuntu-linux:~$ ssh-keygen -t rsa #然后将id_rsa.pub中的内容复制到B主机的~/.ssh/authorized_keys中即可 #ssh-copy-id的功能就是将本机的公钥写入远端主机，也可以登录远端主机手工写入 reber@ubuntu-linux:~$ ssh-copy-id root@123.123.123.123 The authenticity of host '123.123.123.123 (123.123.123.123)' can't be established. RSA key fingerprint is a7:46:e4:9a:18:65:4e:8e:0b:8a:22:15:7d:91:a7:7f.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/linux-ssh-connect/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -702,7 +702,7 @@ yum install httpd  安装MySQL
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(78)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -809,7 +809,7 @@ yum install httpd  安装MySQL
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>16</sup>
+                <sup>17</sup>
             </p>
         
             <p style="display:inline-block;">

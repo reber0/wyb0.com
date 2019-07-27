@@ -66,6 +66,67 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2016/injection-of-defense/">SQL注入之防御</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-06-25
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 要做的事 也就是找到注入点然后修复
+0x01 防御方法  使用预编译语句绑定变量(比如php的mysqli、pdo)
+&lt;?php //预编译 $mysqli = new mysqli(&quot;localhost&quot;,&quot;root&quot;,&quot;123456&quot;,&quot;share&quot;); $mysqli-&gt;query(&quot;set names utf8&quot;); $sql = &quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&quot;; $s = $mysqli-&gt;prepare($sql); //绑定参数 $name = &quot;Tom&quot;; $sex = &quot;M&quot;; $age = 23; $s-&gt;bind_param(&quot;ssi&quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&gt;execute(); var_dump($result); $s-&gt;close(); ?&gt;  使用存储过程(这里以SQLServer举例)
+  --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p') DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg 'xiaoli'   使用转义函数
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/injection-of-defense/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2016/injection-of-wide-byte/">SQL注入之宽字节注入(MySQL)</a></h2>
 
         
@@ -615,60 +676,6 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/windows2003-set-up-iis-asp/">Windows2003下搭建IIS&#43;asp</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-06-18
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/server">Server</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/server">server</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 添加组件 0x01 开启iis 0x02 添加Web服务扩展 0x03 运行asp 0x04 权限 
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -726,7 +733,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(78)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -833,7 +840,7 @@ use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>16</sup>
+                <sup>17</sup>
             </p>
         
             <p style="display:inline-block;">

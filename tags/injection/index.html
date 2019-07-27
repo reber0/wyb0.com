@@ -67,6 +67,70 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/">通过 selenium 和 flask 中转后利用 sqlmap 进行注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2019-07-27
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 先说前提 昨天某个小伙伴说有个注入没法搞 前端提交登陆表单时数据包加密了, 而且有个 sign 字符串每次都不一样用于校验, 应该是用 js 加密了 0x01 找加密的 js 文件 注入的地方是获取验证码时的手机号, 刚开始想着先找到 js 加密的函数, 然后生成 sign 再组数据包发送。
+就像 记一次SQL Server报错注入 中一样, 用 selenium 或者 PhantomJS 执行 js 代码生成sign
+一番查找发现了加密的 js 文件函数, 但是用的是 angular 这个前端框架, 没用过这个东西。。。。。 能看懂一般的 js 代码, 但是这个没得搞, 不懂。。。
+0x02 数据中转 本来昨天我已经放弃了的, 结果今天上午小伙伴又找我了, 说还没有整好, 又看了一通 js, 仍然无解, 看不懂。。。
+想起昨天有个大佬说用 PhantomJS + flask 这样、那样、再这样, 中转数据就可以用 sqlmap 跑了, emmmmm。。。
+
+虽然很早以前用过 asp 的 Cookie 注入中转 , 但是那个是软件, 一直没有搞懂原理, 现在正好趁机学下
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2019/injection-tips-of-oracle/">SQL注入tips(Oracle)</a></h2>
 
         
@@ -631,70 +695,6 @@ mysql&gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(rand
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/injection-of-time-based/">SQL注入之基于时间的注入(MySQL)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-06-24
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 特点 当页面存在注入，但是没有显示位且不管怎么测试返回页面都没有变化，此时可以使用基于时间的盲注进行注入。 其实只要存在SQL注入就可以使用基于时间的盲注，利用范围比较广泛，但是可能受到网络带宽等因素的影响。  0x01 利用方式 整型注入的话可以直接: ?id=if(1=1,sleep(2),1) 字符型的话需要闭合: ?id=2' and if(1=1,sleep(2),1) and '1  0x02 相关函数  if(条件, 值1, 值2)
-当条件为真时返回值1，条件为假时返回值2
- sleep()
-sleep(2)睡眠两秒
- benchmark(count, expr)
-benchmark是用于测试函数性能的，它是将表达式expr执行count次，执行次数越多耗费时间越久
-  0x03 基于时间的注入payload mysql&gt; select if((select database()) like &quot;rte%&quot;,sleep(2),666); +---------------------------------------------------+ | if((select database()) like &quot;rte%&quot;,sleep(2),666) | +---------------------------------------------------+ | 0 | +---------------------------------------------------+ 1 row in set (2.00 sec) mysql&gt; select if((select database())=&quot;rteaaa&quot;,sleep(2),666); +-----------------------------------------------+ | if((select database())=&quot;rtest1&quot;,sleep(2),666) | +-----------------------------------------------+ | 666 | +-----------------------------------------------+ 1 row in set (0.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/injection-of-time-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -752,7 +752,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(78)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -859,7 +859,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>16</sup>
+                <sup>17</sup>
             </p>
         
             <p style="display:inline-block;">
