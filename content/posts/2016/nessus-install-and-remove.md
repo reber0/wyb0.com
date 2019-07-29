@@ -3,7 +3,7 @@ date = "2016-05-11T17:09:10+08:00"
 description = "介绍下渗透测试中可能用到的工具nessus家庭版的安装方法"
 draft = false
 tags = ["tools","pentest"]
-title = "Nessus的安装"
+title = "Nessus 的安装和卸载"
 topics = ["Linux", "Pentest"]
 
 +++
@@ -11,15 +11,15 @@ topics = ["Linux", "Pentest"]
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-07-29 09:19:48
+ * @LastEditTime: 2019-07-29 09:42:19
  -->
 
-### 0x00 下载Nessus的deb安装包:
+### 0x00 下载 Nessus 的 deb 安装包
 去【[这里](http://www.tenable.com/products/nessus/select-your-operating-system?_blank)】，选择家庭版，然后下载对应的安装包
 ![70](/img/post/Nessus_Home.png)
 ![40](/img/post/select_nessus_deb.png)
 
-### 0x01 本地安装nessus:
+### 0x01 本地安装 Nessus
 ![60](/img/post/install_nessus.png)
 
 ### 0x02 执行后续安装步骤:
@@ -43,6 +43,9 @@ topics = ["Linux", "Pentest"]
 ![50](/img/post/input_code.png)
 ![35](/img/post/wait_download.png)
 
-### 0x03 登陆Nessus:
+### 0x03 登陆 Nessus
 ![35](/img/post/sign_in_nessus1.png)
 ![45](/img/post/sign_in_nessus2.png)
+
+### 0x03 卸载 Nessus
+[https://docs.tenable.com/nessus/Content/RemoveNessus.htm](https://docs.tenable.com/nessus/Content/RemoveNessus.htm?_blank)
