@@ -5,9 +5,15 @@ title = "About"
 sidemenu = "true"
 +++
 
-### E-mail
-- reber0#163.com
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-07-30 18:55:52
+ -->
 
+### E-mail
+- reber0ask#163.com
 
 ### WeChat and QQ
 <div style="width:350px;margin-left:40px;margin-top:10px;display:none;" >
