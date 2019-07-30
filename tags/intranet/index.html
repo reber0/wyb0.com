@@ -67,6 +67,64 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2019/frp-intranet-through/">FRP 内网穿透</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2019-07-30
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/intranet">intranet</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 对外提供简单的文件访问服务  服务端  ➜ frp cat frps.ini [common] ; 监听端口 bind_port = 7000 ; 那些端口允许客户端用来映射 allow_ports = 22-80,3000,33389  ➜ frp ./frps -c frps.ini 2019/07/31 00:22:31 [I] [service.go:139] frps tcp listen on 0.0.0.0:7000 2019/07/31 00:22:31 [I] [root.go:204] Start frps success   客户端  C:\Users\Administrator\Desktop\frp&gt;type frpc.ini [common] server_addr = 66.123.35.123 server_port = 7000 [test_static_file] type = tcp ; 文件服务的端口 remote_port = 3000 ; 启用插件 plugin = static_file ; 要对外暴露的文件目录 plugin_local_path = C:\\Users\Administrator\Desktop\frp_file ; 访问 url 中会被去除的前缀，保留的内容即为要访问的文件路径 plugin_strip_prefix = myfile ; 301 认证 plugin_http_user = admin plugin_http_passwd = 123456  C:\Users\Administrator\Desktop\frp&gt;frpc.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2019/frp-intranet-through/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2018/responder-and-ntml-hash/">内网渗透之Responder与Net-NTML hash</a></h2>
 
         
@@ -632,65 +690,23 @@ drop function shell;  查看基本信息  上传udf提权  添加用户  远程�
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/windows-use-system-vulnerabilities-elevate-privileges/">Windows下系统漏洞提权</a></h2>
 
+                
+
+
+    
+    
+    <nav class="pagination" role="pagination">
         
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-08-07
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
+            <i class="fa fa-chevron-left"></i>
+        
 
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/intranet">intranet</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         提权是在已经getshell但是权限不大的前提下做的
-0x00 查看基本信息 0x01 使用cmd执行命令  尝试使用cmd执行命令  找可写目录  尝试上传cmd.exe  写一个aspx马  上传cmd.exe  再次尝试使用cmd执行命令   0x02 权限提升  查看未安装补丁
-systeminfo&gt;a.txt&amp;(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592799 KB2621440 KB2160329 KB970483 KB2124261 KB977165 KB958644) do @type a.txt|@find /i &quot;%i&quot;||@echo %i Not Installed!)&amp;del /f /q /a a.txt   上传exp提权   0x03 添加用户  添加远程连接用户  0x04 使用3389远程连接 
-    </p>
-
-    
-</article>
-
-
-                
-
-                
-
+        <span>&nbsp;1 / 2&nbsp;</span>
+        
+        
+            <a href="/tags/intranet/page/2/"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
 
 
             </div>
@@ -731,7 +747,7 @@ systeminfo&gt;a.txt&amp;(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -843,7 +859,7 @@ systeminfo&gt;a.txt&amp;(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -66,6 +66,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2017/python-module-tqdm/">下载大文件时显示进度条</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2017-04-15
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber &lt;1070018473@qq.com&gt; import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers['Content-Length'])/1024/1024 with open(name, &quot;wb&quot;) as f: print &quot;download file {}, total size: {}M&quot;.format(name,content_size) for data in tqdm(iterable=resp.iter_content(1024*1024),total=content_size,unit='M'): f.write(data) def get_content(filename): data = [] with open(filename) as f: lines = f.readlines() for line in lines: data.append(line.strip()) return data if __name__ == '__main__': urls = get_content('urls.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2017/python-module-tqdm/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2017/weblogic-ssrf-check/">检测WebLogic是否存在SSRF</a></h2>
 
         
@@ -601,67 +661,6 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/python-cnd-check/">Python实现CDN的判断</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-12-23
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是CDN CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。  0x01 判断方法  可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息  0x02 代码 首先安装dnspython这个第三方模块：pip install dnspython
-#!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.netloc # print url rsv = dns.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-cnd-check/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -719,7 +718,7 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -831,7 +830,7 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">

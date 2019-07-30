@@ -66,6 +66,65 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-password-generator/">Python实现密码生成器</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-08-29
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 简介 有时候需要在网上注册许多账号，如果每个账户密码都一样的话，若被别人得知一个密码则所有账户就都沦陷了，若密码不一样则可能会忘记，在这里就用脚本写一个生成密码的工具，只需输入域名和账户名就可以根据key生成不一样的密码，也可以把域名和账户名写入文件，这样你用户名也可以不用记了。。。
+0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import hashlib import sys import os import optparse import json import msvcrt def get_md5(string): md5 = hashlib.md5() md5.update(string) s = md5.hexdigest() return s def get_domain(): if os.path.exists('account.txt'): data = {} with open('account.txt', 'r') as f: lines = f.readlines() for line in lines: line = line.split('*') data[line[0]] = line[1].strip() else: pass return data def get_pass(): pwd = [] while True: nchar = msvcrt.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-password-generator/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2016/python-multi-threaded-weak-password-blasting/">Python实现多线程弱口令爆破</a></h2>
 
         
@@ -591,60 +650,6 @@ yum install httpd  安装MySQL
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/mind-map-of-web-common-vulnerabilities/">Web常见漏洞脑图</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-08-11
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/mindmap">mindmap</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         Web常见漏洞 
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -702,7 +707,7 @@ yum install httpd  安装MySQL
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -814,7 +819,7 @@ yum install httpd  安装MySQL
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/intranet" title="intranet">intranet</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">
