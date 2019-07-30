@@ -10,7 +10,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-07-27 18:15:25
- * @LastEditTime: 2019-07-30 19:18:28
+ * @LastEditTime: 2019-07-30 22:35:43
 -->
 
 ### 0x00 先说前提
@@ -24,7 +24,7 @@ draft = false
 ### 0x01 找加密的 js 文件
 注入的地方是获取验证码时的手机号, 刚开始想着先找到 js 加密的函数, 然后生成 sign 再组数据包发送。
 
-就像 [记一次SQL Server报错注入](http://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/) 中一样, 用 selenium 或者 PhantomJS 执行 js 代码生成sign
+就像 [记一次SQL Server报错注入](/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/) 中一样, 用 selenium 或者 PhantomJS 执行 js 代码生成sign
 
 一番查找发现了加密的 js 文件函数, 但是用的是 angular 这个前端框架, 没用过这个东西。。。。。
 ![80](/img/post/Xnip2019-07-27_19-06-48.png)
@@ -41,7 +41,7 @@ draft = false
     <img src="/img/post/Xnip2019-07-27_20-01-02.png" style="width: 50%;height: 50%;" />
 </div><br>
 
-虽然很早以前用过 asp 的 [Cookie 注入中转](http://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/?_blank) , 但是那个是软件, 一直没有搞懂原理, 现在正好趁机学下
+虽然很早以前用过 asp 的 [Cookie 注入中转](/posts/2015/injection-of-asp-in-the-cookie/?_blank) , 但是那个是软件, 一直没有搞懂原理, 现在正好趁机学下
 
 经过各种百度, 大概明白了, 应是本地起个 server, sqlmap 就扫描这个 server, server 接收到 payload 后将 payload 加到表单中, 然后模拟提交表单
 
