@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-07-30 23:27:54
- * @LastEditTime: 2019-07-31 02:27:29
+ * @LastEditTime: 2019-07-31 22:42:25
  -->
 
 ### 0x00 对外提供简单的文件访问服务
@@ -105,6 +105,53 @@ C:\Users\Administrator\Desktop\frp>frpc.exe -c frpc.ini
 2019/07/30 23:32:38 [I] [proxy_manager.go:137] [ce144f7511f63353] proxy added: [
 rdp]
 2019/07/30 23:32:38 [I] [control.go:144] [rdp] start proxy success
+```
+这里其实可以把 frp 做成服务，开机自启动的那种
+
+从 [https://github.com/kohsuke/winsw/releases](https://github.com/kohsuke/winsw/releases?_blank) 下载 winsw，然后将 winsw.exe 放在 frp 的文件夹下
+
+写个脚本执行后添加一个服务，我们可以利用 winsw 来添加、移除、启动、停止 frp 服务
+
+```
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+'''
+@Author: reber
+@Mail: reber0ask@qq.com
+@Date: 2019-03-22 16:22:59
+@LastEditTime: 2019-07-22 09:17:05
+'''
+
+import os
+import sys
+import subprocess
+
+current_path = os.path.abspath('.')
+frpc_path = os.path.join(current_path,"frpc.exe")
+frpc_ini_path = os.path.join(current_path,"frpc.ini")
+
+xml = """<service>
+    <id>frp</id>
+    <name>frp_service</name>
+    <description>frp rdp service</description>
+    <executable>{}</executable>
+    <arguments>-c {}</arguments>
+    <onfailure action="restart" delay="60 sec"/>
+    <onfailure action="restart" delay="120 sec"/>
+    <logmode>reset</logmode>
+</service>
+""".format(frpc_path,frpc_ini_path)
+
+with open("winsw.xml","w") as f:
+    f.write(xml)
+
+if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        arg = sys.argv[1]
+        rr = subprocess.getstatusoutput("winsw.exe {}".format(arg))
+        print(rr)
+    else:
+        print("Usage: python3 frp.py [install|uninstall|start|stop|status]")
 ```
 
 * 本地
