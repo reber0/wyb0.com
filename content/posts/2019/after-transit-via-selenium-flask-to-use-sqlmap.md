@@ -10,7 +10,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-07-27 18:15:25
- * @LastEditTime: 2019-07-30 22:35:43
+ * @LastEditTime: 2019-07-31 21:41:30
 -->
 
 ### 0x00 先说前提
@@ -98,7 +98,7 @@ def send(payload):
         message = selector.xpath("//div[@class='ng-binding ng-scope']/text()")
         if message:
             time.sleep(0.5)
-            # 得到返回的信息后, 关闭信息提示框, 然后清楚 input 的内容便于发送下一个 payload
+            # 得到返回的信息后, 关闭信息提示框, 然后清除 input 的内容便于发送下一个 payload
             chrome.find_element_by_class_name("close").click()
             chrome.find_element_by_id("modile").clear()
             break
