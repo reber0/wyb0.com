@@ -7,6 +7,12 @@ date = "2019-01-04T20:23:35+08:00"
 draft = false
 +++
 
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-08-12 11:14:05
+ -->
 ### 0x00 判断数据库类型
 * Oracle有一些自带的表：dual、user_tables
     * ```id=45 and (select count(*) from user_tables)>0--```
@@ -118,6 +124,10 @@ select name, password, astatus from sys.user$; --需要权限
 ![](/img/post/20190104-203238.png)
 
 ### 0x04 boolean-based blind注入
+* case...when...
+![65](/img/post/Xnip2019-08-12_11-12-32.png)
+![65](/img/post/Xnip2019-08-12_11-13-46.png)
+
 * decode
 
 decode(条件，值1，值1结果，值2，值2结果，。。。值n，值n结果，默认值)
