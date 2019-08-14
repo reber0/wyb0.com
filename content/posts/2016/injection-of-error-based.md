@@ -7,6 +7,12 @@ title = "SQL注入之报错型注入(MySQL)"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-08-14 19:07:23
+ -->
 
 ### 0x00 前提
 ```
@@ -24,7 +30,7 @@ topics = ["Pentest"]
 
 ?id=1' and extractvalue(1, concat(0x7e, (<f>select @@version</f>),0x7e))-\-+
 
-第一个公式具体原理可以参考：[MySQL报错注入原理分析(count()、rand()、group by)](http://wyb0.com/posts/mysql-injection-error-based-theory-count-rand-groupby?_blank)
+第一个公式具体原理可以参考：[MySQL报错注入原理分析(count()、rand()、group by)](/posts/2016/mysql-injection-error-based-theory-count-rand-groupby?_blank)
 
 ### 0x02 公式解析
 ```

@@ -11,7 +11,7 @@ topics = ["Pentest"]
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:00
- * @LastEditTime: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-08-14 19:05:02
  -->
 
 ### 0x00 代码执行
@@ -152,4 +152,4 @@ mixed preg_replace ( mixed pattern, mixed replacement, mixed subject [, int limi
 * 放弃使用preg_replace的e修饰符，使用preg_replace_callback()替换
 * 若必须使用preg_replace的e修饰符，则必用单引号包裹正则匹配出的对象
 
-#### 下一篇：[代码执行漏洞(二)](/posts/code-execution-vulnerabilities-2/)
+#### 下一篇：[代码执行漏洞(二)](/posts/2016/code-execution-vulnerabilities-2/)

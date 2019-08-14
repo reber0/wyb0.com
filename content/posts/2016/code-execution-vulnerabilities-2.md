@@ -11,10 +11,10 @@ topics = ["Pentest"]
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:00
- * @LastEditTime: 2019-07-25 12:22:58
+ * @LastEditTime: 2019-08-14 19:04:18
  -->
 
-#### 接着上一篇：[代码执行漏洞(一)](/posts/code-execution-vulnerabilities/)
+#### 接着上一篇：[代码执行漏洞(一)](/posts/2016/code-execution-vulnerabilities/)
 
 ### 0x00 函数create_function()
 php中的函数create_function()可以创建一个匿名函数，其函数原型如下：
