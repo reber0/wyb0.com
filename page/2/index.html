@@ -66,6 +66,68 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2018/docker-compose-build-lamp/">使用docker-compose构造LAMP环境</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2018-12-15
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/docker">docker</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 实现功能 使用docker-compose构造LAMP环境，其中mysql数据库、mysql配置文件、网站文件均持久化存储到本机。
+apache、php通过Dockerfile构造，Dockerfile拉取ubuntu镜像，然后安装apache2和php。
+mysql的话通过docker的links连接mysql:5.5这个镜像当作数据库。
+具体文件参见：https://github.com/reber0/docker_env
+0x01 文件构造 ➜ tree apache apache ├── Dockerfile ├── conf │ └── my.cnf ├── docker-compose.yml ├── mysql ├── src │ ├── init.sh │ └── sources.list └── web └── index.php 4 directories, 6 files  0x02 docker-compose.yml version: '3' services: apache: image: ubuntu:apache #镜像名为ubuntu，tag为apache container_name: apache #运行后生成的容器名字为apache build: . #使用当前路径下的Dockerfile构造镜像 ports: - &quot;81:80&quot; volumes: - ./www:/var/www/html links: - mymysql environment: #设置环境变量 - TZ=Asia/Shanghai #设定时区 restart: always #容器重启策略：当容器终止退出后，总是重启容器，默认策略。 mymysql: image: mysql:5.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2018/docker-compose-build-lamp/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2018/docker-compose/">Docker之Docker Compose</a></h2>
 
         
@@ -631,69 +693,6 @@ SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2018/msf-simple-elevate-privileges/">Metasploit简单提权</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2018-02-26
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/tools">tools</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/intranet">intranet</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 前提 虚拟机有一个shell：http://10.11.11.20/a.php，物理机IP是211.222.222.72
-外网安装msf的主机：外网IP是114.115.123.123，内网IP是192.168.0.195
-0x01 查看主机基本信息 菜刀连接shell，终端执行systeminfo
-C:\Apps\phpStudy\WWW\&gt; systeminfo 主机名: REBER-WIN7 OS 名称: Microsoft Windows 7 专业版 OS 版本: 6.1.7600 ��ȱ Build 7600 OS 制造商: Microsoft Corporation OS 配置: 独立服务器 OS 构件类型: Multiprocessor Free 注册的所有人: reber 注册的组织: 产品 ID: 00371-868-0000007-85272 初始安装日期: 2017/12/26, 7:23:00 系统启动时间: 2018/2/26, 9:52:14 系统制造商: Parallels Software International Inc. 系统型号: Parallels Virtual Platform 系统类型: x64-based PC 处理器: 安装了 1 个处理器。 [01]: Intel64 Family 6 Model 70 Stepping 1 GenuineIntel ~2495 Mhz BIOS 版本: Parallels Software International Inc.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2018/msf-simple-elevate-privileges/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -751,7 +750,7 @@ C:\Apps\phpStudy\WWW\&gt; systeminfo 主机名: REBER-WIN7 OS 名称: Microsoft 
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(81)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -868,7 +867,7 @@ C:\Apps\phpStudy\WWW\&gt; systeminfo 主机名: REBER-WIN7 OS 名称: Microsoft 
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/javascript" title="javascript">javascript</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">
