@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-08-23 16:27:12
- * @LastEditTime: 2019-08-23 16:32:50
+ * @LastEditTime: 2019-08-24 11:28:26
  -->
 ### 0x00 安装
 ```
@@ -143,22 +143,86 @@ reber=# \du
  reber0ask | Create DB                                                  | {}
 ```
 
-* 以指定用户登陆
+* 以指定用户登陆并创建表
 
 ```
 ➜  psql -U reber0ask -d mypgsql -h 127.0.0.1 -p 5432
 psql (11.4)
 Type "help" for help.
 
-mypgsql=> \du
-                                   List of roles
- Role name |                         Attributes                         | Member of
------------+------------------------------------------------------------+-----------
- reber     | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
- reber0ask | Create DB                                                  | {}
+mypgsql=> \l
+                                   List of databases
+   Name    |   Owner   | Encoding |   Collate   |    Ctype    |    Access privileges
+-----------+-----------+----------+-------------+-------------+-------------------------
+ mypgsql   | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =Tc/reber0ask          +
+           |           |          |             |             | reber0ask=CTc/reber0ask
+ reber     | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ template0 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber               +
+           |           |          |             |             | reber=CTc/reber
+ template1 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber               +
+           |           |          |             |             | reber=CTc/reber
+(4 rows)
+
+mypgsql=> create table msg(
+mypgsql(> id serial primary key,
+mypgsql(> title character varying(100),
+mypgsql(> content character varying(2014)
+mypgsql(> );
+CREATE TABLE
+mypgsql=> \d
+             List of relations
+ Schema |    Name    |   Type   |   Owner
+--------+------------+----------+-----------
+ public | msg        | table    | reber0ask
+ public | msg_id_seq | sequence | reber0ask
+(2 rows)
+
+mypgsql=> \d msg;
+                                     Table "public.msg"
+ Column  |          Type           | Collation | Nullable |             Default
+---------+-------------------------+-----------+----------+---------------------------------
+ id      | integer                 |           | not null | nextval('msg_id_seq'::regclass)
+ title   | character varying(100)  |           |          |
+ content | character varying(2014) |           |          |
+Indexes:
+    "msg_pkey" PRIMARY KEY, btree (id)
+
+mypgsql=> insert into public.msg(title,content) values('hi','hello world!');
+INSERT 0 1
+mypgsql=> select * from msg;
+ id | title |   content
+----+-------+--------------
+  1 | hi    | hello world!
+(1 row)
 ```
 
-### 0x02 允许远程连接数据库
+### 0x02 导入与导出
+* 导出
+
+```
+➜  pg_dump -U reber0ask mypgsql > mypgsql.sql
+➜  ls -al mypgsql.sql
+-rw-r--r--  1 reber  staff  1795  8 24 11:11 mypgsql.sql
+```
+
+* 导入
+
+```
+➜  psql -U reber0ask -d mypgsql -h 127.0.0.1 -p 5432
+psql (11.4)
+Type "help" for help.
+
+mypgsql=> \c reber
+You are now connected to database "reber" as user "reber0ask".
+reber=> drop database mypgsql;
+DROP DATABASE
+reber=> create database mypgsql;
+CREATE DATABASE
+reber=> \q
+➜  psql -U reber0ask -d mypgsql -h 127.0.0.1 -p 5432 -f mypgsql.sql
+```
+
+### 0x03 允许远程连接数据库
 ```
 ➜  vim  /usr/local/var/postgres/postgresql.conf
 listen_addresses = '*'
@@ -167,7 +231,7 @@ listen_addresses = '*'
 host  all  all 0.0.0.0/0 md5
 ```
 
-### 0x03 python 简单连接
+### 0x04 python 简单连接
 ```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
