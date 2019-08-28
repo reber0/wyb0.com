@@ -491,69 +491,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/python-some-small-modules/">Python的一些小模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-08-19
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 colorama 这个模块可以输出带有颜色的字符
-#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.CYAN,content='debug',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.YELLOW,content='warning',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.RED,content='error',g_color=colorama.Fore.RESET)  0x01 pyfiglet 可以输出字体的图片效果
-from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&quot;xtty&quot;) #font可以控制输出的类型  0x02 chardet 这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
-#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&quot;https://tower.im/users/sign_in&quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.decode(code['encoding']).encode('gbk') print chardet.detect(str1) start = str1.find('&lt;title&gt;') stop = str1.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-some-small-modules/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/python-module-optparse/">Python的optparse模块</a></h2>
 
         
@@ -663,6 +600,64 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
 
 
                 
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-module-paramiko/">Python的paramiko模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-07-14
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 安装 直接pip install paramiko安装
+或者去http://www.paramiko.org/ 下载
+0x01 执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&quot;192.168.188.134&quot;,22,&quot;reber&quot;,&quot;123456&quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&quot;ls -l&quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  0x02 上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&quot;192.168.188.134&quot;,22)) ftp.connect(username=&quot;reber&quot;,password=&quot;123456&quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\a.txt' sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\WYB_9\\Desktop\\system.log remotepath='/tmp/a.txt' localpath='C:\\Users\\WYB_9\\Desktop\\system.log' sftp.get(remotepath, localpath) ftp.close()  
+    </p>
+
+    
+</article>
+
+
+                
 
                 
 
@@ -715,7 +710,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+                <a href="http://wyb0.com/topics/other" title="other">other(14)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -730,7 +725,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -846,11 +841,6 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
                 <sup>3</sup>
             </p>
@@ -862,7 +852,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>14</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -891,11 +881,6 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
                 <sup>1</sup>
             </p>
@@ -907,7 +892,7 @@ import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] dom
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

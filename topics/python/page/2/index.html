@@ -612,7 +612,7 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/python-some-small-modules/">Python的一些小模块</a></h2>
+        <h2><a href="http://wyb0.com/posts/2016/python-module-optparse/">Python的optparse模块</a></h2>
 
         
         <div class="post-meta">
@@ -620,7 +620,7 @@
                 <i class="fa fa-calendar fa-fw"></i>
                 <time>
                     
-                        2016-08-19
+                        2016-08-16
                     
                 </time>
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -656,16 +656,10 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 colorama 这个模块可以输出带有颜色的字符
-#!/usr/bin/env python # -*- coding: utf-8 -*- import colorama colorama.init() print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.CYAN,content='debug',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.YELLOW,content='warning',g_color=colorama.Fore.RESET) print &quot;{f_color}{content}{g_color}&quot;.format(f_color=colorama.Fore.RED,content='error',g_color=colorama.Fore.RESET)  0x01 pyfiglet 可以输出字体的图片效果
-from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&quot;xtty&quot;) #font可以控制输出的类型  0x02 chardet 这个模块可以用来判断你的字符串(除了Unicode类型)是什么类型的编码
-#!/usr/bin/env python #-*- coding:utf-8 -*- import chardet import requests resp = requests.get(&quot;https://tower.im/users/sign_in&quot;) html = resp.content if not isinstance(html,unicode): code = chardet.detect(html) print code #输出当前的编码方式 #解码为unicode，然后编码为gbk str1 = html.decode(code['encoding']).encode('gbk') print chardet.detect(str1) start = str1.find('&lt;title&gt;') stop = str1.
+         0x00 关于optparse模块 python2.3之后添加的模块optparse是专门用来处理命令行选项的
+import optparse parser = optparse.OptionParser(usage='Usage: %prog [options] domaion', version='%prog 1.2') parser.add_option('-b', '--bug', dest='isbug', default=False, action='store_true', help='Whether open the debug mode, default is false') parser.add_option('-u', '--url', dest='url', default=None, action='store', type='string', help='target url') parser.add_option('-n','--number', dest='num', default=10, type='int', help='the number, default is 10') (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message  0x01 说明 在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action='store'，可以不用写 action='store_true'使用参数时将布尔值true存储到dest指定的变量中 action='store_false'使用参数时将布尔值false存储到dest指定的变量中  
     </p>
 
-    
-    <footer>
-        <a href="/posts/2016/python-some-small-modules/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
     
 </article>
 
@@ -723,7 +717,7 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/other" title="other">other(16)</a>
+                <a href="http://wyb0.com/topics/other" title="other">other(14)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -738,7 +732,7 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(36)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -854,11 +848,6 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/markdown" title="markdown">markdown</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
                 <sup>3</sup>
             </p>
@@ -870,7 +859,7 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/module" title="module">module</a>
-                <sup>14</sup>
+                <sup>13</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -899,11 +888,6 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
             </p>
         
             <p style="display:inline-block;">
-                <a href="http://wyb0.com/tags/plan" title="plan">plan</a>
-                <sup>1</sup>
-            </p>
-        
-            <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/poc" title="poc">poc</a>
                 <sup>1</sup>
             </p>
@@ -915,7 +899,7 @@ from pyfiglet import figlet_format print figlet_format(&quot;reber&quot;, font=&
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>34</sup>
+                <sup>33</sup>
             </p>
         
             <p style="display:inline-block;">
