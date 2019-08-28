@@ -66,72 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/ubuntu-insatll-sublime-text3/">Ubuntu下安装sublime text 3</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-05-08
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/software">software</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境：ubuntu14.4
-0x00 安装  添加Sublime Text 3的仓库
-sudo add-apt-repository ppa:webupd8team/sublime-text-3
- 更新软件库
-sudo apt-get update
- 安装Sublime Text 3
-sudo apt-get install sublime-text-installer
-  0x01 解决不能输入中文的问题  新建sublime_imfix.c(位于～目录)，写入如下内容
-#include &lt;gtk/gtkimcontext.h&gt; void gtk_im_context_set_client_window (GtkIMContext *context,GdkWindow *window) { GtkIMContextClass *klass; g_return_if_fail (GTK_IS_IM_CONTEXT (context)); klass = GTK_IM_CONTEXT_GET_CLASS (context); if (klass-&gt;set_client_window) klass-&gt;set_client_window (context, window); g_object_set_data(G_OBJECT(context),&quot;window&quot;,window); if(!GDK_IS_WINDOW (window)) return; int width = gdk_window_get_width(window); int height = gdk_window_get_height(window); if(width != 0 &amp;&amp; height !=0) gtk_im_context_focus_in(context); }  将上一步的代码编译成共享库libsublime-imfix.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/ubuntu-insatll-sublime-text3/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/ubuntu-build-lamp/">Ubuntu 搭建 LAMP</a></h2>
 
         
@@ -687,6 +621,70 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/linux-user/">Linux之用户和用户组</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-04-17
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x01 新建用户 环境：Ubuntu 14.04.4
+ Step1：添加新用户
+useradd -r -m -s /bin/bash 用户名
+ Step2:配置新用户密码
+passwd 用户名
+ Step3：给新添加的用户增加root权限
+visudo
+然后添加：
+用户名 ALL=(ALL:ALL) ALL
+ ctrl+o 保存 ctrl+x 退出
+  0x01 用户组 初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个  useradd xm 用户xm会默认加到xm组 useradd -g fans xm 将xm的所属组改为fans useradd -G fans xm 初始组为xm，有效组为fans  useradd xiaoming usermod -g fans xiaoming 只有一个初始组，被修改为fans useradd xm usermod -G fans xm xm用户会有两个组，初始组为xm，又添加一个有效组fans usermod -G fans1 xm xm用户两个组，初始组为xm，有效组更改为fans1  用户创建的文件拥有者是初始组  
+    </p>
+
+    
+</article>
+
+
+            
 
             
 
@@ -744,7 +742,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(81)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -871,7 +869,7 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
-                <sup>3</sup>
+                <sup>2</sup>
             </p>
         
             <p style="display:inline-block;">
