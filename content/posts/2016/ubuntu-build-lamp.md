@@ -3,10 +3,16 @@ date = "2016-05-07T21:37:07+08:00"
 description = ""
 draft = false
 tags = ["server"]
-title = "Ubuntu初接触(包括搭建LAMP)"
+title = "Ubuntu 搭建 LAMP"
 topics = ["Linux", "Server"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-08-28 09:34:41
+ -->
 
 ### 0x00 环境
 我是在虚拟机中安装14.04.4版的Ubuntu [下载Ubuntu14.04.4](http://mirrors.163.com/ubuntu-releases/14.04.4/ubuntu-14.04.4-desktop-amd64.iso)
