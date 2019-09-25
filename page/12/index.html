@@ -66,61 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/in-the-wireless-use-ettercap-to-do-man-in-the-middle-attack/">无线下ettercap做中间人攻击</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-07-13
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/wireless">wireless</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         前提：攻击主机和被攻击主机在一个无线下面
-0x00 打开ettercap 0x01 查看host列表 在软件的图形化界面点击sniff，选择unified sniffing选择网卡，然后单击hosts选项，选择scan for host，然后选择host list 0x02 选定攻击目标 选择192.168.1.116的IP地址，点击Add to Target 1,然后选择网关的IP地址192.168.1.1，点击Add to Target 2 0x03 开始攻击 ettercap选择&quot;mitm&quot;—&quot;arp poisoning&quot;—&quot;Sniff remote connections&quot;— &quot;确定&quot;，然后再在被攻击端查看arp，可知攻击已经成功 0x04 ettercap持续监听目标 软件上开始监听，被攻击端用浏览器登录路由器 0x05 得到Cookie 点击主界面的&rdquo;View&rdquo; — &ldquo;connetcions&rdquo; 可以查看被攻击主机的一些网络链接 0x06 用cookie登陆被入侵账户 打开火狐浏览器，通过firebug插件添加截获到的cookie从而登陆账户 
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/attack-802.11-network-under-wpa-protection/">攻击WPA保护下的802.11网络</a></h2>
 
         
@@ -658,6 +603,66 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-module-logging-and-colorlog/">Python 中通过 logging 和 colorlog 模块记录日志</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-06-27
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 使用流程  创建一个 logger 创建相关 handler，同时定义 handler 的输出格式 将 handler 添加到 logger 使用 logger 记录日志  0x01 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- ''' @Author: reber @Mail: reber0ask@qq.com @Date: 2019-07-16 22:31:00 @LastEditTime: 2019-07-24 09:52:15 ''' import logging import colorlog class MyLog(object): def __init__(self, logfile, loglevel, logger): # 创建一个 logger self.logger = colorlog.getLogger(logger) # self.logger.setLevel(logging.INFO) self.logger.setLevel(logging.DEBUG) # 创建相关 hander fh = self.__file_hander(logfile) sh = self.__stream_hander(loglevel) # 将 handler 添加到 logger self.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-module-logging-and-colorlog/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -715,7 +720,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(78)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -725,7 +730,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(34)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(33)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -892,7 +897,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>32</sup>
+                <sup>31</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -992,7 +997,7 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
-                <sup>4</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">
