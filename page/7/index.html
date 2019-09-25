@@ -374,69 +374,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/python-blasting-secondary-domain/">Python爆破二级域名</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-09-12
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E7%88%86%E7%A0%B4">爆破</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        Reference(侵删)：https://github.com/lijiejie/subDomainsBrute
-0x00 帮助信息 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- import dns.resolver import threading import Queue import optparse import sys queue = Queue.Queue() lock = threading.Lock() class GetSubDomain(threading.Thread): &quot;&quot;&quot;docstring for SubDomain&quot;&quot;&quot; def __init__(self, target,queue,outfile): threading.Thread.__init__(self) self.target = target self.queue = queue self.rsv = dns.resolver.Resolver() outfile = target + '.txt' if not outfile else outfile self.f = open('./output/'+outfile,'a+') self.ip_list = [] def _scan(self): while not self.queue.empty(): self.ip_list = [] ips = None sub_domain = self.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-blasting-secondary-domain/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/tmux-usage/">Tmux 的使用</a></h2>
 
         
@@ -686,6 +623,61 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/php-safe-configuration/">PHP安全配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-09-01
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 PHP的配置 PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题
+0x01 远程文件包含  涉及配置项  allow_url_include  配置为On时允许进行远程文件包含  allow_url_fopen  配置为On时允许使用函数fopen、file_put_contents   配置方案  alllow_url_include = Off allow_url_fopen = Off   0x02 关闭错误回显  涉及配置项  display_errors  配置为On时会显示错误信息   配置方案  display_errors = Off log_errors = On error_log = /var/log/php_error.log   0x03 隐藏php版本  涉及配置项  expose_php  为Off时会隐藏php版本   配置方案  expose_php = Off   0x04 魔术引号  涉及配置项  magic_quotes_gpc  过滤get、post、cookie的单引号、双引号、反斜杠、空字符，但不过滤$_SERVER  magic_quotes_runtime  对文件或数据库中取出的数据进行过滤，可防止二次注入   配置方案  做逻辑判断时需要去掉反斜杠，所以用全局过滤框架做过滤吧   0x05 安全模式  涉及配置项  safe_mode  开启后安全系数提升，但会限制函数使用权限和操作目录文件权限等   配置方案  在安全模式下可以使用safe_mode_include_dir = /var/www/common来排除某些文件   0x06 目录权限控制  涉及配置项  open_basedir  开启后可将用户访问范围限定，可防止跨站，但会影响性能   配置方案  open_basedir = /var/www/web1/:/var/www/web2/ (后面的斜杠不能少)   0x07 禁止函数  涉及配置项  disable_functions  禁止某些命令执行函数和文件操作函数的使用   配置方案  disable_functions = system,passthru,exec,shell_exec,popen,pcntl_exec, proc_open,chdir,chroot,getcwd,readdir,mkdir,copy,file_get_contents,   0x08 注册全局变量  涉及配置项  register_globals  值为On是会开启全局注册变量功能   配置方案  register_globals = Off   
+    </p>
+
+    
+</article>
+
+
+            
 
             
 
@@ -743,7 +735,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -753,7 +745,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(34)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -920,7 +912,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>33</sup>
+                <sup>32</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1020,7 +1012,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
-                <sup>5</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">

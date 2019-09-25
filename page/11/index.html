@@ -66,66 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="http://wyb0.com/posts/2016/code-execution-vulnerabilities/">代码执行漏洞(一)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-07-25
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/rce">rce</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 代码执行 当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。
-0x01 相关函数 PHP：eval assert Python：exec asp：&lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&gt; Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能  0x02 phpcms中的string2array函数 这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组
-array( //这个是字符串形式的数组，它并不是数组，而是字符串 'upload_maxsize' =&gt; '2048', 'upload_allowext' =&gt; 'jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf', 'watermark_enable' =&gt; '1', 'watermark_minwidth' =&gt; '300', 'watermark_minheight' =&gt; '300', 'watermark_img' =&gt; '/statics/img/water/mark.png', 'watermark_pct' =&gt; '85', 'watermark_quality' =&gt; '80', 'watermark_pos' =&gt; '9', )  function string2array($data) { //这个函数可以将字符串$data转化为数组 if($data == '') return array(); @eval(&quot;\$array = $data;&quot;); return $array; }  0x03 漏洞危害  执行代码 让网站写shell 甚至控制服务器  0x04 漏洞分类(也是利用点) 执行代码的函数：eval、assert callback函数：preg_replace + /e模式 反序列化：unserialize()(反序列化函数)  0x05 漏洞挖掘 框架找漏洞，如ThinkPHP： inurl:index.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/code-execution-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="http://wyb0.com/posts/2016/windows-proxifier-implement-global-proxy/">Windows下用Proxifier实现全局代理</a></h2>
 
         
@@ -654,6 +594,67 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="http://wyb0.com/posts/2016/python-module-cmd/">Python的cmd模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-07-14
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于cmd模块 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+0x01 cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  0x02 用cmd模块简单实现shell命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot; def __init__(self): Cmd.__init__(self) os.chdir(&quot;C:/Users/WYB_9/Desktop&quot;) hostName = socket.gethostname() self.prompt = &quot;reber@&quot; + hostName + &quot; &quot; + os.path.abspath('.') + &quot;\n$ &quot; def help_dir(self): print &quot;dir [path]&quot; def do_dir(self, arg): if not arg: print &quot;\n&quot;.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-module-cmd/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -711,7 +712,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -721,7 +722,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/python" title="python">python(35)</a>
+                <a href="http://wyb0.com/topics/python" title="python">python(34)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -888,7 +889,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/python" title="python">python</a>
-                <sup>33</sup>
+                <sup>32</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -988,7 +989,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
-                <sup>5</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
