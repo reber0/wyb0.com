@@ -9,7 +9,7 @@ sidemenu = "true"
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:00
- * @LastEditTime: 2019-08-13 16:24:26
+ * @LastEditTime: 2019-09-26 12:17:56
  -->
 
 ### ID
@@ -29,11 +29,17 @@ sidemenu = "true"
 </div>
 
 ### About me
-- #### 网络安全爱好者
+- 不断学习
 
-- #### 不断学习 努力工作
+- 努力工作
+
+- 网络安全爱好者
 
 ### About this site
-* 从2015年5月6日开始陆续写博客
+* 从2015年5月份开始陆续写博客
 * 博客主要用于记录自己的一些学习笔记之类的东西，供自己学习参考使用
 * 博客部分内容是长时间积累的，所以来源难以查找，如果侵权请与我联系
+
+### About Reprinted
+* 只要在文章头部或尾部注明原文链接即可随意转载，如下：
+![70](/img/about_reprinted.jpg)
