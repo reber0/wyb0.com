@@ -7,6 +7,12 @@ title = "Linux下搭建Tomcat+MySQL+JSP"
 topics = ["Server"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-11-04 15:15:56
+ -->
 
 安装环境为：CentOS-6.5-x86_64-minimal
 
@@ -21,11 +27,16 @@ $ sudo yum install mysql mysql-server mysql-devel
 ![创建安装jdk和tomcat的文件夹.png](/img/post/mkdir_java_tomcat.png)
 
 2. 下载安装包并解压安装  
+
 jdk包可在[这里](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)下载  
+
 tomcat包可在[这里](http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz)下载
+
 ![下载tomcat安装包.png](/img/post/download_tomcat.png)
 ![复制解压后的安装包到/opt下对应目录.png](/img/post/cp_jdk_tomcat_to_opt.png)
+
 为java添加环境变量并设置命令链接符
+
 ```bash
 $ tail -n 3 /etc/profile
 export JAVA_HOME="/opt/jdk1.8.0_91"
