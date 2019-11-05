@@ -109,7 +109,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-07-30 23:27:54
- * @LastEditTime: 2019-07-31 22:42:25
+ * @LastEditTime: 2019-11-05 16:55:25
  -->
 
 <h3 id="0x00-对外提供简单的文件访问服务">0x00 对外提供简单的文件访问服务</h3>
@@ -300,13 +300,11 @@ local_port = 3389
 </code></pre>
 
 <ul>
-<li><p>本机(sk 要和客户端的 sk 一致)</p>
-
-<ul>
-<li>启动 frc client</li>
+<li>本机(sk 要和客户端的 sk 一致)</li>
 </ul>
 
-<blockquote>
+<p>启动 frc client</p>
+
 <pre><code class="language-ini">[23:47 reber@wyb at /opt/frp]
 ➜  cat frpc.ini
 [common]
@@ -322,21 +320,83 @@ bind_addr = 127.0.0.1
 bind_port = 3333
 </code></pre>
 
-<p><br></p>
-
 <pre><code>[23:47 reber@wyb at /opt/frp]
 ➜  ./frpc -c frpc.ini
 2019/07/30 23:48:01 [I] [service.go:221] login to server success, get run id [53c2545a4f53d070], server udp port [0]
 2019/07/30 23:48:01 [I] [visitor_manager.go:69] [secret_rdp_visitor] start visitor success
 2019/07/30 23:48:01 [I] [visitor_manager.go:112] visitor added: [secret_rdp_visitor]
 </code></pre>
-</blockquote>
+
+<p>然后使用软件连接本地的 3333 端口就连接上内网主机的 3389 了</p>
+
+<h3 id="0x03-socks5-代理">0x03 socks5 代理</h3>
 
 <ul>
-<li>连接内网主机的 3389 端口<br />
-使用软件连接本地的 3333 端口就连接上内网主机的 3389 了</li>
-</ul></li>
+<li>服务端</li>
 </ul>
+
+<pre><code class="language-ini">➜  frp cat frps.ini
+[common]
+bind_port = 7000
+allow_ports = 21-444,33333
+</code></pre>
+
+<pre><code>➜  frp ./frps -c frps.ini
+2019/11/05 16:30:51 [I] [service.go:139] frps tcp listen on 0.0.0.0:17001
+2019/11/05 16:30:51 [I] [root.go:204] Start frps success
+</code></pre>
+
+<ul>
+<li>客户端(添加 sk , 指定远程端口)</li>
+</ul>
+
+<pre><code class="language-ini">reber@ubuntu:~/frp$ cat frpc.ini
+[common]
+server_addr = 66.123.35.123
+server_port = 7000
+
+[socks5_proxy]
+type = stcp
+sk = Aa123456.
+remote_port = 443
+plugin = socks5
+</code></pre>
+
+<p>此时服务端接收到连接</p>
+
+<pre><code class="language-ini">➜  frp sudo ./frps -c frps.ini --log_file frps.log
+2019/11/05 16:46:32 [I] [service.go:139] frps tcp listen on 0.0.0.0:7000
+2019/11/05 16:46:32 [I] [root.go:204] Start frps success
+2019/11/05 16:46:35 [I] [service.go:349] client login info: ip [211.123.40.123:54189] version [0.27.1] hostname [] os [linux] arch [amd64]
+2019/11/05 16:46:35 [I] [stcp.go:34] [be5d3fd01f344cd5] [socks5_proxy] stcp proxy custom listen success
+2019/11/05 16:46:35 [I] [control.go:398] [be5d3fd01f344cd5] new proxy [socks5_proxy] success
+</code></pre>
+
+<ul>
+<li>本机(sk 要和客户端的 sk 一致)</li>
+</ul>
+
+<pre><code class="language-ini">➜  cat /opt/frp/frpc.ini
+[common]
+server_addr = 66.123.35.123
+server_port = 7000
+
+[socks5_proxy_visitor]
+type = stcp
+role = visitor
+server_name = socks5_proxy
+sk = Aa123456.
+bind_addr = 127.0.0.1
+bind_port = 3434
+</code></pre>
+
+<pre><code class="language-ini">➜  ./frpc -c frpc.ini
+2019/11/05 16:50:15 [I] [service.go:221] login to server success, get run id [7fa93545103f5e6c], server udp port [0]
+2019/11/05 16:50:15 [I] [visitor_manager.go:69] [socks5_proxy_visitor] start visitor success
+2019/11/05 16:50:15 [I] [visitor_manager.go:112] visitor added: [socks5_proxy_visitor]
+</code></pre>
+
+<p>执行后本机即可通过 3434 端口 socks5 到目标任意端口</p>
 
 <h3 id="0x03-点对点内网穿透">0x03 点对点内网穿透</h3>
 
