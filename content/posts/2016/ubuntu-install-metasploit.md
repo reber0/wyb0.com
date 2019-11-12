@@ -7,6 +7,12 @@ title = "Ubuntu下安装Metasploit"
 topics = ["Pentest"]
 
 +++
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:01
+ * @LastEditTime: 2019-11-12 13:38:57
+ -->
 
 ### 0x00 安装Metasploit
 * 下载msfinstall脚本
@@ -53,3 +59,6 @@ msf > db_status
 #构建完成后，退出Metasploit控制台，然后重新进入即可使用数据库缓存进行搜索模块
 msf > db_rebuild_cache
 ```
+
+### 0x02 Metasploit Cheat Sheet
+常见命令可以看下 [https://www.comparitech.com/net-admin/metasploit-cheat-sheet/](https://www.comparitech.com/net-admin/metasploit-cheat-sheet/?_blank)
