@@ -192,13 +192,13 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
     </item>
     
     <item>
-      <title>Python的optparse模块</title>
-      <link>http://wyb0.com/posts/2016/python-module-optparse/</link>
+      <title>Python 命令行参数解析</title>
+      <link>http://wyb0.com/posts/2016/python-parames-parse/</link>
       <pubDate>Tue, 16 Aug 2016 15:10:44 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/python-module-optparse/</guid>
-      <description> 0x00 关于optparse模块 python2.3之后添加的模块optparse是专门用来处理命令行选项的
-import optparse parser = optparse.OptionParser(usage=&#39;Usage: %prog [options] domaion&#39;, version=&#39;%prog 1.2&#39;) parser.add_option(&#39;-b&#39;, &#39;--bug&#39;, dest=&#39;isbug&#39;, default=False, action=&#39;store_true&#39;, help=&#39;Whether open the debug mode, default is false&#39;) parser.add_option(&#39;-u&#39;, &#39;--url&#39;, dest=&#39;url&#39;, default=None, action=&#39;store&#39;, type=&#39;string&#39;, help=&#39;target url&#39;) parser.add_option(&#39;-n&#39;,&#39;--number&#39;, dest=&#39;num&#39;, default=10, type=&#39;int&#39;, help=&#39;the number, default is 10&#39;) (options, args) = parser.parse_args() print options print args print options.url # parser.print_help() # show help message  0x01 说明 在输出帮助信息时%prog会被脚本名代替 -b和--bug作用一样，一个是短标签一个是长标签 dest：它是存储变量值的变量名 default：默认的值 type：值的类型，默认为string，可以不用写 action：有3种类型 默认action=&#39;store&#39;，可以不用写 action=&#39;store_true&#39;使用参数时将布尔值true存储到dest指定的变量中 action=&#39;store_false&#39;使用参数时将布尔值false存储到dest指定的变量中  </description>
+      <guid>http://wyb0.com/posts/2016/python-parames-parse/</guid>
+      <description>0x00 argparse 模块 参考 https://docs.python.org/zh-cn/3.7/library/argparse.html
+import argparse class Parser(object): &amp;quot;&amp;quot;&amp;quot;Parser&amp;quot;&amp;quot;&amp;quot; def __init__(self): super(Parser, self).__init__() self.service_type_list = [ &amp;quot;ssh&amp;quot;,&amp;quot;telnet&amp;quot;,&amp;quot;rlogin&amp;quot;,&amp;quot;ftp&amp;quot;, &amp;quot;mysql&amp;quot;,&amp;quot;mssql&amp;quot;,&amp;quot;oracle&amp;quot;,&amp;quot;pgsql&amp;quot;,&amp;quot;redis&amp;quot;,&amp;quot;mongodb&amp;quot;,&amp;quot;memcache&amp;quot;, &amp;quot;vnc&amp;quot;,&amp;quot;ldap&amp;quot;,&amp;quot;pop&amp;quot;,&amp;quot;rdp&amp;quot;,&amp;quot;smb&amp;quot;,&amp;quot;snmp&amp;quot;, ] self.log_level = [&amp;quot;debug&amp;quot;, &amp;quot;info&amp;quot;, &amp;quot;warning&amp;quot;, &amp;quot;error&amp;quot;, &amp;quot;critical&amp;quot;] self.example = &amp;quot;&amp;quot;&amp;quot;Example: \r python3 {} -s ssh -i 123.123.123.123 \r python3 {} -s ssh -i 123.123.123.123/24 -l root -p 123456&amp;quot;&amp;quot;&amp;quot; def parser(self): parser = argparse.ArgumentParser( formatter_class=argparse.RawDescriptionHelpFormatter,#使 example 可以换行 add_help=True, # description = &amp;quot;常见服务口令爆破&amp;quot;, ) parser.epilog = self.example.format(parser.prog,parser.prog) parser.add_argument(&amp;quot;-i&amp;quot;, dest=&amp;quot;host&amp;quot;, type=str, help=&amp;quot;Target ip&amp;quot;) parser.</description>
     </item>
     
     <item>
