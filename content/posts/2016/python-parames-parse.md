@@ -11,13 +11,16 @@ topics = ["Python"]
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-12-14 15:57:25
+ * @LastEditTime: 2019-12-14 16:17:08
  -->
 
 ### 0x00 argparse 模块
 参考 [https://docs.python.org/zh-cn/3.7/library/argparse.html](https://docs.python.org/zh-cn/3.7/library/argparse.html?_blank)
 
 ```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import argparse
 
 class Parser(object):
@@ -25,9 +28,8 @@ class Parser(object):
     def __init__(self):
         super(Parser, self).__init__()
         self.service_type_list = [
-            "ssh","telnet","rlogin","ftp",
-            "mysql","mssql","oracle","pgsql","redis","mongodb","memcache",
-            "vnc","ldap","pop","rdp","smb","snmp",
+            "ssh","telnet","ftp",
+            "mysql","mssql","oracle","pgsql","redis"
         ]
         self.log_level = ["debug", "info", "warning", "error", "critical"]
         self.example = """Example:
@@ -65,6 +67,7 @@ class Parser(object):
                             help="Timeout, default is 10s")
         parser.add_argument("-v", dest="log_level", type=str, default="info", 
                             choices=self.log_level, help="Log Level, default is 'info'")
+
         # args = parser.parse_args()
         # parser.print_help()
 
@@ -74,29 +77,32 @@ class Parser(object):
     def init():
         parser = Parser().parser()
         return parser
+
+
+if __name__ == "__main__":
+    parser = Parser().init()
+    args = parser.parse_args()
+    parser.print_help()
 ```
 
 ### 0x02 运行
 
 ```
-➜  python3 rsbrute.py
-usage: rsbrute.py [-h] [-i HOST] [-iL HOST_FILE] [-l USER] [-p PWD]
-                  [-lp USER_PWD_FILE] [-L USER_FILE] [-P PWD_FILE]
-                  [--port PORT] -s
-                  {ssh,telnet,rlogin,ftp,mysql,mssql,oracle,pgsql,redis,mongodb,memcache,vnc,ldap,pop,rdp,smb,snmp}
-                  [-t THREAD_NUM] [-T TIMEOUT]
-                  [-v {debug,info,warning,error,critical}]
-rsbrute.py: error: the following arguments are required: -s
+➜  python3 tmp.py
+usage: tmp.py [-h] [-i HOST] [-iL HOST_FILE] [-l USER] [-p PWD]
+              [-lp USER_PWD_FILE] [-L USER_FILE] [-P PWD_FILE] [--port PORT]
+              -s {ssh,telnet,ftp,mysql,mssql,oracle,pgsql,redis}
+              [-t THREAD_NUM] [-T TIMEOUT]
+              [-v {debug,info,warning,error,critical}]
+tmp.py: error: the following arguments are required: -s
 ```
-
 ```
-➜  python3 rsbrute.py -s ssh
-usage: rsbrute.py [-h] [-i HOST] [-iL HOST_FILE] [-l USER] [-p PWD]
-                  [-lp USER_PWD_FILE] [-L USER_FILE] [-P PWD_FILE]
-                  [--port PORT] -s
-                  {ssh,telnet,rlogin,ftp,mysql,mssql,oracle,pgsql,redis,mongodb,memcache,vnc,ldap,pop,rdp,smb,snmp}
-                  [-t THREAD_NUM] [-T TIMEOUT]
-                  [-v {debug,info,warning,error,critical}]
+➜  python3 tmp.py -s ssh
+usage: tmp.py [-h] [-i HOST] [-iL HOST_FILE] [-l USER] [-p PWD]
+              [-lp USER_PWD_FILE] [-L USER_FILE] [-P PWD_FILE] [--port PORT]
+              -s {ssh,telnet,ftp,mysql,mssql,oracle,pgsql,redis}
+              [-t THREAD_NUM] [-T TIMEOUT]
+              [-v {debug,info,warning,error,critical}]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -108,7 +114,7 @@ optional arguments:
   -L USER_FILE          username file
   -P PWD_FILE           password file
   --port PORT           Target port
-  -s {ssh,telnet,rlogin,ftp,mysql,mssql,oracle,pgsql,redis,mongodb,memcache,vnc,ldap,pop,rdp,smb,snmp}
+  -s {ssh,telnet,ftp,mysql,mssql,oracle,pgsql,redis}
                         Service type
   -t THREAD_NUM         The number of threads, default is 10 threads
   -T TIMEOUT            Timeout, default is 10s
@@ -116,6 +122,6 @@ optional arguments:
                         Log Level, default is 'info'
 
 Example:
-  python3 rsbrute.py -s ssh -i 123.123.123.123
-  python3 rsbrute.py -s ssh -i 123.123.123.123/24 -l root -p 123456
+  python3 tmp.py -s ssh -i 123.123.123.123
+  python3 tmp.py -s ssh -i 123.123.123.123/24 -l root -p 123456
 ```
