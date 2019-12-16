@@ -66,6 +66,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2016/use-blank-attribute-to-fish/">利用_blank属性钓鱼</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2016-10-12
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%92%93%E9%B1%BC">钓鱼</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 _blank _blank是html中的标签属性，如&lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt;, 但若点击HELLO打开的网页1.php中有如下代码：
+&lt;script&gt; if(window.opener){ window.opener.location = &quot;http://xss.reber-9.com/fish.html&quot;; } &lt;/script&gt;  则原网页将转跳到http://xss.reber-9.com/fish.html ，这就会造成钓鱼
+0x01 简单模板  a.html内容如下：  &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;Document&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt; &lt;/body&gt; &lt;/html&gt;   http://xss.reber-9.com/1.php中1.php内容如下：  &lt;html&gt; &lt;head&gt; &lt;title&gt;test&lt;/title&gt; &lt;script&gt; if(window.opener){ window.opener.location = &quot;http://xss.reber-9.com/fish.html&quot;; } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;p&gt;hello&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;   1.php同级下有个钓鱼模板fish.html，内容如下：  &lt;html&gt; &lt;head&gt; &lt;title&gt;fish&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;This is fishing template!&lt;/h2&gt; &lt;/body&gt; &lt;/html&gt;   点击a.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/use-blank-attribute-to-fish/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2016/principles/">准则</a></h2>
 
         
@@ -616,66 +676,6 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/python-module/">Python的模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-08-31
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append('D:/xx/xx/xx/code')可以添加搜索路径 使用if __name__ == '__main__':  0x01 实例  文件结构如下   测试文件test.py  #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.test()   包package1
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-module/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -733,7 +733,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(78)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -890,7 +890,7 @@ ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/pentest" title="pentest">pentest</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">

@@ -6,10 +6,23 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 Aug 2019 16:27:12 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 16 Dec 2019 09:23:47 +0800</lastBuildDate>
     
 	<atom:link href="http://wyb0.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>目录遍历利用</title>
+      <link>http://wyb0.com/posts/2019/a-directory-traversal-using-script/</link>
+      <pubDate>Mon, 16 Dec 2019 09:23:47 +0800</pubDate>
+      
+      <guid>http://wyb0.com/posts/2019/a-directory-traversal-using-script/</guid>
+      <description>0x00 目录遍历 一个同事说有一些目录遍历，想着能不能搞个脚本啥的，以后利用也方便，自己没有写出来，说让我看看
+一般来说存在目录遍历的话就是翻文件，看看有没有一些敏感信息、未授权接口之类的，一个个翻的话也确实比较麻烦
+而且 eWebEditor、FCKeditor 这种编辑器有些版本也存在目录遍历漏洞，能找的一些未授权访问也是好的
+以前写过一个爬网站链接的脚本，感觉可以在那个脚本的基础上改一下，改过后确实大致能用
+0x01 脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- &#39;&#39;&#39; @Author: reber @Mail: reber0ask@qq.com @Date: 2019-08-05 15:58:38 @LastEditTime: 2019-12-16 17:07:09 &#39;&#39;&#39; import asyncio import aiohttp from lxml import etree from urllib.parse import urljoin from urllib.parse import urlparse from urllib.parse import urlunsplit from pybloom_live import BloomFilter bf = BloomFilter(100000, 0.01) def is_repeat(ele): if ele in bf: return True #元素不一定在集合中 else: bf.add(ele) return False #元素一定不在集合中 class GetAllLink(object): &amp;quot;&amp;quot;&amp;quot;docstring for GetAllLink&amp;quot;&amp;quot;&amp;quot; def __init__(self, target, crawl_deepth, rate): super(GetAllLink, self).</description>
+    </item>
     
     <item>
       <title>PostgreSQL 简单使用</title>
