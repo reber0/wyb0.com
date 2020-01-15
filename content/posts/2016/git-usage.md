@@ -20,8 +20,23 @@ topics = ["Git"]
 git remote add origin git@github.com:reber-9/reber-9.com.git
 ```
 
-### 0x03 .gitignore文件
-![gitignore](/img/post/git_gitignore.png)
+### 0x03 忽略文件
+```
+$ cat .gitignore
+# 忽略 log 文件夹下的文件
+log/
+
+# 忽略 Thumbs.db 这个文件
+Thumbs.db
+
+# 忽略 .sql 结尾的文件
+data/*.sql
+```
+
+```
+# 忽略 config.py 这个文件的更新，即 config.py 的内容改变是 git add 不会添加 config.py
+$ git update-index --assume-unchanged config.py
+```
 
 ### 0x04 添加和提交和推送
 ![推送更改](/img/post/win_github_add_push_md.png)
