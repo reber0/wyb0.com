@@ -1,9 +1,3 @@
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:01
- * @LastEditTime : 2020-03-05 15:45:32
- -->
 +++
 date = "2016-08-06T08:36:53+08:00"
 description = ""
