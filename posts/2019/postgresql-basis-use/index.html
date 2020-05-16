@@ -109,7 +109,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-08-23 16:27:12
- * @LastEditTime: 2019-08-24 11:28:26
+ * @LastEditTime : 2020-05-16 21:39:37
  -->
 
 <h3 id="0x00-安装">0x00 安装</h3>
@@ -119,12 +119,14 @@
 ➜  source ~/.zshrc
 -- 初始化数据库
 ➜  initdb /usr/local/var/postgres
-➜  pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres/postgres.log start
--- 创建用户名数据库
-➜  createdb
+➜  pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start
 </code></pre>
 
 <h3 id="0x01-简单操作">0x01 简单操作</h3>
+
+<ul>
+<li>常用操作命令</li>
+</ul>
 
 <pre><code>reber=# \password #设置当前登录用户的密码
 reber=# \password [user_name] #设置其他用户的密码
@@ -140,142 +142,174 @@ reber=# \conninfo #列出当前数据库和连接的信息
 <li>连接数据库</li>
 </ul>
 
-<pre><code class="language-bash">➜  psql #psql连接数据库默认选用的是当前的系统用户
+<pre><code class="language-bash">➜  psql postgres #初始化数据库后会生成默认的数据库 postgres
 psql (11.4)
 Type &quot;help&quot; for help.
 
-reber=# \l #查看当前数据库情况
+postgres=# \l #查看当前数据库情况
                               List of databases
    Name    | Owner | Encoding |   Collate   |    Ctype    | Access privileges
 -----------+-------+----------+-------------+-------------+-------------------
  postgres  | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
- reber     | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
  template0 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
            |       |          |             |             | reber=CTc/reber
  template1 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
            |       |          |             |             | reber=CTc/reber
 (4 rows)
 
-reber=# \du #查看当前用户
+postgres=# \du #查看当前用户
                                    List of roles
  Role name |                         Attributes                         | Member of
 -----------+------------------------------------------------------------+-----------
  reber     | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+
+postgres=# \c
+You are now connected to database &quot;postgres&quot; as user &quot;reber&quot;.
+postgres=# \password
+Enter new password:
+Enter it again:
+postgres-# \q
 </code></pre>
 
 <ul>
-<li>删除自带的 postgres 数据库</li>
+<li>修改配置文件改端口</li>
 </ul>
 
-<pre><code>reber=# drop database postgres;
-DROP DATABASE
-reber=# \l
-                              List of databases
-   Name    | Owner | Encoding |   Collate   |    Ctype    | Access privileges
------------+-------+----------+-------------+-------------+-------------------
- reber     | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
- template0 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
-           |       |          |             |             | reber=CTc/reber
- template1 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
-           |       |          |             |             | reber=CTc/reber
-(3 rows)
+<p>vim /usr/local/var/postgres/postgresql.conf</p>
+
+<pre><code>port = 55432
+</code></pre>
+
+<ul>
+<li>修改配置文件使密码生效(METHOD 改为 md5)</li>
+</ul>
+
+<p>vim /usr/local/var/postgres/pg_hba.conf</p>
+
+<pre><code># TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# &quot;local&quot; is for Unix domain socket connections only
+local   all             all                                     md5
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     md5
+host    replication     all             127.0.0.1/32            md5
+host    replication     all             ::1/128                 md5
+</code></pre>
+
+<p>然后重启 pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log restart</p>
+
+<p>再次登录就会要求输入密码</p>
+
+<pre><code>➜  psql -d postgres -p 55432
+Password for user reber:
+psql (12.3)
+Type &quot;help&quot; for help.
+
+postgres=#
 </code></pre>
 
 <ul>
 <li>创建新用户</li>
 </ul>
 
-<pre><code>reber=# create user reber0ask with password '3eRa1kBg95D7';
+<pre><code>postgres=# create user reber0ask with password '3eRa1kBg95D7';
 CREATE ROLE
-reber-# \du
+postgres=# \du
                                    List of roles
  Role name |                         Attributes                         | Member of
 -----------+------------------------------------------------------------+-----------
  reber     | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
  reber0ask |                                                            | {}
+
+postgres=#
 </code></pre>
 
 <ul>
 <li>为新用户创建新数据库</li>
 </ul>
 
-<pre><code>reber=# create database mypgsql owner reber0ask;
+<pre><code>postgres=# create database rscan owner reber0ask;
 CREATE DATABASE
-reber=# \l
+postgres=# \l
                                 List of databases
    Name    |   Owner   | Encoding |   Collate   |    Ctype    | Access privileges
 -----------+-----------+----------+-------------+-------------+-------------------
- mypgsql   | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
- reber     | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ postgres  | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ rscan     | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
  template0 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
            |           |          |             |             | reber=CTc/reber
  template1 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
            |           |          |             |             | reber=CTc/reber
 (4 rows)
+
+postgres=#
 </code></pre>
 
 <ul>
 <li>将新数据库的所有权限都给用户</li>
 </ul>
 
-<pre><code>reber=# grant all privileges on database mypgsql to reber0ask;
+<pre><code>postgres=# grant all privileges on database rscan to reber0ask;
 GRANT
-reber=# \l
-                                   List of databases
-   Name    |   Owner   | Encoding |   Collate   |    Ctype    |    Access privileges
------------+-----------+----------+-------------+-------------+-------------------------
- mypgsql   | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =Tc/reber0ask          +
+postgres=# \l
+ postgres  | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ rscan     | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =Tc/reber0ask          +
            |           |          |             |             | reber0ask=CTc/reber0ask
- reber     | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
  template0 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber               +
            |           |          |             |             | reber=CTc/reber
  template1 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber               +
            |           |          |             |             | reber=CTc/reber
-(4 rows)
+
+postgres=#
 </code></pre>
 
 <ul>
 <li>给用户创建数据库的属性</li>
 </ul>
 
-<pre><code>reber=# alter role reber0ask createdb;
+<pre><code>postgres=# alter role reber0ask createdb;
 ALTER ROLE
-reber=# \du
+postgres=# \du
                                    List of roles
  Role name |                         Attributes                         | Member of
 -----------+------------------------------------------------------------+-----------
  reber     | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
  reber0ask | Create DB                                                  | {}
+
+postgres=#
 </code></pre>
 
-<ul>
-<li>以指定用户登陆并创建表</li>
-</ul>
+<h3 id="0x02-以指定用户登陆并创建表">0x02 以指定用户登陆并创建表</h3>
 
-<pre><code>➜  psql -U reber0ask -d mypgsql -h 127.0.0.1 -p 5432
+<pre><code>➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432
+Password for user reber0ask:
 psql (11.4)
 Type &quot;help&quot; for help.
 
-mypgsql=&gt; \l
-                                   List of databases
-   Name    |   Owner   | Encoding |   Collate   |    Ctype    |    Access privileges
------------+-----------+----------+-------------+-------------+-------------------------
- mypgsql   | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =Tc/reber0ask          +
-           |           |          |             |             | reber0ask=CTc/reber0ask
- reber     | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
- template0 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber               +
+rscan=&gt; \l
+                                List of databases
+   Name    |   Owner   | Encoding |   Collate   |    Ctype    | Access privileges
+-----------+-----------+----------+-------------+-------------+-------------------
+ postgres  | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ rscan     | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ template0 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
            |           |          |             |             | reber=CTc/reber
- template1 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber               +
+ template1 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
            |           |          |             |             | reber=CTc/reber
 (4 rows)
 
-mypgsql=&gt; create table msg(
-mypgsql(&gt; id serial primary key,
-mypgsql(&gt; title character varying(100),
-mypgsql(&gt; content character varying(2014)
-mypgsql(&gt; );
+rscan=&gt; create table msg(
+rscan(&gt; id serial primary key,
+rscan(&gt; title character varying(100),
+rscan(&gt; content character varying(2014)
+rscan(&gt; );
 CREATE TABLE
-mypgsql=&gt; \d
+rscan=&gt; \d
              List of relations
  Schema |    Name    |   Type   |   Owner
 --------+------------+----------+-----------
@@ -283,7 +317,7 @@ mypgsql=&gt; \d
  public | msg_id_seq | sequence | reber0ask
 (2 rows)
 
-mypgsql=&gt; \d msg;
+rscan=&gt; \d msg;
                                      Table &quot;public.msg&quot;
  Column  |          Type           | Collation | Nullable |             Default
 ---------+-------------------------+-----------+----------+---------------------------------
@@ -293,45 +327,62 @@ mypgsql=&gt; \d msg;
 Indexes:
     &quot;msg_pkey&quot; PRIMARY KEY, btree (id)
 
-mypgsql=&gt; insert into public.msg(title,content) values('hi','hello world!');
+rscan=&gt; insert into public.msg(title,content) values('hi','hello world!');
 INSERT 0 1
-mypgsql=&gt; select * from msg;
+rscan=&gt; select * from msg;
  id | title |   content
 ----+-------+--------------
   1 | hi    | hello world!
 (1 row)
 </code></pre>
 
-<h3 id="0x02-导入与导出">0x02 导入与导出</h3>
+<h3 id="0x03-导入与导出">0x03 导入与导出</h3>
 
 <ul>
 <li>导出</li>
 </ul>
 
-<pre><code>➜  pg_dump -U reber0ask mypgsql &gt; mypgsql.sql
-➜  ls -al mypgsql.sql
--rw-r--r--  1 reber  staff  1795  8 24 11:11 mypgsql.sql
+<pre><code>➜  pg_dump -d rscan -U reber0ask -h 127.0.0.1 -p 55432  &gt; rscan.sql
+Password:
+➜  ls -al rscan.sql
+-rw-r--r--@ 1 reber  staff  15045  5 16 20:54 rscan.sql
 </code></pre>
 
 <ul>
 <li>导入</li>
 </ul>
 
-<pre><code>➜  psql -U reber0ask -d mypgsql -h 127.0.0.1 -p 5432
-psql (11.4)
+<pre><code>➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432
+Password for user reber0ask:
+psql (12.3)
 Type &quot;help&quot; for help.
 
-mypgsql=&gt; \c reber
-You are now connected to database &quot;reber&quot; as user &quot;reber0ask&quot;.
-reber=&gt; drop database mypgsql;
+rscan=&gt; \c postgres
+You are now connected to database &quot;postgres&quot; as user &quot;reber0ask&quot;.
+postgres=&gt; drop database rscan;
+ERROR:  database &quot;rscan&quot; is being accessed by other users
+DETAIL:  There is 1 other session using the database.
+postgres=&gt; revoke connect on database rscan from public;
+REVOKE
+postgres=&gt; select pg_terminate_backend(pg_stat_activity.pid)
+postgres-&gt; from pg_stat_activity
+postgres-&gt; where pg_stat_activity.datname = 'rscan';
+ pg_terminate_backend
+----------------------
+ t
+(1 row)
+
+postgres=&gt; drop database rscan;
 DROP DATABASE
-reber=&gt; create database mypgsql;
+
+postgres=&gt; create database rscan;
 CREATE DATABASE
-reber=&gt; \q
-➜  psql -U reber0ask -d mypgsql -h 127.0.0.1 -p 5432 -f mypgsql.sql
+
+postgres=&gt; \q
+➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432 -f rscan.sql
 </code></pre>
 
-<h3 id="0x03-允许远程连接数据库">0x03 允许远程连接数据库</h3>
+<h3 id="0x04-允许远程连接数据库">0x04 允许远程连接数据库</h3>
 
 <pre><code>➜  vim  /usr/local/var/postgres/postgresql.conf
 listen_addresses = '*'
@@ -340,7 +391,7 @@ listen_addresses = '*'
 host  all  all 0.0.0.0/0 md5
 </code></pre>
 
-<h3 id="0x04-python-简单连接">0x04 python 简单连接</h3>
+<h3 id="0x05-python-简单连接">0x05 python 简单连接</h3>
 
 <pre><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -412,7 +463,7 @@ class PgSQLX(object):
 
 
 if __name__ == '__main__':
-    pgsql_uri = &quot;postgresql://reber:3eRa1kBg95D7@59.108.123.123:5432/postgres&quot;
+    pgsql_uri = &quot;postgresql://reber0ask:3eRa1kBg95D7@192.168.3.19:55432/rscan&quot;
     sqlconn = PgSQLX(pgsql_uri)
     result = sqlconn.query(&quot;select * from msg where id=%s&quot;,(id,))
     print(result)
