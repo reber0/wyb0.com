@@ -11,7 +11,7 @@ topics = ["Linux", "Server"]
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-08-28 09:34:41
+ * @LastEditTime : 2020-07-21 16:18:05
  -->
 
 ### 0x00 环境
@@ -109,6 +109,34 @@ mysql：
     mysql_close($link);
 ?>
 ```
+
+* 禁止远程连接
+
+```
+mysql> use mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> update user set host='%' where user='root';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select host,user from user;
++-----------+------------------+
+| host      | user             |
++-----------+------------------+
+| %         | root             |
+| localhost | debian-sys-maint |
+| localhost | mysql.session    |
+| localhost | mysql.sys        |
++-----------+------------------+
+4 rows in set (0.00 sec)
+```
+
  
 ### 0x05 管理开机自启
 ```
