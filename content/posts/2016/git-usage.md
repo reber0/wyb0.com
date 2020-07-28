@@ -9,10 +9,14 @@ topics = ["Git"]
 +++
 
 ### 0x00 创建仓库
-![创建仓库](/img/post/git_init.png)
+```
+git init
+```
 
 ### 0x01 克隆
-![git克隆](/img/post/git_clone.png)
+```
+git clone git@github.com:reber0/wyb0.com.git
+```
 
 ### 0x02 仓库连接到远程服务器
 ```
@@ -39,7 +43,11 @@ $ git update-index --assume-unchanged config.py
 ```
 
 ### 0x04 添加和提交和推送
-![推送更改](/img/post/win_github_add_push_md.png)
+```
+git add a.txt
+git commit -m "add file a.txt"
+git push origin master
+```
 
 ### 0x05 分支
 * 切换分支后，分支的更改不会影响原来分支，
