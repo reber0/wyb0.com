@@ -67,6 +67,10 @@ git log查看commit的id
 git reset --hard commit_id  # 若未push,可回到上个commit处
 
 git revert HEAD # 若push后,可撤销前一次 commit 
+
+1.若用的 rm 删除文件，那就相当于只删除了工作区的文件，直接用git checkout -- <file>即可恢复
+2.若用 git rm 删除文件，则删除文件的同时且操作被添加到了暂存区，即暂存区的文件也被删了，需要先 git reset HEAD <file>，然后再 git checkout -- <file> 恢复
+3.若先用了 git rm，而且 git commit 了，那只能 git reset --hard HEAD^ 恢复，或者 git reset --hard <add 时的 id>
 ```
 
 ### 0x09 多用户
