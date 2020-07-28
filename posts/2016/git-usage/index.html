@@ -168,14 +168,28 @@ git merge test 可以将test分支的改动合并到当前分支
 
 <h3 id="0x08-撤回">0x08 撤回</h3>
 
-<pre><code>git reset HEAD  # 上一次add的文件全部撤销
+<ul>
+<li><p>撤销 add</p>
 
-git log查看commit的id  
-git reset --hard commit_id  # 若未push,可回到上个commit处
+<pre><code class="language-bash">git reset HEAD  # 上一次add的文件全部撤销
+git reset HEAD 1.txt  # 撤销 add 的 1.txt
+</code></pre></li>
 
-git revert HEAD # 若push后,可撤销前一次 commit 
+<li><p>查看 commit id</p>
 
-1.若用的 rm 删除文件，那就相当于只删除了工作区的文件，直接用git checkout -- &lt;file&gt;即可恢复
+<pre><code>git log # 查看 commit 的 id  
+git reflog # 查看 commit 的 id  
+</code></pre></li>
+
+<li><p>回退</p>
+
+<pre><code>git revert HEAD # 若push后,可撤销前一次 commit 
+</code></pre></li>
+
+<li><p>文件恢复</p></li>
+</ul>
+
+<pre><code>1.若用的 rm 删除文件，那就相当于只删除了工作区的文件，直接用git checkout -- &lt;file&gt;即可恢复
 2.若用 git rm 删除文件，则删除文件的同时且操作被添加到了暂存区，即暂存区的文件也被删了，需要先 git reset HEAD &lt;file&gt;，然后再 git checkout -- &lt;file&gt; 恢复
 3.若先用了 git rm，而且 git commit 了，那只能 git reset --hard HEAD^ 恢复，或者 git reset --hard &lt;add 时的 id&gt;
 </code></pre>
