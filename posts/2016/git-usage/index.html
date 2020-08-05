@@ -181,10 +181,59 @@ git reset HEAD 1.txt  # 撤销 add 的 1.txt
 git reflog # 查看 commit 的 id  
 </code></pre></li>
 
-<li><p>回退</p>
+<li><p>删除 commit 历史记录</p>
 
-<pre><code>git revert HEAD # 若push后,可撤销前一次 commit 
-</code></pre></li>
+<blockquote>
+<p>比如不小心在 add aa.py 这个操作里提交了密码</p>
+</blockquote>
+
+<ul>
+<li>查看 log: git log &ndash;pretty=oneline &ndash;abbrev-commit</li>
+</ul>
+
+<blockquote>
+<pre><code>36dd82f (HEAD -&gt; master, origin/master, origin/HEAD) add main.py
+048715f add aa.py
+0551909 add 123.txt
+fb13042 add test.txt
+f7c2baa Initial commit
+(END)
+</code></pre>
+
+<p>得到前一个 commit 的 id，即 add 123.txt 操作的 id 0551909</p>
+</blockquote>
+
+<ul>
+<li>变基，删除 log: git rebase -i 0551909
+<br /></li>
+</ul>
+
+<blockquote>
+<p>将</p>
+
+<pre><code>1 pick 048715f add aa.py
+2 pick 36dd82f add main.py
+</code></pre>
+
+<p>改为</p>
+
+<pre><code>1 drop 048715f add aa.py
+2 pick 36dd82f add main.py
+</code></pre>
+</blockquote>
+
+<ul>
+<li>强制推送 git push -f origin master，此时 add aa.py 这个历史 commit 就没有了</li>
+</ul>
+
+<blockquote>
+<pre><code>c695a20 (HEAD -&gt; master, origin/master, origin/HEAD) add main.py
+0551909 add 123.txt
+fb13042 add test.txt
+f7c2baa Initial commit
+(END)
+</code></pre>
+</blockquote></li>
 
 <li><p>文件恢复</p></li>
 </ul>
