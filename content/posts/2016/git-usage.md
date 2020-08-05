@@ -81,10 +81,47 @@ git log # 查看 commit 的 id
 git reflog # 查看 commit 的 id  
 ```
 
-* 回退
-```
-git revert HEAD # 若push后,可撤销前一次 commit 
-```
+* 删除 commit 历史记录
+
+    > 比如不小心在 add aa.py 这个操作里提交了密码
+
+    * 查看 log: git log --pretty=oneline --abbrev-commit
+
+    > ```
+    36dd82f (HEAD -> master, origin/master, origin/HEAD) add main.py
+    048715f add aa.py
+    0551909 add 123.txt
+    fb13042 add test.txt
+    f7c2baa Initial commit
+    (END)
+    ```
+    得到前一个 commit 的 id，即 add 123.txt 操作的 id 0551909
+
+    * 变基，删除 log: git rebase -i 0551909
+    
+    > 将
+
+    > ```
+    1 pick 048715f add aa.py
+    2 pick 36dd82f add main.py
+    ```
+
+    > 改为
+
+    > ```
+    1 drop 048715f add aa.py
+    2 pick 36dd82f add main.py
+    ```
+
+    * 强制推送 git push -f origin master，此时 add aa.py 这个历史 commit 就没有了
+
+    > ```
+    c695a20 (HEAD -> master, origin/master, origin/HEAD) add main.py
+    0551909 add 123.txt
+    fb13042 add test.txt
+    f7c2baa Initial commit
+    (END)
+    ```
 
 * 文件恢复
 
