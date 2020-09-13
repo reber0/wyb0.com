@@ -66,6 +66,60 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="http://wyb0.com/posts/2017/301-redirect/">301重定向</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    
+                        2017-02-07
+                    
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/%E9%87%8D%E5%AE%9A%E5%90%91">重定向</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 目的 由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上， 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301 服务器环境：Ubuntu 14.04.5、Apache2  0x01 开启rewrite模块 $ sudo a2enmod rewrite  0x02 根目录下新建.htaccess： Options +FollowSymLinks RewriteEngine on RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301] # 这里换上新域名  0x03 修改配置文件 # AllowOverride None 改为AllowOverride All $ sudo vim /etc/apache2/apache2.conf &lt;Directory /var/www/&gt; Options FollowSymLinks AllowOverride All Require all granted &lt;/Directory&gt;  0x04 重启Apache $ sudo /etc/init.d/apache2 restart  
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="http://wyb0.com/posts/2017/ubuntu-set-up-gitlab/">Ubuntu下部署Gitlab</a></h2>
 
         
@@ -622,64 +676,6 @@ CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 S
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="http://wyb0.com/posts/2016/code-execution-vulnerabilities-2/">代码执行漏洞(二)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    
-                        2016-10-14
-                    
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="http://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="http://wyb0.com/tags/rce">rce</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         接着上一篇：代码执行漏洞(一) 0x00 函数create_function() php中的函数create_function()可以创建一个匿名函数，其函数原型如下：
-string create_function ( string $args , string $code ) 其中$args是函数的参数，$code是函数的内容  若对提交的code未过滤或过滤不当则可能会导致代码执行漏洞
-0x01 示例 示例a.php代码如下：
-&lt;?php $test = @$_GET['test']; $newfun = create_function('$a,$b', $test); $newfun('1111','2222'); ?&gt; 上述代码中$nuwfun('1111','2222')代表此时$a='1111',$b='2222',然后将其传给$test  0x02 函数assert() 这个函数和eval()的作用差不多
-&lt;?php @assert($_GET['str']); ?&gt;  
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -737,7 +733,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(79)</a>
+                <a href="http://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -844,7 +840,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <p style="display:inline-block;">
                 <a href="http://wyb0.com/tags/injection" title="injection">injection</a>
-                <sup>17</sup>
+                <sup>18</sup>
             </p>
         
             <p style="display:inline-block;">
