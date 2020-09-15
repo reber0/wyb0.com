@@ -2,7 +2,7 @@
 date = "2018-04-16T19:16:14+08:00"
 description = "thinkphp的where函数可以接收字符串和数组，接收字符串时就可能存在注入，还是使用数组来传值吧。。。"
 draft = false
-tags = ["injection"]
+tags = ["injection", "代码审计"]
 title = "ThinkPHP5的where函数"
 topics = ["Pentest","PHP"]
 
