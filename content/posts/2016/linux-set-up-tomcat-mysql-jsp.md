@@ -7,12 +7,6 @@ title = "Linux下搭建Tomcat+MySQL+JSP"
 topics = ["Server"]
 
 +++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-11-04 15:15:56
- -->
 
 安装环境为：CentOS-6.5-x86_64-minimal
 
@@ -41,7 +35,7 @@ tomcat包可在[这里](http://mirrors.cnnic.cn/apache/tomcat/tomcat-8/v8.0.36/b
 $ tail -n 3 /etc/profile
 export JAVA_HOME="/opt/jdk1.8.0_91"
 export CLASSPATH=.:$JAVA_HOME/lib
-export PATH=$JAVA_BIN/bin:$PATH
+export PATH=$JAVA_HOME/bin:$PATH
 
 $ sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_91/bin/java 1
 $ sudo update-alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_91/bin/javac 1
