@@ -1,5 +1,5 @@
 +++
-title = "内网渗透之Responder与Net-NTML hash"
+title = "内网渗透之Responder与Net-NTLM hash"
 topics = ["Pentest"]
 tags = ["intranet"]
 description = "获取windows的hash"
@@ -9,7 +9,7 @@ draft = false
 
 ### 0x00 一些概念
 * Windows认证协议  
-分为：基于NTML的认证和基于kerberos的认证
+分为：基于NTLM的认证和基于kerberos的认证
 
 * 什么是NTLM Hash？  
 早期IBM设计的LM Hash算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即NTLM Hash
