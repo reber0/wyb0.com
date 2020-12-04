@@ -20,9 +20,9 @@ draft = false
     * Client收到Challenge后将密码hash和challenge混合hash，混合后的hash称为response，然后将challenge、response和username发送给Server
     * Server将收到的3个值转发给DC，然后DC根据传过来的username到域控的账号数据库ntds.list找到对应的密码hash，将hash和Client传过来的challenge混合hash，将这个混合hash与Client传过来的response进行对比验证
 
-* NTLM Hash与Net-NTLM Hash
-    * NTLM Hash通常是指Windows系统下Security Account Manager中保存的用户密码hash，通常可从Windows系统中的SAM文件和域控的NTDS.dit文件中获得所有用户的hash（比如用Mimikatz提取），“挑战/响应验证”中的用户名及密码hash就是NTLM Hash
-    * Net-NTLM Hash通常是指网络环境下NTLM认证中的hash，“挑战/响应验证”中的response中包含Net-NTLM hash，用Responder抓取的就是Net-NTLM Hash
+* NTLM Hash 与 Net-NTLM Hash
+    * NTLM Hash 通常是指 Windows 系统下 Security Account Manager 中保存的用户密码 hash，通常可从 Windows 系统中的 SAM 文件和域控的 NTDS.dit 文件中获得所有用户的 hash（比如用Mimikatz提取），“挑战/响应验证”中的用户名及密码 hash 就是NTLM Hash，可以用来进行 PTH 攻击(NTLM 中继攻击)
+    * Net-NTLM Hash 通常是指网络环境下 NTLM 认证中的 hash，“挑战/响应验证”中的 response 中包含 Net-NTLM hash，用Responder抓取的就是 Net-NTLM Hash，可以用来做中间人攻击
 
 * 关于Responder  
 由Laurent Gaffie撰写的 Responder 是迄今为止，在每个渗透测试人员用于窃取不同形式的证书（包括Net-NTLM hash）的最受欢迎的工具。它通过设置几个模拟的恶意守护进程（如SQL服务器，FTP，HTTP和SMB服务器等）来直接提示凭据或模拟质询 – 响应验证过程并捕获客户端发送的必要 hash。Responder也有能力攻击LLMNR，NBT-NS和mDNS等协议。
