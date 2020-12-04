@@ -123,11 +123,11 @@
 <li>Server将收到的3个值转发给DC，然后DC根据传过来的username到域控的账号数据库ntds.list找到对应的密码hash，将hash和Client传过来的challenge混合hash，将这个混合hash与Client传过来的response进行对比验证</li>
 </ul></li>
 
-<li><p>NTLM Hash与Net-NTLM Hash</p>
+<li><p>NTLM Hash 与 Net-NTLM Hash</p>
 
 <ul>
-<li>NTLM Hash通常是指Windows系统下Security Account Manager中保存的用户密码hash，通常可从Windows系统中的SAM文件和域控的NTDS.dit文件中获得所有用户的hash（比如用Mimikatz提取），“挑战/响应验证”中的用户名及密码hash就是NTLM Hash</li>
-<li>Net-NTLM Hash通常是指网络环境下NTLM认证中的hash，“挑战/响应验证”中的response中包含Net-NTLM hash，用Responder抓取的就是Net-NTLM Hash</li>
+<li>NTLM Hash 通常是指 Windows 系统下 Security Account Manager 中保存的用户密码 hash，通常可从 Windows 系统中的 SAM 文件和域控的 NTDS.dit 文件中获得所有用户的 hash（比如用Mimikatz提取），“挑战/响应验证”中的用户名及密码 hash 就是NTLM Hash，可以用来进行 PTH 攻击(NTLM 中继攻击)</li>
+<li>Net-NTLM Hash 通常是指网络环境下 NTLM 认证中的 hash，“挑战/响应验证”中的 response 中包含 Net-NTLM hash，用Responder抓取的就是 Net-NTLM Hash，可以用来做中间人攻击</li>
 </ul></li>
 
 <li><p>关于Responder<br />
