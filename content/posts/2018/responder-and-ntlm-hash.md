@@ -2,7 +2,7 @@
 title = "内网渗透之 Responder 与 Net-NTLM hash"
 topics = ["Pentest"]
 tags = ["intranet"]
-description = "获取windows的hash"
+description = "在内网中利用 Responder 这个工具获取 Net-NTLM hash"
 date = "2018-09-10T09:48:10+08:00"
 draft = false
 +++
