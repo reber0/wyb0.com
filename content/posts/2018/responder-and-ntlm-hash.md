@@ -97,7 +97,7 @@ netcfg.exe -l \\host\share -c p -i foo
 * 通过文件包含获取(获取到的是 Administrator 的 hash)
 ![90](/img/post/Xnip2020-12-11_11-39-10.png)
 
-* 通过 XSS 获取(获取到的是 zhangsan 的 hash)
+* 通过 XSS 获取(获取到的是 zhangsan 的 hash)(只有 IE 和 edge 能行)
 ![80](/img/post/Xnip2020-12-11_11-46-56.png)
 
 ### 0x04 WPAD 代理服务器抓取 Net-NTLM hash
@@ -267,4 +267,5 @@ C:\Windows\system32\:#
 * [https://osandamalith.com/2017/03/24/places-of-interest-in-stealing-netntlm-hashes](https://osandamalith.com/2017/03/24/places-of-interest-in-stealing-netntlm-hashes?_blank)
 * [https://medium.com/@canavaroxum/xxe-on-windows-system-then-what-76d571d66745](https://medium.com/@canavaroxum/xxe-on-windows-system-then-what-76d571d66745?_blank)
 * [https://www.anquanke.com/post/id/85004](https://www.anquanke.com/post/id/85004?_blank)
+* [https://www.anquanke.com/post/id/193493](https://www.anquanke.com/post/id/193493)
 * [https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going](https://www.phillips321.co.uk/2016/07/09/hashcat-on-os-x-getting-it-going?_blank)
