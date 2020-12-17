@@ -85,7 +85,7 @@ git reflog # 查看 commit 的 id
 
     > 比如不小心在 add aa.py 这个操作里提交了密码
 
-    * 查看 log: git log --pretty=oneline --abbrev-commit
+    * 查看 log: `git log --pretty=oneline --abbrev-commit`
 
     > ```
     36dd82f (HEAD -> master, origin/master, origin/HEAD) add main.py
