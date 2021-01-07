@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>linux on </title>
-    <link>http://wyb0.com/tags/linux/</link>
+    <link>https://wyb0.com/tags/linux/</link>
     <description>Recent content in linux on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 19 May 2017 16:51:11 +0800</lastBuildDate>
     
-	<atom:link href="http://wyb0.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wyb0.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Mac基础设置</title>
-      <link>http://wyb0.com/posts/2017/mac-basic-use/</link>
+      <link>https://wyb0.com/posts/2017/mac-basic-use/</link>
       <pubDate>Fri, 19 May 2017 16:51:11 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2017/mac-basic-use/</guid>
+      <guid>https://wyb0.com/posts/2017/mac-basic-use/</guid>
       <description>macOS Sierra 10.12.6
 0x00 安装brew $ /usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;  0x01 安装wget $ brew install wget  0x02 安装oh-my-zsh $ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh $ cat /etc/shells #查看当前有什么shell $ which zsh #查看zsh路径 $ chsh -s /bin/zsh #切换shell为zsh $ vim ~/.zshrc添加alias c=&#39;clear&#39;  0x03 换源 # 对于zsh用户换源 $ echo &#39;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles&#39; &amp;gt;&amp;gt; ~/.zshrc $ source ~/.zshrc $ brew update  0x04 安装scroll-reverser  去http://pilotmoon.com/scrollreverser下载
  0x05 安装java环境  去Oracle官网下载jre然后安装</description>
@@ -24,10 +24,10 @@
     
     <item>
       <title>Linux之文本处理软件awk</title>
-      <link>http://wyb0.com/posts/2016/linux-text-processing-software-awk/</link>
+      <link>https://wyb0.com/posts/2016/linux-text-processing-software-awk/</link>
       <pubDate>Wed, 20 Apr 2016 15:54:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-text-processing-software-awk/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-text-processing-software-awk/</guid>
       <description>awk默认是以行为单位处理文本的，对文本中的每一行都执行后面 &amp;ldquo;{ }&amp;rdquo; 中的语句。
 0x00 awk  若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：
 xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 aaaa cccc 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv  要求：
@@ -36,10 +36,10 @@ xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 
     
     <item>
       <title>Linux之文本处理</title>
-      <link>http://wyb0.com/posts/2016/linux-text-processing/</link>
+      <link>https://wyb0.com/posts/2016/linux-text-processing/</link>
       <pubDate>Wed, 20 Apr 2016 07:58:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-text-processing/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-text-processing/</guid>
       <description>这里介绍3种方式：awk、grep、sed
 0x00 awk处理文本(最常用) 作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化 awk命令格式：awk [F filed-separator] &#39;commands&#39; input-fiel(s) 参数-F：可以添加任意的分割符，比较重要 awk工作流程是这样的： 读入有&#39;\n&#39;换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&amp;quot;空白键&amp;quot; 或 &amp;quot;[tab]键&amp;quot;。   入门示例：
 [wyb@localhost temp]$ head -n 5 /etc/passwd root:x:0:0:root:/root:/bin/bash bin:x:1:1:bin:/bin:/sbin/nologin daemon:x:2:2:daemon:/sbin:/sbin/nologin adm:x:3:4:adm:/var/adm:/sbin/nologin lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F &#39;:&#39; &#39;{print $1}&#39; #输出第1列，域分隔符为： root bin daemon adm lp [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F &#39;:&#39; &#39;{pri nt &amp;quot;id:&amp;quot;$1&amp;quot;\tshell:&amp;quot;$7}&#39; #输出第1、7列且给予列名 id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin [wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F &#39;:&#39; &#39;BEGIN {print &amp;quot;====begin=====&amp;quot;} {print &amp;quot;id:&amp;quot;$1&amp;quot;\tshell:&amp;quot;$7} END {print &amp;quot;====end====&amp;quot;}&#39; ====begin===== id:root shell:/bin/bash id:bin shell:/sbin/nologin id:daemon shell:/sbin/nologin id:adm shell:/sbin/nologin id:lp shell:/sbin/nologin ====end==== [wyb@localhost temp]$ awk -F: &#39;/root/&#39; /etc/passwd #搜索含有root关键字的所有行 root:x:0:0:root:/root:/bin/bash operator:x:11:0:operator:/root:/sbin/nologin [wyb@localhost temp]$ awk -F: &#39;/root/{print $7}&#39; /etc/passwd #匹配root并输出对应shell /bin/bash /sbin/nologin [wyb@localhost temp]$ awk -F: &#39;/^root/&#39; /etc/passwd #匹配以root开头的行 root:x:0:0:root:/root:/bin/bash  内置变量：   ARGC&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;命令行参数个数 ARGV&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;命令行参数排列 ENVIRON&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;支持队列中系统环境变量的使用 FILENAME&amp;nbsp;&amp;nbsp;&amp;nbsp;awk浏览的文件名 FNR&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;浏览文件的记录数 FS&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;设置输入域分隔符，等价于命令行 -F选项 NF&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;浏览记录的域的个数 NR&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;已读的记录数 OFS&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;输出域分隔符 ORS&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;输出记录分隔符 RS&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;控制记录分隔符</description>
@@ -47,20 +47,20 @@ xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 
     
     <item>
       <title>Linux之安装ettercap</title>
-      <link>http://wyb0.com/posts/2016/linux-install-ettercap/</link>
+      <link>https://wyb0.com/posts/2016/linux-install-ettercap/</link>
       <pubDate>Tue, 19 Apr 2016 20:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-install-ettercap/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-install-ettercap/</guid>
       <description>0x00 准备 操作系统：CentOS 首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了 执行：sudo yum groupinstall &amp;quot;Development tools&amp;quot; #源码安装软件就需要安装这个 使用wget下载ettercap源码  0x01 查看需要的依赖项 [wyb@localhost ettercap-0.8.2]$ vim INSTALL #### Bundled libraries Ettercap now bundles the following libraries with the source distribution: libnet 1.1.6 curl 7.41.0 luajit 2.0.3 check 0.9.14 [wyb@localhost ettercap-0.8.2]$ cd bundled_deps/ [wyb@localhost bundled_deps]$ ls check curl libnet luajit  0x02 安装依赖包  安装check
 [wyb@localhost check]$ cd check-0.9.14 [wyb@localhost check-0.9.14]$ ls [wyb@localhost check-0.9.14]$ ./configure [wyb@localhost check-0.9.14]$ make [wyb@localhost check-0.</description>
     </item>
     
     <item>
       <title>Linux之软件的安装</title>
-      <link>http://wyb0.com/posts/2016/linux-software-installation/</link>
+      <link>https://wyb0.com/posts/2016/linux-software-installation/</link>
       <pubDate>Tue, 19 Apr 2016 19:07:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-software-installation/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-software-installation/</guid>
       <description>Linux上的软件安装可以分为三种方式：
 0x00 yum安装 yum基于RPM包管理，一次性安装所有依赖包，提供了查找、安装、删除一个、一组 至全部软件包的命令，配置文件在/etc/yum.repos.d/下 主要命令： yum install gcc g++ yum remove wget yum list installed //显示已经安装过的软件 yum list //显示所有可以安装的包  
 [wyb@localhost ~]$ wget -h //验证有没有安装wget -bash: /usr/bin/wget: No such file or directory [wyb@localhost ~]$ sudo yum search wget //通过yum查找wget，看有没有这个软件包 Loaded plugins: fastestmirror, refresh-packagekit, security Loading mirror speeds from cached hostfile * base: mirrors.yun-idc.com * extras: mirrors.pubyun.com * updates: mirrors.yun-idc.com ============================== N/S Matched: wget =============================== wget.x86_64 : A utility for retrieving files using the HTTP or FTP protocols Name and summary matches only, use &amp;quot;search all&amp;quot; for everything.</description>
@@ -68,19 +68,19 @@ xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 
     
     <item>
       <title>Linux之基础命令</title>
-      <link>http://wyb0.com/posts/2016/linux-basic-command/</link>
+      <link>https://wyb0.com/posts/2016/linux-basic-command/</link>
       <pubDate>Tue, 19 Apr 2016 10:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-basic-command/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-basic-command/</guid>
       <description>0x00 ls：显示文件 [wyb@localhost tmp]$ ls a a.txt [wyb@localhost tmp]$ ls -l total 4 drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--. 1 wyb root 0 Apr 17 18:23 a.txt [wyb@localhost tmp]$ ls -a . .. a a.txt .esd-500 .ICE-unix [wyb@localhost tmp]$ ls -al total 20 drwxrwxrwt. 5 root root 4096 Apr 17 18:23 . dr-xr-xr-x. 22 root root 4096 Apr 17 16:31 .. drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--.</description>
     </item>
     
     <item>
       <title>Linux之服务和计划任务</title>
-      <link>http://wyb0.com/posts/2016/linux-service-and-planning-tasks/</link>
+      <link>https://wyb0.com/posts/2016/linux-service-and-planning-tasks/</link>
       <pubDate>Tue, 19 Apr 2016 10:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-service-and-planning-tasks/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-service-and-planning-tasks/</guid>
       <description>0x00 服务： 在后台运行的软件就叫服务，参数一般为：start/stop/restart
  apache启动后默认降权
 service httpd start实际调用的是/etc/init.d/httpd这个shell脚本 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d [wyb@localhost ~]$ ls -al /etc/init.d lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&amp;gt; rc.d/init.d  添加服务
@@ -94,10 +94,10 @@ cron每分钟醒来依次查看当前是否有需要运行的命令，最小单�
     
     <item>
       <title>Linux之用户和用户组</title>
-      <link>http://wyb0.com/posts/2016/linux-user/</link>
+      <link>https://wyb0.com/posts/2016/linux-user/</link>
       <pubDate>Sun, 17 Apr 2016 20:48:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-user/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-user/</guid>
       <description> 0x01 新建用户 环境：Ubuntu 14.04.4
  Step1：添加新用户
 useradd -r -m -s /bin/bash 用户名
@@ -113,20 +113,20 @@ visudo
     
     <item>
       <title>Linux之网络配置</title>
-      <link>http://wyb0.com/posts/2016/linux-network-configuration/</link>
+      <link>https://wyb0.com/posts/2016/linux-network-configuration/</link>
       <pubDate>Sun, 17 Apr 2016 17:58:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-network-configuration/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-network-configuration/</guid>
       <description>0x00 第一种方法 1. 启动网卡： $ ifconfig eth0 up/down 2. 配置ip： $ ifconfig eth0 192.168.22.231 netmask 255.255.255.0 3. 配置网关： $ route add default gw 192.168.22.1 4. 配DNS： $ vim /etc/resolv.conf $ echo &amp;quot;nameserver 114.114.114.114&amp;quot; &amp;gt; /etc/resolv.cof 5. 重启网络使配置生效： 6. 用文件配置ip信息 $ /etc/sysconfig/network-scripts/ifcfg-eth0 ps:添加静态路由 route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3 //添加静态路由添加网络10.211.55.0，从eth0出去  0x01 第二种方法 打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:
 DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  0x02 打开ip转发 echo &amp;quot;1&amp;quot; &amp;gt;&amp;gt; /proc/sys/net/ipv4/ip_forward 或者vim /etc/sysctl.</description>
     </item>
     
     <item>
       <title>Linux之权限</title>
-      <link>http://wyb0.com/posts/2016/linux-permission-settings/</link>
+      <link>https://wyb0.com/posts/2016/linux-permission-settings/</link>
       <pubDate>Sun, 17 Apr 2016 10:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-permission-settings/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-permission-settings/</guid>
       <description>主要有三种参数：rwx 对于文件来说：分别是读/写/执行
 对于目录来说：r读目录结构；w操作目录结构；x进入目录
 如：drwxr&amp;ndash;r&amp;ndash; 3 root root 4096 Jun 25 08:35 .ssh
@@ -137,10 +137,10 @@ DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  0x02 打开ip
     
     <item>
       <title>Linux之vim</title>
-      <link>http://wyb0.com/posts/2016/linux-vim/</link>
+      <link>https://wyb0.com/posts/2016/linux-vim/</link>
       <pubDate>Fri, 15 Apr 2016 21:03:07 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/linux-vim/</guid>
+      <guid>https://wyb0.com/posts/2016/linux-vim/</guid>
       <description>0x00 Vim的安装及配置：  安装vim  yum install vim   配置文件的位置  在目录 /etc/ 下面，有个名为vimrc的 文件， 这是系统中公共的vim配置文件，对所有用户都有效。   设置语法高亮显示  1) 打开vimrc，添加以下语句来使得语法高亮显示： syntax on 2) 如果此时语法还是没有高亮显示，那么在/etc目录下的profile文件中添加以下语句： export TERM=xterm-color   设置Windows风格的C/C++自动缩进（添加以下set语句到vimrc中）  1）设置Tab为4个空格 set tabstop=4 #设定tab长度为4 set softtabstop=4 #使按退格键时可以一次删除4个空格 set shiftwidth=4 #表示每一级缩进的长度，一般设置成跟softtabstop一样 set expandtab/noexpandtab #缩进用空格/制表符表示 2）自动缩进 set autoindent/noautoindent #设置每行的缩进值与上一行相等/不相等(我未启用) 3）使用 C/C++ 语言的自动缩进方式 set cindent 4）在左侧显示文本的行号 set nu 5）搜索设置 set incsearch #输入搜索内容时就显示搜索结果 set hlsearch #搜索时高亮显示被找到的文本 6）如果没有下列语句，就加上吧 if &amp;amp;term==&amp;quot;xterm&amp;quot; set t_Co=8 set t_Sb=^[[4%dm set t_Sf=^[[3%dm endif  0x01 Vim编辑器的三种模式  命令行模式  $vim 文件名 #直接进入命令行模式 Ctrl+ZZ#可保存文件 5dd/4yy#剪切5行/复制4行 p #粘贴到当前行后面 u #一直点的话会一直撤销，直到回复到文件最初状态 gg/G #光标移动到首行/末行 H/M/L #光标移动到屏幕显示的首行/中间/末行 0/$ #光标移动到行首/行尾 w/b #光标跳到下一个/上一个单词 o #在下一行插入 Ctrl+g #显示文本的信息 dt% #删除所有内容直到遇到 % d0/d$或D #删除从光标到行首/行尾的字符 3dw #删除3个单词 v+方向键 #可以从当前光标向各方向选择字符或行 4+向下的方向键 #光标向下移动4行 /和？#向下和向上搜索   末行模式  :wq #推出并保存 :wq!</description>
     </item>
     

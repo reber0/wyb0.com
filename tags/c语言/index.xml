@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C语言 on </title>
-    <link>http://wyb0.com/tags/c%E8%AF%AD%E8%A8%80/</link>
+    <link>https://wyb0.com/tags/c%E8%AF%AD%E8%A8%80/</link>
     <description>Recent content in C语言 on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 22 May 2015 16:52:55 +0800</lastBuildDate>
     
-	<atom:link href="http://wyb0.com/tags/c%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wyb0.com/tags/c%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>利用C语言简单实现单重DES</title>
-      <link>http://wyb0.com/posts/2015/single-des-simple-implementation/</link>
+      <link>https://wyb0.com/posts/2015/single-des-simple-implementation/</link>
       <pubDate>Fri, 22 May 2015 16:52:55 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2015/single-des-simple-implementation/</guid>
+      <guid>https://wyb0.com/posts/2015/single-des-simple-implementation/</guid>
       <description>0x00 简介 此程序通过单重des实现8个字节的加密和解密。 新建一个工程，这个工程需要3个cpp文件(c文件也可以)和2个头文件。 cpp文件：main.cpp、des.cpp、status.cpp 头文件：des.h、status.h  0x01 代码  以下为主函数main.cpp的内容：  #include &amp;lt;stdio.h&amp;gt; #include &amp;quot;status.h&amp;quot; #include &amp;quot;des.h&amp;quot; int main() { char M[8],Key[9]; printf(&amp;quot;Input Plaintext :&amp;quot;); scanf(&amp;quot;%s&amp;quot;,&amp;amp;M); printf(&amp;quot;Input Key :&amp;quot;); scanf(&amp;quot;%s&amp;quot;,&amp;amp;Key); SetKey(Key);//生成16个子秘钥 printf(&amp;quot;加密：&amp;quot;); Des(M,&#39;e&#39;); printf(&amp;quot;%s\n&amp;quot;,M); printf(&amp;quot;解密：&amp;quot;); Des(M,&#39;d&#39;); printf(&amp;quot;%s\n&amp;quot;,M); return 0; }   以下为des.cpp的内容：  #include &amp;lt;stdio.h&amp;gt; #include &amp;lt;string.h&amp;gt; #include &amp;quot;status.h&amp;quot; #include &amp;quot;des.h&amp;quot; void ByteToBit(const char *In,bool *Out,int bits) { for (int j=0;j&amp;lt;bits;j++) Out[j]=(In[j/8]&amp;gt;&amp;gt;(j%8))&amp;amp; 1; } void BitToByte(bool *In,char *Out,int bits) { memset(Out,0,(bits+7)/8); for (int k=0;k&amp;lt;bits;k++) Out[k/8]|=In[k]&amp;lt;&amp;lt;(k%8); } void Transform(bool *Y,bool *X,const char *Table,int len) { for (int l=0;l&amp;lt;len;l++) Temp[l]=X[Table[l]-1]; memcpy(Y,Temp,len); } void Des(char *m,char ch) { bool Tem[32]; ByteToBit(m,P,64); Transform(P,P,IP1_Table,64); Li=&amp;amp;P[0]; Ri=&amp;amp;P[32]; if (ch==&#39;e&#39;) { for (i=0;i&amp;lt;16;i++) { memcpy(Tem,Ri,32);//临时存放明文的右半部分 f(Ri,SubKey[i]); XOR(Ri,Li,32); memcpy(Li,Tem,32);//将明文的右半部分写入Li } } else { for (i=15;i&amp;gt;=0;i--) { memcpy(Tem,Li,32);//临时存放明文的右半部分 f(Li,SubKey[i]); XOR(Li,Ri,32); memcpy(Ri,Tem,32);//将明文的右半部分写入Li } } Transform(P,P,IP2_Table,64); BitToByte(P,m,64); } void f(bool *R,bool *k) { bool T[48]; Transform(T,R,E_Table,48);//32位的Ri扩展为48位 XOR(T,k,48);//Ri和轮秘钥的异或 S_Box_f(T,R); Transform(R,R,P_Table,32); } void XOR(bool *R,bool *k,int len) { for (int m=0;m&amp;lt;len;m++) R[m]=R[m]^k[m]; } void S_Box_f(bool *B,bool *C) { int a,b; for (int k=0;k&amp;lt;8;k++) { a=B[0]*2+B[5]; b=B[1]*8+B[2]*4+B[3]*2+B[4]; ByteToBit(&amp;amp;S_Box[k][a][b],C,4); B+=6; C+=4; } } //以下求得子秘钥 void SetKey(char *KEY) { ByteToBit(KEY,K,64); Transform(K,K,PC1_Table,56); printf(&amp;quot;\n\n\n&amp;quot;); Ci=&amp;amp;K[0]; Di=&amp;amp;K[28]; for (int j=0;j&amp;lt;16;j++) { MovKey(Ci,28,LOOP_Table[j]); MovKey(Di,28,LOOP_Table[j]); Transform(SubKey[j],K,PC2_Table,48); } } void MovKey(bool *LR,int len,int loop) { memcpy(Temp,LR,loop); memcpy(LR,LR+loop,len-loop); memcpy(LR+len-loop,Temp,loop); }   以下为status.</description>
     </item>
     

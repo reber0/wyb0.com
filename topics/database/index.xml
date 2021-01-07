@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Database on </title>
-    <link>http://wyb0.com/topics/database/</link>
+    <link>https://wyb0.com/topics/database/</link>
     <description>Recent content in Database on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 23 Aug 2019 16:27:12 +0800</lastBuildDate>
     
-	<atom:link href="http://wyb0.com/topics/database/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://wyb0.com/topics/database/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>PostgreSQL 简单使用</title>
-      <link>http://wyb0.com/posts/2019/postgresql-basis-use/</link>
+      <link>https://wyb0.com/posts/2019/postgresql-basis-use/</link>
       <pubDate>Fri, 23 Aug 2019 16:27:12 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2019/postgresql-basis-use/</guid>
+      <guid>https://wyb0.com/posts/2019/postgresql-basis-use/</guid>
       <description>0x00 安装 ➜ brew install postgresql ➜ echo &#39;export PATH=&amp;quot;/usr/local/Cellar/postgresql/11.4/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc ➜ source ~/.zshrc -- 初始化数据库 ➜ initdb /usr/local/var/postgres ➜ pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start  0x01 简单操作  常用操作命令  reber=# \password #设置当前登录用户的密码 reber=# \password [user_name] #设置其他用户的密码 reber=# \l #列出所有数据库 reber=# \du #列出所有用户 reber=# \c [database_name] #连接数据库 reber=# \d #列出当前数据库的所有表 reber=# \d [table_name] #列出表结构 reber=# \conninfo #列出当前数据库和连接的信息   连接数据库  ➜ psql postgres #初始化数据库后会生成默认的数据库 postgres psql (11.</description>
     </item>
     
     <item>
       <title>Oracle数据库简单使用</title>
-      <link>http://wyb0.com/posts/2018/oracle-database/</link>
+      <link>https://wyb0.com/posts/2018/oracle-database/</link>
       <pubDate>Tue, 25 Dec 2018 23:34:56 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2018/oracle-database/</guid>
+      <guid>https://wyb0.com/posts/2018/oracle-database/</guid>
       <description>0x00 关于Oracle  完整的Oracle数据库通常由两部分组成：Oracle数据库和数据库实例。 数据库是一系列物理文件的集合（数据文件，控制文件，联机日志，参数文件等） Oracle数据库实例则是一组Oracle后台进程/线程以及在服务器分配的共享内存区 关于部分视图  DBA/ALL/USER/V_$/GV_$/SESSION/INDEX开头的绝大部分都是视图 DBA_TABLES意为DBA拥有的或可以访问的所有的关系表。 ALL_TABLES意为某一用户拥有的或有权限访问的所有的关系表。 USER_TABLES意为某一用户所拥有的所有的关系表。 当某一用户本身就为数据库DBA时，DBA_TABLES与ALL_TABLES等价。 DBA_TABLES &amp;gt;= ALL_TABLES &amp;gt;= USER_TABLES   0x01 关于实例  在启动Oracle数据库服务器时，实际上是在服务器的内存中创建一个Oracle实例（即在服务器内存中分配共享内存并创建相关的后台内存） 我们访问Oracle都是访问一个实例，通过Oracle数据库实例来访问和控制磁盘中的数据文件 Oracle实例如果关联了数据库文件，就是可以访问的，如果没有，就会得到实例不可用的错误 实例名指的是用于响应某个数据库操作的数据库管理系统的名称，它同时也叫SID，连接数据库时就会用到这个SID，如：jdbc:oracle:thin:@localhost:1521:orcl（orcl就为数据库实例名）  0x02 关于表空间(可以理解为mysql中的数据库)  Oracle数据库是通过表空间来存储物理表的，一个数据库实例可以有N个表空间，一个表空间下可以有N张表。 用户和表空间是多对多的关系，但是一般创建用户时会指定一个默认表空间。 表空间是数据库中最大的逻辑单位，一个表空间可以包含多个数据文件，而一个数据文件只能隶属一个表空间。  0x03 搭建Oracle环境 使用docker拉取Oracle数据库并且运行
 [23:36 reber@wyb in ~] ➜ docker pull alexeiled/docker-oracle-xe-11g [23:36 reber@wyb in ~] ➜ docker run --rm -tid --shm-size=2g -p 1521:1521 -p 8080:8080 alexeiled/docker-oracle-xe-11g  然后在www.oracle.com下载链接Oracle的客户端：instantclient-basic-macos、instantclient-sqlplus-macos
 [15:41 reber@wyb in ~/Downloads] ➜ unzip instantclient-basic-macos.</description>
@@ -33,38 +33,38 @@
     
     <item>
       <title>SQLServer存储过程</title>
-      <link>http://wyb0.com/posts/2017/sqlserver-stored-procedure/</link>
+      <link>https://wyb0.com/posts/2017/sqlserver-stored-procedure/</link>
       <pubDate>Tue, 30 May 2017 13:16:18 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2017/sqlserver-stored-procedure/</guid>
+      <guid>https://wyb0.com/posts/2017/sqlserver-stored-procedure/</guid>
       <description>0x00 数据表结构 CREATE DATABASE student; CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT &#39;xiaoming&#39;, sex INT NOT NULL DEFAULT 1, age INT NOT NULL DEFAULT 0, hight INT NOT NULL DEFAULT 0 ) INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaohong&#39;,0,23,165); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaogang&#39;,1,24,175); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoliu&#39;,1,21,160); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaozhang&#39;,1,19,165); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoli&#39;,1,23,170); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaohua&#39;,0,23,160); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoming&#39;,1,21,165); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaowang&#39;,1,23,166); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaojuan&#39;,0,21,159);  0x01 存储过程 --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name=&#39;get_student_msg&#39; AND type=&#39;p&#39;) DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg &#39;xiaoli&#39;  0x02 使用游标的存储过程 -- 使用DECLARE声明局部变量，一般在函数和存储过程中使用 DECLARE @name VARCHAR(20) DECLARE @sex INT DECLARE @age INT DECLARE @hight INT DECLARE stu_cursor CURSOR FOR --定义游标，后面跟sql语句 SELECT name,sex,age,hight --使用游标的对象(根据需要写select语句) FROM dbo.</description>
     </item>
     
     <item>
       <title>SQLServer的基本使用</title>
-      <link>http://wyb0.com/posts/2017/sqlserver-basis-use/</link>
+      <link>https://wyb0.com/posts/2017/sqlserver-basis-use/</link>
       <pubDate>Tue, 30 May 2017 12:53:41 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2017/sqlserver-basis-use/</guid>
+      <guid>https://wyb0.com/posts/2017/sqlserver-basis-use/</guid>
       <description>0x00 数据库 -- 创建数据库 CREATE DATABASE student; -- 选择数据库 USE student; -- 查看当前数据库 SELECT DB_NAME(); -- 查看当前数据库 SELECT DB_NAME(); -- 查看数据库版本 SELECT @@version;  0x01 数据表 -- 创建数据库表 CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT &#39;xiaoming&#39;, sex INT NOT NULL DEFAULT 1 ) -- 查看表结构 EXEC sp_help &#39;info&#39;; -- 更新表结构 ALTER TABLE info add age int; -- 添加一列 ALTER TABLE info DROP COLUMN age; -- 删除一列 -- 插入数据 INSERT INTO info(name,sex) VALUES(&#39;xiaohong&#39;,0); -- 查看数据 SELECT * FROM dbo.</description>
     </item>
     
     <item>
       <title>MongoDB的基本使用</title>
-      <link>http://wyb0.com/posts/2017/mongodb-basis-use/</link>
+      <link>https://wyb0.com/posts/2017/mongodb-basis-use/</link>
       <pubDate>Thu, 25 May 2017 15:33:12 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2017/mongodb-basis-use/</guid>
+      <guid>https://wyb0.com/posts/2017/mongodb-basis-use/</guid>
       <description>0x00 角色和权限 Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：
  数据库用户角色  read：允许用户读取指定数据库 readWrite：允许用户读写指定数据库  数据库管理角色  dbOwner：包含readWrite、dbAdmin、userAdmin dbAdmin：允许用户在指定数据库中对集合、文档等操作 userAdmin：允许用户向system.users集合写入，可以在指定数据库里创建、删除和管理用户  集群管理角色  clusterAdmin：只在admin数据库中可用，包含clusterManager、clusterMonitor、hostManager clusterManager： clusterMonitor： hostManager  备份和恢复角色  backup restore  所有数据库角色  readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限 readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限 dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限 userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限  超级用户角色  root：只在admin数据库中可用。超级账号，超级权限  内部角色  __system   0x01 创建用户 #创建管理员用户 &amp;gt; use admin switched to db admin &amp;gt; db.createUser({ ... user:&amp;quot;root&amp;quot;, ... pwd:&amp;quot;root123&amp;quot;, ... roles:[{&amp;quot;role&amp;quot;:&amp;quot;root&amp;quot;,&amp;quot;db&amp;quot;:&amp;quot;admin&amp;quot;}] ... }) Successfully added user: { &amp;quot;user&amp;quot; : &amp;quot;root&amp;quot;, &amp;quot;roles&amp;quot; : [ { &amp;quot;role&amp;quot; : &amp;quot;root&amp;quot;, &amp;quot;db&amp;quot; : &amp;quot;admin&amp;quot; } ] } &amp;gt; db.</description>
     </item>
     
     <item>
       <title>Python封装MySQL类</title>
-      <link>http://wyb0.com/posts/2016/python-package-mysql-function/</link>
+      <link>https://wyb0.com/posts/2016/python-package-mysql-function/</link>
       <pubDate>Mon, 12 Sep 2016 22:54:28 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/python-package-mysql-function/</guid>
+      <guid>https://wyb0.com/posts/2016/python-package-mysql-function/</guid>
       <description>0x00 安装 有两种，一个是MySQLdb，一个是pymysql
  下载MySQL-python然后安装
  sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)  0x01 简单表设计如下 insert into mysql.user(Host,User,Password) values(&#39;%&#39;,&#39;python&#39;,&#39;123456&#39;); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default &#39;127.0.0.1&#39; comment &#39;ip地址&#39;, domain varchar(100) not null default &#39;www.xx.com&#39; comment &#39;域名&#39; ); grant all privileges on python.* to &#39;python&#39;@&#39;%&#39; identified by &#39;123456&#39;; flush privileges;  0x02 MySQLdb封装代码 #!</description>
@@ -72,10 +72,10 @@
     
     <item>
       <title>Redis的简单使用</title>
-      <link>http://wyb0.com/posts/2016/redis-bisis-use/</link>
+      <link>https://wyb0.com/posts/2016/redis-bisis-use/</link>
       <pubDate>Wed, 03 Aug 2016 11:02:20 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/redis-bisis-use/</guid>
+      <guid>https://wyb0.com/posts/2016/redis-bisis-use/</guid>
       <description>0x00 关于Redis Redis和MySQL这种关系型数据库不一样，它是非关系型数据库，是日志型、Key-Value数据库， 实现了master-slave(主从)同步,数据都是缓存在内存中的,所以可高速读写,但存储成本较高, 不适合做海量数据存储。  0x01 安装  Linux下安装Redis 可在http://download.redis.io/releases/ 下载
 $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxvf redis-3.2.3.tar.gz $ cd redis-3.2.3 $ make $ make install  Windows下安装Redis 下载：点此下载
   安装后添加环境变量
@@ -84,28 +84,28 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
     
     <item>
       <title>MySQL的information_schema库</title>
-      <link>http://wyb0.com/posts/2016/mysql-database-table-information_schema/</link>
+      <link>https://wyb0.com/posts/2016/mysql-database-table-information_schema/</link>
       <pubDate>Sun, 19 Jun 2016 19:40:25 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/mysql-database-table-information_schema/</guid>
+      <guid>https://wyb0.com/posts/2016/mysql-database-table-information_schema/</guid>
       <description> 0x00 information_schema information_schema这个数据库中保存了MySQL服务器所有数据库的信息。 如数据库名，数据库的表，表栏的数据类型与访问权限等。 再简单点，这台MySQL服务器上，到底有哪些数据库、各个数据库有哪些表， 每张表的字段类型是什么，各个数据库要什么权限才能访问，等等信息都保存在information_schema里面。 information_schema的表schemata中的列schema_name记录了所有数据库的名字 information_schema的表tables中的列table_schema记录了所有数据库的名字 information_schema的表tables中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列table_schema记录了所有数据库的名字 information_schema的表columns中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列column_name记录了所有数据库的表的列的名字  0x01 information_schema的SCHEMATA表 0x02 information_schema的TABLES表 0x03 information_schema的COLUMNS表 </description>
     </item>
     
     <item>
       <title>PHP之封装MySQL类</title>
-      <link>http://wyb0.com/posts/2016/php-package-mysql-function/</link>
+      <link>https://wyb0.com/posts/2016/php-package-mysql-function/</link>
       <pubDate>Fri, 03 Jun 2016 11:19:05 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/php-package-mysql-function/</guid>
+      <guid>https://wyb0.com/posts/2016/php-package-mysql-function/</guid>
       <description>0x00 config.inc.php内容如下 &amp;lt;?php return array( &#39;DB_HOST&#39; =&amp;gt; &#39;192.168.188.134&#39;, &#39;DB_NAME&#39; =&amp;gt; &#39;scoreboard&#39;, &#39;DB_USER&#39; =&amp;gt; &#39;score&#39;, &#39;DB_PASS&#39; =&amp;gt; &#39;123456&#39;, &#39;DB_CHARSET&#39; =&amp;gt; &#39;utf8&#39;, &#39;IS_LOG&#39; =&amp;gt; 1,//开启日志 &#39;LOGFILEPATH&#39; =&amp;gt; &#39;../log.txt&#39;//日志路径 ); /* $database = require(&#39;./config.php&#39;); echo $database[&#39;DB_TYPE&#39;]; //输出&#39;DB_TYPE&#39; */ ?&amp;gt;  0x01 表设计如下 create database scoreboard; use scoreboard; drop table if exists users; create table users( id int not null auto_increment primary key, gid int not null default &#39;xiaoming&#39; comment &#39;组id&#39;, username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;, password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39;, sex varchar(2) not null default &#39;0&#39; comment &#39;性别&#39;, totalscore int not null default &#39;0&#39; comment &#39;个人总积分&#39; ); drop table if exists share; create table share( id int not null auto_increment primary key, uid int not null, content varchar(1024) not null default &#39;content&#39; comment &#39;分享内容&#39;, comment varchar(1024) comment &#39;点评&#39;, date varchar(15) not null default &#39;20150101&#39; comment &#39;分享日期&#39; ); drop table if exists score; create table score( id int not null auto_increment primary key, uid int not null default &#39;0&#39; comment &#39;用户id&#39;, score int not null default &#39;0&#39; comment &#39;用户单次积分&#39;, ); grant all privileges on scoreboard.</description>
     </item>
     
     <item>
       <title>PHP之MySQL常用函数</title>
-      <link>http://wyb0.com/posts/2016/php-mysql-common-function/</link>
+      <link>https://wyb0.com/posts/2016/php-mysql-common-function/</link>
       <pubDate>Thu, 02 Jun 2016 13:21:49 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/php-mysql-common-function/</guid>
+      <guid>https://wyb0.com/posts/2016/php-mysql-common-function/</guid>
       <description>0x00 处理函数  mysql_connect(server,user,pwd,newlink,clientflag)
 连接服务器的函数,成功则返回MySQL标识，失败则返回FALSE
  mysql_select_db(database,connection)
@@ -131,10 +131,10 @@ $ cd /opt $ wget http://download.redis.io/releases/redis-3.2.3.tar.gz $ tar -zxv
     
     <item>
       <title>MySQL语法</title>
-      <link>http://wyb0.com/posts/2016/mysql-syntax/</link>
+      <link>https://wyb0.com/posts/2016/mysql-syntax/</link>
       <pubDate>Thu, 02 Jun 2016 11:19:05 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/mysql-syntax/</guid>
+      <guid>https://wyb0.com/posts/2016/mysql-syntax/</guid>
       <description>0x00 Select语句的一般语法 1.SELECT [ALL|DISTINCT] &amp;lt;目标列表达式&amp;gt; [,&amp;lt;目标列表达式&amp;gt; ]... 2.FROM &amp;lt;表名或视图名&amp;gt; [,&amp;lt;表名或视图名&amp;gt; ]... 3.[ WHERE &amp;lt;行条件表达式&amp;gt; ] 4.[ GROUP BY &amp;lt;列名1&amp;gt; ,[列名2][,...][HAVING组条件表达式] ] 5.[ ORDER BY &amp;lt;列名1&amp;gt; ,[ASC|DESC][,...] ];  上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5，
 即先确定从哪个数据源查找，
 然后确定过滤条件，
@@ -146,10 +146,10 @@ select name as &#39;名字&#39;,password as &#39;密码&#39; form user; select *
     
     <item>
       <title>MySQL的增删改查</title>
-      <link>http://wyb0.com/posts/2016/mysql-curd/</link>
+      <link>https://wyb0.com/posts/2016/mysql-curd/</link>
       <pubDate>Sun, 29 May 2016 22:50:52 +0800</pubDate>
       
-      <guid>http://wyb0.com/posts/2016/mysql-curd/</guid>
+      <guid>https://wyb0.com/posts/2016/mysql-curd/</guid>
       <description>0x00 连接数据库 0x01 查看数据库 0x02 创建数据库 一般将sql语句保存在文本中，然后复制运行
 create database test; use test; drop table if exists users; create table users( id int not null auto_increment primary key, username varchar(20) not null default &#39;xiaoming&#39; comment &#39;用户名&#39;, password varchar(32) not null default &#39;123456&#39; comment &#39;密码&#39; ); drop table if exists msg; create table msg( id int not null auto_increment primary key, uid int not null default &#39;0&#39; comment &#39;用户id&#39;, title varchar(30) not null default &#39;title&#39; comment &#39;信息标题&#39;, content varchar(1024) not null default &#39;content&#39; comment &#39;信息内容&#39;, ip varchar(15) not null default &#39;127.</description>
     </item>
