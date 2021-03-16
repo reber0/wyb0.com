@@ -49,25 +49,40 @@ git commit -m "add file a.txt"
 git push origin master
 ```
 
-### 0x05 分支
+### 0x05 添加大文件
+```
+GitHub 限制上传 100M 的文件
+1、brew install git-lfs
+2、cd 到 git 文件夹执行 git lfs install
+3、git lfs track "./xxx/aaa" 添加 aaa 文件，生成 .gitattributes 文件
+4、git add .gitattributes
+5、git commit -m "add gitattributes"
+6、git push origin master
+此时再添加大文件即可上传
+1、git add ./xxx/aaa
+2、git commit -m "add aaa"
+3、git push origin master
+```
+
+### 0x06 分支
 * 切换分支后，分支的更改不会影响原来分支，
 * 切换分支后，分支更改后需要add，然后commit
 * git checkout -b test可以创建分支同时切换
 
 ![分支](/img/post/git_branch.png)
 
-### 0x06 更新和合并
+### 0x07 更新和合并
 ```
 git pull 可以同步github上的数据到本地
 git merge test 可以将test分支的改动合并到当前分支
 ```
 
-### 0x07 查看状态
+### 0x08 查看状态
 ```
 git status
 ```
 
-### 0x08 撤回
+### 0x09 撤回
 
 * 撤销 add
 ```bash
@@ -131,7 +146,7 @@ git reflog # 查看 commit 的 id
 3.若先用了 git rm，而且 git commit 了，那只能 git reset --hard HEAD^ 恢复，或者 git reset --hard <add 时的 id>
 ```
 
-### 0x09 多用户
+### 0x0A 多用户
 如果有多个用户时可进行如下设置
 ```
 $ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C "123456@qq.com"
