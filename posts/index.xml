@@ -771,9 +771,9 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
       <pubDate>Wed, 12 Oct 2016 10:24:38 +0800</pubDate>
       
       <guid>https://wyb0.com/posts/2016/use-blank-attribute-to-fish/</guid>
-      <description>0x00 _blank _blank是html中的标签属性，如&amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber-9.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt;, 但若点击HELLO打开的网页1.php中有如下代码：
-&amp;lt;script&amp;gt; if(window.opener){ window.opener.location = &amp;quot;http://xss.reber-9.com/fish.html&amp;quot;; } &amp;lt;/script&amp;gt;  则原网页将转跳到http://xss.reber-9.com/fish.html ，这就会造成钓鱼
-0x01 简单模板  a.html内容如下：  &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt; &amp;lt;title&amp;gt;Document&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber-9.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   http://xss.reber-9.com/1.php中1.php内容如下：  &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt; &amp;lt;script&amp;gt; if(window.opener){ window.opener.location = &amp;quot;http://xss.reber-9.com/fish.html&amp;quot;; } &amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;p&amp;gt;hello&amp;lt;/p&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   1.php同级下有个钓鱼模板fish.html，内容如下：  &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;fish&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;h2&amp;gt;This is fishing template!&amp;lt;/h2&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   点击a.</description>
+      <description>0x00 _blank _blank是html中的标签属性，如&amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt;, 但若点击HELLO打开的网页1.php中有如下代码：
+&amp;lt;script&amp;gt; if(window.opener){ window.opener.location = &amp;quot;http://xss.reber.com/fish.html&amp;quot;; } &amp;lt;/script&amp;gt;  则原网页将转跳到http://xss.reber.com/fish.html ，这就会造成钓鱼
+0x01 简单模板  a.html内容如下：  &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt; &amp;lt;title&amp;gt;Document&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   http://xss.reber.com/1.php中1.php内容如下：  &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt; &amp;lt;script&amp;gt; if(window.opener){ window.opener.location = &amp;quot;http://xss.reber.com/fish.html&amp;quot;; } &amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;p&amp;gt;hello&amp;lt;/p&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   1.php同级下有个钓鱼模板fish.html，内容如下：  &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;fish&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;h2&amp;gt;This is fishing template!&amp;lt;/h2&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   点击a.</description>
     </item>
     
     <item>
@@ -1911,7 +1911,7 @@ $_FILES[&#39;upload_file&#39;][&#39;name&#39;] //带扩展名的原始文件名 
       <guid>https://wyb0.com/posts/2016/windows-build-blog-in-github/</guid>
       <description>0x00 首先在github上新建仓库 0x01 本地新建仓库  下载安装hugo  为hugo添加环境变量  下载安装github客户端  新建仓库  下载主题
 可以在https://github.com/spf13/hugoThemes 下载你喜欢的主题
- 使用主题并查看效果   0x02 本地环境配置  本地生成秘钥  在github保存秘钥  测试公钥是否添加成功  设置本地用户名和邮箱   0x03 配置config.toml # 将reber-9全部替换为你github的账户名，另外你也可以进行一些基本的设置 baseurl = &amp;quot;http://reber-9.github.io&amp;quot; languageCode = &amp;quot;en-us&amp;quot; title = &amp;quot;reber-9&#39;s Blog&amp;quot; theme = &amp;quot;beautifulhugo&amp;quot; pygmentsUseClasses = false #disqusShortname = &amp;quot;XXX&amp;quot; #googleAnalytics = &amp;quot;XXX&amp;quot; [Params] logo = &amp;quot;img/avatar-icon.png&amp;quot; subtitle = &amp;quot;This is my personal blog&amp;quot; [Author] name = &amp;quot;Some Person&amp;quot; email = &amp;quot;123123123@163.</description>
+ 使用主题并查看效果   0x02 本地环境配置  本地生成秘钥  在github保存秘钥  测试公钥是否添加成功  设置本地用户名和邮箱   0x03 配置config.toml # 将reber全部替换为你github的账户名，另外你也可以进行一些基本的设置 baseurl = &amp;quot;http://reber.github.io&amp;quot; languageCode = &amp;quot;en-us&amp;quot; title = &amp;quot;reber&#39;s Blog&amp;quot; theme = &amp;quot;beautifulhugo&amp;quot; pygmentsUseClasses = false #disqusShortname = &amp;quot;XXX&amp;quot; #googleAnalytics = &amp;quot;XXX&amp;quot; [Params] logo = &amp;quot;img/avatar-icon.png&amp;quot; subtitle = &amp;quot;This is my personal blog&amp;quot; [Author] name = &amp;quot;Some Person&amp;quot; email = &amp;quot;123123123@163.</description>
     </item>
     
     <item>
@@ -1921,10 +1921,10 @@ $_FILES[&#39;upload_file&#39;][&#39;name&#39;] //带扩展名的原始文件名 
       
       <guid>https://wyb0.com/posts/2016/ubuntu-push-blog-to-github/</guid>
       <description>环境：Ubuntu14.4
-0x00 安装hugo和git 0x01 生成密钥，将密钥添加到github $ cd ~ $ ssh-keygen -t rsa -b 2048 -C &amp;quot;123456@qq.com&amp;quot; $ cd ~/.ssh/ $ cat id_rsa.pub # 将公钥添加到 github  0x02 配置本地用户和邮箱 git config --global user.name &amp;quot;reber-9&amp;quot; git config --global user.email &amp;quot;123456@qq.com&amp;quot;  0x03 验证密钥是否添加成功 ssh -T git@github.com
-0x04 克隆远程工程 git clone https://github.com/reber-9/reber-9.com.git
-0x05 添加CNAME cd ~/reber-9.com/
-echo &amp;ldquo;reber-9.com&amp;rdquo; &amp;gt;&amp;gt; static/CNAME
+0x00 安装hugo和git 0x01 生成密钥，将密钥添加到github $ cd ~ $ ssh-keygen -t rsa -b 2048 -C &amp;quot;123456@qq.com&amp;quot; $ cd ~/.ssh/ $ cat id_rsa.pub # 将公钥添加到 github  0x02 配置本地用户和邮箱 git config --global user.name &amp;quot;reber&amp;quot; git config --global user.email &amp;quot;123456@qq.com&amp;quot;  0x03 验证密钥是否添加成功 ssh -T git@github.com
+0x04 克隆远程工程 git clone https://github.com/reber/reber.com.git
+0x05 添加CNAME cd ~/reber.com/
+echo &amp;ldquo;reber.com&amp;rdquo; &amp;gt;&amp;gt; static/CNAME
 0x06 更新 更新origin remote的master分支：
 git pull origin master
 获取服务端的改动：
@@ -1943,8 +1943,8 @@ git fetch
  安装hugo
 reber@ubuntu:~/Downloads$ sudo dpkg -i hug_015_amd64
  生成站点
-  reber@ubuntu:~/Downloads$ cd /home/reber reber@ubuntu:~$ hugo new site reber-9.com #新建站点 #启动站点,访问localhost:1313测试有没有成功 reber@ubuntu:~/reber-9.com$ hugo server -w  0x01 配置github  安装git  reber@ubuntu:~$ sudo apt-get install git reber@ubuntu:~$ git --version #查看版本判断是否安装成功   安装ssh  reber@ubuntu:~/reber-9.com$ sudo apt-get install ssh   备份并创建本地ssh
-  reber@ubuntu:~/reber-9.com$ cd /home/reber/.ssh/ reber@ubuntu:~/.ssh$ mkdir ras.bak reber@ubuntu:~/.ssh$ cp id_ras* rsa.</description>
+  reber@ubuntu:~/Downloads$ cd /home/reber reber@ubuntu:~$ hugo new site reber.com #新建站点 #启动站点,访问localhost:1313测试有没有成功 reber@ubuntu:~/reber.com$ hugo server -w  0x01 配置github  安装git  reber@ubuntu:~$ sudo apt-get install git reber@ubuntu:~$ git --version #查看版本判断是否安装成功   安装ssh  reber@ubuntu:~/reber.com$ sudo apt-get install ssh   备份并创建本地ssh
+  reber@ubuntu:~/reber.com$ cd /home/reber/.ssh/ reber@ubuntu:~/.ssh$ mkdir ras.bak reber@ubuntu:~/.ssh$ cp id_ras* rsa.</description>
     </item>
     
     <item>
@@ -1985,7 +1985,7 @@ reber@ubuntu:~$ vim /etc/apt/sources.list
       <pubDate>Thu, 05 May 2016 10:30:32 +0800</pubDate>
       
       <guid>https://wyb0.com/posts/2016/git-usage/</guid>
-      <description>0x00 创建仓库 git init  0x01 克隆 git clone git@github.com:reber0/wyb0.com.git  0x02 仓库连接到远程服务器 # 若没有克隆现有仓库则可以连接远程仓库： git remote add origin git@github.com:reber-9/reber-9.com.git  0x03 忽略文件 $ cat .gitignore # 忽略 log 文件夹下的文件 log/ # 忽略 Thumbs.db 这个文件 Thumbs.db # 忽略 .sql 结尾的文件 data/*.sql  # 忽略 config.py 这个文件的更新，即 config.py 的内容改变是 git add 不会添加 config.py $ git update-index --assume-unchanged config.py  0x04 添加和提交和推送 git add a.txt git commit -m &amp;quot;add file a.txt&amp;quot; git push origin master  0x05 添加大文件 GitHub 限制上传 100M 的文件 1、brew install git-lfs 2、cd 到 git 文件夹执行 git lfs install 3、git lfs track &amp;quot;.</description>
+      <description>0x00 创建仓库 git init  0x01 克隆 git clone git@github.com:reber0/wyb0.com.git  0x02 仓库连接到远程服务器 # 若没有克隆现有仓库则可以连接远程仓库： git remote add origin git@github.com:reber/reber.com.git  0x03 忽略文件 $ cat .gitignore # 忽略 log 文件夹下的文件 log/ # 忽略 Thumbs.db 这个文件 Thumbs.db # 忽略 .sql 结尾的文件 data/*.sql  # 忽略 config.py 这个文件的更新，即 config.py 的内容改变是 git add 不会添加 config.py $ git update-index --assume-unchanged config.py  0x04 添加和提交和推送 git add a.txt git commit -m &amp;quot;add file a.txt&amp;quot; git push origin master  0x05 添加大文件 GitHub 限制上传 100M 的文件 1、brew install git-lfs 2、cd 到 git 文件夹执行 git lfs install 3、git lfs track &amp;quot;.</description>
     </item>
     
     <item>

