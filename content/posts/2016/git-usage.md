@@ -21,7 +21,7 @@ git clone git@github.com:reber0/wyb0.com.git
 ### 0x02 仓库连接到远程服务器
 ```
 # 若没有克隆现有仓库则可以连接远程仓库：
-git remote add origin git@github.com:reber-9/reber-9.com.git
+git remote add origin git@github.com:reber/reber.com.git
 ```
 
 ### 0x03 忽略文件
@@ -169,6 +169,6 @@ $ ls
 
 # 可以新建项目后在项目里执行下面两条命令配置局部用户名和邮箱
 # 会在.git/config写入用户名和邮箱
-git config --local user.name "reber-9"  
+git config --local user.name "reber"  
 git config --local user.email "123456@qq.com"
 ```

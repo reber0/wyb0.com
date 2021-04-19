@@ -22,7 +22,7 @@ $ cat id_rsa.pub # 将公钥添加到 github
 
 ###  0x02 配置本地用户和邮箱
 ```
-git config --global user.name "reber-9"  
+git config --global user.name "reber"  
 git config --global user.email "123456@qq.com"
 ```
 
@@ -30,11 +30,11 @@ git config --global user.email "123456@qq.com"
 ssh -T git@github.com
 
 ### 0x04 克隆远程工程
-git clone https://github.com/reber-9/reber-9.com.git
+git clone https://github.com/reber/reber.com.git
 
 ### 0x05 添加CNAME
-cd ~/reber-9.com/  
-echo "reber-9.com" >> static/CNAME
+cd ~/reber.com/  
+echo "reber.com" >> static/CNAME
 
 ### 0x06 更新
 更新origin remote的master分支：  
@@ -48,7 +48,7 @@ $ mkdir public
 $ cd public/
 $ git init  
 $ git checkout --orphan gh-pages  
-$ git remote add origin git@github.com:reber-9/reber-9.com.git  
+$ git remote add origin git@github.com:reber/reber.com.git  
 $ git pull origin gh-pages
 $ cd ../
 ```

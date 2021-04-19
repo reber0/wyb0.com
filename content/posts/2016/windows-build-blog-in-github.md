@@ -51,10 +51,10 @@ topics = ["Windows", "Git"]
 
 ### 0x03 配置config.toml
 ```
-# 将reber-9全部替换为你github的账户名，另外你也可以进行一些基本的设置
-baseurl = "http://reber-9.github.io"
+# 将reber全部替换为你github的账户名，另外你也可以进行一些基本的设置
+baseurl = "http://reber.github.io"
 languageCode = "en-us"
-title = "reber-9's Blog"
+title = "reber's Blog"
 theme = "beautifulhugo"
 pygmentsUseClasses = false
 #disqusShortname = "XXX"
@@ -67,7 +67,7 @@ pygmentsUseClasses = false
 [Author]
   name = "Some Person"
   email = "123123123@163.com"
-  github = "reber-9"
+  github = "reber"
 
 [[menu.main]]
     name = "Blog"
@@ -93,4 +93,4 @@ pygmentsUseClasses = false
 ![推送生成的html](/img/post/win_github_blog_push_html.png)
 
 ### 0x05 访问博客
-直接访问http://reber-9.github.io 即可
+直接访问http://reber.github.io 即可
