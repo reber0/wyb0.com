@@ -157,7 +157,7 @@ print os.linesep #给出当前平台使用的行终止符,windows为"\r\n"
 os.system("whoami") #执行系统命令
 print os.getcwd() #函数得到当前工作目录
 print os.path.abspath('D:\Clone') #获得绝对路径
-print os.listdir('C:\\Users\\WYB_9\\Desktop\\a') #返回目录下所有文件和目录名
+print os.listdir('C:\\Users\\reber\\Desktop\\a') #返回目录下所有文件和目录名
 print "#########################"
 print os.path.isfile('python.py')
 print os.path.isdir('D:\Clone') #检验给出的路径是一个文件还是目录。

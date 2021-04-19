@@ -249,9 +249,9 @@ if __name__ == '__main__':
 ### 0x03 结果
 ```
 结果如下：
-C:\Users\WYB_9\Desktop>python check_cdn.py http://www.reber-9.com
+C:\Users\reber\Desktop>python check_cdn.py http://www.reber-9.com
 {'Status': True, 'CDN': u'Baiduyun'}
 
-C:\Users\WYB_9\Desktop>python check_cdn.py http://v.ifeng.com
+C:\Users\reber\Desktop>python check_cdn.py http://v.ifeng.com
 {'Status': True, 'CDN': u'ChinaCache'}
 ```

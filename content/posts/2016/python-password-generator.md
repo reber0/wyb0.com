@@ -107,7 +107,7 @@ main()
 ```
 
 ### 0x02 运行结果
-可在脚本同文件夹下新建txt文件，内容形式如：baidu.com*wyb_9，站点域名和用户名以*分割
+可在脚本同文件夹下新建txt文件，内容形式如：baidu.com*reber，站点域名和用户名以*分割
 ![存在文件](/img/post/create_pwd_has_file.png)
 
 ![不存在文件](/img/post/create_pwd_no_file.png)

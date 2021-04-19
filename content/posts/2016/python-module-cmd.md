@@ -36,7 +36,7 @@ class ClassShell(Cmd):
     """docstring for ClassShell"""
     def __init__(self):
         Cmd.__init__(self)
-        os.chdir("C:/Users/WYB_9/Desktop")
+        os.chdir("C:/Users/reber/Desktop")
         hostName = socket.gethostname()
         self.prompt = "reber@" + hostName + "  " + os.path.abspath('.') + "\n$ "
         
@@ -71,7 +71,7 @@ class ClassShell(Cmd):
     def do_cd(self, arg):
         hostName = socket.gethostname()
         if not arg:
-            os.chdir("C:/Users/WYB_9/Desktop")
+            os.chdir("C:/Users/reber/Desktop")
             self.prompt = "reber@" + hostName + "  " + os.path.abspath('.') + "\n$ "
         elif os.path.exists(arg):
             os.chdir(arg)
