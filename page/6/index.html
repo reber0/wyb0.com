@@ -66,6 +66,64 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="https://wyb0.com/posts/2017/multi-parameter-blasting-webshell/">利用多参数提高webshell爆破速度</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2017-02-17
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E7%88%86%E7%A0%B4">爆破</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 原理 之前在https://www.t00ls.net/viewthread.php?tid=36985看到这个思路的。
+Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5883个参数，可以一次提交多个密码，从而快速爆破。
+0x01 爆破webshell代码 #!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber &lt;1070018473@qq.com&gt; import sys import requests proxy = {'http':'http://127.0.0.1:8080'} headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Accept-Language': 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Content-Type': 'application/x-www-form-urlencoded', } def get_file(filename): data = [] with open(filename,'r') as f: lines = f.readlines() for line in lines: data.append(line.strip()) return data def get_payloads(data): payloads = [] for x in xrange(0,10): print x*1000,(x+1)*1000 payload = [] for y in data[x*1000:(x+1)*1000]: payload.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2017/multi-parameter-blasting-webshell/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="https://wyb0.com/posts/2017/301-redirect/">301重定向</a></h2>
 
         
@@ -597,65 +655,6 @@ AJAX可在不重新加载整个页面的情况下与服务器交换数据从而�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/dirty-cow-vulnerabilities/">脏牛漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-10-22
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 测试环境 我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
-CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux [reber123@WYB ~]$ id uid=502(reber123) gid=502(reber123) groups=502(reber123)  0x01 创建文件 查看文件权限信息，可以看到属主为root，且只读，权限为0404
-[reber123@WYB ~]$ ls -al test -r-----r-- 1 root root 19 Oct 21 00:02 test [reber123@WYB ~]$ cat test this is not a test [reber123@WYB ~]$  0x02 编译、执行poc POC保存为a.c，编译为aaa
-[reber123@WYB ~]$ gcc -lpthread a.c -o aaa [reber123@WYB ~]$ ls aaa a.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/dirty-cow-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -713,7 +712,7 @@ CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 S
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(81)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -935,7 +934,7 @@ CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 S
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -996,6 +995,11 @@ CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 S
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
                 <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">

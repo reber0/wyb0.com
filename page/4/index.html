@@ -66,6 +66,62 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="https://wyb0.com/posts/2017/middleware-security-configuration/">中间件安全配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2017-10-28
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Apache  服务器安全配置  #查看服务器运行权限 $ ps aux|grep apache|grep -v grep $ sudo lsof -i:80 COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME apache2 1377 root 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21121 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21122 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21123 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21124 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 21125 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 24800 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) apache2 127488 www-data 4u IPv6 12596 0t0 TCP *:http (LISTEN) 第一行是Apache主进程，以root权限运行的，因为Apache的Web端口是80或443，而在Ubuntu(Linux)中开启小于1024的端口需要root权限，所以主进程必须以root权限运行。 第二行起为Apache子进程，其执行用户为www-data，www-data是Ubuntu中运行Web服务的默认用户，权限较低。 Windows中Apache安装完成后默认是administrator权限，所以需要降权，创建一个用户Apache，用户组为Guests，然后将Apache目录下的日志的可写权限赋给Guests账户。  #目录及文件权限 修改配置文件，vim /etc/apache2/apache2.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2017/middleware-security-configuration/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="https://wyb0.com/posts/2017/docker-volume/">Docker之数据卷</a></h2>
 
         
@@ -619,62 +675,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2017/sqlserver-stored-procedure/">SQLServer存储过程</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2017-05-30
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/database">Database</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/sqlserver">sqlserver</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 数据表结构 CREATE DATABASE student; CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT 'xiaoming', sex INT NOT NULL DEFAULT 1, age INT NOT NULL DEFAULT 0, hight INT NOT NULL DEFAULT 0 ) INSERT INTO info(name,sex,age,hight) VALUES('xiaohong',0,23,165); INSERT INTO info(name,sex,age,hight) VALUES('xiaogang',1,24,175); INSERT INTO info(name,sex,age,hight) VALUES('xiaoliu',1,21,160); INSERT INTO info(name,sex,age,hight) VALUES('xiaozhang',1,19,165); INSERT INTO info(name,sex,age,hight) VALUES('xiaoli',1,23,170); INSERT INTO info(name,sex,age,hight) VALUES('xiaohua',0,23,160); INSERT INTO info(name,sex,age,hight) VALUES('xiaoming',1,21,165); INSERT INTO info(name,sex,age,hight) VALUES('xiaowang',1,23,166); INSERT INTO info(name,sex,age,hight) VALUES('xiaojuan',0,21,159);  0x01 存储过程 --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p') DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg 'xiaoli'  0x02 使用游标的存储过程 -- 使用DECLARE声明局部变量，一般在函数和存储过程中使用 DECLARE @name VARCHAR(20) DECLARE @sex INT DECLARE @age INT DECLARE @hight INT DECLARE stu_cursor CURSOR FOR --定义游标，后面跟sql语句 SELECT name,sex,age,hight --使用游标的对象(根据需要写select语句) FROM dbo.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2017/sqlserver-stored-procedure/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -732,7 +732,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(81)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -954,7 +954,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1015,6 +1015,11 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
                 <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">

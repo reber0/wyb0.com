@@ -66,6 +66,68 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="https://wyb0.com/posts/2021/social_ngineering_database_and_sphinx/">通过 Sphinx 快速查询数据</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2021-06-10
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/tools">tools</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E7%A4%BE%E5%B7%A5">社工</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Sphinx Sphinx 是一款基于 SQL 的高性能全文检索引擎，Sphinx 的性能在众多全文检索引擎中也是数一数二的，利用 Sphinx我们可以完成比数据库本身更专业的搜索功能，而且可以有很多针对性的性能优化。
+ 快速创建索引：3 分钟左右即可创建近 100 万条记录的索引，并且采用了增量索引的方式，重建索引非常迅速。 闪电般的检索速度：尽管是 1 千万条的大数据量，查询数据的速度也在毫秒级以上，2-4G 的文本量中平均查询速度不到 0.1 秒。 为很多脚本语言设计了检索 API，如 PHP,Python,Perl,Ruby 等，因此你可以在大部分编程应用中很方便地调用 Sphinx 的相关接口。 为 MySQL 设计了一个存储引擎插件，因此如果你在 MySQL 上使用 Sphinx，那简直就方便到家了。 支持分布式搜索，可以横向扩展系统性能。  0x01 使用 Sphinx 查询的流程  通过 Sphinx 的 indexer 生成索引（需要先配置文件 sphinx.conf）  部分索引：indexer.exe -c sphinx.conf index_3pk_com_member
+全部索引：C:\Apps\sphinx\bin\indexer.exe -c C:\Apps\sphinx\etc\sphinx.conf --all
+若此时searchd守护进程已经启动，那么需要加上 --rotate参数： C:\Apps\sphinx\bin\indexer.exe -c C:\Apps\sphinx\etc\sphinx.conf --all --rotate
+ Sphinx 启动一个 searchd 进行监听（调接口）  C:\Apps\sphinx\bin\searchd.exe -c c:\Apps\sphinx\etc\sphinx.conf
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2021/social_ngineering_database_and_sphinx/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="https://wyb0.com/posts/2020/recording-a-injection-bypass/">记一次 SQL 注入简单 bypass</a></h2>
 
         
@@ -596,67 +658,6 @@ Payload：admin';if(1=(select count(*) from master.dbo.sysobjects where xtype = 
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/">从 SQL Server 注入到 getshell</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2019-03-02
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/pentest">pentest</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/getshell">getshell</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 目标情况  一个web站点111.*.*.63，只有一个登陆框，测试了没有注入，没有弱口令 扫描了全端口，没有发现什么有用的信息  0x01 发现注入 当时是查看网页源代码，有两个可疑接口，一个是初始化密码借口，访问返回空白页面，没有什么用
-另一个是密码设置接口，不过这个接口是同网段的另一个ip 111.*.*.59，访问后发现是个重置密码的界面 但是进行密码重置的时候需要发送验证码，系统会先校验用户名是否存在，加单引号出错，and 1=2没反应
-burpsuite抓包后sqlmap跑了下，python sqlmap.py -r 1.txt，存在注入 通过sqlmap得到了这几个数据库
-[*] HSOA_20170320 [*] HSOA_NEW [*] HSOA_T [*] master [*] model [*] msdb [*] Shuttle [*] SHWT [*] tempdb  0x02 找网站绝对路径  判断是不是dba权限(延时后返回正确页面，确定为dba权限&lt;也可用sqlmap的&ndash;is-dba判断&gt;)  uname=test';if(1=(select is_srvrolemember('sysadmin'))) WAITFOR DELAY '0:0:2';--   判断是否是站库分离(延时后返回正确页面，确定站库没有分离)  uname=test';if(host_name()=@@servername) WAITFOR DELAY '0:0:5';--   查看是否有xp_cmdshell  uname=test';if(1=(select count(*) from master.dbo.sysobjects where xtype = 'x' and name = 'xp_cmdshell')) WAITFOR DELAY '0:0:2'--  恢复／删除xp_cmdshell exec sp_addextendedproc xp_cmdshell,@dllname='xplog70.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2019/sql-server-from-injection-to-getshell/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -714,7 +715,7 @@ burpsuite抓包后sqlmap跑了下，python sqlmap.py -r 1.txt，存在注入 通
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(81)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -936,7 +937,7 @@ burpsuite抓包后sqlmap跑了下，python sqlmap.py -r 1.txt，存在注入 通
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -997,6 +998,11 @@ burpsuite抓包后sqlmap跑了下，python sqlmap.py -r 1.txt，存在注入 通
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
                 <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">

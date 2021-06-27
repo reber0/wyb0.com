@@ -66,6 +66,64 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="https://wyb0.com/posts/2016/sqlmapapi-usage/">sqlmapapi的简单使用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-28
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/tools">tools</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于sqlmapapi.py 当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量
+0x01 用于交互的方法 在sqlmap/lib/utils/api.py中:
+# 用户方法 @get(&quot;/task/new&quot;) Create new task ID. @get(&quot;/task/&lt;taskid&gt;/delete&quot;) Delete own task ID. # 管理函数 @get(&quot;/admin/&lt;taskid&gt;/list&quot;) List task pull. @get(&quot;/admin/&lt;taskid&gt;/flush&quot;) Flush task spool (delete all tasks). # 核心交互函数 @get(&quot;/option/&lt;taskid&gt;/list&quot;) List options for a certain task ID @post(&quot;/option/&lt;taskid&gt;/get&quot;) Get the value of an option (command line switch) for a certain task ID @post(&quot;/option/&lt;taskid&gt;/set&quot;) Set an option (command line switch) for a certain task ID @post(&quot;/scan/&lt;taskid&gt;/start&quot;) Launch a scan @get(&quot;/scan/&lt;taskid&gt;/stop&quot;) Kill a scan @get(&quot;/scan/&lt;taskid&gt;/status&quot;) Return status of a scan @get(&quot;/scan/&lt;taskid&gt;/data&quot;) Retrieve the data of a scan @get(&quot;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&quot;) Retrieve a subset of log messages @get(&quot;/scan/&lt;taskid&gt;/log&quot;) Retrieve the log messages @get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system  0x02 sqlmapapi.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/sqlmapapi-usage/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="https://wyb0.com/posts/2016/csrf/">CSRF漏洞</a></h2>
 
         
@@ -595,79 +653,6 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/injection/">SQL注入</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-19
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 含义 sql注入是将代码插入(拼接)到应用(用户)的输入参数中，之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击，
-总结起来就是攻击者将恶意代码拼接到sql语句并加以执行从而得到数据的过程。
-0x01 成因 SQl语句未对用户参数进行严格过滤
-0x02 可引发注入的地方 其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入，常见的如下，按出现频率排序：
- GET POST X-Forwarded-For Cookie User-Agent  0x03 注入分类  根据语法(较权威)
- UNION query SQL injection(可联合查询注入)
-只要页面有显示位即可使用，且注入速度很快 Error-based SQL injection(报错型注入)
-没有显示位但用echo &ldquo;mysql_error()&ldquo;输出了错误信息，速度很快，但是语句较复杂 Boolean-based blind SQL injection(布尔型注入)
-一次一个字节，速度慢，但只要有注入就能用 Time-based blind SQL injection(基于时间延迟注入)
-超级慢，比布尔型注入慢几倍，但是通用性较强 Stacked queries SQL injection(堆叠注入)
-只有SQL Server可以使用(可多语句查询注入)  根据类型
- 整形
-形如&quot;a.asp?ID=55&quot;，这类注入的参数是&rdquo;数字&rdquo;，因此称为&rdquo;数字型注入点&rdquo;。 字符串型
-形如&quot;b.asp?name=xiaoming&quot;这类注入的参数是&rdquo;字符&rdquo;，称为&rdquo;字符型&rdquo;注入点。
- 搜索型
-指在进行数据搜索时没过滤搜索参数，直接通过搜索框表单提交。
-   0x04 查找注入点  在URL中
- and 1=1/and 1=2(整型) 随即输入(整型) -1/+1 回显上下页面(整型) 单引号(字符型/整型) and sleep(5) (判断页面返回时间)  在http头
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/injection/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -725,7 +710,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(80)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(81)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -947,7 +932,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
-                <sup>10</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1008,6 +993,11 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
                 <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
