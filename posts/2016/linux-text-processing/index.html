@@ -1,0 +1,894 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux之文本处理 - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>Linux之文本处理</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            2016-04-20 07:58
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="https://wyb0.com/tags/linux">linux</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<p>这里介绍3种方式：awk、grep、sed</p>
+
+<h3 id="0x00-awk处理文本-最常用">0x00 awk处理文本(最常用)</h3>
+
+<pre><code>作用：awk对数据以行分析并生成报告时显得很强大，它将行进行切片，再处理分开的切片，可对格式化的数据重新进行格式化  
+awk命令格式：awk [F filed-separator] 'commands' input-fiel(s)  
+参数-F：可以添加任意的分割符，比较重要  
+awk工作流程是这样的：  
+读入有'\n'换行符分割的一条记录，然后将记录按-F指定的域分隔符划分域，$0则表示所有域,$1表示第一个域,$n表示第n个域。默认域分隔符是&quot;空白键&quot; 或 &quot;[tab]键&quot;。
+</code></pre>
+
+<ul>
+<li><p>入门示例：</p>
+
+<pre><code class="language-bash">[wyb@localhost temp]$ head -n 5 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+[wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':' '{print $1}' #输出第1列，域分隔符为：
+root
+bin
+daemon
+adm
+lp
+[wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':'  '{pri
+nt &quot;id:&quot;$1&quot;\tshell:&quot;$7}' #输出第1、7列且给予列名
+id:root shell:/bin/bash
+id:bin  shell:/sbin/nologin
+id:daemon       shell:/sbin/nologin
+id:adm  shell:/sbin/nologin
+id:lp   shell:/sbin/nologin
+[wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':'  'BEGIN {print &quot;====begin=====&quot;} {print &quot;id:&quot;$1&quot;\tshell:&quot;$7} END {print &quot;====end====&quot;}'
+====begin=====
+id:root shell:/bin/bash
+id:bin  shell:/sbin/nologin
+id:daemon       shell:/sbin/nologin
+id:adm  shell:/sbin/nologin
+id:lp   shell:/sbin/nologin
+====end====
+[wyb@localhost temp]$ awk -F: '/root/' /etc/passwd #搜索含有root关键字的所有行
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+[wyb@localhost temp]$ awk -F: '/root/{print $7}' /etc/passwd #匹配root并输出对应shell
+/bin/bash
+/sbin/nologin
+[wyb@localhost temp]$ awk -F: '/^root/' /etc/passwd #匹配以root开头的行
+root:x:0:0:root:/root:/bin/bash
+</code></pre></li>
+
+<li><p>内置变量：
+<table>
+<tr>
+    <td bgcolor=black>
+ARGC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;命令行参数个数<br/>
+ARGV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;命令行参数排列<br/>
+ENVIRON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持队列中系统环境变量的使用<br/>
+FILENAME&nbsp;&nbsp;&nbsp;awk浏览的文件名<br/>
+FNR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览文件的记录数<br/>
+FS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设置输入域分隔符，等价于命令行 -F选项<br/>
+NF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览记录的域的个数<br/>
+NR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已读的记录数<br/>
+OFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出域分隔符<br/>
+ORS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出记录分隔符<br/>
+RS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;控制记录分隔符
+    </td>
+</tr>
+</table></p>
+
+<pre><code>[wyb@localhost temp]$ awk -F: '{print &quot;filename:&quot; FILENAME &quot;,linenumber:&quot; NR &quot;,columns:&quot; NF &quot;,linecontent:&quot;$0}' a.txt
+filename:a.txt,linenumber:1,columns:1,linecontent:1     root    12sf34s56
+filename:a.txt,linenumber:2,columns:1,linecontent:2     admin   ksdjfiweurf
+filename:a.txt,linenumber:3,columns:1,linecontent:3     dome    skd89453
+filename:a.txt,linenumber:4,columns:1,linecontent:4     tomkd   3jkke34
+filename:a.txt,linenumber:5,columns:1,linecontent:5     jarry   sdkj89ry4
+filename:a.txt,linenumber:6,columns:1,linecontent:6     canki   sdkj834
+filename:a.txt,linenumber:7,columns:1,linecontent:7     lola    er8f7734
+filename:a.txt,linenumber:8,columns:1,linecontent:8     marry   j8jkf78
+filename:a.txt,linenumber:9,columns:1,linecontent:9     candy   kd89943
+</code></pre></li>
+
+<li><p>awk编程：</p>
+
+<ul>
+<li><p>变量和赋值：</p>
+
+<pre><code>[wyb@localhost temp]$ head -n 5 /etc/passwd | awk -F ':'  'BEGIN {count=0} {count++; print &quot;username:&quot;$1} END {print &quot;count:&quot;count}'
+username:root
+username:bin
+username:daemon
+username:adm
+username:lp
+count:5
+[wyb@localhost ~]$ ls -l aaa/ettercap-0.8.2 | awk 'BEGIN {size=0;} {size=size+5;} END {print &quot;[end]size is:&quot;,size,&quot;byte&quot;}'
+[end]size is: 160 byte
+[wyb@localhost ~]$ ls -l aaa/ettercap-0.8.2 | awk 'BEGIN {size=0;} {size=size+5;} END {print &quot;[end]size is:&quot;,size/1024/1024,&quot;M&quot;}'
+[end]size is: 0.000152588 M
+</code></pre></li>
+
+<li><p>条件语句：</p>
+
+<pre><code>[wyb@localhost ~]$ head -n 6 /etc/passwd | awk -F ':' '{if($1==&quot;root&quot;) print &quot;root bash is:&quot;$7}'
+root bash is:/bin/bash
+[wyb@localhost ~]$ 
+</code></pre></li>
+</ul></li>
+</ul>
+
+<h3 id="0x01-grep处理文本">0x01 Grep处理文本</h3>
+
+<p>匹配到时输出一行</p>
+
+<ul>
+<li>常用参数：nrABC
+<table>
+<tr>
+    <td bgcolor=black>
+-n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出匹配到的字符串所在行数<br/>
+-r&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;遍历子目录文件查找字符串<br/>
+-A 3&nbsp;&nbsp;显示匹配行及下面3行<br/>
+-B 4&nbsp;&nbsp;显示匹配行及上面4行<br/>
+-C 4&nbsp;&nbsp;显示匹配行及上下4行<br/>
+-i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不区分大小写<br/>
+-v&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示所有不包含字符的行
+    </td>
+</tr>
+</table></li>
+</ul>
+
+<pre><code>[wyb@localhost ~]$ grep root /etc/passwd #查找root这个字符
+root:x:0:0:root:/root:/bin/bash
+operator:x:11:0:operator:/root:/sbin/nologin
+[wyb@localhost ~]$ grep -n root /etc/passwd #查找root字符串并输出所在行数
+1:root:x:0:0:root:/root:/bin/bash
+11:operator:x:11:0:operator:/root:/sbin/nologin
+[wyb@localhost ~]$ grep -n root /etc/passwd --color #给字符串不同颜色
+1:root:x:0:0:root:/root:/bin/bash
+11:operator:x:11:0:operator:/root:/sbin/nologin
+[wyb@localhost temp]$ ls
+aa  b.txt
+[wyb@localhost temp]$ grep -r -n root /home/wyb/temp/ --color #在temp目录及子目录查找字符串root
+/home/wyb/temp/b.txt:4:sdkrootwe
+/home/wyb/temp/b.txt:6:fsdkfjroot
+/home/wyb/temp/b.txt:9:root
+/home/wyb/temp/aa/a.txt:1:1     root    12sf34s56
+[wyb@localhost temp]$ grep -r -n &quot;^root&quot; /etc/passwd --color #正则查找字符串root
+1:root:x:0:0:root:/root:/bin/bash
+[wyb@localhost temp]$ grep -r -n &quot;root&quot; /etc/passwd --color -c #匹配的行的数
+2
+[wyb@localhost temp]$ ps aux | grep &quot;^wyb&quot;
+wyb        2185  0.0  0.1  99952  1840 ?        S    16:33   0:02 sshd: wyb@pts/0  
+wyb        2186  0.0  0.1 108464  1944 pts/0    Ss   16:33   0:00 -bash
+wyb        3229  2.0  0.1 110232  1136 pts/0    R+   18:27   0:00 ps aux
+wyb        3230  0.0  0.0 103244   828 pts/0    S+   18:27   0:00 grep ^wyb
+[wyb@localhost temp]$ ps aux | grep ora
+wyb        3233  0.0  0.0 103244   828 pts/0    S+   18:28   0:00 grep ora
+</code></pre>
+
+<h3 id="0x02-sed处理文本">0x02 sed处理文本</h3>
+
+<pre><code>* 处理大文本很好用，上几十万、上百万行的数据
+* sed主要以行为单位，可以将数据行进行替换、删除、新增、选取等
+* sed语法 参数 动作 文件
+* -n只把匹配到的输出
+* 主要参数是：
+    * a 在下面插入数据
+    * d 删除
+    * i 在上面插入数据
+    * p 输出数据
+    * c 替换字符串，后面可跟字符串，字符串替换n1到n2之间的行&lt;br/&gt;
+      s 替换字符串，通常搭配正则
+</code></pre>
+
+<ul>
+<li>字符的删除</li>
+</ul>
+
+<pre><code>[wyb@localhost aa]$ nl a.txt | sed '3,8d' #不输出3-8行
+     1  1     root      12sf34s56
+     2  2     admin     ksdjfiweurf
+     9  9     candy     kd89943
+[wyb@localhost aa]$ nl a.txt | sed '3,$d' #从第三行删到最后一行
+     1  1     root      12sf34s56
+     2  2     admin     ksdjfiweurf
+[wyb@localhost aa]$ nl a.txt | sed '/root/d' #正则删除带root的行
+     2  2     admin     ksdjfiweurf
+     3  3     dome      skd89453
+     4  4     tomkd     3jkke34
+     5  5     jarry     sdkj89ry4
+     6  6     canki     sdkj834
+     7  7     lola      er8f7734
+     8  8     marry     j8jkf78
+     9  9     candy     kd89943
+</code></pre>
+
+<ul>
+<li>a插入字符</li>
+</ul>
+
+<pre><code>[wyb@localhost aa]$ nl a.txt | sed '2a aaaaaa' | head -n 5 #在第二行下面插入一行字符串aaaaaa
+     1  1     root      12sf34s56
+     2  2     admin     ksdjfiweurf
+aaaaaa
+     3  3     dome      skd89453
+     4  4     tomkd     3jkke34
+[wyb@localhost aa]$ nl a.txt | sed '2i aaaaaa' | head -n 5 #在第二行上面插入一行字符串aaaaaa
+     1  1     root      12sf34s56
+aaaaaa
+     2  2     admin     ksdjfiweurf
+     3  3     dome      skd89453
+     4  4     tomkd     3jkke34
+[wyb@localhost aa]$ nl a.txt | sed '2i aaaaaa \ #增加多行用\
+bbbbb\
+ccccc\
+dddddd' | head -n 7
+     1  1     root      12sf34s56
+aaaaaa 
+bbbbb
+ccccc
+dddddd
+     2  2     admin     ksdjfiweurf
+     3  3     dome      skd89453
+</code></pre>
+
+<ul>
+<li>p输出字符</li>
+</ul>
+
+<pre><code>[wyb@localhost aa]$ nl a.txt | sed '2,5p'
+     1  1     root      12sf34s56
+     2  2     admin     ksdjfiweurf
+     2  2     admin     ksdjfiweurf
+     3  3     dome      skd89453
+     3  3     dome      skd89453
+     4  4     tomkd     3jkke34
+     4  4     tomkd     3jkke34
+     5  5     jarry     sdkj89ry4
+     5  5     jarry     sdkj89ry4
+     6  6     canki     sdkj834
+     7  7     lola      er8f7734
+     8  8     marry     j8jkf78
+     9  9     candy     kd89943
+[wyb@localhost aa]$ nl a.txt | sed -n '2,5p' #加-n去除其余行
+     2  2     admin     ksdjfiweurf
+     3  3     dome      skd89453
+     4  4     tomkd     3jkke34
+     5  5     jarry     sdkj89ry4
+[wyb@localhost aa]$ nl a.txt | sed -n '/root/p' #正则匹配root
+     1  1     root      12sf34s56
+[wyb@localhost bbb]$ nl /etc/passwd | sed -n '/root/{s/root/111111/;p}' #查找root，然后将行中的第一个root替换为abcdefg  -n代表不输出所有的
+     1  111111:x:0:0:root:/root:/bin/bash
+    11  operator:x:11:0:operator:/111111:/sbin/nologin
+</code></pre>
+
+<ul>
+<li>c和s替换字符</li>
+</ul>
+
+<pre><code>[wyb@localhost aa]$ nl a.txt | sed '2,5c aaaaaa' #将第2-5行替换
+     1  1     root      12sf34s56
+aaaaaa
+     6  6     canki     sdkj834
+     7  7     lola      er8f7734
+     8  8     marry     j8jkf78
+     9  9     candy     kd89943
+[wyb@localhost aa]$ nl /etc/passwd | sed -n '/root/{s/root/1111/g;p}'查找root，然后将全局的root替换为1111
+     1  1111:x:0:0:1111:/1111:/bin/bash
+    11  operator:x:11:0:operator:/1111:/sbin/nologin
+[wyb@localhost aa]$ nl /etc/passwd | sed -n '1,3{s/root/1111/g;p}'前五行查找root，然后将全局的root替换为1111
+     1  1111:x:0:0:1111:/1111:/bin/bash
+     2  bin:x:1:1:bin:/bin:/sbin/nologin
+     3  daemon:x:2:2:daemon:/sbin:/sbin/nologin
+[wyb@localhost aa]$ nl /etc/passwd | sed -n '1,5{s/root/1111/g;p;q}'前五行查找root，然后将整行的root替换为1111,查找到一个就退出
+     1  1111:x:0:0:1111:/1111:/bin/bash
+</code></pre>
+
+<ul>
+<li>实例</li>
+</ul>
+
+<pre><code>[wyb@localhost aa]$ ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10  
+          inet addr:192.168.63.131  Bcast:192.168.63.255  Mask:255.255.255.0
+          inet6 addr: fe80::20c:29ff:fe56:b410/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:11732 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:7223 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1148256 (1.0 MiB)  TX bytes:1192150 (1.1 MiB)
+
+
+[wyb@localhost aa]$ ifconfig eth0 | grep 'inet add' 
+          inet addr:192.168.63.131  Bcast:192.168.63.255  Mask:255.255.255.0
+[wyb@localhost aa]$ ifconfig eth0 | grep 'inet add' | sed 's/Bcast.*$//g'
+          inet addr:192.168.63.131  
+[wyb@localhost aa]$ 
+
+[wyb@localhost aa]$ nl /etc/passwd | sed '3,$d'
+     1  root:x:0:0:root:/root:/bin/bash
+     2  bin:x:1:1:bin:/bin:/sbin/nologin
+[wyb@localhost aa]$ nl /etc/passwd | sed '3,$d' | sed -n 's/bash/buleshell/p'
+     1  root:x:0:0:root:/root:/bin/buleshell
+
+[wyb@localhost aa]$ nl /etc/passwd | sed -e '3,$d' -e 's/bash/buleshell/p'
+     1  root:x:0:0:root:/root:/bin/buleshell
+     1  root:x:0:0:root:/root:/bin/buleshell
+     2  bin:x:1:1:bin:/bin:/sbin/nologin
+[wyb@localhost aa]$ 
+
+
+[wyb@localhost aa]$ nl /etc/passwd | sed -e '3,$d' -e 's/bash/buleshell/p'
+     1  root:x:0:0:root:/root:/bin/buleshell
+     1  root:x:0:0:root:/root:/bin/buleshell
+     2  bin:x:1:1:bin:/bin:/sbin/nologin
+[wyb@localhost aa]$ nl /etc/passwd | sed -e '3,$d' -e 's/bash/buleshell/p' &gt; test.txt
+[wyb@localhost aa]$ cat test.txt 
+     1  root:x:0:0:root:/root:/bin/buleshell
+     1  root:x:0:0:root:/root:/bin/buleshell
+     2  bin:x:1:1:bin:/bin:/sbin/nologin
+</code></pre>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人(<f>@reber</f>)所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="https://wyb0.com/posts/2016/linux-install-ettercap/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;Linux之安装ettercap
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="https://wyb0.com/posts/2016/linux-text-processing-software-awk/">
+                Linux之文本处理软件awk&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

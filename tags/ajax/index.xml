@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ajax on </title>
+    <link>https://wyb0.com/tags/ajax/</link>
+    <description>Recent content in ajax on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 22 Jun 2017 15:18:29 +0800</lastBuildDate>
+    
+	<atom:link href="https://wyb0.com/tags/ajax/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AJAX之跨域</title>
+      <link>https://wyb0.com/posts/2017/ajax-cross-domain/</link>
+      <pubDate>Thu, 22 Jun 2017 15:18:29 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2017/ajax-cross-domain/</guid>
+      <description>0x00 简介 当使用AJAX请求其他域名下的数据时会出现拒绝访问的情况，这是出于安全考虑，AJAX只能访问本地的资源，而不能跨域访问。
+当使用AJAX与PHP中的代码请求其他域的数据时会出现下面的情况
+至于解决方案的话这里说三种：JSONP、jQuery、CORS。
+0x01 JSONP 这里的场景是本地127站点跨域请求远程114.115.214.111站点的数据
+&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt; &amp;lt;title&amp;gt;jsonptest&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;script&amp;gt; function callback_func(data) { document.getElementById(&amp;quot;txtHint&amp;quot;).innerHTML=&amp;quot;姓名:&amp;quot;+data.name+&amp;quot;--性别:&amp;quot;+data.sex+&amp;quot;--年龄:&amp;quot;+data.age; } function get_msg(name) { var url = &amp;quot;http://114.115.214.111/wyb/msg.php?name=&amp;quot;+name+&amp;quot;&amp;amp;callback=callback_func&amp;quot;; var script = document.createElement(&#39;script&#39;); script.setAttribute(&#39;src&#39;, url); script.setAttribute(&#39;id&#39;, &#39;aaabbb&#39;); document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script); document.getElementById(&#39;aaabbb&#39;).remove(); } &amp;lt;/script&amp;gt; &amp;lt;h3&amp;gt;在输入框中尝试输入姓名(xiaoming):&amp;lt;/h3&amp;gt; &amp;lt;form action=&amp;quot;&amp;quot;&amp;gt; 输入姓名: &amp;lt;input type=&amp;quot;text&amp;quot; onkeyup=&amp;quot;get_msg(this.value)&amp;quot; /&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;p&amp;gt;提示信息: &amp;lt;span id=&amp;quot;txtHint&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;  &amp;lt;?php $conn = @mysql_connect(&#39;localhost&#39;,&#39;admin&#39;,&#39;123456&#39;); mysql_select_db(&#39;test&#39;,$conn); $name = $_GET[&#39;name&#39;]; $callback = $_GET[&#39;callback&#39;]; $sql = &amp;quot;select * from student where name=&#39;&amp;quot;.</description>
+    </item>
+    
+    <item>
+      <title>AJAX与PHP</title>
+      <link>https://wyb0.com/posts/2016/ajax-and-php/</link>
+      <pubDate>Wed, 16 Nov 2016 10:37:03 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/ajax-and-php/</guid>
+      <description>0x00 AJAX与PHP ajax.html代码如下：
+&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt; &amp;lt;script&amp;gt; function showHint(str) { var xmlhttp; if (str.length==0) { document.getElementById(&amp;quot;txtHint&amp;quot;).innerHTML=&amp;quot;&amp;quot;; return; } if (window.XMLHttpRequest) { // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码 xmlhttp=new XMLHttpRequest(); //创建对象 } else { // IE6, IE5 浏览器执行代码 xmlhttp=new ActiveXObject(&amp;quot;Microsoft.XMLHTTP&amp;quot;); } xmlhttp.onreadystatechange=function() { if (xmlhttp.readyState==4 &amp;amp;&amp;amp; xmlhttp.status==200) { document.getElementById(&amp;quot;txtHint&amp;quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&amp;quot;GET&amp;quot;,&amp;quot;./ajax.php?q=&amp;quot;+str,true); xmlhttp.send(); } &amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;h3&amp;gt;在输入框中尝试输入字母 a:&amp;lt;/h3&amp;gt; &amp;lt;form action=&amp;quot;&amp;quot;&amp;gt; 输入姓名: &amp;lt;input type=&amp;quot;text&amp;quot; id=&amp;quot;txt1&amp;quot; onkeyup=&amp;quot;showHint(this.value)&amp;quot; /&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;p&amp;gt;提示信息: &amp;lt;span id=&amp;quot;txtHint&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;  上面的代码会完成以下的东西： 1.</description>
+    </item>
+    
+    <item>
+      <title>AJAX的XHR请求与响应</title>
+      <link>https://wyb0.com/posts/2016/ajax-request-and-response/</link>
+      <pubDate>Tue, 25 Oct 2016 00:53:13 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/ajax-request-and-response/</guid>
+      <description>0x00 什么是AJAX AJAX全称是Asynchronous JavaScript and XML，即异步的JavaScript和XML
+AJAX不是新的编程语言，而是一种使用现有标准的新方法。
+AJAX可在不重新加载整个页面的情况下与服务器交换数据从而更新部分网页
+0x01 示例 &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;script&amp;gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari xmlhttp=new XMLHttpRequest(); } else {// code for IE6, IE5 xmlhttp=new ActiveXObject(&amp;quot;Microsoft.XMLHTTP&amp;quot;); } xmlhttp.onreadystatechange=function(){ if (xmlhttp.readyState==4 &amp;amp;&amp;amp; xmlhttp.status==200) { document.getElementById(&amp;quot;myDiv&amp;quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&amp;quot;GET&amp;quot;,&amp;quot;/try/ajax/ajax_info.txt&amp;quot;,true); xmlhttp.send(); } &amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div id=&amp;quot;myDiv&amp;quot;&amp;gt;&amp;lt;h2&amp;gt;使用 AJAX 修改该文本内容&amp;lt;/h2&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;button type=&amp;quot;button&amp;quot; onclick=&amp;quot;loadXMLDoc()&amp;quot;&amp;gt;修改内容&amp;lt;/button&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;  当点击&amp;rdquo;修改内容&amp;rdquo;后，文本就会改变，但html页面源码没变，只向服务器请求了文本
+0x02 关于XHR XMLHttpRequest是AJAX的基础，就是它与后台就行交互的
+现在大部分浏览器都支持XMLHttpRequest对象(IE5和IE6使用ActiveXObject)
+//创建对象示例 var xmlhttp; if (window.</description>
+    </item>
+    
+  </channel>
+</rss>

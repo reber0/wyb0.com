@@ -1,0 +1,776 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>目录遍历利用 - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>目录遍历利用</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            2019-12-16 09:23
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="https://wyb0.com/tags/pentest">pentest</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-12-16 09:23:47
+ * @LastEditTime: 2019-12-16 10:51:52
+ -->
+
+<h3 id="0x00-目录遍历">0x00 目录遍历</h3>
+
+<p>一个同事说有一些目录遍历，想着能不能搞个脚本啥的，以后利用也方便，自己没有写出来，说让我看看</p>
+
+<p>一般来说存在目录遍历的话就是翻文件，看看有没有一些敏感信息、未授权接口之类的，一个个翻的话也确实比较麻烦</p>
+
+<p>而且 eWebEditor、FCKeditor 这种编辑器有些版本也存在目录遍历漏洞，能找的一些未授权访问也是好的</p>
+
+<p>以前写过一个爬网站链接的脚本，感觉可以在那个脚本的基础上改一下，改过后确实大致能用</p>
+
+<h3 id="0x01-脚本">0x01 脚本</h3>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+'''
+@Author: reber
+@Mail: reber0ask@qq.com
+@Date: 2019-08-05 15:58:38
+@LastEditTime: 2019-12-16 17:07:09
+'''
+
+import asyncio
+import aiohttp
+from lxml import etree
+from urllib.parse import urljoin
+from urllib.parse import urlparse
+from urllib.parse import urlunsplit
+from pybloom_live import BloomFilter
+
+
+bf = BloomFilter(100000, 0.01)
+
+def is_repeat(ele):
+    if ele in bf:
+        return True #元素不一定在集合中
+    else:
+        bf.add(ele)
+        return False #元素一定不在集合中
+
+class GetAllLink(object):
+    &quot;&quot;&quot;docstring for GetAllLink&quot;&quot;&quot;
+    def __init__(self, target, crawl_deepth, rate):
+        super(GetAllLink, self).__init__()
+        self.target = target if (&quot;://&quot; in target) else &quot;http://{}/&quot;.format(target)
+        self.crawl_deepth = crawl_deepth
+        self.current_url_path = self.target
+
+        self.sem = asyncio.Semaphore(rate) # 限制并发量
+        self.loop = asyncio.get_event_loop()
+
+        self.url_links = {
+            &quot;a&quot;: [self.target],
+            &quot;img&quot;: [],
+            &quot;link&quot;: [],
+            &quot;script&quot;: [],
+            &quot;external&quot;: [],
+        }
+        self.unvisited = []
+        self.unvisited.append(self.target)
+        self.visited = []
+
+    async def async_get_page(self, url):
+        async with self.sem:
+            async with aiohttp.ClientSession() as session:
+                try:
+                    async with session.get(url, timeout=10) as resp:
+                        code = resp.status
+                        url = str(resp.url)
+                        html = await resp.text()
+                        return (code, url, html)
+                except aiohttp.client_exceptions.ClientConnectorError:
+                    return (000, url, &quot;Cannot connect to host&quot;)
+
+    def callback(self, future):
+        status_code, url, html = future.result()
+        print(&quot;get url: ==&gt; &quot;+url)
+        self.visited.append(url)
+        if status_code == 200:
+            self.extract_links(url, html)
+        elif status_code == 404 or status_code == 403:
+            print(status_code, url)
+        else:
+            print(status_code, url, html)
+
+    def extract_links(self, url, html):
+        import re
+        url = url.replace(&quot;%5C&quot;,&quot;/&quot;)
+        dir_m = re.findall(r'&lt;Folder name=&quot;(.*?)&quot; /&gt;', html, re.S|re.M)
+        file_m = re.findall(r'&lt;File name=&quot;(.*?)&quot; size=&quot;.*?&quot; /&gt;', html, re.S|re.M)
+        for dir in dir_m:
+            new_url = url+&quot;/&quot;+dir
+            print(new_url.split(&quot;=&quot;)[-1])
+            self.unvisited.append(new_url)
+        for file in file_m:
+            new_url = url+&quot;/&quot;+file
+            print(new_url.split(&quot;=&quot;)[-1])
+            self.visited.append(new_url)
+
+    # def extract_links(self, url, html):
+    #     &quot;&quot;&quot;
+    #     提取 url
+    #     &quot;&quot;&quot;
+    #     o = urlparse(url)
+    #     self.current_url_path = urlunsplit((o.scheme,o.netloc,o.path,'',''))
+
+    #     selector = etree.HTML(html)
+    #     a_list = selector.xpath(&quot;//a/@href&quot;)
+    #     img_list = selector.xpath(&quot;//img/@src&quot;)
+    #     link_list = selector.xpath(&quot;//link/@href&quot;)
+    #     script_list = selector.xpath(&quot;//script/@src&quot;)
+
+    #     for a in a_list:
+    #         self.parse_link(&quot;a&quot;,a)
+    #     for img in img_list:
+    #         self.parse_link(&quot;img&quot;,img)
+    #     for link in link_list:
+    #         self.parse_link(&quot;link&quot;,link)
+    #     for script in script_list:
+    #         self.parse_link(&quot;script&quot;, script)
+
+    # def parse_link(self, link_type, link):
+    #     url = None
+    #     if link.startswith(&quot;//&quot;):
+    #         link = &quot;http:&quot;+link
+
+    #     if link.startswith(&quot;/&quot;) or link.startswith(&quot;.&quot;): #相对路径，肯定是本域
+    #         url = urljoin(self.current_url_path, link)
+    #     elif link.startswith(self.target): #完整url，且为本域
+    #         url = link
+    #     elif link.startswith('http') or link.startswith('https'): # url为http开头且domain不在url中，肯定为外域
+    #         url = link
+    #         link_type = &quot;external&quot;
+
+    #     if url and (not is_repeat(url)):
+    #         if link_type == &quot;a&quot;:
+    #             print(&quot;match url: &quot;+url)
+    #             self.unvisited.append(url)
+    #             self.url_links[link_type].append(url)
+    #         else:
+    #             print(&quot;match url: &quot;+url)
+    #             self.url_links[link_type].append(url)
+
+    def run(self):
+        current_deepth=0
+        while current_deepth &lt; self.crawl_deepth:
+            print(&quot;*&quot;*130)
+            if len(self.unvisited) == 0:
+                break
+            else:
+                tasks = list()
+                while len(self.unvisited) &gt; 0:
+                    url = self.unvisited.pop()
+                    task = asyncio.ensure_future(self.async_get_page(url))
+                    task.add_done_callback(self.callback)
+                    tasks.append(task)
+                self.loop.run_until_complete(asyncio.wait(tasks))
+            current_deepth += 1
+
+
+if __name__ == &quot;__main__&quot;:
+    import optparse
+    parser = optparse.OptionParser(usage='Usage: %prog [options] domaion',
+                                    version='%prog 1.0')
+    parser.add_option('-u', dest='target',default=None, type='string',help='target domain')
+    parser.add_option('-d', dest='deepth',default=3, type='int',help='crawl deepth')
+    parser.add_option('-r', dest='rate', default=10, type='int', help='the rate, default is 10')
+
+    (options, args) = parser.parse_args()
+
+    if options.target:
+        gal = GetAllLink(target=options.target, crawl_deepth=options.deepth, rate=options.rate)
+        gal.run()
+        # print(&quot;-&quot;*130)
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;a&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;img&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;link&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;script&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;external&quot;]))
+        domain = urlparse(options.target).netloc
+        with open(&quot;{}.txt&quot;.format(domain),&quot;a+&quot;) as f:
+            for url in gal.visited:
+                print(url)
+                f.write(url+&quot;\n&quot;)
+            for url in gal.unvisited:
+                f.write(url+&quot;\n&quot;)
+    else:
+        parser.print_help()
+</code></pre>
+
+<h3 id="0x02-结果">0x02 结果</h3>
+
+<p>其实也就是在原来脚本的基础上注释了 parse_link()，重写了 extract_links()，把结果输出那里改下</p>
+
+<p>这个脚本是基于 FCKeditor 的目录遍历写的，常见的那种目录遍历的话改下 extract_links() 中的正则就行了</p>
+
+<p><img src="/img/post/Xnip2019-12-16_10-20-26.jpg" alt="" /></p>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人(<f>@reber</f>)所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="https://wyb0.com/posts/2019/postgresql-basis-use/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;PostgreSQL 简单使用
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="https://wyb0.com/posts/2020/recording-a-injection-bypass/">
+                记一次 SQL 注入简单 bypass&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

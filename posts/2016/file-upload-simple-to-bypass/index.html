@@ -1,0 +1,876 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件上传漏洞常见绕过手法 - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>文件上传漏洞常见绕过手法</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            2016-07-20 17:04
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="https://wyb0.com/tags/fileupload">fileupload</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2019-04-10 10:45:00
+ * @LastEditTime: 2019-07-25 12:31:04
+ -->
+
+<h3 id="0x00-一般防止上传漏洞手法">0x00 一般防止上传漏洞手法</h3>
+
+<pre><code>1、客户端检测：客户端使用JavaScript检测，在文件未上传时，就对文件进行验证
+    //任何客户端的验证都是不安全的，客户端验证目的是防止用户输入错误、减少
+    //服务器开销，而服务端验证才可以真正防御攻击者。  
+2、服务器端检测：服务端脚本一般会检测文件的MIME类型，检测文件扩展名是否合法
+</code></pre>
+
+<h3 id="0x01-客户端检测">0x01 客户端检测</h3>
+
+<p>客户端验证代码形如下：</p>
+
+<pre><code class="language-html">&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;图片上传&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+    function checkFile(){
+        var flag = false;
+        var str = document.getElementById(&quot;file&quot;).value;
+        str = str.substring(str.lastIndexOf('.') + 1);
+        var arr = new Array('png','bmp','gif','jpg');
+        for (var i=0;i&lt;arr.length;i++){
+            if(str==arr[i]){
+                flag = true;
+            }
+        }
+        if(!flag){
+            alert('文件不合法！');
+        }
+        return flag;
+    }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form action=&quot;upload.php&quot; method=&quot;post&quot; onsubmit=&quot;checkFile()&quot; enctype=&quot;multipart/form-data&quot;&gt;
+        &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot; /&gt;&lt;br/&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;提交&quot; name=&quot;submit&quot; /&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>接收文件的脚本upload.php代码如下：</p>
+
+<pre><code class="language-php">&lt;?php
+if(isset($_POST[&quot;submit&quot;])){
+    $name = $_FILES['file']['name'];
+    $name = md5(date('Y-m-d h:m:s')).strrchr($name,&quot;.&quot;);
+    $size = $_FILES['file']['size'];
+    $tmp = $_FILES['file']['tem_name'];
+    move_uploaded_file($tmp,$name);
+    echo &quot;文件上传成功！path：&quot;.$name;
+}
+?&gt;
+</code></pre>
+
+<p>绕过：</p>
+
+<pre><code>1、可以用firebug将form表单中的onsubmit事件删除，这样就可以绕过验证。
+2、使用Burp Suite：
+    1）先将木马文件的扩展名改为一张正常图片的扩展名，如jpg
+    2）上传时使用Burp Suite拦截数据包，将木马文件扩展名改为php就可绕过客户端验证。
+    注意：这里修改文件名字后，请求头中的Content-Length的值也要改
+</code></pre>
+
+<h3 id="0x02-服务端检测">0x02 服务端检测</h3>
+
+<p>服务端分为6项：</p>
+
+<pre><code>* 黑名单与白名单验证
+* MIME验证
+* 目录验证
+* 截断上传攻击
+* 文件攻击
+* 检测文件内容
+</code></pre>
+
+<h4 id="1-黑名单与白名单验证">1. 黑名单与白名单验证</h4>
+
+<ul>
+<li>黑名单过滤方式</li>
+</ul>
+
+<pre><code class="language-php">&lt;?php
+$Blacklist = array('asp','php','jsp','php5','asa','aspx');    //黑名单
+if (isset($_POST[&quot;submit&quot;])){
+    $name = $FILES['file']['name'];    //接收文件名
+    $extension = substr(strrchr($name, &quot;.&quot;) , 1);    //得到扩展名
+    $boo = false;
+    foreach ($Blaklist as $key =&gt; $value){
+        if ($value==$extension) {    //迭代判断是否命中
+            $boo = true;
+            break;     //命中后直接退出循环
+        }
+    }
+    if (!$boo) {    //若没有被命中，则进行上传操作
+        $size = $_FILES['file']['size'];  //接收文件大小
+        $tmp = $FILES['file']['temp_name'];   //临时路径
+        move_uploaded_file($tmp, $name);   //移动临时文件到当前文件目录
+    } else {
+        echo &quot;文件不合法!!&quot;;
+    }
+}
+?&gt;
+</code></pre>
+
+<ul>
+<li>白名单过滤方式</li>
+</ul>
+
+<pre><code class="language-php">&lt;?php
+$WhiteList = array('rar','jpg','png','bmp','gif','jpg','doc');
+if(isset($_POST[&quot;submit&quot;])){
+    $name = $_FILES['file']['name'];
+    $extension = substr(strrchr($name,&quot;.&quot;),1);
+    $boo = false;
+    foreach($WhiteList as $key =&gt; $value){
+        if($value==$extension){
+            $boo = true;
+        }
+    }
+    if($boo){
+        $size = $_FILES['file']['size'];
+        $tmp = $_FILES['file']['tmp_name'];
+        move_uploaded_file($tmp,$name);
+        echo &quot;文件上传成功！&lt;br/&gt;path:&quot;.$name;
+    }else{
+        echo &quot;文件不合法！&quot;;
+    }
+}
+?&gt;
+</code></pre>
+
+<p>绕过方法：</p>
+
+<pre><code>* 0x00截断绕过
+* 从黑名单中找到web开发者忽略的扩展名，如：cer
+* 没有对扩展名进行大小写转换，在window平台依然可以大小写绕过
+* 在window下，若文件名以&quot;.&quot;或者空格作为结尾，系统会自动去除&quot;.&quot;与空格，所以可以上传不符合Windows命名规则的文件来绕过，
+  如：test.asp.、test.asp(空格)、test.asp_、test.php::$DATA
+* 配合解析漏洞，如iis6上传test.asp;1.jpg
+</code></pre>
+
+<h4 id="2-mime验证">2. MIME验证</h4>
+
+<p>对文件MIME类型做验证的PHP代码如下：</p>
+
+<pre><code class="language-php">&lt;?php
+if($_FILES['file']['type']==&quot; image/jpeg&quot;){
+    $imageTempName = $_FILES['file']['tmp_name'];
+    $imageName = $_FILES['file']['name'];
+    $last = substr($imageName,strrpos($imageName,&quot;.&quot;));
+    if(!is_dir(&quot;uploadFile&quot;)){
+        mkdir(&quot;uploadFile&quot;);
+    }
+    $imageName = md5($imageName).$last;
+    move_upload_file($imageTempName,&quot;./uploadFile/&quot;.$imageName);
+    echo(&quot;文件上传成功！ path = /uploadFile/$imageName&quot;);
+}else{
+    echo(&quot;文件上传类型错误，请重新上传...&quot;);
+    exit();
+}
+?&gt;
+</code></pre>
+
+<p>未修改MIME类型，上传失败：
+<img src="/img/post/upload_vuln_not_alter_mime.png" alt="上传漏洞没有修改MIME" />
+修改MIME类型，上传成功：
+<img src="/img/post/upload_vuln_alter_mime.png" alt="上传漏洞修改MIME" /></p>
+
+<h4 id="3-目录验证">3. 目录验证</h4>
+
+<p>文件上传时通常允许用户将文件放到指定的目录中，若目录存在则将文件写入目录，否则新建目录然后写入，若为iis6.0则可以利用这个漏洞，客户端上传代码如下：</p>
+
+<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;up&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form action=&quot;upload.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+        &lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;&lt;br/&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;Extension&quot; value=&quot;up&quot; /&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;提交&quot; name=&quot;submit&quot; /&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>服务端PHP接收文件的代码如下：</p>
+
+<pre><code class="language-php">&lt;?php
+if($_FILES['file']['type']==&quot;image/jpeg&quot;){
+    $imageTempName=$_FILES['file']['tmp_name'];
+    $imageName=$_FILES['file']['name'];
+    $last=substr($imageName,strrpos($imageName,&quot;.&quot;));
+    if($last!=&quot;.jpg&quot;){
+        echo(&quot;mime error!&lt;br/&gt;&quot;);
+    }
+    $Extension=$_POST['Extension'];
+    if(!is_dir($Extension)){
+        mkdir(&quot;./$Extension&quot;);
+        echo &quot;mkidr $Extension succesfully&quot;.&quot;&lt;br/&gt;&quot;;
+    }
+    $imageName=md5($imageName).$last;
+    move_uploaded_file($imageTempName,&quot;./$Extension/&quot;.$imageName);
+    echo(&quot;upload ok! path = /$Extension/$imageName&quot;);
+} else {
+    echo(&quot;type error...&quot;);
+    exit();
+}
+?&gt;
+</code></pre>
+
+<p>查看上传到了那个文件：
+<img src="/img/post/upload_vuln_check_upload_dirname.png" alt="上传漏洞查看上传到那个文件夹" />
+将文件改名：
+<img src="/img/post/upload_vuln_alter_upload_dirname.png" alt="上传漏洞尝试更改上传文件夹名字" />
+<img src="/img/post/upload_vuln_check_asp_dirname.png" alt="上传漏洞查看asp文件夹是否生成" /></p>
+
+<h4 id="4-截断上传攻击">4. 截断上传攻击</h4>
+
+<p>截断上传攻击在ASP程序中比较常见(在PHP、JSP中也有)
+先上传正常后缀的图片马：
+<img src="/img/post/upload_vuln_upload_normal_picture.png" alt="上传漏洞上传正常后缀的图片马" />
+更改图片名字：
+<img src="/img/post/upload_vuln_alter_picture_name.png" alt="上传漏洞修改图片名字" />
+截断：
+<img src="/img/post/upload_vuln_truncate_picture_name.png" alt="上传漏洞截断文件名" />
+上传成功：
+<img src="/img/post/upload_vuln_upload_success.png" alt="上传漏洞成功将jpg图片马上传为asp脚本" /></p>
+
+<h4 id="5-文件攻击">5. 文件攻击</h4>
+
+<ul>
+<li><p>.htaccess文件攻击<br />
+Apache设置为AllowOverride All时，通过.htaccess文件调用php解析器去解析一个文件名中只要包含&rdquo;haha&rdquo;这个字符串的任意文件，无论扩展名是什么(没有也行)，都以php的方式来解析，.haccess文件代码如下：</p>
+
+<pre><code>&lt;FilesMatch &quot;haha&quot;&gt;
+SetHandler application/x-httpd-php
+&lt;/FilesMatch&gt;
+</code></pre>
+
+<p>或者如下，上传一个文件名为evil.gif的图片马：</p>
+
+<pre><code>&lt;FilesMatch &quot;evil.gif&quot;&gt;
+SetHandler application/x-httpd-php
+&lt;/FilesMatch&gt;
+</code></pre>
+
+<p>或者如下，上传一个后缀为png的图片马：</p>
+
+<pre><code>&lt;Files *.png&gt;
+SetHandler application/x-httpd-php
+&lt;/Files&gt;
+</code></pre></li>
+
+<li><p>.user.ini文件攻击</p>
+
+<pre><code>只要中间键是以fastcgi运行的php都可以用这个方法，.user.ini能被动态加载，它也有两个配置
+项：auto_append_file和auto_prepend_file，只要在.user.ini中添加auto_prepend_file=aa.jpg
+这句话，就可以让其他php文件执行前自动包含aa.jpg，和require()类似。
+</code></pre>
+
+<p><img src="/img/post/upload_vuln_file_attack1.png" alt="上传漏洞-文件攻击1" />
+<img src="/img/post/upload_vuln_file_attack2.png" alt="上传漏洞-文件攻击2" /></p></li>
+</ul>
+
+<h4 id="6-检测文件内容">6. 检测文件内容</h4>
+
+<ul>
+<li><p>文件幻数检测<br />
+在文件首部加上如下幻数，后面跟一句话木马即可</p>
+
+<pre><code>JFIF    FF D8 FF E0 00 10 4A 46 49 46
+GIF89a  47 49 46 38 39 61
+PNG     89 50 4E 47
+</code></pre></li>
+
+<li><p>文件相关信息检测<br />
+通常用的getimagesize()函数，只需要在幻数基础上加一些文件信息就行了，如下：</p>
+
+<pre><code>GIF89a
+(...some binary data for image...)
+&lt;?php phpinfo(); ?&gt;
+(... skipping the rest of binary data ...)
+</code></pre></li>
+
+<li><p>文件加载检测<br />
+服务端会调用API或函数对文件进行加载测试，常见的是图像渲染测试，变态的甚至是二次渲染：</p>
+
+<pre><code>对渲染/加载测试的攻击方式是代码注入绕过
+对二次渲染的攻击方式是攻击文件加载器本身
+</code></pre></li>
+</ul>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人(<f>@reber</f>)所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="https://wyb0.com/posts/2016/file-upload-and-file-parse-vuln/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;文件上传漏洞与文件解析漏洞
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="https://wyb0.com/posts/2016/file-upload-editor-upload-vulnerability/">
+                文件上传之文本编辑器上传漏洞&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

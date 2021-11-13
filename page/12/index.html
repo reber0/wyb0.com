@@ -1,0 +1,1094 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.55.0" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reber's Blog - 渗透测试|python|php </title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    
+<div class="main">
+    <div class="left">
+        <div class="content">
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/xss-basis-and-use/">XSS漏洞及其挖掘方法</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-15
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/xss">xss</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 简介 XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在&rdquo;脚本&rdquo;这两个字上，脚本主要有两个：JavaScript和ActionScript。
+要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。
+0x01 危害 JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。
+• 盗取管理员Cookie • XSS Worm • 挂马(水坑攻击) • 键盘记录(有局限性) • 利用网站重定向 • 修改网页内容 • 等等  0x02 攻击场景 在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。
+• 支持html解析和javascript解析的客户端,如：html文档、flsh、pdf等 • url的参数，回显到网页上 • form表单提交的内容出现在网页上，如：昵称、邮箱、简介、留言 • 等等  0x03 分类 主要分为三类：反射型、存储型、DOM型(还有flash XSS、mXSS)。
+ 反射型XSS
+  反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。
+简单流程： 1. 用户访问带有XSS代码的URL请求 2. 服务器端接收数据后处理，然后返回带有XSS代码的数据发送给浏览器 3. 浏览器解析带有XSS代码的数据后，最终造成XSS漏洞 可能攻击流程： 1. 用户aaa在网站www.xxx.com浏览网页 2. 攻击者hacker发现www.xxx.com/xss.php存在反射型XSS漏洞，然后精心构造JavaScript代码， 3. 构造的代码的功能为盗取用户Cookie并发送到指定站点www.xxser.com 4. hacker将带有反射型XSS漏洞的URL通过站内信发给aaa，站内信为一些诱惑信息，目的是使用户aaa点击 5. 假设用户aaa点击了带有XSS漏洞的URL，则aaa的Cookie将被发送到www.xxser.com 6. hacker获取aaa的Cookie后可以以aaa的身份登陆www.xxx.com，从而得到aaa的敏感信息   存储型XSS
+  存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/xss-basis-and-use/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-module-paramiko/">Python的paramiko模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-14
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 安装 直接pip install paramiko安装
+或者去http://www.paramiko.org/ 下载
+0x01 执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&quot;192.168.188.134&quot;,22,&quot;reber&quot;,&quot;123456&quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&quot;ls -l&quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  0x02 上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&quot;192.168.188.134&quot;,22)) ftp.connect(username=&quot;reber&quot;,password=&quot;123456&quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath='/tmp/a.txt' localpath='C:\\Users\\reber\\Desktop\\a.txt' sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\reber\\Desktop\\system.log remotepath='/tmp/a.txt' localpath='C:\\Users\\reber\\Desktop\\system.log' sftp.get(remotepath, localpath) ftp.close()  
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-module-cmd/">Python的cmd模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-14
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于cmd模块 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+0x01 cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  0x02 用cmd模块简单实现shell命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot; def __init__(self): Cmd.__init__(self) os.chdir(&quot;C:/Users/reber/Desktop&quot;) hostName = socket.gethostname() self.prompt = &quot;reber@&quot; + hostName + &quot; &quot; + os.path.abspath('.') + &quot;\n$ &quot; def help_dir(self): print &quot;dir [path]&quot; def do_dir(self, arg): if not arg: print &quot;\n&quot;.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-module-cmd/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/in-the-wireless-use-ettercap-to-do-man-in-the-middle-attack/">无线下ettercap做中间人攻击</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-13
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/wireless">wireless</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         前提：攻击主机和被攻击主机在一个无线下面
+0x00 打开ettercap 0x01 查看host列表 在软件的图形化界面点击sniff，选择unified sniffing选择网卡，然后单击hosts选项，选择scan for host，然后选择host list 0x02 选定攻击目标 选择192.168.1.116的IP地址，点击Add to Target 1,然后选择网关的IP地址192.168.1.1，点击Add to Target 2 0x03 开始攻击 ettercap选择&quot;mitm&quot;—&quot;arp poisoning&quot;—&quot;Sniff remote connections&quot;— &quot;确定&quot;，然后再在被攻击端查看arp，可知攻击已经成功 0x04 ettercap持续监听目标 软件上开始监听，被攻击端用浏览器登录路由器 0x05 得到Cookie 点击主界面的&rdquo;View&rdquo; — &ldquo;connetcions&rdquo; 可以查看被攻击主机的一些网络链接 0x06 用cookie登陆被入侵账户 打开火狐浏览器，通过firebug插件添加截获到的cookie从而登陆账户 
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/attack-802.11-network-under-wpa-protection/">攻击WPA保护下的802.11网络</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-13
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/wireless">wireless</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 网络拓扑及信息 其中ip等信息如下： 0x01 获取信息  查看无线网卡并将其设置为监听模式  打开kismet，进行基本设置  选择名字为111111的AP为目标  查看kismet抓包信息 kismet生成的nettxt文件的部分信息如下：
+  Network 104: BSSID D8:42:AC:C9:5C:1D Manuf : Shanghai First : Mon Nov 16 12:46:21 2015 Last : Mon Nov 16 13:10:23 2015 Type : infrastructure BSSID : D8:42:AC:C9:5C:1D SSID 1 Type : Probe Response SSID : &quot;111111&quot; First : Mon Nov 16 12:46:30 2015 Last : Mon Nov 16 13:10:22 2015 Max Rate : 54.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/attack-802.11-network-under-wpa-protection/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/windows2003-set-up-vpn/">Windows2003下搭建VPN</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-07
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 环境及要求 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器
+0x01 安装服务 0x02 配置并启用路由和远程访问 0x03 新增路由协议 0x04 新增接口 0x05 新增VPN用户 0x06 尝试连接VPN 
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/iptables-configure-dmz/">iptables简单配置DMZ</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-05
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/dmz">dmz</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 要求  内网可以访问外网 内网可以访问DMZ区 外网不能访问内网 外网能访问DMZ区的服务 DMZ区不能访问内网 DMZ区不能主动访问外网  0x01 拓扑 0x02 个主机IP信息 内网网段为：192.168.1.0/24
+DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容如下：
+#!/bin/bash iptables –F #清空此表中的规则 iptables –X #清空此表中的自定义规则 iptables –Z #清空此表中的计数器为0 iptables -P INPUT DROP iptables -P OUTPUT DROP iptables -P FORWARD DROP iptables -F -t nat iptables -X -t nat iptables -Z -t nat iptables -t nat -P PREROUTING ACCEPT iptables -t nat -P POSTROUTING ACCEPT iptables -t nat -P OUTPUT ACCEPT #添加必要的模块 modprobe ip_nat_ftp modprobe iptable_nat modprobe ip_conntrack modprobe ip_conntrack_ftp #开启转发功能 echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward #******************************************************************** #PREROUTING： iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/iptables-configure-dmz/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-simple-decode-ip-head/">Python简单解码IP头</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-03
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 解码IP头 Windows上运行时要以管理员身份运行
+代码可以解码IP头统计通信信息并保存到文本，同时统计数量
+#!/usr/bin/env python #-*- coding:utf-8 -*- import socket import os import sys import time import struct from ctypes import * host = &quot;10.22.114.114&quot; tcp_num = 0 udp_num = 0 icmp_num = 0 class IP(Structure): _fields_ = [ (&quot;ihl&quot;, c_ubyte,4), (&quot;version&quot;, c_ubyte,4), (&quot;tos&quot;, c_ubyte), (&quot;len&quot;, c_ushort), (&quot;id&quot;, c_ushort), (&quot;offset&quot;, c_ushort), (&quot;ttl&quot;, c_ubyte), (&quot;protocol_num&quot;,c_ubyte), (&quot;sum&quot;, c_ushort), (&quot;src&quot;, c_ulong), (&quot;dst&quot;, c_ulong) ] def __new__ (self,socket_buffer=None): return self.from_buffer_copy(socket_buffer) def __init__ (self,socket_buffer=None): self.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-simple-decode-ip-head/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-module-requests/">Python的requests模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-02
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 无参数的get请求 import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串  0x01 有参数的get请求 import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } param = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie  0x02 POST请求 import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.10.10.10:8080/Lab2.0/student.action' data = { 'userid':'1315935xxx', 'password':'xxxxxxx', 'quan':'Student', } header = { 'User-Agent': 'Mozilla/5.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-module-requests/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/ssrf/">SSRF</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-30
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/ssrf">ssrf</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 什么是SSRF SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，它将一个可以发起网络请求的服务当作跳板来攻击其他服务，SSRF的攻击目标一般是内网。
+当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。
+0x01 SSRF的危害 可以扫描内部网络
+可以构造数据攻击内部主机
+0x02 漏洞挖掘 其实只要能对外发起网络请求就有可能存在SSRF漏洞。
+1. 从WEB功能上寻找 通过URL分享内容 文件处理、编码处理、转码等服务 在线翻译 通过URL地址加载与下载图片 图片、文章的收藏 设置邮件接收服务器 2. 从URL关键字寻找 share、wap、url、link、src、source、target、u、3g、 display、sourceURl、imageURL、domain...  0x03 漏洞验证 http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png 1. 右键在新窗口打开图片，图片地址为http://www.baidu.com/img/bd_logo1.png， 说明不存在SSRF漏洞。 2. firebug看网络连接信息，若没有http://www.baidu.com/img/bd_logo1.png 这个图片请求，则证明图片是aa.com服务端发起的请求，则可能存在SSRF漏洞。  0x04 绕过过滤 有时漏洞利用时会遇到IP限制，可用如下方法绕过：
+* 使用@：http://A.com@10.10.10.10 = 10.10.10.10 * IP地址转换成十进制、八进制：127.0.0.1 = 2130706433 * 使用短地址：http://10.10.116.11 = http://t.cn/RwbLKDx * 端口绕过：ip后面加一个端口 * xip.io：10.0.0.1.xip.io = 10.0.0.1 www.10.0.0.1.xip.io = 10.0.0.1 mysite.10.0.0.1.xip.io = 10.0.0.1 foo.bar.10.0.0.1.xip.io = 10.0.0.1 * 通过js跳转  0x05 通用的SSRF实例  weblogin配置不当，天生ssrf漏洞 discuz x2.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/ssrf/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+
+            
+
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <a href="/page/11/"><i class="fa fa-chevron-left"></i></a>
+        
+
+        <span>&nbsp;12 / 19&nbsp;</span>
+        
+        
+            <a href="/page/13/"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
+
+
+        </div>
+    </div>
+    <div class="right">
+        
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+        
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+        
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+        
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+    </div>
+</div>
+
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+

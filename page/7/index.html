@@ -1,0 +1,1122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.55.0" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reber's Blog - 渗透测试|python|php </title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    
+<div class="main">
+    <div class="left">
+        <div class="content">
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/">[转]MySQL报错注入原理分析(count()、rand()、group by)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-11-13
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        原文链接：http://drops.wooyun.org/tips/14312
+0x00 疑问 一直在用mysql数据库报错注入方法，但为何会报错？
+百度谷歌知乎了一番，发现大家都是把官网的结论发一下截图，然后执行sql语句证明一下结论，但是没有人去深入研究为什么rand不能和order by一起使用，也没彻底说明三者同时使用报错的原理。
+0x01 位置问题？ select count(*),(floor(rand(0)*2))x from information_schema.tables group by x;这是网上最常见的语句,目前位置看到的网上sql注入教程,floor 都是直接放count(*)后面，为了排除干扰，我们直接对比了两个报错语句，如下图
+由上面的图片，可以知道报错跟位置无关。
+0x02 绝对报错还是相对报错？ 是不是报错语句有了floor(rand(0)*2)以及其他几个条件就一定报错？其实并不是如此，我们先建建个表，新增一条记录看看，如下图： 确认表中只有一条记录后，再执行报错语句看看，如下图： 多次执行均未发现报错。
+然后我们新增一条记录。 然后再测试下报错语句 多次执行并没有报错
+OK 那我们再增加一条 执行报错语句 ok 成功报错
+由此可证明floor(rand(0)*2)报错是有条件的，记录必须3条以上，而且在3条以上必定报错，到底为何？请继续往下看。
+0x03 随机因子具有决定权么(rand()和rand(0)) 为了更彻底的说明报错原因，直接把随机因子去掉，再来一遍看看，先看一条记录的时候，如下图: 一条记录的话 无论执行多少次也不报错
+然后增加一条记录。
+两条记录的话 结果就变成不确定性了 随机出现报错。
+然后再插入一条
+三条记录之后，也和2条记录一样进行随机报错。
+由此可见报错和随机因子是有关联的，但有什么关联呢，为什么直接使用rand()，有两条记录的情况下就会报错，而且是有时候报错，有时候不报错，而rand(0)的时候在两条的时候不报错，在三条以上就绝对报错？我们继续往下看。
+0x04 不确定性与确定性 前面说过，floor(rand(0)*2)报错的原理是恰恰是由于它的确定性，这到底是为什么呢？从0x03我们大致可以猜想到，因为floor(rand()*2)不加随机因子的时候是随机出错的，而在3条记录以上用floor(rand(0)*2)就一定报错，由此可猜想floor(rand()*2)是比较随机的，不具备确定性因素，而floor(rand(0)*2)具备某方面的确定性。
+为了证明我们猜想，分别对floor(rand()*2)和floor(rand(0)*2)在多记录表中执行多次(记录选择10条以上)，在有12条记录表中执行结果如下图：
+mysql&gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(rand()*2) | +-----------------+ | 0 | | 0 | | 0 | | 0 | | 0 | | 0 | | 1 | | 0 | | 0 | | 0 | | 0 | | 0 | +-----------------+ 12 rows in set (0.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/ajax-request-and-response/">AJAX的XHR请求与响应</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-10-25
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/javascript">JavaScript</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/ajax">ajax</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 什么是AJAX AJAX全称是Asynchronous JavaScript and XML，即异步的JavaScript和XML
+AJAX不是新的编程语言，而是一种使用现有标准的新方法。
+AJAX可在不重新加载整个页面的情况下与服务器交换数据从而更新部分网页
+0x01 示例 &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;script&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari xmlhttp=new XMLHttpRequest(); } else {// code for IE6, IE5 xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); } xmlhttp.onreadystatechange=function(){ if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true); xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改该文本内容&lt;/h2&gt;&lt;/div&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;修改内容&lt;/button&gt; &lt;/body&gt; &lt;/html&gt;  当点击&rdquo;修改内容&rdquo;后，文本就会改变，但html页面源码没变，只向服务器请求了文本
+0x02 关于XHR XMLHttpRequest是AJAX的基础，就是它与后台就行交互的
+现在大部分浏览器都支持XMLHttpRequest对象(IE5和IE6使用ActiveXObject)
+//创建对象示例 var xmlhttp; if (window.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/ajax-request-and-response/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/dirty-cow-vulnerabilities/">脏牛漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-10-22
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 测试环境 我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
+CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux [reber123@WYB ~]$ id uid=502(reber123) gid=502(reber123) groups=502(reber123)  0x01 创建文件 查看文件权限信息，可以看到属主为root，且只读，权限为0404
+[reber123@WYB ~]$ ls -al test -r-----r-- 1 root root 19 Oct 21 00:02 test [reber123@WYB ~]$ cat test this is not a test [reber123@WYB ~]$  0x02 编译、执行poc POC保存为a.c，编译为aaa
+[reber123@WYB ~]$ gcc -lpthread a.c -o aaa [reber123@WYB ~]$ ls aaa a.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/dirty-cow-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/code-execution-vulnerabilities-2/">代码执行漏洞(二)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-10-14
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/rce">rce</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         接着上一篇：代码执行漏洞(一) 0x00 函数create_function() php中的函数create_function()可以创建一个匿名函数，其函数原型如下：
+string create_function ( string $args , string $code ) 其中$args是函数的参数，$code是函数的内容  若对提交的code未过滤或过滤不当则可能会导致代码执行漏洞
+0x01 示例 示例a.php代码如下：
+&lt;?php $test = @$_GET['test']; $newfun = create_function('$a,$b', $test); $newfun('1111','2222'); ?&gt; 上述代码中$nuwfun('1111','2222')代表此时$a='1111',$b='2222',然后将其传给$test  0x02 函数assert() 这个函数和eval()的作用差不多
+&lt;?php @assert($_GET['str']); ?&gt;  
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/use-blank-attribute-to-fish/">利用_blank属性钓鱼</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-10-12
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E9%92%93%E9%B1%BC">钓鱼</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 _blank _blank是html中的标签属性，如&lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber.com/1.php&quot;&gt;HELLO&lt;/a&gt;, 但若点击HELLO打开的网页1.php中有如下代码：
+&lt;script&gt; if(window.opener){ window.opener.location = &quot;http://xss.reber.com/fish.html&quot;; } &lt;/script&gt;  则原网页将转跳到http://xss.reber.com/fish.html ，这就会造成钓鱼
+0x01 简单模板  a.html内容如下：  &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;Document&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;a target=&quot;_blank&quot; href=&quot;http://xss.reber.com/1.php&quot;&gt;HELLO&lt;/a&gt; &lt;/body&gt; &lt;/html&gt;   http://xss.reber.com/1.php中1.php内容如下：  &lt;html&gt; &lt;head&gt; &lt;title&gt;test&lt;/title&gt; &lt;script&gt; if(window.opener){ window.opener.location = &quot;http://xss.reber.com/fish.html&quot;; } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;p&gt;hello&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;   1.php同级下有个钓鱼模板fish.html，内容如下：  &lt;html&gt; &lt;head&gt; &lt;title&gt;fish&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;h2&gt;This is fishing template!&lt;/h2&gt; &lt;/body&gt; &lt;/html&gt;   点击a.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/use-blank-attribute-to-fish/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/principles/">准则</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-09-21
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/miscellanea">miscellanea</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 创造价值 小鸡问母鸡：可否不用下蛋，带我出去玩啊？母鸡道：不行，我要工作！
+小鸡说：可你已经下了这么多蛋了！母鸡意味深长地对小鸡说：一天一个蛋，菜刀靠边站，一月不生蛋，高压锅里见。
+存在是因为你创造价值，淘汰是因为你失去价值。过去的价值不代表未来，所以每天都要努力！
+0x01 韬光养晦 毛竹用了4年时间，仅仅长了3厘米，但从第5年开始，以每天30厘米的速度疯狂地生长，仅用6周，就长到了15米。其实，在前面的４年，毛竹将根在土壤里延伸了数百平方米。
+做人做事亦是如此，不要担心付出得不到回报，因为这些付出都是为了扎根，等到时机成熟，你会登上别人遥不可及的巅峰。
+0x02 感恩 乞丐：能不能给我一百块钱？
+路人：我只有八十块钱。
+乞丐：那你就欠我二十块钱吧。
+不要总以为是上苍欠你的，老觉得老天爷给的不够多、不够好，不要让贪婪之欲取代了感恩之心。
+0x05 宽容与谦卑 一滴墨汁落在一杯清水里，这杯水立即变色，不能喝了；一滴墨汁融在大海里，大海依然是蔚蓝色的大海。为什么？因为两者的肚量不一样。
+不熟的麦穗直刺刺地向上挺着，成熟的麦穗低垂着头。为什么？因为两者的份量不一样。
+宽容别人，就是肚量；谦卑自己，就是份量；合起来，就是一个人的质量。
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/package-sqlmapapi-common-function/">SqlmapApi常用方法封装</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-09-21
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/tools">tools</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import threading import requests import json from time import sleep class Sqli(threading.Thread): &quot;&quot;&quot;docstring for AutoSqli&quot;&quot;&quot; def __init__(self, server, target, data='', referer='', cookie=''): threading.Thread.__init__(self) self.server = server[0:-1] if server[-1]=='/' else server self.target = target self.data = data self.referer = referer self.cookie = cookie self.taskid = '' self.data def new_task(self): url = &quot;{}/task/new&quot;.format(self.server) self.taskid = json.loads(requests.get(url).text)['taskid'] if len(self.taskid)&gt;0: print &quot;Create new task,taskid is: %s&quot; % self.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/package-sqlmapapi-common-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-blasting-zip-archive/">Python爆破zip压缩包</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-09-20
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E7%88%86%E7%A0%B4">爆破</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 代码 多线程爆破加密的zip压缩包
+#!/usr/bin/env python # -*- coding: utf-8 -*- import sys import optparse import zipfile import threading import Queue queue = Queue.Queue() lock = threading.Lock() result = '' def load_pwd(filename): for line in open(filename,'r'): if line: queue.put(line.strip()) def bruter(zipname,queue): global result zFile = zipfile.ZipFile(zipname) while not queue.empty(): password = queue.get() try: zFile.extractall(pwd=password) # 解压 lock.acquire() print &quot;[Ok] password is: %s&quot; % password lock.release() result = password except: lock.acquire() print &quot;[Error] password not is: %s&quot; % password lock.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-blasting-zip-archive/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-implement-agent/">Python实现代理</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-09-13
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 帮助信息 0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- 'This is a proxy' __author__ = 'xxx' import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s) text = b''.join([x if 0x20 &lt;= ord(x) &lt; 0x7F else b'.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-implement-agent/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-package-mysql-function/">Python封装MySQL类</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-09-12
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/database">Database</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/mysql">mysql</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 安装 有两种，一个是MySQLdb，一个是pymysql
+ 下载MySQL-python然后安装
+ sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)  0x01 简单表设计如下 insert into mysql.user(Host,User,Password) values('%','python','123456'); drop database if exists python; create database python; use python; drop table if exists msg; create table msg( id int not null auto_increment primary key, ip varchar(40) not null default '127.0.0.1' comment 'ip地址', domain varchar(100) not null default 'www.xx.com' comment '域名' ); grant all privileges on python.* to 'python'@'%' identified by '123456'; flush privileges;  0x02 MySQLdb封装代码 #!
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-package-mysql-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+
+            
+
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <a href="/page/6/"><i class="fa fa-chevron-left"></i></a>
+        
+
+        <span>&nbsp;7 / 19&nbsp;</span>
+        
+        
+            <a href="/page/8/"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
+
+
+        </div>
+    </div>
+    <div class="right">
+        
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+        
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+        
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+        
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+    </div>
+</div>
+
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+

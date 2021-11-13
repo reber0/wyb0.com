@@ -1,0 +1,1113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>python - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+    
+    <div class="main">
+        <div class="left">
+            
+            <div class="content">
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-module-requests/">Python的requests模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-02
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 无参数的get请求 import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串  0x01 有参数的get请求 import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } param = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie  0x02 POST请求 import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.10.10.10:8080/Lab2.0/student.action' data = { 'userid':'1315935xxx', 'password':'xxxxxxx', 'quan':'Student', } header = { 'User-Agent': 'Mozilla/5.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-module-requests/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-encode-setting/">Python的编码问题</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-29
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 几个编码函数 * ord(x) 将字符转换为10进制整数(0~255之间) #ord('a')==&gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;'a'，chr(0x61)==&gt;'a' * b2a_hex(x) 将字符转换为对应的16进制 #import binascii;binascii.b2a_hex('a')==&gt;'61' * a2b_hex(x) 将16进制转换为对应的字符 #import binascii;binascii.a2b_hex('61')==&gt;'a' * hex(x) 将10进制整数转换为对应的16进制 #hex(16)==&gt;'0x10' * oct(x) 将10进制整数转换为对应的8进制 #oct(9)==&gt;'011'  0x01 设置为utf-8  在py文件开头设置
+#!/usr/bin/env python #-*- coding: utf-8 -*- 或： #coding=utf8  永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
+#coding=utf8 import sys reload(sys) sys.setdefaultencoding('utf8') # 此方法修改了python环境，设置系统默认编码，永久有效   0x03 编码转换 python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
+python2中的字符串一般包含两种类型：str和unicode str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串 unicode：unicode编码的字符串才是unicode类型的字符串 可通过isinstance()和type()来判断 &gt;&gt;&gt; aa = '小明' &gt;&gt;&gt; isinstance(aa,str) True &gt;&gt;&gt; type(aa) &lt;type 'str'&gt; &gt;&gt;&gt; bb = u'小明' &gt;&gt;&gt; isinstance(bb,unicode) True &gt;&gt;&gt; type(bb) &lt;type 'unicode'&gt;  &gt;&gt;&gt; u'小明'.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-encode-setting/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-module-logging-and-colorlog/">Python 中通过 logging 和 colorlog 模块记录日志</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-27
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 使用流程  创建一个 logger 创建相关 handler，同时定义 handler 的输出格式 将 handler 添加到 logger 使用 logger 记录日志  0x01 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- ''' @Author: reber @Mail: reber0ask@qq.com @Date: 2019-07-16 22:31:00 @LastEditTime : 2020-06-16 13:17:05 ''' import logging import colorlog class MyLog(object): &quot;&quot;&quot; MyLog(loglevel, logger_name, logfile=None) &quot;&quot;&quot; def __init__(self, loglevel, logger_name, logfile=None): # 创建一个 logger self.logger = logging.getLogger(logger_name) self.logger.setLevel(logging.DEBUG) # 设置日志输出等级，后面创建 Handler 然后 setLevel(logging.DEBUG) 也不能输出 WARNING 等级之下的日志 # self.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-module-logging-and-colorlog/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-coding-style/">Python编写规范</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-12
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 代码编排 1.缩进：使用4个空格缩进 2.行长度：每行不要超过80个字符 3.空行：顶级定义之间空两行，如函数或类的定义，方法定义、类定义与第一个方法之间都应该空一行。 4.分号：行尾不要有分号，也不要用分号将两条命令放在一行,除非是： 1.长的导入模块语句。 2.注释里的URL. 3.可以使用圆括号实现隐式行连接  0x01文档编排 1.导入：模块注释-&gt;文档字符串-&gt;导入-&gt;模块全局变量-&gt;常量 导入顺序：标准库导入-&gt;第三方库导入-&gt;应用程序指定库导入 2.import:不要在一行中import多个库，一行中只导入一个  0x02 空格 1.不要在逗号、分号、冒号前加空格，但应在他们后面加(除了在行尾) 2.二元操作符(赋值、比较、布尔)两边都加空格 3.当&quot;=&quot;用于指示关键字参数或默认参数值是，不要再其两侧使用空格 4.&quot;,&quot;和&quot;#&quot;和&quot;=&quot;不需要对齐，因为空格会成为维护的负担  0x03 注释 总体原则，错误的注释不如没有注释。 注释必须使用英文，最好是完整的句子，首字母大写，句后要有结束符，结束符后跟两个空格，开始下一句。如果是短语，可以省略结束符。 1.块注释：在一段代码前增加的注释。在&quot;#&quot;后加一空格。段落之间以只有&quot;#&quot;的行间隔。 2.行注释，在一句代码后加注释。进来少使用. 3.绝不要描述代码. 假设阅读代码的人比你更懂Python, 他只是不知道你的代码要做什么.  0x04 文档描述 1.为所有的共有模块、函数、类、方法写docstrings；非共有的没有必要，但是可以写注释（在def的下一行）。 2.如果docstring要换行，参考如下例子 class SampleClass(object): &quot;&quot;&quot;Summary of class here. Longer class information.... Longer class information.... Attributes: likes_spam: A boolean indicating if we like SPAM or not. eggs: An integer count of the eggs we have laid. &quot;&quot;&quot; def __init__(self): &quot;&quot;&quot;Inits SampleClass with blah.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-coding-style/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-regular/">Python的正则</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-02-05
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E6%AD%A3%E5%88%99">正则</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 正则表达式 正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串
+0x01 符号 0x02 特殊字符 0x03 常用的模块属性 0x04 re模块 由于Pyton的字符串本身也用\转义，强烈建议使用r前缀
+ 函数match()
+这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None  函数search()
+这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None  函数findall()和finditer()
+re.findall()将以列表的形式返回所有能匹配到的字符
+re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数sub()
+这个函数会对字符串进行匹配，然后替换，可以指定替换次数  函数split()
+这个函数会以正则来分割字符串，以列表样式返回  函数compile()
+这个函数可以编译正则，提高匹配速度   0x05 提取子串 根据正则可以匹配字符然后提取出来，用括号表示要提取的分组 0x06 贪婪匹配 正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&rdquo;？&rdquo;来抑制贪婪匹配 
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-thread/">Python的线程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-02-03
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/thread">thread</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。
+0x00 单线程 #!/usr/bin/env python # -*- coding: utf-8 -*- from time import time,ctime,sleep def music(arg): for x in range(2): print &quot;I'm listening to %s. %s&quot; % (arg,ctime()) sleep(1) def movie(arg): for x in range(2): print &quot;I'm watching %s. %s&quot; % (arg,ctime()) sleep(5) if __name__ == '__main__': start = int(time()) music(u'我') movie(u'可是') print &quot;All over time:%s&quot; % ctime() print &quot;Used time:%d&quot; % int(time()-start)  0x01 多线程 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep INDEX = 0 def http_get(sites): global INDEX while INDEX &lt; len(sites): url = sites[INDEX] INDEX += 1 resp = requests.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-thread/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-io-operation/">Python的IO操作</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-01-31
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 文件的操作  文件读写  r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入
+#!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.txt&quot;,&quot;r&quot;) data = f.read() print &quot;File name: &quot;,f.name print &quot;File open moudle: &quot;,f.mode print &quot;File is close ?&quot;,f.closed print &quot;File content: &quot;,data finally: f.close() with open(&quot;test.txt&quot;,&quot;a+&quot;) as f: #自动调用close() data = &quot;\nYes,I know.&quot; f.write(data) print u&quot;写入内容：%s&quot; % data with open(&quot;test.txt&quot;,&quot;r&quot;) as f: #readlines()一次读取一行，返回一个列表，也可以用read(size)读取指定大小 line = f.readlines() print line   指针移动  #!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-io-operation/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-object-oriented/">Python的面向对象</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-01-25
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 面向对象  面向对象是为了解决系统的可维护性，可扩展性，可重用性
+ 三个基本特征：封装、继承、多态
+ 封装：对一类事物，将其相同特点和功能提取出来，所共有的特点叫做属性，共有的功能就叫做方法，将属性和方法组合在一起就叫做封装。
+如：人具有姓名、年龄、性别，这些就是属性，人可以说话、可以走、可以跑，这些就是方法，封装起来就是一个类，而类的实例化就是对象
+ 继承：继承可以使得子类具有父类的属性和方法，不需要再次编写相同的代码，子类可以对继承的代码进行重写，也可以追加新的属性和方法。
+如：有一个类People，教师就可以继承自People，可以添加自己的属性，如：工资、职工号，也可以添加自己的方法，如：备课、写教案
+ 多态：首先，多态必有继承，没有继承就没有多态，继承后一个父类的引用变量可以指向其任意一个子类对象。
+如：有一个People类，它的子类可以有学生、老师、工人，有多种形态，这就是多态
+   0x01 类的实例 注意：类中每个方法后面都要写self，self就是当前对象指针
+ 示例一  #!/usr/bin/env python # -*- coding:utf-8 -*- # 声明一个People类 class People(object): &quot;&quot;&quot;docstring for People&quot;&quot;&quot; def __init__(self, name, age): super(People, self).__init__() self.name = name self.age = age def running(self): print &quot;%s is running&quot; % self.name def print_base_msg(self): print &quot;Name:%s Age:%d&quot; % (self.name,self.age) # 继承自People类 class Teacher(People): &quot;&quot;&quot;docstring for Teacher&quot;&quot;&quot; def __init__(self, name, age, salary): super(Teacher, self).
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-object-oriented/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-functional-programming/">Python的函数式编程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-01-21
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 函数式编程 首先说一下高阶函数，能将函数作为参数来接收的函数就可以称为高阶函数，如下：
+def add(x,y,f): return f(x) + f(y) print add(7,-3,abs) #abs是求绝对值的函数，这里返回的值为10  将函数作为参数传入，这样的函数就是高阶函数，而函数式编程就是指这种抽象程度很高的编程范式。
+函数式编程的一个特点就是可以将函数作为参数，还允许返回一个函数。
+纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。
+允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。
+0x01 高阶函数  map()函数
+map接收两个参数，一个是函数，一个是列表(list)，map将函数依次作用到list的每个元素，然后返回新的list  def f(x): return x*x print map(f,[1,2,3,4]) #返回[1,4,9,16] print map(str,[1,2,3,4]) # 返回['1','2','3','4']   reduce()函数
+reduce接收参数和map一样(但传入的函数必须接收两个参数)，reduce会对list的每个元素反复调用函数，然后返回最终值  def f(x,y): return x*y print reduce(f,[1,2,3,4]) #1*2*3*4，返回24   filter()函数
+filter也接收函数和list，函数会对list的每个元素进行判断然后返回True或False，为True的组成新list返回  def f(x): return x &gt; 3 print filter(f,[1,2,3,4,5]) #返回[4,5]   sorted()函数
+Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #返回[2,3,34,345]  sorted也是一个高阶函数，当然也可以接收函数和参数。通常规定，对于两个元素x和y，若认为x &lt; y则返回-1，若认为x == y则返回0，若认为x &gt; y则返回1，从而进行正向排序
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-functional-programming/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-type-of-data/">Python的数据类型</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-01-19
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 特点及差别 常见4种数据类型：list、tuple、dict、set list即列表，它内部是有序的，可以添加、更新、删除元素 tuple是元组，它的内部也是有序的，但一般不可更新、删除，即内部元素不可变 dict即字典，它的内部无序，key不可变、不可重复，key值可更新，可删除键值对 set可用作求交集、并集等，它的内部无序，key不可变、不可重复，可添加和删除  0x01 操作示例 #!/usr/bin/env python # -*- coding: utf-8 -*- ####################################### print '-----list-----' L = [] #这样就可以声明一个list了 n = 1 while n &lt;= 9: L.append(n) #添加 n = n + 2 print L #[1,3,5,7,9] L[len(L)-1] = 11 #更新 print L #[1,3,5,7,11] L.pop() #删除,和L.pop(-1)一样 L.pop(-2) print L #[1,3,7] L.insert(1,'jack') for x in range(len(L)): print L[x], #逗号可抑制换行，结果为 1 jack 3 7 print '\n-----list-----\n' ####################################### print '-----tuple-----' T =('Michael','Bob','Tracy') print T #['Michael', 'Bob', 'Tracy'] for x in range(len(T)): print T[x], # Michael Bob Tracy print '\n-----tuple-----\n' ####################################### print '-----dict-----' D = {'Adam':95,'Lisa':90,'Bart':75} print D #{'Lisa': 90, 'Adam': 95, 'Bart': 75} D['Lisa'] = 99 #更新 D['Kongming'] = 'X' #添加 print D #{'Lisa': 99, 'Kongming': 'X', 'Adam': 95, 'Bart': 75} D.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-type-of-data/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+
+                
+
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <a href="/tags/python/page/2/"><i class="fa fa-chevron-left"></i></a>
+        
+
+        <span>&nbsp;3 / 3&nbsp;</span>
+        
+        
+            <i class="fa fa-chevron-right"></i>
+        
+    </nav>
+
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br><br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>

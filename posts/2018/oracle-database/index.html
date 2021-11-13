@@ -1,0 +1,976 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oracle数据库简单使用 - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    <div class="main">
+        <div class="left">
+            <div>
+                <h2>Oracle数据库简单使用</h2>
+                
+                <div class="post-meta">
+                    <div style="padding:5px 5px 2px 5px;">
+                        <i class="fa fa-calendar fa-fw"></i>
+                        <time>
+                            2018-12-25 23:34
+                        </time>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    
+
+                    
+
+                    
+                        
+                        
+                        
+                            <i class="fa fa-folder fa-fw"></i>
+                            
+                                <a class="post-taxonomy-topic" href="https://wyb0.com/topics/database">Database</a>
+                            
+                        
+                        
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                        
+                        
+                            <i class="fa fa-tags fa-fw"></i>
+                            
+                                <a class="post-taxonomy-tag" href="https://wyb0.com/tags/oracle">oracle</a>
+                            
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content">
+                
+                
+
+<h3 id="0x00-关于oracle">0x00 关于Oracle</h3>
+
+<ul>
+<li>完整的Oracle数据库通常由两部分组成：Oracle数据库和数据库实例。</li>
+<li>数据库是一系列物理文件的集合（数据文件，控制文件，联机日志，参数文件等）</li>
+<li>Oracle数据库实例则是一组Oracle后台进程/线程以及在服务器分配的共享内存区</li>
+<li>关于部分视图
+
+<ul>
+<li><code>DBA/ALL/USER/V_$/GV_$/SESSION/INDEX</code>开头的绝大部分都是视图</li>
+<li>DBA_TABLES意为DBA拥有的或可以访问的所有的关系表。</li>
+<li>ALL_TABLES意为某一用户拥有的或有权限访问的所有的关系表。</li>
+<li>USER_TABLES意为某一用户所拥有的所有的关系表。</li>
+<li>当某一用户本身就为数据库DBA时，DBA_TABLES与ALL_TABLES等价。</li>
+<li><code>DBA_TABLES &gt;= ALL_TABLES &gt;= USER_TABLES</code></li>
+</ul></li>
+</ul>
+
+<h3 id="0x01-关于实例">0x01 关于实例</h3>
+
+<ul>
+<li>在启动Oracle数据库服务器时，实际上是在服务器的内存中创建一个Oracle实例（即在服务器内存中分配共享内存并创建相关的后台内存）</li>
+<li>我们访问Oracle都是访问一个实例，通过Oracle数据库实例来访问和控制磁盘中的数据文件</li>
+<li>Oracle实例如果关联了数据库文件，就是可以访问的，如果没有，就会得到实例不可用的错误</li>
+<li>实例名指的是用于响应某个数据库操作的数据库管理系统的名称，它同时也叫SID，连接数据库时就会用到这个SID，如：jdbc:oracle:thin:@localhost:1521:orcl（orcl就为数据库实例名）</li>
+</ul>
+
+<h3 id="0x02-关于表空间-可以理解为mysql中的数据库">0x02 关于表空间(可以理解为mysql中的数据库)</h3>
+
+<ul>
+<li>Oracle数据库是通过表空间来存储物理表的，一个数据库实例可以有N个表空间，一个表空间下可以有N张表。</li>
+<li>用户和表空间是多对多的关系，但是一般创建用户时会指定一个默认表空间。</li>
+<li>表空间是数据库中最大的逻辑单位，一个表空间可以包含多个数据文件，而一个数据文件只能隶属一个表空间。</li>
+</ul>
+
+<h3 id="0x03-搭建oracle环境">0x03 搭建Oracle环境</h3>
+
+<p>使用docker拉取Oracle数据库并且运行</p>
+
+<pre><code>[23:36 reber@wyb in ~]
+➜  docker pull alexeiled/docker-oracle-xe-11g
+[23:36 reber@wyb in ~]
+➜  docker run --rm -tid --shm-size=2g -p 1521:1521 -p 8080:8080 alexeiled/docker-oracle-xe-11g
+</code></pre>
+
+<p>然后在<a href="https://www.oracle.com/technetwork/database/database-technologies/instant-client/downloads/index.html?_blank">www.oracle.com</a>下载链接Oracle的客户端：instantclient-basic-macos、instantclient-sqlplus-macos</p>
+
+<pre><code>[15:41 reber@wyb in ~/Downloads]
+➜  unzip instantclient-basic-macos.x64-12.2.0.1.0-2.zip
+Archive:  instantclient-basic-macos.x64-12.2.0.1.0-2.zip
+  inflating: instantclient_12_2/BASIC_README
+  inflating: instantclient_12_2/adrci
+  inflating: instantclient_12_2/genezi
+    linking: instantclient_12_2/libclntsh.dylib  -&gt; libclntsh.dylib.12.1
+  inflating: instantclient_12_2/libclntsh.dylib.12.1
+  inflating: instantclient_12_2/libclntshcore.dylib.12.1
+  inflating: instantclient_12_2/libnnz12.dylib
+    linking: instantclient_12_2/libocci.dylib  -&gt; libocci.dylib.12.1
+  inflating: instantclient_12_2/libocci.dylib.12.1
+  inflating: instantclient_12_2/libociei.dylib
+  inflating: instantclient_12_2/libocijdbc12.dylib
+  inflating: instantclient_12_2/libons.dylib
+  inflating: instantclient_12_2/liboramysql12.dylib
+  inflating: instantclient_12_2/ojdbc8.jar
+  inflating: instantclient_12_2/uidrvci
+  inflating: instantclient_12_2/xstreams.jar
+finishing deferred symbolic links:
+  instantclient_12_2/libclntsh.dylib -&gt; libclntsh.dylib.12.1
+  instantclient_12_2/libocci.dylib -&gt; libocci.dylib.12.1
+[15:41 reber@wyb in ~/Downloads]
+➜  unzip instantclient-sqlplus-macos.x64-12.2.0.1.0-2.zip
+Archive:  instantclient-sqlplus-macos.x64-12.2.0.1.0-2.zip
+  inflating: instantclient_12_2/SQLPLUS_README
+  inflating: instantclient_12_2/glogin.sql
+  inflating: instantclient_12_2/libsqlplus.dylib
+  inflating: instantclient_12_2/libsqlplusic.dylib
+  inflating: instantclient_12_2/sqlplus
+[15:42 reber@wyb in ~/Downloads]
+➜  sudo mv instantclient_12_2 /opt/
+Password:
+[15:42 reber@wyb in ~/Downloads]
+➜  ls /opt
+RAR                  instantclient_12_2
+chromedriver         metasploit-framework
+➜  tail -n 5 ~/.zshrc
+# oracle sqlplus
+export PATH=&quot;$PATH:/opt/instantclient_12_2&quot;
+</code></pre>
+
+<p>连接数据库</p>
+
+<pre><code>[16:03 reber@wyb in ~/Downloads]
+➜  sqlplus system/oracle@127.0.0.1/xe
+
+SQL*Plus: Release 12.2.0.1.0 Production on Tue Dec 25 16:03:25 2018
+
+Copyright (c) 1982, 2017, Oracle.  All rights reserved.
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL&gt;
+</code></pre>
+
+<h3 id="0x04-表空间操作">0x04 表空间操作</h3>
+
+<ul>
+<li><p>查看表空间</p>
+
+<pre><code class="language-sql">--下面的表空间每个用户都默认存在
+SQL&gt; select tablespace_name,status from user_tablespaces;
+
+TABLESPACE_NAME                STATUS
+------------------------------ ---------
+SYSTEM                         ONLINE
+SYSAUX                         ONLINE
+UNDOTBS1                       ONLINE
+TEMP                           ONLINE
+USERS                          ONLINE
+</code></pre></li>
+
+<li><p>创建表空间</p>
+
+<pre><code class="language-sql">--创建数据表空间
+SQL&gt; create tablespace db_test_data --创建一个新的表空间，名字是db_test_data
+  2  datafile '/tmp/db_test_data.dbf' --表空间数据文件路径
+  3  size 64m --表空间初始大小
+  4  autoextend on
+  5  next 64m maxsize 2048m
+  6  extent management local;
+
+Tablespace created.
+
+--创建临时表空间
+SQL&gt; create temporary tablespace db_test_temp
+  2  tempfile '/tmp/db_test_temp.dbf'
+  3  size 64m
+  4  autoextend on
+  5  next 64m maxsize 2048m
+  6  extent management local;
+
+Tablespace created.
+
+-- 再次查看表空间
+SQL&gt; select tablespace_name,status from user_tablespaces;
+
+TABLESPACE_NAME        STATUS
+---------------------- ---------
+SYSTEM                 ONLINE
+SYSAUX                 ONLINE
+UNDOTBS1               ONLINE
+TEMP                   ONLINE
+USERS                  ONLINE
+DB_TEST_DATA           ONLINE
+DB_TEST_TEMP           ONLINE
+
+7 rows selected.
+</code></pre></li>
+
+<li><p>创建用户并指定表空间的映射</p>
+
+<pre><code class="language-sql">SQL&gt; create user utest identified by ptest
+  2  default tablespace db_test_data --默认用户表空间
+  3  temporary tablespace db_test_temp; --默认临时表空间
+
+--dba权限查看用户
+SQL&gt; select username,default_tablespace,temporary_tablespace from dba_users;
+
+USERNAME             DEFAULT_TABLESPACE   TEMPORARY_TABLESPACE
+-------------------- -------------------- --------------------
+UTEST                DB_TEST_DATA         DB_TEST_TEMP
+SYS                  SYSTEM               TEMP
+ANONYMOUS            SYSAUX               TEMP
+SYSTEM               SYSTEM               TEMP
+APEX_PUBLIC_USER     SYSTEM               TEMP
+APEX_040000          SYSAUX               TEMP
+XS$NULL              SYSTEM               TEMP
+OUTLN                SYSTEM               TEMP
+FLOWS_FILES          SYSAUX               TEMP
+MDSYS                SYSAUX               TEMP
+CTXSYS               SYSAUX               TEMP
+XDB                  SYSAUX               TEMP
+HR                   USERS                TEMP
+
+13 rows selected.
+</code></pre></li>
+
+<li><p>给用户授予权限(也可以创建有相应权限的角色然后授予角色)</p>
+
+<pre><code class="language-sql">--赋予用户角色，Oracle有dba、connect、resource这3个角色
+SQL&gt; grant connect,resource to utest;
+
+Grant succeeded.
+
+--赋予用户系统权限，有create session,unlimited tablespace,create table,create view,create any index,create sequence,create type等
+SQL&gt; grant create view,create any index to utest;
+
+Grant succeeded.
+
+--在db_test_data这个表空间下创建表tuser，不加tablespace db_test_data的话默认创建在SYSTEM这个表空间下
+SQL&gt; create table tuser(
+  2  id int not null primary key,
+  3  username varchar(10) not null,
+  4  password varchar(32) not null
+  5  ) tablespace db_test_data;
+
+Table created.
+
+--创建的对比的表，这个表在下面不会授权给用户utest
+SQL&gt; create table temp(
+  2  id int not null primary key,
+  3  tmp varchar(5) not null
+  4  ) tablespace db_test_data;
+
+Table created.
+
+--查看当前用户在表空间DB_TEST_DATA有权限查看的表，这里的表空间需要大写
+SQL&gt; select table_name,owner from all_tables where tablespace_name='DB_TEST_DATA';
+TABLE_NAME        OWNER
+----------------- ---------
+TUSER             SYSTEM
+TEMP              SYSTEM
+
+--赋予用户对象权限，有select,insert,alter,update,delete,index,preferences等
+--这里是赋予utest增删改查SYSTEM的tuser表的权限，如果不赋予的话utest对tuser就没有操作权限
+SQL&gt; grant select,insert,update,delete on tuser to utest;
+
+Grant succeeded.
+</code></pre>
+
+<p><br></p>
+
+<pre><code class="language-sql">--删除空的表空间，不包含物理文件
+drop tablespace tablespace_name;
+--删除空的表空间，包含物理文件
+drop tablespace tablespace_name including datafiles;
+
+--删除非空表空间，不包含物理文件
+drop tablespace tablespace_name including contents;
+--删除非空表空间，包含物理文件
+drop tablespace tablespace_name including contents and datafiles;
+
+--移除用户角色权限
+revoke connect,resource from utest;
+--撤回用户系统权限
+revoke create view,create any index from utest;
+--撤回用户对象权限
+revoke select,insert,update,delete on tuser from utest;
+--删除用户
+drop user utest cascade;
+</code></pre></li>
+</ul>
+
+<h3 id="0x05-切换到用户utest">0x05 切换到用户utest</h3>
+
+<ul>
+<li><p>查看相关权限</p>
+
+<pre><code class="language-sql">--切换用户
+SQL&gt; conn utest/ptest@127.0.0.1/xe
+Connected.
+
+--查看当前用户的角色
+SQL&gt; select role from session_roles;
+
+ROLE
+------------------------------
+CONNECT
+RESOURCE
+
+--查看当前用户的角色所包含的权限
+SQL&gt; select * from role_sys_privs;
+
+ROLE             PRIVILEGE            ADM
+---------------- -------------------- -------
+RESOURCE         CREATE SEQUENCE      NO
+RESOURCE         CREATE TRIGGER       NO
+RESOURCE         CREATE CLUSTER       NO
+RESOURCE         CREATE PROCEDURE     NO
+RESOURCE         CREATE TYPE          NO
+CONNECT          CREATE SESSION       NO
+RESOURCE         CREATE OPERATOR      NO
+RESOURCE         CREATE TABLE         NO
+RESOURCE         CREATE INDEXTYPE     NO
+
+9 rows selected.
+
+--当前用户的系统权限
+SQL&gt; select * from user_sys_privs;
+
+USERNAME        PRIVILEGE                 ADM
+--------------- ------------------------- ----------
+UTEST           CREATE VIEW               NO
+UTEST           UNLIMITED TABLESPACE      NO
+UTEST           CREATE ANY INDEX          NO
+
+--当前用户的对象权限
+SQL&gt; select grantee,privilege from user_tab_privs;
+
+GRANTEE          PRIVILEGE
+---------------- ---------------
+UTEST            UPDATE
+UTEST            SELECT
+UTEST            INSERT
+UTEST            DELETE
+
+--查看当前用户的全部权限
+SQL&gt; select * from session_privs;
+
+PRIVILEGE
+---------------------------
+CREATE SESSION
+UNLIMITED TABLESPACE
+CREATE TABLE
+CREATE CLUSTER
+CREATE ANY INDEX
+CREATE VIEW
+CREATE SEQUENCE
+CREATE PROCEDURE
+CREATE TRIGGER
+CREATE TYPE
+CREATE OPERATOR
+CREATE INDEXTYPE
+
+12 rows selected.
+</code></pre></li>
+
+<li><p>查看当前用户的表空间</p>
+
+<pre><code class="language-sql">SQL&gt; select tablespace_name from user_tablespaces;
+
+TABLESPACE_NAME
+------------------------------
+SYSTEM
+SYSAUX
+UNDOTBS1
+TEMP
+USERS
+DB_TEST_DATA
+DB_TEST_TEMP
+
+7 rows selected.
+
+SQL&gt; select username,default_tablespace,temporary_tablespace from user_users;
+
+USERNAME      DEFAULT_TABLESPACE     TEMPORARY_TABLESPACE
+------------- ---------------------- ------------------------
+UTEST         DB_TEST_DATA           DB_TEST_TEMP
+
+SQL&gt;
+</code></pre></li>
+
+<li><p>表与数据操作</p>
+
+<pre><code class="language-sql">--创建自己的表，这里没有指定，则用默认表空间DB_TEST_DATA
+SQL&gt; create table tmsg(
+  2  id int not null primary key,
+  3  title varchar(20) not null,
+  4  content varchar(100) not null);
+
+Table created.
+
+--再次查看当前用户在表空间DB_TEST_DATA有权限查看的表，tuser表给了权限可以查到，temp表没有给权限所以查不到
+SQL&gt; select table_name,owner from all_tables where tablespace_name='DB_TEST_DATA';
+TABLE_NAME        OWNER
+----------------- ---------
+TUSER             SYSTEM
+TMSG              UTEST
+
+--向表tuser插入数据，表是system的，所以需要加system.
+SQL&gt; insert into system.tuser(id,username,password) values(1,'aaa','123456');
+
+1 row created.
+
+--向tmsg插入数据，表是当前用户utest的，这里其实也是utest.tmsg，不过默认缺省了utest.
+SQL&gt; insert into tmsg(id,title,content) values(1,'hi','hello,world!');
+
+1 row created.
+
+SQL&gt; select * from system.tuser;
+
+    ID  USERNAME     PASSWORD
+------- ------------ -------------------
+      1 aaa          123456
+
+SQL&gt; select * from tmsg;
+
+    ID  TITLE        CONTENT
+------- ------------ -------------------
+      1 hi           hello,world!
+
+SQL&gt;
+</code></pre></li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="https://www.aliyun.com/jiaocheng/318905.html?_blank">https://www.aliyun.com/jiaocheng/318905.html</a></li>
+<li><a href="https://www.cnblogs.com/jiangxinnju/p/5840420.html?_blank">https://www.cnblogs.com/jiangxinnju/p/5840420.html</a></li>
+</ul>
+
+                
+                <div style="padding:10px 1px;">
+                    <font color="FF0000">若未作声明则文章版权归本人(<f>@reber</f>)所有，转载请注明原文链接：</font>
+                    <script>
+                        var link = decodeURI(window.location.href);
+                        var url = '<a href="' + link + '">'+link+'</a>';
+                        document.write(url);
+                    </script>
+                </div>
+
+                
+<div class="prev-next-post pure-g">
+    <div class="pure-u-12-24" style="text-align: left;">
+        
+        <nav class="prev">
+            <a href="https://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/">
+                <i class="fa fa-chevron-left"></i>&nbsp;&nbsp;&nbsp;记一次SQL Server报错注入
+            </a>
+        </nav>
+        
+    </div>
+    <div class="pure-u-12-24" style="text-align: right;">
+        
+        <nav class="next">
+            <a href="https://wyb0.com/posts/2019/injection-tips-of-oracle/">
+                SQL注入tips(Oracle)&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i>
+            </a>
+        </nav>
+        
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
+

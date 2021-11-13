@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tools on </title>
+    <link>https://wyb0.com/tags/tools/</link>
+    <description>Recent content in tools on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 10 Jun 2021 16:44:23 +0800</lastBuildDate>
+    
+	<atom:link href="https://wyb0.com/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>通过 Sphinx 快速查询数据</title>
+      <link>https://wyb0.com/posts/2021/social_ngineering_database_and_sphinx/</link>
+      <pubDate>Thu, 10 Jun 2021 16:44:23 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2021/social_ngineering_database_and_sphinx/</guid>
+      <description>0x00 Sphinx Sphinx 是一款基于 SQL 的高性能全文检索引擎，Sphinx 的性能在众多全文检索引擎中也是数一数二的，利用 Sphinx我们可以完成比数据库本身更专业的搜索功能，而且可以有很多针对性的性能优化。
+ 快速创建索引：3 分钟左右即可创建近 100 万条记录的索引，并且采用了增量索引的方式，重建索引非常迅速。 闪电般的检索速度：尽管是 1 千万条的大数据量，查询数据的速度也在毫秒级以上，2-4G 的文本量中平均查询速度不到 0.1 秒。 为很多脚本语言设计了检索 API，如 PHP,Python,Perl,Ruby 等，因此你可以在大部分编程应用中很方便地调用 Sphinx 的相关接口。 为 MySQL 设计了一个存储引擎插件，因此如果你在 MySQL 上使用 Sphinx，那简直就方便到家了。 支持分布式搜索，可以横向扩展系统性能。  0x01 使用 Sphinx 查询的流程  通过 Sphinx 的 indexer 生成索引（需要先配置文件 sphinx.conf）  部分索引：indexer.exe -c sphinx.conf index_3pk_com_member
+全部索引：C:\Apps\sphinx\bin\indexer.exe -c C:\Apps\sphinx\etc\sphinx.conf --all
+若此时searchd守护进程已经启动，那么需要加上 --rotate参数： C:\Apps\sphinx\bin\indexer.exe -c C:\Apps\sphinx\etc\sphinx.conf --all --rotate
+ Sphinx 启动一个 searchd 进行监听（调接口）  C:\Apps\sphinx\bin\searchd.exe -c c:\Apps\sphinx\etc\sphinx.conf</description>
+    </item>
+    
+    <item>
+      <title>Metasploit简单提权</title>
+      <link>https://wyb0.com/posts/2018/msf-simple-elevate-privileges/</link>
+      <pubDate>Mon, 26 Feb 2018 13:43:20 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2018/msf-simple-elevate-privileges/</guid>
+      <description>0x00 前提 虚拟机有一个shell：http://10.11.11.20/a.php，物理机IP是211.222.222.72
+外网安装msf的主机：外网IP是114.115.123.123，内网IP是192.168.0.195
+0x01 查看主机基本信息 菜刀连接shell，终端执行systeminfo
+C:\Apps\phpStudy\WWW\&amp;gt; systeminfo 主机名: REBER-WIN7 OS 名称: Microsoft Windows 7 专业版 OS 版本: 6.1.7600 ��ȱ Build 7600 OS 制造商: Microsoft Corporation OS 配置: 独立服务器 OS 构件类型: Multiprocessor Free 注册的所有人: reber 注册的组织: 产品 ID: 00371-868-0000007-85272 初始安装日期: 2017/12/26, 7:23:00 系统启动时间: 2018/2/26, 9:52:14 系统制造商: Parallels Software International Inc. 系统型号: Parallels Virtual Platform 系统类型: x64-based PC 处理器: 安装了 1 个处理器。 [01]: Intel64 Family 6 Model 70 Stepping 1 GenuineIntel ~2495 Mhz BIOS 版本: Parallels Software International Inc.</description>
+    </item>
+    
+    <item>
+      <title>SqlmapApi常用方法封装</title>
+      <link>https://wyb0.com/posts/2016/package-sqlmapapi-common-function/</link>
+      <pubDate>Wed, 21 Sep 2016 17:37:33 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/package-sqlmapapi-common-function/</guid>
+      <description>0x00 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import threading import requests import json from time import sleep class Sqli(threading.Thread): &amp;quot;&amp;quot;&amp;quot;docstring for AutoSqli&amp;quot;&amp;quot;&amp;quot; def __init__(self, server, target, data=&#39;&#39;, referer=&#39;&#39;, cookie=&#39;&#39;): threading.Thread.__init__(self) self.server = server[0:-1] if server[-1]==&#39;/&#39; else server self.target = target self.data = data self.referer = referer self.cookie = cookie self.taskid = &#39;&#39; self.data def new_task(self): url = &amp;quot;{}/task/new&amp;quot;.format(self.server) self.taskid = json.loads(requests.get(url).text)[&#39;taskid&#39;] if len(self.taskid)&amp;gt;0: print &amp;quot;Create new task,taskid is: %s&amp;quot; % self.</description>
+    </item>
+    
+    <item>
+      <title>Metasploit利用workspace进行批量扫描爆破</title>
+      <link>https://wyb0.com/posts/2016/metasploit-use-workspace-batch-blasting/</link>
+      <pubDate>Tue, 23 Aug 2016 10:05:52 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/metasploit-use-workspace-batch-blasting/</guid>
+      <description>0x00 启动 0x01 Metasploit的工作平台 在msf里的工作平台可以保存历史的一些操作信息 0x02 使用db_nmap扫描主机 扫描后的结果会保留在工作平台中，可以用hosts和services进行查看： 0x03 使用msf的模块进行弱口令爆破 注：这里针对ftp服务进行弱口令测试 使用vulns可以查看结果：msf auxiliary(ftp_login) &amp;gt; vulns</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu下安装Metasploit</title>
+      <link>https://wyb0.com/posts/2016/ubuntu-install-metasploit/</link>
+      <pubDate>Thu, 18 Aug 2016 10:38:41 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/ubuntu-install-metasploit/</guid>
+      <description>0x00 安装Metasploit  下载msfinstall脚本
+$ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &amp;gt; msfinstall  修改文件权限
+$ chmod 755 msfinstall  安装(可能时间较久)
+$ ./msfinstall  更新exp
+$ msfupdate   0x01 连接数据库  首先启动postgresql数据库
+$ /etc/init.d/postgresql start #service postgresql start也可以  初始化MSF数据库(关键步骤)
+$ msfdb init  运行msfconsole
+$ msfconsole  在msf中查看数据库连接状态
+msf &amp;gt; db_status #若出现错误：Module database cache not built yet, using slow search #则重新构建缓存，缓存构建通常需要5-10分钟左右。 #构建完成后，退出Metasploit控制台，然后重新进入即可使用数据库缓存进行搜索模块 msf &amp;gt; db_rebuild_cache   0x02 Metasploit Cheat Sheet 常见命令可以看下 https://www.</description>
+    </item>
+    
+    <item>
+      <title>BurpSuite抓手机包</title>
+      <link>https://wyb0.com/posts/2016/burpsuite-intercept-packets-of-phone/</link>
+      <pubDate>Sat, 13 Aug 2016 23:53:39 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/burpsuite-intercept-packets-of-phone/</guid>
+      <description> 0x00 环境设置 Windows Phone手机和电脑处于同一无线环境下： 0x01 BurpSuite设置 0x02 抓HTTP包 0x03 抓HTTPS包  挂burpsuite的代理下载证书  把证书上传到你自己的服务器上(也可以本地搭建网站)，然后手机访问证书
+安卓手机修改证书后缀为crt，证书可以放在网站上，也可以直接拖到手机上，然后安装  抓https数据包   </description>
+    </item>
+    
+    <item>
+      <title>BurpSuite的Intruder模块</title>
+      <link>https://wyb0.com/posts/2016/burpsuite-intruder-module/</link>
+      <pubDate>Mon, 01 Aug 2016 09:17:38 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/burpsuite-intruder-module/</guid>
+      <description> 0x00 示例一 0x01 示例二 </description>
+    </item>
+    
+    <item>
+      <title>sqlmapapi的简单使用</title>
+      <link>https://wyb0.com/posts/2016/sqlmapapi-usage/</link>
+      <pubDate>Tue, 28 Jun 2016 11:19:11 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/sqlmapapi-usage/</guid>
+      <description>0x00 关于sqlmapapi.py 当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量
+0x01 用于交互的方法 在sqlmap/lib/utils/api.py中:
+# 用户方法 @get(&amp;quot;/task/new&amp;quot;) Create new task ID. @get(&amp;quot;/task/&amp;lt;taskid&amp;gt;/delete&amp;quot;) Delete own task ID. # 管理函数 @get(&amp;quot;/admin/&amp;lt;taskid&amp;gt;/list&amp;quot;) List task pull. @get(&amp;quot;/admin/&amp;lt;taskid&amp;gt;/flush&amp;quot;) Flush task spool (delete all tasks). # 核心交互函数 @get(&amp;quot;/option/&amp;lt;taskid&amp;gt;/list&amp;quot;) List options for a certain task ID @post(&amp;quot;/option/&amp;lt;taskid&amp;gt;/get&amp;quot;) Get the value of an option (command line switch) for a certain task ID @post(&amp;quot;/option/&amp;lt;taskid&amp;gt;/set&amp;quot;) Set an option (command line switch) for a certain task ID @post(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/start&amp;quot;) Launch a scan @get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/stop&amp;quot;) Kill a scan @get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/status&amp;quot;) Return status of a scan @get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/data&amp;quot;) Retrieve the data of a scan @get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/log/&amp;lt;start&amp;gt;/&amp;lt;end&amp;gt;&amp;quot;) Retrieve a subset of log messages @get(&amp;quot;/scan/&amp;lt;taskid&amp;gt;/log&amp;quot;) Retrieve the log messages @get(&amp;quot;/download/&amp;lt;taskid&amp;gt;/&amp;lt;target&amp;gt;/&amp;lt;filename:path&amp;gt;&amp;quot;) Download a certain file from the file system  0x02 sqlmapapi.</description>
+    </item>
+    
+    <item>
+      <title>使用theHarvester得到邮箱</title>
+      <link>https://wyb0.com/posts/2016/theharvester-blasting-email/</link>
+      <pubDate>Thu, 12 May 2016 15:27:14 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/theharvester-blasting-email/</guid>
+      <description> 0x00 软件 使用theHarvester搜集邮箱 使用dnsenum得到邮箱服务器域名 使用nmap查看端口开启情况 使用Hydra进行弱口令猜解  0x01 设置Shadowsocks为全局模式: 0x02 得到邮箱 可在theHarvester下载theHarvester，得到邮箱后做成字典user.txt 0x03 得到邮箱服务器域名 0x04 nmap确认端口开启 0x05 Hydra爆密码 0x06 尝试登陆 </description>
+    </item>
+    
+    <item>
+      <title>Nessus 的安装和卸载</title>
+      <link>https://wyb0.com/posts/2016/nessus-install-and-remove/</link>
+      <pubDate>Wed, 11 May 2016 17:09:10 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/nessus-install-and-remove/</guid>
+      <description>0x00 下载 Nessus 的 deb 安装包 去【这里】，选择家庭版，然后下载对应的安装包 0x01 本地安装 Nessus 0x02 执行后续安装步骤:  启动nessus  web访问nessus服务  设置账户和密码  申请code，可以在【这里】申请  去邮箱查找code  将code填入，然后等待插件的下载   0x03 登陆 Nessus 0x03 卸载 Nessus https://docs.tenable.com/nessus/Content/RemoveNessus.htm</description>
+    </item>
+    
+    <item>
+      <title>Nmap思维导图</title>
+      <link>https://wyb0.com/posts/2016/nmap-mind-mapping/</link>
+      <pubDate>Tue, 10 May 2016 20:24:07 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/nmap-mind-mapping/</guid>
+      <description> nmap思维导图如下： </description>
+    </item>
+    
+  </channel>
+</rss>

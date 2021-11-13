@@ -1,0 +1,1119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.55.0" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reber's Blog - 渗透测试|python|php </title>
+    <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
+    <meta name="description" content="我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。">
+    <meta name="author" content="reber">
+    <link rel="stylesheet" type="text/css" href="/css/pure-min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" type="text/css" href="/css/grids-responsive-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title="Reber&#39;s Blog" href="/index.xml" />
+    <link rel="stylesheet" href="/css/monokai-sublime.css" type="text/css">
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="reber">
+    
+<div class="head">
+    <h1 class="logo" id="logo">
+        <a href="/"><img src='/img/logo.png' width='70px'></a>
+    </h1>
+    <ul class="nav">
+        
+            
+                <li>
+                    <a href="/"><i class='fa fa-home fa-fw'></i>Home</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/posts/"><i class='fa fa-list fa-fw'></i>Archive</a>
+            
+                </li>
+        
+            
+                <li>
+                    <a href="/about/"><i class='fa fa-user fa-fw'></i>About</a>
+            
+                </li>
+        
+    </ul>
+</div>
+
+
+    
+<div class="main">
+    <div class="left">
+        <div class="content">
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/linux-user/">Linux之用户和用户组</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-04-17
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x01 新建用户 环境：Ubuntu 14.04.4
+ Step1：添加新用户
+useradd -r -m -s /bin/bash 用户名
+ Step2:配置新用户密码
+passwd 用户名
+ Step3：给新添加的用户增加root权限
+visudo
+然后添加：
+用户名 ALL=(ALL:ALL) ALL
+ ctrl+o 保存 ctrl+x 退出
+  0x01 用户组 初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个  useradd xm 用户xm会默认加到xm组 useradd -g fans xm 将xm的所属组改为fans useradd -G fans xm 初始组为xm，有效组为fans  useradd xiaoming usermod -g fans xiaoming 只有一个初始组，被修改为fans useradd xm usermod -G fans xm xm用户会有两个组，初始组为xm，又添加一个有效组fans usermod -G fans1 xm xm用户两个组，初始组为xm，有效组更改为fans1  用户创建的文件拥有者是初始组  
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/linux-network-configuration/">Linux之网络配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-04-17
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 第一种方法 1. 启动网卡： $ ifconfig eth0 up/down 2. 配置ip： $ ifconfig eth0 192.168.22.231 netmask 255.255.255.0 3. 配置网关： $ route add default gw 192.168.22.1 4. 配DNS： $ vim /etc/resolv.conf $ echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.cof 5. 重启网络使配置生效： 6. 用文件配置ip信息 $ /etc/sysconfig/network-scripts/ifcfg-eth0 ps:添加静态路由 route add -net 10.211.55.0 netmask 255.255.255.0 dev eth3 //添加静态路由添加网络10.211.55.0，从eth0出去  0x01 第二种方法 打开文件/etc/sysconfig/network-scripts/ifcfg-eth0,在里面添加相应信息:
+DEVICE=ethl ONBOOT=yes BOOTPROTO=static IPADDR= NETMASK= GATEWAY=  0x02 打开ip转发 echo &quot;1&quot; &gt;&gt; /proc/sys/net/ipv4/ip_forward 或者vim /etc/sysctl.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/linux-network-configuration/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/short/">[转]短</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-04-17
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/miscellanea">miscellanea</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        短 俄罗斯某诗人
+
+
+一天很短 短得来不及拥抱清晨 就已经手握黄昏 
+一年很短 短得来不及细品初春殷红窦绿 就要打点素裹秋霜 
+一生很短 短的来不及享用美好年华 就已经身处迟暮 
+总是经过的太快 领悟的太晚 我们要学会珍惜 珍惜人生路上的亲情、友情、同事情、同学情、朋友情 一旦擦身而过 也许永不邂逅
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/linux-permission-settings/">Linux之权限</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-04-17
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        主要有三种参数：rwx 对于文件来说：分别是读/写/执行
+对于目录来说：r读目录结构；w操作目录结构；x进入目录
+如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh
+若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中
+0x00 文件权限  chmod -x
+[root@localhost tmp]# ls -l total 0 -rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# chmod -x a.txt 去除ugo的x权限 [root@localhost tmp]# ls -l total 0 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt [root@localhost tmp]# ls -l a.txt -rwxrw-rw-. 1 root root 9 Apr 16 20:42 a.txt [root@localhost tmp]# cat a.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/linux-permission-settings/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/linux-vim/">Linux之vim</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-04-15
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/linux">linux</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Vim的安装及配置：  安装vim  yum install vim   配置文件的位置  在目录 /etc/ 下面，有个名为vimrc的 文件， 这是系统中公共的vim配置文件，对所有用户都有效。   设置语法高亮显示  1) 打开vimrc，添加以下语句来使得语法高亮显示： syntax on 2) 如果此时语法还是没有高亮显示，那么在/etc目录下的profile文件中添加以下语句： export TERM=xterm-color   设置Windows风格的C/C++自动缩进（添加以下set语句到vimrc中）  1）设置Tab为4个空格 set tabstop=4 #设定tab长度为4 set softtabstop=4 #使按退格键时可以一次删除4个空格 set shiftwidth=4 #表示每一级缩进的长度，一般设置成跟softtabstop一样 set expandtab/noexpandtab #缩进用空格/制表符表示 2）自动缩进 set autoindent/noautoindent #设置每行的缩进值与上一行相等/不相等(我未启用) 3）使用 C/C++ 语言的自动缩进方式 set cindent 4）在左侧显示文本的行号 set nu 5）搜索设置 set incsearch #输入搜索内容时就显示搜索结果 set hlsearch #搜索时高亮显示被找到的文本 6）如果没有下列语句，就加上吧 if &amp;term==&quot;xterm&quot; set t_Co=8 set t_Sb=^[[4%dm set t_Sf=^[[3%dm endif  0x01 Vim编辑器的三种模式  命令行模式  $vim 文件名 #直接进入命令行模式 Ctrl+ZZ#可保存文件 5dd/4yy#剪切5行/复制4行 p #粘贴到当前行后面 u #一直点的话会一直撤销，直到回复到文件最初状态 gg/G #光标移动到首行/末行 H/M/L #光标移动到屏幕显示的首行/中间/末行 0/$ #光标移动到行首/行尾 w/b #光标跳到下一个/上一个单词 o #在下一行插入 Ctrl+g #显示文本的信息 dt% #删除所有内容直到遇到 % d0/d$或D #删除从光标到行首/行尾的字符 3dw #删除3个单词 v+方向键 #可以从当前光标向各方向选择字符或行 4+向下的方向键 #光标向下移动4行 /和？#向下和向上搜索   末行模式  :wq #推出并保存 :wq!
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/linux-vim/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-regular/">Python的正则</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-02-05
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E6%AD%A3%E5%88%99">正则</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 正则表达式 正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串
+0x01 符号 0x02 特殊字符 0x03 常用的模块属性 0x04 re模块 由于Pyton的字符串本身也用\转义，强烈建议使用r前缀
+ 函数match()
+这个函数会尝试从字符串起始位置匹配一个模式，未匹配到则返回None  函数search()
+这个函数会扫描整个字符串并返回第一个成功的匹配，未匹配到则返回None  函数findall()和finditer()
+re.findall()将以列表的形式返回所有能匹配到的字符
+re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数sub()
+这个函数会对字符串进行匹配，然后替换，可以指定替换次数  函数split()
+这个函数会以正则来分割字符串，以列表样式返回  函数compile()
+这个函数可以编译正则，提高匹配速度   0x05 提取子串 根据正则可以匹配字符然后提取出来，用括号表示要提取的分组 0x06 贪婪匹配 正则表达式默认贪婪匹配，会尽可能的多匹配字符，一般就是用&rdquo;？&rdquo;来抑制贪婪匹配 
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-thread/">Python的线程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-02-03
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/thread">thread</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。
+0x00 单线程 #!/usr/bin/env python # -*- coding: utf-8 -*- from time import time,ctime,sleep def music(arg): for x in range(2): print &quot;I'm listening to %s. %s&quot; % (arg,ctime()) sleep(1) def movie(arg): for x in range(2): print &quot;I'm watching %s. %s&quot; % (arg,ctime()) sleep(5) if __name__ == '__main__': start = int(time()) music(u'我') movie(u'可是') print &quot;All over time:%s&quot; % ctime() print &quot;Used time:%d&quot; % int(time()-start)  0x01 多线程 #!/usr/bin/env python # -*- coding: utf-8 -*- import re import requests import threading from time import time,ctime,sleep INDEX = 0 def http_get(sites): global INDEX while INDEX &lt; len(sites): url = sites[INDEX] INDEX += 1 resp = requests.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-thread/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-io-operation/">Python的IO操作</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-01-31
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 文件的操作  文件读写  r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入
+#!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.txt&quot;,&quot;r&quot;) data = f.read() print &quot;File name: &quot;,f.name print &quot;File open moudle: &quot;,f.mode print &quot;File is close ?&quot;,f.closed print &quot;File content: &quot;,data finally: f.close() with open(&quot;test.txt&quot;,&quot;a+&quot;) as f: #自动调用close() data = &quot;\nYes,I know.&quot; f.write(data) print u&quot;写入内容：%s&quot; % data with open(&quot;test.txt&quot;,&quot;r&quot;) as f: #readlines()一次读取一行，返回一个列表，也可以用read(size)读取指定大小 line = f.readlines() print line   指针移动  #!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-io-operation/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-object-oriented/">Python的面向对象</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-01-25
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 面向对象  面向对象是为了解决系统的可维护性，可扩展性，可重用性
+ 三个基本特征：封装、继承、多态
+ 封装：对一类事物，将其相同特点和功能提取出来，所共有的特点叫做属性，共有的功能就叫做方法，将属性和方法组合在一起就叫做封装。
+如：人具有姓名、年龄、性别，这些就是属性，人可以说话、可以走、可以跑，这些就是方法，封装起来就是一个类，而类的实例化就是对象
+ 继承：继承可以使得子类具有父类的属性和方法，不需要再次编写相同的代码，子类可以对继承的代码进行重写，也可以追加新的属性和方法。
+如：有一个类People，教师就可以继承自People，可以添加自己的属性，如：工资、职工号，也可以添加自己的方法，如：备课、写教案
+ 多态：首先，多态必有继承，没有继承就没有多态，继承后一个父类的引用变量可以指向其任意一个子类对象。
+如：有一个People类，它的子类可以有学生、老师、工人，有多种形态，这就是多态
+   0x01 类的实例 注意：类中每个方法后面都要写self，self就是当前对象指针
+ 示例一  #!/usr/bin/env python # -*- coding:utf-8 -*- # 声明一个People类 class People(object): &quot;&quot;&quot;docstring for People&quot;&quot;&quot; def __init__(self, name, age): super(People, self).__init__() self.name = name self.age = age def running(self): print &quot;%s is running&quot; % self.name def print_base_msg(self): print &quot;Name:%s Age:%d&quot; % (self.name,self.age) # 继承自People类 class Teacher(People): &quot;&quot;&quot;docstring for Teacher&quot;&quot;&quot; def __init__(self, name, age, salary): super(Teacher, self).
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-object-oriented/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-functional-programming/">Python的函数式编程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-01-21
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 函数式编程 首先说一下高阶函数，能将函数作为参数来接收的函数就可以称为高阶函数，如下：
+def add(x,y,f): return f(x) + f(y) print add(7,-3,abs) #abs是求绝对值的函数，这里返回的值为10  将函数作为参数传入，这样的函数就是高阶函数，而函数式编程就是指这种抽象程度很高的编程范式。
+函数式编程的一个特点就是可以将函数作为参数，还允许返回一个函数。
+纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。
+允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。
+0x01 高阶函数  map()函数
+map接收两个参数，一个是函数，一个是列表(list)，map将函数依次作用到list的每个元素，然后返回新的list  def f(x): return x*x print map(f,[1,2,3,4]) #返回[1,4,9,16] print map(str,[1,2,3,4]) # 返回['1','2','3','4']   reduce()函数
+reduce接收参数和map一样(但传入的函数必须接收两个参数)，reduce会对list的每个元素反复调用函数，然后返回最终值  def f(x,y): return x*y print reduce(f,[1,2,3,4]) #1*2*3*4，返回24   filter()函数
+filter也接收函数和list，函数会对list的每个元素进行判断然后返回True或False，为True的组成新list返回  def f(x): return x &gt; 3 print filter(f,[1,2,3,4,5]) #返回[4,5]   sorted()函数
+Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #返回[2,3,34,345]  sorted也是一个高阶函数，当然也可以接收函数和参数。通常规定，对于两个元素x和y，若认为x &lt; y则返回-1，若认为x == y则返回0，若认为x &gt; y则返回1，从而进行正向排序
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-functional-programming/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+
+            
+
+
+    
+    
+    <nav class="pagination" role="pagination">
+        
+            <a href="/page/17/"><i class="fa fa-chevron-left"></i></a>
+        
+
+        <span>&nbsp;18 / 19&nbsp;</span>
+        
+        
+            <a href="/page/19/"><i class="fa fa-chevron-right"></i></a>
+        
+    </nav>
+
+
+        </div>
+    </div>
+    <div class="right">
+        
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Categorie<a href="/single/index.html" class="single" target="_blank">s</a></h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/javascript" title="javascript">javascript(4)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/php" title="php">php(12)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/server" title="server">server(10)</a>
+            </li>
+        
+            <li style="list-style-type:none;">
+                <i class="fa fa-folder fa-fw"></i>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+            </li>
+        
+    </ul>
+
+
+</div>
+        
+
+<div style="padding-bottom:10px;">
+
+
+    <h2 class="asidetitle">Tags</h2>
+    <div class="taglist" id="tags">
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ajax" title="ajax">ajax</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/backdoor" title="backdoor">backdoor</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/cgi" title="cgi">cgi</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/csrf" title="csrf">csrf</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/c%e8%af%ad%e8%a8%80" title="c语言">c语言</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dedecms" title="dedecms">dedecms</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/des" title="des">des</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/deserialize" title="deserialize">deserialize</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/dmz" title="dmz">dmz</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/docker" title="docker">docker</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/fileupload" title="fileupload">fileupload</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/getshell" title="getshell">getshell</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/git" title="git">git</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/https" title="https">https</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/injection" title="injection">injection</a>
+                <sup>18</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/intranet" title="intranet">intranet</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/javascript" title="javascript">javascript</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mindmap" title="mindmap">mindmap</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/miscellanea" title="miscellanea">miscellanea</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/module" title="module">module</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mongodb" title="mongodb">mongodb</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/oracle" title="oracle">oracle</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/pentest" title="pentest">pentest</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/php" title="php">php</a>
+                <sup>12</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/poc" title="poc">poc</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/postgresql" title="postgresql">postgresql</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/python" title="python">python</a>
+                <sup>30</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/rce" title="rce">rce</a>
+                <sup>6</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/redis" title="redis">redis</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/server" title="server">server</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/software" title="software">software</a>
+                <sup>8</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/sqlserver" title="sqlserver">sqlserver</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssh%e9%9a%a7%e9%81%93" title="ssh隧道">ssh隧道</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/ssrf" title="ssrf">ssrf</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/thread" title="thread">thread</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
+                <sup>11</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/wireless" title="wireless">wireless</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xml" title="xml">xml</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/xss" title="xss">xss</a>
+                <sup>4</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bb%a3%e7%a0%81%e5%ae%a1%e8%ae%a1" title="代码审计">代码审计</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="信息泄露">信息泄露</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e5%8f%8d%e5%bc%b9shell" title="反弹shell">反弹shell</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" title="操作系统">操作系统</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%95%8f%e6%84%9f%e4%bf%a1%e6%81%af%e6%b3%84%e9%9c%b2" title="敏感信息泄露">敏感信息泄露</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%96%87%e4%bb%b6%e5%8c%85%e5%90%ab" title="文件包含">文件包含</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e6%ad%a3%e5%88%99" title="正则">正则</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%88%86%e7%a0%b4" title="爆破">爆破</a>
+                <sup>3</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%a4%be%e5%b7%a5" title="社工">社工</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%ab%af%e5%8f%a3%e8%bd%ac%e5%8f%91" title="端口转发">端口转发</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e7%bd%91%e7%bb%9c%e8%ae%be%e5%a4%87" title="网络设备">网络设备</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e8%99%9a%e6%8b%9f%e6%9c%ba" title="虚拟机">虚拟机</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%80%bb%e8%be%91%e6%bc%8f%e6%b4%9e" title="逻辑漏洞">逻辑漏洞</a>
+                <sup>2</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%87%8d%e5%ae%9a%e5%90%91" title="重定向">重定向</a>
+                <sup>1</sup>
+            </p>
+        
+            <p style="display:inline-block;">
+                <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
+                <sup>1</sup>
+            </p>
+        
+    </div>
+
+
+</div>
+
+        
+
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Links</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://www.test404.com/" target="_blank">Test404's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="http://zksmile.me/" target="_blank">Zksmile's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://y-hkl.github.io/" target="_blank">Y-HKL's Blog</a>
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-link fa-fw"></i><a href="https://s.yl0.org/" target="_blank">sòng•sec</a>
+        </li>
+    </ul>
+</div>
+
+        
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-github-square fa-fw"></i><a href="https://github.com/reber0" target="_blank">GitHub</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            
+                <i class="fa fa-weibo fa-fw"></i><a href="http://weibo.com/u/5819760166" target="_blank">Weibo</a>
+            
+        </li>
+        <li style="list-style-type:none;">
+            <i class="fa fa-rss fa-fw"></i><a href="https://wyb0.com/index.xml" target="_blank">RSS</a>
+        </li>
+    </ul>
+</div>
+    </div>
+</div>
+
+    
+<div class="foot">
+    <div class="copyright">
+        
+        Copyright &copy; 2015-<script>var d=new Date();document.write(d.getFullYear());</script> Reber. All Rights Reserved.
+
+        
+        <script type="text/javascript" src="https://js.users.51.la/20938483.js"></script>
+    </div>
+    <script>$('.copyright img').remove();</script>
+</div>
+</div>
+
+    
+    <div class="goToTop">
+      <a href="#top" id="goToTop">
+        <img src="https://wyb0.com/img/goto_top.png" alt="可以返回顶部" title="回到顶部"/>
+      </a>
+    </div>
+
+    <script src="/js/style.js"></script>
+
+    
+    
+
+</body>
+</html>
+
