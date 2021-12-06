@@ -66,6 +66,66 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="https://wyb0.com/posts/2017/python-module-mrq/">MRQ的使用</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2017-07-10
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 MRQ  MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。 MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。 MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。  0x01 设置mongo和redis 因为mrq依赖于redis和mongo，所以先安装设置下
+ 安装redis  $ sudo apt-get install redis-server $ netstat -nlt|grep 6379 $ sudo /etc/init.d/redis-server status  $ sudo /etc/init.d/redis-server stop $ sudo vim /etc/redis/redis.conf #bind 127.0.0.1 requirepass reber_redis $ sudo redis-server /etc/redis/redis.conf &amp; $ redis-cli &gt; auth reber_redis   安装mongo  可以参考：https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6 $ echo &quot;deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2017/python-module-mrq/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="https://wyb0.com/posts/2017/ajax-cross-domain/">AJAX之跨域</a></h2>
 
         
@@ -578,71 +638,6 @@
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2017/xss-encode/">XSS中的编码</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2017-03-30
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/xss">xss</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 浏览器解析 浏览器收到服务器发来的HTML内容，会从头解析，遇到&lt;script&gt;&lt;/script&gt;时， 会调用js脚本解析器来解析并执行脚本，然后继续解析其他的HTML内容， 对于需要触发才能执行的事件，当事件触发时脚本解析器才会解析其中的脚本， 在这之前它是HTML的一部分  0x01 一些编码  URL编码
-%+字符的ASCII编码对应的两位十六进制，如&quot;/&quot;的url编码为&quot;%2F&quot;  HTML编码
- 实体编码
-&amp;开头分号结尾，如 &quot;&lt;&quot; 的编码是 &quot;&amp;lt;&quot;  字符编码
-样式为&quot;&amp;#数值;&quot;，数值可为10进制、16进制ASCII编码或unicode字符编码 如&quot;&lt;&quot;可编码为&quot;&amp;#060;&quot;和&quot;&amp;#x3c;&quot;，但是必须在属性值里面   JS编码
-1、两个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\x3c&quot; 2、三个八进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\074&quot; 3、四个十六进制数字，如果不够个数，前面补0，例如&quot;&lt;&quot;编码为&quot;\u003c&quot; 4、对于一些控制字符，使用特殊的C类型的转义风格（例如\n和\r）  CSS编码
-反斜线(\)后跟1~6位的16进制数字，如&quot;e&quot;为&quot;\65&quot;或&quot;65&quot;或&quot;00065&quot;   0x02 编码与解码顺序 解码时先解码最外层，编码时先编码最内层
-如&lt;td onclick=&quot;openUrl(add.do?userName='{$value}');&quot;&gt;11&lt;/td&gt;， 首先value出现在url中，而url在js中，而js又是html一部分，所以 解码顺序为：html解码-&gt;js解码-&gt;url解码 编码顺序为：url编码-&gt;js编码-&gt;html编码  0x03 利用  八进制
-&lt;p id=&quot;test&quot;&gt;&lt;/p&gt; &lt;script type=&quot;text/javascript&quot;&gt; var test = &quot;\74\151\155\147\40\163\162\143\75\170\40\157\156\145\162\162\157\162\75\141\154\145\162\164\50\61\51\76&quot;; var p = document.getElementById('test'); #这里会进行js解码 p.innerHTML = test; &lt;/script&gt;  十进制和十六进制
-&lt;img src=x onerror=&quot;\u0061\u006c\u0065\u0072\u0074(1)&quot;&gt; &lt;img src=x onerror=&quot;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#49;&amp;#41;&quot;&gt;  javascript协议
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2017/xss-encode/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -700,7 +695,7 @@
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -1017,7 +1012,7 @@
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
     </div>

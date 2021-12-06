@@ -66,6 +66,72 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="https://wyb0.com/posts/2016/ubuntu-install-metasploit/">Ubuntu下安装Metasploit</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-08-18
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/tools">tools</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 安装Metasploit  下载msfinstall脚本
+$ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall  修改文件权限
+$ chmod 755 msfinstall  安装(可能时间较久)
+$ ./msfinstall  更新exp
+$ msfupdate   0x01 连接数据库  首先启动postgresql数据库
+$ /etc/init.d/postgresql start #service postgresql start也可以  初始化MSF数据库(关键步骤)
+$ msfdb init  运行msfconsole
+$ msfconsole  在msf中查看数据库连接状态
+msf &gt; db_status #若出现错误：Module database cache not built yet, using slow search #则重新构建缓存，缓存构建通常需要5-10分钟左右。 #构建完成后，退出Metasploit控制台，然后重新进入即可使用数据库缓存进行搜索模块 msf &gt; db_rebuild_cache   0x02 Metasploit Cheat Sheet 常见命令可以看下 https://www.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/ubuntu-install-metasploit/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="https://wyb0.com/posts/2016/python-parames-parse/">Python 命令行参数解析</a></h2>
 
         
@@ -574,70 +640,6 @@ yum install httpd  安装MySQL
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/windows-use-third-party-server-elevate-privileges/">Windows下第三方服务提权</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-08-07
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 MSSQL提权 MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权
-提权条件：数据库账号是DBA权限
- 关于xp_cmdshell
- 得到数据库连接信息，连接数据库后执行EXEC xp_cmdshell 'net user'; 有sql注入时也可以直接在url上使用xp_cmdshell，因为mssql可以多语句执行，例如?id=1;EXEC xp_cmdshell 'net user';--  连接数据库  执行系统命令  添加用户  远程连接   0x01 MySQL提权 环境：web应用服务器权限较低
-提权条件：MySQL是system权限
- 关于UDF  MySQL提权可以用UDF和Mof。UDF就是User defined Function，即用户定义函数，可以通过创建存储方法来定义函数，从而调用系统命令。
- UDF提权过程
- 导入udf.dll到服务器指定目录
- MySQL版本小于5.1的udf.dll要导入到c:\windows\目录下
- MySQL版本大于等于5.1的udf.dll要导入到plugin_dir目录，plugin_dir在MySQL安装目录下的lib/plugin目录下(MySQL安装目录可以用select @@basedir得到)，默认不存在这个目录，我们要自己创建  使用SQL语句创建功能函数
-CREATE FUNCTION shell RETURNS STRING SONAME &lsquo;udf.dll&rsquo;; 执行MySQL语句调用新创建的函数
-select shell(&lsquo;cmd&rsquo;,&lsquo;whoami&rsquo;); 删除创建的函数
-drop function shell;  查看基本信息  上传udf提权  添加用户  远程连接   
-    </p>
-
-    
-</article>
-
-
-            
 
             
 
@@ -695,7 +697,7 @@ drop function shell;  查看基本信息  上传udf提权  添加用户  远程�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -1012,7 +1014,7 @@ drop function shell;  查看基本信息  上传udf提权  添加用户  远程�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
     </div>

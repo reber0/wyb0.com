@@ -66,6 +66,64 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="https://wyb0.com/posts/2021/gophish/">Gophish 钓鱼测试</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2021-09-26
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E9%92%93%E9%B1%BC">钓鱼</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Gophish 使用  配置 Gophish 服务 配置发送邮箱 编写钓鱼邮件内容 编写钓鱼页面 添加目标邮箱 开始攻击  0x01 配置 Gophish 服务 在 https://github.com/gophish/gophish/releases 下载
+然后编辑 config.json，之后直接 ./gophish 运行即可
+{ &quot;admin_server&quot;: { &quot;listen_url&quot;: &quot;0.0.0.0:58001&quot;, // Gophish 管理页面 &quot;use_tls&quot;: true, &quot;cert_path&quot;: &quot;gophish.crt&quot;, &quot;key_path&quot;: &quot;gophish.key&quot; }, &quot;phish_server&quot;: { &quot;listen_url&quot;: &quot;0.0.0.0:58002&quot;, // 钓鱼的 web 服务 &quot;use_tls&quot;: false, // 不使用 tls，web 服务地址为 http://x.x.x.x:58002/ &quot;cert_path&quot;: &quot;gophish.crt&quot;, &quot;key_path&quot;: &quot;gophish.key&quot; }, &quot;db_name&quot;: &quot;sqlite3&quot;, &quot;db_path&quot;: &quot;gophish.db&quot;, &quot;migrations_prefix&quot;: &quot;db/db_&quot;, &quot;contact_address&quot;: &quot;&quot;, &quot;logging&quot;: { &quot;filename&quot;: &quot;&quot;, &quot;level&quot;: &quot;&quot; } }  0x02 配置发送邮箱 Sending Profiles -&gt; New Profile -&gt; 填写相关信息 -&gt; Send Test Email 收到测试邮件证明配置成功 0x03 编写钓鱼邮件内容 添加邮件模版，Add files 可以添加附件 其他模版例子 0x04 编写钓鱼页面 我的一个模版文件：Gophish 钓鱼页面模版.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2021/gophish/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="https://wyb0.com/posts/2021/php-deserialize-and-string-escaping/">PHP 反序列化与字符串逃逸</a></h2>
 
         
@@ -600,69 +658,6 @@ POST /jsweb/userlogin/UserLoginAction.aspx HTTP/1.1 Host: 115.xxx.xxx.xxx:8042 C
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2019/python-coroutine-fast-port-scan/">利用 Python 的协程进行快速端口扫描</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2019-07-04
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 协程的优势 协程拥有极高的执行效率，因为子程序切换不是线程切换，而是由程序自身控制，因此没有线程切换的开销。和多线程比，线程数量越多，协程的性能优势就越明显。
-不需要多线程的锁机制，因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多
-0x01 Python中的协程 协程也就是微线程，python 的 generator(生成器) 中的 yield 可以一定程度上实现协程
-在 generator 中，我们不但可以通过 for 循环来迭代，还可以不断调用 next() 函数获取由 yield 语句返回的下一个值。
-但是 Python 的 yield 不但可以返回一个值，它还可以接收调用者发出的参数。 0x02 使用 gevent python 中可以通过 generator 实现协程，但是不完全，第三方的 gevent 为 Python 提供了比较完善的协程支持，gevent 可以通过 monkey patch 动态的修改 Python 自带的一些标准库
-由于 IO 操作(比如访问网络)非常耗时，经常使程序处于等待状态，而 gevent 可以为我们自动切换协程，再在适当的时候切换回来继续执行，这就保证总有 greenlet 在运行，而不是等待 IO
-使用 gevent 可以获得极高的并发性能，但 gevent 只能在 Unix/Linux 下运行，在 Windows 下不保证正常安装和运行 下面 3 个网络操作是并发执行的，且结束顺序不同，但只有一个线程
-from gevent import monkey; monkey.patch_all() import requests import gevent def get_resp_size(url): print('GET: %s' % url) html = requests.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2019/python-coroutine-fast-port-scan/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -720,7 +715,7 @@ from gevent import monkey; monkey.patch_all() import requests import gevent def 
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -1037,7 +1032,7 @@ from gevent import monkey; monkey.patch_all() import requests import gevent def 
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
     </div>

