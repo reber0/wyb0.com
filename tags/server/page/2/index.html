@@ -67,7 +67,7 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2015/set-up-dns-server/">搭建DNS服务器</a></h2>
+        <h2><a href="https://wyb0.com/posts/2015/set-up-dns-server/">搭建 DNS 服务器</a></h2>
 
         
         <div class="post-meta">
@@ -107,15 +107,19 @@
 
     
     <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         环境：虚拟机rhel-server-6.2
-0x00 搭建流程  安装DNS服务器 配置DNS主配置文件 配置DNS正反向解析区域数据文件 启动DNS服务器进行测试  0x01 安装DNS服务  挂载光盘
-用mount -o,loop /dev/cdrom /mnt/cdrom命令挂载光盘
- 配置yum源，安装BIND(用命令yum install bind*安装) 安装结果如下：  进行配置
-vim /etc/named.conf,添加必要的信息 在named.conf的包含文件named.rfc1921.zones中定义区域  配置正反向解析文件
-分别配置wyb.cn.hosts和wyb.cn.rev   0x02 验证 用service named start命令启动DNS
-用nslookup命令进行验证，先查看当前采用那台DNS解析，测试反向资源记录以及正反向解析 
+        环境: ubuntu-16.04.7-server-amd64.iso
+安装系统时选上 dns 服务，或者 apt install bind9 安装
+0x01 配置前  涉及到的几个配置文件
+/etc/bind/named.conf，主配置文件，通过 include 关键字加载其他仨配置文件 /etc/bind/named.conf.options，转发器配置文件 /etc/bind/named.conf.local，用户配置文件，一般存放 DNS 记录 /etc/bind/named.default-zones，默认区域文件 /etc/bind/aaa.com.zone，正向解析文件 /etc/bind/aaa.com.arpa，反向解析文件  备份
+cp /etc/bind/named.config.local /etc/bind/named.config.local.bak cp /etc/bind/named.config.options /etc/bind/named.config.options.bak   0x02 配置 named.conf.options first 先转发给 forwarders 列表进行查询，查询不到再查本地
+only 先查本地，查不到再转发
+reber@ubuntu:/etc/bind$ cat named.conf.options acl ktlab { localhost; 10.11.11.0/24; 192.168.3.0/24; }; options { directory &quot;/var/cache/bind&quot;; listen-on { 10.11.11.8; }; listen-on-v6 { none; }; recursion yes; # 允许递归查询 allow-query { ktlab; }; allow-transfer { none; }; # 禁止 transfer # 关闭 DNS 安全，使可解析公网域名 dnssec-enable no; dnssec-validation no; forward only; forwarders { # 将不是本地解析或者本地没有缓存的解析记录进行转发 114.
     </p>
 
+    
+    <footer>
+        <a href="/posts/2015/set-up-dns-server/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
     
 </article>
 
