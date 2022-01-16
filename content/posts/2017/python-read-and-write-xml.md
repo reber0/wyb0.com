@@ -4,7 +4,7 @@ description = ""
 draft = false
 tags = ["python","xml"]
 title = "使用Python读写xml文件"
-topics = ["Other"]
+topics = ["Python"]
 
 +++
 
