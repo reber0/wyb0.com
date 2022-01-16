@@ -377,70 +377,6 @@ reber@wyb:~$ html cat /proc/version Linux version 4.4.0-31-generic (buildd@lgw01
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/mysql-syntax/">MySQL语法</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-02
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/database">Database</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/php">php</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/mysql">mysql</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 Select语句的一般语法 1.SELECT [ALL|DISTINCT] &lt;目标列表达式&gt; [,&lt;目标列表达式&gt; ]... 2.FROM &lt;表名或视图名&gt; [,&lt;表名或视图名&gt; ]... 3.[ WHERE &lt;行条件表达式&gt; ] 4.[ GROUP BY &lt;列名1&gt; ,[列名2][,...][HAVING组条件表达式] ] 5.[ ORDER BY &lt;列名1&gt; ,[ASC|DESC][,...] ];  上面5个句子书写时按顺序，尽量一个句子一行，但在机器内部执行时的顺序是2-3-4-1-5，
-即先确定从哪个数据源查找，
-然后确定过滤条件，
-若有分组则对过滤后的记录进行分组，若分组有限制条件则对分组进一步限制，
-然后将符合条件的列查询出来，
-最后对结果进行排序。
-select name as '名字',password as '密码' form user; select * from message where id between 2 and 6; select * from message where title like '%留言_'; //%匹配任意个字符,_匹配一个字符 select * from message where uid in (2,3,4); //删除2、3、4共3条数据  0x01 连接查询 [&lt;表名1&gt;.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/mysql-syntax/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/php-upload-and-download/">PHP之上传与下载</a></h2>
 
         
@@ -668,6 +604,64 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
 
 
                 
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/php-array/">PHP之数组</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-05-18
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 分类  索引数组 索引值从0开始，依次递增 关联数组 以字符串为索引，键和值对是无序组合，每个键都是唯一的  0x01 数组的定义 两种方法：
+ 直接为数组元素赋值即可声明数组 使用array()函数声明数组
+&lt;?php // 1.直接为数组元素赋值即可声明数组 $contact_index[0] = 1; $contact_index[1] = &quot;高某&quot;; $contact_index[2] = &quot;A公司&quot;; $contact_index[3] = &quot;北京市&quot;; $contact_index[] = &quot;gao@a.com&quot;; var_dump($contact_index); $contact_key[&quot;ID&quot;] = &quot;2&quot;; $contact_key[&quot;姓名&quot;] = &quot;峰某&quot;; $contact_key[&quot;公司&quot;] = &quot;B公司&quot;; $contact_key[&quot;邮箱&quot;] = &quot;feng@b.com&quot;; var_dump($contact_key); // 2.使用array()函数声明数组 $contact_key_array = array( &quot;ID&quot; =&gt; 1; &quot;姓名&quot; =&gt; &quot;峰某&quot;; &quot;公司&quot; =&gt; &quot;B公司&quot;; &quot;邮箱&quot; =&gt; &quot;feng@b.com&quot;; ); var_dump($contact_key_array); ?&gt;   0x02 数组的遍历  for语句遍历数组 foreach语句遍历数组
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/php-array/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
 
                 
 
@@ -700,7 +694,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/database" title="database">database(12)</a>
+                <a href="https://wyb0.com/topics/database" title="database">database(10)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -872,7 +866,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/mysql" title="mysql">mysql</a>
-                <sup>6</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -887,7 +881,7 @@ $_FILES['upload_file']['name'] //带扩展名的原始文件名 $_FILES['upload_
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/php" title="php">php</a>
-                <sup>12</sup>
+                <sup>11</sup>
             </p>
         
             <p style="display:inline-block;">
