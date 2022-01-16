@@ -427,65 +427,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2017/tornado-basis/">初识Tornado</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2017-01-03
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/tornado">tornado</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 简介 Tornado是一个用Python写的相对简单的、不设障碍的Web服务器架构,用以处理上万的同时的 连接口,让实时的Web服务通畅起来。虽然跟现在的一些用Python写的Web架构相似,比如Django, 但Tornado更注重速度,能够处理海量的同时发生的流量。  0x01 示例 main.py代码如下：
-#!/usr/bin/env python # -*- coding: utf-8 -*- import tornado.ioloop import tornado.web class IndexHandler(tornado.web.RequestHandler): def get(self): #访问根时触发这个函数 name = self.get_argument('name','wyb') self.write('Hello,' + name) self.write('&lt;br /&gt;&lt;a href=&quot;/login&quot;&gt;login&lt;/a&gt;') class MyLoginHandler(tornado.web.RequestHandler): def get(self): self.render('login.html') #若用户请求/login页面则将login.html发送给客户端，客户会看的一个登陆表单 def post(self): #当用户点击提交按钮是触发这个函数 name = self.get_argument('name') #接收表单的name password = self.get_argument('password') #接收表单的password self.write(&quot;you name is:%s\nyou password is:%s&quot; % (name,password)) def get_app(): handlers = [ (r&quot;/&quot;,IndexHandler), #代表请求/的都让IndexHandler处理 (r&quot;/login&quot;,MyLoginHandler), #表示请求/login页面的让MyLoginHandler处理 ] app = tornado.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2017/tornado-basis/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/python-cnd-check/">Python实现CDN的判断</a></h2>
 
         
@@ -662,6 +603,62 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
 
                 
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-implement-agent/">Python实现代理</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-09-13
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 帮助信息 0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- 'This is a proxy' __author__ = 'xxx' import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s) text = b''.join([x if 0x20 &lt;= ord(x) &lt; 0x7F else b'.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-implement-agent/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
 
                 
 
@@ -673,7 +670,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <i class="fa fa-chevron-left"></i>
         
 
-        <span>&nbsp;1 / 4&nbsp;</span>
+        <span>&nbsp;1 / 3&nbsp;</span>
         
         
             <a href="/topics/python/page/2/"><i class="fa fa-chevron-right"></i></a>
@@ -699,7 +696,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+                <a href="https://wyb0.com/topics/git" title="git">git(4)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -709,7 +706,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(25)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -719,7 +716,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -729,7 +726,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(28)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -739,7 +736,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(2)</a>
             </li>
         
     </ul>
@@ -816,7 +813,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/git" title="git">git</a>
-                <sup>6</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -841,7 +838,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
-                <sup>11</sup>
+                <sup>10</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -896,7 +893,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>30</sup>
+                <sup>26</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -942,11 +939,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
                 <sup>11</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
-                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1036,7 +1028,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>2</sup>
+                <sup>1</sup>
             </p>
         
     </div>

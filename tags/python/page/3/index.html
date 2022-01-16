@@ -67,123 +67,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/python-module-requests/">Python的requests模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-07-02
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 无参数的get请求 import requests resp = requests.get('http://www.baidu.com',timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串  0x01 有参数的get请求 import requests url = 'http://10.10.10.10:8080/Lab2.0/Login.action' header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', } param = {'aaa':'1111','bbb':'2222'} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie  0x02 POST请求 import requests url1 = 'http://10.10.10.10:8080/Lab2.0/Login.action' url2 = 'http://10.10.10.10:8080/Lab2.0/student.action' data = { 'userid':'1315935xxx', 'password':'xxxxxxx', 'quan':'Student', } header = { 'User-Agent': 'Mozilla/5.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-module-requests/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/python-encode-setting/">Python的编码问题</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-29
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 几个编码函数 * ord(x) 将字符转换为10进制整数(0~255之间) #ord('a')==&gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;'a'，chr(0x61)==&gt;'a' * b2a_hex(x) 将字符转换为对应的16进制 #import binascii;binascii.b2a_hex('a')==&gt;'61' * a2b_hex(x) 将16进制转换为对应的字符 #import binascii;binascii.a2b_hex('61')==&gt;'a' * hex(x) 将10进制整数转换为对应的16进制 #hex(16)==&gt;'0x10' * oct(x) 将10进制整数转换为对应的8进制 #oct(9)==&gt;'011'  0x01 设置为utf-8  在py文件开头设置
-#!/usr/bin/env python #-*- coding: utf-8 -*- 或： #coding=utf8  永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
-#coding=utf8 import sys reload(sys) sys.setdefaultencoding('utf8') # 此方法修改了python环境，设置系统默认编码，永久有效   0x03 编码转换 python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
-python2中的字符串一般包含两种类型：str和unicode str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串 unicode：unicode编码的字符串才是unicode类型的字符串 可通过isinstance()和type()来判断 &gt;&gt;&gt; aa = '小明' &gt;&gt;&gt; isinstance(aa,str) True &gt;&gt;&gt; type(aa) &lt;type 'str'&gt; &gt;&gt;&gt; bb = u'小明' &gt;&gt;&gt; isinstance(bb,unicode) True &gt;&gt;&gt; type(bb) &lt;type 'unicode'&gt;  &gt;&gt;&gt; u'小明'.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-encode-setting/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/python-module-logging-and-colorlog/">Python 中通过 logging 和 colorlog 模块记录日志</a></h2>
 
         
@@ -420,63 +303,6 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/python-io-operation/">Python的IO操作</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-01-31
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 文件的操作  文件读写  r读取；rb可以读取二进制文件(如图片、视频)；w可覆盖写入；a+可追加写入
-#!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.txt&quot;,&quot;r&quot;) data = f.read() print &quot;File name: &quot;,f.name print &quot;File open moudle: &quot;,f.mode print &quot;File is close ?&quot;,f.closed print &quot;File content: &quot;,data finally: f.close() with open(&quot;test.txt&quot;,&quot;a+&quot;) as f: #自动调用close() data = &quot;\nYes,I know.&quot; f.write(data) print u&quot;写入内容：%s&quot; % data with open(&quot;test.txt&quot;,&quot;r&quot;) as f: #readlines()一次读取一行，返回一个列表，也可以用read(size)读取指定大小 line = f.readlines() print line   指针移动  #!/usr/bin/env python # -*- coding: utf-8 -*- try: f = open(&quot;test.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-io-operation/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/python-object-oriented/">Python的面向对象</a></h2>
 
         
@@ -603,62 +429,6 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/python-type-of-data/">Python的数据类型</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-01-19
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 特点及差别 常见4种数据类型：list、tuple、dict、set list即列表，它内部是有序的，可以添加、更新、删除元素 tuple是元组，它的内部也是有序的，但一般不可更新、删除，即内部元素不可变 dict即字典，它的内部无序，key不可变、不可重复，key值可更新，可删除键值对 set可用作求交集、并集等，它的内部无序，key不可变、不可重复，可添加和删除  0x01 操作示例 #!/usr/bin/env python # -*- coding: utf-8 -*- ####################################### print '-----list-----' L = [] #这样就可以声明一个list了 n = 1 while n &lt;= 9: L.append(n) #添加 n = n + 2 print L #[1,3,5,7,9] L[len(L)-1] = 11 #更新 print L #[1,3,5,7,11] L.pop() #删除,和L.pop(-1)一样 L.pop(-2) print L #[1,3,7] L.insert(1,'jack') for x in range(len(L)): print L[x], #逗号可抑制换行，结果为 1 jack 3 7 print '\n-----list-----\n' ####################################### print '-----tuple-----' T =('Michael','Bob','Tracy') print T #['Michael', 'Bob', 'Tracy'] for x in range(len(T)): print T[x], # Michael Bob Tracy print '\n-----tuple-----\n' ####################################### print '-----dict-----' D = {'Adam':95,'Lisa':90,'Bart':75} print D #{'Lisa': 90, 'Adam': 95, 'Bart': 75} D['Lisa'] = 99 #更新 D['Kongming'] = 'X' #添加 print D #{'Lisa': 99, 'Kongming': 'X', 'Adam': 95, 'Bart': 75} D.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-type-of-data/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -696,7 +466,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+                <a href="https://wyb0.com/topics/git" title="git">git(4)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -706,7 +476,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(25)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -716,7 +486,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -726,7 +496,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(28)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -736,7 +506,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(2)</a>
             </li>
         
     </ul>
@@ -813,7 +583,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/git" title="git">git</a>
-                <sup>6</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -838,7 +608,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
-                <sup>11</sup>
+                <sup>10</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -893,7 +663,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>30</sup>
+                <sup>26</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -939,11 +709,6 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
                 <sup>11</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
-                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1033,7 +798,7 @@ Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>2</sup>
+                <sup>1</sup>
             </p>
         
     </div>

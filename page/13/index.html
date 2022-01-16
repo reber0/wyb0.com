@@ -66,185 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/ssrf/">SSRF</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-30
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/ssrf">ssrf</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是SSRF SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，它将一个可以发起网络请求的服务当作跳板来攻击其他服务，SSRF的攻击目标一般是内网。
-当服务端提供了从其他服务器获取数据的功能(如:从指定URL地址获取网页文本内容、加载指定地址的图片、下载等)，但是没有对目标地址做过滤与限制时就会出现SSRF。
-0x01 SSRF的危害 可以扫描内部网络
-可以构造数据攻击内部主机
-0x02 漏洞挖掘 其实只要能对外发起网络请求就有可能存在SSRF漏洞。
-1. 从WEB功能上寻找 通过URL分享内容 文件处理、编码处理、转码等服务 在线翻译 通过URL地址加载与下载图片 图片、文章的收藏 设置邮件接收服务器 2. 从URL关键字寻找 share、wap、url、link、src、source、target、u、3g、 display、sourceURl、imageURL、domain...  0x03 漏洞验证 http://www.aa.com/ss.php?image=http://www.baidu.com/img/bd_logo1.png 1. 右键在新窗口打开图片，图片地址为http://www.baidu.com/img/bd_logo1.png， 说明不存在SSRF漏洞。 2. firebug看网络连接信息，若没有http://www.baidu.com/img/bd_logo1.png 这个图片请求，则证明图片是aa.com服务端发起的请求，则可能存在SSRF漏洞。  0x04 绕过过滤 有时漏洞利用时会遇到IP限制，可用如下方法绕过：
-* 使用@：http://A.com@10.10.10.10 = 10.10.10.10 * IP地址转换成十进制、八进制：127.0.0.1 = 2130706433 * 使用短地址：http://10.10.116.11 = http://t.cn/RwbLKDx * 端口绕过：ip后面加一个端口 * xip.io：10.0.0.1.xip.io = 10.0.0.1 www.10.0.0.1.xip.io = 10.0.0.1 mysite.10.0.0.1.xip.io = 10.0.0.1 foo.bar.10.0.0.1.xip.io = 10.0.0.1 * 通过js跳转  0x05 通用的SSRF实例  weblogin配置不当，天生ssrf漏洞 discuz x2.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/ssrf/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/python-encode-setting/">Python的编码问题</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-29
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 几个编码函数 * ord(x) 将字符转换为10进制整数(0~255之间) #ord('a')==&gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;'a'，chr(0x61)==&gt;'a' * b2a_hex(x) 将字符转换为对应的16进制 #import binascii;binascii.b2a_hex('a')==&gt;'61' * a2b_hex(x) 将16进制转换为对应的字符 #import binascii;binascii.a2b_hex('61')==&gt;'a' * hex(x) 将10进制整数转换为对应的16进制 #hex(16)==&gt;'0x10' * oct(x) 将10进制整数转换为对应的8进制 #oct(9)==&gt;'011'  0x01 设置为utf-8  在py文件开头设置
-#!/usr/bin/env python #-*- coding: utf-8 -*- 或： #coding=utf8  永久编码(推荐) 可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：
-#coding=utf8 import sys reload(sys) sys.setdefaultencoding('utf8') # 此方法修改了python环境，设置系统默认编码，永久有效   0x03 编码转换 python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode
-python2中的字符串一般包含两种类型：str和unicode str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串 unicode：unicode编码的字符串才是unicode类型的字符串 可通过isinstance()和type()来判断 &gt;&gt;&gt; aa = '小明' &gt;&gt;&gt; isinstance(aa,str) True &gt;&gt;&gt; type(aa) &lt;type 'str'&gt; &gt;&gt;&gt; bb = u'小明' &gt;&gt;&gt; isinstance(bb,unicode) True &gt;&gt;&gt; type(bb) &lt;type 'unicode'&gt;  &gt;&gt;&gt; u'小明'.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-encode-setting/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/sqlmapapi-usage/">sqlmapapi的简单使用</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-28
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/tools">tools</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于sqlmapapi.py 当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量
-0x01 用于交互的方法 在sqlmap/lib/utils/api.py中:
-# 用户方法 @get(&quot;/task/new&quot;) Create new task ID. @get(&quot;/task/&lt;taskid&gt;/delete&quot;) Delete own task ID. # 管理函数 @get(&quot;/admin/&lt;taskid&gt;/list&quot;) List task pull. @get(&quot;/admin/&lt;taskid&gt;/flush&quot;) Flush task spool (delete all tasks). # 核心交互函数 @get(&quot;/option/&lt;taskid&gt;/list&quot;) List options for a certain task ID @post(&quot;/option/&lt;taskid&gt;/get&quot;) Get the value of an option (command line switch) for a certain task ID @post(&quot;/option/&lt;taskid&gt;/set&quot;) Set an option (command line switch) for a certain task ID @post(&quot;/scan/&lt;taskid&gt;/start&quot;) Launch a scan @get(&quot;/scan/&lt;taskid&gt;/stop&quot;) Kill a scan @get(&quot;/scan/&lt;taskid&gt;/status&quot;) Return status of a scan @get(&quot;/scan/&lt;taskid&gt;/data&quot;) Retrieve the data of a scan @get(&quot;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&quot;) Retrieve a subset of log messages @get(&quot;/scan/&lt;taskid&gt;/log&quot;) Retrieve the log messages @get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system  0x02 sqlmapapi.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/sqlmapapi-usage/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/csrf/">CSRF漏洞</a></h2>
 
         
@@ -658,6 +479,195 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/injection-of-union-select/">SQL注入之联合查询(MySQL)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-21
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 前提 要用联合查询进行注入则：页面必须有显示位
+0x01 联合查询 union可合并两个或多个select语句的结果集，前提是两个select必有相同列、且各列的数据类型也相同
+0x02 注入步骤  找到注入点得到闭合字符  判断数据库类型  猜解列数，得到显示位(从数据库中查询出来的数据有些会显示在页面中，显示的位置就是显示位)  得到基本信息(数据库名、版本、数据库版本等)  得到数据库  得到security数据库的表名  猜解列名  猜解数据   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/injection-of-mysql-function/">SQL注入之load_file和into outfile(MySQL)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-20
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/getshell">getshell</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 load_file() 读文件  条件:  1. 要有file_priv权限: show global variables like '%secure%'; 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若过滤了单引号，则可以将函数中的字符进行hex编码   一般步骤
+ 读/etc/init.d下的东西，这里有配置文件路径
+?id=1' union select 1,2,load_file('/etc/init.d/httpd')  得到web安装路径
+?id=1' union select 1,2,load_file('/etc/apache/conf/httpd.conf')  读取密码文件
+?id=1' union select 1,2,load_file('/site/xxx.com/conf/conn.inc.php')    0x01 load data local infile 读文件  条件:  MySQL8 中需要 SET GLOBAL local_infile=1;   语句  LOAD DATA LOCAL INFILE 'D:/pet.txt' INTO TABLE pet FIELDS TERMINATED BY ''; select * from pet;  0x02 into outfile getshell  条件：  1.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/injection-of-mysql-function/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/injection/">SQL注入</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-19
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 含义 sql注入是将代码插入(拼接)到应用(用户)的输入参数中，之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击，
+总结起来就是攻击者将恶意代码拼接到sql语句并加以执行从而得到数据的过程。
+0x01 成因 SQl语句未对用户参数进行严格过滤
+0x02 可引发注入的地方 其实只要是客户端可控、参数值代入数据库查询的地方都可能存在注入，常见的如下，按出现频率排序：
+ GET POST X-Forwarded-For Cookie User-Agent  0x03 注入分类  根据语法(较权威)
+ UNION query SQL injection(可联合查询注入)
+只要页面有显示位即可使用，且注入速度很快 Error-based SQL injection(报错型注入)
+没有显示位但用echo &ldquo;mysql_error()&ldquo;输出了错误信息，速度很快，但是语句较复杂 Boolean-based blind SQL injection(布尔型注入)
+一次一个字节，速度慢，但只要有注入就能用 Time-based blind SQL injection(基于时间延迟注入)
+超级慢，比布尔型注入慢几倍，但是通用性较强 Stacked queries SQL injection(堆叠注入)
+只有SQL Server可以使用(可多语句查询注入)  根据类型
+ 整形
+形如&quot;a.asp?ID=55&quot;，这类注入的参数是&rdquo;数字&rdquo;，因此称为&rdquo;数字型注入点&rdquo;。 字符串型
+形如&quot;b.asp?name=xiaoming&quot;这类注入的参数是&rdquo;字符&rdquo;，称为&rdquo;字符型&rdquo;注入点。
+ 搜索型
+指在进行数据搜索时没过滤搜索参数，直接通过搜索框表单提交。
+   0x04 查找注入点  在URL中
+ and 1=1/and 1=2(整型) 随即输入(整型) -1/+1 回显上下页面(整型) 单引号(字符型/整型) and sleep(5) (判断页面返回时间)  在http头
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/injection/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -669,7 +679,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
             <a href="/page/12/"><i class="fa fa-chevron-left"></i></a>
         
 
-        <span>&nbsp;13 / 19&nbsp;</span>
+        <span>&nbsp;13 / 18&nbsp;</span>
         
         
             <a href="/page/14/"><i class="fa fa-chevron-right"></i></a>
@@ -695,7 +705,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/git" title="git">git(6)</a>
+                <a href="https://wyb0.com/topics/git" title="git">git(4)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -705,7 +715,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/linux" title="linux">linux(26)</a>
+                <a href="https://wyb0.com/topics/linux" title="linux">linux(25)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -715,7 +725,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(83)</a>
+                <a href="https://wyb0.com/topics/pentest" title="pentest">pentest(82)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -725,7 +735,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(32)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(28)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -735,7 +745,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/windows" title="windows">windows(4)</a>
+                <a href="https://wyb0.com/topics/windows" title="windows">windows(2)</a>
             </li>
         
     </ul>
@@ -812,7 +822,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/git" title="git">git</a>
-                <sup>6</sup>
+                <sup>4</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -837,7 +847,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/linux" title="linux">linux</a>
-                <sup>11</sup>
+                <sup>10</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -892,7 +902,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>30</sup>
+                <sup>26</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -938,11 +948,6 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/tools" title="tools">tools</a>
                 <sup>11</sup>
-            </p>
-        
-            <p style="display:inline-block;">
-                <a href="https://wyb0.com/tags/tornado" title="tornado">tornado</a>
-                <sup>1</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -1032,7 +1037,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/%e9%92%93%e9%b1%bc" title="钓鱼">钓鱼</a>
-                <sup>2</sup>
+                <sup>1</sup>
             </p>
         
     </div>
