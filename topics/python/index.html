@@ -192,6 +192,71 @@ from gevent import monkey; monkey.patch_all() import requests import gevent def 
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
+        <h2><a href="https://wyb0.com/posts/2017/python-read-and-write-xml/">使用Python读写xml文件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2017-07-20
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/xml">xml</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 解析XML的方法  SAX (simple API for XML)
+python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析XML的过程中触发一个个的事件并调用用户定义的回调函数来处理XML文件。
+ DOM(Document Object Model)
+将XML数据在内存中解析成一个树，通过对树的操作来操作XML。
+ ElementTree(元素树)
+ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。
+   我在这里使用ElementTree  0x01 Element对象的属性 每个Element对象都具有以下属性：
+ tag：string对象，表示数据代表的种类 attrib：dictionary对象，表示附有的属性 text：string对象，表示element的内容 tail：string对象，表示element闭合之后的尾迹 若干子元素（child elements）  &gt;&gt;&gt; from xml.etree import ElementTree as ET &gt;&gt;&gt; xml = &quot;&quot;&quot;&lt;books&gt; ... &lt;book id='37476'&gt;aaaa&lt;/book&gt; ... &lt;book id='83727'&gt;bbbb&lt;/book&gt; ... &lt;/books&gt;&quot;&quot;&quot; &gt;&gt;&gt; root = ET.fromstring(xml) &gt;&gt;&gt; root.tag 'books' &gt;&gt;&gt; child = root.getchildren() &gt;&gt;&gt; child [&lt;Element 'book' at 0x106f59410&gt;, &lt;Element 'book' at 0x106f59450&gt;] &gt;&gt;&gt; child[0].
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2017/python-read-and-write-xml/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+                
+                    
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
         <h2><a href="https://wyb0.com/posts/2017/python-module-mrq/">MRQ的使用</a></h2>
 
         
@@ -603,62 +668,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 
 
                 
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/python-implement-agent/">Python实现代理</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-09-13
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 帮助信息 0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- 'This is a proxy' __author__ = 'xxx' import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#十六进制导出函数 result = [] digits = 4 if isinstance(src,unicode) else 2 for i in xrange(0,len(src),length): s = src[i:i+length] hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s) text = b''.join([x if 0x20 &lt;= ord(x) &lt; 0x7F else b'.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-implement-agent/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
 
                 
 
@@ -711,7 +720,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/other" title="other">other(14)</a>
+                <a href="https://wyb0.com/topics/other" title="other">other(13)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -726,7 +735,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(28)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(29)</a>
             </li>
         
             <li style="list-style-type:none;">
