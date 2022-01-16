@@ -66,302 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/csrf/">CSRF漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-28
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/csrf">csrf</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 概念 当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。
-CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾认证过的网站并执行某些操作。也可以说CSRF就是黑客利用受害者的Cookie骗取服务器的信任从而执行某些操作
-0x01 利用  利用条件
- 攻击者可以得知url的所有参数项并了解其含义 诱导用户访问构造好的POC  利用地方
- 操作是有意义的(比如:修改密码等) 验证过于简单(参数固定、我们可以设置参数)   0x02 GET型CSRF攻击 若有论坛www.aa.com，论坛删除文章的操作是请求类似 http://www.aa.com/opt.php?id=135&amp;act=del&amp;name=Tom的链接  有用户A，他登陆了论坛，且有篇文章id为251，那么他的浏览器此时已经取得了论坛的信任  此时有hacker用户B，他构造了一个html为b.html，b.html内容如下： &lt;html&gt; &lt;head&gt; &lt;title&gt;test&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;img src=&quot;http://www.aa.com/opt.php?id=251&amp;act=del&amp;name=A&quot; /&gt; &lt;/body&gt; &lt;/html&gt; 将b.html放在他自己搭建的网站上，网址为http://www.bb.com/b.html  恶意用户B将链接http://www.bb.com/b.html通过qq发送给用户A， 诱使他访问，用户A一旦访问，他id为251的文章就会被删除  0x03 POST型CSRF攻击 若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图： &lt;!DOCTYPE html&gt; &lt;html lang=&quot;en&quot;&gt; &lt;head&gt; &lt;meta charset=&quot;UTF-8&quot;&gt; &lt;title&gt;aa&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;form action=&quot;http://172.23.10.200/setpasswd.php&quot; method=&quot;post&quot;&gt; 昵称：&lt;input type=&quot;text&quot; name=&quot;nickname&quot; id=&quot;nickname&quot; value=&quot;xxxxx&quot;&gt; 用户名：&lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; value=&quot;xiaoming&quot;&gt; 密码：&lt;input type=&quot;passwd&quot; name=&quot;passwd&quot; id=&quot;passwd&quot; value=&quot;&quot;&gt; 确认密码：&lt;input type=&quot;rpasswd&quot; name=&quot;rpasswd&quot; id=&quot;rpasswd&quot; value=&quot;&quot;&gt; &lt;input type=&quot;submit&quot; name=&quot;button&quot; value=&quot;提交&quot;&gt; &lt;/form&gt; &lt;/body&gt; &lt;/html&gt;  此时我们就可以构造自动提交表单的xxxx.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/csrf/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/python-module-logging-and-colorlog/">Python 中通过 logging 和 colorlog 模块记录日志</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-27
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 使用流程  创建一个 logger 创建相关 handler，同时定义 handler 的输出格式 将 handler 添加到 logger 使用 logger 记录日志  0x01 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- ''' @Author: reber @Mail: reber0ask@qq.com @Date: 2019-07-16 22:31:00 @LastEditTime : 2020-06-16 13:17:05 ''' import logging import colorlog class MyLog(object): &quot;&quot;&quot; MyLog(loglevel, logger_name, logfile=None) &quot;&quot;&quot; def __init__(self, loglevel, logger_name, logfile=None): # 创建一个 logger self.logger = logging.getLogger(logger_name) self.logger.setLevel(logging.DEBUG) # 设置日志输出等级，后面创建 Handler 然后 setLevel(logging.DEBUG) 也不能输出 WARNING 等级之下的日志 # self.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-module-logging-and-colorlog/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/injection-of-defense/">SQL注入之防御</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-25
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 要做的事 也就是找到注入点然后修复
-0x01 防御方法  使用预编译语句绑定变量(比如php的mysqli、pdo)
-&lt;?php //预编译 $mysqli = new mysqli(&quot;localhost&quot;,&quot;root&quot;,&quot;123456&quot;,&quot;share&quot;); $mysqli-&gt;query(&quot;set names utf8&quot;); $sql = &quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&quot;; $s = $mysqli-&gt;prepare($sql); //绑定参数 $name = &quot;Tom&quot;; $sex = &quot;M&quot;; $age = 23; $s-&gt;bind_param(&quot;ssi&quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型 //执行 $result = $s-&gt;execute(); var_dump($result); $s-&gt;close(); ?&gt;  使用存储过程(这里以SQLServer举例)
-  --如果存在名为get_student_msg(相当于函数)的存储过程则删除 IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p') DROP PROCEDURE get_student_msg CREATE PROCEDURE get_student_msg --创建存储过程 @name VARCHAR(20) --声明全局变量 AS BEGIN SELECT * from info WHERE name=@name END GO --创建好存储过程后在其他地方直接使用函数并传参就行了 EXEC get_student_msg 'xiaoli'   使用转义函数
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/injection-of-defense/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/injection-of-wide-byte/">SQL注入之宽字节注入(MySQL)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-24
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 应用场景 在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被&quot;\&quot;转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。
-0x01 测试代码 &lt;?php $conn = mysql_connect('localhost','root','root'); mysql_select_db('messages',$conn); if (isset($_GET['id'])) { $id = addslashes($_GET['id']); //转义id $sql = &quot;select * from msg where id='$id';&quot;; echo $sql.&quot;&lt;br /&gt;&quot;; $result = mysql_query($sql); $rows = @mysql_fetch_assoc($result); if ($rows) { echo '&lt;table align=&quot;left&quot; border=&quot;1&quot;&gt;'; foreach ($rows as $key =&gt; $value) { echo '&lt;tr align=&quot;lift&quot; height=&quot;30&quot;&gt;'; echo '&lt;td&gt;'.$key.'----'.$value.'&lt;/td&gt;'; echo '&lt;/tr&gt;'; } echo '&lt;/table&gt;'; } else { echo mysql_error(); } } else { echo &quot;please input id.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/injection-of-wide-byte/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/injection-of-time-based/">SQL注入之基于时间的注入(MySQL)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-06-24
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 特点 当页面存在注入，但是没有显示位且不管怎么测试返回页面都没有变化，此时可以使用基于时间的盲注进行注入。 其实只要存在SQL注入就可以使用基于时间的盲注，利用范围比较广泛，但是可能受到网络带宽等因素的影响。  0x01 利用方式 整型注入的话可以直接: ?id=if(1=1,sleep(2),1) 字符型的话需要闭合: ?id=2' and if(1=1,sleep(2),1) and '1  0x02 相关函数  if(条件, 值1, 值2)
-当条件为真时返回值1，条件为假时返回值2
- sleep()
-sleep(2)睡眠两秒
- benchmark(count, expr)
-benchmark是用于测试函数性能的，它是将表达式expr执行count次，执行次数越多耗费时间越久
-  0x03 基于时间的注入payload mysql&gt; select if((select database()) like &quot;rte%&quot;,sleep(2),666); +---------------------------------------------------+ | if((select database()) like &quot;rte%&quot;,sleep(2),666) | +---------------------------------------------------+ | 0 | +---------------------------------------------------+ 1 row in set (2.00 sec) mysql&gt; select if((select database())=&quot;rteaaa&quot;,sleep(2),666); +-----------------------------------------------+ | if((select database())=&quot;rtest1&quot;,sleep(2),666) | +-----------------------------------------------+ | 666 | +-----------------------------------------------+ 1 row in set (0.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/injection-of-time-based/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/injection-of-boolian-based/">SQL注入之布尔型注入(MySQL)</a></h2>
 
         
@@ -668,6 +372,302 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/mysql-database-table-information_schema/">MySQL的information_schema库</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-19
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/database">Database</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/mysql">mysql</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 information_schema information_schema这个数据库中保存了MySQL服务器所有数据库的信息。 如数据库名，数据库的表，表栏的数据类型与访问权限等。 再简单点，这台MySQL服务器上，到底有哪些数据库、各个数据库有哪些表， 每张表的字段类型是什么，各个数据库要什么权限才能访问，等等信息都保存在information_schema里面。 information_schema的表schemata中的列schema_name记录了所有数据库的名字 information_schema的表tables中的列table_schema记录了所有数据库的名字 information_schema的表tables中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列table_schema记录了所有数据库的名字 information_schema的表columns中的列table_name记录了所有数据库的表的名字 information_schema的表columns中的列column_name记录了所有数据库的表的列的名字  0x01 information_schema的SCHEMATA表 0x02 information_schema的TABLES表 0x03 information_schema的COLUMNS表 
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/windows2003-set-up-iis-asp/">Windows2003下搭建IIS&#43;asp</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-18
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 添加组件 0x01 开启iis 0x02 添加Web服务扩展 0x03 运行asp 0x04 权限 
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/linux-set-up-ftp/">Linux下搭建FTP</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-18
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        安装环境为：CentOS-6.5-x86_64-minimal
+0x00 安装 yum install vsftpd
+0x01 配置  备份
+cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
+ 编辑配置文件
+vim /etc/vsftpd/vsftpd.conf anonymous_enable=NO #设定不允许匿名访问 local_enable=YES #设定本地用户可以访问 chroot_list_enable=YES #使用户不能离开主目录 xferlog_file=/var/log/vsftpd.log #设定vsftpd的服务日志 ascii_upload_enable=YES ascii_download_enable=YES #设定支持ASCII pam_service_name=vsftpd #PAM认证文件名,PAM将根据/etc/pam.d/vsftpd进行认证 # 并在尾部追加： guest_enable=YES #设定启用虚拟用户功能。 guest_username=ftp #指定虚拟用户的宿主用户。-CentOS中已经有内置的ftp用户了 guest_config_dir=/etc/vsftpd/vuser_conf #设定虚拟用户个人vsftp的配置文件存放路径。存放虚拟用户个性化的配置文件名，和虚拟用户名相同  新增chroot_list并将ftp用户输入进去
+touch /etc/vsftpd/chroot_list
+echo ftp &gt;&gt; /etc/vsftpd/chroot_list
+ 安装Berkeley DB工具用来对虚拟用户认证配置管理：
+yum install db4 db4-utils
+ 创建用户账户文件
+vim /etc/vsftpd/vuser_passwd.txt user1 #奇数行是用户名 123456 #偶数行是密码 user2 #奇数行是用户名 666666 #偶数行是密码 user3 #奇数行是用户名 user3 #偶数行是密码  用Berkeley DB工具生成认证文件
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/linux-set-up-ftp/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/linux-set-up-tomcat-mysql-jsp/">Linux下搭建Tomcat&#43;MySQL&#43;JSP</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-17
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        安装环境为：CentOS-6.5-x86_64-minimal
+0x00 安装mysql $ sudo yum install mysql mysql-server mysql-devel
+0x01 安装jdk和tomcat  创建安装jdk和tomcat的文件夹  下载安装包并解压安装
+  jdk包可在这里下载
+tomcat包可在这里下载
+为java添加环境变量并设置命令链接符
+$ tail -n 3 /etc/profile export JAVA_HOME=&quot;/opt/jdk1.8.0_91&quot; export CLASSPATH=.:$JAVA_HOME/lib export PATH=$JAVA_HOME/bin:$PATH $ sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_91/bin/java 1 $ sudo update-alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_91/bin/javac 1 $ sudo update-alternatives --set java /opt/jdk1.8.0_91/bin/java $ sudo update-alternatives --set javac /opt/jdk1.8.0_91/bin/javac  0x02 简单配置tomcat 0x03 启动tomcat 0x04 连接数据库 驱动可在这里下载 $ vim /opt/tomcat/apache-tomcat-8.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/linux-set-up-tomcat-mysql-jsp/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/linux-set-up-nginx-mysql-php/">Linux下搭建Nginx&#43;MySQL&#43;PHP</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-06-17
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/server">server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        安装环境为：CentOS-6.5-x86_64-minimal
+0x00 准备工作 首先执行： sudo yum groupinstall &quot;Development tools&quot; 安装make： yum -y install gcc automake autoconf libtool make 安装g++： yum install gcc gcc-c++  0x01 安装mysql和php sudo yum install mysql mysql-server mysql-devel sudo yum install php php-devel sudo yum install php-gd php-mysql php-fpm  0x02 安装依赖  安装pcre、pcre-devel
+sudo yum install pcre pcre-devel
+ 安装zlib、zlib-devel
+sudo yum install zlib zlib-devel
+ 安装ssl
+sudo yum install openssl openssl-devel
+  0x03 安装Nginx 可在http://nginx.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/linux-set-up-nginx-mysql-php/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -735,7 +735,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(29)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(24)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -862,7 +862,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/module" title="module">module</a>
-                <sup>12</sup>
+                <sup>7</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -902,7 +902,7 @@ benchmark是用于测试函数性能的，它是将表达式expr执行count次�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>26</sup>
+                <sup>22</sup>
             </p>
         
             <p style="display:inline-block;">

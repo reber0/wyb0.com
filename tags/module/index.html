@@ -189,182 +189,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2017/python-module-tqdm/">下载大文件时显示进度条</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2017-04-15
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber &lt;1070018473@qq.com&gt; import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers['Content-Length'])/1024/1024 with open(name, &quot;wb&quot;) as f: print &quot;download file {}, total size: {}M&quot;.format(name,content_size) for data in tqdm(iterable=resp.iter_content(1024*1024),total=content_size,unit='M'): f.write(data) def get_content(filename): data = [] with open(filename) as f: lines = f.readlines() for line in lines: data.append(line.strip()) return data if __name__ == '__main__': urls = get_content('urls.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2017/python-module-tqdm/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2017/python-module-pycurl/">Python的pycurl模块</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2017-03-21
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 关于cURL cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。
-利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。
-0x01 pycurl常见方法  创建curl对象  c = pycurl.Curl() #创建一个curl对象   设置请求  c.setopt(pycurl.URL,&quot;http://www.baidu.com&quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象   部分返回信息  c.getinfo(pycurl.HTTP_CODE) #返回的HTTP状态码 c.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2017/python-module-pycurl/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/python-module-openpyxl/">使用Python的openpyxl模块读写xlsx文件</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-11-25
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>&nbsp;&#47;
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/module">module</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 openpyxl模块 这个模块可以让你读写excel文件
-0x01 读取数据 代码如下：
-#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook #设置data_only=True，否则如果文件中有计算公式的话读出来的是公式不是数值 wb = load_workbook(filename='aa.xlsx',data_only=True) sheetnames = wb.get_sheet_names() #获得所有表名 print u&quot;存在表：%s&quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&quot;第一张表表名为：%s&quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &quot;表%s有%d行%d列&quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&quot;取部分数据：&quot; print ws['A1'].value,ws['B1'].value print ws['A2'].value,ws['B2'].value print ws.cell(row=1, column=2).value print u&quot;\n输出表%s的所有数据：&quot; % ws.title for x in range(1,rows+1): for y in range(1,columns+1): print ws.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/python-module-openpyxl/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-                
-                    
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/python-module/">Python的模块</a></h2>
 
         
@@ -651,20 +475,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
                 
 
 
-    
-    
-    <nav class="pagination" role="pagination">
-        
-            <i class="fa fa-chevron-left"></i>
-        
-
-        <span>&nbsp;1 / 2&nbsp;</span>
-        
-        
-            <a href="/tags/module/page/2/"><i class="fa fa-chevron-right"></i></a>
-        
-    </nav>
-
 
             </div>
         </div>
@@ -714,7 +524,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(29)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(24)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -841,7 +651,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/module" title="module">module</a>
-                <sup>12</sup>
+                <sup>7</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -881,7 +691,7 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>26</sup>
+                <sup>22</sup>
             </p>
         
             <p style="display:inline-block;">

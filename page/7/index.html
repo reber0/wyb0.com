@@ -66,200 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/">[转]MySQL报错注入原理分析(count()、rand()、group by)</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-11-13
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        原文链接：http://drops.wooyun.org/tips/14312
-0x00 疑问 一直在用mysql数据库报错注入方法，但为何会报错？
-百度谷歌知乎了一番，发现大家都是把官网的结论发一下截图，然后执行sql语句证明一下结论，但是没有人去深入研究为什么rand不能和order by一起使用，也没彻底说明三者同时使用报错的原理。
-0x01 位置问题？ select count(*),(floor(rand(0)*2))x from information_schema.tables group by x;这是网上最常见的语句,目前位置看到的网上sql注入教程,floor 都是直接放count(*)后面，为了排除干扰，我们直接对比了两个报错语句，如下图
-由上面的图片，可以知道报错跟位置无关。
-0x02 绝对报错还是相对报错？ 是不是报错语句有了floor(rand(0)*2)以及其他几个条件就一定报错？其实并不是如此，我们先建建个表，新增一条记录看看，如下图： 确认表中只有一条记录后，再执行报错语句看看，如下图： 多次执行均未发现报错。
-然后我们新增一条记录。 然后再测试下报错语句 多次执行并没有报错
-OK 那我们再增加一条 执行报错语句 ok 成功报错
-由此可证明floor(rand(0)*2)报错是有条件的，记录必须3条以上，而且在3条以上必定报错，到底为何？请继续往下看。
-0x03 随机因子具有决定权么(rand()和rand(0)) 为了更彻底的说明报错原因，直接把随机因子去掉，再来一遍看看，先看一条记录的时候，如下图: 一条记录的话 无论执行多少次也不报错
-然后增加一条记录。
-两条记录的话 结果就变成不确定性了 随机出现报错。
-然后再插入一条
-三条记录之后，也和2条记录一样进行随机报错。
-由此可见报错和随机因子是有关联的，但有什么关联呢，为什么直接使用rand()，有两条记录的情况下就会报错，而且是有时候报错，有时候不报错，而rand(0)的时候在两条的时候不报错，在三条以上就绝对报错？我们继续往下看。
-0x04 不确定性与确定性 前面说过，floor(rand(0)*2)报错的原理是恰恰是由于它的确定性，这到底是为什么呢？从0x03我们大致可以猜想到，因为floor(rand()*2)不加随机因子的时候是随机出错的，而在3条记录以上用floor(rand(0)*2)就一定报错，由此可猜想floor(rand()*2)是比较随机的，不具备确定性因素，而floor(rand(0)*2)具备某方面的确定性。
-为了证明我们猜想，分别对floor(rand()*2)和floor(rand(0)*2)在多记录表中执行多次(记录选择10条以上)，在有12条记录表中执行结果如下图：
-mysql&gt; select floor(rand()*2) from `T-Safe`; +-----------------+ | floor(rand()*2) | +-----------------+ | 0 | | 0 | | 0 | | 0 | | 0 | | 0 | | 1 | | 0 | | 0 | | 0 | | 0 | | 0 | +-----------------+ 12 rows in set (0.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/ajax-request-and-response/">AJAX的XHR请求与响应</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-10-25
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/javascript">JavaScript</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/ajax">ajax</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 什么是AJAX AJAX全称是Asynchronous JavaScript and XML，即异步的JavaScript和XML
-AJAX不是新的编程语言，而是一种使用现有标准的新方法。
-AJAX可在不重新加载整个页面的情况下与服务器交换数据从而更新部分网页
-0x01 示例 &lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;script&gt; function loadXMLDoc() { var xmlhttp; if (window.XMLHttpRequest) {// code for IE7+,Firefox,Chrome,Opera,Safari xmlhttp=new XMLHttpRequest(); } else {// code for IE6, IE5 xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;); } xmlhttp.onreadystatechange=function(){ if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) { document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText; } } xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true); xmlhttp.send(); } &lt;/script&gt; &lt;/head&gt; &lt;body&gt; &lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改该文本内容&lt;/h2&gt;&lt;/div&gt; &lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;修改内容&lt;/button&gt; &lt;/body&gt; &lt;/html&gt;  当点击&rdquo;修改内容&rdquo;后，文本就会改变，但html页面源码没变，只向服务器请求了文本
-0x02 关于XHR XMLHttpRequest是AJAX的基础，就是它与后台就行交互的
-现在大部分浏览器都支持XMLHttpRequest对象(IE5和IE6使用ActiveXObject)
-//创建对象示例 var xmlhttp; if (window.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/ajax-request-and-response/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/dirty-cow-vulnerabilities/">脏牛漏洞</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-10-22
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/intranet">intranet</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 测试环境 我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见
-CentOS release 6.5 [reber123@WYB ~]$ uname -a Linux WYB 3.10.5-3.el6.x86_64 #1 SMP Tue Aug 20 14:10:49 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux [reber123@WYB ~]$ id uid=502(reber123) gid=502(reber123) groups=502(reber123)  0x01 创建文件 查看文件权限信息，可以看到属主为root，且只读，权限为0404
-[reber123@WYB ~]$ ls -al test -r-----r-- 1 root root 19 Oct 21 00:02 test [reber123@WYB ~]$ cat test this is not a test [reber123@WYB ~]$  0x02 编译、执行poc POC保存为a.c，编译为aaa
-[reber123@WYB ~]$ gcc -lpthread a.c -o aaa [reber123@WYB ~]$ ls aaa a.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/dirty-cow-vulnerabilities/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/code-execution-vulnerabilities-2/">代码执行漏洞(二)</a></h2>
 
         
@@ -673,6 +479,181 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/poc-framework-pocsuite/">POC框架Pocsuite</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-09-08
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>&nbsp;&#47;
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/poc">poc</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 关于Pocsuite Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。
+0x01 简单介绍  安装  使用pip install pocsuite即可安装   常用参数  -u 指定一个目标url -f 指定一个存放目标url的文件 -r 指定一个存放poc的文件夹 &ndash;report 导出结果到html文件 &ndash;cookie 携带cookie &ndash;referer 修改referer &ndash;user-agent 修改UA  模式  执行一个poc有两种模式  --verify 漏洞验证模式(只是验证，不能更改服务器的东西) --attack 漏洞利用模式  示例  pocsuite -u &quot;http://www.xxxx.com&quot; -r poc_path/poc_name.py --atack   poc编写
+ 可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类) 此时示例(对目标进行常见服务的测试，加载一类多个poc脚本)  pocsuite -u &quot;http://www.xxxx.com&quot; -r poc_path/server/ --verify   poc的命名规范
+ 漏洞ID_版本号_漏洞类型(其中不能有大写字母，所有符号要改为&quot;_&quot;),大致如下：  _xxxx_struct2_2016_s2_016_code_execution.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/poc-framework-pocsuite/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/sublime-text3-plugins/">Sublime Text 3几个好用的插件</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-09-02
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/software">software</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 Package Control 安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件
+ 代码安装
+ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)  import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())   手动安装
+ 点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件 将下载的文件放在root path/Data/Installed Packages下 重启Sublime Text  使用方法
+ Ctrl+Shift+P调出菜单然后选择相应操作  Preferences -&gt; Package Control也可调出  选择Install Package后可以输入想安装的插件名搜索安装    0x01 Emmet 前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装) 
+0x02 Anaconda 可以自动补全并提示语法，还可跳转到定义、使用等 效果如下： 0x03 AutoFileName 快捷输入文件路径 0x04 主题Theme-SoDaReloaded 两个主题插件，安装好之后：首选项 -&gt; 设置-用户，修改文件Packages/User/Preferences.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/sublime-text3-plugins/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/php-safe-configuration/">PHP安全配置</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-09-01
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/php">PHP</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/php">php</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 PHP的配置 PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题
+0x01 远程文件包含  涉及配置项  allow_url_include  配置为On时允许进行远程文件包含  allow_url_fopen  配置为On时允许使用函数fopen、file_put_contents   配置方案  alllow_url_include = Off allow_url_fopen = Off   0x02 关闭错误回显  涉及配置项  display_errors  配置为On时会显示错误信息   配置方案  display_errors = Off log_errors = On error_log = /var/log/php_error.log   0x03 隐藏php版本  涉及配置项  expose_php  为Off时会隐藏php版本   配置方案  expose_php = Off   0x04 魔术引号  涉及配置项  magic_quotes_gpc  过滤get、post、cookie的单引号、双引号、反斜杠、空字符，但不过滤$_SERVER  magic_quotes_runtime  对文件或数据库中取出的数据进行过滤，可防止二次注入   配置方案  做逻辑判断时需要去掉反斜杠，所以用全局过滤框架做过滤吧   0x05 安全模式  涉及配置项  safe_mode  开启后安全系数提升，但会限制函数使用权限和操作目录文件权限等   配置方案  在安全模式下可以使用safe_mode_include_dir = /var/www/common来排除某些文件   0x06 目录权限控制  涉及配置项  open_basedir  开启后可将用户访问范围限定，可防止跨站，但会影响性能   配置方案  open_basedir = /var/www/web1/:/var/www/web2/ (后面的斜杠不能少)   0x07 禁止函数  涉及配置项  disable_functions  禁止某些命令执行函数和文件操作函数的使用   配置方案  disable_functions = system,passthru,exec,shell_exec,popen,pcntl_exec, proc_open,chdir,chroot,getcwd,readdir,mkdir,copy,file_get_contents,   0x08 注册全局变量  涉及配置项  register_globals  值为On是会开启全局注册变量功能   配置方案  register_globals = Off   
+    </p>
+
+    
+</article>
+
+
+            
 
             
 
@@ -740,7 +721,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(29)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(24)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -867,7 +848,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/module" title="module">module</a>
-                <sup>12</sup>
+                <sup>7</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -907,7 +888,7 @@ string create_function ( string $args , string $code ) 其中$args是函数的�
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>26</sup>
+                <sup>22</sup>
             </p>
         
             <p style="display:inline-block;">

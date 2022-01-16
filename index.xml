@@ -615,15 +615,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
     </item>
     
     <item>
-      <title>下载大文件时显示进度条</title>
-      <link>https://wyb0.com/posts/2017/python-module-tqdm/</link>
-      <pubDate>Sat, 15 Apr 2017 18:49:37 +0800</pubDate>
-      
-      <guid>https://wyb0.com/posts/2017/python-module-tqdm/</guid>
-      <description>0x00 作用 在下载大文件时以进度条的形式显示下载进度，如下图所示： 0x01 代码 #!/usr/bin/env python # -*- coding: utf-8 -*- # code by reber &amp;lt;1070018473@qq.com&amp;gt; import requests from tqdm import tqdm def get_vedio(url,name): resp = requests.get(url=url,stream=True) content_size = int(resp.headers[&#39;Content-Length&#39;])/1024/1024 with open(name, &amp;quot;wb&amp;quot;) as f: print &amp;quot;download file {}, total size: {}M&amp;quot;.format(name,content_size) for data in tqdm(iterable=resp.iter_content(1024*1024),total=content_size,unit=&#39;M&#39;): f.write(data) def get_content(filename): data = [] with open(filename) as f: lines = f.readlines() for line in lines: data.append(line.strip()) return data if __name__ == &#39;__main__&#39;: urls = get_content(&#39;urls.</description>
-    </item>
-    
-    <item>
       <title>检测WebLogic是否存在SSRF</title>
       <link>https://wyb0.com/posts/2017/weblogic-ssrf-check/</link>
       <pubDate>Fri, 14 Apr 2017 14:43:52 +0800</pubDate>
@@ -649,17 +640,6 @@ $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359
 如&amp;lt;td onclick=&amp;quot;openUrl(add.do?userName=&#39;{$value}&#39;);&amp;quot;&amp;gt;11&amp;lt;/td&amp;gt;， 首先value出现在url中，而url在js中，而js又是html一部分，所以 解码顺序为：html解码-&amp;gt;js解码-&amp;gt;url解码 编码顺序为：url编码-&amp;gt;js编码-&amp;gt;html编码  0x03 利用  八进制
 &amp;lt;p id=&amp;quot;test&amp;quot;&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;script type=&amp;quot;text/javascript&amp;quot;&amp;gt; var test = &amp;quot;\74\151\155\147\40\163\162\143\75\170\40\157\156\145\162\162\157\162\75\141\154\145\162\164\50\61\51\76&amp;quot;; var p = document.getElementById(&#39;test&#39;); #这里会进行js解码 p.innerHTML = test; &amp;lt;/script&amp;gt;  十进制和十六进制
 &amp;lt;img src=x onerror=&amp;quot;\u0061\u006c\u0065\u0072\u0074(1)&amp;quot;&amp;gt; &amp;lt;img src=x onerror=&amp;quot;&amp;amp;#97;&amp;amp;#108;&amp;amp;#101;&amp;amp;#114;&amp;amp;#116;&amp;amp;#40;&amp;amp;#49;&amp;amp;#41;&amp;quot;&amp;gt;  javascript协议</description>
-    </item>
-    
-    <item>
-      <title>Python的pycurl模块</title>
-      <link>https://wyb0.com/posts/2017/python-module-pycurl/</link>
-      <pubDate>Tue, 21 Mar 2017 23:18:50 +0800</pubDate>
-      
-      <guid>https://wyb0.com/posts/2017/python-module-pycurl/</guid>
-      <description>0x00 关于cURL cURL可以使用URL的语法模拟浏览器来传输数据，它支持FTP、FTPS、HTTP、HTTPS、GOPHER、TELNET、DICT、FILE以及LDAP等多种协议。
-利用cURL可以实现：HTTPS认证、HTTP POST方法、HTTP PUT方法、FTP上传、keyberos认证、代理服务器、cookies、用户名/密码认证、下载文件断点续传、上传文件断点续传、http代理服务器管道等等。
-0x01 pycurl常见方法  创建curl对象  c = pycurl.Curl() #创建一个curl对象   设置请求  c.setopt(pycurl.URL,&amp;quot;http://www.baidu.com&amp;quot;) #指定请求的URL c.setopt(pycurl.CONNECTTIMEOUT, 5) #连接的等待时间，设置为0则不等待 c.setopt(pycurl.TIMEOUT, 5) #请求超时时间 c.setopt(pycurl.USERAGENT,&amp;quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:46.0) Gecko/20100101 Firefox/46.0&amp;quot;) #配置User-Agent c.setopt(pycurl.NOPROGRESS, 0) #是否屏蔽下载进度条，非0则屏蔽 c.setopt(pycurl.MAXREDIRS, 5) #指定HTTP重定向的最大数 c.setopt(pycurl.FORBID_REUSE, 1) #完成交互后强制断开连接，不重用 c.setopt(pycurl.FRESH_CONNECT,1) #强制获取新的连接，即替代缓存中的连接 c.setopt(pycurl.DNS_CACHE_TIMEOUT,60) #设置保存DNS信息的时间，默认为120秒 c.setopt(pycurl.HEADERFUNCTION, getheader) #将返回的HTTP HEADER定向到回调函数getheader c.setopt(pycurl.WRITEFUNCTION, getbody) #将返回的内容定向到回调函数getbody c.setopt(pycurl.WRITEHEADER, fileobj) #将返回的HTTP HEADER定向到fileobj文件对象 c.setopt(pycurl.WRITEDATA, fileobj) #将返回的HTML内容定向到fileobj文件对象   部分返回信息  c.getinfo(pycurl.HTTP_CODE) #返回的HTTP状态码 c.</description>
     </item>
     
     <item>
@@ -719,17 +699,6 @@ Apache下默认同时允许接收1000个参数；IIS下默认同时允许接收5
       <guid>https://wyb0.com/posts/2016/python-cnd-check/</guid>
       <description>0x00 什么是CDN CDN的全称是Content Delivery Network，即内容分发网络。主要功能是在不同地点缓存内容， 运营商会在全国各地的节点上缓存你的网站网页，通过负载均衡技术，将用户的请求定向到最合适的 缓存服务器上去获取内容，比如说你是上海用户，你访问www.aa.com就会被重定向到上海的节点， 你是北京用户，你也访问www.aa.com，但是你会被重定向到上海的节点。  0x01 判断方法  可以查询CNAME记录，每个cdn厂商都有特有的特征串 查看http返回头的头部信息  0x02 代码 首先安装dnspython这个第三方模块：pip install dnspython
 #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import dns.resolver import urllib2 import urlparse class CdnCheck(object): def __init__(self, url): super(CdnCheck, self).__init__() self.cdninfo() self.url = url self.cnames = [] self.headers = [] def get_cnames(self): # get all cname furl = urlparse.urlparse(self.url) url = furl.netloc # print url rsv = dns.</description>
-    </item>
-    
-    <item>
-      <title>使用Python的openpyxl模块读写xlsx文件</title>
-      <link>https://wyb0.com/posts/2016/python-module-openpyxl/</link>
-      <pubDate>Fri, 25 Nov 2016 17:44:23 +0800</pubDate>
-      
-      <guid>https://wyb0.com/posts/2016/python-module-openpyxl/</guid>
-      <description>0x00 openpyxl模块 这个模块可以让你读写excel文件
-0x01 读取数据 代码如下：
-#!/usr/bin/env python # -*- coding: utf-8 -*- from openpyxl import load_workbook #设置data_only=True，否则如果文件中有计算公式的话读出来的是公式不是数值 wb = load_workbook(filename=&#39;aa.xlsx&#39;,data_only=True) sheetnames = wb.get_sheet_names() #获得所有表名 print u&amp;quot;存在表：%s&amp;quot; % sheetnames ws = wb.get_sheet_by_name(sheetnames[0]) print u&amp;quot;第一张表表名为：%s&amp;quot; % ws.title #Sheet1 rows = ws.max_row #行数 columns = ws.max_column #列数 print &amp;quot;表%s有%d行%d列&amp;quot; % (ws.title,rows,columns) #10 2 共10行2列 print print u&amp;quot;取部分数据：&amp;quot; print ws[&#39;A1&#39;].value,ws[&#39;B1&#39;].value print ws[&#39;A2&#39;].value,ws[&#39;B2&#39;].value print ws.cell(row=1, column=2).value print u&amp;quot;\n输出表%s的所有数据：&amp;quot; % ws.title for x in range(1,rows+1): for y in range(1,columns+1): print ws.</description>
     </item>
     
     <item>
@@ -1423,15 +1392,6 @@ DMZ区网段为：172.16.1.0/24 0x03 iptables的策略 新建iptables.sh,内容�
     </item>
     
     <item>
-      <title>Python的requests模块</title>
-      <link>https://wyb0.com/posts/2016/python-module-requests/</link>
-      <pubDate>Sat, 02 Jul 2016 10:47:19 +0800</pubDate>
-      
-      <guid>https://wyb0.com/posts/2016/python-module-requests/</guid>
-      <description>0x00 无参数的get请求 import requests resp = requests.get(&#39;http://www.baidu.com&#39;,timeout=1) #设置超时，超时后抛出timeout错误 print resp.text #一般用来输出纯文本，可得到unicode类型字符串 print resp.content #一般用来输出pdf、图片等，可得到原网页设定类型的字符串  0x01 有参数的get请求 import requests url = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; header = { &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0&#39;, } param = {&#39;aaa&#39;:&#39;1111&#39;,&#39;bbb&#39;:&#39;2222&#39;} resp = requests.get(url,params=param,headers=header) print resp.url #得到url print resp.status_code #得到返回的状态码 print resp.headers #得到html头 print resp.cookies #得到cookie  0x02 POST请求 import requests url1 = &#39;http://10.10.10.10:8080/Lab2.0/Login.action&#39; url2 = &#39;http://10.10.10.10:8080/Lab2.0/student.action&#39; data = { &#39;userid&#39;:&#39;1315935xxx&#39;, &#39;password&#39;:&#39;xxxxxxx&#39;, &#39;quan&#39;:&#39;Student&#39;, } header = { &#39;User-Agent&#39;: &#39;Mozilla/5.</description>
-    </item>
-    
-    <item>
       <title>SSRF</title>
       <link>https://wyb0.com/posts/2016/ssrf/</link>
       <pubDate>Thu, 30 Jun 2016 15:30:54 +0800</pubDate>
@@ -1480,15 +1440,6 @@ CSRF就是：攻击者通过一些技术手段欺骗用户的浏览器去访问�
 0x01 利用  利用条件
  攻击者可以得知url的所有参数项并了解其含义 诱导用户访问构造好的POC  利用地方
  操作是有意义的(比如:修改密码等) 验证过于简单(参数固定、我们可以设置参数)   0x02 GET型CSRF攻击 若有论坛www.aa.com，论坛删除文章的操作是请求类似 http://www.aa.com/opt.php?id=135&amp;amp;act=del&amp;amp;name=Tom的链接  有用户A，他登陆了论坛，且有篇文章id为251，那么他的浏览器此时已经取得了论坛的信任  此时有hacker用户B，他构造了一个html为b.html，b.html内容如下： &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;title&amp;gt;test&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;img src=&amp;quot;http://www.aa.com/opt.php?id=251&amp;amp;act=del&amp;amp;name=A&amp;quot; /&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 将b.html放在他自己搭建的网站上，网址为http://www.bb.com/b.html  恶意用户B将链接http://www.bb.com/b.html通过qq发送给用户A， 诱使他访问，用户A一旦访问，他id为251的文章就会被删除  0x03 POST型CSRF攻击 若网站www.xx.com有让用户修改密码的功能，但验证过于简单，形如下图： &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt; &amp;lt;title&amp;gt;aa&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;form action=&amp;quot;http://172.23.10.200/setpasswd.php&amp;quot; method=&amp;quot;post&amp;quot;&amp;gt; 昵称：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;nickname&amp;quot; id=&amp;quot;nickname&amp;quot; value=&amp;quot;xxxxx&amp;quot;&amp;gt; 用户名：&amp;lt;input type=&amp;quot;text&amp;quot; name=&amp;quot;name&amp;quot; id=&amp;quot;name&amp;quot; value=&amp;quot;xiaoming&amp;quot;&amp;gt; 密码：&amp;lt;input type=&amp;quot;passwd&amp;quot; name=&amp;quot;passwd&amp;quot; id=&amp;quot;passwd&amp;quot; value=&amp;quot;&amp;quot;&amp;gt; 确认密码：&amp;lt;input type=&amp;quot;rpasswd&amp;quot; name=&amp;quot;rpasswd&amp;quot; id=&amp;quot;rpasswd&amp;quot; value=&amp;quot;&amp;quot;&amp;gt; &amp;lt;input type=&amp;quot;submit&amp;quot; name=&amp;quot;button&amp;quot; value=&amp;quot;提交&amp;quot;&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt;  此时我们就可以构造自动提交表单的xxxx.</description>
-    </item>
-    
-    <item>
-      <title>Python 中通过 logging 和 colorlog 模块记录日志</title>
-      <link>https://wyb0.com/posts/2016/python-module-logging-and-colorlog/</link>
-      <pubDate>Mon, 27 Jun 2016 08:55:30 +0800</pubDate>
-      
-      <guid>https://wyb0.com/posts/2016/python-module-logging-and-colorlog/</guid>
-      <description>0x00 使用流程  创建一个 logger 创建相关 handler，同时定义 handler 的输出格式 将 handler 添加到 logger 使用 logger 记录日志  0x01 示例 #!/usr/bin/env python # -*- coding: utf-8 -*- &#39;&#39;&#39; @Author: reber @Mail: reber0ask@qq.com @Date: 2019-07-16 22:31:00 @LastEditTime : 2020-06-16 13:17:05 &#39;&#39;&#39; import logging import colorlog class MyLog(object): &amp;quot;&amp;quot;&amp;quot; MyLog(loglevel, logger_name, logfile=None) &amp;quot;&amp;quot;&amp;quot; def __init__(self, loglevel, logger_name, logfile=None): # 创建一个 logger self.logger = logging.getLogger(logger_name) self.logger.setLevel(logging.DEBUG) # 设置日志输出等级，后面创建 Handler 然后 setLevel(logging.DEBUG) 也不能输出 WARNING 等级之下的日志 # self.</description>
     </item>
     
     <item>

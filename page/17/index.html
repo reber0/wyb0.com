@@ -66,308 +66,6 @@
 <hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
 <article>
     <header>
-        <h2><a href="https://wyb0.com/posts/2016/linux-software-installation/">Linux之软件的安装</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-04-19
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        Linux上的软件安装可以分为三种方式：
-0x00 yum安装 yum基于RPM包管理，一次性安装所有依赖包，提供了查找、安装、删除一个、一组 至全部软件包的命令，配置文件在/etc/yum.repos.d/下 主要命令： yum install gcc g++ yum remove wget yum list installed //显示已经安装过的软件 yum list //显示所有可以安装的包  
-[wyb@localhost ~]$ wget -h //验证有没有安装wget -bash: /usr/bin/wget: No such file or directory [wyb@localhost ~]$ sudo yum search wget //通过yum查找wget，看有没有这个软件包 Loaded plugins: fastestmirror, refresh-packagekit, security Loading mirror speeds from cached hostfile * base: mirrors.yun-idc.com * extras: mirrors.pubyun.com * updates: mirrors.yun-idc.com ============================== N/S Matched: wget =============================== wget.x86_64 : A utility for retrieving files using the HTTP or FTP protocols Name and summary matches only, use &quot;search all&quot; for everything.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/linux-software-installation/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/linux-basic-command/">Linux之基础命令</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-04-19
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 ls：显示文件 [wyb@localhost tmp]$ ls a a.txt [wyb@localhost tmp]$ ls -l total 4 drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--. 1 wyb root 0 Apr 17 18:23 a.txt [wyb@localhost tmp]$ ls -a . .. a a.txt .esd-500 .ICE-unix [wyb@localhost tmp]$ ls -al total 20 drwxrwxrwt. 5 root root 4096 Apr 17 18:23 . dr-xr-xr-x. 22 root root 4096 Apr 17 16:31 .. drwxr-xr-x. 2 wyb root 4096 Apr 17 18:23 a -rw-r--r--.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/linux-basic-command/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/linux-service-and-planning-tasks/">Linux之服务和计划任务</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-04-19
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        0x00 服务： 在后台运行的软件就叫服务，参数一般为：start/stop/restart
- apache启动后默认降权
-service httpd start实际调用的是/etc/init.d/httpd这个shell脚本 而/etc/init.d是软连接文件夹，实际在/etc/rc.d/init.d [wyb@localhost ~]$ ls -al /etc/init.d lrwxrwxrwx. 1 root root 11 Apr 11 02:54 /etc/init.d -&gt; rc.d/init.d  添加服务
-将脚本放在/etc/init.d/下即可
- 若要自启则
-chkconfig --list //查看chk管理的自启动项 chkconfig --add httpd 添加到chk管理里面 chkconfig --del httpd 将httpd移出chk管理 chkcofnig --level 35 httpd on init的345将开启 chkcofnig --level 345 httpd off /etc/rc.d/rc3.d和rc5.d里将有httpd   0x01 计划任务 系统启动时将有一个脚本将cron服务开启，启动后cron命令会搜索全局型配置文件/etc/crontab和位于/var/spool/corn目录下以用户名命名的文件
-cron每分钟醒来依次查看当前是否有需要运行的命令，最小单位就是分钟
-任务格式：分(0-59) 时 日 月 周(0-6) 命令
- 添加任务第一种方法  crontab -e //任何权限都可以运行这个命令，针对某个用户 [wyb@localhost spool]$ crontab -e //进入编辑，实际是写入到/var/spool/cron/username这个文件中 no crontab for wyb - using an empty one */1 * * * * date &gt;&gt; /tmp/date.
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/linux-service-and-planning-tasks/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/linux-suid-back-door/">Linux之SUID后门</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-04-18
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/backdoor">backdoor</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-        SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制
-0x00 为二进制文件添加s权限从而提升为root权限  写sudoers添加用户 //最佳方案
- vim /etc/passwd //将uid和gid改为0 vim /etc/shadow //密文覆盖
- vim root .ssh/证书文件 .ssh这个文件夹和证书的权限要正确，要和原来一致  0x01 SUID主要作用可以是留后门  在root权限下给usermod一个s权限
-# which usermod #得到usermod的路径 /usr/sbin/usermod # chmod u+s /usr/sbin/usermod # ls -l /usr/sbin/usermod -rwsr-x---. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  usermod给其他人一个x权限
-[root@localhost ~]# chmod o+x /usr/sbin/usermod [root@localhost ~]# ls -l /usr/sbin/usermod -rwsr-x--x. 1 root root 98680 Dec 7 2011 /usr/sbin/usermod  切换到普通用户wyb
-[wyb@localhost ~]$ id wyb uid=500(wyb) gid=500(wyb) groups=500(wyb) [wyb@localhost ~]$ usermod -g root wyb [wyb@localhost ~]$ id wyb uid=500(wyb) gid=0(root) groups=0(root) [wyb@localhost ~]$ exit  验证
-    </p>
-
-    
-    <footer>
-        <a href="/posts/2016/linux-suid-back-door/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
-    </footer>
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
-        <h2><a href="https://wyb0.com/posts/2016/linux-user/">Linux之用户和用户组</a></h2>
-
-        
-        <div class="post-meta">
-            <div style="padding:5px 5px 2px 5px;">
-                <i class="fa fa-calendar fa-fw"></i>
-                <time>
-                    2016-04-17
-                </time>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-            
-
-                
-
-            
-                
-                
-                
-                    <i class="fa fa-folder fa-fw"></i>
-                    
-                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/linux">Linux</a>
-                    
-                
-                
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                
-                
-                
-                    <i class="fa fa-tags fa-fw"></i>
-                    
-                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/linux">linux</a>
-                    
-                
-                
-            </div>
-        </div>
-    </header>
-
-    
-    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
-         0x01 新建用户 环境：Ubuntu 14.04.4
- Step1：添加新用户
-useradd -r -m -s /bin/bash 用户名
- Step2:配置新用户密码
-passwd 用户名
- Step3：给新添加的用户增加root权限
-visudo
-然后添加：
-用户名 ALL=(ALL:ALL) ALL
- ctrl+o 保存 ctrl+x 退出
-  0x01 用户组 初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个  useradd xm 用户xm会默认加到xm组 useradd -g fans xm 将xm的所属组改为fans useradd -G fans xm 初始组为xm，有效组为fans  useradd xiaoming usermod -g fans xiaoming 只有一个初始组，被修改为fans useradd xm usermod -G fans xm xm用户会有两个组，初始组为xm，又添加一个有效组fans usermod -G fans1 xm xm用户两个组，初始组为xm，有效组更改为fans1  用户创建的文件拥有者是初始组  
-    </p>
-
-    
-</article>
-
-
-            
-                
-<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
-<article>
-    <header>
         <h2><a href="https://wyb0.com/posts/2016/short/">[转]短</a></h2>
 
         
@@ -661,6 +359,313 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
 
 
             
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-object-oriented/">Python的面向对象</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-01-25
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 面向对象  面向对象是为了解决系统的可维护性，可扩展性，可重用性
+ 三个基本特征：封装、继承、多态
+ 封装：对一类事物，将其相同特点和功能提取出来，所共有的特点叫做属性，共有的功能就叫做方法，将属性和方法组合在一起就叫做封装。
+如：人具有姓名、年龄、性别，这些就是属性，人可以说话、可以走、可以跑，这些就是方法，封装起来就是一个类，而类的实例化就是对象
+ 继承：继承可以使得子类具有父类的属性和方法，不需要再次编写相同的代码，子类可以对继承的代码进行重写，也可以追加新的属性和方法。
+如：有一个类People，教师就可以继承自People，可以添加自己的属性，如：工资、职工号，也可以添加自己的方法，如：备课、写教案
+ 多态：首先，多态必有继承，没有继承就没有多态，继承后一个父类的引用变量可以指向其任意一个子类对象。
+如：有一个People类，它的子类可以有学生、老师、工人，有多种形态，这就是多态
+   0x01 类的实例 注意：类中每个方法后面都要写self，self就是当前对象指针
+ 示例一  #!/usr/bin/env python # -*- coding:utf-8 -*- # 声明一个People类 class People(object): &quot;&quot;&quot;docstring for People&quot;&quot;&quot; def __init__(self, name, age): super(People, self).__init__() self.name = name self.age = age def running(self): print &quot;%s is running&quot; % self.name def print_base_msg(self): print &quot;Name:%s Age:%d&quot; % (self.name,self.age) # 继承自People类 class Teacher(People): &quot;&quot;&quot;docstring for Teacher&quot;&quot;&quot; def __init__(self, name, age, salary): super(Teacher, self).
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-object-oriented/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2016/python-functional-programming/">Python的函数式编程</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2016-01-21
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/python">Python</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/python">python</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 函数式编程 首先说一下高阶函数，能将函数作为参数来接收的函数就可以称为高阶函数，如下：
+def add(x,y,f): return f(x) + f(y) print add(7,-3,abs) #abs是求绝对值的函数，这里返回的值为10  将函数作为参数传入，这样的函数就是高阶函数，而函数式编程就是指这种抽象程度很高的编程范式。
+函数式编程的一个特点就是可以将函数作为参数，还允许返回一个函数。
+纯粹的函数式编程语言编写的函数没有变量，因此，任意一个函数，只要输入是确定的，输出就是确定的，这种纯函数我们称之为没有副作用。
+允许使用变量的程序设计语言，由于函数内部的变量状态不确定，同样的输入，可能得到不同的输出，因此，这种函数是有副作用的。
+0x01 高阶函数  map()函数
+map接收两个参数，一个是函数，一个是列表(list)，map将函数依次作用到list的每个元素，然后返回新的list  def f(x): return x*x print map(f,[1,2,3,4]) #返回[1,4,9,16] print map(str,[1,2,3,4]) # 返回['1','2','3','4']   reduce()函数
+reduce接收参数和map一样(但传入的函数必须接收两个参数)，reduce会对list的每个元素反复调用函数，然后返回最终值  def f(x,y): return x*y print reduce(f,[1,2,3,4]) #1*2*3*4，返回24   filter()函数
+filter也接收函数和list，函数会对list的每个元素进行判断然后返回True或False，为True的组成新list返回  def f(x): return x &gt; 3 print filter(f,[1,2,3,4,5]) #返回[4,5]   sorted()函数
+Python内置的函数sorted()可以对list进行排序  sorted([34,2,345,3]) #返回[2,3,34,345]  sorted也是一个高阶函数，当然也可以接收函数和参数。通常规定，对于两个元素x和y，若认为x &lt; y则返回-1，若认为x == y则返回0，若认为x &gt; y则返回1，从而进行正向排序
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2016/python-functional-programming/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/">ASP联合注入(Cookie处)</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2015-12-04
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/pentest">Pentest</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/injection">injection</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+         0x00 Cookie注入的使用  三大Web提交方式
+ GET：直接在浏览器上面访问地址
+ POST：提交表单(会员注册、文件上传等)
+ COOKIE：访问网站下面自带的身份验证的值  Cookie注入利用时机
+当用普通注入时，采用and 1=1时出现错误提示(如下图)，普通的注入就没办法了，可以尝试大小写，编码等绕过，若过滤严谨，无法绕过，这时就可以采用cookie注入。  利用方法
+ 可以利用注入中转 可以利用sqlmap   0x01 用注入中转进行Cookie注入  目标：http://localhost:81/2/shownews.asp?id=183
+ 打开注入中转这个工具，填入相应参数，然后点击生成ASP，将生成的asp文件(jmCook.asp)放入你自己搭建的网站内后即可进行注入  提交localhost:81/jmCook.asp?jmdcw=183 order by猜测字段数
+ 提交localhost:81/jmCook.asp?jmdcw=183 UNION SELECT 1,2,3,4 from XXX猜测表名  猜测内容   0x02 用sqlmap进行Cookie注入  sqlmap验证存在Cookie注入  猜表名  猜列名  猜字段内容   
+    </p>
+
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2015/set-up-dns-server/">搭建 DNS 服务器</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2015-07-14
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/server">Server</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/server">Server</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        环境: ubuntu-16.04.7-server-amd64.iso
+安装系统时选上 dns 服务，或者 apt install bind9 安装
+0x01 配置前  涉及到的几个配置文件
+/etc/bind/named.conf，主配置文件，通过 include 关键字加载其他仨配置文件 /etc/bind/named.conf.options，转发器配置文件 /etc/bind/named.conf.local，用户配置文件，一般存放 DNS 记录 /etc/bind/named.default-zones，默认区域文件 /etc/bind/aaa.com.zone，正向解析文件 /etc/bind/aaa.com.arpa，反向解析文件  备份
+cp /etc/bind/named.config.local /etc/bind/named.config.local.bak cp /etc/bind/named.config.options /etc/bind/named.config.options.bak   0x02 配置 named.conf.options first 先转发给 forwarders 列表进行查询，查询不到再查本地
+only 先查本地，查不到再转发
+reber@ubuntu:/etc/bind$ cat named.conf.options acl ktlab { localhost; 10.11.11.0/24; 192.168.3.0/24; }; options { directory &quot;/var/cache/bind&quot;; listen-on { 10.11.11.8; }; listen-on-v6 { none; }; recursion yes; # 允许递归查询 allow-query { ktlab; }; allow-transfer { none; }; # 禁止 transfer # 关闭 DNS 安全，使可解析公网域名 dnssec-enable no; dnssec-validation no; forward only; forwarders { # 将不是本地解析或者本地没有缓存的解析记录进行转发 114.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2015/set-up-dns-server/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
+                
+<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+<article>
+    <header>
+        <h2><a href="https://wyb0.com/posts/2015/small-and-medium-enterprise-network-structures/">中小企业网络搭建</a></h2>
+
+        
+        <div class="post-meta">
+            <div style="padding:5px 5px 2px 5px;">
+                <i class="fa fa-calendar fa-fw"></i>
+                <time>
+                    2015-07-13
+                </time>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            
+
+                
+
+            
+                
+                
+                
+                    <i class="fa fa-folder fa-fw"></i>
+                    
+                        <a class="post-taxonomy-topic" href="https://wyb0.com/topics/other">Other</a>
+                    
+                
+                
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                
+                
+                    <i class="fa fa-tags fa-fw"></i>
+                    
+                        <a class="post-taxonomy-tag" href="https://wyb0.com/tags/%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87">网络设备</a>
+                    
+                
+                
+            </div>
+        </div>
+    </header>
+
+    
+    <p style="max-height:130px;overflow:hidden;line-height:26px;position: relative;word-wrap: break-word !important;z-index:1;">
+        0x00 中小企业需求分析  搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。 对网络设备能够方便地进行远程管理。 在局域网中公司部门间进行vlan划分，实现安全管理。 对三层设备路由技术这方面采取RIPV2协议或OSPF协议。 配置访问控制列表（ACL）以对网络数据进行有效的分类和控制，限制终端之间的相互访问。 内网通过配置PAT技术实现与外网之间的通信。  0x01 所需设备 0x02 网络规划  在三层交换机设置ACL，控制个vlan间的通信 在防火墙(路由器)上设置NAT转换 路由协议采用OSPF 内网访问控制  内网中只有市场部可以访问外网 市场部可以访问市场部、打印机 设计部可以访问设计部、财务部、打印机 外网只有202.202.2.0/24能访问内网  IP规划如下：  打印机：192.168.1.0/24 市场部：192.168.2.0/24 设计部：192.168.3.0/24 财务部：192.168.4.0/24 防火墙和三层交换机所在网段：192.168.5.0/24 管理ip所在网段：192.168.100.0/24   0x03 网络设备配置命令代码  Firewall配置  Router&gt;enable Router#conf t Router(config)#no ip domain-lookup //禁止域名解析 Router(config)#hostname Firewall //更改设备名 Firewall(config)#enable password 123 Firewall(config)#router eigrp 1 Firewall(config-router)#no auto-summary //关闭自动汇总 Firewall(config-router)#exit Firewall(config)#int f0/0 Firewall(config-if)#ip add 192.168.5.2 255.255.255.0 //配端口ip Firewall(config-if)#no shut Firewall(config-if)#exit Firewall(config)#router ospf 1 //配路由协议ospf Firewall(config-router)#network 202.
+    </p>
+
+    
+    <footer>
+        <a href="/posts/2015/small-and-medium-enterprise-network-structures/">Read more<i class="fa fa-angle-double-right fa-fw"></i></a>
+    </footer>
+    
+</article>
+
+
+            
 
             
 
@@ -728,7 +733,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/python" title="python">python(29)</a>
+                <a href="https://wyb0.com/topics/python" title="python">python(24)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -855,7 +860,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/module" title="module">module</a>
-                <sup>12</sup>
+                <sup>7</sup>
             </p>
         
             <p style="display:inline-block;">
@@ -895,7 +900,7 @@ re.finditer()将以迭代器的形式返回所有能匹配到的字符  函数su
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/python" title="python">python</a>
-                <sup>26</sup>
+                <sup>22</sup>
             </p>
         
             <p style="display:inline-block;">
