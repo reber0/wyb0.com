@@ -3,61 +3,62 @@ date = "2016-05-09T23:33:12+08:00"
 description = ""
 draft = false
 tags = ["git"]
-title = "Ubuntu下向github推送博客"
+title = "通过 gh-pages 推送博客"
 topics = ["Git"]
 
 +++
 
-环境：Ubuntu14.4
+环境：Ubuntu 14.4
 
-### 0x00 安装hugo和git
+### 0x00 添加密钥
+```
+➜ ssh-keygen -t rsa -b 2048 -C "123456@qq.com" -f id_rsa_github # 生成密钥
+➜ cd ~/.ssh/
+➜ cat id_rsa_github.pub # 将公钥添加到 github
 
-### 0x01 生成密钥，将密钥添加到github
-```
-$ cd ~
-$ ssh-keygen -t rsa -b 2048 -C "123456@qq.com"
-$ cd ~/.ssh/
-$ cat id_rsa.pub # 将公钥添加到 github
-```
+➜ git config --global user.name "reber" # 配置本地用户
+➜ git config --global user.email "123456@qq.com" # 配置本地邮箱
 
-###  0x02 配置本地用户和邮箱
-```
-git config --global user.name "reber"  
-git config --global user.email "123456@qq.com"
+➜ ssh -T git@github.com # 验证密钥是否添加成功
 ```
 
-### 0x03 验证密钥是否添加成功
-ssh -T git@github.com
+### 0x01 gh-pages
+Github 创建项目仓库后会产生一个 main 分支，只需要再添加 gh-pages 分支就可以创建静态页面了
 
-### 0x04 克隆远程工程
-git clone https://github.com/reber/reber.com.git
+将 html 文件推送到 gh-pages 分支可以解析 html 做博客
 
-### 0x05 添加CNAME
-cd ~/reber.com/  
-echo "reber.com" >> static/CNAME
-
-### 0x06 更新
-更新origin remote的master分支：  
-git pull origin master  
-获取服务端的改动：  
-git fetch
-
-### 0x07 生成html文档，然后创建分支，进行同步
+### 0x02 使用 hugo
+Hugo 是由 Go 语言实现的静态网站生成器，可以快速生成 html 文件
 ```
-$ mkdir public
-$ cd public/
-$ git init  
-$ git checkout --orphan gh-pages  
-$ git remote add origin git@github.com:reber/reber.com.git  
-$ git pull origin gh-pages
-$ cd ../
+➜ hugo new site wyb0.com # hugo 生成站点目录
+➜ git clone https://github.com/reber/wyb0.com.git
+➜ cd wyb0.com
+➜ hugo new about.md
+➜ hugo new first-article.md
+➜ echo "wyb0.com" > static/CNAME # 配置 CNAME 以便使用 gh-pages
 ```
 
-### 0x08 添加文件然后上传
+模版可以去 [https://themes.gohugo.io/](https://themes.gohugo.io/?_blank) 下载一个模版放到 themes 文件夹下
 ```
-$ hugo
-$ cd pulbic/
-$ git add .  
-$ git commit -m "add html"  
-$ git push origin gh-pages
+➜ cd themes
+➜ git clone git@github.com:colorchestra/smol.git
+➜ git clone git@github.com:WingLim/hugo-tania.git
+➜ vim config.toml
+➜ hugo server -w # 本地查看网站，没问题的话可以把文件上传到主分支
+➜ git push origin main
+```
+
+### 0x07 创建 gh-pages 分支
+使用的是 hugo，hugo 会将所有文件转化为 html 放到 public 文件夹
+
+所以把 hugo 生成的 html 推到 gh-pages分支即可
+```
+➜ hugo
+➜ cd public
+➜ git init
+➜ git checkout --orphan gh-pages
+➜ git remote add origin git@github.com:reber/wyb0.com.git
+➜ git add .
+➜ git commit -m "add html"
+➜ git push origin gh-pages
 ```
