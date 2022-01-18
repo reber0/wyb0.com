@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Git的用法 - Reber's Blog</title>
+    <title>Git 的用法 - Reber's Blog</title>
     <meta name="keywords" content="渗透测试,web安全,漏洞,python,php,linux">
     <meta name="description" content="">
     <meta name="author" content="reber">
@@ -62,7 +62,7 @@
     <div class="main">
         <div class="left">
             <div>
-                <h2>Git的用法</h2>
+                <h2>Git 的用法</h2>
                 
                 <div class="post-meta">
                     <div style="padding:5px 5px 2px 5px;">
@@ -103,83 +103,147 @@
                 
                 
 
-<h3 id="0x00-创建仓库">0x00 创建仓库</h3>
+<h3 id="0x00-仓库">0x00 仓库</h3>
 
-<pre><code>git init
-</code></pre>
+<pre><code>// 创建仓库
+git init
 
-<h3 id="0x01-克隆">0x01 克隆</h3>
+// 克隆
+git clone git@github.com:reber0/wyb0.com.git
 
-<pre><code>git clone git@github.com:reber0/wyb0.com.git
-</code></pre>
-
-<h3 id="0x02-仓库连接到远程服务器">0x02 仓库连接到远程服务器</h3>
-
-<pre><code># 若没有克隆现有仓库则可以连接远程仓库：
+// 若没有克隆现有仓库则可以连接远程仓库
 git remote add origin git@github.com:reber/reber.com.git
+
+// 删除远程仓库信息
+git remote rm origin
 </code></pre>
 
-<h3 id="0x03-忽略文件">0x03 忽略文件</h3>
+<h3 id="0x01-添加-ssh-key">0x01 添加 SSH key</h3>
 
-<pre><code>$ cat .gitignore
-# 忽略 log 文件夹下的文件
-log/
+<p>生成 key</p>
 
-# 忽略 Thumbs.db 这个文件
-Thumbs.db
-
-# 忽略 .sql 结尾的文件
-data/*.sql
+<pre><code>➜ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C &quot;123456@qq.com&quot;
 </code></pre>
 
-<pre><code># 忽略 config.py 这个文件的更新，即 config.py 的内容改变是 git add 不会添加 config.py
-$ git update-index --assume-unchanged config.py
+<p>将 ~/.ssh/ 下生成的 id_rsa_github.pub 的内容添加到 github</p>
+
+<p>验证是否添加成功</p>
+
+<pre><code>➜ ssh -T git@github.com
+Hi reber0! You've successfully authenticated, but GitHub does not provide shell access.
 </code></pre>
 
-<h3 id="0x04-添加和提交和推送">0x04 添加和提交和推送</h3>
+<h3 id="0x02-配置全局信息">0x02 配置全局信息</h3>
 
-<pre><code>git add a.txt
+<p>配置全局用户名、邮箱</p>
+
+<pre><code>➜ git config --global user.name &quot;reber0&quot;
+➜ git config --global user.email &quot;123456@qq.com&quot;
+➜ git config -l
+</code></pre>
+
+<p>配置全局忽略文件</p>
+
+<pre><code>➜ cat ~/.gitignore_global
+Thumbs.db // 忽略 Thumbs.db 这个文件
+log/  // 忽略 log 文件夹下的文件
+*.pyc // 忽略 .pyc 结尾的文件
+</code></pre>
+
+<p>查看配置</p>
+
+<pre><code>➜ cat ~/.gitconfig
+[user]
+        name = reber0
+        email = 123456@qq.com
+[filter &quot;lfs&quot;]
+        process = git-lfs filter-process
+        required = true
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+[core]
+        excludesfile = /Users/reber/.gitignore_global
+
+[init]
+        defaultBranch = main
+</code></pre>
+
+<h3 id="0x03-添加和提交和推送">0x03 添加和提交和推送</h3>
+
+<pre><code>git fetch // 查看远端文件改动
+git status // 查看本地文件改动
+git add a.txt
 git commit -m &quot;add file a.txt&quot;
-git push origin master
+git push origin main
 </code></pre>
 
-<h3 id="0x05-添加大文件">0x05 添加大文件</h3>
+<p>忽略文件更新</p>
 
-<pre><code>GitHub 限制上传 100M 的文件
-1、brew install git-lfs
-2、cd 到 git 文件夹执行 git lfs install
-3、git lfs track &quot;./xxx/aaa&quot; 添加 aaa 文件，生成 .gitattributes 文件
-4、git add .gitattributes
-5、git commit -m &quot;add gitattributes&quot;
-6、git push origin master
-此时再添加大文件即可上传
-1、git add ./xxx/aaa
-2、git commit -m &quot;add aaa&quot;
-3、git push origin master
+<pre><code># 忽略 config.py 这个文件的更新，即 config.py 的内容改变时 git add 不会添加 config.py
+➜ git update-index --assume-unchanged config.py
 </code></pre>
 
-<h3 id="0x06-分支">0x06 分支</h3>
+<h3 id="0x04-分支">0x04 分支</h3>
 
-<ul>
-<li>切换分支后，分支的更改不会影响原来分支，</li>
-<li>切换分支后，分支更改后需要add，然后commit</li>
-<li>git checkout -b test可以创建分支同时切换</li>
-</ul>
+<p>初始化仓库</p>
 
-<p><img src="/img/post/git_branch.png" alt="分支" /></p>
-
-<h3 id="0x07-更新和合并">0x07 更新和合并</h3>
-
-<pre><code>git pull 可以同步github上的数据到本地
-git merge test 可以将test分支的改动合并到当前分支
+<pre><code class="language-sh">[15:46 reber@wyb at ~/temp/test]
+➜ git init
+已初始化空的 Git 仓库于 /Users/reber/temp/test/.git/
+[15:48 reber@wyb at ~/temp/test git:(main) ✗]
+➜ git add a.txt
+[15:48 reber@wyb at ~/temp/test git:(main) ✗]
+➜ git commit -m &quot;add file a.txt&quot;
+[main（根提交） e23479e] add file a.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 a.txt
+[15:48 reber@wyb at ~/temp/test git:(main)]
+➜ ls
+a.txt
 </code></pre>
 
-<h3 id="0x08-查看状态">0x08 查看状态</h3>
+<p>新建分支，切换分支后，分支的更改不会影响原来分支，分支更改后需要 add，然后 commit</p>
 
-<pre><code>git status
+<pre><code>[15:48 reber@wyb at ~/temp/test git:(main)]
+➜ git branch gh-pages
+[15:48 reber@wyb at ~/temp/test git:(main)]
+➜ git checkout gh-pages
+切换到分支 'gh-pages'
+[15:49 reber@wyb at ~/temp/test git:(gh-pages)]
+➜ touch b.txt
+[15:49 reber@wyb at ~/temp/test git:(gh-pages) ✗]
+➜ git add b.txt
+[15:49 reber@wyb at ~/temp/test git:(gh-pages) ✗]
+➜ git commit -m &quot;add file b.txt&quot;
+[gh-pages 12aa148] add file b.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 b.txt
+[15:49 reber@wyb at ~/temp/test git:(gh-pages)]
+➜ ls
+a.txt b.txt
+[15:49 reber@wyb at ~/temp/test git:(gh-pages)]
+➜ git checkout main
+切换到分支 'main'
+[15:49 reber@wyb at ~/temp/test git:(main)]
+➜ ls
+a.txt
 </code></pre>
 
-<h3 id="0x09-撤回">0x09 撤回</h3>
+<p>合并分支代码到主分支</p>
+
+<pre><code>[15:54 reber@wyb at ~/temp/test git:(main)]
+➜ git merge gh-pages
+更新 e23479e..12aa148
+Fast-forward
+ b.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 b.txt
+[15:54 reber@wyb at ~/temp/test git:(main)]
+➜ ls
+a.txt b.txt
+</code></pre>
+
+<h3 id="0x05-撤回">0x05 撤回</h3>
 
 <ul>
 <li><p>撤销 add</p>
@@ -256,32 +320,33 @@ f7c2baa Initial commit
 3.若先用了 git rm，而且 git commit 了，那只能 git reset --hard HEAD^ 恢复，或者 git reset --hard &lt;add 时的 id&gt;
 </code></pre>
 
-<h3 id="0x0a-多用户">0x0A 多用户</h3>
+<h3 id="0x06-多用户">0x06 多用户</h3>
 
 <p>如果有多个用户时可进行如下设置</p>
 
-<pre><code>$ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C &quot;123456@qq.com&quot;
-$ ssh-keygen -t rsa -b 2048 -f id_rsa_gitlab -C &quot;456789@qq.com&quot;
-$ vim config
-    Host github.com
-    HostName github.com
-    User user2
-    Port 22
-    IdentityFile ~/.ssh/id_rsa_github
+<pre><code>➜ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C &quot;123456@qq.com&quot;
+➜ ssh-keygen -t rsa -b 2048 -f id_rsa_gitlab -C &quot;456789@qq.com&quot;
+➜ cat ~/.ssh/config
+Host github.com
+HostName github.com
+User reber0
+Port 22
+IdentityFile ~/.ssh/id_rsa_github
 
-    Host 123.12.12.123
-    HostName mygitlab.com
-    User user1
-    Port 2222
-    IdentityFile ~/.ssh/id_rsa_gitlab
-$ ls
+Host git.mysite.com
+HostName git.mysite.com
+User reber
+Port 22
+IdentityFile ~/.ssh/id_rsa_gitlab
+
+Host myvps
+HostName 123.56.123.123
+User root
+Port 9833
+IdentityFile ~/.ssh/id_rsa
+➜ ls
     config  id_rsa_github.pub  id_rsa_gitlab.pub  id_rsa.pub
     id_rsa_github  id_rsa_gitlab      id_rsa      known_hosts
-
-# 可以新建项目后在项目里执行下面两条命令配置局部用户名和邮箱
-# 会在.git/config写入用户名和邮箱
-git config --local user.name &quot;reber&quot;  
-git config --local user.email &quot;123456@qq.com&quot;
 </code></pre>
 
                 
@@ -334,7 +399,7 @@ git config --local user.email &quot;123456@qq.com&quot;
         
             <li style="list-style-type:none;">
                 <i class="fa fa-folder fa-fw"></i>
-                <a href="https://wyb0.com/topics/git" title="git">git(4)</a>
+                <a href="https://wyb0.com/topics/git" title="git">git(3)</a>
             </li>
         
             <li style="list-style-type:none;">
@@ -451,7 +516,7 @@ git config --local user.email &quot;123456@qq.com&quot;
         
             <p style="display:inline-block;">
                 <a href="https://wyb0.com/tags/git" title="git">git</a>
-                <sup>4</sup>
+                <sup>3</sup>
             </p>
         
             <p style="display:inline-block;">
