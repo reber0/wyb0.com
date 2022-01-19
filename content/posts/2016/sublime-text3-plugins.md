@@ -1,12 +1,13 @@
-+++
-date = "2016-09-02T23:07:44+08:00"
-description = ""
-draft = false
-tags = ["software"]
-title = "Sublime Text 3几个好用的插件"
-topics = ["Other"]
-
-+++
+---
+draft: false
+date: 2016-09-02 23:07:44
+title: Sublime Text 3 几个好用的插件
+description: 
+categories:
+  - Other
+tags:
+  - software
+---
 
 ### 0x00 Package Control
 安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件  

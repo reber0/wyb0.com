@@ -1,17 +1,12 @@
-+++
-title = "通过 selenium 和 flask 中转后利用 sqlmap 进行注入"
-topics = ["Pentest"]
-tags = ["injection"]
-description = "渗透测试中有时候前端提交的数据会进行加密之类的操作, 有些加密的函数还不好找, 其实可以用 selenium 调用 chrome 驱动中转后进行测试。"
-date = "2019-07-27T18:15:25+08:00"
-draft = false
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-07-27 18:15:25
- * @LastEditTime: 2019-07-31 21:41:30
--->
+---
+date: 2019-07-27 18:15:25
+title: 通过 selenium 和 flask 中转后利用 sqlmap 进行注入
+description: 渗透测试中有时候前端提交的数据会进行加密之类的操作, 有些加密的函数还不好找, 其实可以用 selenium 调用 chrome 驱动中转后进行测试。
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 先说前提
 昨天某个小伙伴说有个注入没法搞

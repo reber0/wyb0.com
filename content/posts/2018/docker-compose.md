@@ -1,11 +1,13 @@
-+++
-title = "Docker之Docker Compose"
-topics = ["Linux"]
-tags = ["docker"]
-description = "我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。"
-date = "2018-11-19T20:10:23+08:00"
-draft = false
-+++
+---
+draft: false
+date: 2018-11-19 20:10:23
+title: Docker Compose
+description: 
+categories:
+  - Linux
+tags:
+  - docker
+---
 
 ### 0x00 关于docker compose
 可以把docker-compose当作docker命令的封装，它是一个用来把 docker 自动化的东西，docker-compose可以一次性管理多个容器，通常用于需要多个容器相互配合来完成某项任务的场景。

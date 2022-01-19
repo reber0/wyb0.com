@@ -1,12 +1,13 @@
-+++
-date = "2017-05-30T12:53:41+08:00"
-description = ""
-draft = false
-tags = ["sqlserver"]
-title = "SQLServer的基本使用"
-topics = ["Database"]
-
-+++
+---
+draft: false
+date: 2017-05-30 12:53:41
+title: SQLServer 的基本使用
+description: 
+categories:
+  - Database
+tags:
+  - sqlserver
+---
 
 ### 0x00 数据库
 ```

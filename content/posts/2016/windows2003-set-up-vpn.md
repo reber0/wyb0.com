@@ -1,12 +1,13 @@
-+++
-date = "2016-07-07T10:39:50+08:00"
-description = ""
-draft = false
-tags = ["server"]
-title = "Windows2003下搭建VPN"
-topics = ["Server"]
-
-+++
+---
+draft: false
+date: 2016-07-07 10:39:50
+title: Windows2003 下搭建 VPN
+description: 
+categories:
+  - Server
+tags:
+  - server
+---
 
 ### 0x00 环境及要求
 Windows2003下搭建基于PPTP(点对点隧道协议)的VPN服务器

@@ -1,12 +1,13 @@
-+++
-date = "2016-05-08T00:04:42+08:00"
-description = ""
-draft = false
-tags = ["software"]
-title = "Ubuntu下安装sublime text 3"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-05-08 00:04:42
+title: Ubuntu 下安装 sublime text 3
+description: 
+categories:
+  - Linux
+tags:
+  - software
+---
 
 环境：ubuntu14.4
 

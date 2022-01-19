@@ -1,12 +1,13 @@
-+++
-date = "2016-06-12T22:17:35+08:00"
-description = ""
-draft = false
-tags = ["python"]
-title = "Python编写规范"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-06-12 22:17:35
+title: Python 编写规范
+description: 
+categories:
+  - Python
+tags:
+  - python
+---
 
 ### 0x00 代码编排
 ```

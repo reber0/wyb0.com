@@ -1,12 +1,13 @@
-+++
-date = "2017-08-15T22:16:35+08:00"
-description = ""
-draft = false
-tags = ["docker"]
-title = "Docker初识"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2017-08-15 22:16:35
+title: Docker 初识
+description: 
+categories:
+  - Linux
+tags:
+  - docker
+---
 
 ### 0x00 关于Docker
 * Docker中的镜像类似VM的快照，容器类似虚拟机，使用镜像创建容器类似于使用快照创建虚拟机。

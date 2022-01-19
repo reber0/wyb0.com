@@ -1,12 +1,13 @@
-+++
-date = "2016-09-21T17:37:33+08:00"
-description = ""
-draft = false
-tags = ["tools"]
-title = "SqlmapApi常用方法封装"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-09-21 17:37:33
+title: SqlmapApi 常用方法封装
+description: 
+categories:
+  - Pentest
+tags:
+  - tools
+---
 
 ### 0x00 代码如下
 ```python

@@ -1,12 +1,13 @@
-+++
-date = "2016-10-22T00:10:46+08:00"
-description = ""
-draft = false
-tags = ["intranet"]
-title = "脏牛漏洞"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-10-22 00:10:46
+title: 脏牛漏洞
+description: 
+categories:
+  - Pentest
+tags:
+  - intranet
+---
 
 ### 0x00 测试环境
 我是在本地虚拟机测试的，个人理解这个漏洞的话可以起到的作用是：一个普通用户可以覆盖一个root用户的只读文件，若理解有误则希望大家提意见

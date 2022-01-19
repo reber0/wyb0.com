@@ -1,12 +1,13 @@
-+++
-date = "2017-08-18T14:36:39+08:00"
-description = "Docker中镜像以及容器的添加、删除等操作"
-draft = false
-tags = ["docker"]
-title = "Docker之镜像与容器"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2017-08-18 14:36:39
+title: Docker 之镜像与容器
+description: Docker 中镜像以及容器的添加、删除等操作
+categories:
+  - Linux
+tags:
+  - docker
+---
 
 操作系统：Ubuntu14.04.1  
 Docker版本：Docker version 17.06.0-ce, build 02c1d87

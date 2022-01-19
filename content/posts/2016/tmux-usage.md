@@ -1,18 +1,13 @@
-+++
-date = "2016-09-10T16:24:18+08:00"
-description = ""
-draft = false
-tags = ["software"]
-title = "Tmux 的使用"
-topics = ["Linux"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-08-08 10:40:46
- -->
+---
+draft: false
+date: 2016-09-10 16:24:18
+title: Tmux 的使用
+description: 
+categories:
+  - Linux
+tags:
+  - software
+---
 
 ### 0x00 Tmux 的快捷键前缀
 在 Tmux 下想要使用快捷键时，需要先按下快捷键前缀，然后再按下快捷键。

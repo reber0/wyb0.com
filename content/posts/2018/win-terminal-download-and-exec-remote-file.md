@@ -1,12 +1,13 @@
-+++
-date = "2018-02-06T15:12:32+08:00"
-description = "在windows的终端下下载文件，在windows的终端下执行远程文件"
-draft = false
-tags = ["intranet"]
-title = "Windows终端下载文件和执行远程文件"
-topics = ["Pentest"]
-
-+++
+---
+title: Windows 终端下载文件和执行远程文件
+description: 在 windows 的终端下下载文件，在 windows 的终端下执行远程文件
+categories:
+  - Pentest
+tags:
+  - intranet
+date: 2018-02-06 15:12:32
+draft: false
+---
 
 环境：Windows Server 2008 R2 Enterprise
 

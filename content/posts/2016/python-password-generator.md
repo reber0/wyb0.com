@@ -1,12 +1,13 @@
-+++
-date = "2016-08-29T15:14:57+08:00"
-description = ""
-draft = false
-tags = ["python"]
-title = "Python实现密码生成器"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-08-29 15:14:57
+title: Python 实现密码生成器
+description: 
+categories:
+  - Python
+tags:
+  - python
+---
 
 ### 0x00 简介
 有时候需要在网上注册许多账号，如果每个账户密码都一样的话，若被别人得知一个密码则所有账户就都沦陷了，若密码不一样则可能会忘记，在这里就用脚本写一个生成密码的工具，只需输入域名和账户名就可以根据key生成不一样的密码，也可以把域名和账户名写入文件，这样你用户名也可以不用记了。。。

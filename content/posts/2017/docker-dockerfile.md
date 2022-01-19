@@ -1,12 +1,13 @@
-+++
-date = "2017-08-18T18:05:43+08:00"
-description = "Dockerfile中写的是一条条指令，你可以通过Dockerfile更简单的构造自己的环境"
-draft = false
-tags = ["docker"]
-title = "Docker之Dockerfile"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2017-08-18 18:05:43
+title: Docker 之 Dockerfile
+description: Dockerfile 中写的是一条条指令，你可以通过 Dockerfile 更简单的构造自己的环境
+categories:
+  - Linux
+tags:
+  - docker
+---
 
 操作系统：macOS Sierra 10.12.6   
 Docker版本：Docker version 18.09.0, build 4d60db4

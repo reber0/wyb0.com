@@ -1,18 +1,13 @@
-+++
-date = "2016-06-19T20:18:48+08:00"
-description = ""
-draft = false
-tags = ["injection"]
-title = "SQL注入"
-topics = ["Pentest"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: 1070018473@qq.com
- * @Date: 2016-06-19 10:45:01
- * @LastEditTime: 2019-05-08 15:25:50
- -->
+---
+draft: false
+date: 2016-06-19 20:18:48
+title: SQL 注入
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 含义
 sql注入是将代码插入(拼接)到应用(用户)的输入参数中，之后再将这些参数传递给后台的SQL服务器加以解析并执行的攻击，

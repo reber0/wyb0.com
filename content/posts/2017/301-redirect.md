@@ -1,12 +1,13 @@
-+++
-date = "2017-02-07T10:49:38+08:00"
-description = ""
-draft = false
-tags = ["重定向"]
-title = "301重定向"
-topics = ["Other"]
-
-+++
+---
+draft: false
+date: 2017-02-07 10:49:38
+title: 301 重定向
+description: 
+categories:
+  - Other
+tags:
+  - 重定向
+---
 
 
 ### 0x00 目的

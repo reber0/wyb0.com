@@ -1,12 +1,13 @@
-+++
-date = "2016-05-09T23:33:12+08:00"
-description = ""
-draft = false
-tags = ["git"]
-title = "通过 gh-pages 推送博客"
-topics = ["Git"]
-
-+++
+---
+draft: false
+date: 2016-05-09 23:33:12
+title: 通过 gh-pages 发布博客
+description: 
+categories:
+  - Git
+tags:
+  - git
+---
 
 环境：Ubuntu 14.4
 

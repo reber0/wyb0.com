@@ -1,12 +1,13 @@
-+++
-date = "2016-01-21T21:13:17+08:00"
-description = ""
-draft = false
-tags = ["python"]
-title = "Python的函数式编程"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-01-21 21:13:17
+title: Python 的函数式编程
+description: 
+categories:
+  - Python
+tags:
+  - python
+---
 
 ### 0x00 函数式编程
 首先说一下高阶函数，能将函数作为参数来接收的函数就可以称为高阶函数，如下：

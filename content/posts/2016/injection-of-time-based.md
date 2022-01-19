@@ -1,11 +1,13 @@
-+++
-title = "SQL注入之基于时间的注入(MySQL)"
-topics = ["Pentest"]
-tags = ["injection"]
-description = "基于时间的SQL注入"
-date = "2016-06-24T10:10:27+08:00"
-draft = false
-+++
+---
+draft: false
+date: 2016-06-24 10:10:27
+title: SQL 注入之基于时间的注入(MySQL)
+description: 基于时间的 SQL 注入
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 特点
 ```

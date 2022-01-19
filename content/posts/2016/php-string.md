@@ -1,12 +1,13 @@
-+++
-date = "2016-05-21T23:16:28+08:00"
-description = ""
-draft = false
-tags = ["php"]
-title = "PHP之字符串"
-topics = ["PHP"]
-
-+++
+---
+draft: false
+date: 2016-05-21 23:16:28
+title: PHP 之字符串
+description: 
+categories:
+  - PHP
+tags:
+  - php
+---
 
 ### 0x00 特点
 1. 字符串可以使用数组的处理函数操作，但并不是真正的数组

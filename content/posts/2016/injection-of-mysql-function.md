@@ -1,18 +1,14 @@
-+++
-date = "2016-06-20T08:10:27+08:00"
-description = ""
-draft = false
-tags = ["injection", "getshell"]
-title = "SQL注入之load_file和into outfile(MySQL)"
-topics = ["Pentest"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:00
- * @LastEditTime : 2020-08-24 00:29:11
- -->
+---
+draft: false
+date: 2016-06-20 08:10:27
+title: SQL 注入之 load_file 和 into outfile(MySQL)
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+  - getshell
+---
 
 ### 0x00 load_file() 读文件
 * 条件:

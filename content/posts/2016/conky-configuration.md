@@ -1,12 +1,13 @@
-+++
-date = "2016-06-04T20:26:21+08:00"
-description = ""
-draft = false
-tags = ["software"]
-title = "conky配置"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-06-04 20:26:21
+title: conky 配置
+description: 
+categories:
+  - Linux
+tags:
+  - software
+---
 
 ### 0x00 效果
 使用软件conky可以在linux上看到系统的运行状态，效果如下：

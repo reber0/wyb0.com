@@ -1,12 +1,14 @@
-+++
-date = "2016-11-16T10:37:03+08:00"
-description = ""
-draft = false
-tags = ["ajax"]
-title = "AJAX与PHP"
-topics = ["JavaScript"]
+---
+draft: false
+date: 2016-11-16 10:37:03
 
-+++
+title: AJAX 与 PHP
+description: 
+categories:
+  - JavaScript
+tags:
+  - ajax
+---
 
 ### 0x00 AJAX与PHP
 ajax.html代码如下：

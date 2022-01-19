@@ -1,12 +1,14 @@
-+++
-date = "2016-05-31T23:35:06+08:00"
-description = ""
-draft = false
-tags = ["操作系统"]
-title = "win/ubuntu双系统分区设置"
-topics = ["Windows", "Linux"]
-
-+++
+---
+draft: false
+date: 2016-05-31 23:35:06
+title: win/ubuntu 双系统分区设置
+description: 
+categories:
+  - Windows
+  - Linux
+tags:
+  - 操作系统
+---
 
 ### win10和ubuntu双系统分区设置
 1. 硬盘采用uefi格式

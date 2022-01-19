@@ -1,12 +1,13 @@
-+++
-date = "2016-05-05T10:30:32+08:00"
-description = ""
-draft = false
-tags = ["git"]
-title = "Git 的用法"
-topics = ["Git"]
-
-+++
+---
+draft: false
+date: 2016-05-05 10:30:32
+title: Git 的用法
+description: 
+categories:
+  - Git
+tags:
+  - git
+---
 
 ### 0x00 仓库
 ```

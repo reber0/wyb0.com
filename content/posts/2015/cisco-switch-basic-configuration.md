@@ -1,12 +1,12 @@
-+++
-date = "2015-05-06T23:46:26+08:00"
-description = ""
-draft = false
-tags = ["网络设备"]
-title = "思科交换机基本配置"
-topics = ["Other"]
-
-+++
+---
+title: 思科交换机基本配置
+date: 2015-05-06 23:46:26
+description: 
+categories:
+  - Other
+tags:
+  - 网络设备
+---
 
 ### 0x00 简单配置命令
 ```

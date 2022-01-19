@@ -1,12 +1,15 @@
-+++
-date = "2016-09-12T22:54:28+08:00"
-description = ""
-draft = false
-tags = ["python", "mysql"]
-title = "Python封装MySQL类"
-topics = ["Python", "Database"]
-
-+++
+---
+draft: false
+date: 2016-09-12 22:54:28
+title: Python 封装 MySQL 类
+description: 
+categories:
+  - Python
+  - Database
+tags:
+  - python
+  - mysql
+---
 
 ### 0x00 安装
 有两种，一个是MySQLdb，一个是pymysql

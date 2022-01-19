@@ -1,18 +1,14 @@
-+++
-title = "SQL注入tips(Oracle)"
-topics = ["Pentest"]
-tags = ["injection","oracle"]
-description = "前几天渗透测试时遇到了Oracle的注入，这里简单总结一下Oracle中的SQL注入常见的利用手法：联合查询注入、报错型注入、布尔型注入、无返回值的盲注"
-date = "2019-01-04T20:23:35+08:00"
-draft = false
-+++
+---
+date: 2019-01-04 20:23:35
+title: SQL注入 tips(Oracle)
+description: 前几天渗透测试时遇到了Oracle的注入，这里简单总结一下Oracle中的SQL注入常见的利用手法：联合查询注入、报错型注入、布尔型注入、无返回值的盲注
+categories:
+  - Pentest
+tags:
+  - injection
+  - oracle
+---
 
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2020-01-07 13:57:12
- -->
 ### 0x00 判断数据库类型
 * Oracle有一些自带的表：dual、user_tables
     * ```id=45 and (select count(*) from user_tables)>0--```

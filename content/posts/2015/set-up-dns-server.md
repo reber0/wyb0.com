@@ -1,12 +1,12 @@
-+++
-date = "2015-07-14T14:15:13+08:00"
-description = ""
-draft = false
-tags = ["Server"]
-title = "搭建 DNS 服务器"
-topics = ["Server"]
-
-+++
+---
+title: 搭建 DNS 服务器
+date: 2015-07-14 14:15:13
+description: 
+categories:
+  - Server
+tags:
+  - Server
+---
 
 环境: ubuntu-16.04.7-server-amd64.iso
 

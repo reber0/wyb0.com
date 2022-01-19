@@ -1,12 +1,13 @@
-+++
-date = "2016-09-21T23:05:57+08:00"
-description = "来源于网络"
-draft = false
-tags = ["miscellanea"]
-title = "准则"
-topics = ["Other"]
-
-+++
+---
+draft: false
+date: 2016-09-21 23:05:57
+title: 准则
+description: 来源于网络
+categories:
+  - Other
+tags:
+  - miscellanea
+---
 
 ### 0x00 创造价值
 小鸡问母鸡：可否不用下蛋，带我出去玩啊？母鸡道：不行，我要工作！  

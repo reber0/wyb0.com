@@ -1,12 +1,13 @@
-+++
-date = "2017-01-16T20:18:05+08:00"
-description = ""
-draft = false
-tags = ["git"]
-title = "Ubuntu下部署Gitlab"
-topics = ["Git"]
-
-+++
+---
+draft: false
+date: 2017-01-16 20:18:05
+title: Ubuntu 下部署 Gitlab
+description: 
+categories:
+  - Git
+tags:
+  - git
+---
 
 ![钢之炼金术师FA](/img/anime/anime004.jpg)
 

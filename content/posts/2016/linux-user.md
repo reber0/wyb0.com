@@ -1,12 +1,13 @@
-+++
-date = "2016-04-17T20:48:07+08:00"
-description = ""
-draft = false
-tags = ["linux"]
-title = "Linux之用户和用户组"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-04-17 20:48:07
+title: Linux 之用户和用户组
+description: 
+categories:
+  - Linux
+tags:
+  - linux
+---
 
 ### 0x01 新建用户
 环境：Ubuntu 14.04.4

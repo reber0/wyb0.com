@@ -1,12 +1,12 @@
-+++
-date = "2015-12-04T19:42:19+08:00"
-description = ""
-draft = false
-tags = ["injection"]
-title = "ASP联合注入(Cookie处)"
-topics = ["Pentest"]
-
-+++
+---
+title: ASP Cookie 处联合注入
+date: 2015-12-04 19:42:19
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 Cookie注入的使用
 * 三大Web提交方式  

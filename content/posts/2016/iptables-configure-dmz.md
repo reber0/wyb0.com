@@ -1,12 +1,13 @@
-+++
-date = "2016-07-05T09:56:35+08:00"
-description = ""
-draft = false
-tags = ["dmz"]
-title = "iptables简单配置DMZ"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-07-05 09:56:35
+title: iptables 简单配置 DMZ
+description: 
+categories:
+  - Linux
+tags:
+  - dmz
+---
 
 ### 0x00 要求
 1. 内网可以访问外网

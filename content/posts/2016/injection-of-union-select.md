@@ -1,12 +1,13 @@
-+++
-date = "2016-06-21T22:30:18+08:00"
-description = ""
-draft = false
-tags = ["injection"]
-title = "SQL注入之联合查询(MySQL)"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-06-21 22:30:18
+title: SQL 注入之联合查询(MySQL)
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 前提
 要用联合查询进行注入则：页面必须有显示位

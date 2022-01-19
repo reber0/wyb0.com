@@ -1,17 +1,12 @@
-+++
-title = "从 SQL Server 注入到 远程连接桌面"
-topics = ["Pentest"]
-tags = ["pentest"]
-description = "从 SQL Server 注入到 远程连接桌面"
-date = "2019-06-25T17:01:53+08:00"
-draft = false
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-06-25 14:25:41
- * @LastEditTime: 2019-07-10 19:54:43
- -->
+---
+date: 2019-06-25 17:01:53
+title: 从 SQL Server 注入到 远程连接桌面
+description: 从 SQL Server 注入到 远程连接桌面
+categories:
+  - Pentest
+tags:
+  - pentest
+---
 
 ### 0x00 目标情况
 * 只有一个登录框

@@ -1,12 +1,13 @@
-+++
-date = "2016-08-07T23:38:58+08:00"
-description = ""
-draft = false
-tags = ["intranet"]
-title = "Windows下第三方服务提权"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-08-07 23:38:58
+title: Windows 下第三方服务提权
+description: 
+categories:
+  - Pentest
+tags:
+  - intranet
+---
 
 ### 0x00  MSSQL提权
 MSSQL运行在system权限时才可以通过xp_cmdshell组件执行系统命令提权  

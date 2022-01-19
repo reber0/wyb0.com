@@ -1,12 +1,14 @@
-+++
-date = "2016-02-05T11:38:23+08:00"
-description = ""
-draft = false
-tags = ["python","正则"]
-title = "Python的正则"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-02-05 11:38:23
+title: Python 的正则
+description: 
+categories:
+  - Python
+tags:
+  - python
+  - 正则
+---
 
 ### 0x00 正则表达式
 正则表达式是用来匹配字符串的异常强大的东西，可以用来匹配邮箱、域名等字符串

@@ -1,12 +1,13 @@
-+++
-date = "2016-05-15T09:10:23+08:00"
-description = ""
-draft = false
-tags = ["php"]
-title = "PHP之基础"
-topics = ["PHP"]
-
-+++
+---
+draft: false
+date: 2016-05-15 09:10:23
+title: PHP 之基础
+description: 
+categories:
+  - PHP
+tags:
+  - php
+---
 
 ### 0x00 PHP的作用
 ```

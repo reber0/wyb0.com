@@ -1,12 +1,15 @@
-+++
-date = "2016-08-26T17:53:51+08:00"
-description = ""
-draft = false
-tags = ["python", "爆破"]
-title = "Python实现多线程弱口令爆破"
-topics = ["Python", "Pentest"]
-
-+++
+---
+draft: false
+date: 2016-08-26 17:53:51
+title: Python 实现多线程弱口令爆破
+description: 
+categories:
+  - Pentest
+  - Python
+tags:
+  - python
+  - 爆破
+---
 
 ### 0x00 脚本
 ```python

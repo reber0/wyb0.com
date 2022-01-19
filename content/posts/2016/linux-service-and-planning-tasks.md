@@ -1,12 +1,13 @@
-+++
-date = "2016-04-19T10:03:07+08:00"
-description = ""
-draft = false
-tags = ["linux"]
-title = "Linux之服务和计划任务"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-04-19 10:03:07
+title: Linux 之服务和计划任务
+description: 
+categories:
+  - Linux
+tags:
+  - linux
+---
 
 ### 0x00 服务：
 在后台运行的软件就叫服务，参数一般为：start/stop/restart

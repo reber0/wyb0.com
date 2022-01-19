@@ -1,12 +1,13 @@
-+++
-date = "2016-06-04T20:03:10+08:00"
-description = ""
-draft = false
-tags = ["miscellanea"]
-title = "RGB颜色对照表"
-topics = ["Other"]
-
-+++
+---
+draft: false
+date: 2016-06-04T20:03:10
+title: RGB 颜色对照表
+description: 
+categories:
+  - Other
+tags:
+  - miscellanea
+---
 
 <html>
 <head>

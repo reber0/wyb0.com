@@ -1,12 +1,14 @@
-+++
-date = "2016-08-10T11:46:13+08:00"
-description = "Linux下SSH的免密登录，构建SSH隧道进行正向连接、反向连接，内网端口转发、穿透内网"
-draft = false
-tags = ["SSH隧道","端口转发"]
-title = "SSH免密登录及SSH隧道"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-08-10 11:46:13
+title: SSH 免密登录及 SSH 隧道
+description: Linux 下 SSH 的免密登录，构建 SSH 隧道进行正向连接、反向连接，内网端口转发、穿透内网
+categories:
+  - Linux
+tags:
+  - 隧道
+  - 端口转发
+---
 
 ### 0x00 SSH相关选项
 * -V 显示版本

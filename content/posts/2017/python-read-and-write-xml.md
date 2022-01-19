@@ -1,12 +1,14 @@
-+++
-date = "2017-07-20T14:20:26+08:00"
-description = ""
-draft = false
-tags = ["python","xml"]
-title = "使用Python读写xml文件"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2017-07-20 14:20:26
+title: 使用 Python 读写 xml 文件
+description: 
+categories:
+  - Python
+tags:
+  - python
+  - xml
+---
 
 ### 0x00 解析XML的方法
 1. SAX (simple API for XML)  

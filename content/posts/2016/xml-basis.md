@@ -1,12 +1,13 @@
-+++
-date = "2016-05-25T13:59:59+08:00"
-description = ""
-draft = false
-tags = ["xml"]
-title = "XML基础"
-topics = ["Other"]
-
-+++
+---
+draft: false
+date: 2016-05-25 13:59:59
+title: XML 基础
+description: 
+categories:
+  - Other
+tags:
+  - xml
+---
 
 ### 0x00 XML简介
 1、xml的设计宗旨是传输数据，而并非显示数据  

@@ -1,12 +1,15 @@
-+++
-date = "2018-04-16T19:16:14+08:00"
-description = "thinkphp的where函数可以接收字符串和数组，接收字符串时就可能存在注入，还是使用数组来传值吧。。。"
-draft = false
-tags = ["injection", "代码审计"]
-title = "ThinkPHP5的where函数"
-topics = ["Pentest","PHP"]
-
-+++
+---
+draft: false
+date: 2018-04-16 19:16:14
+title: ThinkPHP5 的 where 函数使用不当存在注入
+description: thinkphp 的 where 函数可以接收字符串和数组，接收字符串时就可能存在注入，还是使用数组来传值吧。。。
+categories:
+  - Pentest
+  - PHP
+tags:
+  - injection
+  - 代码审计
+---
 
 ### 0x00 关于thinkphp5的where函数
 年前公司委托别的公司开发一个网站，使用的是ThinkPHP 5.0.13，存在一个注入漏洞，分析后发现是因为tp5中的where函数使用不当，tp5中where这个函数可以接收字符串和数组这两种类型的参数来进行查询，而在用字符串这种传递方式时，如果使用不当的话就可能会出现sql注入。

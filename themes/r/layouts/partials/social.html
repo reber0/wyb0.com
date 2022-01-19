@@ -1,0 +1,14 @@
+<!-- social -->
+<div style="padding-bottom:10px;">
+    <h2 class="asidetitle">Social</h2>
+    <ul style="margin-left:10px;margin-bottom:0px;left:10px;">
+        {{ if .Site.Params.Social }}
+            {{ range $i, $e := .Site.Params.Social }}
+                {{ if $i }} {{ end }}
+                <li style="list-style-type:none;">
+                    <a href="{{ .url }}" target="_blank">{{ .pre | safeHTML }}{{ .name }}</a>
+                </li>
+            {{ end }}
+        {{ end }}
+    </ul>
+</div>

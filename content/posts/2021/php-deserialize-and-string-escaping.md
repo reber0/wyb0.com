@@ -1,11 +1,12 @@
-+++
-title = "PHP 反序列化与字符串逃逸"
-topics = ["Pentest"]
-tags = ["deserialize"]
-description = "我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。"
-date = "2021-07-18T17:21:33+08:00"
-draft = false
-+++
+---
+title: PHP 反序列化与字符串逃逸
+date: 2021-07-18 17:21:33
+description: 
+categories:
+  - Pentest
+tags:
+  - deserialize
+---
 
 ### 0x00 漏洞成因
 该漏洞主要是因为序列化的字符串在经过过滤函数不正确的处理而导致对象注入，目前看到都是因为过滤函数放在了 serialize 函数之后
@@ -70,6 +71,7 @@ $w = filter($a);
 unserialize($w);
 ?>
 ```
+
 ### 0x03 分析
 * 可以看到我们可以传入 username 和 password 触发 User 类，而我们需要触发 evil 类从而获取 hint.php
 * 题目中序列化了 User 类然后结果被方法 write 和 read 处理后再反序列化
@@ -89,7 +91,7 @@ class evil{
 var_dump(serialize(new evil("hint.php")));
 ?>
 ```
-输出 payload：O:4:"evil":1:{s:4:"hint";s:8:"hint.php";}
+输出 `payload：O:4:"evil":1:{s:4:"hint";s:8:"hint.php";}`
 
 ### 0x05 利用(过滤后变长)
 经过 filter 函数后，序列化的字符串中的 123 会被替换为 abcdef，整体来说遇到一个 123 字符串就会变长 3
@@ -115,14 +117,14 @@ O:4:"User":2:{s:8:"username";s:3:"111";s:8:"password";s:3:"222";}
 
 可以看出其实可控的是 111 及后面的 222，我们需要将 User 类序列化的字符串想办法构造为
 
-O:4:"User":2:{s:8:"username";s:4:"111";     s:8:"password";<f>序列化后的 evil 字符串</f>;}
+`O:4:"User":2:{s:8:"username";s:4:"111";     s:8:"password";`<f>序列化后的 evil 字符串</f>;}
 
 当我们传入构造后的序列化 payload 后
 ![](/img/post/16258097627342.jpg)
 
 上图中，位置 2 在序列化的字符串中其实是 username 的值，是一个字符串，若我们在 1 的位置插入 60 个字符
 
-则 username 的值为我们插入的 60 个字符，而 password 的值则为 payload <f>O:4:"evil":1:{s:4:"hint";s:8:"hint.php";}</f>，后面 3 位置的字符串失效，当反序列化时即可触发 evil，构造后如下图：
+则 username 的值为我们插入的 60 个字符，而 password 的值则为 payload <f>`O:4:"evil":1:{s:4:"hint";s:8:"hint.php";}`</f>，后面 3 位置的字符串失效，当反序列化时即可触发 evil，构造后如下图：
 ![](/img/post/16258101773735.jpg)
 将 payload 中 evil 的属性个数改为大于存在的属性个数即可绕过 wakeup，最终得到 hint.php 的内容
 ![](/img/post/16258103107382.jpg)

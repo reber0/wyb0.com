@@ -1,11 +1,13 @@
-+++
-title = "通过 Sphinx 快速查询数据"
-topics = ["Pentest"]
-tags = ["tools", "社工"]
-description = "搭建社工库，通过 Sphinx 快速查询数据"
-date = "2021-06-10T16:44:23+08:00"
-draft = false
-+++
+---
+title: 通过 Sphinx 快速查询数据
+date: 2021-06-10 16:44:23
+description: 搭建社工库，通过 Sphinx 快速查询数据
+categories:
+  - Pentest
+tags:
+  - tools
+  - 社工
+---
 
 ### 0x00 Sphinx
 Sphinx 是一款基于 SQL 的高性能全文检索引擎，Sphinx 的性能在众多全文检索引擎中也是数一数二的，利用 Sphinx我们可以完成比数据库本身更专业的搜索功能，而且可以有很多针对性的性能优化。

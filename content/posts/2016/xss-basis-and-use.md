@@ -1,12 +1,13 @@
-+++
-date = "2016-07-15T10:30:54+08:00"
-description = ""
-draft = false
-tags = ["xss"]
-title = "XSS漏洞及其挖掘方法"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-07-15 10:30:54
+title: XSS 漏洞及其挖掘方法
+description: 
+categories:
+  - Pentest
+tags:
+  - xss
+---
 
 ### 0x00 简介
 XSS(跨站脚本攻击)是指攻击者在网页中嵌入客户端脚本，通常是Javascript编写的恶意代码，当用户使用浏览器浏览被嵌入恶意代码的网页时，恶意代码将在用户的浏览器上被解析执行。重点在"脚本"这两个字上，脚本主要有两个：JavaScript和ActionScript。  

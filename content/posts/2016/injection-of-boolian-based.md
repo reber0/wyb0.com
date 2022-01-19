@@ -1,12 +1,13 @@
-+++
-date = "2016-06-23T23:32:34+08:00"
-description = ""
-draft = false
-tags = ["injection"]
-title = "SQL注入之布尔型注入(MySQL)"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-06-23 23:32:34
+title: SQL 注入之布尔型注入(MySQL)
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 特点
 ```

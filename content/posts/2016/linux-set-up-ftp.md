@@ -1,12 +1,14 @@
-+++
-date = "2016-06-18T09:40:06+08:00"
-description = ""
-draft = false
-tags = ["server"]
-title = "Linux下搭建FTP"
-topics = ["Server"]
+---
+draft: false
+date: 2016-06-18 09:40:06
+title: Linux 下搭建 FTP
+description: 
+categories:
+  - Server
+tags:
+  - server
+---
 
-+++
 
 安装环境为：CentOS-6.5-x86_64-minimal
 

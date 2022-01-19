@@ -1,12 +1,13 @@
-+++
-date = "2016-06-28T11:19:11+08:00"
-description = ""
-draft = false
-tags = ["tools"]
-title = "sqlmapapi的简单使用"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-06-28 11:19:11
+title: sqlmapapi 的简单使用
+description: 
+categories:
+  - Pentest
+tags:
+  - tools
+---
 
 ### 0x00 关于sqlmapapi.py
 当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量

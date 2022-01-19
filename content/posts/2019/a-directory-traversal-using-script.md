@@ -1,18 +1,14 @@
-+++
-title = "目录遍历利用"
-topics = ["Pentest"]
-tags = ["pentest"]
-description = "我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。"
-date = "2019-12-16T09:23:47+08:00"
-draft = false
-+++
+---
+date: 2019-12-16 09:23:47
+title: 目录遍历利用
+description: 对存在目录遍历漏洞的网站进行遍历，获取存在的 url
+categories:
+  - Pentest
+tags:
+  - pentest
+---
 
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-12-16 09:23:47
- * @LastEditTime: 2019-12-16 10:51:52
- -->
+
 ### 0x00 目录遍历
 一个同事说有一些目录遍历，想着能不能搞个脚本啥的，以后利用也方便，自己没有写出来，说让我看看
 

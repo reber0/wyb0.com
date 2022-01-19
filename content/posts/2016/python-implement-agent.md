@@ -1,12 +1,13 @@
-+++
-date = "2016-09-13T11:36:39+08:00"
-description = ""
-draft = false
-tags = ["python"]
-title = "Python实现代理"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-09-13 11:36:39
+title: Python 实现代理
+description: 
+categories:
+  - Python
+tags:
+  - python
+---
 
 ### 0x00 帮助信息
 ![帮助信息](/img/post/python_proxy_help.png)

@@ -1,12 +1,14 @@
-+++
-date = "2018-01-29T16:45:34+08:00"
-description = ""
-draft = false
-tags = ["python","module"]
-title = "Python中执行系统命令"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2018-01-29 16:45:34
+title: Python 中执行系统命令
+description: 
+categories:
+  - Python
+tags:
+  - python
+  - module
+---
 
 ### 0x00 使用模块
 在python执行系统命令一般可以通过3个模块来实现，这三个模块是：os、commands、subprocess

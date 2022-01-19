@@ -1,12 +1,13 @@
-+++
-date = "2016-07-20T08:30:53+08:00"
-description = ""
-draft = false
-tags = ["虚拟机"]
-title = "虚拟机下安装vm-tools"
-topics = ["Other"]
-
-+++
+---
+draft: false
+date: 2016-07-20 08:30:53
+title: 虚拟机下安装 vm-tools
+description: 
+categories:
+  - Other
+tags:
+  - 虚拟机
+---
 
 vm-tools安装后可以在客户机和虚拟机间双向复制文件
 

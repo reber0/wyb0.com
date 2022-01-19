@@ -1,12 +1,14 @@
-+++
-date = "2016-04-20T15:54:07+08:00"
-description = ""
-draft = false
-tags = ["linux","software"]
-title = "Linux之文本处理软件awk"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-04-20 15:54:07
+title: Linux 之文本处理软件 awk
+description: 
+categories:
+  - Linux
+tags:
+  - linux
+  - software
+---
 
 awk默认是以行为单位处理文本的，对文本中的每一行都执行后面 "{ }" 中的语句。
 

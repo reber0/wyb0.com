@@ -1,18 +1,14 @@
-+++
-title = "PostgreSQL 简单使用"
-topics = ["Database"]
-tags = ["postgresql"]
-description = "PostgreSQL 简单使用"
-date = "2019-08-23T16:27:12+08:00"
-draft = false
-+++
+---
+date: 2019-08-23 16:27:12
+title: PostgreSQL 简单使用
+description: PostgreSQL 简单使用
+categories:
+  - Database
+tags:
+  - postgre
+---
 
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-08-23 16:27:12
- * @LastEditTime : 2020-05-16 21:39:37
- -->
+
 ### 0x00 安装
 ```
 ➜  brew install postgresql

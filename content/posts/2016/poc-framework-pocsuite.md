@@ -1,12 +1,15 @@
-+++
-date = "2016-09-08T20:38:45+08:00"
-description = ""
-draft = false
-tags = ["poc"]
-title = "POC框架Pocsuite"
-topics = ["Python", "Pentest"]
-
-+++
+---
+draft: false
+date: 2016-09-08 20:38:45
+title: POC 框架 Pocsuite
+description: 
+categories:
+  - Pentest
+  - Python
+tags:
+  - pentest
+  - tools
+---
 
 ### 0x00 关于Pocsuite
 Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。

@@ -1,12 +1,14 @@
-+++
-date = "2016-08-01T09:17:38+08:00"
-description = ""
-draft = false
-tags = ["tools"]
-title = "BurpSuite的Intruder模块"
-topics = ["Pentest"]
+---
+draft: false
+date: 2016-08-01 09:17:38
 
-+++
+title: BurpSuite 的 Intruder 模块
+description: 
+categories:
+  - Pentest
+tags:
+  - tools
+---
 
 ### 0x00 示例一
 ![burpsuite抓包发送给intruder模](/img/post/burpsuite_intruder_caught.png)

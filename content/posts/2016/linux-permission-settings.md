@@ -1,12 +1,13 @@
-+++
-date = "2016-04-17T10:03:07+08:00"
-description = ""
-draft = false
-tags = ["linux"]
-title = "Linux之权限"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-04-17 10:03:07
+title: Linux 之权限
+description: 
+categories:
+  - Linux
+tags:
+  - linux
+---
 
 主要有三种参数：rwx 
 对于文件来说：分别是读/写/执行  

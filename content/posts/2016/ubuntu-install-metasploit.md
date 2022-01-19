@@ -1,18 +1,14 @@
-+++
-date = "2016-08-18T10:38:41+08:00"
-description = "在Ubuntu下安装渗透测试工具Metasploit"
-draft = false
-tags = ["tools","intranet"]
-title = "Ubuntu下安装Metasploit"
-topics = ["Pentest"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-11-12 13:38:57
- -->
+---
+draft: false
+date: 2016-08-18 10:38:41
+title: Ubuntu 下安装 Metasploit
+description: 在 Ubuntu 下安装渗透测试工具 Metasploit
+categories:
+  - Pentest
+tags:
+  - tools
+  - intranet
+---
 
 ### 0x00 安装Metasploit
 * 下载msfinstall脚本

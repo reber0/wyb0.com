@@ -1,12 +1,12 @@
-
-+++
-title = "PHP 反序列化"
-topics = ["Pentest"]
-tags = ["deserialize"]
-description = "我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。"
-date = "2021-07-08T17:08:50+08:00"
-draft = false
-+++
+---
+title: PHP 反序列化
+date: 2021-07-08 17:08:50
+description: 
+categories:
+  - Pentest
+tags:
+  - deserialize
+---
 
 ### 0x01 php 中的魔法函数
 __construct()：PHP 中类的构造函数，创建对象时调用。具有构造函数的类会在每次创建新对象时先调用此方法，所以非常适合在使用对象之前做一些初始化工作。

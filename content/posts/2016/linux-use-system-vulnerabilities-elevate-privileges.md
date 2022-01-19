@@ -1,12 +1,13 @@
-+++
-date = "2016-08-09T19:23:13+08:00"
-description = ""
-draft = false
-tags = ["intranet"]
-title = "Linux下系统漏洞提权"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-08-09 19:23:13
+title: Linux 下系统漏洞提权
+description: 
+categories:
+  - Pentest
+tags:
+  - intranet
+---
 
 ### 0x00 Linux下的提权
 Linux下一般都是系统漏洞提权，分为以下几个步骤：

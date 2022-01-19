@@ -1,18 +1,14 @@
-+++
-date = "2016-08-16T15:10:44+08:00"
-description = ""
-draft = false
-tags = ["python", "module"]
-title = "Python 命令行参数解析"
-topics = ["Python"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-12-14 16:17:08
- -->
+---
+draft: false
+date: 2016-08-16 15:10:44
+title: Python 命令行参数解析
+description: 
+categories:
+  - Python
+tags:
+  - python
+  - module
+---
 
 ### 0x00 argparse 模块
 参考 [https://docs.python.org/zh-cn/3.7/library/argparse.html](https://docs.python.org/zh-cn/3.7/library/argparse.html?_blank)

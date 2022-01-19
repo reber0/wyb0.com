@@ -1,12 +1,14 @@
-+++
-date = "2016-08-04T15:52:26+08:00"
-description = ""
-draft = false
-tags = ["逻辑漏洞","redis"]
-title = "Redis未授权访问漏洞"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-08-04 15:52:26
+title: Redis 未授权访问漏洞
+description: 
+categories:
+  - Pentest
+tags:
+  - redis
+  - 逻辑漏洞
+---
 
 ### 0x00 Redis的未授权访问
 若Redis服务器对公网开放，且未启用认证，则攻击者可以未授权访问服务器。

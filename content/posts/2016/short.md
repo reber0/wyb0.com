@@ -1,12 +1,13 @@
-+++
-date = "2016-04-17T15:49:07+08:00"
-description = "网上看到的,感觉挺好,所以就记录一下,俄罗斯某诗人"
-draft = false
-tags = ["miscellanea"]
-title = "[转]短"
-topics = ["Other"]
-
-+++
+---
+draft: false
+date: 2016-04-17 15:49:07
+title: "[转] 短"
+description: 网上看到的，感觉挺好，所以就记录一下，俄罗斯某诗人
+categories:
+  - Other
+tags:
+  - miscellanea
+---
 
 
 <center>

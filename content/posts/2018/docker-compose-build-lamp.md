@@ -1,11 +1,13 @@
-+++
-title = "使用docker-compose构造LAMP环境"
-topics = ["Linux"]
-tags = ["docker"]
-description = "使用docker-compose构造LAMP环境，其中mysql数据、mysql配置文件、网站文件均为持久化存储。"
-date = "2018-12-15T22:51:04+08:00"
-draft = false
-+++
+---
+draft: false
+date: 2018-12-15 22:51:04
+title: 使用 docker-compose 构造 LAMP 环境
+description: 使用 docker-compose 构造 LAMP 环境，其中 mysql 数据、mysql 配置文件、网站文件均为持久化存储。
+categories:
+  - Linux
+tags:
+  - docker
+---
 
 ### 0x00 实现功能
 使用docker-compose构造LAMP环境，其中mysql数据库、mysql配置文件、网站文件均持久化存储到本机。

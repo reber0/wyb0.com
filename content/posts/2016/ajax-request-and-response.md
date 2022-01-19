@@ -1,12 +1,14 @@
-+++
-date = "2016-10-25T00:53:13+08:00"
-description = ""
-draft = false
-tags = ["ajax"]
-title = "AJAX的XHR请求与响应"
-topics = ["JavaScript"]
+---
+draft: false
+date: 2016-10-25 00:53:13
 
-+++
+title: AJAX 的 XHR 请求与响应
+description: 
+categories:
+  - JavaScript
+tags:
+  - ajax
+---
 
 ### 0x00 什么是AJAX
 AJAX全称是Asynchronous JavaScript and XML，即异步的JavaScript和XML  

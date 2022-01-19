@@ -1,11 +1,12 @@
-+++
-title = "Gophish 钓鱼测试"
-topics = ["Pentest"]
-tags = ["钓鱼"]
-description = "渗透测试中的钓鱼邮件测试，通过 Gophish 给目标用户发送精心构造的钓鱼邮件，之后提示学习如何防范钓鱼邮件。"
-date = "2021-09-26T11:45:33+08:00"
-draft = false
-+++
+---
+title: Gophish 钓鱼测试
+date: 2021-09-26 11:45:33
+description: 渗透测试中的钓鱼邮件测试，通过 Gophish 给目标用户发送精心构造的钓鱼邮件，之后提示学习如何防范钓鱼邮件。
+categories:
+  - Pentest
+tags:
+  - 钓鱼
+---
 
 
 ### 0x00 Gophish 使用
@@ -18,7 +19,7 @@ draft = false
 
 ### 0x01 配置 Gophish 服务
 
-在 [https://github.com/gophish/gophish/releases](https://github.com/gophish/gophish/releases) 下载
+在 [https://github.com/gophish/gophish/releases](https://github.com/gophish/gophish/releases?_blank) 下载
 
 然后编辑 config.json，之后直接 ./gophish 运行即可
 ```json

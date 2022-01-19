@@ -1,12 +1,13 @@
-+++
-date = "2017-10-28T13:58:29+08:00"
-description = "Apache、Tomcat等中间件的安全配置"
-draft = false
-tags = ["server"]
-title = "中间件安全配置"
-topics = ["Server"]
-
-+++
+---
+draft: false
+date: 2017-10-28 13:58:29
+title: 中间件安全配置
+description: Apache、Tomcat、Nginx 等中间件的安全配置
+categories:
+  - Server
+tags:
+  - server
+---
 
 ### 0x00 Apache
 * 服务器安全配置

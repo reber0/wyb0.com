@@ -1,12 +1,13 @@
-+++
-date = "2018-01-08T22:02:07+08:00"
-description = ""
-draft = false
-tags = ["php"]
-title = "打包下载php文件"
-topics = ["PHP"]
-
-+++
+---
+draft: false
+date: 2018-01-08 22:02:07
+title: 打包下载 php 文件
+description: 
+categories:
+  - PHP
+tags:
+  - php
+---
 
 ### 0x00 代码如下
 ```

@@ -1,12 +1,13 @@
-+++
-date = "2016-07-31T18:43:49+08:00"
-description = ""
-draft = false
-tags = ["逻辑漏洞"]
-title = "逻辑漏洞"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-07-31 18:43:49
+title: 逻辑漏洞
+description: 
+categories:
+  - Pentest
+tags:
+  - 逻辑漏洞
+---
 
 ### 0x00 逻辑漏洞
 逻辑漏洞是一种业务逻辑上的设计缺陷，业务流存在问题。

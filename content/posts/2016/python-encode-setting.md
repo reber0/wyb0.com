@@ -1,12 +1,13 @@
-+++
-date = "2016-06-29T15:14:11+08:00"
-description = ""
-draft = false
-tags = ["python"]
-title = "Python的编码问题"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-06-29 15:14:11
+title: Python 的编码问题
+description: 
+categories:
+  - Python
+tags:
+  - python
+---
 
 ### 0x00 几个编码函数
 ```

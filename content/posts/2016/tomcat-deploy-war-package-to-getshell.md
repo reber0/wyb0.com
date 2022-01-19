@@ -1,18 +1,13 @@
-+++
-date = "2016-08-02T22:30:13+08:00"
-description = ""
-draft = false
-tags = ["getshell"]
-title = "Tomcat部署War包getshell"
-topics = ["Pentest"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-06-20 12:47:17
- -->
+---
+draft: false
+date: 2016-08-02 22:30:13
+title: Tomcat 部署 War 包 getshell
+description: 
+categories:
+  - Pentest
+tags:
+  - shell
+---
 
 ### 0x00 关于 War 包
 ```

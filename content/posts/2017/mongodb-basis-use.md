@@ -1,12 +1,14 @@
-+++
-date = "2017-05-25T15:33:12+08:00"
-description = ""
-draft = false
-tags = ["mongodb"]
-title = "MongoDB的基本使用"
-topics = ["Database"]
+---
+draft: false
+date: 2017-05-25 15:33:12
+title: MongoDB 的基本使用
+description: 
+categories:
+  - Database
+tags:
+  - mongodb
+---
 
-+++
 
 ### 0x00 角色和权限
 Mongo的授权采用了角色授权的方法，每个用户都有一组权限，Monog内建角色权限如下：

@@ -1,12 +1,13 @@
-+++
-date = "2016-04-19T10:03:07+08:00"
-description = ""
-draft = false
-tags = ["linux"]
-title = "Linux之基础命令"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-04-19 10:03:07
+title: Linux 之基础命令
+description: 
+categories:
+  - Linux
+tags:
+  - linux
+---
 
 ### 0x00 ls：显示文件
 ```

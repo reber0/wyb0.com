@@ -1,12 +1,15 @@
-+++
-date = "2016-04-19T20:03:07+08:00"
-description = ""
-draft = false
-tags = ["linux","software"]
-title = "Linux之安装ettercap"
-topics = ["Linux", "Pentest"]
-
-+++
+---
+draft: false
+date: 2016-04-19 20:03:0
+title: Linux之安装ettercap
+description: 
+categories:
+  - Pentest
+  - Linux
+tags:
+  - linux
+  - software
+---
 
 ### 0x00 准备
 ```

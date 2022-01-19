@@ -1,12 +1,14 @@
-+++
-date = "2017-07-10T16:30:43+08:00"
-description = "MRQ是基于Redis、Mongo和gevent的分布式任务队列"
-draft = false
-tags = ["python","module"]
-title = "MRQ的使用"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2017-07-10 16:30:43
+title: MRQ 的使用
+description: MRQ 是基于 Redis、Mongo 和 gevent 的分布式任务队列
+categories:
+  - Python
+tags:
+  - python
+  - module
+---
 
 ### 0x00 MRQ
 * MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。

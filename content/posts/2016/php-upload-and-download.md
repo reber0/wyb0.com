@@ -1,12 +1,13 @@
-+++
-date = "2016-05-24T08:31:09+08:00"
-description = ""
-draft = false
-tags = ["php"]
-title = "PHP之上传与下载"
-topics = ["PHP"]
-
-+++
+---
+draft: false
+date: 2016-05-24 08:31:09
+title: PHP 之上传与下载
+description: 
+categories:
+  - PHP
+tags:
+  - php
+---
 
 ### 0x00 上传
 * 客户端设置  

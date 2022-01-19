@@ -1,11 +1,13 @@
-+++
-title = "DNS域传送漏洞"
-topics = ["Pentest"]
-tags = ["敏感信息泄露"]
-description = "在渗透测试中如果存在DNS域传送漏洞的话可以节省很多搜集域名的时间"
-date = "2017-11-20T13:58:33+08:00"
-draft = false
-+++
+---
+draft: false
+date: 2017-11-20 13:58:33
+title: DNS 域传送漏洞
+description: 在渗透测试中如果存在DNS域传送漏洞的话可以节省很多搜集域名的时间
+categories:
+  - Pentest
+tags:
+  - 敏感信息泄露
+---
 
 ### 0x00 DNS域传送
 DNS服务器分为：主服务器、备份服务器和缓存服务器，在主备服务器之间则通过“DNS域传送”同步数据。

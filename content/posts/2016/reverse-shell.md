@@ -1,12 +1,13 @@
-+++
-date = "2016-08-06T08:36:53+08:00"
-description = ""
-draft = false
-tags = ["反弹shell"]
-title = "反弹shell小结"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-08-06 08:36:53
+title: 反弹 shell 小结
+description: 
+categories:
+  - Pentest
+tags:
+  - shell
+---
 
 当你找到一个有命令执行的主机时，你可能想要一个交互式的shell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令
 

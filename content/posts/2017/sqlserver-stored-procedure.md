@@ -1,12 +1,13 @@
-+++
-date = "2017-05-30T13:16:18+08:00"
-description = ""
-draft = false
-tags = ["sqlserver"]
-title = "SQLServer存储过程"
-topics = ["Database"]
-
-+++
+---
+draft: false
+date: 2017-05-30 13:16:18
+title: SQLServer 存储过程
+description: 
+categories:
+  - Database
+tags:
+  - sqlserver
+---
 
 ### 0x00 数据表结构
 ```

@@ -1,12 +1,15 @@
-+++
-date = "2016-06-03T11:19:05+08:00"
-description = ""
-draft = false
-tags = ["php", "mysql"]
-title = "PHP之封装MySQL类"
-topics = ["PHP", "Database"]
-
-+++
+---
+draft: false
+date: 2016-06-03 11:19:05
+title: PHP 之封装 MySQL 类
+description: 
+categories:
+  - PHP
+  - Database
+tags:
+  - php
+  - mysql
+---
 
 ### 0x00 config.inc.php内容如下
 ```

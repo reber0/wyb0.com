@@ -1,12 +1,13 @@
-+++
-date = "2016-04-20T07:58:07+08:00"
-description = ""
-draft = false
-tags = ["linux"]
-title = "Linux之文本处理"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-04-20 07:58:07
+title: Linux 之文本处理
+description: 
+categories:
+  - Linux
+tags:
+  - linux
+---
 
 这里介绍3种方式：awk、grep、sed
 

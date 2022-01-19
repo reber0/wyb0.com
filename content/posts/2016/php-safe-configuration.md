@@ -1,12 +1,13 @@
-+++
-date = "2016-09-01T08:46:03+08:00"
-description = ""
-draft = false
-tags = ["php"]
-title = "PHP安全配置"
-topics = ["PHP"]
-
-+++
+---
+draft: false
+date: 2016-09-01 08:46:03
+title: PHP 安全配置
+description: 
+categories:
+  - PHP
+tags:
+  - php
+---
 
 ### 0x00 PHP的配置
 PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题

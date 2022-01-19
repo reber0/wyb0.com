@@ -1,12 +1,14 @@
-+++
-date = "2016-07-14T09:44:06+08:00"
-description = ""
-draft = false
-tags = ["python", "module"]
-title = "Python的cmd模块"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-07-14 09:44:06
+title: Python 的 cmd 模块
+description: 
+categories:
+  - Python
+tags:
+  - python
+  - module
+---
 
 ### 0x00 关于cmd模块
 使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们

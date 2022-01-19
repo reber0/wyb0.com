@@ -1,12 +1,13 @@
-+++
-date = "2016-07-03T20:06:39+08:00"
-description = ""
-draft = false
-tags = ["python"]
-title = "Python简单解码IP头"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-07-03 20:06:39
+title: Python 简单解码 IP 头
+description: 
+categories:
+  - Python
+tags:
+  - python
+---
 
 ### 0x00 解码IP头
 Windows上运行时要以管理员身份运行  

@@ -1,18 +1,13 @@
-+++
-date = "2016-08-11T21:17:21+08:00"
-description = ""
-draft = false
-tags = ["mindmap"]
-title = "Web常见漏洞脑图"
-topics = ["Pentest"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:01
- * @LastEditTime : 2020-07-23 14:48:13
- -->
+---
+draft: false
+date: 2016-08-11 21:17:21
+title: Web常见漏洞脑图
+description: 
+categories:
+  - Pentest
+tags:
+  - mindmap
+---
 
 ## Web常见漏洞
 

@@ -1,18 +1,13 @@
-+++
-date = "2016-07-25T22:32:51+08:00"
-description = ""
-draft = false
-tags = ["rce"]
-title = "代码执行漏洞(一)"
-topics = ["Pentest"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:00
- * @LastEditTime: 2019-08-14 19:05:02
- -->
+---
+draft: false
+date: 2016-07-25 22:32:51
+title: 代码执行漏洞(一)
+description: 
+categories:
+  - Pentest
+tags:
+  - rce
+---
 
 ### 0x00 代码执行
 当应用在调用一些能将字符转化为代码的函数(如PHP中的eval)时，没有考虑用户是否能控制这个字符串，这就会造成代码执行漏洞。

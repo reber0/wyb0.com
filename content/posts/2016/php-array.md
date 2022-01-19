@@ -1,12 +1,13 @@
-+++
-date = "2016-05-18T11:09:46+08:00"
-description = ""
-draft = false
-tags = ["php"]
-title = "PHP之数组"
-topics = ["PHP"]
-
-+++
+---
+draft: false
+date: 2016-05-18 11:09:46
+title: PHP 之数组
+description: 
+categories:
+  - PHP
+tags:
+  - php
+---
 
 ### 0x00 分类
 1. 索引数组

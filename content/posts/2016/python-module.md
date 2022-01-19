@@ -1,12 +1,14 @@
-+++
-date = "2016-08-31T11:22:41+08:00"
-description = ""
-draft = false
-tags = ["python", "module"]
-title = "Python的模块"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-08-31 11:22:41
+title: Python 的模块
+description: 
+categories:
+  - Python
+tags:
+  - python
+  - module
+---
 
 ### 0x00 Python的模块
 * 在python中，任何一个python文件都可以看作一个模块

@@ -1,12 +1,13 @@
-+++
-date = "2016-06-30T15:30:54+08:00"
-description = ""
-draft = false
-tags = ["ssrf"]
-title = "SSRF"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-06-30 15:30:54
+title: SSRF
+description: 
+categories:
+  - Pentest
+tags:
+  - ssrf
+---
 
 ### 0x00 什么是SSRF
 SSRF(Server-Side Request Forgery:服务请求伪造)是一种由攻击者构造，从而让服务端发起请求的一种安全漏洞，<font color="FF0000">它将一个可以发起网络请求的服务当作跳板来攻击其他服务</font>，SSRF的攻击目标一般是<font color="FF0000">内网</font>。  

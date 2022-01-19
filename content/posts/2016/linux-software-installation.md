@@ -1,12 +1,13 @@
-+++
-date = "2016-04-19T19:07:07+08:00"
-description = ""
-draft = false
-tags = ["linux"]
-title = "Linux之软件的安装"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-04-19 19:07:07
+title: Linux 之软件的安装
+description: 
+categories:
+  - Linux
+tags:
+  - linux
+---
 
 Linux上的软件安装可以分为三种方式：
 

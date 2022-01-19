@@ -1,12 +1,13 @@
-+++
-date = "2016-07-26T09:24:22+08:00"
-description = ""
-draft = false
-tags = ["文件包含"]
-title = "文件包含漏洞"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-07-26 09:24:22
+title: 文件包含漏洞
+description: 
+categories:
+  - Pentest
+tags:
+  - 文件包含
+---
 
 环境：phpStudy 2016、DVWA v1.10
 

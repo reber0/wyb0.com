@@ -1,12 +1,13 @@
-+++
-date = "2016-08-08T08:28:27+08:00"
-description = ""
-draft = false
-tags = ["intranet"]
-title = "导出Windows主机密码与开启3389"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-08-08 08:28:27
+title: 导出 Windows 主机密码与开启 3389
+description: 
+categories:
+  - Pentest
+tags:
+  - intranet
+---
 
 ### 0x00 导出主机密码hash
 * 关于Windows的hash

@@ -1,11 +1,13 @@
-+++
-title = "[转]MySQL报错注入原理分析(count()、rand()、group by)"
-topics = ["Pentest"]
-tags = ["injection"]
-description = "MySQL中利用count()、rand()、group by进行报错注入原理分析，详细描述了web安全中的报错注入的具体原理"
-date = "2016-11-13T11:59:26+08:00"
-draft = false
-+++
+---
+draft: false
+date: 2016-11-13 11:59:26
+title: "[转] MySQL 报错注入原理分析(count()、rand()、group by)"
+description: MySQL 中利用 count()、rand()、group by 进行报错注入原理分析，详细描述了 web 安全中的报错注入的具体原理
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 原文链接：[http://drops.wooyun.org/tips/14312](http://drops.wooyun.org/tips/14312?_blank)
 

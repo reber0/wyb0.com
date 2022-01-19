@@ -1,18 +1,13 @@
-+++
-title = "记一次网页 js 挂马"
-topics = ["Pentest"]
-tags = ["javascript"]
-description = "网页挂马一般是向页面中加入恶意代码进行转跳、下载木马病毒等操作。"
-date = "2019-08-19T10:17:46+08:00"
-draft = false
-+++
+---
+date: 2019-08-19 10:17:46
+title: 记一次网页 js 挂马
+description: 网页挂马一般是向页面中加入恶意代码进行转跳、下载木马病毒等操作。
+categories:
+  - Pentest
+tags:
+  - javascript
+---
 
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-08-19 10:17:46
- * @LastEditTime: 2019-08-19 12:21:34
- -->
 ### 0x00 常见网页挂马方式
 * iframe 框架挂马  
     简单来说就是加 iframe 标签

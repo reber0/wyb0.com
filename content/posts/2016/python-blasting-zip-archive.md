@@ -1,12 +1,15 @@
-+++
-date = "2016-09-20T14:50:59+08:00"
-description = ""
-draft = false
-tags = ["python", "爆破"]
-title = "Python爆破zip压缩包"
-topics = ["Python", "Pentest"]
-
-+++
+---
+draft: false
+date: 2016-09-20 14:50:59
+title: Python 爆破 zip 压缩包
+description: 
+categories:
+  - Pentest
+  - Python
+tags:
+  - 爆破
+  - python
+---
 
 ### 0x00 代码
 多线程爆破加密的zip压缩包

@@ -1,18 +1,12 @@
-+++
-title = "FRP 内网穿透"
-topics = ["Pentest"]
-tags = ["intranet"]
-description = "渗透测试时的内网穿透工具 frp"
-date = "2019-07-30T23:27:54+08:00"
-draft = false
-+++
-
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-07-30 23:27:54
- * @LastEditTime: 2019-11-05 16:55:25
- -->
+---
+date: 2019-07-30 23:27:54
+title: FRP 内网穿透
+description: 渗透测试时的内网穿透工具 frp
+categories:
+  - Pentest
+tags:
+  - intranet
+---
 
 ### 0x00 对外提供简单的文件访问服务
 * 服务端

@@ -1,12 +1,13 @@
-+++
-date = "2016-07-28T22:42:58+08:00"
-description = ""
-draft = false
-tags = ["信息泄露"]
-title = "敏感信息泄露"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-07-28 22:42:58
+title: 敏感信息泄露
+description: 
+categories:
+  - 信息泄露
+tags:
+  - miscellanea
+---
 
 ### 0x00 软件敏感信息
 ```

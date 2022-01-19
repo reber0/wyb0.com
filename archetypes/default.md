@@ -1,10 +1,28 @@
-+++
-title = ""
-topics = [""]
-tags = [""]
-description = "我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。"
-date = "{{ .Date }}"
-draft = false
-+++
+---
+draft: true
+isCJKLanguage: true
+date: {{ now.Format (default "2006-01-02 15:04:05" .Site.Params.dateFmt) }}
+title: "{{ replace .Name "-" " " | title }}"
+description: 我的个人博客，主要用于记录自己的一些渗透测试、编程等学习笔记之类的东西。
+categories: 
+  - null
+tags:
+  - null
+---
 
-### 0x00 这里是正文
+
+### 0x00 
+
+
+
+### 0x01 
+
+
+
+### 0x02 
+
+
+
+### 0x03 
+
+

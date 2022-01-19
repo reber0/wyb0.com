@@ -1,12 +1,14 @@
-+++
-date = "2017-08-01T18:16:39+08:00"
-description = ""
-draft = false
-tags = ["https"]
-title = "[转]HTTPS加密原理简介"
-topics = ["Other"]
+---
+draft: false
+date: 2017-08-01 18:16:39
+title: "[转] HTTPS 加密原理简介"
+description: 
+categories:
+  - Other
+tags:
+  - https
+---
 
-+++
 
 原文链接：http://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html
 

@@ -1,12 +1,13 @@
-+++
-date = "2016-06-18T20:39:50+08:00"
-description = ""
-draft = false
-tags = ["server"]
-title = "Windows2003下搭建IIS+asp"
-topics = ["Server"]
-
-+++
+---
+draft: false
+date: 2016-06-18 20:39:50
+title: Windows2003 下搭建 IIS+asp
+description: 
+categories:
+  - Server
+tags:
+  - server
+---
 
 ### 0x00 添加组件
 ![40](/img/post/add_component1.png)

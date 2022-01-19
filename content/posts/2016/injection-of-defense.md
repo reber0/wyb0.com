@@ -1,12 +1,13 @@
-+++
-date = "2016-06-25T10:25:11+08:00"
-description = ""
-draft = false
-tags = ["injection"]
-title = "SQL注入之防御"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-06-25 10:25:11
+title: SQL 注入之防御
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 要做的事
 也就是找到注入点然后修复

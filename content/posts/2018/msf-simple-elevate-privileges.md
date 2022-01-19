@@ -1,18 +1,14 @@
-+++
-date = "2018-02-26T13:43:20+08:00"
-description = "本地构建渗透测试环境，在已经获得shell的前提下尝试利用Metasploit进行提权"
-draft = false
-tags = ["tools","intranet"]
-title = "Metasploit简单提权"
-topics = ["Pentest"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:01
- * @LastEditTime: 2019-07-15 22:13:29
- -->
+---
+draft: false
+date: 2018-02-26 13:43:20
+title: Metasploit 简单提权
+description: 本地构建渗透测试环境，在已经获得 shell 的前提下尝试利用 Metasploit 进行提权
+categories:
+  - Pentest
+tags:
+  - tools
+  - intranet
+---
 
 ### 0x00 前提
 虚拟机有一个shell：```http://10.11.11.20/a.php```，物理机IP是211.222.222.72   

@@ -1,12 +1,13 @@
-+++
-date = "2016-01-25T11:17:59+08:00"
-description = ""
-draft = false
-tags = ["python"]
-title = "Python的面向对象"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-01-25 11:17:59
+title: Python 的面向对象
+description: 
+categories:
+  - Python
+tags:
+  - python
+---
 
 ### 0x00 面向对象
 * 面向对象是为了解决系统的可维护性，可扩展性，可重用性

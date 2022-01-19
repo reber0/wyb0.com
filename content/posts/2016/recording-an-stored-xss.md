@@ -1,12 +1,13 @@
-+++
-date = "2016-07-17T23:30:54+08:00"
-description = ""
-draft = false
-tags = ["xss"]
-title = "一次存储型XSS利用实例"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-07-17 23:30:54
+title: 一次存储型 XSS 利用实例
+description: 
+categories:
+  - Pentest
+tags:
+  - xss
+---
 
 首先感谢凯神的指导
 

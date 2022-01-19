@@ -1,12 +1,13 @@
-+++
-date = "2017-12-09T23:02:22+08:00"
-description = "XXE漏洞是针对使用XML交互的Web应用程序的攻击方法"
-draft = false
-tags = ["xml"]
-title = "XXE漏洞"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2017-12-09 23:02:22
+title: XXE 漏洞
+description: XXE 漏洞是针对使用 XML 交互的 Web 应用程序的攻击方法
+categories:
+  - Pentest
+tags:
+  - xml
+---
 
 ### 0x00 XXE
 XML文件作为配置文件(spring、Struts2等)、文档结构说明文件(PDF、RSS等)、图片格式文件(SVG header)应用比较广泛

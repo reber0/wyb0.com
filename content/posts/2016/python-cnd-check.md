@@ -1,12 +1,15 @@
-+++
-date = "2016-12-23T21:10:05+08:00"
-description = "利用python来识别网站是否使用了cdn以及使用了那种cdn"
-draft = false
-tags = ["python"]
-title = "Python实现CDN的判断"
-topics = ["Python", "Pentest"]
-
-+++
+---
+draft: false
+date: 2016-12-23 21:10:05
+title: Python 实现 CDN 的判断
+description: 利用 python 来识别网站是否使用了 cdn 以及使用了那种 cdn
+categories:
+  - Pentest
+  - Python
+tags:
+  - pentest
+  - python
+---
 
 ![银魂](/img/anime/anime002.jpg)
 

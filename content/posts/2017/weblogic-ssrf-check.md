@@ -1,12 +1,14 @@
-+++
-date = "2017-04-14T14:43:52+08:00"
-description = ""
-draft = false
-tags = ["ssrf"]
-title = "检测WebLogic是否存在SSRF"
-topics = ["Python","Pentest"]
-
-+++
+---
+draft: false
+date: 2017-04-14 14:43:52
+title: 检测 WebLogic 是否存在 SSRF
+description: 
+categories:
+  - Pentest
+  - Python
+tags:
+  - ssrf
+---
 
 ### 0x00 weblogic返回状态
 weblogic的ssrf漏洞测试3种状态，返回如下：

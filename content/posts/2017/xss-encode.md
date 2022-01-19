@@ -1,12 +1,13 @@
-+++
-date = "2017-03-30T15:25:37+08:00"
-description = ""
-draft = false
-tags = ["xss"]
-title = "XSS中的编码"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2017-03-30 15:25:37
+title: XSS 中的编码
+description: 
+categories:
+  - Pentest
+tags:
+  - xss
+---
 
 ![攻壳机动队](/img/anime/anime006.jpg)
 

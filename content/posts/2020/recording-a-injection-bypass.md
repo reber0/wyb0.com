@@ -1,11 +1,12 @@
-+++
-title = "记一次 SQL 注入简单 bypass"
-topics = ["Pentest"]
-tags = ["injection"]
-description = "注入 bypass"
-date = "2020-06-22T17:35:07+08:00"
-draft = false
-+++
+---
+date: 2020-06-22 17:35:07
+title: 记一次 SQL 注入简单 bypass
+description: 注入 bypass
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 存在 SQL 注入
 总之是遇到一个站，登录的页面，数据包大致如下：

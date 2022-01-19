@@ -1,12 +1,13 @@
-+++
-date = "2016-06-24T15:32:34+08:00"
-description = ""
-draft = false
-tags = ["injection"]
-title = "SQL注入之宽字节注入(MySQL)"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-06-24 15:32:34
+title: SQL 注入之宽字节注入(MySQL)
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 应用场景
 在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quotes_gpc，或者使用addslashes、mysql_real_escape_string等函数对客户端传入的参数进行过滤，则注入的单引号或双引号就会被```"\"```转义，但是，如果服务端的数据库使用的是GB2312、GBK、GB18030等宽字节的编码时，则依然会造成注入。

@@ -1,11 +1,13 @@
-+++
-title = "Oracle数据库简单使用"
-topics = ["Database"]
-tags = ["oracle"]
-description = "我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。"
-date = "2018-12-25T23:34:56+08:00"
-draft = false
-+++
+---
+draft: false
+date: 2018-12-25 23:34:56
+title: Oracle 数据库简单使用
+description: 
+categories:
+  - Database
+tags:
+  - oracle
+---
 
 ### 0x00 关于Oracle
 * 完整的Oracle数据库通常由两部分组成：Oracle数据库和数据库实例。

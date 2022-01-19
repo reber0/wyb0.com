@@ -1,12 +1,13 @@
-+++
-date = "2016-06-13T09:14:45+08:00"
-description = ""
-draft = false
-tags = ["software"]
-title = "Ubuntu下使用ShadowSocks"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-06-13 09:14:45
+title: Ubuntu 下使用 ShadowSocks
+description: 
+categories:
+  - Linux
+tags:
+  - software
+---
 
 环境：Ubuntu14.04
 

@@ -1,12 +1,13 @@
-+++
-date = "2016-06-19T19:40:25+08:00"
-description = ""
-draft = false
-tags = ["mysql"]
-title = "MySQL的information_schema库"
-topics = ["Database"]
-
-+++
+---
+draft: false
+date: 2016-06-19 19:40:25
+title: MySQL的information_schema库
+description: 
+categories:
+  - Database
+tags:
+  - mysql
+---
 
 ### 0x00 information\_schema
 ```

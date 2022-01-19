@@ -1,18 +1,14 @@
-+++
-title = "SQL注入tips(SQL Server)"
-topics = ["Pentest"]
-tags = ["injection"]
-description = "SQL Server注入常见的一些注入手法"
-date = "2018-09-04T10:09:17+08:00"
-draft = false
-+++
+---
+draft: false
+date: 2018-09-04 10:09:17
+title: SQL注入 tips(SQL Server)
+description: SQL Server 注入常见的一些注入手法
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
-<!--
- * @Author: reber
- * @Mail: 1070018473@qq.com
- * @Date: 2018-09-04 10:45:01
- * @LastEditTime: 2019-12-11 13:28:22
- -->
 ### 0x00 基础信息探测
 ```sql
 @@VERSION,@@SERVERNAME,@@SERVICENAME;

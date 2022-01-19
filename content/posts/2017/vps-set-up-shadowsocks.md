@@ -1,12 +1,14 @@
-+++
-date = "2017-03-10T10:34:40+08:00"
-description = ""
-draft = false
-tags = ["Server"]
-title = "在vps上搭建Shadowsocks"
-topics = ["Linux"]
+---
+draft: false
+date: 2017-03-10 10:34:40
+title: 在 vps 上搭建 Shadowsocks
+description: 
+categories:
+  - Linux
+tags:
+  - server
+---
 
-+++
 
 ![某科学的超电磁炮](/img/anime/anime005.jpg)
 

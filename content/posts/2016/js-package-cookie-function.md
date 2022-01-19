@@ -1,12 +1,13 @@
-+++
-date = "2016-12-27T11:49:38+08:00"
-description = "对cookie的增、删、改方法进行封装"
-draft = false
-tags = ["javascript"]
-title = "[转]JS操作cookie方法的封装"
-topics = ["JavaScript"]
-
-+++
+---
+draft: false
+date: 2016-12-27 11:49:38
+title: "[转] JS 操作 cookie 方法的封装"
+description: 对 cookie 的增、删、改方法进行封装
+categories:
+  - JavaScript
+tags:
+  - javascript
+---
 
 原文链接：http://www.wyzu.cn/2015/0123/107167.html
 

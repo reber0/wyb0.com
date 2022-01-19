@@ -1,12 +1,13 @@
-+++
-date = "2016-04-15T21:03:07+08:00"
-description = ""
-draft = false
-tags = ["linux"]
-title = "Linux之vim"
-topics = ["Linux"]
-
-+++
+---
+draft: false
+date: 2016-04-15 21:03:07
+title: Linux 之 vim
+description: 
+categories:
+  - Linux
+tags:
+  - linux
+---
 
 ### 0x00 Vim的安装及配置：
 * 安装vim

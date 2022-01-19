@@ -1,12 +1,13 @@
-+++
-date = "2016-05-22T16:29:47+08:00"
-description = ""
-draft = false
-tags = ["php"]
-title = "PHP之目录与文件"
-topics = ["PHP"]
-
-+++
+---
+draft: false
+date: 2016-05-22 16:29:47
+title: PHP 之目录与文件
+description: 
+categories:
+  - PHP
+tags:
+  - php
+---
 
 ### 0x00 目录的操作
 ```php

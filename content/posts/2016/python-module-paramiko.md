@@ -1,12 +1,14 @@
-+++
-date = "2016-07-14T15:24:11+08:00"
-description = ""
-draft = false
-tags = ["python", "module"]
-title = "Python的paramiko模块"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-07-14 15:24:11
+title: Python 的 paramiko 模块
+description: 
+categories:
+  - Python
+tags:
+  - python
+  - module
+---
 
 ### 0x00 安装
 直接pip install paramiko安装  

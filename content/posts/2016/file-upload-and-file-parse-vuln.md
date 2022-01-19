@@ -1,18 +1,13 @@
-+++
-date = "2016-07-20T11:30:53+08:00"
-description = ""
-draft = false
-tags = ["fileupload"]
-title = "文件上传漏洞与文件解析漏洞"
-topics = ["Pentest"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:00
- * @LastEditTime : 2020-04-04 20:35:09
- -->
+---
+draft: false
+date: 2016-07-20 11:30:53
+title: 文件上传漏洞与文件解析漏洞
+description: 
+categories:
+  - Pentest
+tags:
+  - fileupload
+---
 
 ### 0x00 文件上传漏洞
 ```bash

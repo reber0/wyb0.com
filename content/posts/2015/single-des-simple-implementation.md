@@ -1,12 +1,13 @@
-+++
-date = "2015-05-22T16:52:55+08:00"
-description = ""
-draft = false
-tags = ["des", "C语言"]
-title = "利用C语言简单实现单重DES"
-topics = ["Other"]
-
-+++
+---
+title: 利用 C 语言简单实现单重 DES
+date: 2015-05-22 16:52:55
+description: 
+categories:
+  - 编程
+tags:
+  - des
+  - C 语言
+---
 
 ### 0x00 简介
 

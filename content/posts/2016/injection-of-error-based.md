@@ -1,18 +1,13 @@
-+++
-date = "2016-06-22T15:30:54+08:00"
-description = ""
-draft = false
-tags = ["injection"]
-title = "SQL注入之报错型注入(MySQL)"
-topics = ["Pentest"]
-
-+++
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-04-10 10:45:00
- * @LastEditTime: 2019-08-14 19:07:23
- -->
+---
+draft: false
+date: 2016-06-22 15:30:54
+title: SQL 注入之报错型注入(MySQL)
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 前提
 ```

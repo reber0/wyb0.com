@@ -1,11 +1,15 @@
-+++
-date = "2016-08-03T11:02:20+08:00"
-description = ""
-draft = false
-tags = ["server","redis"]
-title = "Redis的简单使用"
-topics = ["Server","Database"]
-+++
+---
+draft: false
+date: 2016-08-03 11:02:20
+title: 一次存储型 XSS 利用实例
+description: 
+categories:
+  - Server
+  - Database
+tags:
+  - server
+  - redis
+---
 
 ### 0x00 关于Redis
 ```

@@ -1,12 +1,13 @@
-+++
-date = "2016-08-07T21:31:35+08:00"
-description = ""
-draft = false
-tags = ["intranet"]
-title = "Windows下系统漏洞提权"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-08-07 21:31:35
+title: Windows 下系统漏洞提权
+description: 
+categories:
+  - Pentest
+tags:
+  - intranet
+---
 
 提权是在已经getshell但是权限不大的前提下做的
 

@@ -1,12 +1,13 @@
-+++
-date = "2016-06-28T09:21:34+08:00"
-description = ""
-draft = false
-tags = ["csrf"]
-title = "CSRF漏洞"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-06-28 09:21:34
+title: CSRF 漏洞
+description: 
+categories:
+  - Pentest
+tags:
+  - csrf
+---
 
 ### 0x00 概念
 当你登陆某个网站时，通常浏览器与网站都会形成一个会话，在会话没有结束时你可以执行发表文章、发邮件、删除文章等操作，若会话结束，你再操作的话会提示你会话已经结束，请重新登陆。  

@@ -1,12 +1,13 @@
-+++
-date = "2016-08-12T08:39:35+08:00"
-description = ""
-draft = false
-tags = ["server"]
-title = "Linux下虚拟主机搭建多站点"
-topics = ["Server"]
-
-+++
+---
+draft: false
+date: 2016-08-12 08:39:35
+title: Linux 下虚拟主机搭建多站点
+description: 
+categories:
+  - Server
+tags:
+  - server
+---
 
 环境：CentOS-6.5-x86_64-minimal
 

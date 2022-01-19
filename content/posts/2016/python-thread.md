@@ -1,12 +1,14 @@
-+++
-date = "2016-02-03T12:44:38+08:00"
-description = ""
-draft = false
-tags = ["python","thread"]
-title = "Python的线程"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-02-03 12:44:38
+title: Python 的线程
+description: 
+categories:
+  - Python
+tags:
+  - python
+  - thread
+---
 
 Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。
 

@@ -1,11 +1,13 @@
-+++
-title = "记一次SQL Server报错注入"
-topics = ["Pentest"]
-tags = ["injection"]
-description = "我的个人博客，主要用于记录自己的一些学习笔记之类的东西，其中有渗透测试、python、php等。"
-date = "2018-12-24T10:51:02+08:00"
-draft = false
-+++
+---
+draft: false
+date: 2018-12-24 10:51:02
+title: 记一次 SQL Server 报错注入
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 验证码前端验证
 需要测试一个网站，刚开始看到网站时感觉希望不大，因为验证码是需要拖动的，这也就意味着很大可能没办法爆破，另一方面是都用这种验证码了，安全做的能很差劲吗？果然，试了admin、123456之类的都不行

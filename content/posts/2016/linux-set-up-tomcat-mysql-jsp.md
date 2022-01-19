@@ -1,12 +1,13 @@
-+++
-date = "2016-06-17T23:08:05+08:00"
-description = ""
-draft = false
-tags = ["server"]
-title = "Linux下搭建Tomcat+MySQL+JSP"
-topics = ["Server"]
-
-+++
+---
+draft: false
+date: 2016-06-17 23:08:05
+title: Linux 下搭建 Tomcat+MySQL+JSP
+description: 
+categories:
+  - Server
+tags:
+  - server
+---
 
 安装环境为：CentOS-6.5-x86_64-minimal
 

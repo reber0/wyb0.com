@@ -1,12 +1,14 @@
-+++
-date = "2016-08-11T23:26:39+08:00"
-description = ""
-draft = false
-tags = ["python", "module"]
-title = "Python的scapy模块简单使用"
-topics = ["Python"]
-
-+++
+---
+draft: false
+date: 2016-08-11 23:26:39
+title: Python 的 scapy 模块简单使用
+description: 
+categories:
+  - Python
+tags:
+  - python
+  - module
+---
 
 ### 0x00 简单尝试
 ![尝试构造数据包](/img/post/scapy_establish_the_packet.png)

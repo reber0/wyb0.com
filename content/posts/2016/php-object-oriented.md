@@ -1,12 +1,13 @@
-+++
-date = "2016-05-20T16:07:55+08:00"
-description = ""
-draft = false
-tags = ["php"]
-title = "PHP之面向对象"
-topics = ["PHP"]
-
-+++
+---
+draft: false
+date: 2016-05-20 16:07:55
+title: PHP 之面向对象
+description: 
+categories:
+  - PHP
+tags:
+  - php
+---
 
 ### 0x00 面向对象
 1. 面向对象概念

@@ -1,18 +1,13 @@
-+++
-title = "致远 OA A8 htmlofficeservlet getshell (POC&EXP)"
-topics = ["Pentest"]
-tags = ["getshell"]
-description = "致远 OA-A8 系统的 Servlet 接口存在漏洞，可通过 /seeyon/htmlofficeservlet 直接getsehll"
-date = "2019-06-29T17:57:32+08:00"
-draft = false
-+++
+---
+date: 2019-06-29 17:57:32
+title: 致远 OA A8 htmlofficeservlet getshell (POC&EXP)
+description: 致远 OA-A8 系统的 Servlet 接口存在漏洞，可通过 /seeyon/htmlofficeservlet 直接getsehll
+categories:
+  - Pentest
+tags:
+  - getshell
+---
 
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2019-06-29 17:57:32
- * @LastEditTime: 2019-07-10 20:00:45
- -->
 ### 0x00 影响版本
 * 致远A8-V5协同管理软件 V6.1sp1
 * 致远A8+协同管理软件 V7.0、V7.0sp1、V7.0sp2、V7.0sp3

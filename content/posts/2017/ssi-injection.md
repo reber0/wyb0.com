@@ -1,12 +1,13 @@
-+++
-date = "2017-06-08T11:20:15+08:00"
-description = ""
-draft = false
-tags = ["injection"]
-title = "SSI注入"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2017-06-08 11:20:15
+title: SSI 注入
+description: 
+categories:
+  - Pentest
+tags:
+  - injection
+---
 
 ### 0x00 SSI
 SSI (Server Side Includes)是HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。

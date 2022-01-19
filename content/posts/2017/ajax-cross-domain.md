@@ -1,12 +1,13 @@
-+++
-date = "2017-06-22T15:18:29+08:00"
-description = ""
-draft = false
-tags = ["ajax"]
-title = "AJAX之跨域"
-topics = ["JavaScript"]
-
-+++
+---
+draft: false
+date: 2017-06-22 15:18:29
+title: AJAX 之跨域
+description: 
+categories:
+  - JavaScript
+tags:
+  - ajax
+---
 
 ### 0x00 简介 
 当使用AJAX请求其他域名下的数据时会出现拒绝访问的情况，这是出于安全考虑，AJAX只能访问本地的资源，而不能跨域访问。

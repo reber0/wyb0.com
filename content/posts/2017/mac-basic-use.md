@@ -1,11 +1,13 @@
-+++
-date = "2017-05-19T16:51:11+08:00"
-description = ""
-draft = false
-tags = ["linux"]
-title = "Mac基础设置"
-topics = ["Other"]
-+++
+---
+draft: false
+date: 2017-05-19 16:51:11
+title: Mac 基础设置
+description: 
+categories:
+  - Other
+tags:
+  - mac
+---
 
 macOS Sierra 10.12.6
 

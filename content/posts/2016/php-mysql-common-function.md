@@ -1,12 +1,15 @@
-+++
-date = "2016-06-02T13:21:49+08:00"
-description = ""
-draft = false
-tags = ["mysql", "php"]
-title = "PHP之MySQL常用函数"
-topics = ["PHP", "Database"]
-
-+++
+---
+draft: false
+date: 2016-06-02 13:21:49
+title: PHP 之 MySQL 常用函数
+description: 
+categories:
+  - PHP
+  - Database
+tags:
+  - php
+  - mysql
+---
 
 ### 0x00 处理函数
 1. mysql_connect(server,user,pwd,newlink,clientflag)  

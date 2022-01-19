@@ -1,12 +1,13 @@
-+++
-date = "2016-07-24T21:33:59+08:00"
-description = ""
-draft = false
-tags = ["software"]
-title = "Windows下用Proxifier实现全局代理"
-topics = ["Windows"]
-
-+++
+---
+draft: false
+date: 2016-07-24 21:33:59
+title: Windows 下用 Proxifier 实现全局代理
+description: 
+categories:
+  - Windows
+tags:
+  - software
+---
 
 ### 0x00 环境
 在windows下用Shadowsocks和Proxifier实现全局代理：

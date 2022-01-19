@@ -1,12 +1,13 @@
-+++
-date = "2016-08-02T10:45:14+08:00"
-description = ""
-draft = false
-tags = ["cgi"]
-title = "CGI与FastCGI与PHP-FPM"
-topics = ["PHP"]
-
-+++
+---
+draft: false
+date: 2016-08-02 10:45:14
+title: CGI 与 FastCGI 与 PHP-FPM
+description: 
+categories:
+  - PHP
+tags:
+  - cgi
+---
 
 ### 0x01 CGI协议
 中间件在收到请求时会去找php解析器处理，cgi是规定了要传递哪些数据(比如url、header、post数据等)的协议

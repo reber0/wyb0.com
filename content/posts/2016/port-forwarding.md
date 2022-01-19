@@ -1,12 +1,13 @@
-+++
-date = "2016-08-08T19:33:45+08:00"
-description = ""
-draft = false
-tags = ["端口转发"]
-title = "端口转发"
-topics = ["Pentest"]
-
-+++
+---
+draft: false
+date: 2016-08-08 19:33:45
+title: 端口转发
+description: 
+categories:
+  - Pentest
+tags:
+  - 端口转发
+---
 
 ### 0x00 应用场景
 * 内网IP的80端口通过端口映射到了外网IP的80端口上
