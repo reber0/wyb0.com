@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Git 的用法 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Git 的用法</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-05-05</time>
+    <span>in</span>
+    
+      <a href="/categories/Git">Git</a>
+  </strong>
+  <span> • 1029 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/git">git</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-仓库">0x00 仓库</h3>
+
+<pre><code>// 创建仓库
+git init
+
+// 克隆
+git clone git@github.com:reber0/wyb0.com.git
+
+// 若没有克隆现有仓库则可以连接远程仓库
+git remote add origin git@github.com:reber/reber.com.git
+
+// 删除远程仓库信息
+git remote rm origin
+</code></pre>
+
+<h3 id="0x01-添加-ssh-key">0x01 添加 SSH key</h3>
+
+<p>生成 key</p>
+
+<pre><code>➜ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C &quot;123456@qq.com&quot;
+</code></pre>
+
+<p>将 ~/.ssh/ 下生成的 id_rsa_github.pub 的内容添加到 github</p>
+
+<p>验证是否添加成功</p>
+
+<pre><code>➜ ssh -T git@github.com
+Hi reber0! You've successfully authenticated, but GitHub does not provide shell access.
+</code></pre>
+
+<h3 id="0x02-配置全局信息">0x02 配置全局信息</h3>
+
+<p>配置全局用户名、邮箱</p>
+
+<pre><code>➜ git config --global user.name &quot;reber0&quot;
+➜ git config --global user.email &quot;123456@qq.com&quot;
+➜ git config -l
+</code></pre>
+
+<p>配置全局忽略文件</p>
+
+<pre><code>➜ cat ~/.gitignore_global
+Thumbs.db // 忽略 Thumbs.db 这个文件
+log/  // 忽略 log 文件夹下的文件
+*.pyc // 忽略 .pyc 结尾的文件
+</code></pre>
+
+<p>查看配置</p>
+
+<pre><code>➜ cat ~/.gitconfig
+[user]
+        name = reber0
+        email = 123456@qq.com
+[filter &quot;lfs&quot;]
+        process = git-lfs filter-process
+        required = true
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+[core]
+        excludesfile = /Users/reber/.gitignore_global
+
+[init]
+        defaultBranch = main
+</code></pre>
+
+<h3 id="0x03-添加和提交和推送">0x03 添加和提交和推送</h3>
+
+<pre><code>git fetch // 查看远端文件改动
+git status // 查看本地文件改动
+git add a.txt
+git commit -m &quot;add file a.txt&quot;
+git push origin main
+</code></pre>
+
+<p>忽略文件更新</p>
+
+<pre><code># 忽略 config.py 这个文件的更新，即 config.py 的内容改变时 git add 不会添加 config.py
+➜ git update-index --assume-unchanged config.py
+</code></pre>
+
+<h3 id="0x04-分支">0x04 分支</h3>
+
+<p>初始化仓库</p>
+
+<pre><code class="language-sh">[15:46 reber@wyb at ~/temp/test]
+➜ git init
+已初始化空的 Git 仓库于 /Users/reber/temp/test/.git/
+[15:48 reber@wyb at ~/temp/test git:(main) ✗]
+➜ git add a.txt
+[15:48 reber@wyb at ~/temp/test git:(main) ✗]
+➜ git commit -m &quot;add file a.txt&quot;
+[main（根提交） e23479e] add file a.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 a.txt
+[15:48 reber@wyb at ~/temp/test git:(main)]
+➜ ls
+a.txt
+</code></pre>
+
+<p>新建分支，切换分支后，分支的更改不会影响原来分支，分支更改后需要 add，然后 commit</p>
+
+<pre><code>[15:48 reber@wyb at ~/temp/test git:(main)]
+➜ git branch gh-pages
+[15:48 reber@wyb at ~/temp/test git:(main)]
+➜ git checkout gh-pages
+切换到分支 'gh-pages'
+[15:49 reber@wyb at ~/temp/test git:(gh-pages)]
+➜ touch b.txt
+[15:49 reber@wyb at ~/temp/test git:(gh-pages) ✗]
+➜ git add b.txt
+[15:49 reber@wyb at ~/temp/test git:(gh-pages) ✗]
+➜ git commit -m &quot;add file b.txt&quot;
+[gh-pages 12aa148] add file b.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 b.txt
+[15:49 reber@wyb at ~/temp/test git:(gh-pages)]
+➜ ls
+a.txt b.txt
+[15:49 reber@wyb at ~/temp/test git:(gh-pages)]
+➜ git checkout main
+切换到分支 'main'
+[15:49 reber@wyb at ~/temp/test git:(main)]
+➜ ls
+a.txt
+</code></pre>
+
+<p>合并分支代码到主分支</p>
+
+<pre><code>[15:54 reber@wyb at ~/temp/test git:(main)]
+➜ git merge gh-pages
+更新 e23479e..12aa148
+Fast-forward
+ b.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 b.txt
+[15:54 reber@wyb at ~/temp/test git:(main)]
+➜ ls
+a.txt b.txt
+</code></pre>
+
+<h3 id="0x05-撤回">0x05 撤回</h3>
+
+<ul>
+<li><p>撤销 add</p>
+
+<pre><code class="language-bash">git reset HEAD  # 上一次add的文件全部撤销
+git reset HEAD 1.txt  # 撤销 add 的 1.txt
+</code></pre></li>
+
+<li><p>查看 commit id</p>
+
+<pre><code>git log # 查看 commit 的 id  
+git reflog # 查看 commit 的 id  
+</code></pre></li>
+
+<li><p>删除 commit 历史记录</p>
+
+<blockquote>
+<p>比如不小心在 add aa.py 这个操作里提交了密码</p>
+</blockquote>
+
+<ul>
+<li>查看 log: <code>git log --pretty=oneline --abbrev-commit</code></li>
+</ul>
+
+<blockquote>
+<pre><code>36dd82f (HEAD -&gt; master, origin/master, origin/HEAD) add main.py
+048715f add aa.py
+0551909 add 123.txt
+fb13042 add test.txt
+f7c2baa Initial commit
+(END)
+</code></pre>
+
+<p>得到前一个 commit 的 id，即 add 123.txt 操作的 id 0551909</p>
+</blockquote>
+
+<ul>
+<li>变基，删除 log: git rebase -i 0551909
+<br /></li>
+</ul>
+
+<blockquote>
+<p>将</p>
+
+<pre><code>1 pick 048715f add aa.py
+2 pick 36dd82f add main.py
+</code></pre>
+
+<p>改为</p>
+
+<pre><code>1 drop 048715f add aa.py
+2 pick 36dd82f add main.py
+</code></pre>
+</blockquote>
+
+<ul>
+<li>强制推送 git push -f origin master，此时 add aa.py 这个历史 commit 就没有了</li>
+</ul>
+
+<blockquote>
+<pre><code>c695a20 (HEAD -&gt; master, origin/master, origin/HEAD) add main.py
+0551909 add 123.txt
+fb13042 add test.txt
+f7c2baa Initial commit
+(END)
+</code></pre>
+</blockquote></li>
+
+<li><p>文件恢复</p></li>
+</ul>
+
+<pre><code>1.若用的 rm 删除文件，那就相当于只删除了工作区的文件，直接用git checkout -- &lt;file&gt;即可恢复
+2.若用 git rm 删除文件，则删除文件的同时且操作被添加到了暂存区，即暂存区的文件也被删了，需要先 git reset HEAD &lt;file&gt;，然后再 git checkout -- &lt;file&gt; 恢复
+3.若先用了 git rm，而且 git commit 了，那只能 git reset --hard HEAD^ 恢复，或者 git reset --hard &lt;add 时的 id&gt;
+</code></pre>
+
+<h3 id="0x06-多用户">0x06 多用户</h3>
+
+<p>如果有多个用户时可进行如下设置</p>
+
+<pre><code>➜ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C &quot;123456@qq.com&quot;
+➜ ssh-keygen -t rsa -b 2048 -f id_rsa_gitlab -C &quot;456789@qq.com&quot;
+➜ cat ~/.ssh/config
+Host github.com
+HostName github.com
+User reber0
+Port 22
+IdentityFile ~/.ssh/id_rsa_github
+
+Host git.mysite.com
+HostName git.mysite.com
+User reber
+Port 22
+IdentityFile ~/.ssh/id_rsa_gitlab
+
+Host myvps
+HostName 123.56.123.123
+User root
+Port 9833
+IdentityFile ~/.ssh/id_rsa
+➜ ls
+    config  id_rsa_github.pub  id_rsa_gitlab.pub  id_rsa.pub
+    id_rsa_github  id_rsa_gitlab      id_rsa      known_hosts
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

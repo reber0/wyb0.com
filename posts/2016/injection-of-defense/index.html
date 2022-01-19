@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>SQL 注入之防御 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>SQL 注入之防御</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-06-25</time>
+    <span>in</span>
+    
+      <a href="/categories/Pentest">Pentest</a>
+  </strong>
+  <span> • 481 words</span>
+  <span> • 1 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/injection">injection</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-要做的事">0x00 要做的事</h3>
+
+<p>也就是找到注入点然后修复</p>
+
+<h3 id="0x01-防御方法">0x01 防御方法</h3>
+
+<ul>
+<li><p>使用预编译语句绑定变量(比如php的mysqli、pdo)</p>
+
+<pre><code class="language-php">&lt;?php
+    //预编译
+    $mysqli = new mysqli(&quot;localhost&quot;,&quot;root&quot;,&quot;123456&quot;,&quot;share&quot;);
+    $mysqli-&gt;query(&quot;set names utf8&quot;);
+    $sql = &quot;INSERT INTO test (name,sex,age) VALUE(?,?,?)&quot;;
+    $s = $mysqli-&gt;prepare($sql);
+    //绑定参数
+    $name = &quot;Tom&quot;;
+    $sex = &quot;M&quot;;
+    $age = 23;
+    $s-&gt;bind_param(&quot;ssi&quot;,$name,$sex,$age);//ssi的意思是字符、字符、整型
+    //执行
+    $result = $s-&gt;execute();
+    var_dump($result);
+    $s-&gt;close();
+?&gt;
+</code></pre></li>
+
+<li><p>使用存储过程(这里以SQLServer举例)</p></li>
+</ul>
+
+<pre><code>--如果存在名为get_student_msg(相当于函数)的存储过程则删除
+IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p')
+    DROP PROCEDURE get_student_msg
+
+CREATE PROCEDURE get_student_msg --创建存储过程
+    @name VARCHAR(20) --声明全局变量
+AS
+    BEGIN
+        SELECT * from info
+        WHERE name=@name
+    END
+GO
+
+--创建好存储过程后在其他地方直接使用函数并传参就行了
+EXEC get_student_msg 'xiaoli'
+</code></pre>
+
+<ul>
+<li><p>使用转义函数<br />
+如：addslashes()和mysql_real_escape_string()<br />
+在php.ini设置auto_prepend_file自动在脚本执行前在首部加载文件</p>
+
+<pre><code class="language-php">&lt;?php
+//简单过滤
+$filter = array(&amp;$_GET,&amp;$_POST,&amp;$_COOKIE);
+foreach ($filter as $key =&gt; $value){
+    foreach ($value as $k =&gt; $v){
+        $filter[$key][$k] = mysql_real_escape_string($v);
+    }
+}
+?&gt;
+</code></pre></li>
+
+<li><p>检查数据类型</p>
+
+<ul>
+<li>使用(int)或settype()等将数字等进行强制转换，对邮箱、日期等也进行检查</li>
+</ul></li>
+
+<li><p>使用框架、为数据库合理分配权限等</p></li>
+</ul>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

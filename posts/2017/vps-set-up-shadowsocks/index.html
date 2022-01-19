@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>在 vps 上搭建 Shadowsocks | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>在 vps 上搭建 Shadowsocks</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2017-03-10</time>
+    <span>in</span>
+    
+      <a href="/categories/Linux">Linux</a>
+  </strong>
+  <span> • 274 words</span>
+  <span> • 1 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/server">server</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<p><img src="/img/anime/anime005.jpg" alt="某科学的超电磁炮" /></p>
+
+<h3 id="0x01-安装与配置">0x01 安装与配置</h3>
+
+<p>环境：Ubuntu 14.04.1 LTS</p>
+
+<pre><code class="language-bash">reber@localhost:~$ sudo apt-get update
+reber@localhost:~$ python --version
+Python 2.7.6
+reber@localhost:~$ sudo apt-get install python-gevent python-pip
+reber@localhost:~$ sudo pip install shadowsocks
+reber@localhost:~$ vim /home/reber/shadowsocks.json
+    {
+        &quot;server&quot;:&quot;服务器 IP 地址&quot;, # 服务器 IP (IPv4/IPv6)
+        &quot;server_port&quot;:8388, # 监听的服务器端口
+        &quot;local_address&quot;: &quot;127.0.0.1&quot;, # 本地监听的 IP 地址
+        &quot;local_port&quot;:1080, # 本地端端口
+        &quot;password&quot;:&quot;mypassword&quot;, # 密码
+        #&quot;port_password&quot;:
+        #{
+        #    &quot;40001&quot;: &quot;password1&quot;,
+        #    &quot;40002&quot;: &quot;password2&quot;,
+        #    &quot;40003&quot;: &quot;password3&quot;
+        #},
+        #&quot;_comment&quot;:
+        #{
+        #    &quot;40001&quot;: &quot;xiaoming&quot;,
+        #    &quot;40002&quot;: &quot;lilei&quot;,
+        #    &quot;40003&quot;: &quot;mike&quot;
+        #}
+        &quot;timeout&quot;:300, # 超时时间（秒）
+        &quot;method&quot;:&quot;aes-256-cfb&quot;, # 加密方式
+        # 若Linux内核在3.7+，可开启fast_open降低延迟
+        # 开启方法：echo 3 &gt; /proc/sys/net/ipv4/tcp_fastopen
+        &quot;fast_open&quot;: false, 
+        &quot;workers&quot;: 1 # works数量，默认为 1
+    }
+reber@localhost:~$ sudo apt-get install python-m2crypto
+</code></pre>
+
+<h3 id="0x02-服务端启动">0x02 服务端启动</h3>
+
+<pre><code># 前台运行
+reber@localhost:~$ sudo ssserver -c /home/reber/shadowsocks.json
+# 后台运行
+reber@localhost:~$ sudo nohup ssserver -c /home/reber/shadowsocks.json &gt; /dev/null 2&gt;&amp;1 &amp;
+# 关闭服务
+reber@localhost:~$ sudo killall ssserver 
+</code></pre>
+
+<h4 id="0x03-本地使用">0x03 本地使用</h4>
+
+<blockquote>
+<p>添加如下配置
+<img src="/img/post/use_ss.png" alt="使用Shadowsocks" /></p>
+</blockquote>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

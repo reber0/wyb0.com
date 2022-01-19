@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="MRQ 是基于 Redis、Mongo 和 gevent 的分布式任务队列"/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>MRQ 的使用 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>MRQ 的使用</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2017-07-10</time>
+    <span>in</span>
+    
+      <a href="/categories/Python">Python</a>
+  </strong>
+  <span> • 1362 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/python">python</a>, 
+        <a href="/tags/module">module</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-mrq">0x00 MRQ</h3>
+
+<ul>
+<li>MRQ是Python基于Redis、Mongo和gevent的分布式任务队列。</li>
+<li>MRQ一方面旨在像RQ一样简单，另一方面有接近Celery的性能。</li>
+<li>MRQ最初的功能设计是为了满足任务队列的各种任务需求(IO密集&amp;CPU密集，很多小任务&amp;几个大任务)。</li>
+</ul>
+
+<h3 id="0x01-设置mongo和redis">0x01 设置mongo和redis</h3>
+
+<p>因为mrq依赖于redis和mongo，所以先安装设置下</p>
+
+<ul>
+<li>安装redis</li>
+</ul>
+
+<pre><code class="language-bash">$ sudo apt-get install redis-server
+$ netstat -nlt|grep 6379
+$ sudo /etc/init.d/redis-server status
+</code></pre>
+
+<pre><code class="language-bash">$ sudo /etc/init.d/redis-server stop
+$ sudo vim /etc/redis/redis.conf
+    #bind 127.0.0.1
+    requirepass reber_redis
+$ sudo redis-server /etc/redis/redis.conf &amp;
+$ redis-cli
+&gt; auth reber_redis
+</code></pre>
+
+<ul>
+<li>安装mongo</li>
+</ul>
+
+<p>可以参考：<a href="https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/">https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/</a></p>
+
+<pre><code class="language-bash">$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+$ echo &quot;deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse&quot; | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+$ sudo apt-get update
+$ sudo apt-get install -y mongodb-org
+$ ps -aux|grep mongodb
+$ netstat -nlt|grep 27017
+</code></pre>
+
+<p><br /></p>
+
+<pre><code class="language-bash">$ mongo
+&gt; use admin
+switched to db admin
+&gt; db.createUser({user:'root',pwd:'root',roles:[{role:'root',db:'admin'}]})
+Successfully added user: {
+        &quot;user&quot; : &quot;root&quot;,
+        &quot;roles&quot; : [
+                {
+                        &quot;role&quot; : &quot;root&quot;,
+                        &quot;db&quot; : &quot;admin&quot;
+                }
+        ]
+}
+&gt; db.auth('root','root')
+1
+&gt; use mrq
+switched to db mrq
+&gt; db.createUser({user:'reber_mrq_u',pwd:'reber_mrq_p',roles:[{role:'dbOwner',db:'mrq'}]})
+Successfully added user: {
+        &quot;user&quot; : &quot;reber_mrq_u&quot;,
+        &quot;roles&quot; : [
+                {
+                        &quot;role&quot; : &quot;dbOwner&quot;,
+                        &quot;db&quot; : &quot;mrq&quot;
+                }
+        ]
+}
+&gt; db.auth('reber_mrq_u','reber_mrq_p')
+&gt; db.shutdownServer()
+</code></pre>
+
+<p><br /></p>
+
+<pre><code class="language-bash">$ sudo vim /etc/mongod.conf
+storage:
+  dbPath: /var/lib/mongodb
+  journal:
+    enabled: true
+systemLog:
+  destination: file
+  logAppend: true
+  path: /var/log/mongodb/mongod.log
+net:
+  port: 27017
+  #bindIp: 127.0.0.1
+security:
+  authorization: enabled
+$ sudo mongod --config /etc/mongod.conf &amp;
+$ mongo
+MongoDB shell version v3.4.6
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.4.6
+&gt; use mrq
+switched to db mrq
+&gt; db.auth('reber_mrq_u','reber_mrq_p')
+1
+</code></pre>
+
+<h3 id="0x02-案例代码">0x02 案例代码</h3>
+
+<pre><code>$ mkdir mrqtest &amp;&amp; cd mrqtest
+$ touch __init__.py
+$ touch scheduler.py
+$ touch tasks_push.py
+$ touch dotask.py
+$ touch worker.sh &amp;&amp; chmod 777 worker.sh
+</code></pre>
+
+<ul>
+<li>scheduler.py</li>
+</ul>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;定期推送执行任务&quot;&quot;&quot;
+
+import time
+import random
+
+class Scheduler(object):
+    &quot;&quot;&quot;
+    docstring for Scheduler
+    参考的saline表哥的代码
+    &quot;&quot;&quot;
+    def __init__(self, interval, mongodb_uri, redis_uri):
+        super(Scheduler, self).__init__()
+        self.interval = interval
+        self.mongodb_uri = mongodb_uri
+        self.redis_uri = redis_uri
+
+    def exec_push_work(self):
+        import subprocess
+
+        for task in ['task1', 'task2']:
+            data = random.randint(1000, 9999)
+            command = &quot;mrq-run --queue {task} tasks_push.{task} '{data}' \
+                    --default_job_max_retries=3 --mongodb={mongodb_uri} \
+                    --redis={redis_uri}&quot;.format(task=task, data=data, 
+                    mongodb_uri=self.mongodb_uri, redis_uri=self.redis_uri)
+
+            subprocess.Popen(command, shell=True,stdout=subprocess.PIPE, 
+                            stderr=subprocess.STDOUT)
+
+    def run(self):
+        while True:
+            self.exec_push_work()
+            # 每隔20秒推送一次任务
+            time.sleep(self.interval)
+
+
+if __name__ == '__main__':
+    interval = 20
+    mongodb_uri = 'mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq'
+    redis_uri = 'redis://reber_redis@127.0.0.1:6379/0'
+
+    scheduler = Scheduler(interval,mongodb_uri,redis_uri)
+    scheduler.run()
+</code></pre>
+
+<ul>
+<li>tasks_push.py</li>
+</ul>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;执行任务时调用的就是这个文件中类中的run函数&quot;&quot;&quot;
+
+from mrq.task import Task
+from dotask import do_task1,do_task2
+
+class task1(Task):
+
+    def run(self, params):
+        result = do_task1(params)
+        return result
+
+class task2(Task):
+
+    def run(self, params):
+        result = do_task2(params)
+        return result
+</code></pre>
+
+<ul>
+<li>dotask.py</li>
+</ul>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;执行任务的具体函数&quot;&quot;&quot;
+
+def do_task1(params):
+    return &quot;task1:{}&quot;.format(params)
+
+def do_task2(params):
+    return &quot;task2:{}&quot;.format(params)
+</code></pre>
+
+<ul>
+<li>worker.sh</li>
+</ul>
+
+<pre><code>#!/bin/bash
+
+mrq-worker task1 --greenlets 5 --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq --redis redis://reber_redis@127.0.0.1:6379/0 &amp;
+
+mrq-worker task2 --greenlets 5 --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq --redis redis://reber_redis@127.0.0.1:6379/0 &amp;
+</code></pre>
+
+<h3 id="0x03-修改mrq库的代码">0x03 修改MRQ库的代码</h3>
+
+<pre><code class="language-python">#mrq中坑爹的数据库链接，当指定密码连接redis时一直提示没有权限😂，
+#原因是mrp/context.py中格式化redis的连接参数时使用的是import urllib.parse，
+#它是urlparse库的改进版，是Python3.0中的，但是我本地是Python2.7的，没有urllib.parse
+
+#修改/Library/Python/2.7/site-packages/mrq/context.py，自己添加个函数解析下：
+def redis_parse_uri(uri):
+    SCHEME = 'redis://'
+    SCHEME_LEN = len(SCHEME)
+    DEFAULT_PORT = 6379
+
+    host = None
+    port = None
+    path = None
+    password = None
+
+    scheme_free = uri[SCHEME_LEN:]
+
+    idx = scheme_free.rfind('/')
+    if idx == -1:
+        host_part = scheme_free
+    else:
+        path = scheme_free[idx:]
+        host_part = scheme_free[:idx]
+
+    idx = host_part.find('@')
+    if idx == -1:
+        hosts = host_part
+    else:
+        password = host_part[:idx]
+        hosts = host_part[idx+1:]
+
+    idx = hosts.find(':')
+    if idx == -1:
+        host = hosts
+        port = DEFAULT_PORT
+    else:
+        host = hosts.split(':')[0]
+        port = int(hosts.split(':')[1])
+
+    return {
+        'host': host,
+        'port': port,
+        'path': path,
+        'password': password
+    }
+
+def _connections_factory(attr):
+    &quot;&quot;&quot;找到这里改下&quot;&quot;&quot;
+    # urllib.parse.uses_netloc.append('redis')
+    # redis_url = urllib.parse.urlparse(config_obj)
+    redis_url = redis_parse_uri(config_obj)
+
+    log.info(&quot;%s: Connecting to Redis at %s...&quot; %
+             (attr, redis_url.get('host')))
+
+    redis_pool = pyredis.BlockingConnectionPool(
+        host=redis_url.get('host'),
+        port=redis_url.get('port'),
+        db=int((redis_url.get('path') or &quot;&quot;).replace(&quot;/&quot;, &quot;&quot;) or &quot;0&quot;),
+        password=redis_url.get('password'),
+        max_connections=int(config.get(&quot;redis_max_connections&quot;)),
+        timeout=int(config.get(&quot;redis_timeout&quot;)),
+        decode_responses=True
+    )
+</code></pre>
+
+<h3 id="0x04-执行">0x04 执行</h3>
+
+<ul>
+<li>清空数据库</li>
+</ul>
+
+<p><img src="/img/post/mrq_clear_db.png" alt="清空数据库" /></p>
+
+<ul>
+<li>启动mrq-dashboard</li>
+</ul>
+
+<pre><code class="language-bash">$ mrq-dashboard --mongodb mongodb://reber_mrq_u:reber_mrq_p@127.0.0.1:27017/mrq --redis redis://reber_redis@127.0.0.1:6379/0
+
+#--mongodb和--redis均以uri格式指定连接数据库的信息
+#执行完访问 http://127.0.0.1:5555 即可
+</code></pre>
+
+<p><img src="/img/post/mrq_dashboard.png" alt="启动mrq-dashboard" /></p>
+
+<ul>
+<li>执行workers.sh</li>
+</ul>
+
+<pre><code>$ cd mrqtest
+$ ./worker.sh
+#这里会创建两个worker，名字为task1和task2
+</code></pre>
+
+<p><img src="/img/post/mrq_run_workers_dashboad.png" alt="启动mrq-dashboard后查看dashboad" /></p>
+
+<p><img src="/img/post/mrq_dashboard_jobs1.png" alt="未添加任务时jobs为空" /></p>
+
+<ul>
+<li>执行scheduler.py从而推送任务</li>
+</ul>
+
+<pre><code>$ cd mrqtest
+$ python scheduler.py
+</code></pre>
+
+<p><img src="/img/post/mrq_push_task.png" alt="添加任务" /></p>
+
+<p><img src="/img/post/mrq_dashboard_jobs2.png" alt="添加任务后查看jobs" /></p>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

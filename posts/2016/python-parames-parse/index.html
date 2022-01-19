@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Python 命令行参数解析 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Python 命令行参数解析</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-08-16</time>
+    <span>in</span>
+    
+      <a href="/categories/Python">Python</a>
+  </strong>
+  <span> • 424 words</span>
+  <span> • 1 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/python">python</a>, 
+        <a href="/tags/module">module</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-argparse-模块">0x00 argparse 模块</h3>
+
+<p>参考 <a href="https://docs.python.org/zh-cn/3.7/library/argparse.html?_blank">https://docs.python.org/zh-cn/3.7/library/argparse.html</a></p>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import argparse
+
+class Parser(object):
+    &quot;&quot;&quot;Parser&quot;&quot;&quot;
+    def __init__(self):
+        super(Parser, self).__init__()
+        self.service_type_list = [
+            &quot;ssh&quot;,&quot;telnet&quot;,&quot;ftp&quot;,
+            &quot;mysql&quot;,&quot;mssql&quot;,&quot;oracle&quot;,&quot;pgsql&quot;,&quot;redis&quot;
+        ]
+        self.log_level = [&quot;debug&quot;, &quot;info&quot;, &quot;warning&quot;, &quot;error&quot;, &quot;critical&quot;]
+        self.example = &quot;&quot;&quot;Example:
+                          \r  python3 {} -s ssh -i 123.123.123.123
+                          \r  python3 {} -s ssh -i 123.123.123.123/24 -l root -p 123456&quot;&quot;&quot;
+
+    def parser(self):
+        parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawDescriptionHelpFormatter,#使 example 可以换行
+            add_help=True,
+            # description = &quot;常见服务口令爆破&quot;,
+            )
+        parser.epilog = self.example.format(parser.prog,parser.prog)
+        parser.add_argument(&quot;-i&quot;, dest=&quot;host&quot;, type=str, 
+                            help=&quot;Target ip&quot;)
+        parser.add_argument(&quot;-iL&quot;, dest=&quot;host_file&quot;, type=str, 
+                            help=&quot;Target file name, one ip per line&quot;)
+        parser.add_argument(&quot;-l&quot;, dest=&quot;user&quot;, type=str, 
+                            help=&quot;username&quot;)
+        parser.add_argument(&quot;-p&quot;, dest=&quot;pwd&quot;, type=str, 
+                            help=&quot;password&quot;)
+        parser.add_argument(&quot;-lp&quot;, dest=&quot;user_pwd_file&quot;, type=str, 
+                            help=&quot;user_pwd file, example: username:password&quot;)
+        parser.add_argument(&quot;-L&quot;, dest=&quot;user_file&quot;, type=str, 
+                            help=&quot;username file&quot;)
+        parser.add_argument(&quot;-P&quot;, dest=&quot;pwd_file&quot;, type=str, 
+                            help=&quot;password file&quot;)
+        parser.add_argument(&quot;--port&quot;, dest=&quot;port&quot;, type=int, 
+                            help=&quot;Target port&quot;)
+        parser.add_argument(&quot;-s&quot;, dest=&quot;service_type&quot;, type=str, required=True, 
+                            choices=self.service_type_list, help=&quot;Service type&quot;)
+        parser.add_argument(&quot;-t&quot;, dest=&quot;thread_num&quot;, type=int, default=10, 
+                            help=&quot;The number of threads, default is 10 threads&quot;)
+        parser.add_argument(&quot;-T&quot;, dest=&quot;timeout&quot;, type=int, default=10, 
+                            help=&quot;Timeout, default is 10s&quot;)
+        parser.add_argument(&quot;-v&quot;, dest=&quot;log_level&quot;, type=str, default=&quot;info&quot;, 
+                            choices=self.log_level, help=&quot;Log Level, default is 'info'&quot;)
+
+        # args = parser.parse_args()
+        # parser.print_help()
+
+        return parser
+
+    @staticmethod
+    def init():
+        parser = Parser().parser()
+        return parser
+
+
+if __name__ == &quot;__main__&quot;:
+    parser = Parser().init()
+    args = parser.parse_args()
+    parser.print_help()
+</code></pre>
+
+<h3 id="0x02-运行">0x02 运行</h3>
+
+<pre><code>➜  python3 tmp.py
+usage: tmp.py [-h] [-i HOST] [-iL HOST_FILE] [-l USER] [-p PWD]
+              [-lp USER_PWD_FILE] [-L USER_FILE] [-P PWD_FILE] [--port PORT]
+              -s {ssh,telnet,ftp,mysql,mssql,oracle,pgsql,redis}
+              [-t THREAD_NUM] [-T TIMEOUT]
+              [-v {debug,info,warning,error,critical}]
+tmp.py: error: the following arguments are required: -s
+</code></pre>
+
+<pre><code>➜  python3 tmp.py -s ssh
+usage: tmp.py [-h] [-i HOST] [-iL HOST_FILE] [-l USER] [-p PWD]
+              [-lp USER_PWD_FILE] [-L USER_FILE] [-P PWD_FILE] [--port PORT]
+              -s {ssh,telnet,ftp,mysql,mssql,oracle,pgsql,redis}
+              [-t THREAD_NUM] [-T TIMEOUT]
+              [-v {debug,info,warning,error,critical}]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i HOST               Target ip
+  -iL HOST_FILE         Target file name, one ip per line
+  -l USER               username
+  -p PWD                password
+  -lp USER_PWD_FILE     user_pwd file, example: username:password
+  -L USER_FILE          username file
+  -P PWD_FILE           password file
+  --port PORT           Target port
+  -s {ssh,telnet,ftp,mysql,mssql,oracle,pgsql,redis}
+                        Service type
+  -t THREAD_NUM         The number of threads, default is 10 threads
+  -T TIMEOUT            Timeout, default is 10s
+  -v {debug,info,warning,error,critical}
+                        Log Level, default is 'info'
+
+Example:
+  python3 tmp.py -s ssh -i 123.123.123.123
+  python3 tmp.py -s ssh -i 123.123.123.123/24 -l root -p 123456
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

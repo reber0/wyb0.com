@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>打包下载 php 文件 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>打包下载 php 文件</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2018-01-08</time>
+    <span>in</span>
+    
+      <a href="/categories/PHP">PHP</a>
+  </strong>
+  <span> • 221 words</span>
+  <span> • 1 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/php">php</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-代码如下">0x00 代码如下</h3>
+
+<pre><code>&lt;?php
+
+function addFileToZip($zip,$zipname,$path){
+    $handler = opendir($path);
+    while(($filename = readdir($handler))!==false) {
+        if($filename != &quot;.&quot; &amp;&amp; $filename != &quot;..&quot; &amp;&amp; $filename!= $zipname){
+            if (is_dir($path.&quot;/&quot;.$filename)) {  //如果读取的某个对象是文件夹，则递归
+                addFileToZip($zip,$zipname,$path.&quot;/&quot;.$filename);
+            } else {
+                $zip-&gt;addFile($path.&quot;/&quot;.$filename);
+            }
+        }
+    }
+    @closedir($path);
+}
+
+function tar($zipname,$path) {
+    $zip = new ZipArchive(); //使用本类，linux需开启zlib，windows需取消php_zip.dll前的注释
+
+    if ($zip-&gt;open($zipname, ZipArchive::OVERWRITE) === TRUE) {
+        addFileToZip($zip,$zipname,$path);$zip-&gt;close();
+    } else {
+        exit('Unable to open file, or file creation failed!');
+    }
+}
+
+function download($zipname) {
+    if(!file_exists($zipname)){
+      exit(&quot;Zip file does not exist!&quot;);
+    }  
+    header(&quot;Cache-Control: public&quot;);
+    header(&quot;Content-Description: File Transfer&quot;);
+    header('Content-disposition: attachment; filename='.basename($zipname)); //文件名
+    header(&quot;Content-Type: application/zip&quot;); //zip格式的  
+    header(&quot;Content-Transfer-Encoding: binary&quot;); //告诉浏览器，这是二进制文件
+    header('Content-Length: '. filesize($zipname)); //告诉浏览器，文件大小
+    @readfile($zipname);
+
+    unlink($zipname);
+}
+
+$zipname = 'bak.zip';
+$path = '.';
+tar($zipname,$path);
+download($zipname);
+
+?&gt;
+</code></pre>
+
+<p><br /></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="http://blog.csdn.net/libinemail/article/details/52190235">http://blog.csdn.net/libinemail/article/details/52190235</a></li>
+</ul>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

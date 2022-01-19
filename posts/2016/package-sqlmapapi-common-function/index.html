@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>SqlmapApi 常用方法封装 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>SqlmapApi 常用方法封装</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-09-21</time>
+    <span>in</span>
+    
+      <a href="/categories/Pentest">Pentest</a>
+  </strong>
+  <span> • 270 words</span>
+  <span> • 1 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/tools">tools</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-代码如下">0x00 代码如下</h3>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import threading
+import requests
+import json
+from time import sleep
+
+class Sqli(threading.Thread):
+    &quot;&quot;&quot;docstring for AutoSqli&quot;&quot;&quot;
+    def __init__(self, server, target, data='', referer='', cookie=''):
+        threading.Thread.__init__(self)
+        self.server = server[0:-1] if server[-1]=='/' else server
+        self.target = target
+        self.data = data
+        self.referer = referer
+        self.cookie = cookie
+        self.taskid = ''
+        self.data
+
+    def new_task(self):
+        url = &quot;{}/task/new&quot;.format(self.server)
+        self.taskid = json.loads(requests.get(url).text)['taskid']
+        if len(self.taskid)&gt;0:
+            print &quot;Create new task,taskid is: %s&quot; % self.taskid
+            return True
+        return False
+
+    def set_option(self):
+        headers = {'Content-Type': 'application/json'}
+        option = {&quot;options&quot;: {
+                    &quot;smart&quot;: True,
+                    }
+                 }
+        url = &quot;{}/option/{}/set&quot;.format(self.server,self.taskid)
+        resp = requests.post(url, data=json.dumps(option), headers=headers)
+        return json.loads(resp.text)['success']
+
+    def start_scan(self):
+        headers = {'Content-Type': 'application/json'}
+        payload = {
+            'url': self.target,
+            'data': self.data,
+            'cookie': self.cookie,
+            'referer': self.referer
+        }
+        url = &quot;{}/scan/{}/start&quot;.format(self.server,self.taskid)
+        t = json.loads(requests.post(url,data=json.dumps(payload),headers=headers).text)
+        if len(str(t['engineid'])) &gt; 0 and t['success']:
+            print &quot;[%s] Start scan&quot; % self.taskid
+            return True
+        return False
+
+    def get_status(self):
+        url = &quot;{}/scan/{}/status&quot;.format(self.server,self.taskid)
+        status = json.loads(requests.get(url).text)['status']
+        if status == 'running':
+            return 'running'
+        elif status == 'terminated':
+            return 'terminated'
+        else:
+            return 'error'
+
+    def get_data(self):
+        url = &quot;{}/scan/{}/data&quot;.format(self.server,self.taskid)
+        data = json.loads(requests.get(url).text)['data']
+        if len(data) == 0:
+            print '[] not injection:\t' + self.target
+        else:
+            print '=======&gt; injection:\t' + self.target
+            self.data = data
+
+    def delete_task(self):
+        url = &quot;{}/task/{}/delete&quot;.format(self.server,self.taskid)
+        if json.loads(requests.get(url).text)['success']:
+            print &quot;[%s] Delete task&quot; % self.taskid
+            return True
+        return False
+
+    def write_to_file(self,msg):
+        with open('result.txt','a+') as f:
+            f.write(json.dumps(msg)+'\n\n')
+
+    def run(self):
+        try:
+            if not self.new_task():
+                return False
+            self.set_option()
+            if not self.start_scan():
+                return False
+            while True:
+                if self.get_status() == 'running':
+                    sleep(10)
+                elif self.get_status() == 'terminated':
+                    break
+                else:
+                    break
+            self.get_data()
+            self.write_to_file(self.data)
+            self.delete_task()
+        except Exception, e:
+            print e
+
+if __name__ == '__main__':
+    server = 'http://127.0.0.1:8775'
+    target = 'http://192.168.188.134/sqli/Less-1/?id=1'
+    sqli = Sqli(server, target)
+    sqli.start()
+    sqli.join()
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

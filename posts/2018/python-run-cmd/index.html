@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Python 中执行系统命令 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Python 中执行系统命令</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2018-01-29</time>
+    <span>in</span>
+    
+      <a href="/categories/Python">Python</a>
+  </strong>
+  <span> • 750 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/python">python</a>, 
+        <a href="/tags/module">module</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-使用模块">0x00 使用模块</h3>
+
+<p>在python执行系统命令一般可以通过3个模块来实现，这三个模块是：os、commands、subprocess</p>
+
+<h3 id="0x01-os模块执行系统命令">0x01 os模块执行系统命令</h3>
+
+<p>一般用os模块的system函数来执行一些简单的命令</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; import os
+&gt;&gt;&gt; os.system(&quot;pwd&quot;)
+/Users/reber
+0
+</code></pre>
+
+<h3 id="0x02-commands模块执行系统命令">0x02 commands模块执行系统命令</h3>
+
+<p>commands这个模块在python3中被移除了</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; import commands
+&gt;&gt;&gt; commands.getoutput(&quot;pwd&quot;)
+'/Users/reber'
+&gt;&gt;&gt; commands.getstatusoutput(&quot;pwd&quot;)
+(0, '/Users/reber') #返回状态码以及结果
+</code></pre>
+
+<h3 id="0x03-subprocess模块执行系统命令">0x03 subprocess模块执行系统命令</h3>
+
+<ul>
+<li>task.py代码</li>
+</ul>
+
+<pre><code>def aaa():
+    s = 0
+    for x in range(3):
+        time.sleep(1)
+        s += x
+    return s
+
+print(aaa())
+</code></pre>
+
+<ul>
+<li>call函数执行命令(会阻塞到任务完成)<br />
+函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)</li>
+</ul>
+
+<pre><code class="language-python">&gt;&gt;&gt; from subprocess import call
+&gt;&gt;&gt; call([&quot;ls&quot;,&quot;-l&quot;]) #传入一个list
+total 16
+-rw-r--r--   1 reber  staff    80  8 16 16:19 README.md
+drwxr-xr-x@  3 reber  staff   102  3 14  2017 archetypes
+-rwxr-xr-x@  1 reber  staff  1403 12 13 17:43 config.toml
+drwxr-xr-x@  4 reber  staff   136 12  9 23:02 content
+drwxr-xr-x@  7 reber  staff   238  4 26  2017 layouts
+drwxr-xr-x@ 19 reber  staff   646 10 11 12:33 public
+drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
+0
+&gt;&gt;&gt; call(&quot;ls -l&quot;,shell=True) #shell设置为True时可以传入一个字符串
+total 16
+-rw-r--r--   1 reber  staff    80  8 16 16:19 README.md
+drwxr-xr-x@  3 reber  staff   102  3 14  2017 archetypes
+-rwxr-xr-x@  1 reber  staff  1403 12 13 17:43 config.toml
+drwxr-xr-x@  4 reber  staff   136 12  9 23:02 content
+drwxr-xr-x@  7 reber  staff   238  4 26  2017 layouts
+drwxr-xr-x@ 19 reber  staff   646 10 11 12:33 public
+drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
+0
+</code></pre>
+
+<ul>
+<li>Popen函数进行进程交互(非阻塞)</li>
+</ul>
+
+<pre><code class="language-python">&gt;&gt;&gt; from subprocess import Popen,PIPE,STDOUT
+&gt;&gt;&gt; h = Popen(&quot;ls dsfj&quot;,stdout=PIPE,stderr=STDOUT,shell=True)
+&gt;&gt;&gt; h.stdout.read() #从数据流中读出数据，如果数据流过大且不读数据的话可能会死锁
+'ls: dsfj: No such file or directory\n'
+&gt;&gt;&gt; h.stderr.read() #使用的是STDOUT，将错误通过标准输出流输出，没有read方法
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+AttributeError: 'NoneType' object has no attribute 'read'
+
+
+&gt;&gt;&gt; h = Popen(&quot;ls dsfj&quot;,stdout=PIPE,stderr=PIPE,shell=True)
+&gt;&gt;&gt; h.stdout.read()
+''
+&gt;&gt;&gt; h.stderr.read()
+'ls: dsfj: No such file or directory\n'
+</code></pre>
+
+<p><br></p>
+
+<pre><code class="language-python">&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/task.py&quot;
+&gt;&gt;&gt; h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+&gt;&gt;&gt; stdoutput = h.stdout.read() #stdoutput,erroutput = h.communicate()
+&gt;&gt;&gt; erroutput = h.stdout.read()
+&gt;&gt;&gt; stdoutput,erroutput
+('3\n', '')
+&gt;&gt;&gt; h.pid,h.poll() #子进程id，执行结果状态码(0代表成功)
+(49787, 0)
+
+
+&gt;&gt;&gt; f = open('a.txt','a+')
+&gt;&gt;&gt; h = Popen(&quot;ls -l&quot;, stdout=f, stderr=PIPE, shell=True) #写入文件
+&gt;&gt;&gt; h = Popen(&quot;ifconfig&quot;, shell=True, stdout=f, stderr=PIPE)
+&gt;&gt;&gt; f.close()
+</code></pre>
+
+<ul>
+<li>在python3中subprocess实现了commands的getstatusoutput方法</li>
+</ul>
+
+<pre><code>$ py3
+(py3env) [16:28 reber@wyb in ~/wyb0.com git:(master) ✗]
+$ python
+Python 3.6.3 (default, Oct  4 2017, 06:09:15)
+[GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.37)] on darwin
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; from subprocess import getstatusoutput
+&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/task.py&quot;
+&gt;&gt;&gt; getstatusoutput(cmd)
+(0, '3')
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

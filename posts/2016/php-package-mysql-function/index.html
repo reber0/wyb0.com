@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>PHP 之封装 MySQL 类 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>PHP 之封装 MySQL 类</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-06-03</time>
+    <span>in</span>
+    
+      <a href="/categories/PHP">PHP</a>, 
+      <a href="/categories/Database">Database</a>
+  </strong>
+  <span> • 1385 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/php">php</a>, 
+        <a href="/tags/mysql">mysql</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-config-inc-php内容如下">0x00 config.inc.php内容如下</h3>
+
+<pre><code>&lt;?php
+return array(
+    'DB_HOST' =&gt; '192.168.188.134',
+    'DB_NAME' =&gt; 'scoreboard', 
+    'DB_USER' =&gt; 'score',
+    'DB_PASS' =&gt; '123456',
+    'DB_CHARSET' =&gt; 'utf8',
+    'IS_LOG' =&gt; 1,//开启日志
+    'LOGFILEPATH' =&gt; '../log.txt'//日志路径
+);
+/*
+    $database = require('./config.php');
+    echo $database['DB_TYPE'];   //输出'DB_TYPE'
+*/
+
+?&gt;
+</code></pre>
+
+<h3 id="0x01-表设计如下">0x01 表设计如下</h3>
+
+<pre><code>create database scoreboard;
+use scoreboard;
+
+drop table if exists users;
+create table users(
+id int not null auto_increment primary key,
+gid int not null default 'xiaoming' comment '组id',
+username varchar(20) not null default 'xiaoming' comment '用户名',
+password varchar(32) not null default '123456' comment '密码',
+sex varchar(2) not null default '0' comment '性别',
+totalscore int not null default '0' comment '个人总积分'
+);
+
+drop table if exists share;
+create table share(
+id int not null auto_increment primary key,
+uid int not null,
+content varchar(1024) not null default 'content' comment '分享内容',
+comment varchar(1024) comment '点评',
+date varchar(15) not null default '20150101' comment '分享日期'
+);
+
+drop table if exists score;
+create table score(
+id int not null auto_increment primary key,
+uid int not null default '0' comment '用户id',
+score int not null default '0' comment '用户单次积分',
+);
+
+grant all privileges on scoreboard.* to 'score'@'%' identified by '123456';
+
+-- 或者只给特定权限
+-- grant select,update,delete on scoreboard.* to 'score'@'%' identified by '123456';
+
+flush privileges;
+</code></pre>
+
+<h3 id="0x02-封装类如下">0x02 封装类如下</h3>
+
+<pre><code>&lt;?php
+
+class mysql {
+    private $logfilepath;
+    private $is_log;
+    private $hlog;
+    private $conn;
+
+    //构造函数
+    public function __construct() {
+        $config = include_once(dirname(__FILE__).&quot;/../config/config.inc.php&quot;);
+        $this-&gt;is_log = $config['IS_LOG'];
+        $this-&gt;logfilepath = $config['LOGFILEPATH'];
+
+        if ($this-&gt;is_log){
+            $handle = fopen($this-&gt;logfilepath,&quot;a+&quot;);
+            $this-&gt;hlog = $handle;
+        }
+
+        $this-&gt;conn = $this-&gt;connect($config['DB_HOST'],$config['DB_USER'],$config['DB_PASS'],$config['DB_NAME'],$config['DB_CHARSET']);
+    }
+
+    //连接数据库
+    public function connect($dbhost, $dbuser, $dbpass, $dbname, $dbcharset) {
+        $this-&gt;conn = @mysql_connect($dbhost,$dbuser,$dbpass);
+        if (!$this-&gt;conn) {
+            $msg = &quot;连接数据库失败：&quot;.mysql_error();
+            $this-&gt;write_log($msg);
+            die($msg);
+        } else {
+            if (!@mysql_select_db($dbname)) {
+                $msg = &quot;连接数据库成功，但选择数据库失败：&quot;.mysql_error();
+                $this-&gt;write_log($msg);
+                die($msg);
+            } else {
+                $msg = &quot;连接数据库成功，且选择数据库成功&quot;;
+                $this-&gt;write_log($msg);
+            }
+        }
+
+        @mysql_query(&quot;set names &quot;.$dbcharset);
+
+    }
+
+    //执行语句
+    public function query($sql) {
+        
+        $result = @mysql_query($sql);
+
+        if (!$result) {
+            $this-&gt;write_log('mysql_query error:'.mysql_error());
+        } else {
+            $this-&gt;write_log('执行语句：'.$sql.' 且执行成功');
+        }
+        return $result;
+    }
+
+    //查询一条数据
+    public function select_one($tab,$column = &quot;*&quot;,$condition = '',$debug=False) {   //查询函数
+        $condition = $condition ? ' where ' . $condition : NULL;
+        $sql = &quot;select $column from $tab $condition &quot;;
+        if ($debug) {
+            echo '将执行语句：'.$sql.'&lt;br /&gt;';
+        } else {
+            $result = $this-&gt;query($sql);
+            $row = @mysql_fetch_assoc($result);
+            return $row;
+        }
+    }
+
+    //查询多条数据
+    public function select_more($tab,$column = &quot;*&quot;,$condition = '',$debug=False) {   //查询函数
+        $condition = $condition ? ' where ' . $condition : NULL;
+        $sql = &quot;select $column from $tab $condition&quot;;
+        if ($debug) {
+            echo '将执行语句：'.$sql;
+        } else {
+            $result = $this-&gt;query($sql);
+            $i = 0;
+            $rows = array();
+            while ($row = @mysql_fetch_assoc($result)) {
+                $rows[$i] = $row;
+                // print_r($rows[$i]);
+                $i++; 
+            }
+            return $rows;
+        }
+    }
+
+    //返回结果集
+    public function echo_result($tab,$column = &quot;*&quot;,$condition = '',$debug=False) {   //查询函数
+        $condition = $condition ? ' where ' . $condition : NULL;
+        $sql = &quot;select $column from $tab $condition &quot;;
+        if ($debug) {
+            echo '将执行语句：'.$sql.'&lt;br /&gt;';
+        } else {
+            return $this-&gt;query($sql);
+        }
+    }
+
+    //插入数据
+    public function insert($tab,$arr,$debug=False) {
+        $value = '';
+        $column = '';
+        foreach ($arr as $k =&gt; $v) {
+            $column .= &quot;,{$k}&quot;;
+            $value .= &quot;,'{$v}'&quot;;
+        }
+        $column = substr($column, 1);
+        $value = substr($value, 1);
+
+        $sql = &quot;insert into $tab($column) values($value)&quot;;
+        if ($debug) {
+            echo '将执行语句：'.$sql;
+        } else {
+            $this-&gt;query($sql);
+            $num = $this-&gt;affected_num();
+            $this-&gt;write_log(&quot;受影响行数：&quot;.$num);
+            return $num;    //返回受影响行数
+        }
+    }
+
+    //获取最后插入的id
+    public function insert_id() {
+        $id = mysql_insert_id($this-&gt;link_id);
+        $this-&gt;write_log('最后插入的id为：'.$id);
+        return $id;
+    }
+
+    //更新数据
+    public function update($tab,$arr,$condition = '',$debug=False) {
+        if (!$condition) {
+            die(&quot;error&quot;.mysql_error());
+        } else {
+            $condition = 'where ' . $condition;
+        }
+        
+        $value = '';
+        foreach ($arr as $k =&gt; $v) {
+            $value .= &quot;{$k}='{$v}',&quot;;
+        }
+        $value = substr($value,0,-1);
+
+        $sql = &quot;update $tab set $value $condition&quot;;
+        if ($debug) {
+            echo '将执行语句：'.$sql;
+        } else {
+            $this-&gt;query($sql);
+            $num = $this-&gt;affected_num();
+            $this-&gt;write_log(&quot;受影响行数：&quot;.$num);
+
+            return $num;            
+        }
+    }
+
+    //删除数据
+    public function delete($tab,$condition='',$debug=False) {
+        $condition = $condition ? ' where ' . $condition : NULL;
+        $sql = &quot;delete from $tab $condition&quot;;
+        if ($debug) {
+            echo '将执行语句：'.$sql;
+        } else {
+            $this-&gt;query($sql);
+            $num = $this-&gt;affected_num();
+            $this-&gt;write_log(&quot;受影响行数：&quot;.$num);
+            return $num;    //返回受影响行数
+        }
+    }
+
+    //返回受影响行数
+    public function affected_num() {
+        $num = @mysql_affected_rows();
+        return $num;
+    }
+
+    //写入日志
+    public function write_log($msg='') {
+        if ($this-&gt;is_log){
+            $text = date(&quot;Y-m-d H:i:s&quot;).&quot; &quot;.$msg.&quot;\r\n&quot;;
+            fwrite($this-&gt;hlog,$text);
+        }
+    }
+
+    //关闭数据库连接
+    public function close() {  
+        mysql_close($this-&gt;conn);
+    }
+
+    //析构函数
+    public function __destruct() {
+        if($this-&gt;is_log){
+            fclose($this-&gt;hlog);
+        }
+    }
+}
+
+    //$db = new mysql();
+    
+    // //select_one($tab,$column = &quot;*&quot;,$condition = '')
+    // $rows = $db-&gt;select_more('share','*');
+    // print_r($rows[0]);
+    // print_r($rows[1]);
+
+    // //insert($tab,$arr)
+    // $arr = array();
+    // $arr['uid'] = '3';
+    // $arr['content'] = 'xss';
+    // $arr['comment'] = 'very good';
+    // $arr['date'] = '1464082630';
+    // $db-&gt;insert('share',$arr);
+
+    // //update($tab,$arr,$condition = '')
+    // $arr = array();
+    // $arr['content'] = 'xssxssxssxssxss';
+    // $arr['comment'] = 'goodgoodgoodgood';
+    // $condition = 'id &gt; 5';
+    // $db-&gt;update('share',$arr,$condition);
+
+    //$db-&gt;delete(&quot;share&quot;,&quot;id between 10 and 15&quot;);
+
+    //$db-&gt;close();
+?&gt;
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>conky 配置 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>conky 配置</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-06-04</time>
+    <span>in</span>
+    
+      <a href="/categories/Linux">Linux</a>
+  </strong>
+  <span> • 585 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/software">software</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-效果">0x00 效果</h3>
+
+<p>使用软件conky可以在linux上看到系统的运行状态，效果如下：
+<img src="/img/post/Conky.png" alt="conky效果图" /></p>
+
+<h3 id="0x01-安装与配置">0x01 安装与配置</h3>
+
+<ol>
+<li><p>先安装conky：<br />
+sudo apt-get install conky</p></li>
+
+<li><p>在/home/username/下创建文件.conkyrc</p></li>
+
+<li><p>使conky开机自启<br />
+在/etc/profile最下面添加：/usr/bin/conky &amp;</p></li>
+</ol>
+
+<h3 id="0x03-配置文件-conkyrc内容如下">0x03 配置文件.conkyrc内容如下</h3>
+
+<pre><code># set to yes if you want Conky to be forked in the background
+background no
+cpu_avg_samples 2
+net_avg_samples 2
+out_to_console no
+# X font when Xft is disabled, you can pick one with program xfontsel
+#font 7x12
+#font 6x10
+#font 7x13
+#font 8x13
+#font 7x12
+#font *mintsmild.se*
+#font -*-*-*-*-*-*-34-*-*-*-*-*-*-*
+#font -artwiz-snap-normal-r-normal-*-*-100-*-*-p-*-iso8859-1
+# Use Xft?
+use_xft yes
+# Xft font when Xft is enabled
+xftfont Sans:size=11  
+own_window_argb_visual yes
+#own_window_colour hotpink
+# Text alpha when using Xft
+xftalpha 0.8
+# on_bottom yes
+# mail spool
+mail_spool $MAIL
+# Update interval in seconds
+update_interval 1
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_type override
+own_window_type normal
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+# Minimum size of text area
+minimum_size 260 5
+maximum_width 400
+# Draw shades?
+draw_shades no
+# Draw outlines?
+draw_outline no
+# Draw borders around text
+draw_borders no
+# Stippled borders?
+stippled_borders no
+# border margins
+border_margin 4
+# border width
+border_width 1
+# Default colors and also border colors
+default_color white
+default_shade_color white
+default_outline_color white
+# Text alignment, other possible values are commented
+#alignment top_left
+#minimum_size 10 10
+gap_x 10
+gap_y 35
+alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+# Gap between borders of screen and text
+# Add spaces to keep things from moving about?  This only affects
+# certain objects.
+use_spacer none
+# Subtract file system buffers from used memory?
+no_buffers yes
+# set to yes if you want all text to be in uppercase
+uppercase no
+# none, xmms, bmp, audacious, infopipe (default is none)
+# xmms_player bmp
+
+
+TEXT
+${hr 5}
+Time:$alignr${time %Y.%m.%d}$alignc ${time %H:%M:%S}$alignr Week:${time %w}
+${hr 5}
+###############
+${color red}SYSTEM ${hr 1}
+Hostname: $alignr$nodename
+Kernel: $alignr$kernel
+Machine:$alignr$machine
+Uptime: $alignr$uptime
+Temp: ${alignr}${acpitemp} °C
+Battery:$alignr${battery BAT0}
+###############
+${color green}NETWORK ${hr 1}
+IP Address:${alignr}${addr eth0}
+GateWay:${alignr}$gw_ip
+DNS Server:${alignr}${nameserver}
+Down ${downspeed eth0} /s ${alignr}Up ${upspeed eth0} /s
+#${downspeedgraph eth0 25,107} ${alignr}${upspeedgraph eth0 25,107}
+Total ${totaldown eth0} ${alignr}Total ${totalup eth0}
+#############
+${color purple}MEMORY ${hr 1}
+Ram ${alignr}$mem / $memmax ($memperc%)
+${membar 4}
+swap ${alignr}$swap / $swapmax ($swapperc%)
+${swapbar 4}
+Highest MEM $alignr MEM%
+${top_mem name 1}$alignr ${top_mem mem 1}
+${top_mem name 2}$alignr ${top_mem mem 2}
+${top_mem name 3}$alignr ${top_mem mem 3}
+##############
+${color orange}CPU ${hr 1}
+Frequency: ${alignr}${freq dyn} MHz
+Processes: ${alignr}$processes ($running_processes running)
+CPU1 ${alignr}${cpu cpu1}%
+${cpubar 4 cpu1}
+CPU2 ${alignr}${cpu cpu2}%
+${cpubar 4 cpu2}
+Highest CPU $alignr CPU%
+${top name 1}$alignr${top cpu 1}
+${top name 2}$alignr${top cpu 2}
+${top name 3}$alignr${top cpu 3}
+##############
+${color grey}FILE SYSTEM ${hr 1}
+Disk I/O:$diskio
+/root: ${alignr}${fs_free /} / ${fs_size /}
+${fs_bar 4 /}
+/home: ${alignr}${fs_free /home} / ${fs_size /home}
+${fs_bar 4 /home}
+#############
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Python 实现代理 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Python 实现代理</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-09-13</time>
+    <span>in</span>
+    
+      <a href="/categories/Python">Python</a>
+  </strong>
+  <span> • 690 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/python">python</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-帮助信息">0x00 帮助信息</h3>
+
+<p><img src="/img/post/python_proxy_help.png" alt="帮助信息" /></p>
+
+<h3 id="0x01-代码如下">0x01 代码如下</h3>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+'This is a proxy'
+
+__author__ = 'xxx'
+
+import sys
+import socket
+import threading
+import optparse
+
+lock = threading.Lock()
+
+def locker(msg):
+    lock.acquire()
+    print msg
+    lock.release()
+
+def hexdump (src,length=16):#十六进制导出函数
+    result = []
+    digits = 4 if isinstance(src,unicode) else 2
+
+    for i in xrange(0,len(src),length):
+        s = src[i:i+length]
+        hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s)
+        text = b''.join([x if 0x20 &lt;= ord(x) &lt; 0x7F else b'.' for x in s])
+        result.append(b&quot;%04X  %-*s  %s&quot; % (i,length*(digits+1),hexa,text))
+
+    print b'\n'.join(result)
+
+def receive_from (connection):
+    
+    buffer = &quot;&quot;
+    
+    #我们设置了1秒的超时，这取决于目标的情况，可能需要调整
+    connection.settimeout(1)
+    try:
+        #持续从缓存中读取数据直到没有数据或者超时
+        while True:
+            data = connection.recv(4096)
+            if not data:
+                break
+
+            buffer += data
+    except:
+        pass
+        
+    return buffer
+    
+#对目标是远程主机的请求进行修改
+def request_handler (buffer):
+    #执行包修改
+    return buffer
+
+#对目标是本地主机的响应进行修改
+def response_handler (buffer):
+    #执行包修改
+    return buffer
+
+def proxy_handler (client_socket,remote_host,remote_port,receive_first):
+    #连接远程主机
+    remote_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    remote_socket.connect((remote_host,remote_port))
+
+    #如果必要从远程主机接收数据
+    if receive_first:
+        remote_buffer = receive_from(remote_socket)
+        if len(remote_buffer):
+            print &quot;\n[==&gt;] Received %d bytes from remote.&quot; % len(remote_buffer)
+            # hexdump(remote_buffer)
+        
+        #发送给我们的相应处理
+        remote_buffer = response_handler(remote_buffer)
+        #若我们有数据传递给本地客户端，发送它
+        if len(remote_buffer):
+            print &quot;[&lt;==] Sending %d bytes to localhost.\n&quot; % len(remote_buffer)
+            client_socket.send(remote_buffer)
+    
+    #现在我们从本地循环读取数据，发送给远程主机和本地主机
+    while True:
+        #从本地读取数据
+        local_buffer = receive_from(client_socket)
+        if len(local_buffer):
+            print &quot;\n[==&gt;] Received %d bytes from localhost.&quot; % len(local_buffer)
+            # hexdump(local_buffer)
+            #发送给我们的本地请求
+            local_buffer = request_handler(local_buffer)
+            #发送给远程主机
+            remote_socket.send(local_buffer)
+            print &quot;[==&gt;] Sent to remote.&quot;
+
+        #接收响应的数据
+        remote_buffer = receive_from(remote_socket)
+        if len(remote_buffer):
+            print &quot;\n[&lt;==] Received %d bytes from remote.&quot; % len(remote_buffer)
+            # hexdump(remote_buffer)
+            #发送数据到响应处理函数
+            remote_buffer = response_handler(remote_buffer)
+            #将响应发送给本地socket
+            client_socket.send(remote_buffer)
+            print &quot;[==&gt;] Sent to localhost.&quot;
+
+        #若两边都没有数据，关闭连接
+        if not len(local_buffer) or not len(remote_buffer):
+            client_socket.close()
+            remote_socket.close()
+            print &quot;[*] No more data. Closing connections.&quot;
+            break
+
+def server_loop(local_host,local_port,remote_host,remote_port,receive_first):
+
+    server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    try:
+        server.bind((local_host,local_port))
+    except:
+        print &quot;[!!] Failed to listen on %s:%d&quot; % (local_host,local_port)
+        print &quot;[!!] Check for other listening sockets or correct permisssions.&quot;
+        sys.exit(0)
+    print &quot;[*] Listening on %s:%d......&quot; % (local_host,local_port)
+    server.listen(5)
+
+    while True:
+        client_socket,addr = server.accept()
+        
+        #打印本地连接信息
+        print &quot;\n[==&gt;] Received incoming connection from %s:%d&quot; % (addr[0],addr[1])
+
+        #开启一个线程与远程主机通信
+        proxy_thread = threading.Thread(target=proxy_handler,args=(client_socket,remote_host,remote_port,receive_first))
+        proxy_thread.start()
+
+def main ():
+    parser = optparse.OptionParser()
+    parser.add_option('--lh', '--localhost', dest='localhost',default='127.0.0.1',
+        type='string', help='Localhost.')
+    parser.add_option('--lp', '--localport', dest='localport',default=8888,
+        type='int', help='Localport.')
+    parser.add_option('--rh', '--remotehost', dest='remotehost', default='127.0.0.1',
+        type='string', help='Remotehost.')
+    parser.add_option('--rp', '--remoteport', dest='remoteport', default=8080, 
+        type='int', help='Remoteport.')
+    parser.add_option('--rf', '--receivefirst', dest='receive_first', default=False,
+        action='store_true',help='Connection before send and receive data.')
+
+    (options, args) = parser.parse_args()
+
+    #设置本地监听参数
+    if options.localhost:
+        local_host = options.localhost
+    if options.localport:
+        local_port = options.localport
+    
+    #设置远程目标
+    if options.remotehost:
+        remote_host = options.remotehost
+    if options.remoteport:
+        remote_port = options.remoteport
+
+    receive_first = options.receive_first
+
+    # print local_host,local_port,remote_host,remote_port,receive_first
+
+    #现在设置好我们的监听socket
+    server_loop(local_host,local_port,remote_host,remote_port,receive_first)
+
+main()
+</code></pre>
+
+<h3 id="0x02-效果图">0x02 效果图</h3>
+
+<p><img src="/img/post/python_proxy_result.png" alt="效果图" /></p>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

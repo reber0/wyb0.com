@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PostgreSQL 简单使用"/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>PostgreSQL 简单使用 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>PostgreSQL 简单使用</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2019-08-23</time>
+    <span>in</span>
+    
+      <a href="/categories/Database">Database</a>
+  </strong>
+  <span> • 1340 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/postgre">postgre</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-安装">0x00 安装</h3>
+
+<pre><code>➜  brew install postgresql
+➜  echo 'export PATH=&quot;/usr/local/Cellar/postgresql/11.4/bin:$PATH&quot;' &gt;&gt; ~/.zshrc
+➜  source ~/.zshrc
+-- 初始化数据库
+➜  initdb /usr/local/var/postgres
+➜  pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start
+</code></pre>
+
+<h3 id="0x01-简单操作">0x01 简单操作</h3>
+
+<ul>
+<li>常用操作命令</li>
+</ul>
+
+<pre><code>reber=# \password #设置当前登录用户的密码
+reber=# \password [user_name] #设置其他用户的密码
+reber=# \l #列出所有数据库
+reber=# \du #列出所有用户
+reber=# \c [database_name] #连接数据库
+reber=# \d #列出当前数据库的所有表
+reber=# \d [table_name] #列出表结构
+reber=# \conninfo #列出当前数据库和连接的信息
+</code></pre>
+
+<ul>
+<li>连接数据库</li>
+</ul>
+
+<pre><code class="language-bash">➜  psql postgres #初始化数据库后会生成默认的数据库 postgres
+psql (11.4)
+Type &quot;help&quot; for help.
+
+postgres=# \l #查看当前数据库情况
+                              List of databases
+   Name    | Owner | Encoding |   Collate   |    Ctype    | Access privileges
+-----------+-------+----------+-------------+-------------+-------------------
+ postgres  | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ template0 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
+           |       |          |             |             | reber=CTc/reber
+ template1 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
+           |       |          |             |             | reber=CTc/reber
+(4 rows)
+
+postgres=# \du #查看当前用户
+                                   List of roles
+ Role name |                         Attributes                         | Member of
+-----------+------------------------------------------------------------+-----------
+ reber     | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+
+postgres=# \c
+You are now connected to database &quot;postgres&quot; as user &quot;reber&quot;.
+postgres=# \password
+Enter new password:
+Enter it again:
+postgres-# \q
+</code></pre>
+
+<ul>
+<li>修改配置文件改端口</li>
+</ul>
+
+<p>vim /usr/local/var/postgres/postgresql.conf</p>
+
+<pre><code>port = 55432
+</code></pre>
+
+<ul>
+<li>修改配置文件使密码生效(METHOD 改为 md5)</li>
+</ul>
+
+<p>vim /usr/local/var/postgres/pg_hba.conf</p>
+
+<pre><code># TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# &quot;local&quot; is for Unix domain socket connections only
+local   all             all                                     md5
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     md5
+host    replication     all             127.0.0.1/32            md5
+host    replication     all             ::1/128                 md5
+</code></pre>
+
+<p>然后重启 pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log restart</p>
+
+<p>再次登录就会要求输入密码</p>
+
+<pre><code>➜  psql -d postgres -p 55432
+Password for user reber:
+psql (12.3)
+Type &quot;help&quot; for help.
+
+postgres=#
+</code></pre>
+
+<ul>
+<li>创建新用户</li>
+</ul>
+
+<pre><code>postgres=# create user reber0ask with password '3eRa1kBg95D7';
+CREATE ROLE
+postgres=# \du
+                                   List of roles
+ Role name |                         Attributes                         | Member of
+-----------+------------------------------------------------------------+-----------
+ reber     | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+ reber0ask |                                                            | {}
+
+postgres=#
+</code></pre>
+
+<ul>
+<li>为新用户创建新数据库</li>
+</ul>
+
+<pre><code>postgres=# create database rscan owner reber0ask;
+CREATE DATABASE
+postgres=# \l
+                                List of databases
+   Name    |   Owner   | Encoding |   Collate   |    Ctype    | Access privileges
+-----------+-----------+----------+-------------+-------------+-------------------
+ postgres  | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ rscan     | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ template0 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
+           |           |          |             |             | reber=CTc/reber
+ template1 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
+           |           |          |             |             | reber=CTc/reber
+(4 rows)
+
+postgres=#
+</code></pre>
+
+<ul>
+<li>将新数据库的所有权限都给用户</li>
+</ul>
+
+<pre><code>postgres=# grant all privileges on database rscan to reber0ask;
+GRANT
+postgres=# \l
+ postgres  | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ rscan     | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =Tc/reber0ask          +
+           |           |          |             |             | reber0ask=CTc/reber0ask
+ template0 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber               +
+           |           |          |             |             | reber=CTc/reber
+ template1 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber               +
+           |           |          |             |             | reber=CTc/reber
+
+postgres=#
+</code></pre>
+
+<ul>
+<li>给用户创建数据库的属性</li>
+</ul>
+
+<pre><code>postgres=# alter role reber0ask createdb;
+ALTER ROLE
+postgres=# \du
+                                   List of roles
+ Role name |                         Attributes                         | Member of
+-----------+------------------------------------------------------------+-----------
+ reber     | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+ reber0ask | Create DB                                                  | {}
+
+postgres=#
+</code></pre>
+
+<h3 id="0x02-以指定用户登陆并创建表">0x02 以指定用户登陆并创建表</h3>
+
+<pre><code>➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432
+Password for user reber0ask:
+psql (11.4)
+Type &quot;help&quot; for help.
+
+rscan=&gt; \l
+                                List of databases
+   Name    |   Owner   | Encoding |   Collate   |    Ctype    | Access privileges
+-----------+-----------+----------+-------------+-------------+-------------------
+ postgres  | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ rscan     | reber0ask | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+ template0 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
+           |           |          |             |             | reber=CTc/reber
+ template1 | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
+           |           |          |             |             | reber=CTc/reber
+(4 rows)
+
+rscan=&gt; create table msg(
+rscan(&gt; id serial primary key,
+rscan(&gt; title character varying(100),
+rscan(&gt; content character varying(2014)
+rscan(&gt; );
+CREATE TABLE
+rscan=&gt; \d
+             List of relations
+ Schema |    Name    |   Type   |   Owner
+--------+------------+----------+-----------
+ public | msg        | table    | reber0ask
+ public | msg_id_seq | sequence | reber0ask
+(2 rows)
+
+rscan=&gt; \d msg;
+                                     Table &quot;public.msg&quot;
+ Column  |          Type           | Collation | Nullable |             Default
+---------+-------------------------+-----------+----------+---------------------------------
+ id      | integer                 |           | not null | nextval('msg_id_seq'::regclass)
+ title   | character varying(100)  |           |          |
+ content | character varying(2014) |           |          |
+Indexes:
+    &quot;msg_pkey&quot; PRIMARY KEY, btree (id)
+
+rscan=&gt; insert into public.msg(title,content) values('hi','hello world!');
+INSERT 0 1
+rscan=&gt; select * from msg;
+ id | title |   content
+----+-------+--------------
+  1 | hi    | hello world!
+(1 row)
+</code></pre>
+
+<h3 id="0x03-导入与导出">0x03 导入与导出</h3>
+
+<ul>
+<li>导出</li>
+</ul>
+
+<pre><code>➜  pg_dump -d rscan -U reber0ask -h 127.0.0.1 -p 55432  &gt; rscan.sql
+Password:
+➜  ls -al rscan.sql
+-rw-r--r--@ 1 reber  staff  15045  5 16 20:54 rscan.sql
+</code></pre>
+
+<ul>
+<li>导入</li>
+</ul>
+
+<pre><code>➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432
+Password for user reber0ask:
+psql (12.3)
+Type &quot;help&quot; for help.
+
+rscan=&gt; \c postgres
+You are now connected to database &quot;postgres&quot; as user &quot;reber0ask&quot;.
+postgres=&gt; drop database rscan;
+ERROR:  database &quot;rscan&quot; is being accessed by other users
+DETAIL:  There is 1 other session using the database.
+postgres=&gt; revoke connect on database rscan from public;
+REVOKE
+postgres=&gt; select pg_terminate_backend(pg_stat_activity.pid)
+postgres-&gt; from pg_stat_activity
+postgres-&gt; where pg_stat_activity.datname = 'rscan';
+ pg_terminate_backend
+----------------------
+ t
+(1 row)
+
+postgres=&gt; drop database rscan;
+DROP DATABASE
+
+postgres=&gt; create database rscan;
+CREATE DATABASE
+
+postgres=&gt; \q
+➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432 -f rscan.sql
+</code></pre>
+
+<h3 id="0x04-允许远程连接数据库">0x04 允许远程连接数据库</h3>
+
+<pre><code>➜  vim  /usr/local/var/postgres/postgresql.conf
+listen_addresses = '*'
+➜  vim  /usr/local/var/postgres/pg_hba.conf
+# TYPE  DATABASE  USER  CIDR-ADDRESS  METHOD
+host  all  all 0.0.0.0/0 md5
+</code></pre>
+
+<h3 id="0x05-python-简单连接">0x05 python 简单连接</h3>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+'''
+@Author: reber
+@Mail: reber0ask@qq.com
+@Date: 2019-08-23 15:45:21
+@LastEditTime: 2019-08-23 16:22:02
+'''
+
+import psycopg2
+import contextlib
+from urllib.parse import urlparse
+
+class PgSQLX(object):
+    def __init__(self, pgsql_uri):
+        super(PgSQLX, self).__init__()
+        self.pgsql_uri = pgsql_uri
+        self.pgsql_info = self.pgsql_parse_uri()
+
+    def pgsql_parse_uri(self):
+        o = urlparse(self.pgsql_uri)
+        host = o.hostname
+        port = o.port
+        user = o.username
+        password = o.password
+        database = o.path[1:]
+
+        return {
+            'host': host,
+            'port': port,
+            'user': user,
+            'password': password,
+            'database': database,
+        }
+
+    @contextlib.contextmanager
+    def init(self):
+        dbconn = psycopg2.connect(**self.pgsql_info)
+        cursor = dbconn.cursor()
+        # dbconn = psycopg2.connect(
+        #     host = self.pgsql_info.get('host'),
+        #     port = self.pgsql_info.get('port'),
+        #     user = self.pgsql_info.get('user'),
+        #     password = self.pgsql_info.get('password'),
+        #     database = self.pgsql_info.get('database'),
+        #     )
+        # cursor = dbconn.cursor()
+
+        try:
+            yield cursor #这里就是with返回的
+        finally:
+            dbconn.commit()
+            cursor.close()
+            dbconn.close()
+
+    def query(self, sql, arg=''):
+        try:
+            with self.init() as cursor:
+                if arg:
+                    cursor.execute(sql,arg) #返回受影响行数
+                else:
+                    cursor.execute(sql)
+                result = cursor.fetchall() #返回数据格式是[(),()]
+                # result = cursor.fetchone() #返回数据格式是()
+                return result
+        except Exception as e:
+            print(sql,str(e))
+
+
+if __name__ == '__main__':
+    pgsql_uri = &quot;postgresql://reber0ask:3eRa1kBg95D7@192.168.3.19:55432/rscan&quot;
+    sqlconn = PgSQLX(pgsql_uri)
+    result = sqlconn.query(&quot;select * from msg where id=%s&quot;,(id,))
+    print(result)
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

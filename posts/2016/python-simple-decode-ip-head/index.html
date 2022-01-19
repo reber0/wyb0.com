@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Python 简单解码 IP 头 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Python 简单解码 IP 头</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-07-03</time>
+    <span>in</span>
+    
+      <a href="/categories/Python">Python</a>
+  </strong>
+  <span> • 231 words</span>
+  <span> • 1 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/python">python</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-解码ip头">0x00 解码IP头</h3>
+
+<p>Windows上运行时要以管理员身份运行<br />
+代码可以解码IP头统计通信信息并保存到文本，同时统计数量</p>
+
+<pre><code class="language-python">#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+
+import socket
+import os
+import sys
+import time
+import struct 
+from ctypes import *
+
+host = &quot;10.22.114.114&quot;
+
+tcp_num = 0
+udp_num = 0
+icmp_num = 0
+
+class IP(Structure):
+    _fields_ = [
+        (&quot;ihl&quot;,         c_ubyte,4),
+        (&quot;version&quot;,     c_ubyte,4),
+        (&quot;tos&quot;,         c_ubyte),
+        (&quot;len&quot;,         c_ushort),
+        (&quot;id&quot;,          c_ushort),
+        (&quot;offset&quot;,      c_ushort),
+        (&quot;ttl&quot;,         c_ubyte),
+        (&quot;protocol_num&quot;,c_ubyte),
+        (&quot;sum&quot;,         c_ushort),
+        (&quot;src&quot;,         c_ulong),
+        (&quot;dst&quot;,         c_ulong)
+    ]
+
+    def __new__ (self,socket_buffer=None):
+        return self.from_buffer_copy(socket_buffer)
+
+    def __init__ (self,socket_buffer=None):
+        self.protocol_map = {1:&quot;ICMP&quot;,6:&quot;TCP&quot;,17:&quot;UDP&quot;}
+        
+        self.src_address = socket.inet_ntoa(struct.pack(&quot;&lt;L&quot;,self.src))
+        self.dst_address = socket.inet_ntoa(struct.pack(&quot;&lt;L&quot;,self.dst))
+        try:
+            self.protocol = self.protocol_map[self.protocol_num]
+        except:
+            self.protocol = str(self.protocol_num)
+
+if os.name == &quot;nt&quot;:
+    socket_protocol = socket.IPPROTO_IP
+else:
+    socket_protocol = socket.IPPROTO_ICMP
+
+sniffer = socket.socket(socket.AF_INET,socket.SOCK_RAW,socket_protocol)
+
+sniffer.bind((host,0))
+sniffer.setsockopt(socket.IPPROTO_IP,socket.IP_HDRINCL,1)
+
+if os.name == &quot;nt&quot;:
+    sniffer.ioctl(socket.SIO_RCVALL,socket.RCVALL_ON)
+
+try:
+    while True:
+        raw_buffer = sniffer.recvfrom(65565)[0]
+
+        ip_header = IP(raw_buffer[0:32])
+        msg = &quot;Protocol: %-5s %-15s -&gt; %s&quot; % (ip_header.protocol,ip_header.src_address,ip_header.dst_address)
+        if ip_header.protocol == &quot;TCP&quot;:
+            tcp_num = tcp_num + 1
+        elif ip_header.protocol == &quot;UDP&quot;:
+            udp_num = udp_num + 1
+        elif ip_header.protocol == &quot;ICMP&quot;:
+            icmp_num = icmp_num + 1
+        num = &quot;TCP:%d\tUDP:%d\tICMP:%d&quot; % (tcp_num,udp_num,icmp_num)
+        # print num
+        with open(&quot;data.txt&quot;,&quot;a+&quot;) as f:
+            f.write(msg+&quot;\n&quot;)
+        sys.stdout.write(num+&quot;\r&quot;)
+        sys.stdout.flush()
+        time.sleep(0.5)
+        print
+#CTRL-C
+except KeyboardInterrupt:
+    if os.name == &quot;nt&quot;:
+        sniffer.ioctl(socket.SIO_RCVALL,socket.RCVALL_OFF)
+</code></pre>
+
+<h3 id="0x01-结果">0x01 结果</h3>
+
+<p><img src="/img/post/ip_decoding_run_msg.png" alt="程序运行信息" /></p>
+
+<p><img src="/img/post/ip_decoding_data.png" alt="保存的数据" /></p>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

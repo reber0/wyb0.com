@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>AJAX 与 PHP | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>AJAX 与 PHP</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-11-16</time>
+    <span>in</span>
+    
+      <a href="/categories/JavaScript">JavaScript</a>
+  </strong>
+  <span> • 999 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/ajax">ajax</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-ajax与php">0x00 AJAX与PHP</h3>
+
+<p>ajax.html代码如下：</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;script&gt;
+    function showHint(str) {
+        var xmlhttp;
+        if (str.length==0) { 
+            document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;;
+            return;
+        }
+        if (window.XMLHttpRequest) {
+            // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp=new XMLHttpRequest(); //创建对象
+        } else {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+        }
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) {
+                document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open(&quot;GET&quot;,&quot;./ajax.php?q=&quot;+str,true);
+        xmlhttp.send();
+    }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h3&gt;在输入框中尝试输入字母 a:&lt;/h3&gt;
+    &lt;form action=&quot;&quot;&gt; 
+    输入姓名: &lt;input type=&quot;text&quot; id=&quot;txt1&quot; onkeyup=&quot;showHint(this.value)&quot; /&gt;
+    &lt;/form&gt;
+    &lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; 
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<pre><code>上面的代码会完成以下的东西：
+
+1. 在输入字母时会调用showHint()
+2. showHint()创建对象
+3. 定义onreadystatechange事件
+4. xmlhttp.open()访问当前目录下的ajax.php来请求资源
+</code></pre>
+
+<p>ajax.php代码如下：</p>
+
+<pre><code>&lt;?php
+// Fill up array with names
+$a[]=&quot;Anna&quot;;
+$a[]=&quot;Brittany&quot;;
+$a[]=&quot;Cinderella&quot;;
+$a[]=&quot;Diana&quot;;
+$a[]=&quot;Eva&quot;;
+$a[]=&quot;Fiona&quot;;
+$a[]=&quot;Gunda&quot;;
+$a[]=&quot;Hege&quot;;
+$a[]=&quot;Inga&quot;;
+$a[]=&quot;Johanna&quot;;
+$a[]=&quot;Kitty&quot;;
+$a[]=&quot;Linda&quot;;
+$a[]=&quot;Nina&quot;;
+$a[]=&quot;Ophelia&quot;;
+$a[]=&quot;Petunia&quot;;
+$a[]=&quot;Amanda&quot;;
+$a[]=&quot;Raquel&quot;;
+$a[]=&quot;Cindy&quot;;
+$a[]=&quot;Doris&quot;;
+$a[]=&quot;Eve&quot;;
+$a[]=&quot;Evita&quot;;
+$a[]=&quot;Sunniva&quot;;
+$a[]=&quot;Tove&quot;;
+$a[]=&quot;Unni&quot;;
+$a[]=&quot;Violet&quot;;
+$a[]=&quot;Liza&quot;;
+$a[]=&quot;Elizabeth&quot;;
+$a[]=&quot;Ellen&quot;;
+$a[]=&quot;Wenche&quot;;
+$a[]=&quot;Vicky&quot;;
+
+//get the q parameter from URL
+$q=$_GET[&quot;q&quot;];
+
+//lookup all hints from array if length of q&gt;0
+if (strlen($q) &gt; 0) {
+    $hint=&quot;&quot;;
+    for($i=0; $i&lt;count($a); $i++) {
+        if (strtolower($q)==strtolower(substr($a[$i],0,strlen($q)))) {
+            if ($hint==&quot;&quot;) {
+                $hint=$a[$i];
+            } else {
+                $hint=$hint.&quot; , &quot;.$a[$i];
+            }
+        }
+    }
+}
+
+// Set output to &quot;no suggestion&quot; if no hint were found
+// or to the correct values
+if ($hint == &quot;&quot;) {
+    $response=&quot;no suggestion&quot;;
+} else {
+    $response=$hint;
+}
+
+//output the response
+echo $response;
+?&gt;
+</code></pre>
+
+<p>结果如下：
+<img src="/img/post/ajax_and_php.gif" alt="ajax与php" /></p>
+
+<h3 id="0x01-ajax与数据库">0x01 AJAX与数据库</h3>
+
+<pre><code>可以通过xmlhttp.open(&quot;GET&quot;,&quot;./ajax.php?q=&quot;+str,true);的形式获取服务器数据，
+那么也就可以通过这种方式获取服务端数据库中的内容
+</code></pre>
+
+<p>ajax.html代码如下：</p>
+
+<pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;script&gt;
+    function showUser(str) {
+        if (str==&quot;&quot;) {
+            document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;;
+            return;
+        } 
+        if (window.XMLHttpRequest) {
+            // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp=new XMLHttpRequest();
+        } else {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+        }
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200){
+                document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open(&quot;GET&quot;,&quot;getuser.php?id=&quot;+str,true);
+        xmlhttp.send();
+    }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;form&gt;
+        &lt;select name=&quot;users&quot; onchange=&quot;showUser(this.value)&quot;&gt;
+            &lt;option value=&quot;&quot;&gt;Select a person:&lt;/option&gt;
+            &lt;option value=&quot;7&quot;&gt;用户1&lt;/option&gt;
+            &lt;option value=&quot;8&quot;&gt;用户2&lt;/option&gt;
+            &lt;option value=&quot;9&quot;&gt;用户3&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/form&gt;
+    &lt;br&gt;
+    &lt;div id=&quot;txtHint&quot;&gt;&lt;b&gt;Person info will be listed here.&lt;/b&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>getuser.php代码如下：</p>
+
+<pre><code>&lt;?php
+    header(&quot;Content-Type:text/html; charset=gbk&quot;);
+
+    $id=$_GET[&quot;id&quot;];
+
+    $con = mysql_connect('localhost','root','123456');
+    mysql_select_db(&quot;thinkphp&quot;,$con);
+    $sql=&quot;SELECT * FROM msg WHERE id = '&quot;.$id.&quot;'&quot;;
+    $result = mysql_query($sql);
+
+    echo &quot;&lt;table border='1'&gt;
+    &lt;tr&gt;
+    &lt;th&gt;Id&lt;/th&gt;
+    &lt;th&gt;Name&lt;/th&gt;
+    &lt;th&gt;Sex&lt;/th&gt;
+    &lt;/tr&gt;&quot;;
+
+    while($row = mysql_fetch_array($result)) {
+        echo &quot;&lt;tr&gt;&quot;;
+        echo &quot;&lt;td&gt;&quot; . $row['id'] . &quot;&lt;/td&gt;&quot;;
+        echo &quot;&lt;td&gt;&quot; . $row['name'] . &quot;&lt;/td&gt;&quot;;
+        echo &quot;&lt;td&gt;&quot; . $row['sex'] . &quot;&lt;/td&gt;&quot;;
+        echo &quot;&lt;/tr&gt;&quot;;
+    }
+    echo &quot;&lt;/table&gt;&quot;;
+
+    mysql_close($con);
+?&gt;
+</code></pre>
+
+<p>结果如下：
+<img src="/img/post/ajax_and_mysql1.png" alt="ajax与mysql1" />
+<img src="/img/post/ajax_and_mysql2.png" alt="ajax与mysql2" />
+<img src="/img/post/ajax_and_mysql3.png" alt="ajax与mysql3" /></p>
+
+<h3 id="0x02-ajax使用实例">0x02 AJAX使用实例</h3>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;script&gt;
+        var xmlhttp;
+        function loadXMLDoc(url,cfunc) {
+            if (window.XMLHttpRequest) {
+                // IE7+, Firefox, Chrome, Opera, Safari 代码
+                xmlhttp=new XMLHttpRequest();
+            } else {
+                // IE6, IE5 代码
+                xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+            }
+            xmlhttp.onreadystatechange=cfunc;
+            xmlhttp.open(&quot;GET&quot;,url,true);
+            xmlhttp.send();
+        }
+        function myFunction() {
+            loadXMLDoc(
+                &quot;/try/ajax/ajax_info.txt&quot;,
+                function() {
+                    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) {
+                        document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+                    }
+                }
+            );
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改文本内容&lt;/h2&gt;&lt;/div&gt;
+    &lt;button type=&quot;button&quot; onclick=&quot;myFunction()&quot;&gt;修改内容&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

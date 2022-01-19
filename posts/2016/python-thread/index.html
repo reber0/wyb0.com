@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Python 的线程 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Python 的线程</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-02-03</time>
+    <span>in</span>
+    
+      <a href="/categories/Python">Python</a>
+  </strong>
+  <span> • 944 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/python">python</a>, 
+        <a href="/tags/thread">thread</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<p>Python的参数传递其实传递的是对象，当传递可变对象(列表、队列)时相当于引用传递，可以修改对象的原始值，当传递不可变对象(字符串、整型)时就相当于传值，不能直接修改原始对象。</p>
+
+<h3 id="0x00-单线程">0x00 单线程</h3>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from time import time,ctime,sleep
+
+def music(arg):
+    for x in range(2):
+        print &quot;I'm listening to %s. %s&quot; % (arg,ctime())
+        sleep(1)
+def movie(arg):
+    for x in range(2):
+        print &quot;I'm watching %s. %s&quot; % (arg,ctime())
+        sleep(5)
+
+if __name__ == '__main__':
+    start = int(time())
+    music(u'我')
+    movie(u'可是')
+    print &quot;All over time:%s&quot; % ctime()
+    print &quot;Used time:%d&quot; % int(time()-start)
+</code></pre>
+
+<p><img src="/img/post/thread_single.png" alt="单线程" /></p>
+
+<h3 id="0x01-多线程">0x01 多线程</h3>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import re
+import requests
+import threading
+from time import time,ctime,sleep
+
+
+INDEX = 0
+
+def http_get(sites):
+    global INDEX
+    while INDEX &lt; len(sites):
+        url = sites[INDEX]
+        INDEX += 1
+        resp = requests.get(url, timeout=3)
+        resp.encoding = resp.apparent_encoding
+        title = re.search(r'&lt;title&gt;(.*?)&lt;/title&gt;', resp.text).group(1)
+        print &quot;URL:%-30sTitle:%s&quot; % (url, title)
+
+sites = [
+    &quot;http://www.baidu.com&quot;,
+    &quot;http://www.qq.com&quot;,
+    &quot;http://www.github.com&quot;,
+    &quot;http://www.jingyingba.com&quot;,
+]
+
+if __name__ == '__main__':
+    start = int(time())
+    
+    threads = []
+    for i in range(0, 3):
+        t = threading.Thread(target=http_get, args=(sites,))
+        threads.append(t)
+    for t in threads:
+        #t.setDaemon(True) #设为守护线程,主线程结束后不管子线程是否完成,立即结束
+        t.start()
+    for t in threads:
+        t.join() #主线程阻塞，等待子线程完成
+        
+    print &quot;Used time:%d&quot; % int(time() - start)
+</code></pre>
+
+<p><img src="/img/post/thread_multithreading.png" alt="多线程" /></p>
+
+<h3 id="0x02-线程同步">0x02 线程同步</h3>
+
+<p>使用多线程时若线程共用一个资源则可能导致线程竞争问题，可以通过互斥锁和队列来解决</p>
+
+<ul>
+<li>线程竞争</li>
+</ul>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import re
+import requests
+import threading
+from time import time,ctime,sleep
+
+num = 0
+
+def test():
+    global num
+    sleep(1)
+    num = num+1
+    msg = 'Number: ' + str(num)
+    print msg
+
+if __name__ == '__main__':
+    start = int(time())
+    
+    threads = []
+    for i in range(0, 20):
+        t = threading.Thread(target=test)
+        threads.append(t)
+    for t in threads:
+        t.setDaemon(True)
+        t.start()
+    for t in threads:
+        t.join()
+        
+    print &quot;Used time:%d&quot; % int(time() - start)
+</code></pre>
+
+<p><img src="/img/post/thread_compete1.png" alt="线程竞争1" /></p>
+
+<p><img src="/img/post/thread_compete2.png" alt="线程竞争2" /></p>
+
+<ul>
+<li>互斥锁</li>
+</ul>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+&quot;&quot;&quot;
+使用步骤：
+1. 创建互斥锁 mutex = threading.Lock()
+2. 锁定 mutex.acquire([timeout])
+3. 释放 mutex.release()
+&quot;&quot;&quot;
+
+import re
+import requests
+import threading
+from time import time,ctime,sleep
+
+num = 0
+mutex = threading.Lock()
+
+def test():
+    global num
+    sleep(0.5)
+
+    mutex.acquire() #这里存在线程竞争，设置互斥锁
+    num = num+1
+    mutex.release()
+
+    msg = 'set num to '+str(num)
+    mutex.acquire() #输出有可能错乱，还是线程竞争问题
+    print msg
+    mutex.release()
+
+if __name__ == '__main__':
+    start = int(time())
+
+    threads = []
+    for i in range(0, 20):
+        t = threading.Thread(target=test)
+        threads.append(t)
+    for t in threads:
+        t.setDaemon(True)
+        t.start()
+    for t in threads:
+        t.join()
+
+    print &quot;Total use time %d&quot; % int(time() - start)
+</code></pre>
+
+<p><img src="/img/post/thread_mutex.png" alt="互斥锁同步" /></p>
+
+<ul>
+<li>队列(推荐)</li>
+</ul>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import re
+import random
+import Queue
+import requests
+import threading
+from time import time,ctime,sleep
+
+queue = Queue.Queue()
+
+for i in xrange(1,20+1):
+    queue.put(i) #put一次队列里的任务数就加1
+
+def test(queue):
+    while not queue.empty():
+        sleep(random.random()) #随机生成的一个实数，它在(0,1)范围内
+        i = queue.get()
+        print i
+        queue.task_done()
+
+if __name__ == '__main__':
+    start = int(time())
+
+    threads = []
+    for x in range(0, 20):
+        t = threading.Thread(target=test, args=(queue,))
+        threads.append(t)
+    for t in threads:
+        t.setDaemon(True)
+        t.start()
+    queue.join() #等待队列里的任务数为0，即队列为空任务完成
+
+    print &quot;Total use time %d&quot; % int(time() - start)
+</code></pre>
+
+<p><img src="/img/post/thread_queue.png" alt="队列解决线程竞争问题" /></p>
+
+<h3 id="0x03-多线程与类与队列">0x03 多线程与类与队列</h3>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+&quot;&quot;&quot;
+使用步骤：
+1. 继承线程类 threading.Thread
+2. 重写线程类的__init__方法
+3. 重写线程类的run方法
+4. 继承类每实例化一次就创建一个线程
+
+__init__方法一般接收外部参数并存放到实例变量
+实例化对象调用start()方法后运行了run()方法
+&quot;&quot;&quot;
+
+import re
+import random
+import Queue
+import requests
+import threading
+from time import time,ctime,sleep
+
+hosts = [
+    &quot;http://www.baidu.com&quot;,
+    &quot;http://www.qq.com&quot;,
+    &quot;http://www.github.com&quot;,
+    &quot;http://www.jingyingba.com&quot;
+]
+
+queue = Queue.Queue()
+
+class ThreadTest(threading.Thread):
+    &quot;docstring for ThreadTest&quot;
+    def __init__(self, queue):
+        threading.Thread.__init__(self)
+        self.queue = queue
+
+    def run(self):
+        while not self.queue.empty():
+            host = self.queue.get()
+            resp = requests.get(host)
+            resp.encoding = resp.apparent_encoding
+            title = re.search(r'&lt;title&gt;(.*?)&lt;/title&gt;',resp.text,re.I).group(1)
+            print &quot;URL:%-30sTitle:%s&quot; % (host, title)
+            self.queue.task_done()
+
+def main():
+    for host in hosts:
+        queue.put(host)
+
+    for x in xrange(1,4):
+        t = ThreadTest(queue)
+        t.setDaemon(True)
+        t.start()
+    queue.join()
+
+if __name__ == '__main__':
+    start = time()
+    main()
+    print &quot;Total use time %d&quot; % int(time() - start)
+</code></pre>
+
+<p><img src="/img/post/thread_multithreading_queue_class.png" alt="使用多线程和类和队列" /></p>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

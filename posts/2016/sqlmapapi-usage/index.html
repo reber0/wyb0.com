@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>sqlmapapi 的简单使用 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>sqlmapapi 的简单使用</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-06-28</time>
+    <span>in</span>
+    
+      <a href="/categories/Pentest">Pentest</a>
+  </strong>
+  <span> • 803 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/tools">tools</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-关于sqlmapapi-py">0x00 关于sqlmapapi.py</h3>
+
+<p>当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量</p>
+
+<h3 id="0x01-用于交互的方法">0x01 用于交互的方法</h3>
+
+<p>在sqlmap/lib/utils/api.py中:</p>
+
+<pre><code># 用户方法
+@get(&quot;/task/new&quot;) Create new task ID. 
+@get(&quot;/task/&lt;taskid&gt;/delete&quot;) Delete own task ID. 
+
+# 管理函数
+@get(&quot;/admin/&lt;taskid&gt;/list&quot;) List task pull. 
+@get(&quot;/admin/&lt;taskid&gt;/flush&quot;) Flush task spool (delete all tasks). 
+
+# 核心交互函数
+@get(&quot;/option/&lt;taskid&gt;/list&quot;) List options for a certain task ID
+@post(&quot;/option/&lt;taskid&gt;/get&quot;) Get the value of an option (command line switch) for a certain task ID
+@post(&quot;/option/&lt;taskid&gt;/set&quot;) Set an option (command line switch) for a certain task ID
+@post(&quot;/scan/&lt;taskid&gt;/start&quot;) Launch a scan
+@get(&quot;/scan/&lt;taskid&gt;/stop&quot;) Kill a scan
+@get(&quot;/scan/&lt;taskid&gt;/status&quot;) Return status of a scan
+@get(&quot;/scan/&lt;taskid&gt;/data&quot;) Retrieve the data of a scan
+@get(&quot;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&quot;) Retrieve a subset of log messages
+@get(&quot;/scan/&lt;taskid&gt;/log&quot;) Retrieve the log messages
+@get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system
+</code></pre>
+
+<h3 id="0x02-sqlmapapi-py参数如下">0x02 sqlmapapi.py参数如下</h3>
+
+<p><img src="/img/post/sqlmapapi_help.png" alt="sqlmapapi参数" />
+它的-s参数可以启动一个服务(返回一个Admin Id)，只要将url给它就行了：
+<img src="/img/post/sqlmapapi_server.png" alt="启动sqlmapapi服务" /></p>
+
+<h3 id="0x03-简单使用">0x03 简单使用</h3>
+
+<ol>
+<li><p>创建任务
+使用@get(&ldquo;/task/new&rdquo;)方法创建一个新的任务
+<img src="/img/post/sqlmapapi_new_task.png" alt="sqlmapapi新建任务" /></p></li>
+
+<li><p>指定参数
+使用@post(&ldquo;/option/&lt;taskid&gt;/set&rdquo;)方法设置参数
+<img src="/img/post/sqlmapapi_options.png" alt="sqlmapapi指定参数" /></p></li>
+
+<li><p>开始扫描
+使用@post(&ldquo;/scan/&lt;taskid&gt;/start&rdquo;)方法开始扫描
+<img src="/img/post/sqlmapapi_scan_start.png" alt="sqlmapapi开始扫描" /></p></li>
+
+<li><p>获取探测是否结束
+使用@get(&ldquo;/scan/&lt;taskid&gt;/status&rdquo;)获取探测是否结束
+<img src="/img/post/sqlmapapi_scan_status.png" alt="sqlmapapi得到扫描状态" /></p></li>
+
+<li><p>获取探测结果
+使用@get(&ldquo;/scan/&lt;taskid&gt;/data&rdquo;)获取探测结果，如果不能注入，则获取到的结果为空，如下：</p>
+
+<pre><code>{u'data': [], u'success': True, u'error': []}
+</code></pre>
+
+<p>若存在注入则可能如下：
+<img src="/img/post/sqlmapapi_scan_result.png" alt="sqlmapapi得到扫描结果" /></p></li>
+
+<li><p>删除任务
+使用@get(&ldquo;/task/delete&rdquo;)方法删除一个任务.</p>
+
+<pre><code>&gt;&gt;&gt;resp = requests.get('http://127.0.0.1:8776/task/96f01550dadabab8/delete')
+&gt;&gt;&gt;resp.json()
+{u'success': True}
+</code></pre>
+
+<p><img src="/img/post/sqlmapapi_delete_task.png" alt="sqlmapapi删除任务" /></p></li>
+</ol>
+
+<h3 id="0x04-简单示例">0x04 简单示例</h3>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import time
+import json
+import requests
+
+url_list = {}
+url_list['url1'] = 'http://192.168.188.134/sqli/Less-1/?id=1'
+url_list['url2'] = 'http://192.168.188.134/sqli/Less-2/?id=1'
+url_list['url3'] = 'http://192.168.188.134/sqli/Less-3/?id=1'
+
+
+for key in url_list.keys():
+    payload = {}
+    resp = requests.get('http://127.0.0.1:8775/task/new') #创建任务
+    taskid = resp.json()['taskid']
+    payload['url'] = url_list[key]
+    headers = {'Content-Type':'application/json'}
+    if resp.json()['success']: #指定参数
+        print &quot;set options...&quot;
+        url = &quot;http://127.0.0.1:8775/option/%s/set&quot; % taskid
+        resp = requests.post(url,data=json.dumps(payload),headers=headers)
+        if resp.json()['success']: #开始扫描
+            print &quot;start scan...&quot;
+            url = &quot;http://127.0.0.1:8775/scan/%s/start&quot; % taskid
+            resp = requests.post(url,data=json.dumps(payload),headers=headers)
+            print &quot;scan runing...&quot;
+            if resp.json()['success']:
+                while 1:
+                    url = &quot;http://127.0.0.1:8775/scan/%s/status&quot; % taskid #查看扫描状态
+                    resp = requests.get(url)
+                    if resp.json()['status'] != 'terminated':
+                        pass
+                    else:
+                        print &quot;scan end.&quot;
+                        url = &quot;http://127.0.0.1:8775/scan/%s/data&quot; % taskid #获取扫描结果
+                        data = requests.get(url)
+                        print data.json()['data']
+                        print &quot;delete task&quot;
+                        url = &quot;http://127.0.0.1:8775/task/%s/delete&quot; % taskid
+                        requests.get(url)
+                        break
+                    time.sleep(2)
+    else:
+        print &quot;new task error&quot;
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

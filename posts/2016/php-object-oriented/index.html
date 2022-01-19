@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>PHP 之面向对象 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>PHP 之面向对象</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-05-20</time>
+    <span>in</span>
+    
+      <a href="/categories/PHP">PHP</a>
+  </strong>
+  <span> • 1227 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/php">php</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-面向对象">0x00 面向对象</h3>
+
+<ol>
+<li>面向对象概念
+
+<ul>
+<li>面向对象是达到了软件工程的三个目标：重用性、灵活性和扩展性，使其编程的代码更加简洁、更易于维护、并且具有更强的可重用性。</li>
+</ul></li>
+<li>类和对象的关系
+
+<ul>
+<li>在面向对象的编程语言中，类是一个对立的程序单位，而对象的抽象就是类。类描述了一组有相同特性(属性)和相同行为(方法)的对象。开发时要先抽象类再用该类去创建对象。而我们的程序中直接使用的是对象而不是类。</li>
+</ul></li>
+<li>什么是类
+
+<ul>
+<li>在面向对象的编程语言中，类是一个对立的程序单位，是具有相同属性和服务的一组对象的集合。它为属于该类的所有对象提供了同意的抽象描述，其内部包括成员属性和服务的方法两个部分。</li>
+</ul></li>
+<li>什么是对象
+
+<ul>
+<li>在客观世界里，所有的事物都是由对象和对象之间的联系组成的。对象是系统中用来描述客观事物的一个实体，它是构成系统的一个基本单位，一个对象由一组属性和有权对这些属性进行操作的一组服务的封装体。</li>
+</ul></li>
+</ol>
+
+<h3 id="0x01-类的声明">0x01 类的声明</h3>
+
+<ol>
+<li>类名和变量名还有函数名的命名规则类似，都遵循PHP中定义名称的命名规则。</li>
+<li>若类名由多个单词组成，习惯上每个单词的首字母要大写</li>
+<li>类中成员可分为属性和方法</li>
+<li>属性为静态描述，方法为动态描述</li>
+<li>在类中声明成员属性时，变量前面一定要有关键字，如：public、private、static等</li>
+<li>若不需要有特定意义的修饰，则使用var关键字</li>
+</ol>
+
+<pre><code class="language-php">格式：
+[一些修饰类的关键字] class 类名 {
+    类中成员;
+}
+
+Class Person {
+成员属性：
+    姓名、性别、年龄、身高、体重、电话、住址等
+成员方法：
+    说话、学习、走路、吃饭、开车、使用手机等
+}
+
+例子：
+&lt;?php
+    class Person {
+        var $name;
+        var $age;
+        var $sex;
+        function say() {
+            echo &quot;人在说话&quot;;
+        }
+        function run() {
+            echo &quot;人在走路&quot;;
+        }
+    }
+?&gt;
+</code></pre>
+
+<h3 id="0x02-实例化对象">0x02 实例化对象</h3>
+
+<pre><code class="language-php">格式：
+$变量名 = new 类名称([参数列表]);
+$变量名 = new 类名称;
+
+例子：
+&lt;?php
+    class Phone {
+    // ...
+    }
+    class Person {
+    // ...
+    }
+    $person1 = new Person();
+    $person2 = new Person();
+    $person3 = new Person;
+    $phone1 = new Phone();
+    $phton2 = new Phone();
+    $phton3 = new Phone;
+?&gt;
+</code></pre>
+
+<h3 id="0x03-对象中成员的访问">0x03 对象中成员的访问</h3>
+
+<pre><code class="language-php">&lt;?php
+    /**
+    *声明一个人类Person，其中包含三个成员属性和两个成员方法
+    */
+    class Person
+    {
+        var $name;
+        var $age;
+        var $sex;
+        
+        function say() {
+            echo &quot;我的名字：&quot;.$this-&gt;name.&quot;,性别：&quot;.$this-&gt;sex.&quot;，年龄：&quot;.$this-&gt;age.&quot;。&lt;br /&gt;\n&quot;;
+        }
+        function run() {
+            echo $this-&gt;name.&quot;在走路&lt;br /&gt;\n&quot;;
+        }
+    }
+    
+    $xiaoming = new Person();
+    $wyb = new Person();
+    
+    $xiaoming-&gt;name = &quot;小明&quot;;
+    $xiaoming-&gt;sex = &quot;男&quot;;
+    $xiaoming-&gt;age = 16;
+    
+    $wyb-&gt;name = &quot;wyb&quot;;
+    $wyb-&gt;sex = &quot;男&quot;;
+    $wyb-&gt;age = 18;
+    
+    $xiaoming-&gt;say();
+    $wyb-&gt;run();
+?&gt;
+</code></pre>
+
+<h3 id="0x04-构造方法和析构方法">0x04 构造方法和析构方法</h3>
+
+<ul>
+<li>构造方法和析构方法是对象中两个特殊的方法</li>
+<li>构造方法是对象创建完成后第一个被对象自动调用的方法</li>
+<li>析构方法是对象在销毁之前最后一个被对象自动调用的方法</li>
+<li>通常用构造方法完成一些对象的初始化工作，用析构方法完成一些对象在销毁前的清理工作</li>
+</ul>
+
+<pre><code class="language-php">function _ _construct([参数列表]) {
+    //方法体，通常用来对成员属性进行初始化赋值
+}
+
+function _ _destruct([参数列表]) {
+    //方法体，通常用来完成一些在对象销毁前的清理工作
+}
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

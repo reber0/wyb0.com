@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Python 爆破 zip 压缩包 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Python 爆破 zip 压缩包</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-09-20</time>
+    <span>in</span>
+    
+      <a href="/categories/Pentest">Pentest</a>, 
+      <a href="/categories/Python">Python</a>
+  </strong>
+  <span> • 154 words</span>
+  <span> • 1 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/%E7%88%86%E7%A0%B4">爆破</a>, 
+        <a href="/tags/python">python</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-代码">0x00 代码</h3>
+
+<p>多线程爆破加密的zip压缩包</p>
+
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+import optparse
+import zipfile
+import threading
+import Queue
+
+queue = Queue.Queue()
+lock = threading.Lock()
+result = ''
+
+def load_pwd(filename):
+    for line in open(filename,'r'):
+        if line:
+            queue.put(line.strip())
+
+def bruter(zipname,queue):
+    global result
+    zFile = zipfile.ZipFile(zipname)
+    while not queue.empty():
+        password = queue.get()
+        try:
+            zFile.extractall(pwd=password) # 解压
+            lock.acquire()
+            print &quot;[Ok] password is: %s&quot; % password
+            lock.release()
+            result = password
+        except:
+            lock.acquire()
+            print &quot;[Error] password not is: %s&quot; % password
+            lock.release()
+        queue.task_done()
+
+def main():
+    parser = optparse.OptionParser()
+    parser.add_option('-f', '--file', dest='zipfile',
+        type='string', help='Target zip file.')
+    parser.add_option('-p', '--pfile', dest='pwdfile',default='pass.txt',
+        type='string', help='Password file.')
+    parser.add_option('-t', '--thread_num', dest='thread_num',default=60,
+        type='int', help='Thread number.')
+
+    (options, args) = parser.parse_args()
+
+    if options.zipfile and options.pwdfile:
+        load_pwd(options.pwdfile)
+    else:
+        parser.print_help()
+        sys.exit(0)
+
+    threads = []
+    for x in range(options.thread_num):
+        t = threading.Thread(target=bruter,args=(options.zipfile,queue,))
+        t.setDaemon(True)
+        t.start()
+    queue.join()
+    print &quot;result is: %s&quot; % result
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

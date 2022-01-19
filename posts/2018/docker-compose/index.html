@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>Docker Compose | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Docker Compose</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2018-11-19</time>
+    <span>in</span>
+    
+      <a href="/categories/Linux">Linux</a>
+  </strong>
+  <span> • 1192 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/docker">docker</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-关于docker-compose">0x00 关于docker compose</h3>
+
+<p>可以把docker-compose当作docker命令的封装，它是一个用来把 docker 自动化的东西，docker-compose可以一次性管理多个容器，通常用于需要多个容器相互配合来完成某项任务的场景。</p>
+
+<h3 id="0x01-安装与卸载">0x01 安装与卸载</h3>
+
+<p><a href="https://docs.docker.com/compose/install?_blank">https://docs.docker.com/compose/install</a></p>
+
+<h3 id="0x02-一些常用命令">0x02 一些常用命令</h3>
+
+<ul>
+<li>构建容器：docker-compose up -d</li>
+<li>启动容器：docker-compose start</li>
+<li>停止容器：docker-compose stop</li>
+<li>重启容器：docker-compose restart</li>
+<li>kill容器：docker-compose kill</li>
+<li>删除容器：docker-compose rm</li>
+<li>bash连接容器：docker-compose exec [services_name] bash</li>
+<li>执行一条命令：docker-compose run [services_name] [command]</li>
+</ul>
+
+<h3 id="0x03-docker-compose简单应用">0x03 docker-compose简单应用</h3>
+
+<ul>
+<li><p>结构</p>
+
+<pre><code>.
+├── Dockerfile
+├── docker-compose.yml
+└── src
+    ├── app.py
+    └── sources.list
+
+1 directory, 4 files
+</code></pre></li>
+
+<li><p>Dockerfile</p>
+
+<pre><code>FROM ubuntu:14.04.4
+MAINTAINER reber &lt;1070018473@qq.com&gt;
+
+COPY ./src /code #将data挂载到容器的code
+WORKDIR /code
+RUN cp sources.list /etc/apt/sources.list &amp;&amp; apt-get update
+RUN apt-get install -y python-dev python-pip
+RUN pip install flask redis
+
+CMD [&quot;python&quot;,&quot;app.py&quot;]
+</code></pre></li>
+
+<li><p>docker-compose.yml(构建两个services)</p>
+
+<pre><code>version: '3'
+services:
+  web:
+    image: &quot;dockercompose:test&quot;  #镜像名字和标签
+    build: .
+    ports:
+     - &quot;8888:5000&quot; #将容器的5000映射到本机的8888端口
+    volumes:
+     - ./src:/code  #挂载后更改本机文件时容器中的文件会随之改变，反之一样
+    links:
+     - redis  #links后在web中访问redis就可以通过redis这个名字来访问而不用通过ip，比如ping -c 2 redis
+  redis:
+    image: &quot;redis:alpine&quot;
+    ports:
+     - &quot;3333:6379&quot;
+</code></pre></li>
+
+<li><p>app.py</p>
+
+<pre><code>import time
+import redis
+from flask import Flask
+
+app = Flask(__name__)
+cache = redis.Redis(host='redis', port=6379)
+
+def get_hit_count():
+    retries = 5
+    while True:
+        try:
+            return cache.incr('hits')
+        except redis.exceptions.ConnectionError as exc:
+            if retries == 0:
+                raise exc
+            retries -= 1
+            time.sleep(0.5)
+
+@app.route('/')
+def hello():
+    count = get_hit_count()
+    return 'Hello World! I have been seen {} times.\n'.format(count)
+
+if __name__ == &quot;__main__&quot;:
+    app.run(host=&quot;0.0.0.0&quot;, debug=True)
+</code></pre></li>
+
+<li><p>操作容器</p>
+
+<pre><code>[12:21 reber@wyb in ~/dockercomposetest]
+#构建并运行容器
+➜  docker-compose up -d
+Creating dockercomposetest_redis_1 ...
+Creating dockercomposetest_redis_1 ... done
+Creating dockercomposetest_web_1 ...
+Creating dockercomposetest_web_1 ... done
+    
+#拉取了两个镜像ubuntu和redis，在此基础上生成镜像dockercompose:test
+➜  docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+dockercompose       test                c421a84a85a9        About an hour ago   415MB
+redis               alpine              05635ee9e1c7        6 days ago          40.8MB
+ubuntu              14.04.4             0ccb13bf1954        2 years ago         188MB
+    
+#生成两个容器
+➜  docker ps
+CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                    NAMES
+b1a5d90b0646        dockercompose:test   &quot;python app.py&quot;          36 seconds ago      Up 35 seconds       0.0.0.0:8888-&gt;5000/tcp   dockercomposetest_web_1
+364d6cf7ae50        redis:alpine         &quot;docker-entrypoint...&quot;   36 seconds ago      Up 35 seconds       0.0.0.0:3333-&gt;6379/tcp   dockercomposetest_redis_1
+
+#执行一条命令就会生成一个容器
+➜  docker-compose run web pwd
+Starting dockercomposetest_redis_1 ... done
+/code
+➜  docker-compose run web ls
+Starting dockercomposetest_redis_1 ... done
+app.py  sources.list
+➜  docker ps -a
+CONTAINER ID        IMAGE                COMMAND                  CREATED              STATUS                          PORTS                    NAMES
+9b74c86f8f99        dockercompose:test   &quot;ls&quot;                     15 seconds ago       Exited (0) 10 seconds ago                                dockercomposetest_web_run_2
+6025c6379617        dockercompose:test   &quot;pwd&quot;                    20 seconds ago       Exited (0) 19 seconds ago                                dockercomposetest_web_run_1
+b1a5d90b0646        dockercompose:test   &quot;python app.py&quot;          9 minutes ago        Up 9 minutes                    0.0.0.0:8888-&gt;5000/tcp   dockercomposetest_web_1
+364d6cf7ae50        redis:alpine         &quot;docker-entrypoint...&quot;   9 minutes ago        Up 9 minutes                    0.0.0.0:3333-&gt;6379/tcp   dockercomposetest_redis_1
+
+#查看运行情况
+➜  curl http://127.0.0.1:8888
+Hello World! I have been seen 3 times.
+➜  redis-cli -h 127.0.0.1 -p 3333
+127.0.0.1:3333&gt; keys *
+1) &quot;hits&quot;
+127.0.0.1:3333&gt; get hits
+&quot;3&quot;
+127.0.0.1:3333&gt; exit
+</code></pre></li>
+
+<li><p>常用命令</p>
+
+<pre><code>[12:31 reber@wyb in ~/dockercomposetest]
+➜  docker-compose up -d
+Creating dockercomposetest_redis_1 ...
+Creating dockercomposetest_redis_1 ... done
+Creating dockercomposetest_web_1 ...
+Creating dockercomposetest_web_1 ... done
+➜  docker ps
+CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                    NAMES
+d8b6270f1b63        dockercompose:test   &quot;python app.py&quot;          7 seconds ago       Up 6 seconds        0.0.0.0:8888-&gt;5000/tcp   dockercomposetest_web_1
+4d1965d53fe5        redis:alpine         &quot;docker-entrypoint...&quot;   7 seconds ago       Up 6 seconds        0.0.0.0:3333-&gt;6379/tcp   dockercomposetest_redis_1
+➜  docker-compose stop
+Stopping dockercomposetest_web_1 ... done
+Stopping dockercomposetest_redis_1 ... done
+[12:31 reber@wyb in ~/dockercomposetest]
+➜  docker ps -a
+CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS                     PORTS               NAMES
+0582adca2a2d        dockercompose:test   &quot;python app.py&quot;          12 seconds ago      Exited (0) 7 seconds ago                       dockercomposetest_web_1
+1f8417160da3        redis:alpine         &quot;docker-entrypoint...&quot;   12 seconds ago      Exited (0) 6 seconds ago                       dockercomposetest_redis_1
+➜  docker-compose rm
+Going to remove dockercomposetest_web_1, dockercomposetest_redis_1
+Are you sure? [yN] y
+Removing dockercomposetest_web_1 ... done
+Removing dockercomposetest_redis_1 ... done
+➜  docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+</code></pre></li>
+</ul>
+
+<h3 id="0x04-构建tomcat实例">0x04 构建tomcat实例</h3>
+
+<pre><code class="language-bash">➜  tree
+.
+├── Dockerfile
+├── docker-compose.yml
+├── src
+│   ├── apache-tomcat-8.0.53.tar.gz
+│   ├── jdk-8u181-linux-x64.tar.gz
+│   └── sources.list
+└── web
+    └── index.jsp
+
+2 directories, 6 files
+
+➜  cat Dockerfile
+FROM ubuntu:14.04.4
+MAINTAINER reber &lt;1070018473@qq.com&gt;
+
+COPY ./src /data
+WORKDIR /data
+RUN cp sources.list /etc/apt/sources.list &amp;&amp; apt-get update
+RUN tar -zxvf apache-tomcat-8.0.53.tar.gz &amp;&amp; mv apache-tomcat-8.0.53 /opt
+RUN tar -zxvf jdk-8u181-linux-x64.tar.gz &amp;&amp; mv jdk1.8.0_181 /opt
+RUN rm -rf /data
+
+ENV JAVA_HOME=&quot;/opt/jdk1.8.0_181&quot;
+ENV JAVA_BIN=&quot;$JAVA_HOME/bin&quot;
+ENV CLASSPATH=&quot;$JAVA_HOME/lib&quot;
+ENV PATH=&quot;$JAVA_HOME/bin&quot;:$PATH
+
+WORKDIR /opt/apache-tomcat-8.0.53/webapps/ROOT
+
+ENTRYPOINT [&quot;tail&quot;,&quot;-f&quot;,&quot;/dev/null&quot;] #使容器一直运行，不自动退出
+
+➜  cat docker-compose.yml
+version: '3'
+services:
+  tomcat:
+    image: ubuntu:tomcat
+    build: .
+    ports:
+     - &quot;8888:8080&quot;
+    volumes:
+     - ./web:/opt/apache-tomcat-8.0.53/webapps/ROOT
+</code></pre>
+
+<p><br /></p>
+
+<h4 id="reference-侵删">Reference(侵删)：</h4>
+
+<ul>
+<li><a href="https://docs.docker.com/compose/gettingstarted/?_blank">https://docs.docker.com/compose/gettingstarted/</a></li>
+</ul>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

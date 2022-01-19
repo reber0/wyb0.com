@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="对 cookie 的增、删、改方法进行封装"/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>[转] JS 操作 cookie 方法的封装 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>[转] JS 操作 cookie 方法的封装</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-12-27</time>
+    <span>in</span>
+    
+      <a href="/categories/JavaScript">JavaScript</a>
+  </strong>
+  <span> • 1183 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/javascript">javascript</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<p>原文链接：<a href="http://www.wyzu.cn/2015/0123/107167.html">http://www.wyzu.cn/2015/0123/107167.html</a></p>
+
+<h3 id="0x00-实现功能">0x00 实现功能</h3>
+
+<ul>
+<li>添加cookie</li>
+<li>获取所有cookie</li>
+<li>根据名字获取单个cookie的值</li>
+<li>移除所有cookie</li>
+<li>根据名字移除单个cookie</li>
+</ul>
+
+<h3 id="0x01-封装cookie-js源码">0x01 封装cookie.js源码</h3>
+
+<pre><code>/*
+ * 名称和值传送时必须是经过RUL编码的
+ * cookie绑定在指定的域名下，非本域无法共享cookie，但是可以是在主站共享cookie给子站
+ * cookie的名称不分大小写；同时建议将cookie URL编码
+ * 建议针对cookie设置expires、domain、 path；每个cookie小于4KB
+ **/
+
+(function(global){
+    function getCookiesObj() {
+        //获得cookie对象
+        var cookies = {};
+        if (document.cookie) {
+            var objs = document.cookie.split('; ');
+            for (var i in objs) {
+                var index = objs[i].indexOf('='),
+                    name = objs[i].substr(0,index),
+                    value = objs[i].substr(index+1,objs[i].length);
+                cookies[name] = value;
+            }
+        }
+        return cookies;
+    }
+
+    function set(sName,sValue,Opts) {
+        //设置cookie
+        // Opts expires,path,domain,secure
+        if (sName &amp;&amp; sValue) {
+            var cookie = encodeURIComponent(sName)+'='+encodeURIComponent(sValue);
+            
+            if (Opts) {
+                if (Opts.expires) {
+                    var date = new Date();
+                    date.setTime(date.getTime()+Opts.expires*24*3600*1000)
+                    cookie += '; expires=' + date.toGMTString();
+                }
+                if (Opts.path) {
+                    cookie += '; path=' + Opts.path;
+                }
+                if (Opts.domain) {
+                    cookie += '; domain=' + Opts.domain;
+                }
+                if (Opts.secure) {
+                    cookie += '; secure';
+                }
+            }
+            document.cookie = cookie;
+            return cookie;
+        } else {
+            return '';
+        }
+    }
+
+    function getCookie(name) {
+        //得到某个cookie
+        return decodeURIComponent(getCookiesObj()[name]) || null;
+    }
+
+    function getCookies() {
+        //得到所有cookie
+        return getCookiesObj();
+    }
+
+    function remove(name) {
+        //移除某个cookie
+        if (getCookiesObj()[name]) {
+            var date = new Date();
+            date.setDate(date.getDate()-1);
+            document.cookie = name + '=; expires='+date.toGMTString();
+        }
+    }
+
+    function clear() {
+        // 移除所有cookie
+        var cookies = getCookiesObj();
+        var date = new Date();
+        date.setDate(date.getDate()-1);
+        for (var key in cookies) {
+            document.cookie = key + '=; expires='+date.toGMTString();
+        }
+    }
+
+    function noConflict(name) {
+        //解决冲突
+        if (name &amp;&amp; typeof name === 'string') {
+            if (name &amp;&amp; window['cookie']) {
+                window[name] = window['cookie'];
+                delete window['cookie'];
+                return window[name];
+            }
+        } else {
+            return window['cookie'];
+            delete window['cookie'];
+        }
+    }
+
+    global['cookie'] = {
+        'set': set,
+        'getCookies': getCookies,
+        'getCookie': getCookie,
+        'remove': remove,
+        'clear': clear,
+        'noConflict': noConflict
+    };
+})(window);
+</code></pre>
+
+<h3 id="0x02-利用的a-html源码">0x02 利用的a.html源码</h3>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;title&gt;cookie example&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;./cookie.js&quot; &gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot;&gt;
+            console.log('----------cookie对象-------------');
+            console.log(cookie);
+            console.log('----------对象-------------');
+            console.log(cookie.getCookies());
+            console.log('----------设置cookie-------------');
+            console.log(cookie.set('name', 'wlh'));
+            console.log('----------设置cookie 123-------------');
+            console.log(cookie.set('name', 'wlh123'));
+            console.log('----------设置cookie age-------------');
+            console.log(cookie.set('age', 20));
+            // alert(document.cookie);
+            console.log('----------获取cookie-------------');
+            console.log(cookie.getCookie('name'));
+            console.log('----------获取所有-------------');
+            console.log(cookie.getCookies());
+            console.log('----------清除age-------------');
+            console.log(cookie.remove('age'));
+            console.log('----------获取所有-------------');
+            console.log(cookie.getCookies());
+            console.log('----------清除所有-------------');
+            console.log(cookie.clear());
+            console.log('----------获取所有-------------');
+            console.log(cookie.getCookies());
+            console.log('----------解决冲突-------------');
+            var $Cookie = cookie.noConflict(true /*a new name of cookie*/);
+            console.log($Cookie);
+            console.log('----------使用新的命名-------------');
+            console.log($Cookie.getCookies());
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h3 id="0x03-结果">0x03 结果</h3>
+
+<p><img src="/img/post/js_cookie.png" alt="调用封装文件操作cookie" /></p>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

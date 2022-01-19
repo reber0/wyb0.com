@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>PHP 之目录与文件 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>PHP 之目录与文件</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-05-22</time>
+    <span>in</span>
+    
+      <a href="/categories/PHP">PHP</a>
+  </strong>
+  <span> • 1026 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/php">php</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-目录的操作">0x00 目录的操作</h3>
+
+<pre><code class="language-php">&lt;?php
+  $path = &quot;/var/www/html/php/dir.php&quot;;
+  echo dirname($path).&quot;&lt;br /&gt;&quot;;  //返回上级路径
+  echo basename($path).&quot;&lt;br /&gt;&quot;;  //返回文件名部分
+  print_r(pathinfo($path));  //返回包含path信息的数组
+
+  echo &quot;&lt;br /&gt;&lt;br /&gt;&quot;;
+
+  //readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动
+  $path = &quot;D:/phpStudy/WWW/php&quot;;
+  $dh = opendir($path);
+  while (false !== ($filename=readdir($dh))) {
+    echo $filename.&quot;&lt;br /&gt;&quot;;
+  }
+  rewinddir($dh);  //指针复位
+  echo readdir($dh);
+  closedir($dh);
+
+  mkdir(&quot;./aaa&quot;);//创建文件夹aaa
+  rmdir(&quot;./aaa&quot;);//删除文件夹aaa
+
+  file_put_contents(&quot;aa.php&quot;, &quot;&quot;);//创建文件aa.php
+  unlink(&quot;./aa.php&quot;);//删除文件aa.php
+?&gt;
+</code></pre>
+
+<p><center>
+<img src="/img/post/arrow.png" alt="箭头" /><br />
+<img src="/img/post/dir.png" alt="目录的操作" />
+</center></p>
+
+<h3 id="0x01-文件的读写">0x01 文件的读写</h3>
+
+<ol>
+<li><p>fopen(filename,mode)和fclose(filename,mode)
+<img src="/img/post/file_open_mode.png" alt="fopen()打开文件的模式" /></p>
+
+<h4 id="例子">例子：</h4>
+
+<pre><code class="language-php">&lt;?php
+$file = fopen(&quot;test.txt&quot;,&quot;r&quot;);
+$file = fopen(&quot;/home/test/test.txt&quot;,&quot;r&quot;);
+$file = fopen(&quot;/home/test/test.gif&quot;,&quot;wb&quot;);
+$file = fopen(&quot;http://www.example.com/&quot;,&quot;r&quot;);
+$file = fopen(&quot;ftp://user:password@example.com/test.txt&quot;,&quot;w&quot;);
+?&gt;
+</code></pre></li>
+
+<li><p>读取内容</p>
+
+<pre><code class="language-php">fread(h_file,length)  //读取打开文件的length个字节，返回读取的字符串  
+fgets(h_file,length)  //读取一行返回length个字节，不加length时默认1024个字节，失败返回false  
+fgetc(h_file)   //逐字读取
+</code></pre></li>
+
+<li><p>file_get_content()和file_put_content()</p>
+
+<pre><code class="language-php">file_get_content($filename)可以得到文件中的所有内容  
+file_put_content($filename, $str)可以将字符串覆盖写入文件中  
+file_put_content($filename, $str, FILE_APPEND)可以将字符串追加到文件中
+</code></pre></li>
+
+<li><p>filetype()</p>
+
+<pre><code class="language-php">filetype($filename)可以得到文件的类型
+</code></pre></li>
+</ol>
+
+<h3 id="0x02-查看文件夹下的文件信息">0x02 查看文件夹下的文件信息</h3>
+
+<pre><code class="language-php">&lt;?php
+    $path = &quot;./&quot;;
+    $filelist=array(&quot;filesystem.php&quot;);//要过滤掉的文件
+
+    //浏览指定目录下的文件，并使用表格输出
+    //path目录信息的过滤，判断path存在，并且是否是个目录
+    if(!file_exists($path) || !is_dir($path)){
+        die($path.&quot;目录无效！&quot;);
+    }
+    //2. 输出表头信息
+    echo &quot;&lt;h3&gt;{$path}目录下的文件信息&lt;h3&gt;&quot;;
+    echo &quot;&lt;table width='600' border='0'&gt;&quot;;
+    echo &quot;&lt;tr bgcolor='#cccccc' align='left'&gt;&quot;;
+    echo &quot;&lt;th&gt;序号&lt;/th&gt;&lt;th&gt;名称&lt;/th&gt;&lt;th&gt;类型&lt;/th&gt;&lt;th&gt;大小&lt;/th&gt;&lt;th&gt;创建时间&lt;/th&gt;&quot;;
+    echo &quot;&lt;/tr&gt;&quot;;
+
+    //打开这个目录，并遍历目录下面的所有文件
+    $dir = opendir($path);
+    if($dir){
+        $i=0;
+        //遍历目录中的文件,并输出文件的信息
+        while($f = readdir($dir)){
+            if($f==&quot;.&quot; || $f==&quot;..&quot; || in_array($f,$filelist)){
+                continue;//跳出本次循环，继续下一次遍历。
+            }
+            $file = trim($path,&quot;/&quot;).&quot;/&quot;.$f;
+            $i++;
+            echo &quot;&lt;tr&gt;&quot;;
+            echo &quot;&lt;td&gt;{$i}&lt;/td&gt;&quot;;
+            echo &quot;&lt;td&gt;{$f}&lt;/td&gt;&quot;;
+            echo &quot;&lt;td&gt;&quot;.filetype($file).&quot;&lt;/td&gt;&quot;;
+            echo &quot;&lt;td&gt;&quot;.filesize($file).&quot;&lt;/td&gt;&quot;;
+            echo &quot;&lt;td&gt;&quot;.date(&quot;Y-m-d H:i:s&quot;,filectime($file)).&quot;&lt;/td&gt;&quot;;
+            echo &quot;&lt;/tr&gt;&quot;;
+        }
+        closedir($dir); //关闭目录
+    }
+    echo &quot;&lt;tr bgcolor='#cccccc' align='left'&gt;&lt;td colspan='6'&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&quot;;
+    echo &quot;&lt;/table&gt;&quot;;
+?&gt;
+</code></pre>
+
+<p><center>
+<img src="/img/post/arrow.png" alt="箭头" /><br />
+<img src="/img/post/file_info.png" alt="查看文件夹下的文件信息" />
+</center></p>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

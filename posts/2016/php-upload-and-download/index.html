@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content=""/>
+  <meta name="author" content="Reber"/>
+  
+    
+      <title>PHP 之上传与下载 | Reber&#39;s Blog</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+    <link rel="stylesheet" href="/css/monokai-sublime.min.css"/>
+  
+    <link rel="stylesheet" href="/css/style.css"/>
+  
+  
+    <script src="/js/jquery-3.6.0.min.js"/></script>
+  
+    <script src="/js/highlight.min.js"/></script>
+  
+    <script src="/js/style.js"/></script>
+  
+  <link rel="icon" type="image/img" sizes="16x16" href="/img/logo.png">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://wyb0.com/">
+      <img
+        class="icon"
+        src="/img/logo.png"
+      />
+    </a>
+    <div class="text">
+      <a href="https://wyb0.com/"><h1>Reber&#39;s Blog</h1></a>
+      <h3>只会一点点编程、只会一点点渗透</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts/"><b>Posts</b></a>
+      
+         | 
+        <a href="/categories/"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags/"><b>Tags</b></a>
+      
+         | 
+        <a href="/about/"><b>About</b></a>
+      
+         | 
+        <a href="/friends/"><b>Friends</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>PHP 之上传与下载</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2016-05-24</time>
+    <span>in</span>
+    
+      <a href="/categories/PHP">PHP</a>
+  </strong>
+  <span> • 1448 words</span>
+  <span> • 3 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/php">php</a>
+    </div>
+  
+</div>
+
+      <div>
+
+<h3 id="0x00-上传">0x00 上传</h3>
+
+<ul>
+<li><p>客户端设置<br />
+客户端使用form表单上传文件，在form表单中必须指明enctype和method属性的值</p>
+
+<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;post&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;form action=&quot;xx.php&quot; mothod=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    &lt;input type=&quot;file&quot; value=&quot;myfile&quot; /&gt;&lt;br /&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot; /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+
+<li><p>服务端设置</p>
+
+<ul>
+<li><p>php.ini:</p>
+
+<pre><code>file_uploads = On   //默认允许HTTP文件上传，此选项不能设置为OFF
+upload_tmp_dir=    //文件上传时存放文件的临时目录
+upload_max_filesize = 20M   //设定单个文件上传的大小，必须小于post_max_size
+post_max_size = 19M   //允许POST表单的数据最大大小
+</code></pre></li>
+
+<li><p>$_FILES:</p>
+
+<pre><code>$_FILES['upload_file']['name']  //带扩展名的原始文件名
+$_FILES['upload_file']['size']  //文件大小
+$_FILES['upload_file']['tmp_name']  //临时文件名
+$_FILES['upload_file']['error']  //上传文件时的错误信息
+$_FILES['upload_file']['type']  //上传文件的类型
+
+//type是上传文件时原始信息里的content_type,即MIME,有image/gig、text/html等
+//error一般有5中类型：
+//0 上传成功
+//1 文件大小超过了upload_max_filesize
+//2 文件大小超过了表单总MAX_FILE_SIZE设定的值
+//3 只有部分被上传
+//4 没有上传任何文件
+</code></pre></li>
+
+<li><p>服务端上传步骤</p>
+
+<pre><code>1、判断uploads这个文件夹存在
+2、判断error的值
+3、判断文件后缀是否合法
+4、判断MIME的类型和子类型是否合法
+5、判断文件大小
+6、对文件进行重命名
+7、移动
+</code></pre></li>
+
+<li><p>服务端接收脚本</p>
+
+<pre><code class="language-php">&lt;?php
+//执行文件（图片）上传
+echo &quot;&lt;pre&gt;&quot;;
+var_dump($_FILES);
+echo &quot;&lt;/pre&gt;&quot;;
+
+//1.获取上传文件信息
+ $upfile = $_FILES[&quot;pic&quot;]; //html的form表单的input中name属性值要为pic
+ $typelist = array(&quot;image/jpeg&quot;,&quot;image/jpg&quot;,&quot;image/png&quot;,&quot;image/gif&quot;); //定义允许的类型
+ $path=&quot;./uploads/&quot;;  //定义一个上传过后的目录
+
+//2. 过滤上传文件的错误号
+if($upfile[&quot;error&quot;]&gt;0){
+    //获取错误信息
+    switch($upfile['error']){
+        case 1:
+            $info=&quot;上传的文件超过了 php.ini 中 upload_max_filesize 选项限制的值。&quot;; 
+            break;
+        case 2:
+            $info=&quot;上传文件的大小超过了 HTML 表单中 MAX_FILE_SIZE 选项指定的值。&quot;; 
+            break;
+        case 3:
+            $info=&quot;文件只有部分被上传。&quot;; 
+            break;
+        case 4:
+            $info=&quot;没有文件被上传。 &quot;;
+        case 6:
+            $info=&quot;找不到临时文件夹。&quot;; 
+            break;
+        case 7:
+            $info=&quot;文件写入失败&quot;; 
+            break;
+    }
+
+    die(&quot;上传文件错误，原因：&quot;.$info);
+}
+      
+//3. 本次上传文件到小的过滤（自己选择）
+if($upfile[&quot;size&quot;]&gt;100000){
+    die(&quot;上传文件大小超出限制！&quot;);
+}
+        
+//4. 类型过滤
+if(!in_array($upfile[&quot;type&quot;],$typelist)){
+    die(&quot;上传文件类型非法！&quot;.$upfile[&quot;type&quot;]);
+}
+
+//5. 上传后的文件名定义(随机获取一个文件名（保持后缀名不变）)
+$fileinfo = pathinfo($upfile[&quot;name&quot;]);//解析上传文件名字
+do{
+    $newfile= date(&quot;YmdHis&quot;).rand(1000,9999).&quot;.&quot;.$fileinfo[&quot;extension&quot;];
+}while(file_exists($path.$newfile));
+//6. 执行文件上传
+//判断是否是一个上传的文件
+if(is_uploaded_file($upfile[&quot;tmp_name&quot;])){
+    //执行文件上传（移动上传文件）
+    if(move_uploaded_file($upfile[&quot;tmp_name&quot;],$path.$newfile)){
+        echo &quot;文件上传成功！&quot;;
+        echo &quot;&lt;h3&gt;&lt;a href='index.php'&gt;浏览&lt;/a&gt;&lt;/h3&gt;&quot;;
+    }else{
+        die(&quot;上传文件失败&quot;);
+    }
+}else{
+    die(&quot;不是一个上传文件！&quot;);
+}
+?&gt;
+</code></pre></li>
+</ul></li>
+</ul>
+
+<h3 id="0x01-下载">0x01 下载</h3>
+
+<ul>
+<li><p>对于php无法解析的类型</p>
+
+<pre><code>&lt;a href=&quot;http://www.aa.com/xx.rar&quot;&gt;下载&lt;/a &gt;
+</code></pre></li>
+
+<li><p>对于php能解析的文件(同时为了安全性)</p>
+
+<pre><code class="language-php">&lt;?php
+header(&quot;Content-type:text/html;charset=utf-8&quot;);
+$file_name = &quot;文件.exe&quot;;
+$file_name=iconv(&quot;utf-8&quot;,&quot;gb2312&quot;,$file_name); //解决中文不能显示的问题 
+$file_dir = &quot;/public/www/download/&quot;;
+$file_path = $file_dir.$file_name;
+if (!file_exists($file_path)) { //检查文件是否存在
+    echo &quot;文件找不到&quot;;
+    exit;
+} else {
+    $file = fopen($file_path,&quot;r&quot;); // 打开文件
+    Header(&quot;Accept-Ranges: bytes&quot;);//代表支持断点续传
+    // 输入文件标签,下面3个Header是必须的
+    Header(&quot;Content-type: application/octet-stream&quot;);
+    Header(&quot;Accept-Length: &quot;.filesize($file_path));
+    Header(&quot;Content-Disposition: attachment; filename=&quot; . $file_name);
+    // 输出文件内容
+    echo fread($file,filesize($file_path));
+    fclose($file);
+    exit;
+}
+?&gt; 
+</code></pre></li>
+</ul>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/reber0?_blank">GitHub</a>
+      
+         | 
+        <a href="https://weibo.com/u/5819760166?_blank">Weibo</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2015-2022
+    <a href="https://wyb0.com/"><strong>Reber</strong></a>.
+
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>.
+  </p>
+</footer>
+
+  </body>
+</html>
