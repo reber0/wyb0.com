@@ -1,7 +1,8 @@
 ---
 draft: true
 isCJKLanguage: true
-date: {{ now.Format (default "2006-01-02 15:04:05" .Site.Params.dateFmt) }}
+date: {{ now.Format (default "2006-01-02" .Site.Params.dateFmt) }}
+lastmod: {{ now.Format (default "2006-01-02" .Site.Params.dateFmt) }}
 title: "{{ replace .Name "-" " " | title }}"
 description: 我的个人博客，主要用于记录自己的一些渗透测试、编程等学习笔记之类的东西。
 categories: 
