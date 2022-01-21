@@ -4,9 +4,9 @@ date: 2016-07-28 22:42:58
 title: 敏感信息泄露
 description: 
 categories:
-  - 信息泄露
+  - Pentest
 tags:
-  - miscellanea
+  - 信息泄露
 ---
 
 ### 0x00 软件敏感信息
