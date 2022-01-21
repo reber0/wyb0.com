@@ -4,7 +4,7 @@ date: 2017-06-22 15:18:29
 title: AJAX 之跨域
 description: 
 categories:
-  - JavaScript
+  - JS
 tags:
   - ajax
 ---

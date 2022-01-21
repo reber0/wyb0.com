@@ -5,7 +5,7 @@ date: 2016-11-16 10:37:03
 title: AJAX 与 PHP
 description: 
 categories:
-  - JavaScript
+  - JS
 tags:
   - ajax
 ---

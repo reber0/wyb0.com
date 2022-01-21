@@ -4,9 +4,9 @@ date: 2016-12-27 11:49:38
 title: "[转] JS 操作 cookie 方法的封装"
 description: 对 cookie 的增、删、改方法进行封装
 categories:
-  - JavaScript
+  - JS
 tags:
-  - javascript
+  - js
 ---
 
 原文链接：http://www.wyzu.cn/2015/0123/107167.html

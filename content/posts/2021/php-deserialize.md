@@ -5,7 +5,7 @@ description:
 categories:
   - Pentest
 tags:
-  - deserialize
+  - 反序列化
 ---
 
 ### 0x01 php 中的魔法函数

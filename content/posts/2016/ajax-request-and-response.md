@@ -5,7 +5,7 @@ date: 2016-10-25 00:53:13
 title: AJAX 的 XHR 请求与响应
 description: 
 categories:
-  - JavaScript
+  - JS
 tags:
   - ajax
 ---

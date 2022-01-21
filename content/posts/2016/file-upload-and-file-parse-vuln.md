@@ -6,7 +6,7 @@ description:
 categories:
   - Pentest
 tags:
-  - fileupload
+  - 文件上传
 ---
 
 ### 0x00 文件上传漏洞
