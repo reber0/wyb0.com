@@ -6,7 +6,7 @@ description: 在渗透测试中如果存在DNS域传送漏洞的话可以节省�
 categories:
   - Pentest
 tags:
-  - 敏感信息泄露
+  - 信息泄露
 ---
 
 ### 0x00 DNS域传送

@@ -6,7 +6,7 @@ description:
 categories:
   - Pentest
 tags:
-  - shell
+  - getshell
 ---
 
 ### 0x00 关于 War 包
