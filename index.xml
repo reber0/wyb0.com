@@ -921,15 +921,6 @@
     </item>
     
     <item>
-      <title>文件上传之文本编辑器上传漏洞</title>
-      <link>https://wyb0.com/posts/2016/file-upload-editor-upload-vulnerability/</link>
-      <pubDate>Thu, 21 Jul 2016 15:11:29 +0000</pubDate>
-      
-      <guid>https://wyb0.com/posts/2016/file-upload-editor-upload-vulnerability/</guid>
-      <description>0x00 文本编辑器 常见的文本编辑器有CKEditor、eWebEditor、UEditor、KindEditor、xhEdit</description>
-    </item>
-    
-    <item>
       <title>文件上传漏洞常见绕过手法</title>
       <link>https://wyb0.com/posts/2016/file-upload-simple-to-bypass/</link>
       <pubDate>Wed, 20 Jul 2016 17:04:44 +0000</pubDate>
@@ -1539,6 +1530,18 @@
       
       <guid>https://wyb0.com/posts/2015/cisco-switch-basic-configuration/</guid>
       <description>0x00 简单配置命令 Switch&amp;gt;enable(配置交换机名称) Switch(config)#hostname S S(config)#enable password 222//(加密特权密码，密码为222) S(config)#no enable password /</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://wyb0.com/posts/2016/file-upload-editor-upload-vulnerability/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/file-upload-editor-upload-vulnerability/</guid>
+      <description>draft: false date: 2016-07-21 15:11:29 title: 文件上传之文本编辑器上传漏洞 description: categories: - Pentest tags:
+- 文件上传 0x00 文本编辑器 常见的文本编辑器有CKEditor、eWebEditor、UEditor、KindEditor、xhEditor等，它们的功能类似且都有图片上传、视频上传、远程下载等功能，这类文本编辑器也称为富文本编辑器。
+0x01 FCKeditor 下面以FCKeditor(现名为CKEditor)为例：
+1、敏感信息暴漏 * 查看版本信息 /FCKeditor/editor/dialog/fck_about.html * 默认上传页面 /FCKeditor/editor/filemanager/browser/default/browser.html /FCKeditor/editor/filemanager/browser/default/connectors/test.html /FCKeditor/editor/filemanager/upload/test.html /FCKeditor/editor/filemanager/connectors/test.html /FCKeditor/editor/filemanager/connectors/uploadtest.html * 其他敏感文件 /FCKeditor/editor/filemanager/connectors/aspx/connector.html /FCKeditor/editor/filemanager/connectors/asp/connector.html /FCKeditor/editor/filemanager/connectors/php/connector.php 2、黑名单策略错误 FCKeditor&amp;lt;=2.4.3版本采用的是有弊端的黑名单策略，可以采用asa、cer等扩展名 3、任意文件上传漏洞 FCKeditor的2.4.2及以下本本的黑名单配置信息里没有定义类型Media，直接构造html表单就行， 在form中的action=&amp;quot;http://22.22.22.22/fckeditor/editor/filemanager/upload/php/upload.php?Type=Media&amp;quot; 即可，然后上传  0x02 eWebEditor 1、默认后台 2.80以前为：ewebeditor/admin_login.asp 2.80以后为：admin/login.asp 2、默认账号密码 admin admin888 3、数据库地址 默认数据库地址 ewebeditor/db/ewebeditor.mdb 常用数据库地址 ewebeditor/db/ewebeditor.asa ewebeditor/db/ewebeditor.asa ewebeditor/db/#ewebeditor.asa ewebeditor/db/#ewebeditor.mdb ewebeditor/db/!</description>
     </item>
     
     <item>
