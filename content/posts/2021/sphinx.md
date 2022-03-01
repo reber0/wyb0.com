@@ -18,12 +18,12 @@ Sphinx 是一款基于 SQL 的高性能全文检索引擎，Sphinx 的性能在�
 * 为 MySQL 设计了一个存储引擎插件，因此如果你在 MySQL 上使用 Sphinx，那简直就方便到家了。
 * 支持分布式搜索，可以横向扩展系统性能。
 
-### 安装
+### 0x01 安装
 * windows 可以去 [这里](http://sphinxsearch.com/downloads/current/) 下载对应版本，然后添加环境变量
 * ubuntu 可以 sudo apt-get install sphinxsearch (sphinxapi.py 要使用对应版本)
 * macbook 可以 brew install sphinx (sphinxapi.py 要使用对应版本)
 
-### 0x01 使用 Sphinx 查询的流程
+### 0x02 使用 Sphinx 查询的流程
 * 通过 Sphinx 的 indexer 生成索引（需要先配置文件 sphinx.conf）  
     部分索引：indexer -c ./sphinx.conf \<index_name>  
     全部索引：indexer -c ./sphinx.conf -\-all  
@@ -37,7 +37,7 @@ Sphinx 是一款基于 SQL 的高性能全文检索引擎，Sphinx 的性能在�
 
 * 在数据库中根据 id 查数据
 
-### 0x02 Sphinx 配置文件编写
+### 0x03 Sphinx 配置文件编写
 
 
 下面索引了两个库中的两个表
@@ -121,7 +121,7 @@ searchd
 }
 ```
 
-### 0x03 Sphinx 索引
+### 0x04 Sphinx 索引
 * 生成索引
 
 ```
@@ -166,7 +166,7 @@ precached 3 indexes using 3 threads in 0.0 sec
 accepting connections
 ```
 
-### 0x04 Sphinx 使用
+### 0x05 Sphinx 使用
 ```py
 import pymysql
 from sphinxapi import *
