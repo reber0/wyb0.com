@@ -32,34 +32,34 @@ return array(
 ```
 
 ### 0x01 表设计如下
-```
+```sql
 create database scoreboard;
 use scoreboard;
 
 drop table if exists users;
 create table users(
-id int not null auto_increment primary key,
-gid int not null default 'xiaoming' comment '组id',
-username varchar(20) not null default 'xiaoming' comment '用户名',
-password varchar(32) not null default '123456' comment '密码',
-sex varchar(2) not null default '0' comment '性别',
-totalscore int not null default '0' comment '个人总积分'
+    id int not null auto_increment primary key,
+    gid int not null default 'xiaoming' comment '组id',
+    username varchar(20) not null default 'xiaoming' comment '用户名',
+    password varchar(32) not null default '123456' comment '密码',
+    sex varchar(2) not null default '0' comment '性别',
+    totalscore int not null default '0' comment '个人总积分'
 );
 
 drop table if exists share;
 create table share(
-id int not null auto_increment primary key,
-uid int not null,
-content varchar(1024) not null default 'content' comment '分享内容',
-comment varchar(1024) comment '点评',
-date varchar(15) not null default '20150101' comment '分享日期'
+    id int not null auto_increment primary key,
+    uid int not null,
+    content varchar(1024) not null default 'content' comment '分享内容',
+    comment varchar(1024) comment '点评',
+    date varchar(15) not null default '20150101' comment '分享日期'
 );
 
 drop table if exists score;
 create table score(
-id int not null auto_increment primary key,
-uid int not null default '0' comment '用户id',
-score int not null default '0' comment '用户单次积分',
+    id int not null auto_increment primary key,
+    uid int not null default '0' comment '用户id',
+    score int not null default '0' comment '用户单次积分',
 );
 
 grant all privileges on scoreboard.* to 'score'@'%' identified by '123456';
