@@ -54,21 +54,27 @@ source base_source {
     sql_user = root
     sql_pass = root
     sql_port = 3306
-    sql_db = tttttmp # 需要建索引的数据库名字
+    # sql_db = tttttmp # 需要建索引的数据库名字
 
     sql_query_pre = SET NAMES utf8 # 定义查询时的编码
-    sql_query = select id,content from test # 设置要做索引的字段，包含至少一个唯一主键，这里 sphinx 会索引 id 这个字段
+    # sql_query = select id,content from test # 设置要做索引的字段，包含至少一个唯一主键，这里会索引 id、content 这个两个字段
 }
 index base_index {
     min_word_len = 1 # 最小索引词长度,小于这个长度的词不会被索引
-    min_prefix_len = 3 # 最小前缀(3)，搜索 abc* 得到 abc123、abcdiek、abc999
-    # min_infix_len = 3 # 最小中缀(3)，搜索 *aaa* 得到 cdaaa、384aaa938、aaa373
-    ngram_len    = 1 # 如果要搜索中文则指定为1，搜 丰 得到 张丰、邓丰至、丰年
-    ngram_chars  = U+3000..U+2FA1F # 需要分词的字符,如果要搜索中文,打开这行
-    html_strip   = 0 # html标记清理,是否从输出全文数据中去除HTML标记
 
-    source = base_source # 这里与上面的source对应
-    path = /opt/sgk/sphinx_data/index/base_source # 索引文件存放路径及索引的文件名
+    min_prefix_len = 3 # 最小索引前缀(搜索关键字长度至少为3) 12345* 得到 12345xxxxxx
+    # min_infix_len = 3 # 最小索引中缀(搜索关键字长度至少为3) *aaa* 得到 xxxxxaaa、xxxxxaaaxxxxx、aaaxxxxx
+
+    # 不按照词典，而是按照字长来分词，主要针对非英文体系的语言，如果指定为1，搜 丰 得到 张丰、邓丰至、丰年
+    ngram_len = 2
+    # 需要分词的字符，如果要搜索中文，需要配置 ngram_chars
+    # U+3000..U+2FA1F是汉字。为了能搜到完整邮箱：添加 U+0040,U+002D,U+002E 代表 @,-,.
+    ngram_chars = U+3000..U+2FA1F,U+0040,U+002D,U+002E
+
+    html_strip = 1 # html标记清理,是否从输出全文数据中去除HTML标记
+
+    # source = base_source # 这里与上面的source对应
+    # path = ./sphinx_data/index/base_source # 索引文件存放路径及索引的文件名
 }
 
 source 37wan_com_cdb_members:base_source {
@@ -106,18 +112,20 @@ indexer
 }
 searchd
 {
-    listen = 23333 # 查询服务监听的端口 netstat -anop|grep 23333
-    listen = 3333:mysql41 # mysql -h localhost -P 3333; show tables 会显示生成的索引
-    log = /opt/sgk/sphinx_data/logs/search_sphinx.log # 相关日志的存放位置
-    query_log = /opt/sgk/sphinx_data/logs/query_sphinx.log
-    pid_file = /opt/sgk/sphinx_data/searchd_sphinx.pid
+    listen = 127.0.0.1:23333 # 查询服务监听的端口
+    # listen = 127.0.0.1:3333:mysql41 # mysql -h localhost -P 3333; show tables 可查看生成的索引
+    pid_file = ./sphinx_data/searchd.pid
 
-    read_timeout = 5
+    log = ./sphinx_data/logs/searchd.log # 监听日志
+    query_log = ./sphinx_data/logs/query.log # 查询日志
+    binlog_path = # 二进制日志路径，这里禁止掉
+
+    read_timeout = 5 # 客户端读超时时间
     max_children = 30 # 并行执行搜索的数目
-    seamless_rotate = 1 # 启动无缝轮转
-    preopen_indexes = 1 # 索引预开启，是否强制重新打开所有索引文件
+    seamless_rotate = 1 # 启动无缝轮转，防止 searchd 轮换在需要预取大量数据的索引时停止响应
+    preopen_indexes = 0 # 索引预开启，是否强制重新打开所有索引文件，索引比较多时如果设置为 1 会出现 Too many open files 错误
     unlink_old = 1 # 索引轮换成功之后，是否删除以.old为扩展名的索引拷贝
-    # workers = threads # for RT to work 多处理模式（MPM）。 可选项；可用值为none、fork、prefork，以及threads。 默认在Unix类系统为form，Windows系统为threads。
+    dist_threads = 12 # 并发查询线程数
 }
 ```
 
@@ -198,21 +206,35 @@ sgk_index_msg = [
     }
 ]
 
-for index_dict in sgk_index_msg:
-    index = index_dict.get("index")
-    db_name = index_dict.get("db_name")
-    table_name = index_dict.get("table_name")
-    columns = index_dict.get("columns")
+all_results = list()
+try:
+    mysql_uri = "mysql+pymysql://root:root@localhost:3306/mysql?charset=utf8mb4"
+    sqlconn = MySQLX(mysql_uri)
+    for index_dict in sgk_conf:
+        index = index_dict.get("index")
+        db_name = index_dict.get("db_name")
+        table_name = index_dict.get("table_name")
+        columns = index_dict.get("columns")
 
-    res = sphinx.Query("abcde", index) # 从 sphinx 得到匹配到的结果
-    if res and res["total_found"]:
-        ids = [str(x["id"]) for x in res["matches"]]
-        ids = ",".join(ids)
+        res = sphinx.Query(keyword, index)
+        # print(keyword, index, res)
+        if res and res["total_found"]:
+            ids = [str(x["id"]) for x in res["matches"]]
+            ids = ",".join(ids)
 
-        sql = "select {} from {} where id in({})".format(columns, table_name, ids)
-        sqlconn = pymysql.connect("localhost","testuser","test123","TESTDB")
-        cursor = sqlconn.cursor()
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        sqlconn.close()
+            sql = "select {} from {}.{} where id in({})".format(columns, db_name, table_name, ids)
+            results = sqlconn.query(sql)
+            for result in results:
+                _tmp = dict()
+                _tmp["id"] = result.get("id", "")
+                _tmp["from"] = db_name
+                _tmp["uid"] = result.get("uid", "")
+                _tmp["username"] = result.get("username", "")
+                _tmp["password"] = result.get("password", "")
+                _tmp["salt"] = result.get("salt", "")
+                _tmp["mobile"] = result.get("mobile", "")
+                _tmp["email"] = result.get("email", "")
+                all_results.append(_tmp)
+except Exception as e:
+    print(e)
 ```
