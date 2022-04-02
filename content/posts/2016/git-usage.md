@@ -149,66 +149,99 @@ a.txt b.txt
 ### 0x05 撤回
 
 * 撤销 add
-```bash
-git reset HEAD  # 上一次add的文件全部撤销
-git reset HEAD 1.txt  # 撤销 add 的 1.txt
-```
+
+    ```
+    git reset HEAD        # 撤销上一次 add 的全部文件
+    git reset HEAD 1.txt  # 撤销 add 的 1.txt
+    ```
+
 
 * 查看 commit id
-```
-git log # 查看 commit 的 id  
-git reflog # 查看 commit 的 id  
-```
 
-* 删除 commit 历史记录
+    git log --pretty=oneline --abbrev-commit
 
-    > 比如不小心在 add aa.py 这个操作里提交了密码
 
+* 删除 commit 历史记录(比如不小心在 pass.txt 里提交了密码)
+
+    
     * 查看 log: `git log --pretty=oneline --abbrev-commit`
 
-    > ```
-    36dd82f (HEAD -> master, origin/master, origin/HEAD) add main.py
-    048715f add aa.py
-    0551909 add 123.txt
-    fb13042 add test.txt
-    f7c2baa Initial commit
-    (END)
-    ```
-    得到前一个 commit 的 id，即 add 123.txt 操作的 id 0551909
+        6b9efd1 不小心提交了密码，bc1f979 中删除了，两个记录中都会存在密码
+        ```
+        822726b (HEAD -> main, origin/main, origin/HEAD) update
+        bc1f979 remove pass
+        6b9efd1 real pass
+        1fa8193 add pass.txt & update a.txt
+        ee6ff05 mv c.txt 2 cc.txt
+        3f8a7ab update b.txt
+        1f00c68 add a/b/c.txt
+        568868b update README.md
+        4dc6f15 Initial commit
+        ```
+        然后随便找到 6b9efd1 前面的一个 id，这里用 ee6ff05
 
-    * 变基，删除 log: git rebase -i 0551909
-    
-    > 将
+    * 变基，清除 commit 记录: git rebase -i ee6ff05
 
-    > ```
-    1 pick 048715f add aa.py
-    2 pick 36dd82f add main.py
-    ```
+        涉及密码更新的两个 id 都把 pick 改为 s
+        ```
+        1 pick 1fa8193 add pass.txt & update a.txt
+        2 s 6b9efd1 real pass
+        3 s bc1f979 remove pass
+        4 pick 822726b update
+        5 
+        6 # 变基 ee6ff05..822726b 到 ee6ff05（5 个提交）
+        7 #
+        8 # 命令:
+        9 # p, pick <提交> = 使用提交
+        10 # r, reword <提交> = 使用提交，但编辑提交说明
+        10 # e, edit <提交> = 使用提交，但停止以便在 shell 中修补提交
+        10 # s, squash <提交> = 使用提交，但挤压到前一个提交
+        ```
 
-    > 改为
+        保存文件，然后注释或删掉两个涉及密码的提交说明(即 #2 和 #3)
+        ```
+        1 # 这是一个 3 个提交的组合。
+        2 # 这是第一个提交说明：
+        3 
+        4 add pass.txt & update a.txt
+        5 
+        6 # 这是提交说明 #2：
+        7 
+        8 # real pass
+        9 
+        10 # 这是提交说明 #3：
+        11 
+        12 # remove pass
+        13 
+        14 # 请为您的变更输入提交说明。以 '#' 开始的行将被忽略，而一个空的提交
+        15 # 说明将会终止提交。
+        16 #
+        17 # 日期：  Sat Apr 2 11:29:01 2022 +0800
+        ```
 
-    > ```
-    1 drop 048715f add aa.py
-    2 pick 36dd82f add main.py
-    ```
+    * 再次查看 log，原来无关的 1fa8193 变为 b9c4e96，涉及密码的更新没有了
 
-    * 强制推送 git push -f origin master，此时 add aa.py 这个历史 commit 就没有了
+        ```
+        060473b (HEAD -> main, origin/main, origin/HEAD) update
+        b9c4e96 add pass.txt & update a.txt
+        ee6ff05 mv c.txt 2 cc.txt
+        3f8a7ab update b.txt
+        1f00c68 add a/b/c.txt
+        568868b update README.md
+        4dc6f15 Initial commit
+        ```
 
-    > ```
-    c695a20 (HEAD -> master, origin/master, origin/HEAD) add main.py
-    0551909 add 123.txt
-    fb13042 add test.txt
-    f7c2baa Initial commit
-    (END)
-    ```
+    * 强制推送即可
+
+        git push -f origin main
 
 * 文件恢复
 
-```
-1.若用的 rm 删除文件，那就相当于只删除了工作区的文件，直接用git checkout -- <file>即可恢复
-2.若用 git rm 删除文件，则删除文件的同时且操作被添加到了暂存区，即暂存区的文件也被删了，需要先 git reset HEAD <file>，然后再 git checkout -- <file> 恢复
-3.若先用了 git rm，而且 git commit 了，那只能 git reset --hard HEAD^ 恢复，或者 git reset --hard <add 时的 id>
-```
+    ```
+    1.若用的 rm 删除文件，那就相当于只删除了工作区的文件，直接用git checkout -- <file>即可恢复
+    2.若用 git rm 删除文件，则删除文件的同时且操作被添加到了暂存区，即暂存区的文件也被删了，需要先 git reset HEAD <file>，然后再 git checkout -- <file> 恢复
+    3.若先用了 git rm，而且 git commit 了，那只能 git reset --hard HEAD^ 恢复，或者 git reset --hard <add 时的 id>
+    ```
 
 ### 0x06 多用户
 如果有多个用户时可进行如下设置
