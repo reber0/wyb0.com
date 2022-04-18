@@ -10,19 +10,14 @@ tags:
 ---
 
 ### 0x00 仓库
-```
-// 创建仓库
-git init
-
-// 克隆
-git clone git@github.com:reber0/wyb0.com.git
-
-// 若没有克隆现有仓库则可以连接远程仓库
-git remote add origin git@github.com:reber/reber.com.git
-
-// 删除远程仓库信息
-git remote rm origin
-```
+* 创建仓库
+    * git init
+* 克隆
+    * git clone git@github.com:reber0/wyb0.com.git
+* 添加远程仓库连接
+    * git remote add origin git@github.com:reber/reber.com.git
+* 删除远程仓库信息
+    * git remote rm origin
 
 ### 0x01 添加 SSH key
 生成 key
@@ -39,38 +34,39 @@ Hi reber0! You've successfully authenticated, but GitHub does not provide shell 
 ```
 
 ### 0x02 配置全局信息
-配置全局用户名、邮箱
-```
-➜ git config --global user.name "reber0"
-➜ git config --global user.email "123456@qq.com"
-➜ git config -l
-```
+* 配置全局用户名、邮箱
 
-配置全局忽略文件
-```
-➜ cat ~/.gitignore_global
-Thumbs.db // 忽略 Thumbs.db 这个文件
-log/  // 忽略 log 文件夹下的文件
-*.pyc // 忽略 .pyc 结尾的文件
-```
+    ➜ git config --global user.name "reber0"  
+    ➜ git config --global user.email "123456@qq.com"  
+    ➜ git config -l
 
-查看配置
-```
-➜ cat ~/.gitconfig
-[user]
-        name = reber0
-        email = 123456@qq.com
-[filter "lfs"]
-        process = git-lfs filter-process
-        required = true
-        clean = git-lfs clean -- %f
-        smudge = git-lfs smudge -- %f
-[core]
-        excludesfile = /Users/reber/.gitignore_global
+* 配置全局忽略文件
 
-[init]
-        defaultBranch = main
-```
+    ➜ cat ~/.gitignore_global
+    ```
+    Thumbs.db // 忽略 Thumbs.db 这个文件
+    log/  // 忽略 log 文件夹下的文件
+    *.pyc // 忽略 .pyc 结尾的文件
+    ```
+
+* 查看配置
+
+    ➜ cat ~/.gitconfig
+    ```
+    [user]
+            name = reber0
+            email = 123456@qq.com
+    [filter "lfs"]
+            process = git-lfs filter-process
+            required = true
+            clean = git-lfs clean -- %f
+            smudge = git-lfs smudge -- %f
+    [core]
+            excludesfile = /Users/reber/.gitignore_global
+
+    [init]
+            defaultBranch = main
+    ```
 
 ### 0x03 添加和提交和推送
 ```
@@ -100,9 +96,6 @@ git push origin main
 [main（根提交） e23479e] add file a.txt
  1 file changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 a.txt
-[15:48 reber@wyb at ~/temp/test git:(main)]
-➜ ls
-a.txt
 ```
 
 新建分支，切换分支后，分支的更改不会影响原来分支，分支更改后需要 add，然后 commit
@@ -146,7 +139,26 @@ Fast-forward
 a.txt b.txt
 ```
 
-### 0x05 撤回
+### 0x05 标签
+
+* 添加标签
+    * git tag -a 标签名 -m '描述'
+
+
+* 查看标签
+    * 查看本地标签 git tag
+    * 查看远程标签 git ls-remote --tags origin
+
+* 删除标签
+    * 删除本地标签
+        * git tag -d v0.1
+        * git push origin v1.0 推送 v1.0 到远程
+        * git push origin --tags 推送全部 tags 到远程
+    * 删除远程标签
+        * git tag -d v0.9
+        * git push origin :refs/tags/v0.9
+
+### 0x06 撤回
 
 * 撤销 add
 
@@ -243,7 +255,7 @@ a.txt b.txt
     3.若先用了 git rm，而且 git commit 了，那只能 git reset --hard HEAD^ 恢复，或者 git reset --hard <add 时的 id>
     ```
 
-### 0x06 多用户
+### 0x07 多用户
 如果有多个用户时可进行如下设置
 ```
 ➜ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C "123456@qq.com"
