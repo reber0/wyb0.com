@@ -1,4 +1,6 @@
 ---
+draft: false
+isCJKLanguage: true
 title: 思科交换机基本配置
 date: 2015-05-06 23:46:26
 description: 

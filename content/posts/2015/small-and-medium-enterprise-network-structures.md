@@ -1,6 +1,9 @@
 ---
+draft: false
+isCJKLanguage: true
 title: 中小企业网络搭建
-date: 2015-07-13 13:53:56
+date: 2015-07-13
+lastmod: 2015-07-13
 description: 使用交换机、路由器等设备,在局域网搭建中小企业网络
 categories:
   - Other

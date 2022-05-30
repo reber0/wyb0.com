@@ -1,10 +1,6 @@
-<!--
- * @Author: reber
- * @Mail: reber0ask@qq.com
- * @Date: 2021-10-15 09:46:11
- * @LastEditTime: 2022-05-30 10:36:16
--->
 ---
+draft: false
+isCJKLanguage: true
 title: ASP Cookie 处联合注入
 date: 2015-12-04 19:42:19
 description: 

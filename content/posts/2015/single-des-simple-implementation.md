@@ -1,4 +1,6 @@
 ---
+draft: false
+isCJKLanguage: true
 title: 利用 C 语言简单实现单重 DES
 date: 2015-05-22 16:52:55
 description: 

@@ -1,4 +1,5 @@
 ---
+draft: false
 date: 2019-07-30 23:27:54
 title: FRP 内网穿透
 description: 渗透测试时的内网穿透工具 frp
@@ -6,6 +7,7 @@ categories:
   - Pentest
 tags:
   - intranet
+  - 端口转发
 ---
 
 ### 0x00 对外提供简单的文件访问服务
@@ -109,12 +111,6 @@ rdp]
 ```
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-'''
-@Author: reber
-@Mail: reber0ask@qq.com
-@Date: 2019-03-22 16:22:59
-@LastEditTime: 2019-07-22 09:17:05
-'''
 
 import os
 import sys

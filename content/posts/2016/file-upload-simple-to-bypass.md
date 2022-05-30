@@ -7,6 +7,7 @@ categories:
   - Pentest
 tags:
   - 文件上传
+  - bypass
 ---
 
 ### 0x00 一般防止上传漏洞手法

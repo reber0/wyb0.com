@@ -1,4 +1,5 @@
 ---
+draft: false
 date: 2019-12-16 09:23:47
 title: 目录遍历利用
 description: 对存在目录遍历漏洞的网站进行遍历，获取存在的 url
@@ -23,12 +24,6 @@ tags:
 ```
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-'''
-@Author: reber
-@Mail: reber0ask@qq.com
-@Date: 2019-08-05 15:58:38
-@LastEditTime: 2019-12-16 17:07:09
-'''
 
 import asyncio
 import aiohttp

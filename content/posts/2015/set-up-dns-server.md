@@ -1,4 +1,6 @@
 ---
+draft: false
+isCJKLanguage: true
 title: 搭建 DNS 服务器
 date: 2015-07-14 14:15:13
 lastmod: 2021-01-14

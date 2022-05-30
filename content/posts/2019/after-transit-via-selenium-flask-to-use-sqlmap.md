@@ -1,4 +1,5 @@
 ---
+draft: false
 date: 2019-07-27 18:15:25
 title: 通过 selenium 和 flask 中转后利用 sqlmap 进行注入
 description: 渗透测试中有时候前端提交的数据会进行加密之类的操作, 有些加密的函数还不好找, 其实可以用 selenium 调用 chrome 驱动中转后进行测试。
@@ -51,12 +52,6 @@ tags:
 ```
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-'''
-@Author: reber
-@Mail: reber0ask@qq.com
-@Date: 2019-03-22 16:22:59
-@LastEditTime: 2019-07-22 09:17:05
-'''
 
 import time
 from lxml import etree
