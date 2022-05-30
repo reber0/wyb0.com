@@ -534,6 +534,15 @@
     </item>
     
     <item>
+      <title>Nessus 的安装和卸载</title>
+      <link>https://wyb0.com/posts/2016/nessus-install-and-remove/</link>
+      <pubDate>Sun, 13 Nov 2016 11:59:26 +0000</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/nessus-install-and-remove/</guid>
+      <description>0x00 下载 Nessus 的 deb 安装包 去【这里】，选择家庭版，然后下载对应的安装包 0x01 本地安装 Nessus 0x02 执行后续安装步骤: 启动nessus web访问</description>
+    </item>
+    
+    <item>
       <title>[转] MySQL 报错注入原理分析(count()、rand()、group by)</title>
       <link>https://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/</link>
       <pubDate>Sun, 13 Nov 2016 11:59:26 +0000</pubDate>
@@ -1119,6 +1128,15 @@
     </item>
     
     <item>
+      <title>SQL 注入之联合查询(MySQL)</title>
+      <link>https://wyb0.com/posts/2016/injection-of-union-select/</link>
+      <pubDate>Tue, 21 Jun 2016 22:30:18 +0000</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/injection-of-union-select/</guid>
+      <description>0x00 前提 要用联合查询进行注入则：页面必须有显示位 0x01 联合查询 union可合并两个或多个select语句的结果集，前提是两个s</description>
+    </item>
+    
+    <item>
       <title>SQL 注入之 load_file 和 into outfile(MySQL)</title>
       <link>https://wyb0.com/posts/2016/injection-of-mysql-function/</link>
       <pubDate>Mon, 20 Jun 2016 08:10:27 +0000</pubDate>
@@ -1497,6 +1515,15 @@
     </item>
     
     <item>
+      <title>ASP Cookie 处联合注入</title>
+      <link>https://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</link>
+      <pubDate>Fri, 04 Dec 2015 19:42:19 +0000</pubDate>
+      
+      <guid>https://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</guid>
+      <description>0x00 Cookie注入的使用 三大Web提交方式 GET：直接在浏览器上面访问地址 POST：提交表单(会员注册、文件上传等) CO</description>
+    </item>
+    
+    <item>
       <title>搭建 DNS 服务器</title>
       <link>https://wyb0.com/posts/2015/set-up-dns-server/</link>
       <pubDate>Tue, 14 Jul 2015 14:15:13 +0000</pubDate>
@@ -1508,7 +1535,7 @@
     <item>
       <title>中小企业网络搭建</title>
       <link>https://wyb0.com/posts/2015/small-and-medium-enterprise-network-structures/</link>
-      <pubDate>Mon, 13 Jul 2015 13:53:56 +0000</pubDate>
+      <pubDate>Mon, 13 Jul 2015 00:00:00 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2015/small-and-medium-enterprise-network-structures/</guid>
       <description>0x00 中小企业需求分析 搭建企业私有局域网络环境，使用交换机、路由器等网络设备完成由局域网到互联网的接入。 对网络设备能够方便地</description>
@@ -1530,45 +1557,6 @@
       
       <guid>https://wyb0.com/posts/2015/cisco-switch-basic-configuration/</guid>
       <description>0x00 简单配置命令 Switch&amp;gt;enable(配置交换机名称) Switch(config)#hostname S S(config)#enable password 222//(加密特权密码，密码为222) S(config)#no enable password /</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</guid>
-      <description> title: ASP Cookie 处联合注入 date: 2015-12-04 19:42:19 description: categories: - Pentest tags:
-- SQL注入 0x00 Cookie注入的使用  三大Web提交方式
- GET：直接在浏览器上面访问地址
- POST：提交表单(会员注册、文件上传等)
- COOKIE：访问网站下面自带的身份验证的值  Cookie注入利用时机
-当用普通注入时，采用and 1=1时出现错误提示(如下图)，普通的注入就没办法了，可以尝试大小写，编码等绕过，若过滤严谨，无法绕过，这时就可以采用cookie注入。  利用方法
- 可以利用注入中转 可以利用sqlmap   0x01 用注入中转进行Cookie注入  目标：http://localhost:81/2/shownews.asp?id=183
- 打开注入中转这个工具，填入相应参数，然后点击生成ASP，将生成的asp文件(jmCook.asp)放入你自己搭建的网站内后即可进行注入  提交localhost:81/jmCook.asp?jmdcw=183 order by猜测字段数
- 提交localhost:81/jmCook.asp?jmdcw=183 UNION SELECT 1,2,3,4 from XXX猜测表名  猜测内容   0x02 用sqlmap进行Cookie注入  sqlmap验证存在Cookie注入  猜表名  猜列名  猜字段内容   </description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://wyb0.com/posts/2016/injection-of-union-select/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wyb0.com/posts/2016/injection-of-union-select/</guid>
-      <description> draft: false date: 2016-06-21 22:30:18 title: SQL 注入之联合查询(MySQL) description: categories: - Pentest tags:
-- SQL注入 0x00 前提 要用联合查询进行注入则：页面必须有显示位
-0x01 联合查询 union可合并两个或多个select语句的结果集，前提是两个select必有相同列、且各列的数据类型也相同
-0x02 注入步骤  找到注入点得到闭合字符  判断数据库类型  猜解列数，得到显示位(从数据库中查询出来的数据有些会显示在页面中，显示的位置就是显示位)  得到基本信息(数据库名、版本、数据库版本等)  得到数据库  得到security数据库的表名  猜解列名  猜解数据   </description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://wyb0.com/posts/2016/nessus-install-and-remove/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wyb0.com/posts/2016/nessus-install-and-remove/</guid>
-      <description>draft: false date: 2016-11-13 11:59:26 title: Nessus 的安装和卸载 description: 介绍下渗透测试中可能用到的工具 nessus 家庭版的安装方法 categories: - Pentest tags:
-- tools 0x00 下载 Nessus 的 deb 安装包 去【这里】，选择家庭版，然后下载对应的安装包 0x01 本地安装 Nessus 0x02 执行后续安装步骤:  启动nessus  web访问nessus服务  设置账户和密码  申请code，可以在【这里】申请  去邮箱查找code  将code填入，然后等待插件的下载   0x03 登陆 Nessus 0x03 卸载 Nessus https://docs.tenable.com/nessus/Content/RemoveNessus.htm</description>
     </item>
     
     <item>
