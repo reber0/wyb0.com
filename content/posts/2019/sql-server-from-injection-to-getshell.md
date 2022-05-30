@@ -6,7 +6,7 @@ categories:
   - Pentest
 tags:
   - getshell
-  - pentest
+  - SQL注入
 ---
 
 ### 0x00 目标情况

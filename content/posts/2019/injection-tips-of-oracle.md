@@ -5,7 +5,7 @@ description: 前几天渗透测试时遇到了Oracle的注入，这里简单总�
 categories:
   - Pentest
 tags:
-  - injection
+  - SQL注入
   - oracle
 ---
 

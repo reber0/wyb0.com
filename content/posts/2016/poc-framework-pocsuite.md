@@ -5,9 +5,7 @@ title: POC 框架 Pocsuite
 description: 
 categories:
   - Pentest
-  - Python
 tags:
-  - pentest
   - tools
 ---
 

@@ -5,7 +5,7 @@ description: 对存在目录遍历漏洞的网站进行遍历，获取存在的 
 categories:
   - Pentest
 tags:
-  - pentest
+  - 目录遍历
 ---
 
 

@@ -7,7 +7,7 @@ description:
 categories:
   - JS
 tags:
-  - ajax
+  - js
 ---
 
 ### 0x00 AJAX与PHP

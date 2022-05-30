@@ -7,7 +7,7 @@ categories:
   - Pentest
   - PHP
 tags:
-  - injection
+  - SQL注入
   - 代码审计
 ---
 

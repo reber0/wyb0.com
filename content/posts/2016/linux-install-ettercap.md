@@ -1,22 +1,21 @@
 ---
 draft: false
-date: 2016-04-19 20:03:0
-title: Linux之安装ettercap
+date: 2016-04-19
+title: 利用 EtterCap 进行中间人攻击
 description: 
 categories:
   - Pentest
-  - Linux
 tags:
-  - linux
-  - software
+  - 中间人
+  - tools
 ---
 
 ### 0x00 准备
 ```
 操作系统：CentOS  
-首先，ettercap安装时需要4个依赖包，而且安装包里面也已经提供了  
+首先，ettercap 安装时需要 4 个依赖包，而且安装包里面也已经提供了  
 执行：sudo yum groupinstall "Development tools"    #源码安装软件就需要安装这个
-使用wget下载ettercap源码
+使用 wget 下载 ettercap 源码
 ```
 
 ### 0x01 查看需要的依赖项

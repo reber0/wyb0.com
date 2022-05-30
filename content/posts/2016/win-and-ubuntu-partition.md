@@ -4,10 +4,9 @@ date: 2016-05-31 23:35:06
 title: win/ubuntu 双系统分区设置
 description: 
 categories:
-  - Windows
-  - Linux
+  - Other
 tags:
-  - 操作系统
+  - other
 ---
 
 ### win10和ubuntu双系统分区设置

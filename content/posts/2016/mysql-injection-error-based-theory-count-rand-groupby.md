@@ -6,7 +6,7 @@ description: MySQL 中利用 count()、rand()、group by 进行报错注入原�
 categories:
   - Pentest
 tags:
-  - injection
+  - SQL注入
 ---
 
 原文链接：[http://drops.wooyun.org/tips/14312](http://drops.wooyun.org/tips/14312?_blank)

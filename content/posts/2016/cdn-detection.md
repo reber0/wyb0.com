@@ -5,10 +5,8 @@ title: Python 实现 CDN 的判断
 description: 利用 python 来识别网站是否使用了 cdn 以及使用了那种 cdn
 categories:
   - Pentest
-  - Python
 tags:
-  - pentest
-  - python
+  - 信息搜集
 ---
 
 ![银魂](/img/anime/anime002.jpg)

@@ -6,7 +6,7 @@ description: 基于时间的 SQL 注入
 categories:
   - Pentest
 tags:
-  - injection
+  - SQL注入
 ---
 
 ### 0x00 特点

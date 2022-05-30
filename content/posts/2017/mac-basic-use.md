@@ -6,7 +6,7 @@ description:
 categories:
   - Other
 tags:
-  - mac
+  - other
 ---
 
 macOS Sierra 10.12.6

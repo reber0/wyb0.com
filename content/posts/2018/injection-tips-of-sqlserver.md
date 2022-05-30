@@ -6,7 +6,7 @@ description: SQL Server 注入常见的一些注入手法
 categories:
   - Pentest
 tags:
-  - injection
+  - SQL注入
 ---
 
 ### 0x00 基础信息探测

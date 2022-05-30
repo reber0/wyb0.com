@@ -6,7 +6,7 @@ description:
 categories:
   - Pentest
 tags:
-  - injection
+  - SQL注入
   - getshell
 ---
 

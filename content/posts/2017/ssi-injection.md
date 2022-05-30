@@ -6,7 +6,7 @@ description:
 categories:
   - Pentest
 tags:
-  - injection
+  - SSI注入
 ---
 
 ### 0x00 SSI

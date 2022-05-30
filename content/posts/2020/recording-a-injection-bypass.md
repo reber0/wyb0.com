@@ -5,7 +5,7 @@ description: 注入 bypass
 categories:
   - Pentest
 tags:
-  - injection
+  - SQL注入
 ---
 
 ### 0x00 存在 SQL 注入

@@ -6,7 +6,7 @@ description:
 categories:
   - JS
 tags:
-  - ajax
+  - js
 ---
 
 ### 0x00 简介 

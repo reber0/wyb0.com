@@ -6,7 +6,7 @@ description: 记录一些非常见的注入手法，或者说是 mysql 的一些
 categories:
   - Pentest
 tags:
-  - injection
+  - SQL注入
 ---
 
 环境：MySQL 5.5.47

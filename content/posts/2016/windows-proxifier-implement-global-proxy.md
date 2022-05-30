@@ -4,9 +4,10 @@ date: 2016-07-24 21:33:59
 title: Windows 下用 Proxifier 实现全局代理
 description: 
 categories:
-  - Windows
+  - Other
 tags:
-  - software
+  - 代理
+  - tools
 ---
 
 ### 0x00 环境

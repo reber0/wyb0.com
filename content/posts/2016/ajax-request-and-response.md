@@ -7,7 +7,7 @@ description:
 categories:
   - JS
 tags:
-  - ajax
+  - js
 ---
 
 ### 0x00 什么是AJAX
