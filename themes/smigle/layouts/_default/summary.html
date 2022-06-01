@@ -2,9 +2,6 @@
   <h1 class="summary-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
   {{ partial "postMeta.html" . }}
   <div class="summary-body">
-    <p>{{ .Summary }}</p>
-    {{ if .Truncated }}
-      <a href="{{ .Permalink }}">Read more...</a>
-    {{ end }}
+    <p>{{ .Summary }}{{ if .Truncated }}<a href="{{ .Permalink }}"> more...</a>{{ end }}</p>
   </div>
 </article>
