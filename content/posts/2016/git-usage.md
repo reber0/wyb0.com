@@ -1,6 +1,7 @@
 ---
 draft: false
-date: 2016-05-05 10:30:32
+date: 2016-05-05
+lastmod: 2022-06-01
 title: Git 的用法
 description: 
 categories:
@@ -144,6 +145,11 @@ a.txt b.txt
 * 添加标签
     * git tag -a 标签名 -m '描述'
 
+* 版本号
+    * 格式：主版本号.次版本号.修订号（X.Y.Z）
+    * 主版本号：当你做了不兼容的 API 修改
+    * 次版本号：当你做了向下兼容的功能性新增
+    * 修订号：当你做了向下兼容的问题修正
 
 * 查看标签
     * 查看本地标签 git tag
@@ -151,12 +157,12 @@ a.txt b.txt
 
 * 删除标签
     * 删除本地标签
-        * git tag -d v0.1
-        * git push origin v1.0 推送 v1.0 到远程
+        * git tag -d v0.0.1
+        * git push origin v0.0.1 推送 v0.0.1 到远程
         * git push origin --tags 推送全部 tags 到远程
     * 删除远程标签
-        * git tag -d v0.9
-        * git push origin :refs/tags/v0.9
+        * git tag -d v0.0.9
+        * git push origin --delete v0.0.9
 
 ### 0x06 撤回
 
