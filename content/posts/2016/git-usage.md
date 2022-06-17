@@ -1,7 +1,7 @@
 ---
 draft: false
 date: 2016-05-05
-lastmod: 2022-06-01
+lastmod: 2022-06-17
 title: Git 的用法
 description: 
 categories:
@@ -37,8 +37,8 @@ Hi reber0! You've successfully authenticated, but GitHub does not provide shell 
 ### 0x02 配置全局信息
 * 配置全局用户名、邮箱
 
-    ➜ git config --global user.name "reber0"  
-    ➜ git config --global user.email "123456@qq.com"  
+    ➜ git config -\-global user.name "reber0"  
+    ➜ git config -\-global user.email "123456@qq.com"  
     ➜ git config -l
 
 * 配置全局忽略文件
@@ -153,16 +153,16 @@ a.txt b.txt
 
 * 查看标签
     * 查看本地标签 git tag
-    * 查看远程标签 git ls-remote --tags origin
+    * 查看远程标签 git ls-remote -\-tags origin
 
 * 删除标签
     * 删除本地标签
         * git tag -d v0.0.1
         * git push origin v0.0.1 推送 v0.0.1 到远程
-        * git push origin --tags 推送全部 tags 到远程
+        * git push origin -\-tags 推送全部 tags 到远程
     * 删除远程标签
         * git tag -d v0.0.9
-        * git push origin --delete v0.0.9
+        * git push origin -\-delete v0.0.9
 
 ### 0x06 撤回
 
@@ -176,7 +176,7 @@ a.txt b.txt
 
 * 查看 commit id
 
-    git log --pretty=oneline --abbrev-commit
+    git log -\-pretty=oneline -\-abbrev-commit
 
 
 * 删除 commit 历史记录(比如不小心在 pass.txt 里提交了密码)
