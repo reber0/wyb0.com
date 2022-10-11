@@ -82,121 +82,117 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/tools">tools</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-代码如下">0x00 代码如下</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import threading
-import requests
-import json
-from time import sleep
-
-class Sqli(threading.Thread):
-    &quot;&quot;&quot;docstring for AutoSqli&quot;&quot;&quot;
-    def __init__(self, server, target, data='', referer='', cookie=''):
-        threading.Thread.__init__(self)
-        self.server = server[0:-1] if server[-1]=='/' else server
-        self.target = target
-        self.data = data
-        self.referer = referer
-        self.cookie = cookie
-        self.taskid = ''
-        self.data
-
-    def new_task(self):
-        url = &quot;{}/task/new&quot;.format(self.server)
-        self.taskid = json.loads(requests.get(url).text)['taskid']
-        if len(self.taskid)&gt;0:
-            print &quot;Create new task,taskid is: %s&quot; % self.taskid
-            return True
-        return False
-
-    def set_option(self):
-        headers = {'Content-Type': 'application/json'}
-        option = {&quot;options&quot;: {
-                    &quot;smart&quot;: True,
-                    }
-                 }
-        url = &quot;{}/option/{}/set&quot;.format(self.server,self.taskid)
-        resp = requests.post(url, data=json.dumps(option), headers=headers)
-        return json.loads(resp.text)['success']
-
-    def start_scan(self):
-        headers = {'Content-Type': 'application/json'}
-        payload = {
-            'url': self.target,
-            'data': self.data,
-            'cookie': self.cookie,
-            'referer': self.referer
-        }
-        url = &quot;{}/scan/{}/start&quot;.format(self.server,self.taskid)
-        t = json.loads(requests.post(url,data=json.dumps(payload),headers=headers).text)
-        if len(str(t['engineid'])) &gt; 0 and t['success']:
-            print &quot;[%s] Start scan&quot; % self.taskid
-            return True
-        return False
-
-    def get_status(self):
-        url = &quot;{}/scan/{}/status&quot;.format(self.server,self.taskid)
-        status = json.loads(requests.get(url).text)['status']
-        if status == 'running':
-            return 'running'
-        elif status == 'terminated':
-            return 'terminated'
-        else:
-            return 'error'
-
-    def get_data(self):
-        url = &quot;{}/scan/{}/data&quot;.format(self.server,self.taskid)
-        data = json.loads(requests.get(url).text)['data']
-        if len(data) == 0:
-            print '[] not injection:\t' + self.target
-        else:
-            print '=======&gt; injection:\t' + self.target
-            self.data = data
-
-    def delete_task(self):
-        url = &quot;{}/task/{}/delete&quot;.format(self.server,self.taskid)
-        if json.loads(requests.get(url).text)['success']:
-            print &quot;[%s] Delete task&quot; % self.taskid
-            return True
-        return False
-
-    def write_to_file(self,msg):
-        with open('result.txt','a+') as f:
-            f.write(json.dumps(msg)+'\n\n')
-
-    def run(self):
-        try:
-            if not self.new_task():
-                return False
-            self.set_option()
-            if not self.start_scan():
-                return False
-            while True:
-                if self.get_status() == 'running':
-                    sleep(10)
-                elif self.get_status() == 'terminated':
-                    break
-                else:
-                    break
-            self.get_data()
-            self.write_to_file(self.data)
-            self.delete_task()
-        except Exception, e:
-            print e
-
-if __name__ == '__main__':
-    server = 'http://127.0.0.1:8775'
-    target = 'http://192.168.188.134/sqli/Less-1/?id=1'
-    sqli = Sqli(server, target)
-    sqli.start()
-    sqli.join()
-</code></pre>
-</div>
+      <div><h3 id="0x00-代码如下">0x00 代码如下</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> threading
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> time <span style="color:#f92672">import</span> sleep
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Sqli</span>(threading<span style="color:#f92672">.</span>Thread):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;docstring for AutoSqli&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, server, target, data<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>, referer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>, cookie<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>):
+</span></span><span style="display:flex;"><span>        threading<span style="color:#f92672">.</span>Thread<span style="color:#f92672">.</span>__init__(self)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>server <span style="color:#f92672">=</span> server[<span style="color:#ae81ff">0</span>:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">if</span> server[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;/&#39;</span> <span style="color:#66d9ef">else</span> server
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>target <span style="color:#f92672">=</span> target
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>data <span style="color:#f92672">=</span> data
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>referer <span style="color:#f92672">=</span> referer
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>cookie <span style="color:#f92672">=</span> cookie
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>taskid <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">new_task</span>(self):
+</span></span><span style="display:flex;"><span>        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/task/new&#34;</span><span style="color:#f92672">.</span>format(self<span style="color:#f92672">.</span>server)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>taskid <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(requests<span style="color:#f92672">.</span>get(url)<span style="color:#f92672">.</span>text)[<span style="color:#e6db74">&#39;taskid&#39;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(self<span style="color:#f92672">.</span>taskid)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;Create new task,taskid is: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> self<span style="color:#f92672">.</span>taskid
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_option</span>(self):
+</span></span><span style="display:flex;"><span>        headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>}
+</span></span><span style="display:flex;"><span>        option <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;options&#34;</span>: {
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;smart&#34;</span>: <span style="color:#66d9ef">True</span>,
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                 }
+</span></span><span style="display:flex;"><span>        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/option/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/set&#34;</span><span style="color:#f92672">.</span>format(self<span style="color:#f92672">.</span>server,self<span style="color:#f92672">.</span>taskid)
+</span></span><span style="display:flex;"><span>        resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url, data<span style="color:#f92672">=</span>json<span style="color:#f92672">.</span>dumps(option), headers<span style="color:#f92672">=</span>headers)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> json<span style="color:#f92672">.</span>loads(resp<span style="color:#f92672">.</span>text)[<span style="color:#e6db74">&#39;success&#39;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">start_scan</span>(self):
+</span></span><span style="display:flex;"><span>        headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>}
+</span></span><span style="display:flex;"><span>        payload <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;url&#39;</span>: self<span style="color:#f92672">.</span>target,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;data&#39;</span>: self<span style="color:#f92672">.</span>data,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;cookie&#39;</span>: self<span style="color:#f92672">.</span>cookie,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;referer&#39;</span>: self<span style="color:#f92672">.</span>referer
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/scan/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/start&#34;</span><span style="color:#f92672">.</span>format(self<span style="color:#f92672">.</span>server,self<span style="color:#f92672">.</span>taskid)
+</span></span><span style="display:flex;"><span>        t <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(requests<span style="color:#f92672">.</span>post(url,data<span style="color:#f92672">=</span>json<span style="color:#f92672">.</span>dumps(payload),headers<span style="color:#f92672">=</span>headers)<span style="color:#f92672">.</span>text)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(str(t[<span style="color:#e6db74">&#39;engineid&#39;</span>])) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">and</span> t[<span style="color:#e6db74">&#39;success&#39;</span>]:
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">] Start scan&#34;</span> <span style="color:#f92672">%</span> self<span style="color:#f92672">.</span>taskid
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_status</span>(self):
+</span></span><span style="display:flex;"><span>        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/scan/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/status&#34;</span><span style="color:#f92672">.</span>format(self<span style="color:#f92672">.</span>server,self<span style="color:#f92672">.</span>taskid)
+</span></span><span style="display:flex;"><span>        status <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(requests<span style="color:#f92672">.</span>get(url)<span style="color:#f92672">.</span>text)[<span style="color:#e6db74">&#39;status&#39;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> status <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;running&#39;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;running&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> status <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;terminated&#39;</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;terminated&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;error&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_data</span>(self):
+</span></span><span style="display:flex;"><span>        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/scan/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/data&#34;</span><span style="color:#f92672">.</span>format(self<span style="color:#f92672">.</span>server,self<span style="color:#f92672">.</span>taskid)
+</span></span><span style="display:flex;"><span>        data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(requests<span style="color:#f92672">.</span>get(url)<span style="color:#f92672">.</span>text)[<span style="color:#e6db74">&#39;data&#39;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(data) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#39;[] not injection:</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>target
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#39;=======&gt; injection:</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>target
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>data <span style="color:#f92672">=</span> data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">delete_task</span>(self):
+</span></span><span style="display:flex;"><span>        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/task/</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">/delete&#34;</span><span style="color:#f92672">.</span>format(self<span style="color:#f92672">.</span>server,self<span style="color:#f92672">.</span>taskid)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> json<span style="color:#f92672">.</span>loads(requests<span style="color:#f92672">.</span>get(url)<span style="color:#f92672">.</span>text)[<span style="color:#e6db74">&#39;success&#39;</span>]:
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">] Delete task&#34;</span> <span style="color:#f92672">%</span> self<span style="color:#f92672">.</span>taskid
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write_to_file</span>(self,msg):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;result.txt&#39;</span>,<span style="color:#e6db74">&#39;a+&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            f<span style="color:#f92672">.</span>write(json<span style="color:#f92672">.</span>dumps(msg)<span style="color:#f92672">+</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>new_task():
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>set_option()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>start_scan():
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>get_status() <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;running&#39;</span>:
+</span></span><span style="display:flex;"><span>                    sleep(<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">elif</span> self<span style="color:#f92672">.</span>get_status() <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;terminated&#39;</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>get_data()
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>write_to_file(self<span style="color:#f92672">.</span>data)
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>delete_task()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span>, e:
+</span></span><span style="display:flex;"><span>            print e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://127.0.0.1:8775&#39;</span>
+</span></span><span style="display:flex;"><span>    target <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://192.168.188.134/sqli/Less-1/?id=1&#39;</span>
+</span></span><span style="display:flex;"><span>    sqli <span style="color:#f92672">=</span> Sqli(server, target)
+</span></span><span style="display:flex;"><span>    sqli<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>    sqli<span style="color:#f92672">.</span>join()
+</span></span></code></pre></div></div>
     </article>
   </main>
 

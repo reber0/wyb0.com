@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Reber&#39;s Blog</title>
@@ -6,11 +6,7 @@
     <description>Recent content on Reber&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 30 Mar 2022 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://wyb0.com/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 30 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://wyb0.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>JNDI 注入</title>
       <link>https://wyb0.com/posts/2022/jndi/</link>
@@ -57,6 +53,15 @@
     </item>
     
     <item>
+      <title>获取 NTLM Hash</title>
+      <link>https://wyb0.com/posts/2020/get-hash/</link>
+      <pubDate>Tue, 08 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wyb0.com/posts/2020/get-hash/</guid>
+      <description>0x01 通过 sam 文件获取 通过 mimikatz 转储 sam 文件得到 hash(cmd 需要管理员权限) mimikatz.exe log &amp;#34;privilege::debug&amp;#34; &amp;#34;token::elevate&amp;#34; &amp;#34;lsadump::sam&amp;#34; exit 通过 reg save 导出 sam 文件(2003 之后可以使用)(导 hiv 文件 cmd</description>
+    </item>
+    
+    <item>
       <title>记一次 SQL 注入简单 bypass</title>
       <link>https://wyb0.com/posts/2020/recording-a-injection-bypass/</link>
       <pubDate>Mon, 22 Jun 2020 17:35:07 +0000</pubDate>
@@ -80,7 +85,7 @@
       <pubDate>Fri, 23 Aug 2019 16:27:12 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2019/postgresql-basis-use/</guid>
-      <description>0x00 安装 ➜ brew install postgresql ➜ echo &#39;export PATH=&amp;quot;/usr/local/Cellar/postgresql/11.4/bin:$PATH&amp;quot;&#39; &amp;gt;&amp;gt; ~/.zshrc ➜ source ~/.zshrc -- 初始化数据库 ➜ initdb /usr/local/var/postgres ➜ pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start 0x01 简单操作 常用操作命令 reber=# \password #设置当前登录用户的密码 reber=# \password</description>
+      <description>0x00 安装 ➜ brew install postgresql ➜ echo &amp;#39;export PATH=&amp;#34;/usr/local/Cellar/postgresql/11.4/bin:$PATH&amp;#34;&amp;#39; &amp;gt;&amp;gt; ~/.zshrc ➜ source ~/.zshrc -- 初始化数据库 ➜ initdb /usr/local/var/postgres ➜ pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start 0x01 简单操作 常用操作命令 reber=# \password #设置当前登录用户的密码 reber=# \password</description>
     </item>
     
     <item>
@@ -197,7 +202,7 @@
       <pubDate>Wed, 14 Nov 2018 10:36:38 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2018/recording-an-xss-in-pentest/</guid>
-      <description>$(document).ready(function(){ window.location.href=&#39;https://wyb0.com/404.html&#39;; }); ``` ![80](/img/post/20181114-121432.png) 当用户yxk浏览用户申请列表页面时触发XSS ![80](/img/post/20181114-121938.png) 回到reber用户，可以看到已经加入了yxk的组织，可以进行一些</description>
+      <description></description>
     </item>
     
     <item>
@@ -242,7 +247,7 @@
       <pubDate>Wed, 23 May 2018 11:14:51 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2018/injection-tips-of-mysql/</guid>
-      <description>环境：MySQL 5.5.47 0x00 注入点在Order by后面 mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by id into outfile &#39;C:\\Apps\\phpStudy\\WWW\\a.txt&#39;; Query OK, 1 row affected (0.01 sec) mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1);</description>
+      <description>环境：MySQL 5.5.47 0x00 注入点在Order by后面 mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by id into outfile &amp;#39;C:\\Apps\\phpStudy\\WWW\\a.txt&amp;#39;; Query OK, 1 row affected (0.01 sec) mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1);</description>
     </item>
     
     <item>
@@ -296,7 +301,7 @@
       <pubDate>Mon, 08 Jan 2018 22:02:07 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2018/package-and-download-the-php-file/</guid>
-      <description>0x00 代码如下 &amp;lt;?php function addFileToZip($zip,$zipname,$path){ $handler = opendir($path); while(($filename = readdir($handler))!==false) { if($filename != &amp;quot;.&amp;quot; &amp;amp;&amp;amp; $filename != &amp;quot;..&amp;quot; &amp;amp;&amp;amp; $filename!= $zipname){ if (is_dir($path.&amp;quot;/&amp;quot;.$filename)) { //如果读取的某个对象是文件夹，则递归 addFileToZip($zip,$zipname,$path.&amp;quot;/&amp;quot;.$filename); } else { $zip-&amp;gt;addFile($path.&amp;quot;/&amp;quot;.$filename); } } } @closedir($path); } function tar($zipname,$path) {</description>
+      <description>0x00 代码如下 &amp;lt;?php function addFileToZip($zip,$zipname,$path){ $handler = opendir($path); while(($filename = readdir($handler))!==false) { if($filename != &amp;#34;.&amp;#34; &amp;amp;&amp;amp; $filename != &amp;#34;..&amp;#34; &amp;amp;&amp;amp; $filename!= $zipname){ if (is_dir($path.&amp;#34;/&amp;#34;.$filename)) { //如果读取的某个对象是文件夹，则递归 addFileToZip($zip,$zipname,$path.&amp;#34;/&amp;#34;.$filename); } else { $zip-&amp;gt;addFile($path.&amp;#34;/&amp;#34;.$filename); } } } @closedir($path); } function tar($zipname,$path) {</description>
     </item>
     
     <item>
@@ -413,7 +418,7 @@
       <pubDate>Tue, 30 May 2017 13:16:18 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2017/sqlserver-stored-procedure/</guid>
-      <description>0x00 数据表结构 CREATE DATABASE student; CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT &#39;xiaoming&#39;, sex INT NOT NULL DEFAULT 1, age INT NOT NULL DEFAULT 0, hight INT NOT NULL DEFAULT 0 ) INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaohong&#39;,0,23,165); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaogang&#39;,1,24,175); INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoliu&#39;,1,21,160); INSERT INTO info(name,sex,age,hight)</description>
+      <description>0x00 数据表结构 CREATE DATABASE student; CREATE TABLE info ( id INT IDENTITY(1,1) PRIMARY KEY NOT NULL, name VARCHAR(20) NOT NULL DEFAULT &amp;#39;xiaoming&amp;#39;, sex INT NOT NULL DEFAULT 1, age INT NOT NULL DEFAULT 0, hight INT NOT NULL DEFAULT 0 ) INSERT INTO info(name,sex,age,hight) VALUES(&amp;#39;xiaohong&amp;#39;,0,23,165); INSERT INTO info(name,sex,age,hight) VALUES(&amp;#39;xiaogang&amp;#39;,1,24,175); INSERT INTO info(name,sex,age,hight) VALUES(&amp;#39;xiaoliu&amp;#39;,1,21,160); INSERT INTO info(name,sex,age,hight)</description>
     </item>
     
     <item>
@@ -440,7 +445,7 @@
       <pubDate>Fri, 19 May 2017 16:51:11 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2017/mac-basic-use/</guid>
-      <description>macOS Sierra 10.12.6 0x00 安装brew $ /usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot; 0x01 安装wget $ brew install wget 0x02 安装oh-my-zsh $ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh $ cat /etc/shells #查看当前有什么she</description>
+      <description>macOS Sierra 10.12.6 0x00 安装brew $ /usr/bin/ruby -e &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;#34; 0x01 安装wget $ brew install wget 0x02 安装oh-my-zsh $ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh $ cat /etc/shells #查看当前有什么she</description>
     </item>
     
     <item>
@@ -476,7 +481,7 @@
       <pubDate>Fri, 10 Mar 2017 10:34:40 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2017/vps-set-up-shadowsocks/</guid>
-      <description>0x01 安装与配置 环境：Ubuntu 14.04.1 LTS reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &amp;quot;server&amp;quot;:</description>
+      <description>0x01 安装与配置 环境：Ubuntu 14.04.1 LTS reber@localhost:~$ sudo apt-get update reber@localhost:~$ python --version Python 2.7.6 reber@localhost:~$ sudo apt-get install python-gevent python-pip reber@localhost:~$ sudo pip install shadowsocks reber@localhost:~$ vim /home/reber/shadowsocks.json { &amp;#34;server&amp;#34;:&amp;#</description>
     </item>
     
     <item>
@@ -503,7 +508,7 @@
       <pubDate>Mon, 16 Jan 2017 20:18:05 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2017/ubuntu-set-up-gitlab/</guid>
-      <description>0x00 前期准备 # 环境 Ubuntu 14.04 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client reber@ubuntu:~/Desktop$ sudo apt-get install git 0x01 安装 reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb 0x02 配置 reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb external_url &#39;http://192.168.188.160:80&#39; ...... gitlab_rails[&#39;time_zone&#39;] = &#39;Asia/Shanghai&#39; gitlab_rails[&#39;gitlab_email_from&#39;] = &#39;xxxxxx@163.com&#39; ...... gitlab_rails[&#39;smtp_enable&#39;] = true gitlab_rails[&#39;smtp_address&#39;] = &amp;quot;smtp.163.com&amp;quot; gitlab_rails[&#39;smtp_port&#39;]</description>
+      <description>0x00 前期准备 # 环境 Ubuntu 14.04 reber@ubuntu:~/Desktop$ sudo apt-get install openssh-server reber@ubuntu:~/Desktop$ sudo apt-get install openssh-client reber@ubuntu:~/Desktop$ sudo apt-get install git 0x01 安装 reber@ubuntu:~/Desktop$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/ubuntu/pool/trusty/main/g/gitlab-ce/gitlab-ce_8.8.0-ce.0_amd64.deb reber@ubuntu:~/Desktop$ sudo dpkg -i gitlab-ce_8.8.0-ce.0_amd64.deb 0x02 配置 reber@ubuntu:~/Desktop$ sudo vim /etc/gitlab/gitlab.rb external_url &amp;#39;http://192.168.188.160:80&amp;#39; ...... gitlab_rails[&amp;#39;time_zone&amp;#39;] = &amp;#39;Asia/Shanghai&amp;#39; gitlab_rails[&amp;#39;gitlab_email_from&amp;#39;] = &amp;#39;xxxxxx@163.com&amp;#39; ...... gitlab_rails[&amp;#39;smtp_enable&amp;#39;] = true gitlab_rails[&amp;#39;smtp_address&amp;#39;] = &amp;#34;smtp.163.com&amp;#34; gitlab_rails[&amp;#39;smtp_port&amp;#39;]</description>
     </item>
     
     <item>
@@ -530,16 +535,7 @@
       <pubDate>Wed, 16 Nov 2016 10:37:03 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/ajax-and-php/</guid>
-      <description>0x00 AJAX与PHP ajax.html代码如下： &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt; &amp;lt;script&amp;gt; function showHint(str) { var xmlhttp; if (str.length==0) { document.getElementById(&amp;quot;txtHint&amp;quot;).innerHTML=&amp;quot;&amp;quot;; return; } if (window.XMLHttpRequest) { // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码 xmlhttp=new XMLHttpRequest(); /</description>
-    </item>
-    
-    <item>
-      <title>Nessus 的安装和卸载</title>
-      <link>https://wyb0.com/posts/2016/nessus-install-and-remove/</link>
-      <pubDate>Sun, 13 Nov 2016 11:59:26 +0000</pubDate>
-      
-      <guid>https://wyb0.com/posts/2016/nessus-install-and-remove/</guid>
-      <description>0x00 下载 Nessus 的 deb 安装包 去【这里】，选择家庭版，然后下载对应的安装包 0x01 本地安装 Nessus 0x02 执行后续安装步骤: 启动nessus web访问</description>
+      <description>0x00 AJAX与PHP ajax.html代码如下： &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;utf-8&amp;#34;&amp;gt; &amp;lt;script&amp;gt; function showHint(str) { var xmlhttp; if (str.length==0) { document.getElementById(&amp;#34;txtHint&amp;#34;).innerHTML=&amp;#34;&amp;#34;; return; } if (window.XMLHttpRequest) { // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码 xmlhttp=new XMLHttpRequest(); /</description>
     </item>
     
     <item>
@@ -549,6 +545,15 @@
       
       <guid>https://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/</guid>
       <description>原文链接：http://drops.wooyun.org/tips/14312 0x00 疑问 一直在用mysql数据库报错注入方法</description>
+    </item>
+    
+    <item>
+      <title>Nessus 的安装和卸载</title>
+      <link>https://wyb0.com/posts/2016/nessus-install-and-remove/</link>
+      <pubDate>Sun, 13 Nov 2016 11:59:26 +0000</pubDate>
+      
+      <guid>https://wyb0.com/posts/2016/nessus-install-and-remove/</guid>
+      <description>0x00 下载 Nessus 的 deb 安装包 去【这里】，选择家庭版，然后下载对应的安装包 0x01 本地安装 Nessus 0x02 执行后续安装步骤: 启动nessus web访问</description>
     </item>
     
     <item>
@@ -593,7 +598,7 @@
       <pubDate>Wed, 21 Sep 2016 17:37:33 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/package-sqlmapapi-common-function/</guid>
-      <description>0x00 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import threading import requests import json from time import sleep class Sqli(threading.Thread): &amp;quot;&amp;quot;&amp;quot;docstring for AutoSqli&amp;quot;&amp;quot;&amp;quot; def __init__(self, server, target, data=&#39;&#39;, referer=&#39;&#39;, cookie=&#39;&#39;): threading.Thread.__init__(self) self.server = server[0:-1] if server[-1]==&#39;/&#39; else server self.target = target self.data = data self.referer = referer self.cookie = cookie self.taskid = &#39;&#39; self.data def new_task(self):</description>
+      <description>0x00 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- import threading import requests import json from time import sleep class Sqli(threading.Thread): &amp;#34;&amp;#34;&amp;#34;docstring for AutoSqli&amp;#34;&amp;#34;&amp;#34; def __init__(self, server, target, data=&amp;#39;&amp;#39;, referer=&amp;#39;&amp;#39;, cookie=&amp;#39;&amp;#39;): threading.Thread.__init__(self) self.server = server[0:-1] if server[-1]==&amp;#39;/&amp;#39; else server self.target = target self.data = data self.referer = referer self.cookie = cookie self.taskid = &amp;#39;&amp;#39; self.data def new_task(self):</description>
     </item>
     
     <item>
@@ -602,7 +607,7 @@
       <pubDate>Tue, 20 Sep 2016 14:50:59 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/python-blasting-zip-archive/</guid>
-      <description>0x00 代码 多线程爆破加密的zip压缩包 #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import optparse import zipfile import threading import Queue queue = Queue.Queue() lock = threading.Lock() result = &#39;&#39; def load_pwd(filename): for line in open(filename,&#39;r&#39;): if line: queue.put(line.strip()) def bruter(zipname,queue): global result zFile = zipfile.ZipFile(zipname) while</description>
+      <description>0x00 代码 多线程爆破加密的zip压缩包 #!/usr/bin/env python # -*- coding: utf-8 -*- import sys import optparse import zipfile import threading import Queue queue = Queue.Queue() lock = threading.Lock() result = &amp;#39;&amp;#39; def load_pwd(filename): for line in open(filename,&amp;#39;r&amp;#39;): if line: queue.put(line.strip()) def bruter(zipname,queue): global result zFile = zipfile.ZipFile(zipname) while</description>
     </item>
     
     <item>
@@ -611,7 +616,7 @@
       <pubDate>Tue, 13 Sep 2016 11:36:39 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/python-implement-agent/</guid>
-      <description>0x00 帮助信息 0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- &#39;This is a proxy&#39; __author__ = &#39;xxx&#39; import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#</description>
+      <description>0x00 帮助信息 0x01 代码如下 #!/usr/bin/env python # -*- coding: utf-8 -*- &amp;#39;This is a proxy&amp;#39; __author__ = &amp;#39;xxx&amp;#39; import sys import socket import threading import optparse lock = threading.Lock() def locker(msg): lock.acquire() print msg lock.release() def hexdump (src,length=16):#</description>
     </item>
     
     <item>
@@ -683,7 +688,7 @@
       <pubDate>Fri, 26 Aug 2016 17:53:51 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/python-multi-threaded-weak-password-blasting/</guid>
-      <description>0x00 脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- &#39;this script can bruter ftp/ssh/mysql&#39; __author__ = &#39;reber&#39; import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类</description>
+      <description>0x00 脚本 #!/usr/bin/env python # -*- coding: utf-8 -*- &amp;#39;this script can bruter ftp/ssh/mysql&amp;#39; __author__ = &amp;#39;reber&amp;#39; import Queue import threading import time import logging import socket from optparse import OptionParser import paramiko from ftplib import FTP import MySQLdb #################公有类</description>
     </item>
     
     <item>
@@ -710,7 +715,7 @@
       <pubDate>Tue, 16 Aug 2016 15:10:44 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/python-parames-parse/</guid>
-      <description>0x00 argparse 模块 参考 https://docs.python.org/zh-cn/3.7/library/argparse.html #!/usr/bin/env python # -*- coding: utf-8 -*- import argparse class Parser(object): &amp;quot;&amp;quot;&amp;quot;Parser&amp;quot;&amp;quot;&amp;quot; def __init__(self): super(Parser, self).__init__() self.service_type_list = [ &amp;quot;ssh&amp;quot;,&amp;quot;telnet&amp;quot;,&amp;quot;ftp&amp;quot;, &amp;quot;mysql&amp;quot;,&amp;quot;mssql&amp;quot;,&amp;quot;oracle&amp;quot;,&amp;quot;pgsql&amp;quot;,&amp;quot;redis&amp;quot; ] self.log_level = [&amp;quot;debug&amp;quot;, &amp;quot;info&amp;quot;, &amp;quot;warning&amp;quot;, &amp;quot;error&amp;quot;, &amp;quot;critical&amp;quot;] self.example = &amp;quot;&amp;quot;&amp;quot;Example: \r python3 {} -s ssh -i 123.123.123.123 \r python3 {} -s ssh -i 123.123.123.123/24 -l root -p 123456&amp;quot;&amp;quot;&amp;quot; def parser(self): parser</description>
+      <description>0x00 argparse 模块 参考 https://docs.python.org/zh-cn/3.7/library/argparse.html #!/usr/bin/env python # -*- coding: utf-8 -*- import argparse class Parser(object): &amp;#34;&amp;#34;&amp;#34;Parser&amp;#34;&amp;#34;&amp;#34; def __init__(self): super(Parser, self).__init__() self.service_type_list = [ &amp;#34;ssh&amp;#34;,&amp;#34;telnet&amp;#34;,&amp;#34;ftp&amp;#34;, &amp;#34;mysql&amp;#34;,&amp;#34;mssql&amp;#34;,&amp;#34;oracle&amp;#34;,&amp;#34;pgsql&amp;#34;,&amp;#34;redis&amp;#34; ] self.log_level = [&amp;#34;debug&amp;#34;, &amp;#34;info&amp;#34;, &amp;#34;warning&amp;#34;, &amp;#34;error&amp;#34;, &amp;#34;critical&amp;#34;] self.example = &amp;#34;&amp;#34;&amp;#34;Example: \r python3 {} -s ssh -i 123.123.123.123 \r python3 {} -s ssh -i 123.123.123.123/24 -l root -p 123456&amp;#34;&amp;#34;&amp;#34; def parser(self): parser</description>
     </item>
     
     <item>
@@ -1061,7 +1066,7 @@
       <pubDate>Wed, 29 Jun 2016 15:14:11 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/python-encode-setting/</guid>
-      <description>0x00 几个编码函数 * ord(x) 将字符转换为10进制整数(0~255之间) #ord(&#39;a&#39;)==&amp;gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(9</description>
+      <description>0x00 几个编码函数 * ord(x) 将字符转换为10进制整数(0~255之间) #ord(&amp;#39;a&amp;#39;)==&amp;gt;97 * chr(x) 将10进制整数(0~255之间)转换为字符 #chr(9</description>
     </item>
     
     <item>
@@ -1115,7 +1120,7 @@
       <pubDate>Thu, 23 Jun 2016 23:32:34 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/injection-of-boolian-based/</guid>
-      <description>0x00 特点 当页面存在注入，但是没有显示位，且没有用echo &amp;quot;mysql_error()&amp;quot;输出错误信息时可</description>
+      <description>0x00 特点 当页面存在注入，但是没有显示位，且没有用echo &amp;#34;mysql_error()&amp;#34;输出错误信息时可以用</description>
     </item>
     
     <item>
@@ -1142,7 +1147,7 @@
       <pubDate>Mon, 20 Jun 2016 08:10:27 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/injection-of-mysql-function/</guid>
-      <description>0x00 load_file() 读文件 条件: 1. 要有file_priv权限: show global variables like &#39;%secure%&#39;; 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若</description>
+      <description>0x00 load_file() 读文件 条件: 1. 要有file_priv权限: show global variables like &amp;#39;%secure%&amp;#39;; 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若</description>
     </item>
     
     <item>
@@ -1196,7 +1201,7 @@
       <pubDate>Fri, 17 Jun 2016 22:41:50 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/linux-set-up-nginx-mysql-php/</guid>
-      <description>安装环境为：CentOS-6.5-x86_64-minimal 0x00 准备工作 首先执行： sudo yum groupinstall &amp;quot;Development tools&amp;quot; 安装make： yum -y install gcc automake autoconf libtool</description>
+      <description>安装环境为：CentOS-6.5-x86_64-minimal 0x00 准备工作 首先执行： sudo yum groupinstall &amp;#34;Development tools&amp;#34; 安装make： yum -y install gcc automake autoconf libtool</description>
     </item>
     
     <item>
@@ -1232,7 +1237,7 @@
       <pubDate>Sat, 04 Jun 2016 20:03:10 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/rgb-color-look-up-table/</guid>
-      <description>RGB RGB颜色对照表 #FFFFFF #FFFFF0 #FFFFE0 #FFFF00 #FFFAFA #FFFAF0 #FFFACD #FFF8DC #FFF68F #FFF5EE #FFF0F5 #FFEFDB #FFEFD5 #FFEC8B #FFEBCD #FFE7BA #FFE4E1 #FFE4C4 #FFE4B5 #FFE1FF #FFDEAD #FFDAB9 #FFD700 #FFD39B #FFC1C1 #FFC125 #FFC0CB #FFBBFF #FFB90F #FFB6C1 #FFB5C5 #FFAEB9 #FFA54F #FFA500 #FFA07A #FF8C69 #FF8C00 #FF83FA #FF82AB #FF8247 #FF7F50 #FF7F24 #FF7F00 #FF7256 #FF6EB4 #FF6A6A #FF69B4 #FF6347 #FF4500 #FF4040 #FF3E96</description>
+      <description></description>
     </item>
     
     <item>
@@ -1241,7 +1246,7 @@
       <pubDate>Fri, 03 Jun 2016 11:19:05 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/php-package-mysql-function/</guid>
-      <description>0x00 config.inc.php内容如下 &amp;lt;?php return array( &#39;DB_HOST&#39; =&amp;gt; &#39;192.168.188.134&#39;, &#39;DB_NAME&#39; =&amp;gt; &#39;scoreboard&#39;, &#39;DB_USER&#39; =&amp;gt; &#39;score&#39;, &#39;DB_PASS&#39; =&amp;gt; &#39;123456&#39;, &#39;DB_CHARSET&#39; =&amp;gt; &#39;utf8&#39;, &#39;IS_LOG&#39; =&amp;gt; 1,//开启日志 &#39;LOGFILEPATH&#39; =&amp;gt; &#39;../log.txt</description>
+      <description>0x00 config.inc.php内容如下 &amp;lt;?php return array( &amp;#39;DB_HOST&amp;#39; =&amp;gt; &amp;#39;192.168.188.134&amp;#39;, &amp;#39;DB_NAME&amp;#39; =&amp;gt; &amp;#39;scoreboard&amp;#39;, &amp;#39;DB_USER&amp;#39; =&amp;gt; &amp;#39;score&amp;#39;, &amp;#39;DB_PASS&amp;#39; =&amp;gt; &amp;#39;123456&amp;#39;, &amp;#39;DB_CHARSET&amp;#39; =&amp;gt; &amp;#39;utf8&amp;#39;, &amp;#39;IS_LOG&amp;#39; =&amp;gt; 1,//开启日志 &amp;#39;LOGFILEPATH&amp;#39; =&amp;gt; &amp;#39;../log</description>
     </item>
     
     <item>
@@ -1286,7 +1291,7 @@
       <pubDate>Sun, 22 May 2016 16:29:47 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/php-directory-and-file/</guid>
-      <description>0x00 目录的操作 &amp;lt;?php $path = &amp;quot;/var/www/html/php/dir.php&amp;quot;; echo dirname($path).&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;; //返回上级路径 echo basename($path).&amp;quot;&amp;lt;br /&amp;gt;&amp;quot;; //返回文件名部分 print_r(pathinfo($path)); //返回包含path信息的数组 echo &amp;quot;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;quot;; //readd</description>
+      <description>0x00 目录的操作 &amp;lt;?php $path = &amp;#34;/var/www/html/php/dir.php&amp;#34;; echo dirname($path).&amp;#34;&amp;lt;br /&amp;gt;&amp;#34;; //返回上级路径 echo basename($path).&amp;#34;&amp;lt;br /&amp;gt;&amp;#34;; //返回文件名部分 print_r(pathinfo($path)); //返回包含path信息的数组 echo &amp;#34;&amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;&amp;#34;; //readd</description>
     </item>
     
     <item>
@@ -1349,7 +1354,7 @@
       <pubDate>Mon, 09 May 2016 23:33:12 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/ubuntu-push-blog-to-github/</guid>
-      <description>环境：Ubuntu 14.4 0x00 添加密钥 ➜ ssh-keygen -t rsa -b 2048 -C &amp;quot;123456@qq.com&amp;quot; -f id_rsa_github # 生成密钥 ➜ cd ~/.ssh/ ➜ cat id_rsa_github.pub # 将公钥添加到 github ➜ git config --global user.name &amp;quot;reber&amp;quot; # 配置本地用户 ➜ git config</description>
+      <description>环境：Ubuntu 14.4 0x00 添加密钥 ➜ ssh-keygen -t rsa -b 2048 -C &amp;#34;123456@qq.com&amp;#34; -f id_rsa_github # 生成密钥 ➜ cd ~/.ssh/ ➜ cat id_rsa_github.pub # 将公钥添加到 github ➜ git config --global user.name &amp;#34;reber&amp;#34; # 配置本地用户 ➜ git config</description>
     </item>
     
     <item>
@@ -1376,7 +1381,7 @@
       <pubDate>Thu, 05 May 2016 00:00:00 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/git-usage/</guid>
-      <description>0x00 仓库 创建仓库 git init 克隆 git clone git@github.com:reber0/wyb0.com.git 添加远程仓库连接 git remote add origin git@github.com:reber/reber.com.git 删除远程仓库信息 git remote rm origin 0x01 添加 SSH key 生成 key ➜ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C &amp;quot;123456@qq.com&amp;quot; 将 ~/.ssh/ 下</description>
+      <description>0x00 仓库 创建仓库 git init 克隆 git clone git@github.com:reber0/wyb0.com.git 添加远程仓库连接 git remote add origin git@github.com:reber/reber.com.git 删除远程仓库信息 git remote rm origin 0x01 添加 SSH key 生成 key ➜ ssh-keygen -t rsa -b 2048 -f id_rsa_github -C &amp;#34;123456@qq.com&amp;#34; 将 ~/.ssh/ 下</description>
     </item>
     
     <item>
@@ -1430,7 +1435,7 @@
       <pubDate>Tue, 19 Apr 2016 00:00:00 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/linux-install-ettercap/</guid>
-      <description>0x00 准备 操作系统：CentOS 首先，ettercap 安装时需要 4 个依赖包，而且安装包里面也已经提供了 执行：sudo yum groupinstall &amp;quot;Development tools&amp;quot;</description>
+      <description>0x00 准备 操作系统：CentOS 首先，ettercap 安装时需要 4 个依赖包，而且安装包里面也已经提供了 执行：sudo yum groupinstall &amp;#34;Development tools&amp;#34;</description>
     </item>
     
     <item>
@@ -1457,7 +1462,7 @@
       <pubDate>Sun, 17 Apr 2016 15:49:07 +0000</pubDate>
       
       <guid>https://wyb0.com/posts/2016/short/</guid>
-      <description>短 俄罗斯某诗人 一天很短 短得来不及拥抱清晨 就已经手握黄昏 一年很短 短得来不及细品初春殷红窦绿 就要打点素裹秋霜 一生很短 短的来不</description>
+      <description></description>
     </item>
     
     <item>

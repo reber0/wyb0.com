@@ -82,16 +82,12 @@
     [<a href="/categories/Linux">Linux</a>](<a href="/tags/linux">linux</a>,<a href="/tags/software">software</a>)
 </div>
 
-      <div>
-
-<p>awk默认是以行为单位处理文本的，对文本中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。</p>
-
+      <div><p>awk默认是以行为单位处理文本的，对文本中的每一行都执行后面 &ldquo;{ }&rdquo; 中的语句。</p>
 <h3 id="0x00-awk">0x00 awk</h3>
-
 <ul>
-<li><p>若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：</p>
-
-<pre><code>xiaosan sadasdw jiaozuo
+<li>若有一个需要重新格式化的字典test.txt(用户名、密码、地址)：</li>
+</ul>
+<pre tabindex="0"><code>xiaosan sadasdw jiaozuo
 234wer  asdfasd asdas
 1111    aaaa    cccc
 2222    aaaa    degd
@@ -99,21 +95,16 @@
 3333    aaaa    dfger
 21asd   sdfsd   sadasd
 dwqx    asds    sasdfcv
-</code></pre></li>
-
-<li><p>要求：</p>
-
-<pre><code>1.里面有重复数据，使用命令去重
+</code></pre><ul>
+<li>要求：</li>
+</ul>
+<pre tabindex="0"><code>1.里面有重复数据，使用命令去重
 2.提取出用户名和密码 每一行前面加上id数字，递增。
 3.只提取出密码作为爆破字典
 4.某些公司都是一个公司前缀+姓名简写，所以为用户名一栏全部改为uv_用户名
 5.提取出密码一列，有些密码爆破成功率高，所以增加一列，标出密码出现次数
-</code></pre></li>
-</ul>
-
-<h3 id="0x01-去重">0x01 去重</h3>
-
-<pre><code>$ cat test.txt | awk '!a[$1]++'
+</code></pre><h3 id="0x01-去重">0x01 去重</h3>
+<pre tabindex="0"><code>$ cat test.txt | awk &#39;!a[$1]++&#39;
 $ cat test.txt | uniq #作用和上面命令相同
 xiaosan sadasdw jiaozuo
 234wer  asdfasd asdas
@@ -122,13 +113,10 @@ xiaosan sadasdw jiaozuo
 3333    aaaa    dfger
 21asd   sdfsd   sadasd
 dwqx    asds    sasdfcv
-</code></pre>
+</code></pre><h3 id="0x02-去重添加id">0x02 去重、添加id</h3>
+<pre tabindex="0"><code>一般字典不需要id、user、pass等标示符，这里只是为了便于观看
 
-<h3 id="0x02-去重-添加id">0x02 去重、添加id</h3>
-
-<pre><code>一般字典不需要id、user、pass等标示符，这里只是为了便于观看
-
-$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print &quot;id:&quot;NR&quot;\tuser:&quot;$1&quot;\tpass:&quot;$2&quot;\taddress:&quot;$3}' | column -t  #最后一个命令可以将列对齐
+$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &#34;id:&#34;NR&#34;\tuser:&#34;$1&#34;\tpass:&#34;$2&#34;\taddress:&#34;$3}&#39; | column -t  #最后一个命令可以将列对齐
 id:1    user:aosan      pass:sadasdw    address:jiaozuo
 id:2    user:234wer     pass:asdfasd    address:asdas
 id:3    user:1111       pass:aaaa       address:cccc
@@ -136,11 +124,8 @@ id:4    user:2222       pass:aaaa       address:degd
 id:5    user:3333       pass:aaaa       address:dfger
 id:6    user:21asd      pass:sdfsd      address:sadasd
 id:7    user:dwqx       pass:asds       address:sasdfcv
-</code></pre>
-
-<h3 id="0x03-去重-添加id-添加公司前缀">0x03 去重、添加id、添加公司前缀</h3>
-
-<pre><code>$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print &quot;id:&quot;NR&quot;\tuser:uv_&quot;$1&quot;\tpass:&quot;$2&quot;\taddress:&quot;$3}'
+</code></pre><h3 id="0x03-去重添加id添加公司前缀">0x03 去重、添加id、添加公司前缀</h3>
+<pre tabindex="0"><code>$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &#34;id:&#34;NR&#34;\tuser:uv_&#34;$1&#34;\tpass:&#34;$2&#34;\taddress:&#34;$3}&#39;
 id:1    user:uv_aosan   pass:sadasdw    address:jiaozuo
 id:2    user:uv_234wer  pass:asdfasd    address:asdas
 id:3    user:uv_1111    pass:aaaa       address:cccc
@@ -148,11 +133,8 @@ id:4    user:uv_2222    pass:aaaa       address:degd
 id:5    user:uv_3333    pass:aaaa       address:dfger
 id:6    user:uv_21asd   pass:sdfsd      address:sadasd
 id:7    user:uv_dwqx    pass:asds       address:sasdfcv
-</code></pre>
-
-<h3 id="0x04-去重然后输出密码">0x04 去重然后输出密码</h3>
-
-<pre><code>$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print &quot;pass:&quot;$2}'
+</code></pre><h3 id="0x04-去重然后输出密码">0x04 去重然后输出密码</h3>
+<pre tabindex="0"><code>$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print &#34;pass:&#34;$2}&#39;
 pass:sadasdw
 pass:asdfasd
 pass:aaaa
@@ -160,12 +142,9 @@ pass:aaaa
 pass:aaaa
 pass:sdfsd
 pass:asds
-</code></pre>
-
-<h3 id="0x05-输出密码-得到密码出现次数">0x05 输出密码、得到密码出现次数</h3>
-
-<pre><code>下面的'a[$1]++'是按第一列来去重的,若有两条数据只有第一列重复则成功，可以用$0按行来去重
-$ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print $2}' | awk '{a[$1]++} END {for (j in a) print a[j],j}'
+</code></pre><h3 id="0x05-输出密码得到密码出现次数">0x05 输出密码、得到密码出现次数</h3>
+<pre tabindex="0"><code>下面的&#39;a[$1]++&#39;是按第一列来去重的,若有两条数据只有第一列重复则成功，可以用$0按行来去重
+$ cat test.txt | awk &#39;!a[$1]++&#39; | awk -F &#39;\t&#39; &#39;{print $2}&#39; | awk &#39;{a[$1]++} END {for (j in a) print a[j],j}&#39;
 1 sadasdw
 1 sdfsd
 1 asdfasd
@@ -173,27 +152,25 @@ $ cat test.txt | awk '!a[$1]++' | awk -F '\t' '{print $2}' | awk '{a[$1]++} END 
 3 aaaa
 
 uniq 只能去除挨着的重复数据，所以先sort升序排序，然后uniq -c统计重复，再sort -r降序排序
-cat test.txt | awk '{print $2}' | sed '1d' |sort | uniq -c |sort -r
-</code></pre>
-
-<h3 id="0x06-其他">0x06 其他：</h3>
-
+cat test.txt | awk &#39;{print $2}&#39; | sed &#39;1d&#39; |sort | uniq -c |sort -r
+</code></pre><h3 id="0x06-其他">0x06 其他：</h3>
 <ul>
-<li><p>对!a[$1]++的解释如下：</p>
-
+<li>
+<p>对!a[$1]++的解释如下：</p>
 <ul>
 <li>a[e54r56wer]为空，!a[e54r56wer]为真，可以输出，然后++</li>
 <li>若再来一个a[e54r56wer]，因为上一步已经++，此时值为1，!a[e54r56wer]为假，不输出，再++</li>
-</ul></li>
-
-<li><p>对for输出数组的解释如下：<br />
+</ul>
+</li>
+<li>
+<p>对for输出数组的解释如下：<br>
 awk <code>'{a[$1]++} END {for (j in a) print a[j],j}'</code> test.txt</p>
-
 <ul>
 <li>在遍历完文件后，通过END把后面的句子连起来</li>
 <li>for (j in a) 是指打印数组a的下标，并定义下标为变量j</li>
 <li>最后print a[j],j就是打印数组下标和数组，这样就相同的$1排重并计数</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 </div>
     </article>

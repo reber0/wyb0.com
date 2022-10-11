@@ -82,45 +82,47 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/SQL%E6%B3%A8%E5%85%A5">SQL注入</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-前提">0x00 前提</h3>
-
+      <div><h3 id="0x00-前提">0x00 前提</h3>
 <p>要用联合查询进行注入则：页面必须有显示位</p>
-
 <h3 id="0x01-联合查询">0x01 联合查询</h3>
-
 <p>union可合并两个或多个select语句的结果集，前提是两个select必有相同列、且各列的数据类型也相同</p>
-
 <h3 id="0x02-注入步骤">0x02 注入步骤</h3>
-
 <ol>
-<li><p>找到注入点得到闭合字符
-<img src="/img/post/sqli1_get_closed_character.png" alt="找到注入点得到闭合字符" />
-<img src="/img/post/sqli1_check_closed_character.png" alt="确认闭合字符" /></p></li>
-
-<li><p>判断数据库类型
-<img src="/img/post/sqli1_get_type_of_db.png" alt="判断数据库类型" /></p></li>
-
-<li><p>猜解列数，得到显示位(从数据库中查询出来的数据有些会显示在页面中，显示的位置就是显示位)
-<img src="/img/post/sqli1_order_by.png" alt="猜解列数" />
-<img src="/img/post/sqli1_get_display_point.png" alt="得到显示位" /></p></li>
-
-<li><p>得到基本信息(数据库名、版本、数据库版本等)
-<img src="/img/post/sqli1_get_base_msg.png" alt="得到基础信息" /></p></li>
-
-<li><p>得到数据库
-<img src="/img/post/sqli1_get_db_num.png" alt="得到数据库个数" />
-<img src="/img/post/sqli1_get_db_name.png" alt="得到数据库名" /></p></li>
-
-<li><p>得到security数据库的表名
-<img src="/img/post/sqli1_get_table_name.png" alt="得到security数据库的表名" /></p></li>
-
-<li><p>猜解列名
-<img src="/img/post/sqli1_get_column_name.png" alt="得到表列名" /></p></li>
-
-<li><p>猜解数据
-<img src="/img/post/sqli1_get_column_value.png" alt="同时得到用户名和密码" /></p></li>
+<li>
+<p>找到注入点得到闭合字符
+<img src="/img/post/sqli1_get_closed_character.png" alt="找到注入点得到闭合字符">
+<img src="/img/post/sqli1_check_closed_character.png" alt="确认闭合字符"></p>
+</li>
+<li>
+<p>判断数据库类型
+<img src="/img/post/sqli1_get_type_of_db.png" alt="判断数据库类型"></p>
+</li>
+<li>
+<p>猜解列数，得到显示位(从数据库中查询出来的数据有些会显示在页面中，显示的位置就是显示位)
+<img src="/img/post/sqli1_order_by.png" alt="猜解列数">
+<img src="/img/post/sqli1_get_display_point.png" alt="得到显示位"></p>
+</li>
+<li>
+<p>得到基本信息(数据库名、版本、数据库版本等)
+<img src="/img/post/sqli1_get_base_msg.png" alt="得到基础信息"></p>
+</li>
+<li>
+<p>得到数据库
+<img src="/img/post/sqli1_get_db_num.png" alt="得到数据库个数">
+<img src="/img/post/sqli1_get_db_name.png" alt="得到数据库名"></p>
+</li>
+<li>
+<p>得到security数据库的表名
+<img src="/img/post/sqli1_get_table_name.png" alt="得到security数据库的表名"></p>
+</li>
+<li>
+<p>猜解列名
+<img src="/img/post/sqli1_get_column_name.png" alt="得到表列名"></p>
+</li>
+<li>
+<p>猜解数据
+<img src="/img/post/sqli1_get_column_value.png" alt="同时得到用户名和密码"></p>
+</li>
 </ol>
 </div>
     </article>

@@ -82,15 +82,11 @@
     [<a href="/categories/Server">Server</a>](<a href="/tags/server">server</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-apache">0x00 Apache</h3>
-
+      <div><h3 id="0x00-apache">0x00 Apache</h3>
 <ul>
 <li>服务器安全配置</li>
 </ul>
-
-<pre><code>#查看服务器运行权限
+<pre tabindex="0"><code>#查看服务器运行权限
 $ ps aux|grep apache|grep -v grep
 $ sudo lsof -i:80
 COMMAND    PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
@@ -107,9 +103,7 @@ apache2 127488 www-data    4u  IPv6  12596      0t0  TCP *:http (LISTEN)
 第二行起为Apache子进程，其执行用户为www-data，www-data是Ubuntu中运行Web服务的默认用户，权限较低。
 
 Windows中Apache安装完成后默认是administrator权限，所以需要降权，创建一个用户Apache，用户组为Guests，然后将Apache目录下的日志的可写权限赋给Guests账户。
-</code></pre>
-
-<pre><code>#目录及文件权限
+</code></pre><pre tabindex="0"><code>#目录及文件权限
 修改配置文件，vim /etc/apache2/apache2.conf解决目录遍历漏洞
 #Options Indexes FollowSymLinks
 Options FollowSymLinks
@@ -117,9 +111,7 @@ Options FollowSymLinks
 或者使用chmod进行权限限制也可以,比如使用chmod o-r flag.txt命令将www-data的读权限去掉
 
 windows也可以通过配置文件或者权限的设置达到上面设置的效果
-</code></pre>
-
-<pre><code>#错误重定向一
+</code></pre><pre tabindex="0"><code>#错误重定向一
 $ sudo vim /etc/apache2/apache2.conf
 &lt;Directory /var/www/&gt;
         Options Indexes FollowSymLinks
@@ -137,10 +129,8 @@ $ sudo a2enmod rewrite #开启跳转
 $ cat .htaccess
 ErrorDocument 404 /404.html
 RewriteEngine on
-RewriteRule &quot;ttt\.html$&quot; aa.html
-</code></pre>
-
-<pre><code>#隐藏apache版本号
+RewriteRule &#34;ttt\.html$&#34; aa.html
+</code></pre><pre tabindex="0"><code>#隐藏apache版本号
 $ sudo vim /etc/apache2/conf-available/security.conf
 ServerTokens Prod
 ServerSignature Off
@@ -148,35 +138,27 @@ ServerSignature Off
 #隐藏php版本号
 $ sudo vim /etc/php5/apache2/php.ini
 expose_php =  Off
-</code></pre>
-
-<pre><code>#禁止执行脚本
+</code></pre><pre tabindex="0"><code>#禁止执行脚本
 $ vim /etc/apache2/apache2.conf
 &lt;Directory /var/www/html/upload/&gt; #禁止执行php
     php_flag engine off
 &lt;/Directory&gt;
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>Apache日志格式</li>
 </ul>
-
 <p>vim /etc/apache2/apache2.conf</p>
-
-<pre><code>#access.log格式
-LogFormat &quot;%v:%p %h %l %u %t \&quot;%r\&quot; %&gt;s %O \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; vhost_combined
-LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %O \&quot;%{Referer}i\&quot; \&quot;%{User-Agent}i\&quot;&quot; combined
-LogFormat &quot;%h %l %u %t \&quot;%r\&quot; %&gt;s %O&quot; common
-LogFormat &quot;%{Referer}i -&gt; %U&quot; referer
-LogFormat &quot;%{User-agent}i&quot; agent
+<pre tabindex="0"><code>#access.log格式
+LogFormat &#34;%v:%p %h %l %u %t \&#34;%r\&#34; %&gt;s %O \&#34;%{Referer}i\&#34; \&#34;%{User-Agent}i\&#34;&#34; vhost_combined
+LogFormat &#34;%h %l %u %t \&#34;%r\&#34; %&gt;s %O \&#34;%{Referer}i\&#34; \&#34;%{User-Agent}i\&#34;&#34; combined
+LogFormat &#34;%h %l %u %t \&#34;%r\&#34; %&gt;s %O&#34; common
+LogFormat &#34;%{Referer}i -&gt; %U&#34; referer
+LogFormat &#34;%{User-agent}i&#34; agent
 
 #第一行是虚拟主机日志格式
 #第二行是组合日志格式(Combined Log Format)
 #第三行是通用日志格式(Common Log Format)
-</code></pre>
-
-<pre><code>#access.log日志示例
-192.168.228.1 - - [22/Sep/2017:05:26:41 -0700] &quot;GET /flag.txt HTTP/1.1&quot; 403 515 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0&quot;
+</code></pre><pre tabindex="0"><code>#access.log日志示例
+192.168.228.1 - - [22/Sep/2017:05:26:41 -0700] &#34;GET /flag.txt HTTP/1.1&#34; 403 515 &#34;-&#34; &#34;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0&#34;
 
 远端主机：192.168.228.1
 远端登录名：-
@@ -186,21 +168,15 @@ HTTP请求：GET /flag.txt HTTP/1.1
 HTTP状态码：403
 发送的字节数：515
 Referer：-
-User-Agent：&quot;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0&quot;
-</code></pre>
-
-<pre><code>#error.log
+User-Agent：&#34;Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0&#34;
+</code></pre><pre tabindex="0"><code>#error.log
 路径一般为：/var/log/apache2/error.log，notice级别的消息总是会被记录下来，而不能被屏蔽。
 日志格式：[日期和时间] [错误等级] 错误消息
-</code></pre>
-
-<h3 id="0x01-tomcat">0x01 Tomcat</h3>
-
+</code></pre><h3 id="0x01-tomcat">0x01 Tomcat</h3>
 <ul>
 <li>服务器安全配置</li>
 </ul>
-
-<pre><code>#运行权限
+<pre tabindex="0"><code>#运行权限
 Linux中Tomcat的运行权限与Tomcat的启动账户有关，比如以root用户启动，那获取的webshell就也是root权限
 Windows权限控制需要进行账户配置，新建一个Tomcat用户，并归属于Guests组，再将账户设置为服务登录账户
 
@@ -208,44 +184,40 @@ webapps为Web站点目录，将其中文件上传的文件夹设置为不可执�
 
 #服务器后台管理，配置强口令
 $ vim /usr/local/tomcat/conf/tomcat-users.xml
-  &lt;role rolename=&quot;manager-gui&quot;/&gt;
-  &lt;user username=&quot;tomcat&quot; password=&quot;sdkF!ieW~nk/sXfs&quot; roles=&quot;manager-gui&quot;/&gt;
+  &lt;role rolename=&#34;manager-gui&#34;/&gt;
+  &lt;user username=&#34;tomcat&#34; password=&#34;sdkF!ieW~nk/sXfs&#34; roles=&#34;manager-gui&#34;/&gt;
 #或者说删除默认应用
 即除了webapps下的ROOT目录，其他的都删除
 然后就是在ROOT文件夹下除了WEB-INF和META-INF外的文件都删除了
-</code></pre>
-
+</code></pre><ul>
+<li>
+<p>服务器访问限制</p>
 <ul>
-<li><p>服务器访问限制</p>
-
-<ul>
-<li><p>隐藏版本信息</p>
-
-<pre><code>$ cd /opt/tomcat/lib
+<li>隐藏版本信息</li>
+</ul>
+<pre tabindex="0"><code>$ cd /opt/tomcat/lib
 $ jar -xvf catalina.jar #生成META-INF和org文件夹
 $ vim org/apache/catalina/util/ServerInfo.properties #编辑配置文件，去掉版本信息
 $ jar uvf catalina.jar org/apache/catalina/util/ServerInfo.properties #将修改后的文件压回jar包
 $ cd ../bin/
 $ ./startup.sh
-</code></pre></li>
-
-<li><p>禁止列目录</p>
-
-<pre><code>vim /opt/tomcat/conf/web.xml #设置为false即可，默认就是false
-&lt;init-param&gt;
-    &lt;param-name&gt;listings&lt;/param-name&gt;
-    &lt;param-value&gt;false&lt;/param-value&gt;
-&lt;/init-param&gt;
-</code></pre></li>
-</ul></li>
-
-<li><p>服务日志</p></li>
+</code></pre><ul>
+<li>禁止列目录</li>
 </ul>
-
-<pre><code>启用日志（默认就是开启的）：vim /opt/tomcat/conf/server.xml
-&lt;Valve className=&quot;org.apache.catalina.valves.AccessLogValve&quot; directory=&quot;logs&quot;
-       prefix=&quot;localhost_access_log&quot; suffix=&quot;.txt&quot;
-       pattern=&quot;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&quot; /&gt;
+<pre tabindex="0"><code>vim /opt/tomcat/conf/web.xml #设置为false即可，默认就是false
+    &lt;init-param&gt;
+        &lt;param-name&gt;listings&lt;/param-name&gt;
+        &lt;param-value&gt;false&lt;/param-value&gt;
+    &lt;/init-param&gt;
+</code></pre></li>
+<li>
+<p>服务日志</p>
+</li>
+</ul>
+<pre tabindex="0"><code>启用日志（默认就是开启的）：vim /opt/tomcat/conf/server.xml
+&lt;Valve className=&#34;org.apache.catalina.valves.AccessLogValve&#34; directory=&#34;logs&#34;
+       prefix=&#34;localhost_access_log&#34; suffix=&#34;.txt&#34;
+       pattern=&#34;%h %l %u %t &amp;quot;%r&amp;quot; %s %b&#34; /&gt;
 
 $ ll /opt/tomcat/logs
 localhost.2017-09-29.log：程序异常没有被捕获的时候抛出的地方
@@ -259,63 +231,50 @@ SEVERE &gt; WARNING &gt; INFO &gt; CONFIG &gt; FINE &gt; FINER &gt; FINEST
 
 $ vim conf/logging.properties #修改日志级别
 1catalina.org.apache.juli.AsyncFileHandler.level = FINE
-</code></pre>
-
-<h3 id="0x02-nginx">0x02 Nginx</h3>
-
+</code></pre><h3 id="0x02-nginx">0x02 Nginx</h3>
 <ul>
 <li>隐藏版本号</li>
 </ul>
-
-<pre><code>$ vim /usr/local/nginx/conf/nginx.conf
+<pre tabindex="0"><code>$ vim /usr/local/nginx/conf/nginx.conf
 http {
     include       mime.types;
     default_type  application/octet-stream;
 
     server_tokens off; #隐藏版本号
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>伪造中间件类型和版本号</li>
 </ul>
-
-<pre><code>伪造中间件类型，修改源码然后安装：
+<pre tabindex="0"><code>伪造中间件类型，修改源码然后安装：
 $ vim src/http/ngx_http_header_filter_module.c #修改第49行
-static char ngx_http_server_string[] = &quot;Server: nginx&quot; CRLF;
+static char ngx_http_server_string[] = &#34;Server: nginx&#34; CRLF;
 
 伪造版本号，修改源码然后安装：
 $ vim nginx-1.9.9/src/core/nginx.h
 #define nginx_version      1009009
-#define NGINX_VERSION      &quot;1.9.9&quot;
-#define NGINX_VER          &quot;nginx/“ NGINX_VERSION
+#define NGINX_VERSION      &#34;1.9.9&#34;
+#define NGINX_VER          &#34;nginx/“ NGINX_VERSION
 
 修改fastcgi.conf
 $ vim /usr/local/nginx/conf/fastcgi.conf #修改第17行
 fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>防止钓鱼和XSS</li>
 </ul>
-
-<pre><code>$ vim /usr/local/nginx/conf/nginx.conf
+<pre tabindex="0"><code>$ vim /usr/local/nginx/conf/nginx.conf
     server {
         listen       80;
         server_name  localhost;
 
         add_header X-Frame-Options SAMEORIGIN; #在头部添加X-Frame-Options防止被Frame
-        add_header X-XSS-Protection &quot;1; mode=block&quot;; #防御XSS
+        add_header X-XSS-Protection &#34;1; mode=block&#34;; #防御XSS
 
 DENY：浏览器拒绝当前页面加载任何Frame页面
 SAMEORIGIN：frame页面的地址只能为同源域名下的页面
 ALLOW-FROM：origin为允许frame加载的页面地址
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>CRLF注入</li>
 </ul>
-
-<pre><code>案例一：
+<pre tabindex="0"><code>案例一：
 location /sectest {
   return 302 https://$host$uri; #应将$uri或者$document_uri改为$request_uri
 }
@@ -331,50 +290,30 @@ server {
 
     location ~ /v1/((?&lt;action&gt;[^.]*)\.json)?$ {
         add_header X-Action $action;
-        return 200 &quot;OK&quot;;
+        return 200 &#34;OK&#34;;
     }
 }
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>alias导致的任意文件读取</li>
 </ul>
-
-<pre><code>location /files { #把/files改为/files/即可修复
+<pre tabindex="0"><code>location /files { #把/files改为/files/即可修复
   alias /home/;
 }
 
 当访问http://joychou.me/files/x.txt，即访问服务器上的/home/x.txt文件
 当访问http://joychou.me/files../etc/passwd时就读取了passwd文件了
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>反向代理中的SSRF</li>
 </ul>
-
-<pre><code>反向代理语法：proxy_pass http://ip:port/uri/;
+<pre tabindex="0"><code>反向代理语法：proxy_pass http://ip:port/uri/;
 当ip可控时那么反向代理的机器会对该ip发起http请求，即可造成SSRF。
 这种场景多出现在云WAF、CDN、高防DDOS等网络产品。
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>add_header重定义</li>
 </ul>
-
-<pre><code>如果location区块有add_header，那么以location为准。
+<pre tabindex="0"><code>如果location区块有add_header，那么以location为准。
 如果location没有add_header，则继承Http和server块的add_header内容。
-</code></pre>
-
-<p><br /></p>
-
-<h4 id="reference-侵删">Reference(侵删)：</h4>
-
-<ul>
-<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652844866&amp;idx=1&amp;sn=7c1d2879e7ad5ef662cccf8fb7663846">http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652844866&amp;idx=1&amp;sn=7c1d2879e7ad5ef662cccf8fb7663846</a></li>
-<li><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652845014&amp;idx=1&amp;sn=c6221031b486bbe84de6986c67b76fbc">http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&amp;mid=2652845014&amp;idx=1&amp;sn=c6221031b486bbe84de6986c67b76fbc</a></li>
-<li><a href="http://mp.weixin.qq.com/s/768Jx-lBShb-OsiMgg-48A">http://mp.weixin.qq.com/s/768Jx-lBShb-OsiMgg-48A</a></li>
-<li><a href="http://mp.weixin.qq.com/s/QhB-PYpOik_PVdm3F7LIJw">http://mp.weixin.qq.com/s/QhB-PYpOik_PVdm3F7LIJw</a></li>
-</ul>
+</code></pre><!-- raw HTML omitted -->
 </div>
     </article>
   </main>

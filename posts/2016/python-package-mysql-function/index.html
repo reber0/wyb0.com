@@ -82,20 +82,14 @@
     [<a href="/categories/Python">Python</a>,<a href="/categories/Database">Database</a>](<a href="/tags/python">python</a>,<a href="/tags/mysql">mysql</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-安装">0x00 安装</h3>
-
+      <div><h3 id="0x00-安装">0x00 安装</h3>
 <p>有两种，一个是MySQLdb，一个是pymysql</p>
-
 <ul>
-<li>下载<a href="https://pypi.python.org/pypi/MySQL-python/1.2.5">MySQL-python</a>然后安装<br /></li>
+<li>下载<a href="https://pypi.python.org/pypi/MySQL-python/1.2.5">MySQL-python</a>然后安装</li>
 <li>sudo pip install pymysql(推荐，因为py3已经不支持MySQLdb了)</li>
 </ul>
-
 <h3 id="0x01-简单表设计如下">0x01 简单表设计如下</h3>
-
-<pre><code>insert into mysql.user(Host,User,Password) values('%','python','123456');
+<pre tabindex="0"><code>insert into mysql.user(Host,User,Password) values(&#39;%&#39;,&#39;python&#39;,&#39;123456&#39;);
 
 drop database if exists python;
 create database python;
@@ -104,156 +98,150 @@ use python;
 drop table if exists msg;
 create table msg(
     id int not null auto_increment primary key,
-    ip varchar(40) not null default '127.0.0.1' comment 'ip地址',
-    domain varchar(100) not null default 'www.xx.com' comment '域名'
+    ip varchar(40) not null default &#39;127.0.0.1&#39; comment &#39;ip地址&#39;,
+    domain varchar(100) not null default &#39;www.xx.com&#39; comment &#39;域名&#39;
 );
 
-grant all privileges on python.* to 'python'@'%' identified by '123456';
+grant all privileges on python.* to &#39;python&#39;@&#39;%&#39; identified by &#39;123456&#39;;
 flush privileges;
-</code></pre>
-
-<h3 id="0x02-mysqldb封装代码">0x02 MySQLdb封装代码</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import MySQLdb
-
-class mysql(object):
-    &quot;&quot;&quot;docstring for mysql&quot;&quot;&quot;
-    def __init__(self, dbconfig):
-        self.host = dbconfig['host']
-        self.port = dbconfig['port']
-        self.user = dbconfig['user']
-        self.passwd = dbconfig['passwd']
-        self.dbname = dbconfig['dbname']
-        self.charset = dbconfig['charset']
-        self._conn = None
-        self._connect()
-        self._cursor = self._conn.cursor()
-
-    def _connect(self):
-        try:
-            self._conn = MySQLdb.connect(host=self.host,
-                port = self.port,
-                user=self.user,
-                passwd=self.passwd,
-                db=self.dbname,
-                charset=self.charset)
-        except MySQLdb.Error,e:
-            print e
-            
-    def query(self, sql):
-        try:
-            result = self._cursor.execute(sql)
-        except MySQLdb.Error, e:
-            print e
-            result = False
-        return result
-
-    def select(self, table, column='*', condition=''):
-        condition = ' where ' + condition if condition else None
-        if condition:
-            sql = &quot;select %s from %s %s&quot; % (column,table,condition)
-        else:
-            sql = &quot;select %s from %s&quot; % (column,table)
-        self.query(sql)
-        return self._cursor.fetchall()
-
-    def insert(self, table, tdict):
-        column = ''
-        value = ''
-        for key in tdict:
-            column += ',' + key
-            value += &quot;','&quot; + tdict[key]
-        column = column[1:]
-        value = value[2:] + &quot;'&quot;
-        sql = &quot;insert into %s(%s) values(%s)&quot; % (table,column,value)
-        try:
-            self._cursor.execute(sql)
-            self._conn.commit()
-        except:
-            self.rollback()
-        return self._cursor.lastrowid #返回最后的id
-
-    def update(self, table, tdict, condition=''):
-        if not condition:
-            print &quot;must have id&quot;
-            exit()
-        else:
-            condition = 'where ' + condition
-        value = ''
-        for key in tdict:
-            value += &quot;,%s='%s'&quot; % (key,tdict[key])
-        value = value[1:]
-        sql = &quot;update %s set %s %s&quot; % (table,value,condition)
-        try:
-            self._cursor.execute(sql)
-        except:
-            self.rollback()
-        return self.affected_num() #返回受影响行数
-
-    def delete(self, table, condition=''):
-        condition = 'where ' + condition if condition else None
-        sql = &quot;delete from %s %s&quot; % (table,condition)
-        try:
-            self._cursor.execute(sql)
-            self._conn.commit()
-        except:
-            self.rollback()
-        return self.affected_num() #返回受影响行数
-
-    def rollback(self):
-        self._conn.rollback()
-
-    def affected_num(self):
-        return self._cursor.rowcount
-
-    def __del__(self):
-        try:
-            self._cursor.close()
-            self._conn.close()
-        except:
-            pass
-
-    def close(self):
-        self.__del__()
-
-if __name__ == '__main__':
-    dbconfig = {
-        'host':'192.168.188.134',
-        'port':3306,
-        'user':'python',
-        'passwd':'123456',
-        'dbname':'python',
-        'charset':'utf8'
-    }
-    db = mysql(dbconfig)
-
-    # print db.select('msg','id,ip,domain')
-    # print db.select('msg','id,ip,domain','id&gt;2')
-    # print db.affected_num()
-
-    # tdict = {
-    #     'ip':'111.13.100.91',
-    #     'domain':'baidu.com'
-    # }
-    # print db.insert('msg', tdict)
-    
-    # tdict = {
-    #     'ip':'111.13.100.91',
-    #     'domain':'aaaaa.com'
-    # }
-    # print db.update('msg', tdict, 'id=5')
-
-    # print db.delete('msg', 'id&gt;3')
-
-    db.close()
-</code></pre>
-
-<h3 id="0x03-pymysql封装代码">0x03 pymysql封装代码</h3>
-
-<pre><code>#!/usr/bin/env python
+</code></pre><h3 id="0x02-mysqldb封装代码">0x02 MySQLdb封装代码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> MySQLdb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">mysql</span>(object):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;docstring for mysql&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, dbconfig):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>host <span style="color:#f92672">=</span> dbconfig[<span style="color:#e6db74">&#39;host&#39;</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>port <span style="color:#f92672">=</span> dbconfig[<span style="color:#e6db74">&#39;port&#39;</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>user <span style="color:#f92672">=</span> dbconfig[<span style="color:#e6db74">&#39;user&#39;</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>passwd <span style="color:#f92672">=</span> dbconfig[<span style="color:#e6db74">&#39;passwd&#39;</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dbname <span style="color:#f92672">=</span> dbconfig[<span style="color:#e6db74">&#39;dbname&#39;</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>charset <span style="color:#f92672">=</span> dbconfig[<span style="color:#e6db74">&#39;charset&#39;</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_conn <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_connect()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_cursor <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_conn<span style="color:#f92672">.</span>cursor()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_connect</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>_conn <span style="color:#f92672">=</span> MySQLdb<span style="color:#f92672">.</span>connect(host<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>host,
+</span></span><span style="display:flex;"><span>                port <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>port,
+</span></span><span style="display:flex;"><span>                user<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>user,
+</span></span><span style="display:flex;"><span>                passwd<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>passwd,
+</span></span><span style="display:flex;"><span>                db<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>dbname,
+</span></span><span style="display:flex;"><span>                charset<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>charset)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> MySQLdb<span style="color:#f92672">.</span>Error,e:
+</span></span><span style="display:flex;"><span>            print e
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">query</span>(self, sql):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_cursor<span style="color:#f92672">.</span>execute(sql)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> MySQLdb<span style="color:#f92672">.</span>Error, e:
+</span></span><span style="display:flex;"><span>            print e
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">select</span>(self, table, column<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;*&#39;</span>, condition<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>):
+</span></span><span style="display:flex;"><span>        condition <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39; where &#39;</span> <span style="color:#f92672">+</span> condition <span style="color:#66d9ef">if</span> condition <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> condition:
+</span></span><span style="display:flex;"><span>            sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;select </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> from </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (column,table,condition)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;select </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> from </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (column,table)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>query(sql)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_cursor<span style="color:#f92672">.</span>fetchall()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">insert</span>(self, table, tdict):
+</span></span><span style="display:flex;"><span>        column <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>        value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> tdict:
+</span></span><span style="display:flex;"><span>            column <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#39;,&#39;</span> <span style="color:#f92672">+</span> key
+</span></span><span style="display:flex;"><span>            value <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&#39;,&#39;&#34;</span> <span style="color:#f92672">+</span> tdict[key]
+</span></span><span style="display:flex;"><span>        column <span style="color:#f92672">=</span> column[<span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>        value <span style="color:#f92672">=</span> value[<span style="color:#ae81ff">2</span>:] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>        sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;insert into </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">(</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">) values(</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">)&#34;</span> <span style="color:#f92672">%</span> (table,column,value)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>_cursor<span style="color:#f92672">.</span>execute(sql)
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>_conn<span style="color:#f92672">.</span>commit()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>rollback()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_cursor<span style="color:#f92672">.</span>lastrowid <span style="color:#75715e">#返回最后的id</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>(self, table, tdict, condition<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> condition:
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;must have id&#34;</span>
+</span></span><span style="display:flex;"><span>            exit()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            condition <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;where &#39;</span> <span style="color:#f92672">+</span> condition
+</span></span><span style="display:flex;"><span>        value <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> tdict:
+</span></span><span style="display:flex;"><span>            value <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;,</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">=&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;&#34;</span> <span style="color:#f92672">%</span> (key,tdict[key])
+</span></span><span style="display:flex;"><span>        value <span style="color:#f92672">=</span> value[<span style="color:#ae81ff">1</span>:]
+</span></span><span style="display:flex;"><span>        sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;update </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> set </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (table,value,condition)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>_cursor<span style="color:#f92672">.</span>execute(sql)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>rollback()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>affected_num() <span style="color:#75715e">#返回受影响行数</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">delete</span>(self, table, condition<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>):
+</span></span><span style="display:flex;"><span>        condition <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;where &#39;</span> <span style="color:#f92672">+</span> condition <span style="color:#66d9ef">if</span> condition <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;delete from </span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (table,condition)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>_cursor<span style="color:#f92672">.</span>execute(sql)
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>_conn<span style="color:#f92672">.</span>commit()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>rollback()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>affected_num() <span style="color:#75715e">#返回受影响行数</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rollback</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_conn<span style="color:#f92672">.</span>rollback()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">affected_num</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_cursor<span style="color:#f92672">.</span>rowcount
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __del__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>_cursor<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>_conn<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">close</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>__del__()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    dbconfig <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;host&#39;</span>:<span style="color:#e6db74">&#39;192.168.188.134&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;port&#39;</span>:<span style="color:#ae81ff">3306</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;user&#39;</span>:<span style="color:#e6db74">&#39;python&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;passwd&#39;</span>:<span style="color:#e6db74">&#39;123456&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;dbname&#39;</span>:<span style="color:#e6db74">&#39;python&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;charset&#39;</span>:<span style="color:#e6db74">&#39;utf8&#39;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    db <span style="color:#f92672">=</span> mysql(dbconfig)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print db.select(&#39;msg&#39;,&#39;id,ip,domain&#39;)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print db.select(&#39;msg&#39;,&#39;id,ip,domain&#39;,&#39;id&gt;2&#39;)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print db.affected_num()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># tdict = {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#     &#39;ip&#39;:&#39;111.13.100.91&#39;,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#     &#39;domain&#39;:&#39;baidu.com&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># }</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print db.insert(&#39;msg&#39;, tdict)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># tdict = {</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#     &#39;ip&#39;:&#39;111.13.100.91&#39;,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#     &#39;domain&#39;:&#39;aaaaa.com&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># }</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print db.update(&#39;msg&#39;, tdict, &#39;id=5&#39;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print db.delete(&#39;msg&#39;, &#39;id&gt;3&#39;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    db<span style="color:#f92672">.</span>close()
+</span></span></code></pre></div><h3 id="0x03-pymysql封装代码">0x03 pymysql封装代码</h3>
+<pre tabindex="0"><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import urlparse
@@ -272,17 +260,17 @@ class MySQLX(object):
         port = p.port
         user = p.username
         password = p.password
-        dbname = p.path.strip('/')
-        charset = urlparse.parse_qs(p.query)['charset'][0]
+        dbname = p.path.strip(&#39;/&#39;)
+        charset = urlparse.parse_qs(p.query)[&#39;charset&#39;][0]
 
         return {
-            'host': host,
-            'port': port,
-            'user': user,
-            'password': password,
-            'db': dbname,
-            'charset': charset,
-            'cursorclass': pymysql.cursors.DictCursor,
+            &#39;host&#39;: host,
+            &#39;port&#39;: port,
+            &#39;user&#39;: user,
+            &#39;password&#39;: password,
+            &#39;db&#39;: dbname,
+            &#39;charset&#39;: charset,
+            &#39;cursorclass&#39;: pymysql.cursors.DictCursor,
         }
 
     @contextlib.contextmanager
@@ -290,11 +278,11 @@ class MySQLX(object):
         dbconn = pymysql.connect(**self.mysql_info)
         cursor = dbconn.cursor()
         # dbconn = pymysql.connect(
-        #     host=mysql_info.get('host'),
-        #     user=mysql_info.get('user'),
-        #     password=mysql_info.get('password'),
-        #     db=mysql_info.get('db'),
-        #     charset=mysql_info.get('charset')
+        #     host=mysql_info.get(&#39;host&#39;),
+        #     user=mysql_info.get(&#39;user&#39;),
+        #     password=mysql_info.get(&#39;password&#39;),
+        #     db=mysql_info.get(&#39;db&#39;),
+        #     charset=mysql_info.get(&#39;charset&#39;)
         #     )
         # cursor = dbconn.cursor(cursor=pymysql.cursors.DictCursor)
 
@@ -305,7 +293,7 @@ class MySQLX(object):
             cursor.close()
             dbconn.close()
 
-    def query(self, sql, arg=''):
+    def query(self, sql, arg=&#39;&#39;):
         try:
             with self.init() as cursor:
                 if arg:
@@ -319,14 +307,13 @@ class MySQLX(object):
         except Exception as e:
             print sql,str(e)
 
-if __name__ == '__main__':
-    mysql_uri = &quot;mysql+pymysql://root:root@localhost:3306/rtest?charset=utf8mb4&quot;
+if __name__ == &#39;__main__&#39;:
+    mysql_uri = &#34;mysql+pymysql://root:root@localhost:3306/rtest?charset=utf8mb4&#34;
     sqlconn = MySQLX(mysql_uri)
-    sql = &quot;select * from `msg` where id=%s&quot;
-    result = sqlconn.query(sql,&quot;2&quot;)
+    sql = &#34;select * from `msg` where id=%s&#34;
+    result = sqlconn.query(sql,&#34;2&#34;)
     print result
-</code></pre>
-</div>
+</code></pre></div>
     </article>
   </main>
 

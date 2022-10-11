@@ -82,25 +82,18 @@
     [<a href="/categories/Database">Database</a>](<a href="/tags/postgre">postgre</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-安装">0x00 安装</h3>
-
-<pre><code>➜  brew install postgresql
-➜  echo 'export PATH=&quot;/usr/local/Cellar/postgresql/11.4/bin:$PATH&quot;' &gt;&gt; ~/.zshrc
+      <div><h3 id="0x00-安装">0x00 安装</h3>
+<pre tabindex="0"><code>➜  brew install postgresql
+➜  echo &#39;export PATH=&#34;/usr/local/Cellar/postgresql/11.4/bin:$PATH&#34;&#39; &gt;&gt; ~/.zshrc
 ➜  source ~/.zshrc
 -- 初始化数据库
 ➜  initdb /usr/local/var/postgres
 ➜  pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log start
-</code></pre>
-
-<h3 id="0x01-简单操作">0x01 简单操作</h3>
-
+</code></pre><h3 id="0x01-简单操作">0x01 简单操作</h3>
 <ul>
 <li>常用操作命令</li>
 </ul>
-
-<pre><code>reber=# \password #设置当前登录用户的密码
+<pre tabindex="0"><code>reber=# \password #设置当前登录用户的密码
 reber=# \password [user_name] #设置其他用户的密码
 reber=# \l #列出所有数据库
 reber=# \du #列出所有用户
@@ -108,59 +101,48 @@ reber=# \c [database_name] #连接数据库
 reber=# \d #列出当前数据库的所有表
 reber=# \d [table_name] #列出表结构
 reber=# \conninfo #列出当前数据库和连接的信息
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>连接数据库</li>
 </ul>
-
-<pre><code class="language-bash">➜  psql postgres #初始化数据库后会生成默认的数据库 postgres
-psql (11.4)
-Type &quot;help&quot; for help.
-
-postgres=# \l #查看当前数据库情况
-                              List of databases
-   Name    | Owner | Encoding |   Collate   |    Ctype    | Access privileges
------------+-------+----------+-------------+-------------+-------------------
- postgres  | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
- template0 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
-           |       |          |             |             | reber=CTc/reber
- template1 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | =c/reber         +
-           |       |          |             |             | reber=CTc/reber
-(4 rows)
-
-postgres=# \du #查看当前用户
-                                   List of roles
- Role name |                         Attributes                         | Member of
------------+------------------------------------------------------------+-----------
- reber     | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
-
-postgres=# \c
-You are now connected to database &quot;postgres&quot; as user &quot;reber&quot;.
-postgres=# \password
-Enter new password:
-Enter it again:
-postgres-# \q
-</code></pre>
-
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  psql postgres <span style="color:#75715e">#初始化数据库后会生成默认的数据库 postgres</span>
+</span></span><span style="display:flex;"><span>psql <span style="color:#f92672">(</span>11.4<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Type <span style="color:#e6db74">&#34;help&#34;</span> <span style="color:#66d9ef">for</span> help.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>postgres<span style="color:#f92672">=</span><span style="color:#75715e"># \l #查看当前数据库情况</span>
+</span></span><span style="display:flex;"><span>                              List of databases
+</span></span><span style="display:flex;"><span>   Name    | Owner | Encoding |   Collate   |    Ctype    | Access privileges
+</span></span><span style="display:flex;"><span>-----------+-------+----------+-------------+-------------+-------------------
+</span></span><span style="display:flex;"><span> postgres  | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
+</span></span><span style="display:flex;"><span> template0 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | <span style="color:#f92672">=</span>c/reber         +
+</span></span><span style="display:flex;"><span>           |       |          |             |             | reber<span style="color:#f92672">=</span>CTc/reber
+</span></span><span style="display:flex;"><span> template1 | reber | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 | <span style="color:#f92672">=</span>c/reber         +
+</span></span><span style="display:flex;"><span>           |       |          |             |             | reber<span style="color:#f92672">=</span>CTc/reber
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span><span style="color:#ae81ff">4</span> rows<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>postgres<span style="color:#f92672">=</span><span style="color:#75715e"># \du #查看当前用户</span>
+</span></span><span style="display:flex;"><span>                                   List of roles
+</span></span><span style="display:flex;"><span> Role name |                         Attributes                         | Member of
+</span></span><span style="display:flex;"><span>-----------+------------------------------------------------------------+-----------
+</span></span><span style="display:flex;"><span> reber     | Superuser, Create role, Create DB, Replication, Bypass RLS | <span style="color:#f92672">{}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>postgres<span style="color:#f92672">=</span><span style="color:#75715e"># \c</span>
+</span></span><span style="display:flex;"><span>You are now connected to database <span style="color:#e6db74">&#34;postgres&#34;</span> as user <span style="color:#e6db74">&#34;reber&#34;</span>.
+</span></span><span style="display:flex;"><span>postgres<span style="color:#f92672">=</span><span style="color:#75715e"># \password</span>
+</span></span><span style="display:flex;"><span>Enter new password:
+</span></span><span style="display:flex;"><span>Enter it again:
+</span></span><span style="display:flex;"><span>postgres-# <span style="color:#ae81ff">\q</span>
+</span></span></code></pre></div><ul>
 <li>修改配置文件改端口</li>
 </ul>
-
 <p>vim /usr/local/var/postgres/postgresql.conf</p>
-
-<pre><code>port = 55432
-</code></pre>
-
-<ul>
+<pre tabindex="0"><code>port = 55432
+</code></pre><ul>
 <li>修改配置文件使密码生效(METHOD 改为 md5)</li>
 </ul>
-
 <p>vim /usr/local/var/postgres/pg_hba.conf</p>
+<pre tabindex="0"><code># TYPE  DATABASE        USER            ADDRESS                 METHOD
 
-<pre><code># TYPE  DATABASE        USER            ADDRESS                 METHOD
-
-# &quot;local&quot; is for Unix domain socket connections only
+# &#34;local&#34; is for Unix domain socket connections only
 local   all             all                                     md5
 # IPv4 local connections:
 host    all             all             127.0.0.1/32            md5
@@ -171,25 +153,18 @@ host    all             all             ::1/128                 md5
 local   replication     all                                     md5
 host    replication     all             127.0.0.1/32            md5
 host    replication     all             ::1/128                 md5
-</code></pre>
-
-<p>然后重启 pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log restart</p>
-
+</code></pre><p>然后重启 pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres.log restart</p>
 <p>再次登录就会要求输入密码</p>
-
-<pre><code>➜  psql -d postgres -p 55432
+<pre tabindex="0"><code>➜  psql -d postgres -p 55432
 Password for user reber:
 psql (12.3)
-Type &quot;help&quot; for help.
+Type &#34;help&#34; for help.
 
 postgres=#
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>创建新用户</li>
 </ul>
-
-<pre><code>postgres=# create user reber0ask with password '3eRa1kBg95D7';
+<pre tabindex="0"><code>postgres=# create user reber0ask with password &#39;3eRa1kBg95D7&#39;;
 CREATE ROLE
 postgres=# \du
                                    List of roles
@@ -199,13 +174,10 @@ postgres=# \du
  reber0ask |                                                            | {}
 
 postgres=#
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>为新用户创建新数据库</li>
 </ul>
-
-<pre><code>postgres=# create database rscan owner reber0ask;
+<pre tabindex="0"><code>postgres=# create database rscan owner reber0ask;
 CREATE DATABASE
 postgres=# \l
                                 List of databases
@@ -220,13 +192,10 @@ postgres=# \l
 (4 rows)
 
 postgres=#
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>将新数据库的所有权限都给用户</li>
 </ul>
-
-<pre><code>postgres=# grant all privileges on database rscan to reber0ask;
+<pre tabindex="0"><code>postgres=# grant all privileges on database rscan to reber0ask;
 GRANT
 postgres=# \l
  postgres  | reber     | UTF8     | zh_CN.UTF-8 | zh_CN.UTF-8 |
@@ -238,13 +207,10 @@ postgres=# \l
            |           |          |             |             | reber=CTc/reber
 
 postgres=#
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>给用户创建数据库的属性</li>
 </ul>
-
-<pre><code>postgres=# alter role reber0ask createdb;
+<pre tabindex="0"><code>postgres=# alter role reber0ask createdb;
 ALTER ROLE
 postgres=# \du
                                    List of roles
@@ -254,14 +220,11 @@ postgres=# \du
  reber0ask | Create DB                                                  | {}
 
 postgres=#
-</code></pre>
-
-<h3 id="0x02-以指定用户登陆并创建表">0x02 以指定用户登陆并创建表</h3>
-
-<pre><code>➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432
+</code></pre><h3 id="0x02-以指定用户登陆并创建表">0x02 以指定用户登陆并创建表</h3>
+<pre tabindex="0"><code>➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432
 Password for user reber0ask:
 psql (11.4)
-Type &quot;help&quot; for help.
+Type &#34;help&#34; for help.
 
 rscan=&gt; \l
                                 List of databases
@@ -290,55 +253,48 @@ rscan=&gt; \d
 (2 rows)
 
 rscan=&gt; \d msg;
-                                     Table &quot;public.msg&quot;
+                                     Table &#34;public.msg&#34;
  Column  |          Type           | Collation | Nullable |             Default
 ---------+-------------------------+-----------+----------+---------------------------------
- id      | integer                 |           | not null | nextval('msg_id_seq'::regclass)
+ id      | integer                 |           | not null | nextval(&#39;msg_id_seq&#39;::regclass)
  title   | character varying(100)  |           |          |
  content | character varying(2014) |           |          |
 Indexes:
-    &quot;msg_pkey&quot; PRIMARY KEY, btree (id)
+    &#34;msg_pkey&#34; PRIMARY KEY, btree (id)
 
-rscan=&gt; insert into public.msg(title,content) values('hi','hello world!');
+rscan=&gt; insert into public.msg(title,content) values(&#39;hi&#39;,&#39;hello world!&#39;);
 INSERT 0 1
 rscan=&gt; select * from msg;
  id | title |   content
 ----+-------+--------------
   1 | hi    | hello world!
 (1 row)
-</code></pre>
-
-<h3 id="0x03-导入与导出">0x03 导入与导出</h3>
-
+</code></pre><h3 id="0x03-导入与导出">0x03 导入与导出</h3>
 <ul>
 <li>导出</li>
 </ul>
-
-<pre><code>➜  pg_dump -d rscan -U reber0ask -h 127.0.0.1 -p 55432  &gt; rscan.sql
+<pre tabindex="0"><code>➜  pg_dump -d rscan -U reber0ask -h 127.0.0.1 -p 55432  &gt; rscan.sql
 Password:
 ➜  ls -al rscan.sql
 -rw-r--r--@ 1 reber  staff  15045  5 16 20:54 rscan.sql
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>导入</li>
 </ul>
-
-<pre><code>➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432
+<pre tabindex="0"><code>➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432
 Password for user reber0ask:
 psql (12.3)
-Type &quot;help&quot; for help.
+Type &#34;help&#34; for help.
 
 rscan=&gt; \c postgres
-You are now connected to database &quot;postgres&quot; as user &quot;reber0ask&quot;.
+You are now connected to database &#34;postgres&#34; as user &#34;reber0ask&#34;.
 postgres=&gt; drop database rscan;
-ERROR:  database &quot;rscan&quot; is being accessed by other users
+ERROR:  database &#34;rscan&#34; is being accessed by other users
 DETAIL:  There is 1 other session using the database.
 postgres=&gt; revoke connect on database rscan from public;
 REVOKE
 postgres=&gt; select pg_terminate_backend(pg_stat_activity.pid)
 postgres-&gt; from pg_stat_activity
-postgres-&gt; where pg_stat_activity.datname = 'rscan';
+postgres-&gt; where pg_stat_activity.datname = &#39;rscan&#39;;
  pg_terminate_backend
 ----------------------
  t
@@ -352,27 +308,21 @@ CREATE DATABASE
 
 postgres=&gt; \q
 ➜  psql -d rscan -U reber0ask -h 127.0.0.1 -p 55432 -f rscan.sql
-</code></pre>
-
-<h3 id="0x04-允许远程连接数据库">0x04 允许远程连接数据库</h3>
-
-<pre><code>➜  vim  /usr/local/var/postgres/postgresql.conf
-listen_addresses = '*'
+</code></pre><h3 id="0x04-允许远程连接数据库">0x04 允许远程连接数据库</h3>
+<pre tabindex="0"><code>➜  vim  /usr/local/var/postgres/postgresql.conf
+listen_addresses = &#39;*&#39;
 ➜  vim  /usr/local/var/postgres/pg_hba.conf
 # TYPE  DATABASE  USER  CIDR-ADDRESS  METHOD
 host  all  all 0.0.0.0/0 md5
-</code></pre>
-
-<h3 id="0x05-python-简单连接">0x05 python 简单连接</h3>
-
-<pre><code>#!/usr/bin/env python
+</code></pre><h3 id="0x05-python-简单连接">0x05 python 简单连接</h3>
+<pre tabindex="0"><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-'''
+&#39;&#39;&#39;
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-23 15:45:21
 @LastEditTime: 2019-08-23 16:22:02
-'''
+&#39;&#39;&#39;
 
 import psycopg2
 import contextlib
@@ -393,11 +343,11 @@ class PgSQLX(object):
         database = o.path[1:]
 
         return {
-            'host': host,
-            'port': port,
-            'user': user,
-            'password': password,
-            'database': database,
+            &#39;host&#39;: host,
+            &#39;port&#39;: port,
+            &#39;user&#39;: user,
+            &#39;password&#39;: password,
+            &#39;database&#39;: database,
         }
 
     @contextlib.contextmanager
@@ -405,11 +355,11 @@ class PgSQLX(object):
         dbconn = psycopg2.connect(**self.pgsql_info)
         cursor = dbconn.cursor()
         # dbconn = psycopg2.connect(
-        #     host = self.pgsql_info.get('host'),
-        #     port = self.pgsql_info.get('port'),
-        #     user = self.pgsql_info.get('user'),
-        #     password = self.pgsql_info.get('password'),
-        #     database = self.pgsql_info.get('database'),
+        #     host = self.pgsql_info.get(&#39;host&#39;),
+        #     port = self.pgsql_info.get(&#39;port&#39;),
+        #     user = self.pgsql_info.get(&#39;user&#39;),
+        #     password = self.pgsql_info.get(&#39;password&#39;),
+        #     database = self.pgsql_info.get(&#39;database&#39;),
         #     )
         # cursor = dbconn.cursor()
 
@@ -420,7 +370,7 @@ class PgSQLX(object):
             cursor.close()
             dbconn.close()
 
-    def query(self, sql, arg=''):
+    def query(self, sql, arg=&#39;&#39;):
         try:
             with self.init() as cursor:
                 if arg:
@@ -434,13 +384,12 @@ class PgSQLX(object):
             print(sql,str(e))
 
 
-if __name__ == '__main__':
-    pgsql_uri = &quot;postgresql://reber0ask:3eRa1kBg95D7@192.168.3.19:55432/rscan&quot;
+if __name__ == &#39;__main__&#39;:
+    pgsql_uri = &#34;postgresql://reber0ask:3eRa1kBg95D7@192.168.3.19:55432/rscan&#34;
     sqlconn = PgSQLX(pgsql_uri)
-    result = sqlconn.query(&quot;select * from msg where id=%s&quot;,(id,))
+    result = sqlconn.query(&#34;select * from msg where id=%s&#34;,(id,))
     print(result)
-</code></pre>
-</div>
+</code></pre></div>
     </article>
   </main>
 

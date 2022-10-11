@@ -82,91 +82,82 @@
     [<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>,<a href="/tags/module">module</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-argparse-模块">0x00 argparse 模块</h3>
-
+      <div><h3 id="0x00-argparse-模块">0x00 argparse 模块</h3>
 <p>参考 <a href="https://docs.python.org/zh-cn/3.7/library/argparse.html?_blank">https://docs.python.org/zh-cn/3.7/library/argparse.html</a></p>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import argparse
-
-class Parser(object):
-    &quot;&quot;&quot;Parser&quot;&quot;&quot;
-    def __init__(self):
-        super(Parser, self).__init__()
-        self.service_type_list = [
-            &quot;ssh&quot;,&quot;telnet&quot;,&quot;ftp&quot;,
-            &quot;mysql&quot;,&quot;mssql&quot;,&quot;oracle&quot;,&quot;pgsql&quot;,&quot;redis&quot;
-        ]
-        self.log_level = [&quot;debug&quot;, &quot;info&quot;, &quot;warning&quot;, &quot;error&quot;, &quot;critical&quot;]
-        self.example = &quot;&quot;&quot;Example:
-                          \r  python3 {} -s ssh -i 123.123.123.123
-                          \r  python3 {} -s ssh -i 123.123.123.123/24 -l root -p 123456&quot;&quot;&quot;
-
-    def parser(self):
-        parser = argparse.ArgumentParser(
-            formatter_class=argparse.RawDescriptionHelpFormatter,#使 example 可以换行
-            add_help=True,
-            # description = &quot;常见服务口令爆破&quot;,
-            )
-        parser.epilog = self.example.format(parser.prog,parser.prog)
-        parser.add_argument(&quot;-i&quot;, dest=&quot;host&quot;, type=str, 
-                            help=&quot;Target ip&quot;)
-        parser.add_argument(&quot;-iL&quot;, dest=&quot;host_file&quot;, type=str, 
-                            help=&quot;Target file name, one ip per line&quot;)
-        parser.add_argument(&quot;-l&quot;, dest=&quot;user&quot;, type=str, 
-                            help=&quot;username&quot;)
-        parser.add_argument(&quot;-p&quot;, dest=&quot;pwd&quot;, type=str, 
-                            help=&quot;password&quot;)
-        parser.add_argument(&quot;-lp&quot;, dest=&quot;user_pwd_file&quot;, type=str, 
-                            help=&quot;user_pwd file, example: username:password&quot;)
-        parser.add_argument(&quot;-L&quot;, dest=&quot;user_file&quot;, type=str, 
-                            help=&quot;username file&quot;)
-        parser.add_argument(&quot;-P&quot;, dest=&quot;pwd_file&quot;, type=str, 
-                            help=&quot;password file&quot;)
-        parser.add_argument(&quot;--port&quot;, dest=&quot;port&quot;, type=int, 
-                            help=&quot;Target port&quot;)
-        parser.add_argument(&quot;-s&quot;, dest=&quot;service_type&quot;, type=str, required=True, 
-                            choices=self.service_type_list, help=&quot;Service type&quot;)
-        parser.add_argument(&quot;-t&quot;, dest=&quot;thread_num&quot;, type=int, default=10, 
-                            help=&quot;The number of threads, default is 10 threads&quot;)
-        parser.add_argument(&quot;-T&quot;, dest=&quot;timeout&quot;, type=int, default=10, 
-                            help=&quot;Timeout, default is 10s&quot;)
-        parser.add_argument(&quot;-v&quot;, dest=&quot;log_level&quot;, type=str, default=&quot;info&quot;, 
-                            choices=self.log_level, help=&quot;Log Level, default is 'info'&quot;)
-
-        # args = parser.parse_args()
-        # parser.print_help()
-
-        return parser
-
-    @staticmethod
-    def init():
-        parser = Parser().parser()
-        return parser
-
-
-if __name__ == &quot;__main__&quot;:
-    parser = Parser().init()
-    args = parser.parse_args()
-    parser.print_help()
-</code></pre>
-
-<h3 id="0x02-运行">0x02 运行</h3>
-
-<pre><code>➜  python3 tmp.py
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> argparse
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parser</span>(object):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;Parser&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(Parser, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>service_type_list <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;ssh&#34;</span>,<span style="color:#e6db74">&#34;telnet&#34;</span>,<span style="color:#e6db74">&#34;ftp&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;mysql&#34;</span>,<span style="color:#e6db74">&#34;mssql&#34;</span>,<span style="color:#e6db74">&#34;oracle&#34;</span>,<span style="color:#e6db74">&#34;pgsql&#34;</span>,<span style="color:#e6db74">&#34;redis&#34;</span>
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;debug&#34;</span>, <span style="color:#e6db74">&#34;info&#34;</span>, <span style="color:#e6db74">&#34;warning&#34;</span>, <span style="color:#e6db74">&#34;error&#34;</span>, <span style="color:#e6db74">&#34;critical&#34;</span>]
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>example <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;Example:
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                          </span><span style="color:#ae81ff">\r</span><span style="color:#e6db74">  python3 </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> -s ssh -i 123.123.123.123
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                          </span><span style="color:#ae81ff">\r</span><span style="color:#e6db74">  python3 </span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> -s ssh -i 123.123.123.123/24 -l root -p 123456&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">parser</span>(self):
+</span></span><span style="display:flex;"><span>        parser <span style="color:#f92672">=</span> argparse<span style="color:#f92672">.</span>ArgumentParser(
+</span></span><span style="display:flex;"><span>            formatter_class<span style="color:#f92672">=</span>argparse<span style="color:#f92672">.</span>RawDescriptionHelpFormatter,<span style="color:#75715e">#使 example 可以换行</span>
+</span></span><span style="display:flex;"><span>            add_help<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># description = &#34;常见服务口令爆破&#34;,</span>
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>epilog <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>example<span style="color:#f92672">.</span>format(parser<span style="color:#f92672">.</span>prog,parser<span style="color:#f92672">.</span>prog)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-i&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;host&#34;</span>, type<span style="color:#f92672">=</span>str, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Target ip&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-iL&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;host_file&#34;</span>, type<span style="color:#f92672">=</span>str, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Target file name, one ip per line&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-l&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;user&#34;</span>, type<span style="color:#f92672">=</span>str, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-p&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pwd&#34;</span>, type<span style="color:#f92672">=</span>str, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-lp&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;user_pwd_file&#34;</span>, type<span style="color:#f92672">=</span>str, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;user_pwd file, example: username:password&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-L&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;user_file&#34;</span>, type<span style="color:#f92672">=</span>str, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;username file&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-P&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pwd_file&#34;</span>, type<span style="color:#f92672">=</span>str, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;password file&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;--port&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;port&#34;</span>, type<span style="color:#f92672">=</span>int, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Target port&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-s&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;service_type&#34;</span>, type<span style="color:#f92672">=</span>str, required<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, 
+</span></span><span style="display:flex;"><span>                            choices<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>service_type_list, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Service type&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-t&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;thread_num&#34;</span>, type<span style="color:#f92672">=</span>int, default<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;The number of threads, default is 10 threads&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-T&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;timeout&#34;</span>, type<span style="color:#f92672">=</span>int, default<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, 
+</span></span><span style="display:flex;"><span>                            help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Timeout, default is 10s&#34;</span>)
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>add_argument(<span style="color:#e6db74">&#34;-v&#34;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;log_level&#34;</span>, type<span style="color:#f92672">=</span>str, default<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;info&#34;</span>, 
+</span></span><span style="display:flex;"><span>                            choices<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>log_level, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Log Level, default is &#39;info&#39;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># args = parser.parse_args()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># parser.print_help()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> parser
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@staticmethod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">init</span>():
+</span></span><span style="display:flex;"><span>        parser <span style="color:#f92672">=</span> Parser()<span style="color:#f92672">.</span>parser()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> parser
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    parser <span style="color:#f92672">=</span> Parser()<span style="color:#f92672">.</span>init()
+</span></span><span style="display:flex;"><span>    args <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>print_help()
+</span></span></code></pre></div><h3 id="0x02-运行">0x02 运行</h3>
+<pre tabindex="0"><code>➜  python3 tmp.py
 usage: tmp.py [-h] [-i HOST] [-iL HOST_FILE] [-l USER] [-p PWD]
               [-lp USER_PWD_FILE] [-L USER_FILE] [-P PWD_FILE] [--port PORT]
               -s {ssh,telnet,ftp,mysql,mssql,oracle,pgsql,redis}
               [-t THREAD_NUM] [-T TIMEOUT]
               [-v {debug,info,warning,error,critical}]
 tmp.py: error: the following arguments are required: -s
-</code></pre>
-
-<pre><code>➜  python3 tmp.py -s ssh
+</code></pre><pre tabindex="0"><code>➜  python3 tmp.py -s ssh
 usage: tmp.py [-h] [-i HOST] [-iL HOST_FILE] [-l USER] [-p PWD]
               [-lp USER_PWD_FILE] [-L USER_FILE] [-P PWD_FILE] [--port PORT]
               -s {ssh,telnet,ftp,mysql,mssql,oracle,pgsql,redis}
@@ -188,13 +179,12 @@ optional arguments:
   -t THREAD_NUM         The number of threads, default is 10 threads
   -T TIMEOUT            Timeout, default is 10s
   -v {debug,info,warning,error,critical}
-                        Log Level, default is 'info'
+                        Log Level, default is &#39;info&#39;
 
 Example:
   python3 tmp.py -s ssh -i 123.123.123.123
   python3 tmp.py -s ssh -i 123.123.123.123/24 -l root -p 123456
-</code></pre>
-</div>
+</code></pre></div>
     </article>
   </main>
 

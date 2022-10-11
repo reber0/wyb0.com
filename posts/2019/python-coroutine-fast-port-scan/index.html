@@ -82,157 +82,128 @@
     [<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>,<a href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86">信息搜集</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-协程的优势">0x00 协程的优势</h3>
-
+      <div><h3 id="0x00-协程的优势">0x00 协程的优势</h3>
 <p>协程拥有极高的执行效率，因为子程序切换不是线程切换，而是由程序自身控制，因此没有线程切换的开销。和多线程比，线程数量越多，协程的性能优势就越明显。</p>
-
 <p>不需要多线程的锁机制，因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多</p>
-
 <h3 id="0x01-python中的协程">0x01 Python中的协程</h3>
-
 <p>协程也就是微线程，python 的 generator(生成器) 中的 yield 可以一定程度上实现协程</p>
-
 <p>在 generator 中，我们不但可以通过 for 循环来迭代，还可以不断调用 next() 函数获取由 yield 语句返回的下一个值。</p>
-
 <p>但是 Python 的 yield 不但可以返回一个值，它还可以接收调用者发出的参数。
-<img src="/img/post/coroutine_case.png" alt="80" /></p>
-
+<img src="/img/post/coroutine_case.png" alt="80"></p>
 <h3 id="0x02-使用-gevent">0x02 使用 gevent</h3>
-
 <p>python 中可以通过 generator 实现协程，但是不完全，第三方的 gevent 为 Python 提供了比较完善的协程支持，gevent 可以通过 monkey patch 动态的修改 Python 自带的一些标准库</p>
-
 <p>由于 IO 操作(比如访问网络)非常耗时，经常使程序处于等待状态，而 gevent 可以为我们自动切换协程，再在适当的时候切换回来继续执行，这就保证总有 greenlet 在运行，而不是等待 IO</p>
-
 <p>使用 gevent 可以获得极高的并发性能，但 gevent 只能在 Unix/Linux 下运行，在 Windows 下不保证正常安装和运行
 下面 3 个网络操作是并发执行的，且结束顺序不同，但只有一个线程</p>
-
-<pre><code>from gevent import monkey; monkey.patch_all()
+<pre tabindex="0"><code>from gevent import monkey; monkey.patch_all()
 import requests
 import gevent
 
 def get_resp_size(url):
-    print('GET: %s' % url)
+    print(&#39;GET: %s&#39; % url)
     html = requests.get(url).content
-    print('%d bytes received from %s.' % (len(html), url))
+    print(&#39;%d bytes received from %s.&#39; % (len(html), url))
 
 def gevent_test(urls):
     job_list = [gevent.spawn(get_resp_size, url) for url in urls]
     gevent.joinall(job_list)
 
 urls = [
-    'https://www.python.org/',
-    'https://www.yahoo.com/',
-    'https://github.com/',
+    &#39;https://www.python.org/&#39;,
+    &#39;https://www.yahoo.com/&#39;,
+    &#39;https://github.com/&#39;,
 ]
 gevent_test(urls)
-</code></pre>
-
-<h3 id="0x03-asyncio">0x03 asyncio</h3>
-
+</code></pre><h3 id="0x03-asyncio">0x03 asyncio</h3>
 <p>在 python 3.4 时引入了 asyncio 这个模块，asyncio 专门被用来实现异步IO操作。</p>
-
-<p>通过使用 <f>yield from</f> 和 asyncio 模块中的 <f>@asyncio.coroutine</f> 可以实现协程</p>
-
+<p>通过使用 <!-- raw HTML omitted -->yield from<!-- raw HTML omitted --> 和 asyncio 模块中的 <!-- raw HTML omitted -->@asyncio.coroutine<!-- raw HTML omitted --> 可以实现协程</p>
 <p>对于简单的迭代器，yield from iterable 本质上等于 for item in iterable: yield item 的缩写版</p>
-
 <ul>
 <li>hello world 示例</li>
 </ul>
-
-<pre><code>@asyncio.coroutine
+<pre tabindex="0"><code>@asyncio.coroutine
 def hello():
-    print(&quot;Hello world!&quot;)
+    print(&#34;Hello world!&#34;)
     r = yield from asyncio.sleep(1)
-    print(&quot;Hello again!&quot;)
-</code></pre>
-
-<ul>
+    print(&#34;Hello again!&#34;)
+</code></pre><ul>
 <li>请求web网页</li>
 </ul>
-
-<pre><code>import asyncio
+<pre tabindex="0"><code>import asyncio
 
 @asyncio.coroutine
 def wget(host):
-    print('wget %s...' % host)
+    print(&#39;wget %s...&#39; % host)
     connect = asyncio.open_connection(host, 80)
     reader, writer = yield from connect
-    header = 'GET / HTTP/1.0\r\nHost: %s\r\n\r\n' % host
-    writer.write(header.encode('utf-8'))
+    header = &#39;GET / HTTP/1.0\r\nHost: %s\r\n\r\n&#39; % host
+    writer.write(header.encode(&#39;utf-8&#39;))
     yield from writer.drain()
     while True:
         line = yield from reader.readline()
-        if line == b'\r\n':
+        if line == b&#39;\r\n&#39;:
             break
-        print('%s header &gt; %s' % (host, line.decode('utf-8').rstrip()))
+        print(&#39;%s header &gt; %s&#39; % (host, line.decode(&#39;utf-8&#39;).rstrip()))
     # Ignore the body, close the socket
     writer.close()
 
 loop = asyncio.get_event_loop()
-tasks = [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']]
+tasks = [wget(host) for host in [&#39;www.sina.com.cn&#39;, &#39;www.sohu.com&#39;, &#39;www.163.com&#39;]]
 loop.run_until_complete(asyncio.wait(tasks))
 loop.close()
-</code></pre>
-
-<h3 id="0x04-async-await">0x04 async/await</h3>
-
+</code></pre><h3 id="0x04-asyncawait">0x04 async/await</h3>
 <p>在 python 3.5 时引入了 async/await</p>
-
 <ul>
-<li><p>关于asyncio的一些关键字的说明</p>
-
+<li>
+<p>关于asyncio的一些关键字的说明</p>
 <ul>
-<li>event_loop<br />
+<li>event_loop<br>
 事件循环：程序开启一个无限循环，把一些函数注册到事件循环上，当满足事件发生的时候，调用相应的协程函数</li>
-<li>coroutine<br />
+<li>coroutine<br>
 协程对象，指一个使用async关键字定义的函数，它的调用不会立即执行函数，而是会返回一个协程对象。协程对象需要注册到事件循环，由事件循环调用。</li>
-<li>task<br />
+<li>task<br>
 一个协程对象就是一个原生可以挂起的函数，任务则是对协程进一步封装，其中包含了任务的各种状态</li>
-<li>future<br />
+<li>future<br>
 代表将来执行或没有执行的任务的结果。它和task没有本质上的区别</li>
-<li>async/await<br />
+<li>async/await<br>
 async定义一个协程，await就像生成器里的yield一样用于挂起阻塞的异步调用接口。</li>
-</ul></li>
-
-<li><p>async和await是针对coroutine的新语法，要使用新的语法，只需要做两步简单的替换：</p>
-
+</ul>
+</li>
+<li>
+<p>async和await是针对coroutine的新语法，要使用新的语法，只需要做两步简单的替换：</p>
 <ul>
 <li>把@asyncio.coroutine替换为async；</li>
 <li>把yield from替换为await。</li>
-</ul></li>
-
-<li><p>hello world 示例</p></li>
 </ul>
-
-<pre><code>@asyncio.coroutine
+</li>
+<li>
+<p>hello world 示例</p>
+</li>
+</ul>
+<pre tabindex="0"><code>@asyncio.coroutine
 def hello():
-    print(&quot;Hello world!&quot;)
+    print(&#34;Hello world!&#34;)
     r = yield from asyncio.sleep(1)
-    print(&quot;Hello again!&quot;)
+    print(&#34;Hello again!&#34;)
 
 # 改为如下代码：
 
 async def hello():
-    print(&quot;Hello world!&quot;)
+    print(&#34;Hello world!&#34;)
     r = await asyncio.sleep(1)
-    print(&quot;Hello again!&quot;)
-</code></pre>
-
-<ul>
+    print(&#34;Hello again!&#34;)
+</code></pre><ul>
 <li>使用asyncio创建任务运行，并给task指定callback得到执行结果</li>
 </ul>
-
-<pre><code>import asyncio
+<pre tabindex="0"><code>import asyncio
 
 async def do_some_work(x):
-    print(&quot;waiting:&quot;, x)
-    return &quot;Done after {}s&quot;.format(x)
+    print(&#34;waiting:&#34;, x)
+    return &#34;Done after {}s&#34;.format(x)
 
 def callback(future):
     result = future.result()
-    print('callback:',result)
+    print(&#39;callback:&#39;,result)
 
 def run1():
     loop = asyncio.get_event_loop() # 定义一个事件loop
@@ -252,23 +223,19 @@ def run2():
     task.add_done_callback(callback) # 回调函数，获取task的返回值
     loop.run_until_complete(task) # 将task加入到事件循环 loop
     loop.close()
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>使用 asyncio 并发执行协程</li>
 </ul>
-
 <p>异步和并发与并行并没有关系，异步用于表示并发或并行任务的印象</p>
-
-<pre><code>import asyncio
+<pre tabindex="0"><code>import asyncio
 
 async def do_some_work(x):
-    print(&quot;waiting:&quot;, x)
+    print(&#34;waiting:&#34;, x)
     await asyncio.sleep(x)
-    return &quot;Done after {}s&quot;.format(x)
+    return &#34;Done after {}s&#34;.format(x)
 
 def callback(future):
-    print('callback',future.result())
+    print(&#39;callback&#39;,future.result())
 
 def run1():
     # 4s 后结果同时返回
@@ -290,21 +257,18 @@ def run2():
     done, pending = loop.run_until_complete(asyncio.wait(tasks))
     # results = loop.run_until_complete(asyncio.gather(*tasks))
     loop.close()
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>停止协程</li>
 </ul>
-
-<pre><code>import asyncio
+<pre tabindex="0"><code>import asyncio
 
 async def do_some_work(x):
-    print(&quot;waiting:&quot;, x)
+    print(&#34;waiting:&#34;, x)
     await asyncio.sleep(x)
-    return &quot;Done after {}s&quot;.format(x)
+    return &#34;Done after {}s&#34;.format(x)
 
 def callback(future):
-    print('callback',future.result())
+    print(&#39;callback&#39;,future.result())
 
 def run():
     # 1s、2s、4s 分别返回结果
@@ -323,20 +287,17 @@ def run():
         loop.run_forever()
     finally:
         loop.close()
-</code></pre>
-
-<h3 id="0x05-协程与线程配合使用">0x05 协程与线程配合使用</h3>
-
-<pre><code>import asyncio
+</code></pre><h3 id="0x05-协程与线程配合使用">0x05 协程与线程配合使用</h3>
+<pre tabindex="0"><code>import asyncio
 import threading
 
 async def do_some_work(x):
-    print(&quot;waiting:&quot;, x)
+    print(&#34;waiting:&#34;, x)
     await asyncio.sleep(x)
-    return &quot;Done after {}s&quot;.format(x)
+    return &#34;Done after {}s&#34;.format(x)
 
 def callback(future):
-    print('callback',future.result())
+    print(&#39;callback&#39;,future.result())
 
 def start_loop(loop):
     asyncio.set_event_loop(loop)
@@ -353,19 +314,17 @@ def run():
     for future in futures:
         future.add_done_callback(callback)
 
-    print('test...')
+    print(&#39;test...&#39;)
     
     try:
         while True:pass
     except KeyboardInterrupt as e:
-        import sys;sys.exit('user aborted!')
+        import sys;sys.exit(&#39;user aborted!&#39;)
     finally:
         sub_loop.call_soon_threadsafe(sub_loop.stop)
 
 run()
-</code></pre>
-
-<pre><code>➜  python3 tmp.py
+</code></pre><pre tabindex="0"><code>➜  python3 tmp.py
 waiting: 2
 test...
 waiting: 1
@@ -374,23 +333,20 @@ callback Done after 1s
 callback Done after 2s
 callback Done after 4s
 ^Cuser aborted!
-</code></pre>
-
-<h3 id="0x06-通过协程实现全端口-tcp-快速扫描">0x06 通过协程实现全端口 tcp 快速扫描</h3>
-
-<pre><code>import time
+</code></pre><h3 id="0x06-通过协程实现全端口-tcp-快速扫描">0x06 通过协程实现全端口 tcp 快速扫描</h3>
+<pre tabindex="0"><code>import time
 import asyncio
 import threading
 
 class PortScan(object):
-    &quot;&quot;&quot;docstring for PortScan&quot;&quot;&quot;
-    def __init__(self, ip_list=[&quot;127.0.0.1&quot;], all_ports=False, rate=2000):
+    &#34;&#34;&#34;docstring for PortScan&#34;&#34;&#34;
+    def __init__(self, ip_list=[&#34;127.0.0.1&#34;], all_ports=False, rate=2000):
         super(PortScan, self).__init__()
         self.ip_list = ip_list
         self.rate = rate
         self.all_ports = all_ports
         self.open_list = {}
-        self.common_port = &quot;21,22,23,25,53,69,80,81,82,83,84,85,86,87,88,89,110,111,135,139,143,161,389,443,445,465,513,873,993,995,1080,1099,1158,1433,1521,1533,1863,2049,2100,2181,3128,3306,3307,3308,3389,3690,5000,5432,5900,6379,7001,8000,8001,8002,8003,8004,8005,8006,8007,8008,8009,8010,8011,8012,8013,8014,8015,8016,8017,8018,8019,8020,8021,8022,8023,8024,8025,8026,8027,8028,8029,8030,8031,8032,8033,8034,8035,8036,8037,8038,8039,8040,8041,8042,8043,8044,8045,8046,8047,8048,8049,8050,8051,8052,8053,8054,8055,8056,8057,8058,8059,8060,8061,8062,8063,8064,8065,8066,8067,8068,8069,8070,8071,8072,8073,8074,8075,8076,8077,8078,8079,8080,8081,8082,8083,8084,8085,8086,8087,8088,8089,8090,8888,9000,9080,9090,9200,9300,9418,11211,27017,27018,27019,50060&quot;
+        self.common_port = &#34;21,22,23,25,53,69,80,81,82,83,84,85,86,87,88,89,110,111,135,139,143,161,389,443,445,465,513,873,993,995,1080,1099,1158,1433,1521,1533,1863,2049,2100,2181,3128,3306,3307,3308,3389,3690,5000,5432,5900,6379,7001,8000,8001,8002,8003,8004,8005,8006,8007,8008,8009,8010,8011,8012,8013,8014,8015,8016,8017,8018,8019,8020,8021,8022,8023,8024,8025,8026,8027,8028,8029,8030,8031,8032,8033,8034,8035,8036,8037,8038,8039,8040,8041,8042,8043,8044,8045,8046,8047,8048,8049,8050,8051,8052,8053,8054,8055,8056,8057,8058,8059,8060,8061,8062,8063,8064,8065,8066,8067,8068,8069,8070,8071,8072,8073,8074,8075,8076,8077,8078,8079,8080,8081,8082,8083,8084,8085,8086,8087,8088,8089,8090,8888,9000,9080,9090,9200,9300,9418,11211,27017,27018,27019,50060&#34;
 
     async def async_port_check(self, semaphore, ip_port):
         async with semaphore:
@@ -398,14 +354,14 @@ class PortScan(object):
             conn = asyncio.open_connection(ip, port)
             try:
                 reader, writer = await asyncio.wait_for(conn, timeout=10)
-                return (ip, port, 'open')
+                return (ip, port, &#39;open&#39;)
             except Exception as e:
                 # print(e)
-                return (ip, port, 'close')
+                return (ip, port, &#39;close&#39;)
 
     def callback(self, future):
         ip,port,status = future.result()
-        if status == &quot;open&quot;:
+        if status == &#34;open&#34;:
             print(ip,port,status)
             try:
                 if ip in self.open_list:
@@ -418,7 +374,7 @@ class PortScan(object):
             pass
 
     def async_tcp_port_scan(self):
-        ports = [port for port in range(11,65535)] if self.all_ports else self.common_port.split(',')
+        ports = [port for port in range(11,65535)] if self.all_ports else self.common_port.split(&#39;,&#39;)
         ip_port_list = [(ip,int(port)) for ip in self.ip_list for port in ports]
 
         sem = asyncio.Semaphore(self.rate) # 限制并发量
@@ -435,34 +391,23 @@ class PortScan(object):
         print(self.open_list)
 
 
-if __name__ == '__main__':
-    ip_list = [&quot;59.108.35.198&quot;]
+if __name__ == &#39;__main__&#39;:
+    ip_list = [&#34;59.108.35.198&#34;]
 
     now = time.time
 
     start = now()
     ps = PortScan(ip_list,True,2000)
     ps.async_tcp_port_scan()
-    print(&quot;Time:&quot;,now()-start)
-</code></pre>
-
-<pre><code>➜  python3 tmp.py
+    print(&#34;Time:&#34;,now()-start)
+</code></pre><pre tabindex="0"><code>➜  python3 tmp.py
 59.108.35.198 22 open
 59.108.35.198 80 open
 59.108.35.198 8888 open
 59.108.35.198 50050 open
-{'59.108.35.198': [22, 80, 8888, 50050]}
+{&#39;59.108.35.198&#39;: [22, 80, 8888, 50050]}
 Time: 49.96410322189331
-</code></pre>
-
-<p><br></p>
-
-<h4 id="reference-侵删">Reference(侵删)：</h4>
-
-<ul>
-<li><a href="https://www.cnblogs.com/zhaof/p/8490045.html?_blank">https://www.cnblogs.com/zhaof/p/8490045.html</a></li>
-<li><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017970488768640?_blank">https://www.liaoxuefeng.com/wiki/1016959663602400/1017970488768640</a></li>
-</ul>
+</code></pre><!-- raw HTML omitted -->
 </div>
     </article>
   </main>

@@ -82,11 +82,8 @@
     [<a href="/categories/Other">Other</a>](<a href="/tags/%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87">网络设备</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-简单配置命令">0x00 简单配置命令</h3>
-
-<pre><code>Switch&gt;enable(配置交换机名称)
+      <div><h3 id="0x00-简单配置命令">0x00 简单配置命令</h3>
+<pre tabindex="0"><code>Switch&gt;enable(配置交换机名称)
 Switch(config)#hostname S
 
 S(config)#enable password 222//(加密特权密码，密码为222)
@@ -107,21 +104,15 @@ S(config-line)#no password
 S(config-line)#exec-timeout 5 30//(超时时间)(分、秒)
 
 S(config)#no ip domain-lookup//(禁止名称解析)
-</code></pre>
-
-<h3 id="0x01-配置交换机管理ip-默认网关">0x01 配置交换机管理IP、默认网关</h3>
-
-<pre><code>S(config)#interface vlan 1  //(配置交换机管理IP、子网掩码)
+</code></pre><h3 id="0x01-配置交换机管理ip默认网关">0x01 配置交换机管理IP、默认网关</h3>
+<pre tabindex="0"><code>S(config)#interface vlan 1  //(配置交换机管理IP、子网掩码)
 S(config-if)#ip address 192.168.1.1 255.255.255.0
 S(config-if)#no shutdown
 
 S(config)#  exit
 S(config)#ip default-gateway 192.168.1.250//(默认网关)
-</code></pre>
-
-<h3 id="0x02-配置交换机的端口速率-端口双工模式">0x02 配置交换机的端口速率、端口双工模式</h3>
-
-<pre><code>S(config)#//(端口双工模式)
+</code></pre><h3 id="0x02-配置交换机的端口速率端口双工模式">0x02 配置交换机的端口速率、端口双工模式</h3>
+<pre tabindex="0"><code>S(config)#//(端口双工模式)
 S(config)#interface f0/1
 S(config-if)#duplex ?
   auto  Enable AUTO duplex configuration
@@ -138,8 +129,7 @@ S(config-if)#speed 100
 Switch#write  //(保存配置)
 Building configuration...
 [OK]
-</code></pre>
-</div>
+</code></pre></div>
     </article>
   </main>
 

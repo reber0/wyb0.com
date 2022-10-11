@@ -82,186 +82,178 @@
     [<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>,<a href="/tags/%E4%BB%A3%E7%90%86">代理</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-帮助信息">0x00 帮助信息</h3>
-
-<p><img src="/img/post/python_proxy_help.png" alt="帮助信息" /></p>
-
+      <div><h3 id="0x00-帮助信息">0x00 帮助信息</h3>
+<p><img src="/img/post/python_proxy_help.png" alt="帮助信息"></p>
 <h3 id="0x01-代码如下">0x01 代码如下</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-'This is a proxy'
-
-__author__ = 'xxx'
-
-import sys
-import socket
-import threading
-import optparse
-
-lock = threading.Lock()
-
-def locker(msg):
-    lock.acquire()
-    print msg
-    lock.release()
-
-def hexdump (src,length=16):#十六进制导出函数
-    result = []
-    digits = 4 if isinstance(src,unicode) else 2
-
-    for i in xrange(0,len(src),length):
-        s = src[i:i+length]
-        hexa = b' '.join(&quot;[%0*X]&quot; % (digits,ord(x)) for x in s)
-        text = b''.join([x if 0x20 &lt;= ord(x) &lt; 0x7F else b'.' for x in s])
-        result.append(b&quot;%04X  %-*s  %s&quot; % (i,length*(digits+1),hexa,text))
-
-    print b'\n'.join(result)
-
-def receive_from (connection):
-    
-    buffer = &quot;&quot;
-    
-    #我们设置了1秒的超时，这取决于目标的情况，可能需要调整
-    connection.settimeout(1)
-    try:
-        #持续从缓存中读取数据直到没有数据或者超时
-        while True:
-            data = connection.recv(4096)
-            if not data:
-                break
-
-            buffer += data
-    except:
-        pass
-        
-    return buffer
-    
-#对目标是远程主机的请求进行修改
-def request_handler (buffer):
-    #执行包修改
-    return buffer
-
-#对目标是本地主机的响应进行修改
-def response_handler (buffer):
-    #执行包修改
-    return buffer
-
-def proxy_handler (client_socket,remote_host,remote_port,receive_first):
-    #连接远程主机
-    remote_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    remote_socket.connect((remote_host,remote_port))
-
-    #如果必要从远程主机接收数据
-    if receive_first:
-        remote_buffer = receive_from(remote_socket)
-        if len(remote_buffer):
-            print &quot;\n[==&gt;] Received %d bytes from remote.&quot; % len(remote_buffer)
-            # hexdump(remote_buffer)
-        
-        #发送给我们的相应处理
-        remote_buffer = response_handler(remote_buffer)
-        #若我们有数据传递给本地客户端，发送它
-        if len(remote_buffer):
-            print &quot;[&lt;==] Sending %d bytes to localhost.\n&quot; % len(remote_buffer)
-            client_socket.send(remote_buffer)
-    
-    #现在我们从本地循环读取数据，发送给远程主机和本地主机
-    while True:
-        #从本地读取数据
-        local_buffer = receive_from(client_socket)
-        if len(local_buffer):
-            print &quot;\n[==&gt;] Received %d bytes from localhost.&quot; % len(local_buffer)
-            # hexdump(local_buffer)
-            #发送给我们的本地请求
-            local_buffer = request_handler(local_buffer)
-            #发送给远程主机
-            remote_socket.send(local_buffer)
-            print &quot;[==&gt;] Sent to remote.&quot;
-
-        #接收响应的数据
-        remote_buffer = receive_from(remote_socket)
-        if len(remote_buffer):
-            print &quot;\n[&lt;==] Received %d bytes from remote.&quot; % len(remote_buffer)
-            # hexdump(remote_buffer)
-            #发送数据到响应处理函数
-            remote_buffer = response_handler(remote_buffer)
-            #将响应发送给本地socket
-            client_socket.send(remote_buffer)
-            print &quot;[==&gt;] Sent to localhost.&quot;
-
-        #若两边都没有数据，关闭连接
-        if not len(local_buffer) or not len(remote_buffer):
-            client_socket.close()
-            remote_socket.close()
-            print &quot;[*] No more data. Closing connections.&quot;
-            break
-
-def server_loop(local_host,local_port,remote_host,remote_port,receive_first):
-
-    server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    try:
-        server.bind((local_host,local_port))
-    except:
-        print &quot;[!!] Failed to listen on %s:%d&quot; % (local_host,local_port)
-        print &quot;[!!] Check for other listening sockets or correct permisssions.&quot;
-        sys.exit(0)
-    print &quot;[*] Listening on %s:%d......&quot; % (local_host,local_port)
-    server.listen(5)
-
-    while True:
-        client_socket,addr = server.accept()
-        
-        #打印本地连接信息
-        print &quot;\n[==&gt;] Received incoming connection from %s:%d&quot; % (addr[0],addr[1])
-
-        #开启一个线程与远程主机通信
-        proxy_thread = threading.Thread(target=proxy_handler,args=(client_socket,remote_host,remote_port,receive_first))
-        proxy_thread.start()
-
-def main ():
-    parser = optparse.OptionParser()
-    parser.add_option('--lh', '--localhost', dest='localhost',default='127.0.0.1',
-        type='string', help='Localhost.')
-    parser.add_option('--lp', '--localport', dest='localport',default=8888,
-        type='int', help='Localport.')
-    parser.add_option('--rh', '--remotehost', dest='remotehost', default='127.0.0.1',
-        type='string', help='Remotehost.')
-    parser.add_option('--rp', '--remoteport', dest='remoteport', default=8080, 
-        type='int', help='Remoteport.')
-    parser.add_option('--rf', '--receivefirst', dest='receive_first', default=False,
-        action='store_true',help='Connection before send and receive data.')
-
-    (options, args) = parser.parse_args()
-
-    #设置本地监听参数
-    if options.localhost:
-        local_host = options.localhost
-    if options.localport:
-        local_port = options.localport
-    
-    #设置远程目标
-    if options.remotehost:
-        remote_host = options.remotehost
-    if options.remoteport:
-        remote_port = options.remoteport
-
-    receive_first = options.receive_first
-
-    # print local_host,local_port,remote_host,remote_port,receive_first
-
-    #现在设置好我们的监听socket
-    server_loop(local_host,local_port,remote_host,remote_port,receive_first)
-
-main()
-</code></pre>
-
-<h3 id="0x02-效果图">0x02 效果图</h3>
-
-<p><img src="/img/post/python_proxy_result.png" alt="效果图" /></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;This is a proxy&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>__author__ <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;xxx&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> threading
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> optparse
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>lock <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Lock()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">locker</span>(msg):
+</span></span><span style="display:flex;"><span>    lock<span style="color:#f92672">.</span>acquire()
+</span></span><span style="display:flex;"><span>    print msg
+</span></span><span style="display:flex;"><span>    lock<span style="color:#f92672">.</span>release()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hexdump</span> (src,length<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>):<span style="color:#75715e">#十六进制导出函数</span>
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    digits <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span> <span style="color:#66d9ef">if</span> isinstance(src,unicode) <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> xrange(<span style="color:#ae81ff">0</span>,len(src),length):
+</span></span><span style="display:flex;"><span>        s <span style="color:#f92672">=</span> src[i:i<span style="color:#f92672">+</span>length]
+</span></span><span style="display:flex;"><span>        hexa <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">%0*X</span><span style="color:#e6db74">]&#34;</span> <span style="color:#f92672">%</span> (digits,ord(x)) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> s)
+</span></span><span style="display:flex;"><span>        text <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join([x <span style="color:#66d9ef">if</span> <span style="color:#ae81ff">0x20</span> <span style="color:#f92672">&lt;=</span> ord(x) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0x7F</span> <span style="color:#66d9ef">else</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;.&#39;</span> <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> s])
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%04X</span><span style="color:#e6db74">  </span><span style="color:#e6db74">%-*s</span><span style="color:#e6db74">  </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (i,length<span style="color:#f92672">*</span>(digits<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>),hexa,text))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>join(result)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">receive_from</span> (connection):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    buffer <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#我们设置了1秒的超时，这取决于目标的情况，可能需要调整</span>
+</span></span><span style="display:flex;"><span>    connection<span style="color:#f92672">.</span>settimeout(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#持续从缓存中读取数据直到没有数据或者超时</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>            data <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">4096</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> data:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            buffer <span style="color:#f92672">+=</span> data
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> buffer
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#对目标是远程主机的请求进行修改</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">request_handler</span> (buffer):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#执行包修改</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> buffer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#对目标是本地主机的响应进行修改</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">response_handler</span> (buffer):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#执行包修改</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> buffer
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">proxy_handler</span> (client_socket,remote_host,remote_port,receive_first):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#连接远程主机</span>
+</span></span><span style="display:flex;"><span>    remote_socket <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET,socket<span style="color:#f92672">.</span>SOCK_STREAM)
+</span></span><span style="display:flex;"><span>    remote_socket<span style="color:#f92672">.</span>connect((remote_host,remote_port))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#如果必要从远程主机接收数据</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> receive_first:
+</span></span><span style="display:flex;"><span>        remote_buffer <span style="color:#f92672">=</span> receive_from(remote_socket)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(remote_buffer):
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">[==&gt;] Received </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> bytes from remote.&#34;</span> <span style="color:#f92672">%</span> len(remote_buffer)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># hexdump(remote_buffer)</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#发送给我们的相应处理</span>
+</span></span><span style="display:flex;"><span>        remote_buffer <span style="color:#f92672">=</span> response_handler(remote_buffer)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#若我们有数据传递给本地客户端，发送它</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(remote_buffer):
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;[&lt;==] Sending </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> bytes to localhost.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> len(remote_buffer)
+</span></span><span style="display:flex;"><span>            client_socket<span style="color:#f92672">.</span>send(remote_buffer)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#现在我们从本地循环读取数据，发送给远程主机和本地主机</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#从本地读取数据</span>
+</span></span><span style="display:flex;"><span>        local_buffer <span style="color:#f92672">=</span> receive_from(client_socket)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(local_buffer):
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">[==&gt;] Received </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> bytes from localhost.&#34;</span> <span style="color:#f92672">%</span> len(local_buffer)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># hexdump(local_buffer)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#发送给我们的本地请求</span>
+</span></span><span style="display:flex;"><span>            local_buffer <span style="color:#f92672">=</span> request_handler(local_buffer)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#发送给远程主机</span>
+</span></span><span style="display:flex;"><span>            remote_socket<span style="color:#f92672">.</span>send(local_buffer)
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;[==&gt;] Sent to remote.&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#接收响应的数据</span>
+</span></span><span style="display:flex;"><span>        remote_buffer <span style="color:#f92672">=</span> receive_from(remote_socket)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(remote_buffer):
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">[&lt;==] Received </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> bytes from remote.&#34;</span> <span style="color:#f92672">%</span> len(remote_buffer)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># hexdump(remote_buffer)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#发送数据到响应处理函数</span>
+</span></span><span style="display:flex;"><span>            remote_buffer <span style="color:#f92672">=</span> response_handler(remote_buffer)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#将响应发送给本地socket</span>
+</span></span><span style="display:flex;"><span>            client_socket<span style="color:#f92672">.</span>send(remote_buffer)
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;[==&gt;] Sent to localhost.&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#若两边都没有数据，关闭连接</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> len(local_buffer) <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> len(remote_buffer):
+</span></span><span style="display:flex;"><span>            client_socket<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>            remote_socket<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;[*] No more data. Closing connections.&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">server_loop</span>(local_host,local_port,remote_host,remote_port,receive_first):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    server <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET,socket<span style="color:#f92672">.</span>SOCK_STREAM)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        server<span style="color:#f92672">.</span>bind((local_host,local_port))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;[!!] Failed to listen on </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (local_host,local_port)
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;[!!] Check for other listening sockets or correct permisssions.&#34;</span>
+</span></span><span style="display:flex;"><span>        sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    print <span style="color:#e6db74">&#34;[*] Listening on </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">......&#34;</span> <span style="color:#f92672">%</span> (local_host,local_port)
+</span></span><span style="display:flex;"><span>    server<span style="color:#f92672">.</span>listen(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        client_socket,addr <span style="color:#f92672">=</span> server<span style="color:#f92672">.</span>accept()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#打印本地连接信息</span>
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">[==&gt;] Received incoming connection from </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (addr[<span style="color:#ae81ff">0</span>],addr[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#开启一个线程与远程主机通信</span>
+</span></span><span style="display:flex;"><span>        proxy_thread <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>proxy_handler,args<span style="color:#f92672">=</span>(client_socket,remote_host,remote_port,receive_first))
+</span></span><span style="display:flex;"><span>        proxy_thread<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span> ():
+</span></span><span style="display:flex;"><span>    parser <span style="color:#f92672">=</span> optparse<span style="color:#f92672">.</span>OptionParser()
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;--lh&#39;</span>, <span style="color:#e6db74">&#39;--localhost&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;localhost&#39;</span>,default<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;127.0.0.1&#39;</span>,
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;string&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Localhost.&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;--lp&#39;</span>, <span style="color:#e6db74">&#39;--localport&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;localport&#39;</span>,default<span style="color:#f92672">=</span><span style="color:#ae81ff">8888</span>,
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;int&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Localport.&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;--rh&#39;</span>, <span style="color:#e6db74">&#39;--remotehost&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;remotehost&#39;</span>, default<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;127.0.0.1&#39;</span>,
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;string&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Remotehost.&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;--rp&#39;</span>, <span style="color:#e6db74">&#39;--remoteport&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;remoteport&#39;</span>, default<span style="color:#f92672">=</span><span style="color:#ae81ff">8080</span>, 
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;int&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Remoteport.&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;--rf&#39;</span>, <span style="color:#e6db74">&#39;--receivefirst&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;receive_first&#39;</span>, default<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>        action<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;store_true&#39;</span>,help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Connection before send and receive data.&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    (options, args) <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#设置本地监听参数</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> options<span style="color:#f92672">.</span>localhost:
+</span></span><span style="display:flex;"><span>        local_host <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>localhost
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> options<span style="color:#f92672">.</span>localport:
+</span></span><span style="display:flex;"><span>        local_port <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>localport
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#设置远程目标</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> options<span style="color:#f92672">.</span>remotehost:
+</span></span><span style="display:flex;"><span>        remote_host <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>remotehost
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> options<span style="color:#f92672">.</span>remoteport:
+</span></span><span style="display:flex;"><span>        remote_port <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>remoteport
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    receive_first <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>receive_first
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># print local_host,local_port,remote_host,remote_port,receive_first</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#现在设置好我们的监听socket</span>
+</span></span><span style="display:flex;"><span>    server_loop(local_host,local_port,remote_host,remote_port,receive_first)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>main()
+</span></span></code></pre></div><h3 id="0x02-效果图">0x02 效果图</h3>
+<p><img src="/img/post/python_proxy_result.png" alt="效果图"></p>
 </div>
     </article>
   </main>

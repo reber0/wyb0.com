@@ -82,145 +82,112 @@
     [<a href="/categories/Other">Other</a>](<a href="/tags/software">software</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-package-control">0x00 Package Control</h3>
-
+      <div><h3 id="0x00-package-control">0x00 Package Control</h3>
 <p>安装完这个插件后可以更容易的管理(安装、删除、查看等)其他插件</p>
-
 <ul>
-<li>代码安装<br />
+<li>代码安装<br>
 ctrl+~快捷键调出console，将下面代码粘贴进去，然后Enter执行(注意单引号)</li>
 </ul>
-
-<pre><code>import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
-</code></pre>
-
+<pre tabindex="0"><code>import urllib.request,os; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), &#39;wb&#39;).write(urllib.request.urlopen( &#39;http://sublime.wbond.net/&#39; + pf.replace(&#39; &#39;,&#39;%20&#39;)).read())
+</code></pre><ul>
+<li>手动安装
 <ul>
-<li>手动安装<br />
-
-<ul>
-<li>点击<a href="https://sublime.wbond.net/Package%20Control.sublime-package">https://sublime.wbond.net/Package%20Control.sublime-package</a> 下载文件</li>
+<li>点击https://sublime.wbond.net/Package%20Control.sublime-package 下载文件</li>
 <li>将下载的文件放在root path/Data/Installed Packages下</li>
 <li>重启Sublime Text</li>
-</ul></li>
-
-<li><p>使用方法</p>
-
-<ul>
-<li><p>Ctrl+Shift+P调出菜单然后选择相应操作
-<img src="/img/post/sublime_package_control1.png" alt="40" /></p></li>
-
-<li><p>Preferences -&gt; Package Control也可调出
-<img src="/img/post/sublime_package_control2.png" alt="20" /></p></li>
-
-<li><p>选择Install Package后可以输入想安装的插件名搜索安装
-<img src="/img/post/sublime_install.png" alt="50" /></p></li>
-</ul></li>
 </ul>
-
+</li>
+<li>使用方法
+<ul>
+<li>
+<p>Ctrl+Shift+P调出菜单然后选择相应操作
+<img src="/img/post/sublime_package_control1.png" alt="40"></p>
+</li>
+<li>
+<p>Preferences -&gt; Package Control也可调出
+<img src="/img/post/sublime_package_control2.png" alt="20"></p>
+</li>
+<li>
+<p>选择Install Package后可以输入想安装的插件名搜索安装
+<img src="/img/post/sublime_install.png" alt="50"></p>
+</li>
+</ul>
+</li>
+</ul>
 <h3 id="0x01-emmet">0x01 Emmet</h3>
-
 <p>前端必备插件，前身是Zen Coding，可高效编写HTML和CSS(需要依赖PyV8，会自动安装)
-<img src="/img/post/sublime_emmet.png" alt="40" />
-<a href="http://emmet.io/?_blank"><img src="/img/post/sublime_emmet_demo.png" alt="40" /></a></p>
-
+<img src="/img/post/sublime_emmet.png" alt="40">
+<a href="http://emmet.io/?_blank"><img src="/img/post/sublime_emmet_demo.png" alt="40"></a></p>
 <h3 id="0x02-anaconda">0x02 Anaconda</h3>
-
 <p>可以自动补全并提示语法，还可跳转到定义、使用等
-<img src="/img/post/sublime_anaconda_set.png" alt="55" />
-<img src="/img/post/sublime_anaconda_set_default.png" alt="55" />
-<img src="/img/post/sublime_anaconda_set_user.png" alt="60" />
-<img src="/img/post/sublime_anaconda_add_file.png" alt="70" /></p>
-
+<img src="/img/post/sublime_anaconda_set.png" alt="55">
+<img src="/img/post/sublime_anaconda_set_default.png" alt="55">
+<img src="/img/post/sublime_anaconda_set_user.png" alt="60">
+<img src="/img/post/sublime_anaconda_add_file.png" alt="70"></p>
 <p>效果如下：
-<img src="/img/post/sublime_anaconda.png" alt="55" /></p>
-
+<img src="/img/post/sublime_anaconda.png" alt="55"></p>
 <h3 id="0x03-autofilename">0x03 AutoFileName</h3>
-
 <p>快捷输入文件路径
-<img src="/img/post/sublime_autofilename.png" alt="50" /></p>
-
+<img src="/img/post/sublime_autofilename.png" alt="50"></p>
 <h3 id="0x04-主题theme-sodareloaded">0x04 主题Theme-SoDaReloaded</h3>
-
 <p>两个主题插件，安装好之后：首选项 -&gt; 设置-用户，修改文件Packages/User/Preferences.sublime-settings如下</p>
-
-<pre><code>{
-    &quot;color_scheme&quot;: &quot;Packages/Color Scheme - Default/Monokai.tmTheme&quot;,
-    &quot;font_size&quot;: 15,
-    &quot;highlight_line&quot;: true,//光标所在行高亮显示
-    &quot;ignored_packages&quot;:
+<pre tabindex="0"><code>{
+    &#34;color_scheme&#34;: &#34;Packages/Color Scheme - Default/Monokai.tmTheme&#34;,
+    &#34;font_size&#34;: 15,
+    &#34;highlight_line&#34;: true,//光标所在行高亮显示
+    &#34;ignored_packages&#34;:
     [
-        &quot;Vintage&quot;
+        &#34;Vintage&#34;
     ],
-    &quot;tab_size&quot;: 4,
-    &quot;theme&quot;: &quot;SoDaReloaded Dark.sublime-theme&quot;,//使用的主题
-    &quot;translate_tabs_to_spaces&quot;: true,
-    &quot;update_check&quot;: false,
-    &quot;word_wrap&quot;: &quot;auto&quot;,
-    &quot;draw_white_space&quot;: &quot;all&quot;, //显示空格或tab字符
+    &#34;tab_size&#34;: 4,
+    &#34;theme&#34;: &#34;SoDaReloaded Dark.sublime-theme&#34;,//使用的主题
+    &#34;translate_tabs_to_spaces&#34;: true,
+    &#34;update_check&#34;: false,
+    &#34;word_wrap&#34;: &#34;auto&#34;,
+    &#34;draw_white_space&#34;: &#34;all&#34;, //显示空格或tab字符
 }
-</code></pre>
-
-<h3 id="0x05-converttoutf8">0x05 ConvertToUTF8</h3>
-
+</code></pre><h3 id="0x05-converttoutf8">0x05 ConvertToUTF8</h3>
 <p>将文件转码成UTF8编码(存储时还是原来的编码)</p>
-
 <p>当文件是其他编码，有时打开文件可能会有如下提示，安装插件Codecs33即可：</p>
-
-<pre><code>File: /Users/reber/Downloads/spider.py
+<pre tabindex="0"><code>File: /Users/reber/Downloads/spider.py
 Encoding: GB2312
 Error: Codecs missing
 
 Please install Codecs33 plugin (https://github.com/seanliang/Codecs33/tree/osx).
-</code></pre>
-
-<h3 id="0x06-imesupport">0x06 IMESupport</h3>
-
+</code></pre><h3 id="0x06-imesupport">0x06 IMESupport</h3>
 <p>解决Sublime Text中文输入法不能跟随光标的问题</p>
-
 <h3 id="0x07-git">0x07 Git</h3>
-
 <p>在编辑器就可以执行git命令，有github的开发者必备
-<img src="/img/post/sublime_git.png" alt="40" /></p>
-
+<img src="/img/post/sublime_git.png" alt="40"></p>
 <h3 id="0x08-gitgutter">0x08 GitGutter</h3>
-
 <p>在有了Git插件后，GitGutter 更好的帮助开发者查看文件之前的改动和差异，提升开发效率
-<img src="/img/post/sublime_gitgutter.png" alt="30" />
+<img src="/img/post/sublime_gitgutter.png" alt="30">
 有时候卡顿，首选项→插件设置→GitGutter→Setting User</p>
-
-<pre><code>{
-    &quot;non_blocking&quot; : &quot;true&quot;,
-    &quot;live_mode&quot; : &quot;false&quot;
+<pre tabindex="0"><code>{
+    &#34;non_blocking&#34; : &#34;true&#34;,
+    &#34;live_mode&#34; : &#34;false&#34;
 }
-</code></pre>
-
-<h3 id="0x09-markdown-preview">0x09 Markdown Preview</h3>
-
+</code></pre><h3 id="0x09-markdown-preview">0x09 Markdown Preview</h3>
 <p>可以在本地预览文件
-<img src="/img/post/sublime_markdown_preview.png" alt="40" />
-<img src="/img/post/sublime_markdown_preview_html.png" alt="45" /></p>
-
+<img src="/img/post/sublime_markdown_preview.png" alt="40">
+<img src="/img/post/sublime_markdown_preview_html.png" alt="45"></p>
 <h3 id="0x0a-docblokr">0x0A DocBlokr</h3>
-
 <p>这个插件对于编码风格很严的编程语言很有帮助，可以生成标准的注释
-<img src="/img/post/sublime_docblocr1.gif" alt="插件DocBlocr" />
-<img src="/img/post/sublime_docblocr2.gif" alt="插件DocBlocr" /></p>
-
+<img src="/img/post/sublime_docblocr1.gif" alt="插件DocBlocr">
+<img src="/img/post/sublime_docblocr2.gif" alt="插件DocBlocr"></p>
 <h3 id="0x0b-alignment">0x0B Alignment</h3>
-
 <p>插件安装好后选中要对齐的文本，然后按Ctrl+Alt+a即可对齐<code>&quot;=&quot;,&quot;+&quot;, &quot;-&quot;, &quot;&amp;&quot;, &quot;|&quot;, &quot;&lt;&quot;,&quot;&gt;&quot;</code>等符号
-<img src="/img/post/sublime_alignment.gif" alt="20" /></p>
-
+<img src="/img/post/sublime_alignment.gif" alt="20"></p>
 <h3 id="0x0c-后记">0x0C 后记</h3>
-
 <ul>
-<li><p>在安装插件时总出错提示<code>&quot;There are no packages available for installation&quot;</code>可以用上面提到的手动安装Package Control来解决，或者：
-<img src="/img/post/sublime_end1.png" alt="40" /></p></li>
-
-<li><p>有时不能通过Package Control下载插件，可以直接下载插件，然后放在下面图示的文件夹中，然后重启Sublime Text使插件生效即可：
-<img src="/img/post/sublime_end2.png" alt="40" /></p></li>
+<li>
+<p>在安装插件时总出错提示<code>&quot;There are no packages available for installation&quot;</code>可以用上面提到的手动安装Package Control来解决，或者：
+<img src="/img/post/sublime_end1.png" alt="40"></p>
+</li>
+<li>
+<p>有时不能通过Package Control下载插件，可以直接下载插件，然后放在下面图示的文件夹中，然后重启Sublime Text使插件生效即可：
+<img src="/img/post/sublime_end2.png" alt="40"></p>
+</li>
 </ul>
 </div>
     </article>

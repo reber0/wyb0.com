@@ -82,14 +82,9 @@
     [<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>,<a href="/tags/module">module</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-关于cmd模块">0x00 关于cmd模块</h3>
-
+      <div><h3 id="0x00-关于cmd模块">0x00 关于cmd模块</h3>
 <p>使用cmd模块创建的命令行解释器可以循环读取输入的所有行并且解析它们</p>
-
 <h3 id="0x01-cmd模块的一些常用方法">0x01 cmd模块的一些常用方法：</h3>
-
 <ol>
 <li>cmdloop()：类似与Tkinter的mainloop，运行Cmd解析器</li>
 <li>onecmd(str)：读取输入，并进行处理，通常不需要重载该函数，而是使用更加具体的do_command来执行特定的命名</li>
@@ -101,10 +96,8 @@
 <li>preloop()：cmdloop()运行之前调用该方法</li>
 <li>postloop()：cmdloop()退出之后调用该方法</li>
 </ol>
-
 <h3 id="0x02-用cmd模块简单实现shell命令">0x02 用cmd模块简单实现shell命令</h3>
-
-<pre><code>#!/usr/bin/env python
+<pre tabindex="0"><code>#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
 import sys
@@ -113,118 +106,115 @@ import socket
 from cmd import Cmd
 
 class ClassShell(Cmd):
-    &quot;&quot;&quot;docstring for ClassShell&quot;&quot;&quot;
+    &#34;&#34;&#34;docstring for ClassShell&#34;&#34;&#34;
     def __init__(self):
         Cmd.__init__(self)
-        os.chdir(&quot;C:/Users/reber/Desktop&quot;)
+        os.chdir(&#34;C:/Users/reber/Desktop&#34;)
         hostName = socket.gethostname()
-        self.prompt = &quot;reber@&quot; + hostName + &quot;  &quot; + os.path.abspath('.') + &quot;\n$ &quot;
+        self.prompt = &#34;reber@&#34; + hostName + &#34;  &#34; + os.path.abspath(&#39;.&#39;) + &#34;\n$ &#34;
         
 
     def help_dir(self):
-        print &quot;dir [path]&quot;
+        print &#34;dir [path]&#34;
     def do_dir(self, arg):
         if not arg:
-            print &quot;\n&quot;.join(os.listdir('.'))
+            print &#34;\n&#34;.join(os.listdir(&#39;.&#39;))
         elif os.path.exists(arg):
-            print &quot;\n&quot;.join(os.listdir(arg))
+            print &#34;\n&#34;.join(os.listdir(arg))
         else:
-            print &quot;no such path exists&quot;
+            print &#34;no such path exists&#34;
 
     def help_ls(self):
-        print &quot;ls [path]&quot;
+        print &#34;ls [path]&#34;
     def do_ls(self, arg):
         if not arg:
-            print &quot;\n&quot;.join(os.listdir('.'))
+            print &#34;\n&#34;.join(os.listdir(&#39;.&#39;))
         elif os.path.exists(arg):
-            print &quot;\n&quot;.join(os.listdir(arg))
+            print &#34;\n&#34;.join(os.listdir(arg))
         else:
-            print &quot;no such path exists&quot;
+            print &#34;no such path exists&#34;
 
     def help_pwd(self):
-        print &quot;pwd&quot;
+        print &#34;pwd&#34;
     def do_pwd(self, arg):
-        print os.path.abspath('.')
+        print os.path.abspath(&#39;.&#39;)
 
     def help_cd(self):
-        print &quot;cd [path]&quot;
+        print &#34;cd [path]&#34;
     def do_cd(self, arg):
         hostName = socket.gethostname()
         if not arg:
-            os.chdir(&quot;C:/Users/reber/Desktop&quot;)
-            self.prompt = &quot;reber@&quot; + hostName + &quot;  &quot; + os.path.abspath('.') + &quot;\n$ &quot;
+            os.chdir(&#34;C:/Users/reber/Desktop&#34;)
+            self.prompt = &#34;reber@&#34; + hostName + &#34;  &#34; + os.path.abspath(&#39;.&#39;) + &#34;\n$ &#34;
         elif os.path.exists(arg):
             os.chdir(arg)
-            self.prompt = &quot;reber@&quot; + hostName + &quot;  &quot; + os.path.abspath('.') + &quot;\n$ &quot;
+            self.prompt = &#34;reber@&#34; + hostName + &#34;  &#34; + os.path.abspath(&#39;.&#39;) + &#34;\n$ &#34;
         else:
-            print &quot;no such path&quot;
+            print &#34;no such path&#34;
 
     def help_clear(self):
-        print &quot;clear&quot;
+        print &#34;clear&#34;
     def do_clear(self, arg):
-        i = os.system('cls')
+        i = os.system(&#39;cls&#39;)
 
     def help_cat(self):
-        print &quot;cat filename&quot;
+        print &#34;cat filename&#34;
     def do_cat(self, arg):
         if os.path.exists(arg):
-            with open(arg,&quot;r&quot;) as f:
+            with open(arg,&#34;r&#34;) as f:
                 data = f.read()
             print data
         else:
-            print &quot;no such file exists&quot;
+            print &#34;no such file exists&#34;
 
     def help_mv(self):
-        print &quot;mv oldfilename newfilename&quot;
+        print &#34;mv oldfilename newfilename&#34;
     def do_mv(self, arg):
         oldfilename,newfilename = arg.split()
         if os.path.exists(oldfilename):
             os.rename(oldfilename,newfilename)
         else:
-            print &quot;no such file:&quot; + oldfilename
+            print &#34;no such file:&#34; + oldfilename
 
     def help_touch(self):
-        print &quot;touch filename&quot;
+        print &#34;touch filename&#34;
     def do_touch(self, arg):
-        with open(arg, &quot;w&quot;) as f:
+        with open(arg, &#34;w&#34;) as f:
             pass
 
     def help_rm(self):
-        print &quot;rm filepath&quot;
+        print &#34;rm filepath&#34;
     def do_rm(self, arg):
         if os.path.exists(arg):
             os.remove(arg)
         else:
-            print &quot;no such file:&quot; + arg
+            print &#34;no such file:&#34; + arg
         
     def help_cp(self):
-        print &quot;cp oldfilepath newfilepath&quot;
+        print &#34;cp oldfilepath newfilepath&#34;
     def do_cp(self, arg):
         oldfilepath,newfilepath = arg.split()
         if os.path.exists(oldfilepath):
-            with open(oldfilepath, &quot;r&quot;) as f:
+            with open(oldfilepath, &#34;r&#34;) as f:
                 data = f.read()
-            with open(newfilepath, &quot;w&quot;) as f:
+            with open(newfilepath, &#34;w&#34;) as f:
                 f.write(data)
         else:
-            print &quot;no such path:&quot; + oldfilepath
+            print &#34;no such path:&#34; + oldfilepath
 
     def help_exit(self):
-        print &quot;input exit will exit the program&quot;
+        print &#34;input exit will exit the program&#34;
 
     def do_exit(self, arg):
-        print &quot;Exit:&quot;,arg
+        print &#34;Exit:&#34;,arg
         sys.exit()
 
 
-if __name__ == '__main__':
+if __name__ == &#39;__main__&#39;:
     shell = ClassShell()
     shell.cmdloop()
-</code></pre>
-
-<h3 id="0x03-程序执行结果如下">0x03 程序执行结果如下</h3>
-
-<p><img src="/img/post/cmd_results_sample.png" alt="60" /></p>
+</code></pre><h3 id="0x03-程序执行结果如下">0x03 程序执行结果如下</h3>
+<p><img src="/img/post/cmd_results_sample.png" alt="60"></p>
 </div>
     </article>
   </main>

@@ -82,36 +82,30 @@
     [<a href="/categories/Database">Database</a>](<a href="/tags/sqlserver">sqlserver</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-数据表结构">0x00 数据表结构</h3>
-
-<pre><code>CREATE DATABASE student;
+      <div><h3 id="0x00-数据表结构">0x00 数据表结构</h3>
+<pre tabindex="0"><code>CREATE DATABASE student;
 
 CREATE TABLE info
 (
     id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    name VARCHAR(20) NOT NULL DEFAULT 'xiaoming',
+    name VARCHAR(20) NOT NULL DEFAULT &#39;xiaoming&#39;,
     sex INT NOT NULL DEFAULT 1,
     age INT NOT NULL DEFAULT 0,
     hight INT NOT NULL DEFAULT 0
 )
 
-INSERT INTO info(name,sex,age,hight) VALUES('xiaohong',0,23,165);
-INSERT INTO info(name,sex,age,hight) VALUES('xiaogang',1,24,175);
-INSERT INTO info(name,sex,age,hight) VALUES('xiaoliu',1,21,160);
-INSERT INTO info(name,sex,age,hight) VALUES('xiaozhang',1,19,165);
-INSERT INTO info(name,sex,age,hight) VALUES('xiaoli',1,23,170);
-INSERT INTO info(name,sex,age,hight) VALUES('xiaohua',0,23,160);
-INSERT INTO info(name,sex,age,hight) VALUES('xiaoming',1,21,165);
-INSERT INTO info(name,sex,age,hight) VALUES('xiaowang',1,23,166);
-INSERT INTO info(name,sex,age,hight) VALUES('xiaojuan',0,21,159);
-</code></pre>
-
-<h3 id="0x01-存储过程">0x01 存储过程</h3>
-
-<pre><code>--如果存在名为get_student_msg(相当于函数)的存储过程则删除
-IF EXISTS (SELECT name FROM sysobjects WHERE name='get_student_msg' AND type='p')
+INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaohong&#39;,0,23,165);
+INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaogang&#39;,1,24,175);
+INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoliu&#39;,1,21,160);
+INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaozhang&#39;,1,19,165);
+INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoli&#39;,1,23,170);
+INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaohua&#39;,0,23,160);
+INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaoming&#39;,1,21,165);
+INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaowang&#39;,1,23,166);
+INSERT INTO info(name,sex,age,hight) VALUES(&#39;xiaojuan&#39;,0,21,159);
+</code></pre><h3 id="0x01-存储过程">0x01 存储过程</h3>
+<pre tabindex="0"><code>--如果存在名为get_student_msg(相当于函数)的存储过程则删除
+IF EXISTS (SELECT name FROM sysobjects WHERE name=&#39;get_student_msg&#39; AND type=&#39;p&#39;)
     DROP PROCEDURE get_student_msg
 
 CREATE PROCEDURE get_student_msg --创建存储过程
@@ -124,12 +118,9 @@ AS
 GO
 
 --创建好存储过程后在其他地方直接使用函数并传参就行了
-EXEC get_student_msg 'xiaoli'
-</code></pre>
-
-<h3 id="0x02-使用游标的存储过程">0x02 使用游标的存储过程</h3>
-
-<pre><code>-- 使用DECLARE声明局部变量，一般在函数和存储过程中使用
+EXEC get_student_msg &#39;xiaoli&#39;
+</code></pre><h3 id="0x02-使用游标的存储过程">0x02 使用游标的存储过程</h3>
+<pre tabindex="0"><code>-- 使用DECLARE声明局部变量，一般在函数和存储过程中使用
 DECLARE @name VARCHAR(20)
 DECLARE @sex INT
 DECLARE @age INT
@@ -149,11 +140,11 @@ FETCH NEXT FROM stu_cursor INTO @name,@sex,@age,@hight
 
 WHILE (@@FETCH_STATUS = 0) --判断是否成功获取数据
     BEGIN
-        PRINT '名字: '+@name
-        PRINT '性别: '+STR(@sex)
-        PRINT '年龄: '+STR(@age)
-        PRINT '身高: '+STR(@hight)
-        PRINT ''
+        PRINT &#39;名字: &#39;+@name
+        PRINT &#39;性别: &#39;+STR(@sex)
+        PRINT &#39;年龄: &#39;+STR(@age)
+        PRINT &#39;身高: &#39;+STR(@hight)
+        PRINT &#39;&#39;
 
         --游标指向下一行(第二行)，然后取出这一行的数据
         FETCH NEXT FROM stu_cursor INTO @name,@sex,@age,@hight
@@ -161,8 +152,7 @@ WHILE (@@FETCH_STATUS = 0) --判断是否成功获取数据
 
 CLOSE stu_cursor --关闭游标
 DEALLOCATE stu_cursor --删除游标
-</code></pre>
-</div>
+</code></pre></div>
     </article>
   </main>
 

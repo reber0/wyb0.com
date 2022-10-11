@@ -82,21 +82,13 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86">目录遍历</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-目录遍历">0x00 目录遍历</h3>
-
+      <div><h3 id="0x00-目录遍历">0x00 目录遍历</h3>
 <p>一个同事说有一些目录遍历，想着能不能搞个脚本啥的，以后利用也方便，自己没有写出来，说让我看看</p>
-
 <p>一般来说存在目录遍历的话就是翻文件，看看有没有一些敏感信息、未授权接口之类的，一个个翻的话也确实比较麻烦</p>
-
 <p>而且 eWebEditor、FCKeditor 这种编辑器有些版本也存在目录遍历漏洞，能找的一些未授权访问也是好的</p>
-
 <p>以前写过一个爬网站链接的脚本，感觉可以在那个脚本的基础上改一下，改过后确实大致能用</p>
-
 <h3 id="0x01-脚本">0x01 脚本</h3>
-
-<pre><code>#!/usr/bin/env python
+<pre tabindex="0"><code>#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import asyncio
@@ -118,10 +110,10 @@ def is_repeat(ele):
         return False #元素一定不在集合中
 
 class GetAllLink(object):
-    &quot;&quot;&quot;docstring for GetAllLink&quot;&quot;&quot;
+    &#34;&#34;&#34;docstring for GetAllLink&#34;&#34;&#34;
     def __init__(self, target, crawl_deepth, rate):
         super(GetAllLink, self).__init__()
-        self.target = target if (&quot;://&quot; in target) else &quot;http://{}/&quot;.format(target)
+        self.target = target if (&#34;://&#34; in target) else &#34;http://{}/&#34;.format(target)
         self.crawl_deepth = crawl_deepth
         self.current_url_path = self.target
 
@@ -129,11 +121,11 @@ class GetAllLink(object):
         self.loop = asyncio.get_event_loop()
 
         self.url_links = {
-            &quot;a&quot;: [self.target],
-            &quot;img&quot;: [],
-            &quot;link&quot;: [],
-            &quot;script&quot;: [],
-            &quot;external&quot;: [],
+            &#34;a&#34;: [self.target],
+            &#34;img&#34;: [],
+            &#34;link&#34;: [],
+            &#34;script&#34;: [],
+            &#34;external&#34;: [],
         }
         self.unvisited = []
         self.unvisited.append(self.target)
@@ -149,11 +141,11 @@ class GetAllLink(object):
                         html = await resp.text()
                         return (code, url, html)
                 except aiohttp.client_exceptions.ClientConnectorError:
-                    return (000, url, &quot;Cannot connect to host&quot;)
+                    return (000, url, &#34;Cannot connect to host&#34;)
 
     def callback(self, future):
         status_code, url, html = future.result()
-        print(&quot;get url: ==&gt; &quot;+url)
+        print(&#34;get url: ==&gt; &#34;+url)
         self.visited.append(url)
         if status_code == 200:
             self.extract_links(url, html)
@@ -164,66 +156,66 @@ class GetAllLink(object):
 
     def extract_links(self, url, html):
         import re
-        url = url.replace(&quot;%5C&quot;,&quot;/&quot;)
-        dir_m = re.findall(r'&lt;Folder name=&quot;(.*?)&quot; /&gt;', html, re.S|re.M)
-        file_m = re.findall(r'&lt;File name=&quot;(.*?)&quot; size=&quot;.*?&quot; /&gt;', html, re.S|re.M)
+        url = url.replace(&#34;%5C&#34;,&#34;/&#34;)
+        dir_m = re.findall(r&#39;&lt;Folder name=&#34;(.*?)&#34; /&gt;&#39;, html, re.S|re.M)
+        file_m = re.findall(r&#39;&lt;File name=&#34;(.*?)&#34; size=&#34;.*?&#34; /&gt;&#39;, html, re.S|re.M)
         for dir in dir_m:
-            new_url = url+&quot;/&quot;+dir
-            print(new_url.split(&quot;=&quot;)[-1])
+            new_url = url+&#34;/&#34;+dir
+            print(new_url.split(&#34;=&#34;)[-1])
             self.unvisited.append(new_url)
         for file in file_m:
-            new_url = url+&quot;/&quot;+file
-            print(new_url.split(&quot;=&quot;)[-1])
+            new_url = url+&#34;/&#34;+file
+            print(new_url.split(&#34;=&#34;)[-1])
             self.visited.append(new_url)
 
     # def extract_links(self, url, html):
-    #     &quot;&quot;&quot;
+    #     &#34;&#34;&#34;
     #     提取 url
-    #     &quot;&quot;&quot;
+    #     &#34;&#34;&#34;
     #     o = urlparse(url)
-    #     self.current_url_path = urlunsplit((o.scheme,o.netloc,o.path,'',''))
+    #     self.current_url_path = urlunsplit((o.scheme,o.netloc,o.path,&#39;&#39;,&#39;&#39;))
 
     #     selector = etree.HTML(html)
-    #     a_list = selector.xpath(&quot;//a/@href&quot;)
-    #     img_list = selector.xpath(&quot;//img/@src&quot;)
-    #     link_list = selector.xpath(&quot;//link/@href&quot;)
-    #     script_list = selector.xpath(&quot;//script/@src&quot;)
+    #     a_list = selector.xpath(&#34;//a/@href&#34;)
+    #     img_list = selector.xpath(&#34;//img/@src&#34;)
+    #     link_list = selector.xpath(&#34;//link/@href&#34;)
+    #     script_list = selector.xpath(&#34;//script/@src&#34;)
 
     #     for a in a_list:
-    #         self.parse_link(&quot;a&quot;,a)
+    #         self.parse_link(&#34;a&#34;,a)
     #     for img in img_list:
-    #         self.parse_link(&quot;img&quot;,img)
+    #         self.parse_link(&#34;img&#34;,img)
     #     for link in link_list:
-    #         self.parse_link(&quot;link&quot;,link)
+    #         self.parse_link(&#34;link&#34;,link)
     #     for script in script_list:
-    #         self.parse_link(&quot;script&quot;, script)
+    #         self.parse_link(&#34;script&#34;, script)
 
     # def parse_link(self, link_type, link):
     #     url = None
-    #     if link.startswith(&quot;//&quot;):
-    #         link = &quot;http:&quot;+link
+    #     if link.startswith(&#34;//&#34;):
+    #         link = &#34;http:&#34;+link
 
-    #     if link.startswith(&quot;/&quot;) or link.startswith(&quot;.&quot;): #相对路径，肯定是本域
+    #     if link.startswith(&#34;/&#34;) or link.startswith(&#34;.&#34;): #相对路径，肯定是本域
     #         url = urljoin(self.current_url_path, link)
     #     elif link.startswith(self.target): #完整url，且为本域
     #         url = link
-    #     elif link.startswith('http') or link.startswith('https'): # url为http开头且domain不在url中，肯定为外域
+    #     elif link.startswith(&#39;http&#39;) or link.startswith(&#39;https&#39;): # url为http开头且domain不在url中，肯定为外域
     #         url = link
-    #         link_type = &quot;external&quot;
+    #         link_type = &#34;external&#34;
 
     #     if url and (not is_repeat(url)):
-    #         if link_type == &quot;a&quot;:
-    #             print(&quot;match url: &quot;+url)
+    #         if link_type == &#34;a&#34;:
+    #             print(&#34;match url: &#34;+url)
     #             self.unvisited.append(url)
     #             self.url_links[link_type].append(url)
     #         else:
-    #             print(&quot;match url: &quot;+url)
+    #             print(&#34;match url: &#34;+url)
     #             self.url_links[link_type].append(url)
 
     def run(self):
         current_deepth=0
         while current_deepth &lt; self.crawl_deepth:
-            print(&quot;*&quot;*130)
+            print(&#34;*&#34;*130)
             if len(self.unvisited) == 0:
                 break
             else:
@@ -237,43 +229,38 @@ class GetAllLink(object):
             current_deepth += 1
 
 
-if __name__ == &quot;__main__&quot;:
+if __name__ == &#34;__main__&#34;:
     import optparse
-    parser = optparse.OptionParser(usage='Usage: %prog [options] domaion',
-                                    version='%prog 1.0')
-    parser.add_option('-u', dest='target',default=None, type='string',help='target domain')
-    parser.add_option('-d', dest='deepth',default=3, type='int',help='crawl deepth')
-    parser.add_option('-r', dest='rate', default=10, type='int', help='the rate, default is 10')
+    parser = optparse.OptionParser(usage=&#39;Usage: %prog [options] domaion&#39;,
+                                    version=&#39;%prog 1.0&#39;)
+    parser.add_option(&#39;-u&#39;, dest=&#39;target&#39;,default=None, type=&#39;string&#39;,help=&#39;target domain&#39;)
+    parser.add_option(&#39;-d&#39;, dest=&#39;deepth&#39;,default=3, type=&#39;int&#39;,help=&#39;crawl deepth&#39;)
+    parser.add_option(&#39;-r&#39;, dest=&#39;rate&#39;, default=10, type=&#39;int&#39;, help=&#39;the rate, default is 10&#39;)
 
     (options, args) = parser.parse_args()
 
     if options.target:
         gal = GetAllLink(target=options.target, crawl_deepth=options.deepth, rate=options.rate)
         gal.run()
-        # print(&quot;-&quot;*130)
-        # print(&quot;\n&quot;.join(gal.url_links[&quot;a&quot;]))
-        # print(&quot;\n&quot;.join(gal.url_links[&quot;img&quot;]))
-        # print(&quot;\n&quot;.join(gal.url_links[&quot;link&quot;]))
-        # print(&quot;\n&quot;.join(gal.url_links[&quot;script&quot;]))
-        # print(&quot;\n&quot;.join(gal.url_links[&quot;external&quot;]))
+        # print(&#34;-&#34;*130)
+        # print(&#34;\n&#34;.join(gal.url_links[&#34;a&#34;]))
+        # print(&#34;\n&#34;.join(gal.url_links[&#34;img&#34;]))
+        # print(&#34;\n&#34;.join(gal.url_links[&#34;link&#34;]))
+        # print(&#34;\n&#34;.join(gal.url_links[&#34;script&#34;]))
+        # print(&#34;\n&#34;.join(gal.url_links[&#34;external&#34;]))
         domain = urlparse(options.target).netloc
-        with open(&quot;{}.txt&quot;.format(domain),&quot;a+&quot;) as f:
+        with open(&#34;{}.txt&#34;.format(domain),&#34;a+&#34;) as f:
             for url in gal.visited:
                 print(url)
-                f.write(url+&quot;\n&quot;)
+                f.write(url+&#34;\n&#34;)
             for url in gal.unvisited:
-                f.write(url+&quot;\n&quot;)
+                f.write(url+&#34;\n&#34;)
     else:
         parser.print_help()
-</code></pre>
-
-<h3 id="0x02-结果">0x02 结果</h3>
-
+</code></pre><h3 id="0x02-结果">0x02 结果</h3>
 <p>其实也就是在原来脚本的基础上注释了 parse_link()，重写了 extract_links()，把结果输出那里改下</p>
-
 <p>这个脚本是基于 FCKeditor 的目录遍历写的，常见的那种目录遍历的话改下 extract_links() 中的正则就行了</p>
-
-<p><img src="/img/post/Xnip2019-12-16_10-20-26.jpg" alt="" /></p>
+<p><img src="/img/post/Xnip2019-12-16_10-20-26.jpg" alt=""></p>
 </div>
     </article>
   </main>

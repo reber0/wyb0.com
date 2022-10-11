@@ -82,78 +82,66 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/intranet">intranet</a>)
 </div>
 
-      <div>
-
-<p>提权是在已经getshell但是权限不大的前提下做的</p>
-
+      <div><p>提权是在已经getshell但是权限不大的前提下做的</p>
 <h3 id="0x00-查看基本信息">0x00 查看基本信息</h3>
-
-<p><img src="/img/post/privilge_escalation_win_view_msg1.png" alt="Windows系统漏洞提权-查看基本信息1" /></p>
-
-<p><img src="/img/post/privilge_escalation_win_view_msg2.png" alt="Windows系统漏洞提权-查看基本信息2" /></p>
-
+<p><img src="/img/post/privilge_escalation_win_view_msg1.png" alt="Windows系统漏洞提权-查看基本信息1"></p>
+<p><img src="/img/post/privilge_escalation_win_view_msg2.png" alt="Windows系统漏洞提权-查看基本信息2"></p>
 <h3 id="0x01-使用cmd执行命令">0x01 使用cmd执行命令</h3>
-
 <ul>
-<li><p>尝试使用cmd执行命令
-<img src="/img/post/privilge_escalation_win_try_use_cmd.png" alt="Windows系统漏洞提权-尝试使用cmd执行命令" /></p></li>
-
-<li><p>找可写目录
-<img src="/img/post/privilge_escalation_win_find_wirteable_dir.png" alt="Windows系统漏洞提权-找可写目录" /></p></li>
-
-<li><p>尝试上传cmd.exe
-<img src="/img/post/privilge_escalation_win_try_upload_cmd.png" alt="Windows系统漏洞提权-尝试上传cmd" /></p></li>
-
-<li><p>写一个aspx马
-<img src="/img/post/privilge_escalation_win_write_aspx.png" alt="Windows系统漏洞提权-写一个aspx马" />
-<img src="/img/post/privilge_escalation_win_view_aspx.png" alt="Windows系统漏洞提权-查看aspx马" /></p></li>
-
-<li><p>上传cmd.exe
-<img src="/img/post/privilge_escalation_win_upload_cmd.png" alt="Windows系统漏洞提权-上传cmd" />
-<img src="/img/post/privilge_escalation_win_view_cmd.png" alt="Windows系统漏洞提权-查看上传的cmd" /></p></li>
-
-<li><p>再次尝试使用cmd执行命令
-<img src="/img/post/privilge_escalation_win_try_use_cmd_again1.png" alt="Windows系统漏洞提权-再次尝试使用cmd执行命令1" />
-<img src="/img/post/privilge_escalation_win_try_use_cmd_again2.png" alt="Windows系统漏洞提权-再次尝试使用cmd执行命令2" /></p></li>
+<li>
+<p>尝试使用cmd执行命令
+<img src="/img/post/privilge_escalation_win_try_use_cmd.png" alt="Windows系统漏洞提权-尝试使用cmd执行命令"></p>
+</li>
+<li>
+<p>找可写目录
+<img src="/img/post/privilge_escalation_win_find_wirteable_dir.png" alt="Windows系统漏洞提权-找可写目录"></p>
+</li>
+<li>
+<p>尝试上传cmd.exe
+<img src="/img/post/privilge_escalation_win_try_upload_cmd.png" alt="Windows系统漏洞提权-尝试上传cmd"></p>
+</li>
+<li>
+<p>写一个aspx马
+<img src="/img/post/privilge_escalation_win_write_aspx.png" alt="Windows系统漏洞提权-写一个aspx马">
+<img src="/img/post/privilge_escalation_win_view_aspx.png" alt="Windows系统漏洞提权-查看aspx马"></p>
+</li>
+<li>
+<p>上传cmd.exe
+<img src="/img/post/privilge_escalation_win_upload_cmd.png" alt="Windows系统漏洞提权-上传cmd">
+<img src="/img/post/privilge_escalation_win_view_cmd.png" alt="Windows系统漏洞提权-查看上传的cmd"></p>
+</li>
+<li>
+<p>再次尝试使用cmd执行命令
+<img src="/img/post/privilge_escalation_win_try_use_cmd_again1.png" alt="Windows系统漏洞提权-再次尝试使用cmd执行命令1">
+<img src="/img/post/privilge_escalation_win_try_use_cmd_again2.png" alt="Windows系统漏洞提权-再次尝试使用cmd执行命令2"></p>
+</li>
 </ul>
-
 <h3 id="0x02-权限提升">0x02 权限提升</h3>
-
 <ul>
-<li><p>查看未安装补丁</p>
-
-<pre><code>systeminfo&gt;a.txt&amp;(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592799 KB2621440 KB2160329 KB970483 KB2124261 KB977165 KB958644) do @type a.txt|@find /i &quot;%i&quot;||@echo %i Not Installed!)&amp;del /f /q /a a.txt
-</code></pre>
-
-<p><img src="/img/post/privilge_escalation_win_view_patch.png" alt="Windows系统漏洞提权-查看系统未安装补丁" /></p></li>
-
-<li><p>上传exp提权
-<img src="/img/post/privilge_escalation_win_upload_iis6.png" alt="Windows系统漏洞提权-上传iis6" />
-<img src="/img/post/privilge_escalation_win_run_iis6_1.png" alt="Windows系统漏洞提权-第一次运行iis6" />
-<img src="/img/post/privilge_escalation_win_run_iis6_2.png" alt="Windows系统漏洞提权-再次运行iis6" /></p></li>
+<li>查看未安装补丁</li>
 </ul>
-
+<pre tabindex="0"><code>systeminfo&gt;a.txt&amp;(for %i in (KB952004 KB956572 KB2393802 KB2503665 KB2592799 KB2621440 KB2160329 KB970483 KB2124261 KB977165 KB958644) do @type a.txt|@find /i &#34;%i&#34;||@echo %i Not Installed!)&amp;del /f /q /a a.txt
+</code></pre><p><img src="/img/post/privilge_escalation_win_view_patch.png" alt="Windows系统漏洞提权-查看系统未安装补丁"></p>
+<ul>
+<li>上传exp提权
+<img src="/img/post/privilge_escalation_win_upload_iis6.png" alt="Windows系统漏洞提权-上传iis6">
+<img src="/img/post/privilge_escalation_win_run_iis6_1.png" alt="Windows系统漏洞提权-第一次运行iis6">
+<img src="/img/post/privilge_escalation_win_run_iis6_2.png" alt="Windows系统漏洞提权-再次运行iis6"></li>
+</ul>
 <h3 id="0x03-添加用户">0x03 添加用户</h3>
-
 <ul>
 <li>添加远程连接用户</li>
 </ul>
-
-<p><img src="/img/post/privilge_escalation_win_use_sys_help_user.png" alt="Windows系统漏洞提权-使用系统自带的帮助用户" />
-<img src="/img/post/privilge_escalation_win_sys_help_user_add_pwd.png" alt="Windows系统漏洞提权-为系统自带的帮助用户添加密码" />
-<img src="/img/post/privilge_escalation_win_sys_help_user_add_administrators.png" alt="Windows系统漏洞提权-将系统自带的帮助用户添加到管理员组" />
-<img src="/img/post/privilge_escalation_win_active_sys_help_user.png" alt="Windows系统漏洞提权-启用系统自带的帮助用户" />
-<img src="/img/post/privilge_escalation_win_view_sys_help_user.png" alt="Windows系统漏洞提权-查看系统自带的帮助用户现在的权限信息" /></p>
-
+<p><img src="/img/post/privilge_escalation_win_use_sys_help_user.png" alt="Windows系统漏洞提权-使用系统自带的帮助用户">
+<img src="/img/post/privilge_escalation_win_sys_help_user_add_pwd.png" alt="Windows系统漏洞提权-为系统自带的帮助用户添加密码">
+<img src="/img/post/privilge_escalation_win_sys_help_user_add_administrators.png" alt="Windows系统漏洞提权-将系统自带的帮助用户添加到管理员组">
+<img src="/img/post/privilge_escalation_win_active_sys_help_user.png" alt="Windows系统漏洞提权-启用系统自带的帮助用户">
+<img src="/img/post/privilge_escalation_win_view_sys_help_user.png" alt="Windows系统漏洞提权-查看系统自带的帮助用户现在的权限信息"></p>
 <h3 id="0x04-使用3389远程连接">0x04 使用3389远程连接</h3>
-
-<p><img src="/img/post/privilge_escalation_win_view_ip.png" alt="Windows系统漏洞提权-查看ip信息" /></p>
-
-<p><img src="/img/post/privilge_escalation_win_remote_connection.png" alt="Windows系统漏洞提权-远程连接" /></p>
-
-<p><img src="/img/post/privilge_escalation_win_remote_connection_input_pwd.png" alt="Windows系统漏洞提权-远程连接输入用户名密码" /></p>
-
-<p><img src="/img/post/privilge_escalation_win_remote_connection_success.png" alt="Windows系统漏洞提权-远程连接成功" /></p>
+<p><img src="/img/post/privilge_escalation_win_view_ip.png" alt="Windows系统漏洞提权-查看ip信息"></p>
+<p><img src="/img/post/privilge_escalation_win_remote_connection.png" alt="Windows系统漏洞提权-远程连接"></p>
+<p><img src="/img/post/privilge_escalation_win_remote_connection_input_pwd.png" alt="Windows系统漏洞提权-远程连接输入用户名密码"></p>
+<p><img src="/img/post/privilge_escalation_win_remote_connection_success.png" alt="Windows系统漏洞提权-远程连接成功"></p>
 </div>
     </article>
   </main>

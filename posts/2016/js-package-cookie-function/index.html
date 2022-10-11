@@ -82,12 +82,8 @@
     [<a href="/categories/JS">JS</a>](<a href="/tags/js">js</a>)
 </div>
 
-      <div>
-
-<p>原文链接：<a href="http://www.wyzu.cn/2015/0123/107167.html">http://www.wyzu.cn/2015/0123/107167.html</a></p>
-
+      <div><p>原文链接：http://www.wyzu.cn/2015/0123/107167.html</p>
 <h3 id="0x00-实现功能">0x00 实现功能</h3>
-
 <ul>
 <li>添加cookie</li>
 <li>获取所有cookie</li>
@@ -95,10 +91,8 @@
 <li>移除所有cookie</li>
 <li>根据名字移除单个cookie</li>
 </ul>
-
-<h3 id="0x01-封装cookie-js源码">0x01 封装cookie.js源码</h3>
-
-<pre><code>/*
+<h3 id="0x01-封装cookiejs源码">0x01 封装cookie.js源码</h3>
+<pre tabindex="0"><code>/*
  * 名称和值传送时必须是经过RUL编码的
  * cookie绑定在指定的域名下，非本域无法共享cookie，但是可以是在主站共享cookie给子站
  * cookie的名称不分大小写；同时建议将cookie URL编码
@@ -110,9 +104,9 @@
         //获得cookie对象
         var cookies = {};
         if (document.cookie) {
-            var objs = document.cookie.split('; ');
+            var objs = document.cookie.split(&#39;; &#39;);
             for (var i in objs) {
-                var index = objs[i].indexOf('='),
+                var index = objs[i].indexOf(&#39;=&#39;),
                     name = objs[i].substr(0,index),
                     value = objs[i].substr(index+1,objs[i].length);
                 cookies[name] = value;
@@ -125,28 +119,28 @@
         //设置cookie
         // Opts expires,path,domain,secure
         if (sName &amp;&amp; sValue) {
-            var cookie = encodeURIComponent(sName)+'='+encodeURIComponent(sValue);
+            var cookie = encodeURIComponent(sName)+&#39;=&#39;+encodeURIComponent(sValue);
             
             if (Opts) {
                 if (Opts.expires) {
                     var date = new Date();
                     date.setTime(date.getTime()+Opts.expires*24*3600*1000)
-                    cookie += '; expires=' + date.toGMTString();
+                    cookie += &#39;; expires=&#39; + date.toGMTString();
                 }
                 if (Opts.path) {
-                    cookie += '; path=' + Opts.path;
+                    cookie += &#39;; path=&#39; + Opts.path;
                 }
                 if (Opts.domain) {
-                    cookie += '; domain=' + Opts.domain;
+                    cookie += &#39;; domain=&#39; + Opts.domain;
                 }
                 if (Opts.secure) {
-                    cookie += '; secure';
+                    cookie += &#39;; secure&#39;;
                 }
             }
             document.cookie = cookie;
             return cookie;
         } else {
-            return '';
+            return &#39;&#39;;
         }
     }
 
@@ -165,7 +159,7 @@
         if (getCookiesObj()[name]) {
             var date = new Date();
             date.setDate(date.getDate()-1);
-            document.cookie = name + '=; expires='+date.toGMTString();
+            document.cookie = name + &#39;=; expires=&#39;+date.toGMTString();
         }
     }
 
@@ -175,82 +169,76 @@
         var date = new Date();
         date.setDate(date.getDate()-1);
         for (var key in cookies) {
-            document.cookie = key + '=; expires='+date.toGMTString();
+            document.cookie = key + &#39;=; expires=&#39;+date.toGMTString();
         }
     }
 
     function noConflict(name) {
         //解决冲突
-        if (name &amp;&amp; typeof name === 'string') {
-            if (name &amp;&amp; window['cookie']) {
-                window[name] = window['cookie'];
-                delete window['cookie'];
+        if (name &amp;&amp; typeof name === &#39;string&#39;) {
+            if (name &amp;&amp; window[&#39;cookie&#39;]) {
+                window[name] = window[&#39;cookie&#39;];
+                delete window[&#39;cookie&#39;];
                 return window[name];
             }
         } else {
-            return window['cookie'];
-            delete window['cookie'];
+            return window[&#39;cookie&#39;];
+            delete window[&#39;cookie&#39;];
         }
     }
 
-    global['cookie'] = {
-        'set': set,
-        'getCookies': getCookies,
-        'getCookie': getCookie,
-        'remove': remove,
-        'clear': clear,
-        'noConflict': noConflict
+    global[&#39;cookie&#39;] = {
+        &#39;set&#39;: set,
+        &#39;getCookies&#39;: getCookies,
+        &#39;getCookie&#39;: getCookie,
+        &#39;remove&#39;: remove,
+        &#39;clear&#39;: clear,
+        &#39;noConflict&#39;: noConflict
     };
 })(window);
-</code></pre>
-
-<h3 id="0x02-利用的a-html源码">0x02 利用的a.html源码</h3>
-
-<pre><code>&lt;!DOCTYPE html&gt;
+</code></pre><h3 id="0x02-利用的ahtml源码">0x02 利用的a.html源码</h3>
+<pre tabindex="0"><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
-        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;meta charset=&#34;utf-8&#34;&gt;
         &lt;title&gt;cookie example&lt;/title&gt;
     &lt;/head&gt;
     &lt;body&gt;
-        &lt;script type=&quot;text/javascript&quot; src=&quot;./cookie.js&quot; &gt;&lt;/script&gt;
-        &lt;script type=&quot;text/javascript&quot;&gt;
-            console.log('----------cookie对象-------------');
+        &lt;script type=&#34;text/javascript&#34; src=&#34;./cookie.js&#34; &gt;&lt;/script&gt;
+        &lt;script type=&#34;text/javascript&#34;&gt;
+            console.log(&#39;----------cookie对象-------------&#39;);
             console.log(cookie);
-            console.log('----------对象-------------');
+            console.log(&#39;----------对象-------------&#39;);
             console.log(cookie.getCookies());
-            console.log('----------设置cookie-------------');
-            console.log(cookie.set('name', 'wlh'));
-            console.log('----------设置cookie 123-------------');
-            console.log(cookie.set('name', 'wlh123'));
-            console.log('----------设置cookie age-------------');
-            console.log(cookie.set('age', 20));
+            console.log(&#39;----------设置cookie-------------&#39;);
+            console.log(cookie.set(&#39;name&#39;, &#39;wlh&#39;));
+            console.log(&#39;----------设置cookie 123-------------&#39;);
+            console.log(cookie.set(&#39;name&#39;, &#39;wlh123&#39;));
+            console.log(&#39;----------设置cookie age-------------&#39;);
+            console.log(cookie.set(&#39;age&#39;, 20));
             // alert(document.cookie);
-            console.log('----------获取cookie-------------');
-            console.log(cookie.getCookie('name'));
-            console.log('----------获取所有-------------');
+            console.log(&#39;----------获取cookie-------------&#39;);
+            console.log(cookie.getCookie(&#39;name&#39;));
+            console.log(&#39;----------获取所有-------------&#39;);
             console.log(cookie.getCookies());
-            console.log('----------清除age-------------');
-            console.log(cookie.remove('age'));
-            console.log('----------获取所有-------------');
+            console.log(&#39;----------清除age-------------&#39;);
+            console.log(cookie.remove(&#39;age&#39;));
+            console.log(&#39;----------获取所有-------------&#39;);
             console.log(cookie.getCookies());
-            console.log('----------清除所有-------------');
+            console.log(&#39;----------清除所有-------------&#39;);
             console.log(cookie.clear());
-            console.log('----------获取所有-------------');
+            console.log(&#39;----------获取所有-------------&#39;);
             console.log(cookie.getCookies());
-            console.log('----------解决冲突-------------');
+            console.log(&#39;----------解决冲突-------------&#39;);
             var $Cookie = cookie.noConflict(true /*a new name of cookie*/);
             console.log($Cookie);
-            console.log('----------使用新的命名-------------');
+            console.log(&#39;----------使用新的命名-------------&#39;);
             console.log($Cookie.getCookies());
         &lt;/script&gt;
     &lt;/body&gt;
 &lt;/html&gt;
-</code></pre>
-
-<h3 id="0x03-结果">0x03 结果</h3>
-
-<p><img src="/img/post/js_cookie.png" alt="调用封装文件操作cookie" /></p>
+</code></pre><h3 id="0x03-结果">0x03 结果</h3>
+<p><img src="/img/post/js_cookie.png" alt="调用封装文件操作cookie"></p>
 </div>
     </article>
   </main>

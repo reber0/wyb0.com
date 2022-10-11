@@ -82,66 +82,72 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/SQL%E6%B3%A8%E5%85%A5">SQL注入</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-cookie注入的使用">0x00 Cookie注入的使用</h3>
-
+      <div><h3 id="0x00-cookie注入的使用">0x00 Cookie注入的使用</h3>
 <ul>
-<li><p>三大Web提交方式</p>
-
+<li>
+<p>三大Web提交方式</p>
 <ul>
-<li>GET：直接在浏览器上面访问地址<br /></li>
-<li>POST：提交表单(会员注册、文件上传等)<br /></li>
+<li>GET：直接在浏览器上面访问地址</li>
+<li>POST：提交表单(会员注册、文件上传等)</li>
 <li>COOKIE：访问网站下面自带的身份验证的值</li>
-</ul></li>
-
-<li><p>Cookie注入利用时机<br />
+</ul>
+</li>
+<li>
+<p>Cookie注入利用时机<br>
 当用普通注入时，采用and 1=1时出现错误提示(如下图)，普通的注入就没办法了，可以尝试大小写，编码等绕过，若过滤严谨，无法绕过，这时就可以采用cookie注入。
-<img src="/img/post/cookie_injection_conditions.png" alt="Cookie注入条件" /></p></li>
-
-<li><p>利用方法</p>
-
+<img src="/img/post/cookie_injection_conditions.png" alt="Cookie注入条件"></p>
+</li>
+<li>
+<p>利用方法</p>
 <ul>
 <li>可以利用注入中转</li>
 <li>可以利用sqlmap</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="0x01-用注入中转进行cookie注入">0x01 用注入中转进行Cookie注入</h3>
-
 <ul>
-<li><p>目标：<a href="http://localhost:81/2/shownews.asp?id=183">http://localhost:81/2/shownews.asp?id=183</a></p></li>
-
-<li><p>打开注入中转这个工具，填入相应参数，然后点击生成ASP，将生成的asp文件(jmCook.asp)放入你自己搭建的网站内后即可进行注入
-<img src="/img/post/cookie_injection_create_asp.png" alt="注入中转生成asp文件" /></p></li>
-
-<li><p>提交localhost:81/jmCook.asp?jmdcw=183 order by猜测字段数</p></li>
-
-<li><p>提交localhost:81/jmCook.asp?jmdcw=183 UNION SELECT 1,2,3,4 from XXX猜测表名
-<img src="/img/post/cookie_injection_get_display_point.png" alt="得到显示位" /></p></li>
-
-<li><p>猜测内容
-<img src="/img/post/cookie_injection_get_content.png" alt="得到数据" /></p></li>
+<li>
+<p>目标：http://localhost:81/2/shownews.asp?id=183</p>
+</li>
+<li>
+<p>打开注入中转这个工具，填入相应参数，然后点击生成ASP，将生成的asp文件(jmCook.asp)放入你自己搭建的网站内后即可进行注入
+<img src="/img/post/cookie_injection_create_asp.png" alt="注入中转生成asp文件"></p>
+</li>
+<li>
+<p>提交localhost:81/jmCook.asp?jmdcw=183 order by猜测字段数</p>
+</li>
+<li>
+<p>提交localhost:81/jmCook.asp?jmdcw=183 UNION SELECT 1,2,3,4 from XXX猜测表名
+<img src="/img/post/cookie_injection_get_display_point.png" alt="得到显示位"></p>
+</li>
+<li>
+<p>猜测内容
+<img src="/img/post/cookie_injection_get_content.png" alt="得到数据"></p>
+</li>
 </ul>
-
 <h3 id="0x02-用sqlmap进行cookie注入">0x02 用sqlmap进行Cookie注入</h3>
-
 <ul>
-<li><p>sqlmap验证存在Cookie注入
-<img src="/img/post/cookie_injection_sqlmap_test1.png" alt="sqlmap验证存在漏洞1" />
-<img src="/img/post/cookie_injection_sqlmap_test2.png" alt="sqlmap验证存在漏洞2" /></p></li>
-
-<li><p>猜表名
-<img src="/img/post/cookie_injection_sqlmap_get_table_name1.png" alt="sqlmap猜表名1" />
-<img src="/img/post/cookie_injection_sqlmap_get_table_name2.png" alt="sqlmap猜表名2" /></p></li>
-
-<li><p>猜列名
-<img src="/img/post/cookie_injection_sqlmap_get_column_name1.png" alt="sqlmap猜列名1" />
-<img src="/img/post/cookie_injection_sqlmap_get_column_name2.png" alt="sqlmap猜列名2" /></p></li>
-
-<li><p>猜字段内容
-<img src="/img/post/cookie_injection_sqlmap_get_column_value1.png" alt="sqlmap猜字段内容1" />
-<img src="/img/post/cookie_injection_sqlmap_get_column_value2.png" alt="sqlmap猜字段内容2" /></p></li>
+<li>
+<p>sqlmap验证存在Cookie注入
+<img src="/img/post/cookie_injection_sqlmap_test1.png" alt="sqlmap验证存在漏洞1">
+<img src="/img/post/cookie_injection_sqlmap_test2.png" alt="sqlmap验证存在漏洞2"></p>
+</li>
+<li>
+<p>猜表名
+<img src="/img/post/cookie_injection_sqlmap_get_table_name1.png" alt="sqlmap猜表名1">
+<img src="/img/post/cookie_injection_sqlmap_get_table_name2.png" alt="sqlmap猜表名2"></p>
+</li>
+<li>
+<p>猜列名
+<img src="/img/post/cookie_injection_sqlmap_get_column_name1.png" alt="sqlmap猜列名1">
+<img src="/img/post/cookie_injection_sqlmap_get_column_name2.png" alt="sqlmap猜列名2"></p>
+</li>
+<li>
+<p>猜字段内容
+<img src="/img/post/cookie_injection_sqlmap_get_column_value1.png" alt="sqlmap猜字段内容1">
+<img src="/img/post/cookie_injection_sqlmap_get_column_value2.png" alt="sqlmap猜字段内容2"></p>
+</li>
 </ul>
 </div>
     </article>

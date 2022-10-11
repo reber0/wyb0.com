@@ -82,40 +82,26 @@
     [<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>,<a href="/tags/module">module</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-使用模块">0x00 使用模块</h3>
-
+      <div><h3 id="0x00-使用模块">0x00 使用模块</h3>
 <p>在python执行系统命令一般可以通过3个模块来实现，这三个模块是：os、commands、subprocess</p>
-
 <h3 id="0x01-os模块执行系统命令">0x01 os模块执行系统命令</h3>
-
 <p>一般用os模块的system函数来执行一些简单的命令</p>
-
-<pre><code class="language-python">&gt;&gt;&gt; import os
-&gt;&gt;&gt; os.system(&quot;pwd&quot;)
-/Users/reber
-0
-</code></pre>
-
-<h3 id="0x02-commands模块执行系统命令">0x02 commands模块执行系统命令</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;pwd&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">/</span>Users<span style="color:#f92672">/</span>reber
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><h3 id="0x02-commands模块执行系统命令">0x02 commands模块执行系统命令</h3>
 <p>commands这个模块在python3中被移除了</p>
-
-<pre><code class="language-python">&gt;&gt;&gt; import commands
-&gt;&gt;&gt; commands.getoutput(&quot;pwd&quot;)
-'/Users/reber'
-&gt;&gt;&gt; commands.getstatusoutput(&quot;pwd&quot;)
-(0, '/Users/reber') #返回状态码以及结果
-</code></pre>
-
-<h3 id="0x03-subprocess模块执行系统命令">0x03 subprocess模块执行系统命令</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> commands
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> commands<span style="color:#f92672">.</span>getoutput(<span style="color:#e6db74">&#34;pwd&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;/Users/reber&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> commands<span style="color:#f92672">.</span>getstatusoutput(<span style="color:#e6db74">&#34;pwd&#34;</span>)
+</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;/Users/reber&#39;</span>) <span style="color:#75715e">#返回状态码以及结果</span>
+</span></span></code></pre></div><h3 id="0x03-subprocess模块执行系统命令">0x03 subprocess模块执行系统命令</h3>
 <ul>
 <li>task.py代码</li>
 </ul>
-
-<pre><code>def aaa():
+<pre tabindex="0"><code>def aaa():
     s = 0
     for x in range(3):
         time.sleep(1)
@@ -123,91 +109,78 @@
     return s
 
 print(aaa())
-</code></pre>
-
-<ul>
-<li>call函数执行命令(会阻塞到任务完成)<br />
+</code></pre><ul>
+<li>call函数执行命令(会阻塞到任务完成)<br>
 函数原型：subprocess.call(args, *, stdin=None, stdout=None, stderr=None, shell=False)</li>
 </ul>
-
-<pre><code class="language-python">&gt;&gt;&gt; from subprocess import call
-&gt;&gt;&gt; call([&quot;ls&quot;,&quot;-l&quot;]) #传入一个list
-total 16
--rw-r--r--   1 reber  staff    80  8 16 16:19 README.md
-drwxr-xr-x@  3 reber  staff   102  3 14  2017 archetypes
--rwxr-xr-x@  1 reber  staff  1403 12 13 17:43 config.toml
-drwxr-xr-x@  4 reber  staff   136 12  9 23:02 content
-drwxr-xr-x@  7 reber  staff   238  4 26  2017 layouts
-drwxr-xr-x@ 19 reber  staff   646 10 11 12:33 public
-drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
-0
-&gt;&gt;&gt; call(&quot;ls -l&quot;,shell=True) #shell设置为True时可以传入一个字符串
-total 16
--rw-r--r--   1 reber  staff    80  8 16 16:19 README.md
-drwxr-xr-x@  3 reber  staff   102  3 14  2017 archetypes
--rwxr-xr-x@  1 reber  staff  1403 12 13 17:43 config.toml
-drwxr-xr-x@  4 reber  staff   136 12  9 23:02 content
-drwxr-xr-x@  7 reber  staff   238  4 26  2017 layouts
-drwxr-xr-x@ 19 reber  staff   646 10 11 12:33 public
-drwxr-xr-x@  7 reber  staff   238 10 11 12:33 static
-0
-</code></pre>
-
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> subprocess <span style="color:#f92672">import</span> call
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> call([<span style="color:#e6db74">&#34;ls&#34;</span>,<span style="color:#e6db74">&#34;-l&#34;</span>]) <span style="color:#75715e">#传入一个list</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span>rw<span style="color:#f92672">-</span>r<span style="color:#f92672">--</span>r<span style="color:#f92672">--</span>   <span style="color:#ae81ff">1</span> reber  staff    <span style="color:#ae81ff">80</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">16</span>:<span style="color:#ae81ff">19</span> README<span style="color:#f92672">.</span>md
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">3</span> reber  staff   <span style="color:#ae81ff">102</span>  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">14</span>  <span style="color:#ae81ff">2017</span> archetypes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span>rwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">1</span> reber  staff  <span style="color:#ae81ff">1403</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">17</span>:<span style="color:#ae81ff">43</span> config<span style="color:#f92672">.</span>toml
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">4</span> reber  staff   <span style="color:#ae81ff">136</span> <span style="color:#ae81ff">12</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">23</span>:<span style="color:#ae81ff">02</span> content
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">7</span> reber  staff   <span style="color:#ae81ff">238</span>  <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">26</span>  <span style="color:#ae81ff">2017</span> layouts
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span> <span style="color:#ae81ff">19</span> reber  staff   <span style="color:#ae81ff">646</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">33</span> public
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">7</span> reber  staff   <span style="color:#ae81ff">238</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">33</span> static
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> call(<span style="color:#e6db74">&#34;ls -l&#34;</span>,shell<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#75715e">#shell设置为True时可以传入一个字符串</span>
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span>rw<span style="color:#f92672">-</span>r<span style="color:#f92672">--</span>r<span style="color:#f92672">--</span>   <span style="color:#ae81ff">1</span> reber  staff    <span style="color:#ae81ff">80</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">16</span>:<span style="color:#ae81ff">19</span> README<span style="color:#f92672">.</span>md
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">3</span> reber  staff   <span style="color:#ae81ff">102</span>  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">14</span>  <span style="color:#ae81ff">2017</span> archetypes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span>rwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">1</span> reber  staff  <span style="color:#ae81ff">1403</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">17</span>:<span style="color:#ae81ff">43</span> config<span style="color:#f92672">.</span>toml
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">4</span> reber  staff   <span style="color:#ae81ff">136</span> <span style="color:#ae81ff">12</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">23</span>:<span style="color:#ae81ff">02</span> content
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">7</span> reber  staff   <span style="color:#ae81ff">238</span>  <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">26</span>  <span style="color:#ae81ff">2017</span> layouts
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span> <span style="color:#ae81ff">19</span> reber  staff   <span style="color:#ae81ff">646</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">33</span> public
+</span></span><span style="display:flex;"><span>drwxr<span style="color:#f92672">-</span>xr<span style="color:#f92672">-</span>x<span style="color:#f92672">@</span>  <span style="color:#ae81ff">7</span> reber  staff   <span style="color:#ae81ff">238</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">33</span> static
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><ul>
 <li>Popen函数进行进程交互(非阻塞)</li>
 </ul>
-
-<pre><code class="language-python">&gt;&gt;&gt; from subprocess import Popen,PIPE,STDOUT
-&gt;&gt;&gt; h = Popen(&quot;ls dsfj&quot;,stdout=PIPE,stderr=STDOUT,shell=True)
-&gt;&gt;&gt; h.stdout.read() #从数据流中读出数据，如果数据流过大且不读数据的话可能会死锁
-'ls: dsfj: No such file or directory\n'
-&gt;&gt;&gt; h.stderr.read() #使用的是STDOUT，将错误通过标准输出流输出，没有read方法
-Traceback (most recent call last):
-  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-AttributeError: 'NoneType' object has no attribute 'read'
-
-
-&gt;&gt;&gt; h = Popen(&quot;ls dsfj&quot;,stdout=PIPE,stderr=PIPE,shell=True)
-&gt;&gt;&gt; h.stdout.read()
-''
-&gt;&gt;&gt; h.stderr.read()
-'ls: dsfj: No such file or directory\n'
-</code></pre>
-
-<p><br></p>
-
-<pre><code class="language-python">&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/task.py&quot;
-&gt;&gt;&gt; h = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-&gt;&gt;&gt; stdoutput = h.stdout.read() #stdoutput,erroutput = h.communicate()
-&gt;&gt;&gt; erroutput = h.stdout.read()
-&gt;&gt;&gt; stdoutput,erroutput
-('3\n', '')
-&gt;&gt;&gt; h.pid,h.poll() #子进程id，执行结果状态码(0代表成功)
-(49787, 0)
-
-
-&gt;&gt;&gt; f = open('a.txt','a+')
-&gt;&gt;&gt; h = Popen(&quot;ls -l&quot;, stdout=f, stderr=PIPE, shell=True) #写入文件
-&gt;&gt;&gt; h = Popen(&quot;ifconfig&quot;, shell=True, stdout=f, stderr=PIPE)
-&gt;&gt;&gt; f.close()
-</code></pre>
-
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> subprocess <span style="color:#f92672">import</span> Popen,PIPE,STDOUT
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h <span style="color:#f92672">=</span> Popen(<span style="color:#e6db74">&#34;ls dsfj&#34;</span>,stdout<span style="color:#f92672">=</span>PIPE,stderr<span style="color:#f92672">=</span>STDOUT,shell<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>read() <span style="color:#75715e">#从数据流中读出数据，如果数据流过大且不读数据的话可能会死锁</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;ls: dsfj: No such file or directory</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h<span style="color:#f92672">.</span>stderr<span style="color:#f92672">.</span>read() <span style="color:#75715e">#使用的是STDOUT，将错误通过标准输出流输出，没有read方法</span>
+</span></span><span style="display:flex;"><span>Traceback (most recent call last):
+</span></span><span style="display:flex;"><span>  File <span style="color:#e6db74">&#34;&lt;stdin&gt;&#34;</span>, line <span style="color:#ae81ff">1</span>, <span style="color:#f92672">in</span> <span style="color:#f92672">&lt;</span>module<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">AttributeError</span>: <span style="color:#e6db74">&#39;NoneType&#39;</span> object has no attribute <span style="color:#e6db74">&#39;read&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h <span style="color:#f92672">=</span> Popen(<span style="color:#e6db74">&#34;ls dsfj&#34;</span>,stdout<span style="color:#f92672">=</span>PIPE,stderr<span style="color:#f92672">=</span>PIPE,shell<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h<span style="color:#f92672">.</span>stderr<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;ls: dsfj: No such file or directory</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>
+</span></span></code></pre></div><!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;python /Users/reber/Desktop/task.py&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h <span style="color:#f92672">=</span> Popen(cmd, stdout<span style="color:#f92672">=</span>PIPE, stderr<span style="color:#f92672">=</span>PIPE, shell<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> stdoutput <span style="color:#f92672">=</span> h<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>read() <span style="color:#75715e">#stdoutput,erroutput = h.communicate()</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> erroutput <span style="color:#f92672">=</span> h<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> stdoutput,erroutput
+</span></span><span style="display:flex;"><span>(<span style="color:#e6db74">&#39;3</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h<span style="color:#f92672">.</span>pid,h<span style="color:#f92672">.</span>poll() <span style="color:#75715e">#子进程id，执行结果状态码(0代表成功)</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">49787</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> f <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#39;a.txt&#39;</span>,<span style="color:#e6db74">&#39;a+&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h <span style="color:#f92672">=</span> Popen(<span style="color:#e6db74">&#34;ls -l&#34;</span>, stdout<span style="color:#f92672">=</span>f, stderr<span style="color:#f92672">=</span>PIPE, shell<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#75715e">#写入文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> h <span style="color:#f92672">=</span> Popen(<span style="color:#e6db74">&#34;ifconfig&#34;</span>, shell<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, stdout<span style="color:#f92672">=</span>f, stderr<span style="color:#f92672">=</span>PIPE)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> f<span style="color:#f92672">.</span>close()
+</span></span></code></pre></div><ul>
 <li>在python3中subprocess实现了commands的getstatusoutput方法</li>
 </ul>
-
-<pre><code>$ py3
+<pre tabindex="0"><code>$ py3
 (py3env) [16:28 reber@wyb in ~/wyb0.com git:(master) ✗]
 $ python
 Python 3.6.3 (default, Oct  4 2017, 06:09:15)
 [GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.37)] on darwin
-Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+Type &#34;help&#34;, &#34;copyright&#34;, &#34;credits&#34; or &#34;license&#34; for more information.
 &gt;&gt;&gt; from subprocess import getstatusoutput
-&gt;&gt;&gt; cmd = &quot;python /Users/reber/Desktop/task.py&quot;
+&gt;&gt;&gt; cmd = &#34;python /Users/reber/Desktop/task.py&#34;
 &gt;&gt;&gt; getstatusoutput(cmd)
-(0, '3')
-</code></pre>
-</div>
+(0, &#39;3&#39;)
+</code></pre></div>
     </article>
   </main>
 

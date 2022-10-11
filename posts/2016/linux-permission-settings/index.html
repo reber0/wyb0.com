@@ -82,20 +82,16 @@
     [<a href="/categories/Linux">Linux</a>](<a href="/tags/linux">linux</a>)
 </div>
 
-      <div>
-
-<p>主要有三种参数：rwx
-对于文件来说：分别是读/写/执行<br />
-对于目录来说：r读目录结构；w操作目录结构；x进入目录<br />
-如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh<br />
+      <div><p>主要有三种参数：rwx 
+对于文件来说：分别是读/写/执行<br>
+对于目录来说：r读目录结构；w操作目录结构；x进入目录<br>
+如：drwxr&ndash;r&ndash; 3 root root 4096 Jun 25 08:35 .ssh<br>
 若账号vbird不属于root群组，则vbird可以查询此目录下的文件名，没有x权限所以不能切换到此目录中</p>
-
 <h3 id="0x00-文件权限">0x00 文件权限</h3>
-
 <ol>
-<li><p>chmod -x</p>
-
-<pre><code>[root@localhost tmp]# ls -l
+<li>chmod -x</li>
+</ol>
+<pre tabindex="0"><code>[root@localhost tmp]# ls -l
 total 0
 -rwxrwxrwx. 1 root root 0 Apr 16 20:32 a.txt
 [root@localhost tmp]# chmod -x a.txt   去除ugo的x权限
@@ -109,11 +105,10 @@ echo aaa
 [root@localhost tmp]# ./a.txt    直接执行了a.txt中的echo命令
 aaa
 [root@localhost tmp]# 
-</code></pre></li>
-
-<li><p>chmod -R</p>
-
-<pre><code>[root@localhost tmp]# ls -l a;ls -l a/a.txt 
+</code></pre><ol start="2">
+<li>chmod -R</li>
+</ol>
+<pre tabindex="0"><code>[root@localhost tmp]# ls -l a;ls -l a/a.txt 
 total 0
 -rw-r--r--. 1 root root 0 Apr 16 20:35 a.txt
 -rw-r--r--. 1 root root 0 Apr 16 20:35 a/a.txt
@@ -122,53 +117,39 @@ total 0
 total 0
 -rw-r--r-x. 1 root root 0 Apr 16 20:35 a.txt
 -rw-r--r-x. 1 root root 0 Apr 16 20:35 a/a.txt
-</code></pre></li>
-
-<li><p>chmod 7 a.txt</p>
-
-<pre><code>[root@localhost tmp]# ll a.txt 
+</code></pre><ol start="3">
+<li>chmod 7 a.txt</li>
+</ol>
+<pre tabindex="0"><code>[root@localhost tmp]# ll a.txt 
 -rw-rw-rw-. 1 root root 0 Apr 16 20:32 a.txt
 [root@localhost tmp]# chmod 7 a.txt    //只更改其他人的权限，ug赋为0
 [root@localhost tmp]# ll a.txt 
 -------rwx. 1 root root 0 Apr 16 20:32 a.txt
-</code></pre></li>
-</ol>
-
-<h3 id="0x01-文件夹权限">0x01 文件夹权限：</h3>
-
-<p>可读是指能看到里面的文件<br/>
-可写是指能在里面删除、增加文件<br/>
+</code></pre><h3 id="0x01-文件夹权限">0x01 文件夹权限：</h3>
+<p>可读是指能看到里面的文件<!-- raw HTML omitted -->
+可写是指能在里面删除、增加文件<!-- raw HTML omitted -->
 文件夹可执行是指能cd进去</p>
-
 <ol>
-<li><p>不能进入没有x权限的文件夹：</p>
-
-<pre><code>[wyb@localhost Desktop]$ ls -l
+<li>不能进入没有x权限的文件夹：</li>
+</ol>
+<pre tabindex="0"><code>[wyb@localhost Desktop]$ ls -l
 total 4
 dr--------. 2 wyb wyb 4096 Apr 17 01:25 aa
 [wyb@localhost Desktop]$ cd aa/
-</code></pre></li>
-
-<li><p>不能删除有777权限的文件：</p>
-
-<pre><code>[wyb@localhost Desktop]$ ls -l;ls -l aa/a.txt 
+</code></pre><ol start="2">
+<li>不能删除有777权限的文件：</li>
+</ol>
+<pre tabindex="0"><code>[wyb@localhost Desktop]$ ls -l;ls -l aa/a.txt 
 total 4
 dr-xr-xr-x. 2 wyb wyb 4096 Apr 17 01:25 aa
 -rwxrwxrwx. 1 wyb wyb 0 Apr 17 01:25 aa/a.txt
 [wyb@localhost Desktop]$ rm aa/a.txt 
-rm: cannot remove `aa/a.txt': Permission denied  //因为没有aa的x权限，所以不能删除aa下的文件
-</code></pre></li>
-</ol>
-
-<h3 id="0x02-chown">0x02 chown：</h3>
-
+rm: cannot remove `aa/a.txt&#39;: Permission denied  //因为没有aa的x权限，所以不能删除aa下的文件
+</code></pre><h3 id="0x02-chown">0x02 chown：</h3>
 <p>普通用户不能将自己的文件改变成其他的拥有者。其操作权限一般为管理员。</p>
-
-<pre><code>//将aaa.txt的所属由xiao改变为fans组，属主为xiaofang
+<pre tabindex="0"><code>//将aaa.txt的所属由xiao改变为fans组，属主为xiaofang
 $ chown xiaofang:fans aaa.txt
-</code></pre>
-
-<h3 id="0x03-一般用visudo添加sudo">0x03 一般用visudo添加sudo</h3>
+</code></pre><h3 id="0x03-一般用visudo添加sudo">0x03 一般用visudo添加sudo</h3>
 </div>
     </article>
   </main>

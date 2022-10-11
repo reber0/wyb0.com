@@ -82,21 +82,13 @@
     [<a href="/categories/Linux">Linux</a>](<a href="/tags/docker">docker</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-实现功能">0x00 实现功能</h3>
-
+      <div><h3 id="0x00-实现功能">0x00 实现功能</h3>
 <p>使用docker-compose构造LAMP环境，其中mysql数据库、mysql配置文件、网站文件均持久化存储到本机。</p>
-
 <p>apache、php通过Dockerfile构造，Dockerfile拉取ubuntu镜像，然后安装apache2和php。</p>
-
 <p>mysql的话通过docker的links连接mysql:5.5这个镜像当作数据库。</p>
-
 <p>具体文件参见：<a href="https://github.com/reber0/docker_env?_blank">https://github.com/reber0/docker_env</a></p>
-
 <h3 id="0x01-文件构造">0x01 文件构造</h3>
-
-<pre><code>➜  tree apache
+<pre tabindex="0"><code>➜  tree apache
 apache
 ├── Dockerfile
 ├── conf
@@ -110,18 +102,15 @@ apache
     └── index.php
 
 4 directories, 6 files
-</code></pre>
-
-<h3 id="0x02-docker-compose-yml">0x02 docker-compose.yml</h3>
-
-<pre><code>version: '3'
+</code></pre><h3 id="0x02-docker-composeyml">0x02 docker-compose.yml</h3>
+<pre tabindex="0"><code>version: &#39;3&#39;
 services:
   apache:
     image: ubuntu:apache #镜像名为ubuntu，tag为apache
     container_name: apache #运行后生成的容器名字为apache
     build: . #使用当前路径下的Dockerfile构造镜像
     ports:
-      - &quot;81:80&quot;
+      - &#34;81:80&#34;
     volumes:
       - ./www:/var/www/html
     links:
@@ -133,36 +122,30 @@ services:
     image: mysql:5.5 #拉取mysql:5.5
     container_name: mysql
     ports:
-      - &quot;3307:3306&quot;
+      - &#34;3307:3306&#34;
     volumes:
       - ./mysql:/var/lib/mysql
       - ./conf/my.cnf:/etc/mysql/my.cnf
     environment:
       - MYSQL_ROOT_PASSWORD=root #mysql密码为root
       - TZ=Asia/Shanghai
-</code></pre>
-
-<h3 id="0x03-dockerfile">0x03 Dockerfile</h3>
-
-<pre><code class="language-bash">FROM ubuntu:14.04.4
-MAINTAINER reber &lt;1070018473@qq.com&gt;
-
-COPY ./src /data
-WORKDIR /data
-RUN chmod +x init.sh
-RUN cp sources.list /etc/apt/sources.list &amp;&amp; apt-get update
-RUN apt-get install -y apache2
-RUN apt-get install -y php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
-
-WORKDIR /var/www/html
-
-CMD [&quot;/data/init.sh&quot;]
-#ENTRYPOINT [&quot;tail&quot;,&quot;-f&quot;,&quot;/dev/null&quot;]
-</code></pre>
-
-<h3 id="0x04-conf-my-cnf">0x04 conf/my.cnf</h3>
-
-<pre><code>[client]
+</code></pre><h3 id="0x03-dockerfile">0x03 Dockerfile</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>FROM ubuntu:14.04.4
+</span></span><span style="display:flex;"><span>MAINTAINER reber &lt;1070018473@qq.com&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>COPY ./src /data
+</span></span><span style="display:flex;"><span>WORKDIR /data
+</span></span><span style="display:flex;"><span>RUN chmod +x init.sh
+</span></span><span style="display:flex;"><span>RUN cp sources.list /etc/apt/sources.list <span style="color:#f92672">&amp;&amp;</span> apt-get update
+</span></span><span style="display:flex;"><span>RUN apt-get install -y apache2
+</span></span><span style="display:flex;"><span>RUN apt-get install -y php5 php5-gd php5-mysql libapache2-mod-php5 libapache2-mod-auth-mysql
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>WORKDIR /var/www/html
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CMD <span style="color:#f92672">[</span><span style="color:#e6db74">&#34;/data/init.sh&#34;</span><span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ENTRYPOINT [&#34;tail&#34;,&#34;-f&#34;,&#34;/dev/null&#34;]</span>
+</span></span></code></pre></div><h3 id="0x04-confmycnf">0x04 conf/my.cnf</h3>
+<pre tabindex="0"><code>[client]
 port            = 3306
 socket          = /var/run/mysqld/mysqld.sock
 default-character-set=utf8
@@ -174,17 +157,14 @@ datadir         = /var/lib/mysql
 skip-host-cache
 skip-name-resolve
 character-set-server=utf8
-init_connect='SET NAMES utf8'
+init_connect=&#39;SET NAMES utf8&#39;
 
 [mysql]
 default-character-set=utf8
 
 !includedir /etc/mysql/conf.d/
-</code></pre>
-
-<h3 id="0x05-src-sources-list">0x05 src/sources.list</h3>
-
-<pre><code>deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
+</code></pre><h3 id="0x05-srcsourceslist">0x05 src/sources.list</h3>
+<pre tabindex="0"><code>deb http://debian.ustc.edu.cn/ubuntu/ trusty main restricted universe multiverse
 deb http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted universe multiverse
 deb http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
 deb http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
@@ -194,33 +174,24 @@ deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-security main restricted univer
 deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-updates main restricted universe multiverse
 deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-proposed main restricted universe multiverse
 deb-src http://debian.ustc.edu.cn/ubuntu/ trusty-backports main restricted universe multiverse
-</code></pre>
-
-<h3 id="0x06-src-init-sh">0x06 src/init.sh</h3>
-
-<pre><code class="language-bash">#!/bin/bash
-
-service apache2 restart
-tail -f /dev/null
-</code></pre>
-
-<h3 id="0x07-www-index-php">0x07 www/index.php</h3>
-
-<pre><code>&lt;?php
-    //因为使用了links，所以在apache这个容器中可以直接用&quot;mymysql&quot;字符连接数据库，使用links后的
-    //效果可以理解为(实际上没有)在apache这个容器的hosts文件中添加了&quot;mymysql&quot;字符到mysql容器的ip的映射
-    $link = mysql_connect(&quot;mymysql&quot;, &quot;root&quot;, &quot;root&quot;);
+</code></pre><h3 id="0x06-srcinitsh">0x06 src/init.sh</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>service apache2 restart
+</span></span><span style="display:flex;"><span>tail -f /dev/null
+</span></span></code></pre></div><h3 id="0x07-wwwindexphp">0x07 www/index.php</h3>
+<pre tabindex="0"><code>&lt;?php
+    //因为使用了links，所以在apache这个容器中可以直接用&#34;mymysql&#34;字符连接数据库，使用links后的
+    //效果可以理解为(实际上没有)在apache这个容器的hosts文件中添加了&#34;mymysql&#34;字符到mysql容器的ip的映射
+    $link = mysql_connect(&#34;mymysql&#34;, &#34;root&#34;, &#34;root&#34;);
     if(!$link)
-        die('Could not connect: ' . mysql_error());
+        die(&#39;Could not connect: &#39; . mysql_error());
     else
-        echo &quot;Successfully connect to the mysql.&quot;;
+        echo &#34;Successfully connect to the mysql.&#34;;
     mysql_close($link);
 ?&gt;
-</code></pre>
-
-<h3 id="0x08-启动后访问">0x08 启动后访问</h3>
-
-<p><img src="/img/post/20181215-231620.png" alt="80" /></p>
+</code></pre><h3 id="0x08-启动后访问">0x08 启动后访问</h3>
+<p><img src="/img/post/20181215-231620.png" alt="80"></p>
 </div>
     </article>
   </main>

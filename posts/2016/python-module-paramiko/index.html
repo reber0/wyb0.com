@@ -82,60 +82,49 @@
     [<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>,<a href="/tags/module">module</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-安装">0x00 安装</h3>
-
-<p>直接pip install paramiko安装<br />
-或者去<a href="http://www.paramiko.org/">http://www.paramiko.org/</a> 下载</p>
-
+      <div><h3 id="0x00-安装">0x00 安装</h3>
+<p>直接pip install paramiko安装<br>
+或者去http://www.paramiko.org/ 下载</p>
 <h3 id="0x01-执行一条远程命令">0x01 执行一条远程命令</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-#-*- coding:utf-8 -*-
-
-import paramiko
-
-#远程执行命令
-ssh = paramiko.SSHClient()
-ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh.connect(&quot;192.168.188.134&quot;,22,&quot;reber&quot;,&quot;123456&quot;)
-ssh_session = ssh.get_transport().open_session()
-
-stdin,stdout,stderr = ssh.exec_command(&quot;ls -l&quot;)
-print stdin
-print stdout.readlines()   #返回执行结果
-print stderr.readlines()   #有错误信息就返回错误信息，没有就返回空
-
-ssh.close()
-</code></pre>
-
-<p><img src="/img/post/paramiko_ssh_one_command.png" alt="paramiko远程ssh后执行一条命令" /></p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#-*- coding:utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> paramiko
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#远程执行命令</span>
+</span></span><span style="display:flex;"><span>ssh <span style="color:#f92672">=</span> paramiko<span style="color:#f92672">.</span>SSHClient()
+</span></span><span style="display:flex;"><span>ssh<span style="color:#f92672">.</span>set_missing_host_key_policy(paramiko<span style="color:#f92672">.</span>AutoAddPolicy())
+</span></span><span style="display:flex;"><span>ssh<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#34;192.168.188.134&#34;</span>,<span style="color:#ae81ff">22</span>,<span style="color:#e6db74">&#34;reber&#34;</span>,<span style="color:#e6db74">&#34;123456&#34;</span>)
+</span></span><span style="display:flex;"><span>ssh_session <span style="color:#f92672">=</span> ssh<span style="color:#f92672">.</span>get_transport()<span style="color:#f92672">.</span>open_session()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>stdin,stdout,stderr <span style="color:#f92672">=</span> ssh<span style="color:#f92672">.</span>exec_command(<span style="color:#e6db74">&#34;ls -l&#34;</span>)
+</span></span><span style="display:flex;"><span>print stdin
+</span></span><span style="display:flex;"><span>print stdout<span style="color:#f92672">.</span>readlines()   <span style="color:#75715e">#返回执行结果</span>
+</span></span><span style="display:flex;"><span>print stderr<span style="color:#f92672">.</span>readlines()   <span style="color:#75715e">#有错误信息就返回错误信息，没有就返回空</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ssh<span style="color:#f92672">.</span>close()
+</span></span></code></pre></div><p><img src="/img/post/paramiko_ssh_one_command.png" alt="paramiko远程ssh后执行一条命令"></p>
 <h3 id="0x02-上传与下载文件">0x02 上传与下载文件</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-#-*- coding:utf-8 -*-
-
-import paramiko
-ftp = paramiko.Transport((&quot;192.168.188.134&quot;,22))
-ftp.connect(username=&quot;reber&quot;,password=&quot;123456&quot;)
-sftp = paramiko.SFTPClient.from_transport(ftp)
-
-#将本地的文件上传到服务端的/tmp/a.txt
-remotepath='/tmp/a.txt'
-localpath='C:\\Users\\reber\\Desktop\\a.txt'
-sftp.put(localpath, remotepath)
-
-#将服务端的文件下载到C:\\Users\\reber\\Desktop\\system.log
-remotepath='/tmp/a.txt'
-localpath='C:\\Users\\reber\\Desktop\\system.log'
-sftp.get(remotepath, localpath)
-
-ftp.close()
-</code></pre>
-
-<p><img src="/img/post/paramiko_put_file.png" alt="paramiko上传文件" /></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#-*- coding:utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> paramiko
+</span></span><span style="display:flex;"><span>ftp <span style="color:#f92672">=</span> paramiko<span style="color:#f92672">.</span>Transport((<span style="color:#e6db74">&#34;192.168.188.134&#34;</span>,<span style="color:#ae81ff">22</span>))
+</span></span><span style="display:flex;"><span>ftp<span style="color:#f92672">.</span>connect(username<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;reber&#34;</span>,password<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;123456&#34;</span>)
+</span></span><span style="display:flex;"><span>sftp <span style="color:#f92672">=</span> paramiko<span style="color:#f92672">.</span>SFTPClient<span style="color:#f92672">.</span>from_transport(ftp)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#将本地的文件上传到服务端的/tmp/a.txt</span>
+</span></span><span style="display:flex;"><span>remotepath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/tmp/a.txt&#39;</span>
+</span></span><span style="display:flex;"><span>localpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;C:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Users</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">reber</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Desktop</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">a.txt&#39;</span>
+</span></span><span style="display:flex;"><span>sftp<span style="color:#f92672">.</span>put(localpath, remotepath)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#将服务端的文件下载到C:\\Users\\reber\\Desktop\\system.log</span>
+</span></span><span style="display:flex;"><span>remotepath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/tmp/a.txt&#39;</span>
+</span></span><span style="display:flex;"><span>localpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;C:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Users</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">reber</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">Desktop</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">system.log&#39;</span>
+</span></span><span style="display:flex;"><span>sftp<span style="color:#f92672">.</span>get(remotepath, localpath)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ftp<span style="color:#f92672">.</span>close()
+</span></span></code></pre></div><p><img src="/img/post/paramiko_put_file.png" alt="paramiko上传文件"></p>
 </div>
     </article>
   </main>

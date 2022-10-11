@@ -82,11 +82,8 @@
     [<a href="/categories/Database">Database</a>](<a href="/tags/sqlserver">sqlserver</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-数据库">0x00 数据库</h3>
-
-<pre><code>-- 创建数据库
+      <div><h3 id="0x00-数据库">0x00 数据库</h3>
+<pre tabindex="0"><code>-- 创建数据库
 CREATE DATABASE student;
 
 -- 选择数据库
@@ -100,20 +97,17 @@ SELECT DB_NAME();
 
 -- 查看数据库版本
 SELECT @@version;
-</code></pre>
-
-<h3 id="0x01-数据表">0x01 数据表</h3>
-
-<pre><code>-- 创建数据库表
+</code></pre><h3 id="0x01-数据表">0x01 数据表</h3>
+<pre tabindex="0"><code>-- 创建数据库表
 CREATE TABLE info
 (
     id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
-    name VARCHAR(20) NOT NULL DEFAULT 'xiaoming',
+    name VARCHAR(20) NOT NULL DEFAULT &#39;xiaoming&#39;,
     sex INT NOT NULL DEFAULT 1
 )
 
 -- 查看表结构
-EXEC sp_help 'info';
+EXEC sp_help &#39;info&#39;;
 
 -- 更新表结构
 ALTER TABLE info add age int; -- 添加一列
@@ -121,14 +115,14 @@ ALTER TABLE info DROP COLUMN age; -- 删除一列
 
 -- 插入数据
 INSERT INTO info(name,sex)
-VALUES('xiaohong',0);
+VALUES(&#39;xiaohong&#39;,0);
 
 -- 查看数据
 SELECT * FROM dbo.info;
 
 -- 更新数据
 UPDATE info
-SET name='aaa',sex=1
+SET name=&#39;aaa&#39;,sex=1
 WHERE id=1;
 
 -- 删除数据
@@ -137,8 +131,7 @@ WHERE id=1;
 
 -- 删除表
 DROP TABLE info;
-</code></pre>
-</div>
+</code></pre></div>
     </article>
   </main>
 

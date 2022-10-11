@@ -82,10 +82,7 @@
     [<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>,<a href="/tags/module">module</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-python的模块">0x00 Python的模块</h3>
-
+      <div><h3 id="0x00-python的模块">0x00 Python的模块</h3>
 <ul>
 <li>在python中，任何一个python文件都可以看作一个模块</li>
 <li>不同包下有相同模块名并不会冲突，且包下必须有文件<code>__init__.py</code></li>
@@ -95,195 +92,160 @@
 <li><code>sys.path.append('D:/xx/xx/xx/code')</code>可以添加搜索路径</li>
 <li>使用<code>if __name__ == '__main__':</code></li>
 </ul>
-
 <h3 id="0x01-实例">0x01 实例</h3>
-
 <ul>
 <li>文件结构如下</li>
 </ul>
-
-<p><img src="/img/post/python_module_file_tree.png" alt="模块目录结构" /></p>
-
+<p><img src="/img/post/python_module_file_tree.png" alt="模块目录结构"></p>
 <ul>
 <li>测试文件test.py</li>
 </ul>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from package1 import * #导入包package1下的所有模块
-import package2.module3 #导入包package2下的module3模块
-import package2.module4 as s #导入包package2下的module4模块并重命名为s
-
-a = module1.Class1() #创建一个对象
-a.test() #调用类中的方法
-
-b = module2.Class2()
-b.test()
-
-c = package2.module3.Class3()
-c.test()
-
-d = s.Class4()
-d.test()
-</code></pre>
-
-<ul>
-<li><p>包package1</p>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> package1 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span> <span style="color:#75715e">#导入包package1下的所有模块</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> package2.module3 <span style="color:#75715e">#导入包package2下的module3模块</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> package2.module4 <span style="color:#66d9ef">as</span> s <span style="color:#75715e">#导入包package2下的module4模块并重命名为s</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> module1<span style="color:#f92672">.</span>Class1() <span style="color:#75715e">#创建一个对象</span>
+</span></span><span style="display:flex;"><span>a<span style="color:#f92672">.</span>test() <span style="color:#75715e">#调用类中的方法</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> module2<span style="color:#f92672">.</span>Class2()
+</span></span><span style="display:flex;"><span>b<span style="color:#f92672">.</span>test()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> package2<span style="color:#f92672">.</span>module3<span style="color:#f92672">.</span>Class3()
+</span></span><span style="display:flex;"><span>c<span style="color:#f92672">.</span>test()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>Class4()
+</span></span><span style="display:flex;"><span>d<span style="color:#f92672">.</span>test()
+</span></span></code></pre></div><ul>
+<li>
+<p>包package1</p>
 <ul>
 <li><strong>init</strong>.py</li>
 </ul>
-
 <blockquote>
-<pre><code class="language-python">#这个文件可以为空
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"></code></pre></div></blockquote>
+<p>#这个文件可以为空</p>
+<p><strong>all</strong> = [&lsquo;module1&rsquo;, &lsquo;module2&rsquo;] #有这一句才能使用import *导入所有模块</p>
+<pre tabindex="0"><code>
+* module1.py
 
-__all__ = ['module1', 'module2'] #有这一句才能使用import *导入所有模块
-</code></pre>
-</blockquote>
-
-<ul>
-<li>module1.py</li>
-</ul>
-
-<blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
+&gt; ```python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'this is test moudle'
+&#39;this is test moudle&#39;
 
-__author__ = 'reber'
+__author__ = &#39;reber&#39;
 
 import sys
 
 class Class1(object):
-    &quot;&quot;&quot;docstring for Class1&quot;&quot;&quot;
+    &#34;&#34;&#34;docstring for Class1&#34;&#34;&#34;
     def __init__(self):
         super(Class1, self).__init__()
-            
+
     def test(self):
-        print &quot;package1 -&gt; module1.py -&gt; Class1 -&gt; test()&quot;
+        print &#34;package1 -&gt; module1.py -&gt; Class1 -&gt; test()&#34;
 
     def main(self):
-        print &quot;this is module1.py main()&quot;
+        print &#34;this is module1.py main()&#34;
 
-if __name__ == '__main__':
+if __name__ == &#39;__main__&#39;:
     sub11 = Class1()
     sub11.test()
     sub11.main()
-</code></pre>
-</blockquote>
-
-<ul>
+</code></pre><ul>
 <li>module2.py</li>
 </ul>
-
 <blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"></code></pre></div></blockquote>
+<p>#!/usr/bin/env python</p>
+<h1 id="---coding-utf-8---">-<em>- coding: utf-8 -</em>-</h1>
+<p>&rsquo;this is test moudle&rsquo;</p>
+<p><strong>author</strong> = &lsquo;reber&rsquo;</p>
+<p>import sys</p>
+<p>class Class2(object):
+&ldquo;&ldquo;&ldquo;docstring for Class1&quot;&rdquo;&rdquo;
+def <strong>init</strong>(self):
+super(Class2, self).<strong>init</strong>()</p>
+<pre><code>  def test(self):
+      print &quot;package1 -&gt; module2.py -&gt; Class2 -&gt; test()&quot;
 
-'this is test moudle'
-
-__author__ = 'reber'
-
-import sys
-
-class Class2(object):
-    &quot;&quot;&quot;docstring for Class1&quot;&quot;&quot;
-    def __init__(self):
-        super(Class2, self).__init__()
-            
-    def test(self):
-        print &quot;package1 -&gt; module2.py -&gt; Class2 -&gt; test()&quot;
-
-    def main(self):
-        print &quot;this is module2.py main()&quot;
-
-if __name__ == '__main__':
-    sub11 = Class2()
-    sub11.test()
-    sub11.main()
+  def main(self):
+      print &quot;this is module2.py main()&quot;
 </code></pre>
-</blockquote></li>
-
-<li><p>包package2</p>
-
+<p>if <strong>name</strong> == &lsquo;<strong>main</strong>&rsquo;:
+sub11 = Class2()
+sub11.test()
+sub11.main()</p>
+<pre tabindex="0"><code></code></pre></li>
+<li>
+<p>包package2</p>
 <ul>
 <li><strong>init</strong>.py</li>
 </ul>
-
 <blockquote>
-<pre><code class="language-python">
-__all__ = ['module3', 'module4']
-</code></pre>
-</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"></code></pre></div></blockquote>
+<p><strong>all</strong> = [&lsquo;module3&rsquo;, &lsquo;module4&rsquo;]</p>
+<pre tabindex="0"><code>
+* module3.py
 
-<ul>
-<li>module3.py</li>
-</ul>
-
-<blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
+&gt; ```python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'this is test moudle'
+&#39;this is test moudle&#39;
 
-__author__ = 'reber'
+__author__ = &#39;reber&#39;
 
 import sys
 
 class Class3(object):
-    &quot;&quot;&quot;docstring for Class1&quot;&quot;&quot;
+    &#34;&#34;&#34;docstring for Class1&#34;&#34;&#34;
     def __init__(self):
         super(Class3, self).__init__()
-            
+
     def test(self):
-        print &quot;package2 -&gt; module3.py -&gt; Class3 -&gt; test()&quot;
+        print &#34;package2 -&gt; module3.py -&gt; Class3 -&gt; test()&#34;
 
     def main(self):
-        print &quot;this is module3.py main()&quot;
+        print &#34;this is module3.py main()&#34;
 
-if __name__ == '__main__':
+if __name__ == &#39;__main__&#39;:
     sub11 = Class3()
     sub11.test()
     sub11.main()
-</code></pre>
-</blockquote>
-
-<ul>
+</code></pre><ul>
 <li>module4.py</li>
 </ul>
-
 <blockquote>
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"></code></pre></div></blockquote>
+<p>#!/usr/bin/env python</p>
+<h1 id="---coding-utf-8----1">-<em>- coding: utf-8 -</em>-</h1>
+<p>&rsquo;this is test moudle&rsquo;</p>
+<p><strong>author</strong> = &lsquo;reber&rsquo;</p>
+<p>import sys</p>
+<p>class Class4(object):
+&ldquo;&ldquo;&ldquo;docstring for Class4&quot;&rdquo;&rdquo;
+def <strong>init</strong>(self):
+super(Class4, self).<strong>init</strong>()</p>
+<pre><code>  def test(self):
+      print &quot;package2 -&gt; module4.py -&gt; Class4 -&gt; test()&quot;
 
-'this is test moudle'
-
-__author__ = 'reber'
-
-import sys
-
-class Class4(object):
-    &quot;&quot;&quot;docstring for Class4&quot;&quot;&quot;
-    def __init__(self):
-        super(Class4, self).__init__()
-            
-    def test(self):
-        print &quot;package2 -&gt; module4.py -&gt; Class4 -&gt; test()&quot;
-
-    def main(self):
-        print &quot;this is module4.py main()&quot;
-
-if __name__ == '__main__':
-    sub11 = Class4()
-    sub11.test()
-    sub11.main()
+  def main(self):
+      print &quot;this is module4.py main()&quot;
 </code></pre>
-</blockquote></li>
-
-<li><p>执行python test.py结果
-<img src="/img/post/python_module_test_result.png" alt="导入模块测试结果" /></p></li>
+<p>if <strong>name</strong> == &lsquo;<strong>main</strong>&rsquo;:
+sub11 = Class4()
+sub11.test()
+sub11.main()</p>
+<pre tabindex="0"><code></code></pre></li>
+<li>
+<p>执行python test.py结果
+<img src="/img/post/python_module_test_result.png" alt="导入模块测试结果"></p>
+</li>
 </ul>
 </div>
     </article>

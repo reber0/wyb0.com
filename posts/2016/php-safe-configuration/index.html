@@ -82,176 +82,157 @@
     [<a href="/categories/PHP">PHP</a>](<a href="/tags/php">php</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-php的配置">0x00 PHP的配置</h3>
-
+      <div><h3 id="0x00-php的配置">0x00 PHP的配置</h3>
 <p>PHP的配置文件为php.ini,其中有些项配置不当的话就会造成一些安全问题</p>
-
 <h3 id="0x01-远程文件包含">0x01 远程文件包含</h3>
-
 <ul>
 <li>涉及配置项
-
 <ul>
 <li>allow_url_include
-
 <ul>
 <li>配置为On时允许进行远程文件包含</li>
-</ul></li>
+</ul>
+</li>
 <li>allow_url_fopen
-
 <ul>
 <li>配置为On时允许使用函数fopen、file_put_contents</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>配置方案
-
 <ul>
 <li>alllow_url_include = Off</li>
 <li>allow_url_fopen = Off</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="0x02-关闭错误回显">0x02 关闭错误回显</h3>
-
 <ul>
 <li>涉及配置项
-
 <ul>
 <li>display_errors
-
 <ul>
 <li>配置为On时会显示错误信息</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>配置方案
-
 <ul>
 <li>display_errors = Off</li>
 <li>log_errors = On</li>
 <li>error_log = /var/log/php_error.log</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="0x03-隐藏php版本">0x03 隐藏php版本</h3>
-
 <ul>
 <li>涉及配置项
-
 <ul>
 <li>expose_php
-
 <ul>
 <li>为Off时会隐藏php版本</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>配置方案
-
 <ul>
 <li>expose_php = Off</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="0x04-魔术引号">0x04 魔术引号</h3>
-
 <ul>
 <li>涉及配置项
-
 <ul>
 <li>magic_quotes_gpc
-
 <ul>
 <li>过滤get、post、cookie的单引号、双引号、反斜杠、空字符，但不过滤$_SERVER</li>
-</ul></li>
+</ul>
+</li>
 <li>magic_quotes_runtime
-
 <ul>
 <li>对文件或数据库中取出的数据进行过滤，可防止二次注入</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>配置方案
-
 <ul>
 <li>做逻辑判断时需要去掉反斜杠，所以用全局过滤框架做过滤吧</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="0x05-安全模式">0x05 安全模式</h3>
-
 <ul>
 <li>涉及配置项
-
 <ul>
 <li>safe_mode
-
 <ul>
 <li>开启后安全系数提升，但会限制函数使用权限和操作目录文件权限等</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>配置方案
-
 <ul>
 <li>在安全模式下可以使用safe_mode_include_dir = /var/www/common来排除某些文件</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="0x06-目录权限控制">0x06 目录权限控制</h3>
-
 <ul>
 <li>涉及配置项
-
 <ul>
 <li>open_basedir
-
 <ul>
 <li>开启后可将用户访问范围限定，可防止跨站，但会影响性能</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>配置方案
-
 <ul>
 <li>open_basedir = /var/www/web1/:/var/www/web2/  (后面的斜杠不能少)</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="0x07-禁止函数">0x07 禁止函数</h3>
-
 <ul>
 <li>涉及配置项
-
 <ul>
 <li>disable_functions
-
 <ul>
 <li>禁止某些命令执行函数和文件操作函数的使用</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>配置方案
-
 <ul>
 <li>disable_functions = system,passthru,exec,shell_exec,popen,pcntl_exec,
 proc_open,chdir,chroot,getcwd,readdir,mkdir,copy,file_get_contents,</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="0x08-注册全局变量">0x08 注册全局变量</h3>
-
 <ul>
 <li>涉及配置项
-
 <ul>
 <li>register_globals
-
 <ul>
 <li>值为On是会开启全局注册变量功能</li>
-</ul></li>
-</ul></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>配置方案
-
 <ul>
 <li>register_globals = Off</li>
-</ul></li>
+</ul>
+</li>
 </ul>
 </div>
     </article>

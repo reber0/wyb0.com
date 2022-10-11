@@ -82,47 +82,39 @@
     [<a href="/categories/Linux">Linux</a>](<a href="/tags/linux">linux</a>)
 </div>
 
-      <div>
-
-<h3 id="0x01-新建用户">0x01 新建用户</h3>
-
+      <div><h3 id="0x01-新建用户">0x01 新建用户</h3>
 <p>环境：Ubuntu 14.04.4</p>
-
 <ul>
-<li><p>Step1：添加新用户<br />
-useradd -r -m -s /bin/bash 用户名</p></li>
-
-<li><p>Step2:配置新用户密码<br />
-passwd 用户名</p></li>
-
-<li><p>Step3：给新添加的用户增加root权限<br />
-visudo<br />
-然后添加：<br />
-用户名 ALL=(ALL:ALL) ALL</p></li>
-
-<li><p>ctrl+o 保存   ctrl+x 退出</p></li>
+<li>
+<p>Step1：添加新用户<br>
+useradd -r -m -s /bin/bash 用户名</p>
+</li>
+<li>
+<p>Step2:配置新用户密码<br>
+passwd 用户名</p>
+</li>
+<li>
+<p>Step3：给新添加的用户增加root权限<br>
+visudo<br>
+然后添加：<br>
+用户名 ALL=(ALL:ALL) ALL</p>
+</li>
+<li>
+<p>ctrl+o 保存   ctrl+x 退出</p>
+</li>
 </ul>
-
 <h3 id="0x01-用户组">0x01 用户组</h3>
-
-<pre><code>初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个
-</code></pre>
-
-<pre><code>useradd xm   用户xm会默认加到xm组
+<pre tabindex="0"><code>初始组只有一个就是/etc/passwd里gid显示的，有效组可以有多个
+</code></pre><pre tabindex="0"><code>useradd xm   用户xm会默认加到xm组
 useradd -g fans xm  将xm的所属组改为fans
 useradd -G fans xm  初始组为xm，有效组为fans
-</code></pre>
-
-<pre><code>useradd xiaoming
+</code></pre><pre tabindex="0"><code>useradd xiaoming
 usermod -g fans xiaoming  只有一个初始组，被修改为fans
 useradd xm
 usermod -G fans xm    xm用户会有两个组，初始组为xm，又添加一个有效组fans
 usermod -G fans1 xm    xm用户两个组，初始组为xm，有效组更改为fans1
-</code></pre>
-
-<pre><code>用户创建的文件拥有者是初始组
-</code></pre>
-</div>
+</code></pre><pre tabindex="0"><code>用户创建的文件拥有者是初始组
+</code></pre></div>
     </article>
   </main>
 

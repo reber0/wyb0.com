@@ -82,20 +82,17 @@
     [<a href="/categories/PHP">PHP</a>](<a href="/tags/php">php</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-代码如下">0x00 代码如下</h3>
-
-<pre><code>&lt;?php
+      <div><h3 id="0x00-代码如下">0x00 代码如下</h3>
+<pre tabindex="0"><code>&lt;?php
 
 function addFileToZip($zip,$zipname,$path){
     $handler = opendir($path);
     while(($filename = readdir($handler))!==false) {
-        if($filename != &quot;.&quot; &amp;&amp; $filename != &quot;..&quot; &amp;&amp; $filename!= $zipname){
-            if (is_dir($path.&quot;/&quot;.$filename)) {  //如果读取的某个对象是文件夹，则递归
-                addFileToZip($zip,$zipname,$path.&quot;/&quot;.$filename);
+        if($filename != &#34;.&#34; &amp;&amp; $filename != &#34;..&#34; &amp;&amp; $filename!= $zipname){
+            if (is_dir($path.&#34;/&#34;.$filename)) {  //如果读取的某个对象是文件夹，则递归
+                addFileToZip($zip,$zipname,$path.&#34;/&#34;.$filename);
             } else {
-                $zip-&gt;addFile($path.&quot;/&quot;.$filename);
+                $zip-&gt;addFile($path.&#34;/&#34;.$filename);
             }
         }
     }
@@ -108,40 +105,32 @@ function tar($zipname,$path) {
     if ($zip-&gt;open($zipname, ZipArchive::OVERWRITE) === TRUE) {
         addFileToZip($zip,$zipname,$path);$zip-&gt;close();
     } else {
-        exit('Unable to open file, or file creation failed!');
+        exit(&#39;Unable to open file, or file creation failed!&#39;);
     }
 }
 
 function download($zipname) {
     if(!file_exists($zipname)){
-      exit(&quot;Zip file does not exist!&quot;);
+      exit(&#34;Zip file does not exist!&#34;);
     }  
-    header(&quot;Cache-Control: public&quot;);
-    header(&quot;Content-Description: File Transfer&quot;);
-    header('Content-disposition: attachment; filename='.basename($zipname)); //文件名
-    header(&quot;Content-Type: application/zip&quot;); //zip格式的  
-    header(&quot;Content-Transfer-Encoding: binary&quot;); //告诉浏览器，这是二进制文件
-    header('Content-Length: '. filesize($zipname)); //告诉浏览器，文件大小
+    header(&#34;Cache-Control: public&#34;);
+    header(&#34;Content-Description: File Transfer&#34;);
+    header(&#39;Content-disposition: attachment; filename=&#39;.basename($zipname)); //文件名
+    header(&#34;Content-Type: application/zip&#34;); //zip格式的  
+    header(&#34;Content-Transfer-Encoding: binary&#34;); //告诉浏览器，这是二进制文件
+    header(&#39;Content-Length: &#39;. filesize($zipname)); //告诉浏览器，文件大小
     @readfile($zipname);
 
     unlink($zipname);
 }
 
-$zipname = 'bak.zip';
-$path = '.';
+$zipname = &#39;bak.zip&#39;;
+$path = &#39;.&#39;;
 tar($zipname,$path);
 download($zipname);
 
 ?&gt;
-</code></pre>
-
-<p><br /></p>
-
-<h4 id="reference-侵删">Reference(侵删)：</h4>
-
-<ul>
-<li><a href="http://blog.csdn.net/libinemail/article/details/52190235">http://blog.csdn.net/libinemail/article/details/52190235</a></li>
-</ul>
+</code></pre><!-- raw HTML omitted -->
 </div>
     </article>
   </main>

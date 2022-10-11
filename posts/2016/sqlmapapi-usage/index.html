@@ -82,132 +82,119 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/tools">tools</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-关于sqlmapapi-py">0x00 关于sqlmapapi.py</h3>
-
+      <div><h3 id="0x00-关于sqlmapapipy">0x00 关于sqlmapapi.py</h3>
 <p>当利用sqlmap时一次只能测试一个url，效率很低，而用sqlmapapi就可以实现批量</p>
-
 <h3 id="0x01-用于交互的方法">0x01 用于交互的方法</h3>
-
 <p>在sqlmap/lib/utils/api.py中:</p>
-
-<pre><code># 用户方法
-@get(&quot;/task/new&quot;) Create new task ID. 
-@get(&quot;/task/&lt;taskid&gt;/delete&quot;) Delete own task ID. 
+<pre tabindex="0"><code># 用户方法
+@get(&#34;/task/new&#34;) Create new task ID. 
+@get(&#34;/task/&lt;taskid&gt;/delete&#34;) Delete own task ID. 
 
 # 管理函数
-@get(&quot;/admin/&lt;taskid&gt;/list&quot;) List task pull. 
-@get(&quot;/admin/&lt;taskid&gt;/flush&quot;) Flush task spool (delete all tasks). 
+@get(&#34;/admin/&lt;taskid&gt;/list&#34;) List task pull. 
+@get(&#34;/admin/&lt;taskid&gt;/flush&#34;) Flush task spool (delete all tasks). 
 
 # 核心交互函数
-@get(&quot;/option/&lt;taskid&gt;/list&quot;) List options for a certain task ID
-@post(&quot;/option/&lt;taskid&gt;/get&quot;) Get the value of an option (command line switch) for a certain task ID
-@post(&quot;/option/&lt;taskid&gt;/set&quot;) Set an option (command line switch) for a certain task ID
-@post(&quot;/scan/&lt;taskid&gt;/start&quot;) Launch a scan
-@get(&quot;/scan/&lt;taskid&gt;/stop&quot;) Kill a scan
-@get(&quot;/scan/&lt;taskid&gt;/status&quot;) Return status of a scan
-@get(&quot;/scan/&lt;taskid&gt;/data&quot;) Retrieve the data of a scan
-@get(&quot;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&quot;) Retrieve a subset of log messages
-@get(&quot;/scan/&lt;taskid&gt;/log&quot;) Retrieve the log messages
-@get(&quot;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&quot;) Download a certain file from the file system
-</code></pre>
-
-<h3 id="0x02-sqlmapapi-py参数如下">0x02 sqlmapapi.py参数如下</h3>
-
-<p><img src="/img/post/sqlmapapi_help.png" alt="sqlmapapi参数" />
+@get(&#34;/option/&lt;taskid&gt;/list&#34;) List options for a certain task ID
+@post(&#34;/option/&lt;taskid&gt;/get&#34;) Get the value of an option (command line switch) for a certain task ID
+@post(&#34;/option/&lt;taskid&gt;/set&#34;) Set an option (command line switch) for a certain task ID
+@post(&#34;/scan/&lt;taskid&gt;/start&#34;) Launch a scan
+@get(&#34;/scan/&lt;taskid&gt;/stop&#34;) Kill a scan
+@get(&#34;/scan/&lt;taskid&gt;/status&#34;) Return status of a scan
+@get(&#34;/scan/&lt;taskid&gt;/data&#34;) Retrieve the data of a scan
+@get(&#34;/scan/&lt;taskid&gt;/log/&lt;start&gt;/&lt;end&gt;&#34;) Retrieve a subset of log messages
+@get(&#34;/scan/&lt;taskid&gt;/log&#34;) Retrieve the log messages
+@get(&#34;/download/&lt;taskid&gt;/&lt;target&gt;/&lt;filename:path&gt;&#34;) Download a certain file from the file system
+</code></pre><h3 id="0x02-sqlmapapipy参数如下">0x02 sqlmapapi.py参数如下</h3>
+<p><img src="/img/post/sqlmapapi_help.png" alt="sqlmapapi参数">
 它的-s参数可以启动一个服务(返回一个Admin Id)，只要将url给它就行了：
-<img src="/img/post/sqlmapapi_server.png" alt="启动sqlmapapi服务" /></p>
-
+<img src="/img/post/sqlmapapi_server.png" alt="启动sqlmapapi服务"></p>
 <h3 id="0x03-简单使用">0x03 简单使用</h3>
-
 <ol>
-<li><p>创建任务
-使用@get(&ldquo;/task/new&rdquo;)方法创建一个新的任务
-<img src="/img/post/sqlmapapi_new_task.png" alt="sqlmapapi新建任务" /></p></li>
-
-<li><p>指定参数
-使用@post(&ldquo;/option/&lt;taskid&gt;/set&rdquo;)方法设置参数
-<img src="/img/post/sqlmapapi_options.png" alt="sqlmapapi指定参数" /></p></li>
-
-<li><p>开始扫描
-使用@post(&ldquo;/scan/&lt;taskid&gt;/start&rdquo;)方法开始扫描
-<img src="/img/post/sqlmapapi_scan_start.png" alt="sqlmapapi开始扫描" /></p></li>
-
-<li><p>获取探测是否结束
-使用@get(&ldquo;/scan/&lt;taskid&gt;/status&rdquo;)获取探测是否结束
-<img src="/img/post/sqlmapapi_scan_status.png" alt="sqlmapapi得到扫描状态" /></p></li>
-
-<li><p>获取探测结果
-使用@get(&ldquo;/scan/&lt;taskid&gt;/data&rdquo;)获取探测结果，如果不能注入，则获取到的结果为空，如下：</p>
-
-<pre><code>{u'data': [], u'success': True, u'error': []}
-</code></pre>
-
-<p>若存在注入则可能如下：
-<img src="/img/post/sqlmapapi_scan_result.png" alt="sqlmapapi得到扫描结果" /></p></li>
-
-<li><p>删除任务
-使用@get(&ldquo;/task/delete&rdquo;)方法删除一个任务.</p>
-
-<pre><code>&gt;&gt;&gt;resp = requests.get('http://127.0.0.1:8776/task/96f01550dadabab8/delete')
-&gt;&gt;&gt;resp.json()
-{u'success': True}
-</code></pre>
-
-<p><img src="/img/post/sqlmapapi_delete_task.png" alt="sqlmapapi删除任务" /></p></li>
+<li>
+<p>创建任务
+使用@get(&quot;/task/new&quot;)方法创建一个新的任务
+<img src="/img/post/sqlmapapi_new_task.png" alt="sqlmapapi新建任务"></p>
+</li>
+<li>
+<p>指定参数
+使用@post(&quot;/option/&lt;taskid&gt;/set&quot;)方法设置参数
+<img src="/img/post/sqlmapapi_options.png" alt="sqlmapapi指定参数"></p>
+</li>
+<li>
+<p>开始扫描
+使用@post(&quot;/scan/&lt;taskid&gt;/start&quot;)方法开始扫描
+<img src="/img/post/sqlmapapi_scan_start.png" alt="sqlmapapi开始扫描"></p>
+</li>
+<li>
+<p>获取探测是否结束
+使用@get(&quot;/scan/&lt;taskid&gt;/status&quot;)获取探测是否结束
+<img src="/img/post/sqlmapapi_scan_status.png" alt="sqlmapapi得到扫描状态"></p>
+</li>
+<li>
+<p>获取探测结果
+使用@get(&quot;/scan/&lt;taskid&gt;/data&quot;)获取探测结果，如果不能注入，则获取到的结果为空，如下：</p>
+</li>
 </ol>
-
+<pre tabindex="0"><code>{u&#39;data&#39;: [], u&#39;success&#39;: True, u&#39;error&#39;: []}
+</code></pre><p>若存在注入则可能如下：
+<img src="/img/post/sqlmapapi_scan_result.png" alt="sqlmapapi得到扫描结果"></p>
+<ol start="6">
+<li>删除任务
+使用@get(&quot;/task/delete&quot;)方法删除一个任务.</li>
+</ol>
+<pre tabindex="0"><code>&gt;&gt;&gt;resp = requests.get(&#39;http://127.0.0.1:8776/task/96f01550dadabab8/delete&#39;)
+&gt;&gt;&gt;resp.json()
+{u&#39;success&#39;: True}
+</code></pre><p><img src="/img/post/sqlmapapi_delete_task.png" alt="sqlmapapi删除任务"></p>
 <h3 id="0x04-简单示例">0x04 简单示例</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import time
-import json
-import requests
-
-url_list = {}
-url_list['url1'] = 'http://192.168.188.134/sqli/Less-1/?id=1'
-url_list['url2'] = 'http://192.168.188.134/sqli/Less-2/?id=1'
-url_list['url3'] = 'http://192.168.188.134/sqli/Less-3/?id=1'
-
-
-for key in url_list.keys():
-    payload = {}
-    resp = requests.get('http://127.0.0.1:8775/task/new') #创建任务
-    taskid = resp.json()['taskid']
-    payload['url'] = url_list[key]
-    headers = {'Content-Type':'application/json'}
-    if resp.json()['success']: #指定参数
-        print &quot;set options...&quot;
-        url = &quot;http://127.0.0.1:8775/option/%s/set&quot; % taskid
-        resp = requests.post(url,data=json.dumps(payload),headers=headers)
-        if resp.json()['success']: #开始扫描
-            print &quot;start scan...&quot;
-            url = &quot;http://127.0.0.1:8775/scan/%s/start&quot; % taskid
-            resp = requests.post(url,data=json.dumps(payload),headers=headers)
-            print &quot;scan runing...&quot;
-            if resp.json()['success']:
-                while 1:
-                    url = &quot;http://127.0.0.1:8775/scan/%s/status&quot; % taskid #查看扫描状态
-                    resp = requests.get(url)
-                    if resp.json()['status'] != 'terminated':
-                        pass
-                    else:
-                        print &quot;scan end.&quot;
-                        url = &quot;http://127.0.0.1:8775/scan/%s/data&quot; % taskid #获取扫描结果
-                        data = requests.get(url)
-                        print data.json()['data']
-                        print &quot;delete task&quot;
-                        url = &quot;http://127.0.0.1:8775/task/%s/delete&quot; % taskid
-                        requests.get(url)
-                        break
-                    time.sleep(2)
-    else:
-        print &quot;new task error&quot;
-</code></pre>
-</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>url_list <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>url_list[<span style="color:#e6db74">&#39;url1&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://192.168.188.134/sqli/Less-1/?id=1&#39;</span>
+</span></span><span style="display:flex;"><span>url_list[<span style="color:#e6db74">&#39;url2&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://192.168.188.134/sqli/Less-2/?id=1&#39;</span>
+</span></span><span style="display:flex;"><span>url_list[<span style="color:#e6db74">&#39;url3&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;http://192.168.188.134/sqli/Less-3/?id=1&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> url_list<span style="color:#f92672">.</span>keys():
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;http://127.0.0.1:8775/task/new&#39;</span>) <span style="color:#75715e">#创建任务</span>
+</span></span><span style="display:flex;"><span>    taskid <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;taskid&#39;</span>]
+</span></span><span style="display:flex;"><span>    payload[<span style="color:#e6db74">&#39;url&#39;</span>] <span style="color:#f92672">=</span> url_list[key]
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;Content-Type&#39;</span>:<span style="color:#e6db74">&#39;application/json&#39;</span>}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;success&#39;</span>]: <span style="color:#75715e">#指定参数</span>
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;set options...&#34;</span>
+</span></span><span style="display:flex;"><span>        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://127.0.0.1:8775/option/</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/set&#34;</span> <span style="color:#f92672">%</span> taskid
+</span></span><span style="display:flex;"><span>        resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url,data<span style="color:#f92672">=</span>json<span style="color:#f92672">.</span>dumps(payload),headers<span style="color:#f92672">=</span>headers)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;success&#39;</span>]: <span style="color:#75715e">#开始扫描</span>
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;start scan...&#34;</span>
+</span></span><span style="display:flex;"><span>            url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://127.0.0.1:8775/scan/</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/start&#34;</span> <span style="color:#f92672">%</span> taskid
+</span></span><span style="display:flex;"><span>            resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url,data<span style="color:#f92672">=</span>json<span style="color:#f92672">.</span>dumps(payload),headers<span style="color:#f92672">=</span>headers)
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;scan runing...&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;success&#39;</span>]:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">while</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://127.0.0.1:8775/scan/</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/status&#34;</span> <span style="color:#f92672">%</span> taskid <span style="color:#75715e">#查看扫描状态</span>
+</span></span><span style="display:flex;"><span>                    resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;status&#39;</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;terminated&#39;</span>:
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                        print <span style="color:#e6db74">&#34;scan end.&#34;</span>
+</span></span><span style="display:flex;"><span>                        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://127.0.0.1:8775/scan/</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/data&#34;</span> <span style="color:#f92672">%</span> taskid <span style="color:#75715e">#获取扫描结果</span>
+</span></span><span style="display:flex;"><span>                        data <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url)
+</span></span><span style="display:flex;"><span>                        print data<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;data&#39;</span>]
+</span></span><span style="display:flex;"><span>                        print <span style="color:#e6db74">&#34;delete task&#34;</span>
+</span></span><span style="display:flex;"><span>                        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://127.0.0.1:8775/task/</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/delete&#34;</span> <span style="color:#f92672">%</span> taskid
+</span></span><span style="display:flex;"><span>                        requests<span style="color:#f92672">.</span>get(url)
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>                    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;new task error&#34;</span>
+</span></span></code></pre></div></div>
     </article>
   </main>
 

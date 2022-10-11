@@ -82,90 +82,71 @@
     [<a href="/categories/Server">Server</a>](<a href="/tags/server">server</a>)
 </div>
 
-      <div>
-
-<p>环境：CentOS-6.5-x86_64-minimal</p>
-
+      <div><p>环境：CentOS-6.5-x86_64-minimal</p>
 <h3 id="0x00-搭建lamp">0x00 搭建LAMP</h3>
-
 <ul>
-<li><p>安装Apache</p>
-
-<pre><code>yum install httpd
+<li>
+<p>安装Apache</p>
+<pre tabindex="0"><code>yum install httpd
 </code></pre></li>
-
-<li><p>安装MySQL</p>
-
+<li>
+<p>安装MySQL</p>
 <ul>
 <li>yum install mysql mysql-server</li>
-
-<li><p>设置数据库</p>
-
-<pre><code>[reber@localhost conf]$ sudo mysql_secure_installation
+<li>设置数据库</li>
+</ul>
+<pre tabindex="0"><code>[reber@localhost conf]$ sudo mysql_secure_installation
 # 更新root密码：
 [reber@localhost conf]$ mysql -uroot –p
 mysql&gt; use mysql;
-mysql&gt; update user set password=password('123456') where user='root';
+mysql&gt; update user set password=password(&#39;123456&#39;) where user=&#39;root&#39;;
 mysql&gt; flush privileges;  //不想重启mysql就使新密码生效就需要运行此命令刷新
-mysql&gt; insert into mysql.user(Host,User,Password) values(&quot;localhost&quot;,&quot;blog&quot;,password(&quot;123456&quot;));
-# mysql&gt; detele form mysql.user where User='blog' and Host='localhost';  //这步可以删除用户
+mysql&gt; insert into mysql.user(Host,User,Password) values(&#34;localhost&#34;,&#34;blog&#34;,password(&#34;123456&#34;));
+# mysql&gt; detele form mysql.user where User=&#39;blog&#39; and Host=&#39;localhost&#39;;  //这步可以删除用户
 mysql&gt; flush privileges;  //刷新
 mysql&gt; create database db_blog;
 Query OK, 1 row affected (0.00 sec)
-# 授权用户&quot;blog&quot;拥有db_blog数据库的所有权限
-mysql&gt; grant all privileges on db_blog.* to blog@localhost identified by '666666';
+# 授权用户&#34;blog&#34;拥有db_blog数据库的所有权限
+mysql&gt; grant all privileges on db_blog.* to blog@localhost identified by &#39;666666&#39;;
 mysql&gt; flush privileges;  //刷新
 [reber@localhost conf]$ mysql –ublog –p  //此时就需要用666666登陆数据库db_blog
 </code></pre></li>
-</ul></li>
-
-<li><p>安装PHP</p>
-
-<pre><code>$ yum install php php-mysql php-gd php-imap php-ldap php-mbstring php-odbc php-pear php-xml php-xmlrpc
-</code></pre></li>
-
-<li><p>验证AMP搭建成功</p>
-
-<pre><code>[reber@localhost html]$ echo &quot;&lt;?php phpinfo();?&gt;&quot; &gt;&gt; index.php
-</code></pre>
-
-<p><img src="/img/post/linux_virtual_host_test.png" alt="测试lamp环境" /></p></li>
+<li>
+<p>安装PHP</p>
+</li>
 </ul>
-
+<pre tabindex="0"><code>$ yum install php php-mysql php-gd php-imap php-ldap php-mbstring php-odbc php-pear php-xml php-xmlrpc
+</code></pre><ul>
+<li>验证AMP搭建成功</li>
+</ul>
+<pre tabindex="0"><code>[reber@localhost html]$ echo &#34;&lt;?php phpinfo();?&gt;&#34; &gt;&gt; index.php
+</code></pre><p><img src="/img/post/linux_virtual_host_test.png" alt="测试lamp环境"></p>
 <h3 id="0x01-设置虚拟主机">0x01 设置虚拟主机</h3>
-
 <p>[reber@localhost html]$ sudo vim /etc/httpd/conf/httpd.conf
-<img src="/img/post/linux_virtual_host_set_port.png" alt="设置端口" />
-<img src="/img/post/linux_virtual_host_set_virtualhost.png" alt="设置虚拟主机" />
-<img src="/img/post/linux_virtual_host_add_file.png" alt="设置虚拟主机" /></p>
-
-<h3 id="0x02-修改本地windows的hosts文件-进行测试">0x02 修改本地windows的hosts文件，进行测试</h3>
-
-<p><img src="/img/post/linux_virtual_host_change_hosts.png" alt="设置虚拟主机" />
-<img src="/img/post/linux_virtual_host_visit_site.png" alt="测试虚拟主机" /></p>
-
+<img src="/img/post/linux_virtual_host_set_port.png" alt="设置端口">
+<img src="/img/post/linux_virtual_host_set_virtualhost.png" alt="设置虚拟主机">
+<img src="/img/post/linux_virtual_host_add_file.png" alt="设置虚拟主机"></p>
+<h3 id="0x02-修改本地windows的hosts文件进行测试">0x02 修改本地windows的hosts文件，进行测试</h3>
+<p><img src="/img/post/linux_virtual_host_change_hosts.png" alt="设置虚拟主机">
+<img src="/img/post/linux_virtual_host_visit_site.png" alt="测试虚拟主机"></p>
 <h3 id="0x03-搭建wordpress">0x03 搭建WordPress</h3>
-
 <ul>
-<li><p>下载WordPress并设置</p>
-
-<pre><code>$ cd /var/www/blog
+<li>下载WordPress并设置</li>
+</ul>
+<pre tabindex="0"><code>$ cd /var/www/blog
 $ sudo wget https://cn.wordpress.org/wordpress-4.5-zh_CN.tar.gz
 $ tar -zxvf wordpress-4.5-zh_CN.tar.gz
 $ chown –R  apache:apache  wordpress-4.5
 $ mv /var/www/blog/wordpress-4.5/* ../
 $ rm -rf wordpress-4.5
-</code></pre></li>
-
-<li><p>安装WordPress
-<img src="/img/post/linux_virtual_host_install_wordpress1.png" alt="安装WordPress1" />
-<img src="/img/post/linux_virtual_host_install_wordpress2.png" alt="安装WordPress2" /></p></li>
+</code></pre><ul>
+<li>安装WordPress
+<img src="/img/post/linux_virtual_host_install_wordpress1.png" alt="安装WordPress1">
+<img src="/img/post/linux_virtual_host_install_wordpress2.png" alt="安装WordPress2"></li>
 </ul>
-
 <h3 id="0x04-登陆后台写博客">0x04 登陆后台写博客</h3>
-
-<p><img src="/img/post/linux_virtual_host_login_background.png" alt="后台登陆" />
-<img src="/img/post/linux_virtual_host_add_article.png" alt="添加文章" /></p>
+<p><img src="/img/post/linux_virtual_host_login_background.png" alt="后台登陆">
+<img src="/img/post/linux_virtual_host_add_article.png" alt="添加文章"></p>
 </div>
     </article>
   </main>

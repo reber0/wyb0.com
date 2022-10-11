@@ -82,21 +82,17 @@
     [<a href="/categories/JS">JS</a>](<a href="/tags/js">js</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-ajax与php">0x00 AJAX与PHP</h3>
-
+      <div><h3 id="0x00-ajax与php">0x00 AJAX与PHP</h3>
 <p>ajax.html代码如下：</p>
-
-<pre><code>&lt;!DOCTYPE html&gt;
+<pre tabindex="0"><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta charset=&#34;utf-8&#34;&gt;
     &lt;script&gt;
     function showHint(str) {
         var xmlhttp;
         if (str.length==0) { 
-            document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;;
+            document.getElementById(&#34;txtHint&#34;).innerHTML=&#34;&#34;;
             return;
         }
         if (window.XMLHttpRequest) {
@@ -104,92 +100,87 @@
             xmlhttp=new XMLHttpRequest(); //创建对象
         } else {
             // IE6, IE5 浏览器执行代码
-            xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+            xmlhttp=new ActiveXObject(&#34;Microsoft.XMLHTTP&#34;);
         }
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) {
-                document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText;
+                document.getElementById(&#34;txtHint&#34;).innerHTML=xmlhttp.responseText;
             }
         }
-        xmlhttp.open(&quot;GET&quot;,&quot;./ajax.php?q=&quot;+str,true);
+        xmlhttp.open(&#34;GET&#34;,&#34;./ajax.php?q=&#34;+str,true);
         xmlhttp.send();
     }
     &lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
     &lt;h3&gt;在输入框中尝试输入字母 a:&lt;/h3&gt;
-    &lt;form action=&quot;&quot;&gt; 
-    输入姓名: &lt;input type=&quot;text&quot; id=&quot;txt1&quot; onkeyup=&quot;showHint(this.value)&quot; /&gt;
+    &lt;form action=&#34;&#34;&gt; 
+    输入姓名: &lt;input type=&#34;text&#34; id=&#34;txt1&#34; onkeyup=&#34;showHint(this.value)&#34; /&gt;
     &lt;/form&gt;
-    &lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; 
+    &lt;p&gt;提示信息: &lt;span id=&#34;txtHint&#34;&gt;&lt;/span&gt;&lt;/p&gt; 
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre>
-
-<pre><code>上面的代码会完成以下的东西：
+</code></pre><pre tabindex="0"><code>上面的代码会完成以下的东西：
 
 1. 在输入字母时会调用showHint()
 2. showHint()创建对象
 3. 定义onreadystatechange事件
 4. xmlhttp.open()访问当前目录下的ajax.php来请求资源
-</code></pre>
-
-<p>ajax.php代码如下：</p>
-
-<pre><code>&lt;?php
+</code></pre><p>ajax.php代码如下：</p>
+<pre tabindex="0"><code>&lt;?php
 // Fill up array with names
-$a[]=&quot;Anna&quot;;
-$a[]=&quot;Brittany&quot;;
-$a[]=&quot;Cinderella&quot;;
-$a[]=&quot;Diana&quot;;
-$a[]=&quot;Eva&quot;;
-$a[]=&quot;Fiona&quot;;
-$a[]=&quot;Gunda&quot;;
-$a[]=&quot;Hege&quot;;
-$a[]=&quot;Inga&quot;;
-$a[]=&quot;Johanna&quot;;
-$a[]=&quot;Kitty&quot;;
-$a[]=&quot;Linda&quot;;
-$a[]=&quot;Nina&quot;;
-$a[]=&quot;Ophelia&quot;;
-$a[]=&quot;Petunia&quot;;
-$a[]=&quot;Amanda&quot;;
-$a[]=&quot;Raquel&quot;;
-$a[]=&quot;Cindy&quot;;
-$a[]=&quot;Doris&quot;;
-$a[]=&quot;Eve&quot;;
-$a[]=&quot;Evita&quot;;
-$a[]=&quot;Sunniva&quot;;
-$a[]=&quot;Tove&quot;;
-$a[]=&quot;Unni&quot;;
-$a[]=&quot;Violet&quot;;
-$a[]=&quot;Liza&quot;;
-$a[]=&quot;Elizabeth&quot;;
-$a[]=&quot;Ellen&quot;;
-$a[]=&quot;Wenche&quot;;
-$a[]=&quot;Vicky&quot;;
+$a[]=&#34;Anna&#34;;
+$a[]=&#34;Brittany&#34;;
+$a[]=&#34;Cinderella&#34;;
+$a[]=&#34;Diana&#34;;
+$a[]=&#34;Eva&#34;;
+$a[]=&#34;Fiona&#34;;
+$a[]=&#34;Gunda&#34;;
+$a[]=&#34;Hege&#34;;
+$a[]=&#34;Inga&#34;;
+$a[]=&#34;Johanna&#34;;
+$a[]=&#34;Kitty&#34;;
+$a[]=&#34;Linda&#34;;
+$a[]=&#34;Nina&#34;;
+$a[]=&#34;Ophelia&#34;;
+$a[]=&#34;Petunia&#34;;
+$a[]=&#34;Amanda&#34;;
+$a[]=&#34;Raquel&#34;;
+$a[]=&#34;Cindy&#34;;
+$a[]=&#34;Doris&#34;;
+$a[]=&#34;Eve&#34;;
+$a[]=&#34;Evita&#34;;
+$a[]=&#34;Sunniva&#34;;
+$a[]=&#34;Tove&#34;;
+$a[]=&#34;Unni&#34;;
+$a[]=&#34;Violet&#34;;
+$a[]=&#34;Liza&#34;;
+$a[]=&#34;Elizabeth&#34;;
+$a[]=&#34;Ellen&#34;;
+$a[]=&#34;Wenche&#34;;
+$a[]=&#34;Vicky&#34;;
 
 //get the q parameter from URL
-$q=$_GET[&quot;q&quot;];
+$q=$_GET[&#34;q&#34;];
 
 //lookup all hints from array if length of q&gt;0
 if (strlen($q) &gt; 0) {
-    $hint=&quot;&quot;;
+    $hint=&#34;&#34;;
     for($i=0; $i&lt;count($a); $i++) {
         if (strtolower($q)==strtolower(substr($a[$i],0,strlen($q)))) {
-            if ($hint==&quot;&quot;) {
+            if ($hint==&#34;&#34;) {
                 $hint=$a[$i];
             } else {
-                $hint=$hint.&quot; , &quot;.$a[$i];
+                $hint=$hint.&#34; , &#34;.$a[$i];
             }
         }
     }
 }
 
-// Set output to &quot;no suggestion&quot; if no hint were found
+// Set output to &#34;no suggestion&#34; if no hint were found
 // or to the correct values
-if ($hint == &quot;&quot;) {
-    $response=&quot;no suggestion&quot;;
+if ($hint == &#34;&#34;) {
+    $response=&#34;no suggestion&#34;;
 } else {
     $response=$hint;
 }
@@ -197,26 +188,19 @@ if ($hint == &quot;&quot;) {
 //output the response
 echo $response;
 ?&gt;
-</code></pre>
-
-<p>结果如下：
-<img src="/img/post/ajax_and_php.gif" alt="ajax与php" /></p>
-
+</code></pre><p>结果如下：
+<img src="/img/post/ajax_and_php.gif" alt="ajax与php"></p>
 <h3 id="0x01-ajax与数据库">0x01 AJAX与数据库</h3>
-
-<pre><code>可以通过xmlhttp.open(&quot;GET&quot;,&quot;./ajax.php?q=&quot;+str,true);的形式获取服务器数据，
+<pre tabindex="0"><code>可以通过xmlhttp.open(&#34;GET&#34;,&#34;./ajax.php?q=&#34;+str,true);的形式获取服务器数据，
 那么也就可以通过这种方式获取服务端数据库中的内容
-</code></pre>
-
-<p>ajax.html代码如下：</p>
-
-<pre><code>&lt;html&gt;
+</code></pre><p>ajax.html代码如下：</p>
+<pre tabindex="0"><code>&lt;html&gt;
 &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta charset=&#34;utf-8&#34;&gt;
     &lt;script&gt;
     function showUser(str) {
-        if (str==&quot;&quot;) {
-            document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;;
+        if (str==&#34;&#34;) {
+            document.getElementById(&#34;txtHint&#34;).innerHTML=&#34;&#34;;
             return;
         } 
         if (window.XMLHttpRequest) {
@@ -224,73 +208,66 @@ echo $response;
             xmlhttp=new XMLHttpRequest();
         } else {
             // IE6, IE5 浏览器执行代码
-            xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+            xmlhttp=new ActiveXObject(&#34;Microsoft.XMLHTTP&#34;);
         }
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200){
-                document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText;
+                document.getElementById(&#34;txtHint&#34;).innerHTML=xmlhttp.responseText;
             }
         }
-        xmlhttp.open(&quot;GET&quot;,&quot;getuser.php?id=&quot;+str,true);
+        xmlhttp.open(&#34;GET&#34;,&#34;getuser.php?id=&#34;+str,true);
         xmlhttp.send();
     }
     &lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
     &lt;form&gt;
-        &lt;select name=&quot;users&quot; onchange=&quot;showUser(this.value)&quot;&gt;
-            &lt;option value=&quot;&quot;&gt;Select a person:&lt;/option&gt;
-            &lt;option value=&quot;7&quot;&gt;用户1&lt;/option&gt;
-            &lt;option value=&quot;8&quot;&gt;用户2&lt;/option&gt;
-            &lt;option value=&quot;9&quot;&gt;用户3&lt;/option&gt;
+        &lt;select name=&#34;users&#34; onchange=&#34;showUser(this.value)&#34;&gt;
+            &lt;option value=&#34;&#34;&gt;Select a person:&lt;/option&gt;
+            &lt;option value=&#34;7&#34;&gt;用户1&lt;/option&gt;
+            &lt;option value=&#34;8&#34;&gt;用户2&lt;/option&gt;
+            &lt;option value=&#34;9&#34;&gt;用户3&lt;/option&gt;
         &lt;/select&gt;
     &lt;/form&gt;
     &lt;br&gt;
-    &lt;div id=&quot;txtHint&quot;&gt;&lt;b&gt;Person info will be listed here.&lt;/b&gt;&lt;/div&gt;
+    &lt;div id=&#34;txtHint&#34;&gt;&lt;b&gt;Person info will be listed here.&lt;/b&gt;&lt;/div&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre>
+</code></pre><p>getuser.php代码如下：</p>
+<pre tabindex="0"><code>&lt;?php
+    header(&#34;Content-Type:text/html; charset=gbk&#34;);
 
-<p>getuser.php代码如下：</p>
+    $id=$_GET[&#34;id&#34;];
 
-<pre><code>&lt;?php
-    header(&quot;Content-Type:text/html; charset=gbk&quot;);
-
-    $id=$_GET[&quot;id&quot;];
-
-    $con = mysql_connect('localhost','root','123456');
-    mysql_select_db(&quot;thinkphp&quot;,$con);
-    $sql=&quot;SELECT * FROM msg WHERE id = '&quot;.$id.&quot;'&quot;;
+    $con = mysql_connect(&#39;localhost&#39;,&#39;root&#39;,&#39;123456&#39;);
+    mysql_select_db(&#34;thinkphp&#34;,$con);
+    $sql=&#34;SELECT * FROM msg WHERE id = &#39;&#34;.$id.&#34;&#39;&#34;;
     $result = mysql_query($sql);
 
-    echo &quot;&lt;table border='1'&gt;
+    echo &#34;&lt;table border=&#39;1&#39;&gt;
     &lt;tr&gt;
     &lt;th&gt;Id&lt;/th&gt;
     &lt;th&gt;Name&lt;/th&gt;
     &lt;th&gt;Sex&lt;/th&gt;
-    &lt;/tr&gt;&quot;;
+    &lt;/tr&gt;&#34;;
 
     while($row = mysql_fetch_array($result)) {
-        echo &quot;&lt;tr&gt;&quot;;
-        echo &quot;&lt;td&gt;&quot; . $row['id'] . &quot;&lt;/td&gt;&quot;;
-        echo &quot;&lt;td&gt;&quot; . $row['name'] . &quot;&lt;/td&gt;&quot;;
-        echo &quot;&lt;td&gt;&quot; . $row['sex'] . &quot;&lt;/td&gt;&quot;;
-        echo &quot;&lt;/tr&gt;&quot;;
+        echo &#34;&lt;tr&gt;&#34;;
+        echo &#34;&lt;td&gt;&#34; . $row[&#39;id&#39;] . &#34;&lt;/td&gt;&#34;;
+        echo &#34;&lt;td&gt;&#34; . $row[&#39;name&#39;] . &#34;&lt;/td&gt;&#34;;
+        echo &#34;&lt;td&gt;&#34; . $row[&#39;sex&#39;] . &#34;&lt;/td&gt;&#34;;
+        echo &#34;&lt;/tr&gt;&#34;;
     }
-    echo &quot;&lt;/table&gt;&quot;;
+    echo &#34;&lt;/table&gt;&#34;;
 
     mysql_close($con);
 ?&gt;
-</code></pre>
-
-<p>结果如下：
-<img src="/img/post/ajax_and_mysql1.png" alt="ajax与mysql1" />
-<img src="/img/post/ajax_and_mysql2.png" alt="ajax与mysql2" />
-<img src="/img/post/ajax_and_mysql3.png" alt="ajax与mysql3" /></p>
-
+</code></pre><p>结果如下：
+<img src="/img/post/ajax_and_mysql1.png" alt="ajax与mysql1">
+<img src="/img/post/ajax_and_mysql2.png" alt="ajax与mysql2">
+<img src="/img/post/ajax_and_mysql3.png" alt="ajax与mysql3"></p>
 <h3 id="0x02-ajax使用实例">0x02 AJAX使用实例</h3>
-
-<pre><code>&lt;!DOCTYPE html&gt;
+<pre tabindex="0"><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;script&gt;
@@ -301,18 +278,18 @@ echo $response;
                 xmlhttp=new XMLHttpRequest();
             } else {
                 // IE6, IE5 代码
-                xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+                xmlhttp=new ActiveXObject(&#34;Microsoft.XMLHTTP&#34;);
             }
             xmlhttp.onreadystatechange=cfunc;
-            xmlhttp.open(&quot;GET&quot;,url,true);
+            xmlhttp.open(&#34;GET&#34;,url,true);
             xmlhttp.send();
         }
         function myFunction() {
             loadXMLDoc(
-                &quot;/try/ajax/ajax_info.txt&quot;,
+                &#34;/try/ajax/ajax_info.txt&#34;,
                 function() {
                     if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) {
-                        document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+                        document.getElementById(&#34;myDiv&#34;).innerHTML=xmlhttp.responseText;
                     }
                 }
             );
@@ -320,12 +297,11 @@ echo $response;
     &lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改文本内容&lt;/h2&gt;&lt;/div&gt;
-    &lt;button type=&quot;button&quot; onclick=&quot;myFunction()&quot;&gt;修改内容&lt;/button&gt;
+    &lt;div id=&#34;myDiv&#34;&gt;&lt;h2&gt;使用 AJAX 修改文本内容&lt;/h2&gt;&lt;/div&gt;
+    &lt;button type=&#34;button&#34; onclick=&#34;myFunction()&#34;&gt;修改内容&lt;/button&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre>
-</div>
+</code></pre></div>
     </article>
   </main>
 

@@ -82,10 +82,7 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/%E9%92%93%E9%B1%BC">钓鱼</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-gophish-使用">0x00 Gophish 使用</h3>
-
+      <div><h3 id="0x00-gophish-使用">0x00 Gophish 使用</h3>
 <ul>
 <li>配置 Gophish 服务</li>
 <li>配置发送邮箱</li>
@@ -94,83 +91,61 @@
 <li>添加目标邮箱</li>
 <li>开始攻击</li>
 </ul>
-
 <h3 id="0x01-配置-gophish-服务">0x01 配置 Gophish 服务</h3>
-
 <p>在 <a href="https://github.com/gophish/gophish/releases?_blank">https://github.com/gophish/gophish/releases</a> 下载</p>
-
 <p>然后编辑 config.json，之后直接 ./gophish 运行即可</p>
-
-<pre><code class="language-json">{
-    &quot;admin_server&quot;: {
-        &quot;listen_url&quot;: &quot;0.0.0.0:58001&quot;, // Gophish 管理页面
-        &quot;use_tls&quot;: true,
-        &quot;cert_path&quot;: &quot;gophish.crt&quot;,
-        &quot;key_path&quot;: &quot;gophish.key&quot;
-    },
-    &quot;phish_server&quot;: {
-        &quot;listen_url&quot;: &quot;0.0.0.0:58002&quot;, // 钓鱼的 web 服务
-        &quot;use_tls&quot;: false,              // 不使用 tls，web 服务地址为 http://x.x.x.x:58002/
-        &quot;cert_path&quot;: &quot;gophish.crt&quot;,
-        &quot;key_path&quot;: &quot;gophish.key&quot;
-    },
-    &quot;db_name&quot;: &quot;sqlite3&quot;,
-    &quot;db_path&quot;: &quot;gophish.db&quot;,
-    &quot;migrations_prefix&quot;: &quot;db/db_&quot;,
-    &quot;contact_address&quot;: &quot;&quot;,
-    &quot;logging&quot;: {
-        &quot;filename&quot;: &quot;&quot;,
-        &quot;level&quot;: &quot;&quot;
-    }
-}
-</code></pre>
-
-<h3 id="0x02-配置发送邮箱">0x02 配置发送邮箱</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;admin_server&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;listen_url&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0:58001&#34;</span>, <span style="color:#75715e">// Gophish 管理页面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#f92672">&#34;use_tls&#34;</span>: <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;cert_path&#34;</span>: <span style="color:#e6db74">&#34;gophish.crt&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;key_path&#34;</span>: <span style="color:#e6db74">&#34;gophish.key&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;phish_server&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;listen_url&#34;</span>: <span style="color:#e6db74">&#34;0.0.0.0:58002&#34;</span>, <span style="color:#75715e">// 钓鱼的 web 服务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#f92672">&#34;use_tls&#34;</span>: <span style="color:#66d9ef">false</span>,              <span style="color:#75715e">// 不使用 tls，web 服务地址为 http://x.x.x.x:58002/
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#f92672">&#34;cert_path&#34;</span>: <span style="color:#e6db74">&#34;gophish.crt&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;key_path&#34;</span>: <span style="color:#e6db74">&#34;gophish.key&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;db_name&#34;</span>: <span style="color:#e6db74">&#34;sqlite3&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;db_path&#34;</span>: <span style="color:#e6db74">&#34;gophish.db&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;migrations_prefix&#34;</span>: <span style="color:#e6db74">&#34;db/db_&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;contact_address&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;logging&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;filename&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;level&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="0x02-配置发送邮箱">0x02 配置发送邮箱</h3>
 <p>Sending Profiles -&gt; New Profile -&gt; 填写相关信息 -&gt; Send Test Email
-<img src="/img/post/Xnip2021-12-06_14-22-06.jpg" alt="90" />
-<img src="/img/post/Xnip2021-12-06_14-24-28.jpg" alt="65" /></p>
-
+<img src="/img/post/Xnip2021-12-06_14-22-06.jpg" alt="90">
+<img src="/img/post/Xnip2021-12-06_14-24-28.jpg" alt="65"></p>
 <p>收到测试邮件证明配置成功
-<img src="/img/post/Xnip2021-12-06_14-27-19.jpg" alt="65" /></p>
-
+<img src="/img/post/Xnip2021-12-06_14-27-19.jpg" alt="65"></p>
 <h3 id="0x03-编写钓鱼邮件内容">0x03 编写钓鱼邮件内容</h3>
-
 <p>添加邮件模版，Add files 可以添加附件
-<img src="/img/post/Xnip2021-12-06_15-30-58.jpg" alt="90" /></p>
-
+<img src="/img/post/Xnip2021-12-06_15-30-58.jpg" alt="90"></p>
 <p>其他模版例子
-<img src="/img/post/Xnip2021-12-06_15-33-46.jpg" alt="70" />
-<img src="/img/post/Xnip2021-12-06_15-34-39.jpg" alt="70" /></p>
-
+<img src="/img/post/Xnip2021-12-06_15-33-46.jpg" alt="70">
+<img src="/img/post/Xnip2021-12-06_15-34-39.jpg" alt="70"></p>
 <h3 id="0x04-编写钓鱼页面">0x04 编写钓鱼页面</h3>
-
-<p>我的一个模版文件：<a href="https://raw.githubusercontent.com/reber0/Resources/main/gophish_钓鱼页面模版.html?_blank">Gophish 钓鱼页面模版.html</a><br />
+<p>我的一个模版文件：<a href="https://raw.githubusercontent.com/reber0/Resources/main/gophish_%E9%92%93%E9%B1%BC%E9%A1%B5%E9%9D%A2%E6%A8%A1%E7%89%88.html?_blank">Gophish 钓鱼页面模版.html</a><br>
 可以通过 Source 编写 html，也可以直接通过 url 导入，勾选获取提交的数据，设置用户点击提交数据后跳转的页面
-<img src="/img/post/Xnip2021-12-06_14-30-09.jpg" alt="90" /></p>
-
+<img src="/img/post/Xnip2021-12-06_14-30-09.jpg" alt="90"></p>
 <h3 id="0x05-添加目标邮箱">0x05 添加目标邮箱</h3>
-
 <p>可以一个个添加，也可以通过 csv 文件批量添加
-<img src="/img/post/Xnip2021-12-06_16-07-04.jpg" alt="90" /></p>
-
+<img src="/img/post/Xnip2021-12-06_16-07-04.jpg" alt="90"></p>
 <h3 id="0x06-开始攻击">0x06 开始攻击</h3>
-
-<p><img src="/img/post/Xnip2021-12-06_16-16-10.jpg" alt="90" /></p>
-
+<p><img src="/img/post/Xnip2021-12-06_16-16-10.jpg" alt="90"></p>
 <p>用户点击邮件中的链接后如下：
-<img src="/img/post/Xnip2021-12-06_16-24-52.jpg" alt="80" />
-<img src="/img/post/Xnip2021-12-06_16-25-27.jpg" alt="80" /></p>
-
+<img src="/img/post/Xnip2021-12-06_16-24-52.jpg" alt="80">
+<img src="/img/post/Xnip2021-12-06_16-25-27.jpg" alt="80"></p>
 <h3 id="0x07-查看结果">0x07 查看结果</h3>
-
-<p><img src="/img/post/Xnip2021-12-06_16-20-19.jpg" alt="" /></p>
-
+<p><img src="/img/post/Xnip2021-12-06_16-20-19.jpg" alt=""></p>
 <p>数据概览
-<img src="/img/post/Xnip2021-12-06_16-21-33.jpg" alt="" /></p>
-
+<img src="/img/post/Xnip2021-12-06_16-21-33.jpg" alt=""></p>
 <p>查看详情
-<img src="/img/post/Xnip2021-12-06_16-22-14.jpg" alt="" /></p>
+<img src="/img/post/Xnip2021-12-06_16-22-14.jpg" alt=""></p>
 </div>
     </article>
   </main>

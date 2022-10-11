@@ -82,70 +82,61 @@
     [<a href="/categories/PHP">PHP</a>,<a href="/categories/Database">Database</a>](<a href="/tags/php">php</a>,<a href="/tags/mysql">mysql</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-config-inc-php内容如下">0x00 config.inc.php内容如下</h3>
-
-<pre><code>&lt;?php
+      <div><h3 id="0x00-configincphp内容如下">0x00 config.inc.php内容如下</h3>
+<pre tabindex="0"><code>&lt;?php
 return array(
-    'DB_HOST' =&gt; '192.168.188.134',
-    'DB_NAME' =&gt; 'scoreboard', 
-    'DB_USER' =&gt; 'score',
-    'DB_PASS' =&gt; '123456',
-    'DB_CHARSET' =&gt; 'utf8',
-    'IS_LOG' =&gt; 1,//开启日志
-    'LOGFILEPATH' =&gt; '../log.txt'//日志路径
+    &#39;DB_HOST&#39; =&gt; &#39;192.168.188.134&#39;,
+    &#39;DB_NAME&#39; =&gt; &#39;scoreboard&#39;, 
+    &#39;DB_USER&#39; =&gt; &#39;score&#39;,
+    &#39;DB_PASS&#39; =&gt; &#39;123456&#39;,
+    &#39;DB_CHARSET&#39; =&gt; &#39;utf8&#39;,
+    &#39;IS_LOG&#39; =&gt; 1,//开启日志
+    &#39;LOGFILEPATH&#39; =&gt; &#39;../log.txt&#39;//日志路径
 );
 /*
-    $database = require('./config.php');
-    echo $database['DB_TYPE'];   //输出'DB_TYPE'
+    $database = require(&#39;./config.php&#39;);
+    echo $database[&#39;DB_TYPE&#39;];   //输出&#39;DB_TYPE&#39;
 */
 
 ?&gt;
-</code></pre>
-
-<h3 id="0x01-表设计如下">0x01 表设计如下</h3>
-
-<pre><code class="language-sql">create database scoreboard;
-use scoreboard;
-
-drop table if exists users;
-create table users(
-    id int not null auto_increment primary key,
-    gid int not null default 'xiaoming' comment '组id',
-    username varchar(20) not null default 'xiaoming' comment '用户名',
-    password varchar(32) not null default '123456' comment '密码',
-    sex varchar(2) not null default '0' comment '性别',
-    totalscore int not null default '0' comment '个人总积分'
-);
-
-drop table if exists share;
-create table share(
-    id int not null auto_increment primary key,
-    uid int not null,
-    content varchar(1024) not null default 'content' comment '分享内容',
-    comment varchar(1024) comment '点评',
-    date varchar(15) not null default '20150101' comment '分享日期'
-);
-
-drop table if exists score;
-create table score(
-    id int not null auto_increment primary key,
-    uid int not null default '0' comment '用户id',
-    score int not null default '0' comment '用户单次积分',
-);
-
-grant all privileges on scoreboard.* to 'score'@'%' identified by '123456';
-
--- 或者只给特定权限
--- grant select,update,delete on scoreboard.* to 'score'@'%' identified by '123456';
-
-flush privileges;
-</code></pre>
-
-<h3 id="0x02-封装类如下">0x02 封装类如下</h3>
-
-<pre><code>&lt;?php
+</code></pre><h3 id="0x01-表设计如下">0x01 表设计如下</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">database</span> scoreboard;
+</span></span><span style="display:flex;"><span>use scoreboard;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exists</span> users;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> users(
+</span></span><span style="display:flex;"><span>    id int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> auto_increment <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+</span></span><span style="display:flex;"><span>    gid int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;xiaoming&#39;</span> <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;组id&#39;</span>,
+</span></span><span style="display:flex;"><span>    username varchar(<span style="color:#ae81ff">20</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;xiaoming&#39;</span> <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;用户名&#39;</span>,
+</span></span><span style="display:flex;"><span>    password varchar(<span style="color:#ae81ff">32</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;123456&#39;</span> <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;密码&#39;</span>,
+</span></span><span style="display:flex;"><span>    sex varchar(<span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;0&#39;</span> <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;性别&#39;</span>,
+</span></span><span style="display:flex;"><span>    totalscore int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;0&#39;</span> <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;个人总积分&#39;</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exists</span> <span style="color:#66d9ef">share</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">share</span>(
+</span></span><span style="display:flex;"><span>    id int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> auto_increment <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+</span></span><span style="display:flex;"><span>    uid int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    content varchar(<span style="color:#ae81ff">1024</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;content&#39;</span> <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;分享内容&#39;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">comment</span> varchar(<span style="color:#ae81ff">1024</span>) <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;点评&#39;</span>,
+</span></span><span style="display:flex;"><span>    date varchar(<span style="color:#ae81ff">15</span>) <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;20150101&#39;</span> <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;分享日期&#39;</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exists</span> score;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> score(
+</span></span><span style="display:flex;"><span>    id int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> auto_increment <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+</span></span><span style="display:flex;"><span>    uid int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;0&#39;</span> <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;用户id&#39;</span>,
+</span></span><span style="display:flex;"><span>    score int <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">null</span> <span style="color:#66d9ef">default</span> <span style="color:#e6db74">&#39;0&#39;</span> <span style="color:#66d9ef">comment</span> <span style="color:#e6db74">&#39;用户单次积分&#39;</span>,
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">grant</span> <span style="color:#66d9ef">all</span> <span style="color:#66d9ef">privileges</span> <span style="color:#66d9ef">on</span> scoreboard.<span style="color:#f92672">*</span> <span style="color:#66d9ef">to</span> <span style="color:#e6db74">&#39;score&#39;</span><span style="color:#f92672">@</span><span style="color:#e6db74">&#39;%&#39;</span> identified <span style="color:#66d9ef">by</span> <span style="color:#e6db74">&#39;123456&#39;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 或者只给特定权限
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">-- grant select,update,delete on scoreboard.* to &#39;score&#39;@&#39;%&#39; identified by &#39;123456&#39;;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>flush <span style="color:#66d9ef">privileges</span>;
+</span></span></code></pre></div><h3 id="0x02-封装类如下">0x02 封装类如下</h3>
+<pre tabindex="0"><code>&lt;?php
 
 class mysql {
     private $logfilepath;
@@ -155,37 +146,37 @@ class mysql {
 
     //构造函数
     public function __construct() {
-        $config = include_once(dirname(__FILE__).&quot;/../config/config.inc.php&quot;);
-        $this-&gt;is_log = $config['IS_LOG'];
-        $this-&gt;logfilepath = $config['LOGFILEPATH'];
+        $config = include_once(dirname(__FILE__).&#34;/../config/config.inc.php&#34;);
+        $this-&gt;is_log = $config[&#39;IS_LOG&#39;];
+        $this-&gt;logfilepath = $config[&#39;LOGFILEPATH&#39;];
 
         if ($this-&gt;is_log){
-            $handle = fopen($this-&gt;logfilepath,&quot;a+&quot;);
+            $handle = fopen($this-&gt;logfilepath,&#34;a+&#34;);
             $this-&gt;hlog = $handle;
         }
 
-        $this-&gt;conn = $this-&gt;connect($config['DB_HOST'],$config['DB_USER'],$config['DB_PASS'],$config['DB_NAME'],$config['DB_CHARSET']);
+        $this-&gt;conn = $this-&gt;connect($config[&#39;DB_HOST&#39;],$config[&#39;DB_USER&#39;],$config[&#39;DB_PASS&#39;],$config[&#39;DB_NAME&#39;],$config[&#39;DB_CHARSET&#39;]);
     }
 
     //连接数据库
     public function connect($dbhost, $dbuser, $dbpass, $dbname, $dbcharset) {
         $this-&gt;conn = @mysql_connect($dbhost,$dbuser,$dbpass);
         if (!$this-&gt;conn) {
-            $msg = &quot;连接数据库失败：&quot;.mysql_error();
+            $msg = &#34;连接数据库失败：&#34;.mysql_error();
             $this-&gt;write_log($msg);
             die($msg);
         } else {
             if (!@mysql_select_db($dbname)) {
-                $msg = &quot;连接数据库成功，但选择数据库失败：&quot;.mysql_error();
+                $msg = &#34;连接数据库成功，但选择数据库失败：&#34;.mysql_error();
                 $this-&gt;write_log($msg);
                 die($msg);
             } else {
-                $msg = &quot;连接数据库成功，且选择数据库成功&quot;;
+                $msg = &#34;连接数据库成功，且选择数据库成功&#34;;
                 $this-&gt;write_log($msg);
             }
         }
 
-        @mysql_query(&quot;set names &quot;.$dbcharset);
+        @mysql_query(&#34;set names &#34;.$dbcharset);
 
     }
 
@@ -195,19 +186,19 @@ class mysql {
         $result = @mysql_query($sql);
 
         if (!$result) {
-            $this-&gt;write_log('mysql_query error:'.mysql_error());
+            $this-&gt;write_log(&#39;mysql_query error:&#39;.mysql_error());
         } else {
-            $this-&gt;write_log('执行语句：'.$sql.' 且执行成功');
+            $this-&gt;write_log(&#39;执行语句：&#39;.$sql.&#39; 且执行成功&#39;);
         }
         return $result;
     }
 
     //查询一条数据
-    public function select_one($tab,$column = &quot;*&quot;,$condition = '',$debug=False) {   //查询函数
-        $condition = $condition ? ' where ' . $condition : NULL;
-        $sql = &quot;select $column from $tab $condition &quot;;
+    public function select_one($tab,$column = &#34;*&#34;,$condition = &#39;&#39;,$debug=False) {   //查询函数
+        $condition = $condition ? &#39; where &#39; . $condition : NULL;
+        $sql = &#34;select $column from $tab $condition &#34;;
         if ($debug) {
-            echo '将执行语句：'.$sql.'&lt;br /&gt;';
+            echo &#39;将执行语句：&#39;.$sql.&#39;&lt;br /&gt;&#39;;
         } else {
             $result = $this-&gt;query($sql);
             $row = @mysql_fetch_assoc($result);
@@ -216,11 +207,11 @@ class mysql {
     }
 
     //查询多条数据
-    public function select_more($tab,$column = &quot;*&quot;,$condition = '',$debug=False) {   //查询函数
-        $condition = $condition ? ' where ' . $condition : NULL;
-        $sql = &quot;select $column from $tab $condition&quot;;
+    public function select_more($tab,$column = &#34;*&#34;,$condition = &#39;&#39;,$debug=False) {   //查询函数
+        $condition = $condition ? &#39; where &#39; . $condition : NULL;
+        $sql = &#34;select $column from $tab $condition&#34;;
         if ($debug) {
-            echo '将执行语句：'.$sql;
+            echo &#39;将执行语句：&#39;.$sql;
         } else {
             $result = $this-&gt;query($sql);
             $i = 0;
@@ -235,11 +226,11 @@ class mysql {
     }
 
     //返回结果集
-    public function echo_result($tab,$column = &quot;*&quot;,$condition = '',$debug=False) {   //查询函数
-        $condition = $condition ? ' where ' . $condition : NULL;
-        $sql = &quot;select $column from $tab $condition &quot;;
+    public function echo_result($tab,$column = &#34;*&#34;,$condition = &#39;&#39;,$debug=False) {   //查询函数
+        $condition = $condition ? &#39; where &#39; . $condition : NULL;
+        $sql = &#34;select $column from $tab $condition &#34;;
         if ($debug) {
-            echo '将执行语句：'.$sql.'&lt;br /&gt;';
+            echo &#39;将执行语句：&#39;.$sql.&#39;&lt;br /&gt;&#39;;
         } else {
             return $this-&gt;query($sql);
         }
@@ -247,22 +238,22 @@ class mysql {
 
     //插入数据
     public function insert($tab,$arr,$debug=False) {
-        $value = '';
-        $column = '';
+        $value = &#39;&#39;;
+        $column = &#39;&#39;;
         foreach ($arr as $k =&gt; $v) {
-            $column .= &quot;,{$k}&quot;;
-            $value .= &quot;,'{$v}'&quot;;
+            $column .= &#34;,{$k}&#34;;
+            $value .= &#34;,&#39;{$v}&#39;&#34;;
         }
         $column = substr($column, 1);
         $value = substr($value, 1);
 
-        $sql = &quot;insert into $tab($column) values($value)&quot;;
+        $sql = &#34;insert into $tab($column) values($value)&#34;;
         if ($debug) {
-            echo '将执行语句：'.$sql;
+            echo &#39;将执行语句：&#39;.$sql;
         } else {
             $this-&gt;query($sql);
             $num = $this-&gt;affected_num();
-            $this-&gt;write_log(&quot;受影响行数：&quot;.$num);
+            $this-&gt;write_log(&#34;受影响行数：&#34;.$num);
             return $num;    //返回受影响行数
         }
     }
@@ -270,46 +261,46 @@ class mysql {
     //获取最后插入的id
     public function insert_id() {
         $id = mysql_insert_id($this-&gt;link_id);
-        $this-&gt;write_log('最后插入的id为：'.$id);
+        $this-&gt;write_log(&#39;最后插入的id为：&#39;.$id);
         return $id;
     }
 
     //更新数据
-    public function update($tab,$arr,$condition = '',$debug=False) {
+    public function update($tab,$arr,$condition = &#39;&#39;,$debug=False) {
         if (!$condition) {
-            die(&quot;error&quot;.mysql_error());
+            die(&#34;error&#34;.mysql_error());
         } else {
-            $condition = 'where ' . $condition;
+            $condition = &#39;where &#39; . $condition;
         }
         
-        $value = '';
+        $value = &#39;&#39;;
         foreach ($arr as $k =&gt; $v) {
-            $value .= &quot;{$k}='{$v}',&quot;;
+            $value .= &#34;{$k}=&#39;{$v}&#39;,&#34;;
         }
         $value = substr($value,0,-1);
 
-        $sql = &quot;update $tab set $value $condition&quot;;
+        $sql = &#34;update $tab set $value $condition&#34;;
         if ($debug) {
-            echo '将执行语句：'.$sql;
+            echo &#39;将执行语句：&#39;.$sql;
         } else {
             $this-&gt;query($sql);
             $num = $this-&gt;affected_num();
-            $this-&gt;write_log(&quot;受影响行数：&quot;.$num);
+            $this-&gt;write_log(&#34;受影响行数：&#34;.$num);
 
             return $num;            
         }
     }
 
     //删除数据
-    public function delete($tab,$condition='',$debug=False) {
-        $condition = $condition ? ' where ' . $condition : NULL;
-        $sql = &quot;delete from $tab $condition&quot;;
+    public function delete($tab,$condition=&#39;&#39;,$debug=False) {
+        $condition = $condition ? &#39; where &#39; . $condition : NULL;
+        $sql = &#34;delete from $tab $condition&#34;;
         if ($debug) {
-            echo '将执行语句：'.$sql;
+            echo &#39;将执行语句：&#39;.$sql;
         } else {
             $this-&gt;query($sql);
             $num = $this-&gt;affected_num();
-            $this-&gt;write_log(&quot;受影响行数：&quot;.$num);
+            $this-&gt;write_log(&#34;受影响行数：&#34;.$num);
             return $num;    //返回受影响行数
         }
     }
@@ -321,9 +312,9 @@ class mysql {
     }
 
     //写入日志
-    public function write_log($msg='') {
+    public function write_log($msg=&#39;&#39;) {
         if ($this-&gt;is_log){
-            $text = date(&quot;Y-m-d H:i:s&quot;).&quot; &quot;.$msg.&quot;\r\n&quot;;
+            $text = date(&#34;Y-m-d H:i:s&#34;).&#34; &#34;.$msg.&#34;\r\n&#34;;
             fwrite($this-&gt;hlog,$text);
         }
     }
@@ -343,32 +334,31 @@ class mysql {
 
     //$db = new mysql();
     
-    // //select_one($tab,$column = &quot;*&quot;,$condition = '')
-    // $rows = $db-&gt;select_more('share','*');
+    // //select_one($tab,$column = &#34;*&#34;,$condition = &#39;&#39;)
+    // $rows = $db-&gt;select_more(&#39;share&#39;,&#39;*&#39;);
     // print_r($rows[0]);
     // print_r($rows[1]);
 
     // //insert($tab,$arr)
     // $arr = array();
-    // $arr['uid'] = '3';
-    // $arr['content'] = 'xss';
-    // $arr['comment'] = 'very good';
-    // $arr['date'] = '1464082630';
-    // $db-&gt;insert('share',$arr);
+    // $arr[&#39;uid&#39;] = &#39;3&#39;;
+    // $arr[&#39;content&#39;] = &#39;xss&#39;;
+    // $arr[&#39;comment&#39;] = &#39;very good&#39;;
+    // $arr[&#39;date&#39;] = &#39;1464082630&#39;;
+    // $db-&gt;insert(&#39;share&#39;,$arr);
 
-    // //update($tab,$arr,$condition = '')
+    // //update($tab,$arr,$condition = &#39;&#39;)
     // $arr = array();
-    // $arr['content'] = 'xssxssxssxssxss';
-    // $arr['comment'] = 'goodgoodgoodgood';
-    // $condition = 'id &gt; 5';
-    // $db-&gt;update('share',$arr,$condition);
+    // $arr[&#39;content&#39;] = &#39;xssxssxssxssxss&#39;;
+    // $arr[&#39;comment&#39;] = &#39;goodgoodgoodgood&#39;;
+    // $condition = &#39;id &gt; 5&#39;;
+    // $db-&gt;update(&#39;share&#39;,$arr,$condition);
 
-    //$db-&gt;delete(&quot;share&quot;,&quot;id between 10 and 15&quot;);
+    //$db-&gt;delete(&#34;share&#34;,&#34;id between 10 and 15&#34;);
 
     //$db-&gt;close();
 ?&gt;
-</code></pre>
-</div>
+</code></pre></div>
     </article>
   </main>
 

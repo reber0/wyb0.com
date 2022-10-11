@@ -82,67 +82,50 @@
     [<a href="/categories/Server">Server</a>](<a href="/tags/server">server</a>)
 </div>
 
-      <div>
-
-<p>安装环境为：CentOS-6.5-x86_64-minimal</p>
-
+      <div><p>安装环境为：CentOS-6.5-x86_64-minimal</p>
 <h3 id="0x00-准备工作">0x00 准备工作</h3>
-
-<pre><code>首先执行：
-    sudo yum groupinstall &quot;Development tools&quot;
+<pre tabindex="0"><code>首先执行：
+    sudo yum groupinstall &#34;Development tools&#34;
 安装make：
     yum -y install gcc automake autoconf libtool make
 安装g++：
     yum install gcc gcc-c++
-</code></pre>
-
-<h3 id="0x01-安装mysql和php">0x01 安装mysql和php</h3>
-
-<pre><code class="language-sh">sudo yum install mysql mysql-server mysql-devel
-sudo yum install php php-devel
-sudo yum install php-gd php-mysql php-fpm
-</code></pre>
-
-<h3 id="0x02-安装依赖">0x02 安装依赖</h3>
-
+</code></pre><h3 id="0x01-安装mysql和php">0x01 安装mysql和php</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo yum install mysql mysql-server mysql-devel
+</span></span><span style="display:flex;"><span>sudo yum install php php-devel
+</span></span><span style="display:flex;"><span>sudo yum install php-gd php-mysql php-fpm
+</span></span></code></pre></div><h3 id="0x02-安装依赖">0x02 安装依赖</h3>
 <ol>
-<li><p>安装pcre、pcre-devel<br />
-sudo yum install pcre pcre-devel</p></li>
-
-<li><p>安装zlib、zlib-devel<br />
-sudo yum install zlib zlib-devel</p></li>
-
-<li><p>安装ssl<br />
-sudo yum install openssl openssl-devel</p></li>
+<li>
+<p>安装pcre、pcre-devel<br>
+sudo yum install pcre pcre-devel</p>
+</li>
+<li>
+<p>安装zlib、zlib-devel<br>
+sudo yum install zlib zlib-devel</p>
+</li>
+<li>
+<p>安装ssl<br>
+sudo yum install openssl openssl-devel</p>
+</li>
 </ol>
-
 <h3 id="0x03-安装nginx">0x03 安装Nginx</h3>
-
-<p>可在<a href="http://nginx.org/download/nginx-1.9.9.tar.gz">http://nginx.org/download/nginx-1.9.9.tar.gz</a> 下载
-<img src="/img/post/download_nginx.png" alt="下载nginx安装包" /></p>
-
-<pre><code class="language-sh">#Ubuntu中需要依赖：libpcre3 libpcre3-dev zlib1g-dev libssl-dev build-essential
-[reber@WYB nginx-1.9.9]$ ./configure
-[reber@WYB nginx-1.9.9]$ make
-[reber@WYB nginx-1.9.9]$ sudo make install
-</code></pre>
-
-<h3 id="0x04-启动与关闭nginx">0x04 启动与关闭nginx</h3>
-
-<pre><code class="language-sh"># 开启服务：
-[reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
-# 关闭服务：
-[reber@WYB nginx-1.9.9]$ killall nginx
-</code></pre>
-
-<p><img src="/img/post/visit_nginx.png" alt="访问nginx.png" /></p>
-
+<p>可在http://nginx.org/download/nginx-1.9.9.tar.gz 下载
+<img src="/img/post/download_nginx.png" alt="下载nginx安装包"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">#Ubuntu中需要依赖：libpcre3 libpcre3-dev zlib1g-dev libssl-dev build-essential</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>reber@WYB nginx-1.9.9<span style="color:#f92672">]</span>$ ./configure
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>reber@WYB nginx-1.9.9<span style="color:#f92672">]</span>$ make
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>reber@WYB nginx-1.9.9<span style="color:#f92672">]</span>$ sudo make install
+</span></span></code></pre></div><h3 id="0x04-启动与关闭nginx">0x04 启动与关闭nginx</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># 开启服务：</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>reber@WYB nginx-1.9.9<span style="color:#f92672">]</span>$ sudo /usr/local/nginx/sbin/nginx
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 关闭服务：</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>reber@WYB nginx-1.9.9<span style="color:#f92672">]</span>$ killall nginx
+</span></span></code></pre></div><p><img src="/img/post/visit_nginx.png" alt="访问nginx.png"></p>
 <h3 id="0x05-配置nginx支持php">0x05 配置nginx支持php</h3>
-
-<p>[reber@WYB nginx-1.9.9]$ killall nginx<br />
+<p>[reber@WYB nginx-1.9.9]$ killall nginx<br>
 [reber@WYB nginx-1.9.9]$ vim /usr/local/nginx/conf/nginx.conf</p>
-
-<pre><code>location / {
+<pre tabindex="0"><code>location / {
     root   html;
     index  index.html index.htm index.php;
 }
@@ -154,13 +137,9 @@ location ~ \.php$ {
     fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
     include        fastcgi_params;
 }
-</code></pre>
-
-<pre><code class="language-sh">[reber@WYB nginx-1.9.9]$ sudo service php-fpm start
-[reber@WYB nginx-1.9.9]$ sudo /usr/local/nginx/sbin/nginx
-</code></pre>
-
-<p><img src="/img/post/visit_nginx_phpinfo.png" alt="访问nginx的phpinfo.php" /></p>
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">[</span>reber@WYB nginx-1.9.9<span style="color:#f92672">]</span>$ sudo service php-fpm start
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>reber@WYB nginx-1.9.9<span style="color:#f92672">]</span>$ sudo /usr/local/nginx/sbin/nginx
+</span></span></code></pre></div><p><img src="/img/post/visit_nginx_phpinfo.png" alt="访问nginx的phpinfo.php"></p>
 </div>
     </article>
   </main>

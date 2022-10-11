@@ -82,32 +82,20 @@
     [<a href="/categories/Other">Other</a>](<a href="/tags/%E9%87%8D%E5%AE%9A%E5%90%91">重定向</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-目的">0x00 目的</h3>
-
-<pre><code>由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向
+      <div><h3 id="0x00-目的">0x00 目的</h3>
+<pre tabindex="0"><code>由于博客更换了域名，原来百度收录的都成了死链，所以做一下301重定向
 我使用的是github搭建的博客，都是html的文件，先把html文件都上传到自己的服务器上，
 修改dns使原域名指向服务器，让百度收录的链接都能够访问，然后设置301
 
 服务器环境：Ubuntu 14.04.5、Apache2
-</code></pre>
-
-<h3 id="0x01-开启rewrite模块">0x01 开启rewrite模块</h3>
-
-<pre><code>$ sudo a2enmod rewrite
-</code></pre>
-
-<h3 id="0x02-根目录下新建-htaccess">0x02 根目录下新建.htaccess：</h3>
-
-<pre><code>Options +FollowSymLinks
+</code></pre><h3 id="0x01-开启rewrite模块">0x01 开启rewrite模块</h3>
+<pre tabindex="0"><code>$ sudo a2enmod rewrite
+</code></pre><h3 id="0x02-根目录下新建htaccess">0x02 根目录下新建.htaccess：</h3>
+<pre tabindex="0"><code>Options +FollowSymLinks
 RewriteEngine on
 RewriteRule ^(.*)$ http://wyb0.com/$1 [L,R=301]  # 这里换上新域名
-</code></pre>
-
-<h3 id="0x03-修改配置文件">0x03 修改配置文件</h3>
-
-<pre><code># AllowOverride None 改为AllowOverride All
+</code></pre><h3 id="0x03-修改配置文件">0x03 修改配置文件</h3>
+<pre tabindex="0"><code># AllowOverride None 改为AllowOverride All
 
 $ sudo vim /etc/apache2/apache2.conf
 &lt;Directory /var/www/&gt;
@@ -115,13 +103,9 @@ $ sudo vim /etc/apache2/apache2.conf
     AllowOverride All
     Require all granted
 &lt;/Directory&gt;
-</code></pre>
-
-<h3 id="0x04-重启apache">0x04 重启Apache</h3>
-
-<pre><code>$ sudo /etc/init.d/apache2 restart
-</code></pre>
-</div>
+</code></pre><h3 id="0x04-重启apache">0x04 重启Apache</h3>
+<pre tabindex="0"><code>$ sudo /etc/init.d/apache2 restart
+</code></pre></div>
     </article>
   </main>
 

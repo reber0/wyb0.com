@@ -82,105 +82,89 @@
     [<a href="/categories/JS">JS</a>](<a href="/tags/js">js</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-简介">0x00 简介</h3>
-
+      <div><h3 id="0x00-简介">0x00 简介</h3>
 <p>当使用AJAX请求其他域名下的数据时会出现拒绝访问的情况，这是出于安全考虑，AJAX只能访问本地的资源，而不能跨域访问。</p>
-
 <p>当使用<a href="http://wyb0.com/posts/ajax-and-php/">AJAX与PHP</a>中的代码请求其他域的数据时会出现下面的情况</p>
-
-<p><img src="/img/post/ajax_cross_domain.png" alt="ajax跨域请求" /></p>
-
+<p><img src="/img/post/ajax_cross_domain.png" alt="ajax跨域请求"></p>
 <p>至于解决方案的话这里说三种：JSONP、jQuery、CORS。</p>
-
 <h3 id="0x01-jsonp">0x01 JSONP</h3>
-
 <p>这里的场景是本地127站点跨域请求远程114.115.214.111站点的数据</p>
-
-<pre><code>&lt;html lang=&quot;en&quot;&gt;
+<pre tabindex="0"><code>&lt;html lang=&#34;en&#34;&gt;
 &lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta charset=&#34;UTF-8&#34;&gt;
     &lt;title&gt;jsonptest&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
 &lt;script&gt;
     function callback_func(data) {
-        document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;姓名:&quot;+data.name+&quot;--性别:&quot;+data.sex+&quot;--年龄:&quot;+data.age;
+        document.getElementById(&#34;txtHint&#34;).innerHTML=&#34;姓名:&#34;+data.name+&#34;--性别:&#34;+data.sex+&#34;--年龄:&#34;+data.age;
     }
 
     function get_msg(name) {
-        var url = &quot;http://114.115.214.111/wyb/msg.php?name=&quot;+name+&quot;&amp;callback=callback_func&quot;;
-        var script = document.createElement('script');
-        script.setAttribute('src', url);
-        script.setAttribute('id', 'aaabbb');
-        document.getElementsByTagName('head')[0].appendChild(script);
-        document.getElementById('aaabbb').remove();
+        var url = &#34;http://114.115.214.111/wyb/msg.php?name=&#34;+name+&#34;&amp;callback=callback_func&#34;;
+        var script = document.createElement(&#39;script&#39;);
+        script.setAttribute(&#39;src&#39;, url);
+        script.setAttribute(&#39;id&#39;, &#39;aaabbb&#39;);
+        document.getElementsByTagName(&#39;head&#39;)[0].appendChild(script);
+        document.getElementById(&#39;aaabbb&#39;).remove();
     }
 &lt;/script&gt;
 
 
 &lt;h3&gt;在输入框中尝试输入姓名(xiaoming):&lt;/h3&gt;
-&lt;form action=&quot;&quot;&gt; 
-输入姓名: &lt;input type=&quot;text&quot; onkeyup=&quot;get_msg(this.value)&quot; /&gt;
+&lt;form action=&#34;&#34;&gt; 
+输入姓名: &lt;input type=&#34;text&#34; onkeyup=&#34;get_msg(this.value)&#34; /&gt;
 &lt;/form&gt;
-&lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;提示信息: &lt;span id=&#34;txtHint&#34;&gt;&lt;/span&gt;&lt;/p&gt; 
 
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre>
+</code></pre><pre tabindex="0"><code>&lt;?php
+    $conn = @mysql_connect(&#39;localhost&#39;,&#39;admin&#39;,&#39;123456&#39;);
+    mysql_select_db(&#39;test&#39;,$conn);
 
-<pre><code>&lt;?php
-    $conn = @mysql_connect('localhost','admin','123456');
-    mysql_select_db('test',$conn);
+    $name = $_GET[&#39;name&#39;];
+    $callback = $_GET[&#39;callback&#39;];
 
-    $name = $_GET['name'];
-    $callback = $_GET['callback'];
-
-    $sql = &quot;select * from student where name='&quot;.$name.&quot;'&quot;;
+    $sql = &#34;select * from student where name=&#39;&#34;.$name.&#34;&#39;&#34;;
     $result = mysql_query($sql,$conn);
     $row = mysql_fetch_array($result);
 
-    $name = $row['name'];
-    $sex = $row['sex'];
-    $age = $row['age'];
+    $name = $row[&#39;name&#39;];
+    $sex = $row[&#39;sex&#39;];
+    $age = $row[&#39;age&#39;];
 
-    echo $callback.'({'.'&quot;name&quot;:&quot;'.$name.'&quot;,&quot;sex&quot;:'.$sex.',&quot;age&quot;:'.$age.'})';
+    echo $callback.&#39;({&#39;.&#39;&#34;name&#34;:&#34;&#39;.$name.&#39;&#34;,&#34;sex&#34;:&#39;.$sex.&#39;,&#34;age&#34;:&#39;.$age.&#39;})&#39;;
 ?&gt;
-</code></pre>
-
-<p><img src="/img/post/ajax_cross_domain_jsonp.png" alt="ajax跨域请求" />
-<br>
+</code></pre><p><img src="/img/post/ajax_cross_domain_jsonp.png" alt="ajax跨域请求">
+<!-- raw HTML omitted -->
 我们看到调用的url中传递了一个name参数，告诉远端服务器获取name为xiaoliu的信息，而callback参数则告诉服务器，我的本地回调函数叫做callback_func，所以请把查询结果传入这个函数中。</p>
-
 <h3 id="0x02-jquery中的ajax">0x02 jQuery中的ajax</h3>
-
 <p>其实就是对上面JSONP例子中函数的封装扩展</p>
-
-<pre><code>&lt;html lang=&quot;en&quot;&gt;
+<pre tabindex="0"><code>&lt;html lang=&#34;en&#34;&gt;
 &lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta charset=&#34;UTF-8&#34;&gt;
     &lt;title&gt;xsstest&lt;/title&gt;
-    &lt;script src='https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js'&gt;&lt;/script&gt;
+    &lt;script src=&#39;https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js&#39;&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
 &lt;script&gt;
     function get_msg(name){
-        var url=&quot;http://114.115.214.111/wyb/msg.php?name=&quot;+name;
+        var url=&#34;http://114.115.214.111/wyb/msg.php?name=&#34;+name;
         $.ajax({
-            type: &quot;get&quot;,
+            type: &#34;get&#34;,
             async: false,
             url: url,
-            dataType: &quot;jsonp&quot;,
-            jsonp: &quot;callback&quot;,//以获得jsonp回调函数名的参数名(默认为:callback)
-            // jsonpCallback:&quot;aaaaa&quot;,//jsonp回调函数名称，默认为jQuery自动生成的随机函数名
-            &quot;success&quot;: function(data) {
-                $(&quot;#txtHint&quot;).text(&quot;姓名:&quot;+data.name+&quot;--性别:&quot;+data.sex+&quot;--年龄:&quot;+data.age);
+            dataType: &#34;jsonp&#34;,
+            jsonp: &#34;callback&#34;,//以获得jsonp回调函数名的参数名(默认为:callback)
+            // jsonpCallback:&#34;aaaaa&#34;,//jsonp回调函数名称，默认为jQuery自动生成的随机函数名
+            &#34;success&#34;: function(data) {
+                $(&#34;#txtHint&#34;).text(&#34;姓名:&#34;+data.name+&#34;--性别:&#34;+data.sex+&#34;--年龄:&#34;+data.age);
             },
-            &quot;error&quot;: function() {
-                alert(&quot;error&quot;);
+            &#34;error&#34;: function() {
+                alert(&#34;error&#34;);
             }
         });
     }
@@ -188,21 +172,17 @@
 
 
 &lt;h3&gt;在输入框中尝试输入姓名(xiaoming):&lt;/h3&gt;
-&lt;form action=&quot;&quot;&gt; 
-输入姓名: &lt;input type=&quot;text&quot; onkeyup=&quot;get_msg(this.value)&quot; /&gt;
+&lt;form action=&#34;&#34;&gt; 
+输入姓名: &lt;input type=&#34;text&#34; onkeyup=&#34;get_msg(this.value)&#34; /&gt;
 &lt;/form&gt;
-&lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; 
+&lt;p&gt;提示信息: &lt;span id=&#34;txtHint&#34;&gt;&lt;/span&gt;&lt;/p&gt; 
 
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre>
-
-<p><img src="/img/post/ajax_cross_domain_jquery.png" alt="ajax跨域请求" /></p>
-
+</code></pre><p><img src="/img/post/ajax_cross_domain_jquery.png" alt="ajax跨域请求"></p>
 <h3 id="0x03-cors">0x03 CORS</h3>
-
-<p>简单来说就是在请求的文件中加入header，指定可以访问资源的域名<br />
-在php中就是<code>header(&quot;Access-Control-Allow-Origin:*&quot;);</code> 这里的*代表允许所有<br />
+<p>简单来说就是在请求的文件中加入header，指定可以访问资源的域名<br>
+在php中就是<code>header(&quot;Access-Control-Allow-Origin:*&quot;);</code> 这里的*代表允许所有<br>
 加入后使用<a href="http://wyb0.com/posts/ajax-and-php/">AJAX与PHP</a>中的代码就能跨域访问</p>
 </div>
     </article>

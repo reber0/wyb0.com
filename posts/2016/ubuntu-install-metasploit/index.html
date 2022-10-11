@@ -82,62 +82,45 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/tools">tools</a>,<a href="/tags/intranet">intranet</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-安装metasploit">0x00 安装Metasploit</h3>
-
+      <div><h3 id="0x00-安装metasploit">0x00 安装Metasploit</h3>
 <ul>
-<li><p>下载msfinstall脚本</p>
-
-<pre><code>$ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall
-</code></pre></li>
-
-<li><p>修改文件权限</p>
-
-<pre><code>$ chmod 755 msfinstall
-</code></pre></li>
-
-<li><p>安装(可能时间较久)</p>
-
-<pre><code>$ ./msfinstall
-</code></pre></li>
-
-<li><p>更新exp</p>
-
-<pre><code>$ msfupdate
-</code></pre></li>
+<li>下载msfinstall脚本</li>
 </ul>
-
-<h3 id="0x01-连接数据库">0x01 连接数据库</h3>
-
+<pre tabindex="0"><code>$ curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb &gt; msfinstall
+</code></pre><ul>
+<li>修改文件权限</li>
+</ul>
+<pre tabindex="0"><code>$ chmod 755 msfinstall
+</code></pre><ul>
+<li>安装(可能时间较久)</li>
+</ul>
+<pre tabindex="0"><code>$ ./msfinstall
+</code></pre><ul>
+<li>更新exp</li>
+</ul>
+<pre tabindex="0"><code>$ msfupdate
+</code></pre><h3 id="0x01-连接数据库">0x01 连接数据库</h3>
 <ul>
-<li><p>首先启动postgresql数据库</p>
-
-<pre><code>$ /etc/init.d/postgresql start #service postgresql start也可以
-</code></pre></li>
-
-<li><p>初始化MSF数据库(关键步骤)</p>
-
-<pre><code>$ msfdb init
-</code></pre></li>
-
-<li><p>运行msfconsole</p>
-
-<pre><code>$ msfconsole
-</code></pre></li>
-
-<li><p>在msf中查看数据库连接状态</p>
-
-<pre><code>msf &gt; db_status
+<li>首先启动postgresql数据库</li>
+</ul>
+<pre tabindex="0"><code>$ /etc/init.d/postgresql start #service postgresql start也可以
+</code></pre><ul>
+<li>初始化MSF数据库(关键步骤)</li>
+</ul>
+<pre tabindex="0"><code>$ msfdb init
+</code></pre><ul>
+<li>运行msfconsole</li>
+</ul>
+<pre tabindex="0"><code>$ msfconsole
+</code></pre><ul>
+<li>在msf中查看数据库连接状态</li>
+</ul>
+<pre tabindex="0"><code>msf &gt; db_status
 #若出现错误：Module database cache not built yet, using slow search
 #则重新构建缓存，缓存构建通常需要5-10分钟左右。
 #构建完成后，退出Metasploit控制台，然后重新进入即可使用数据库缓存进行搜索模块
 msf &gt; db_rebuild_cache
-</code></pre></li>
-</ul>
-
-<h3 id="0x02-metasploit-cheat-sheet">0x02 Metasploit Cheat Sheet</h3>
-
+</code></pre><h3 id="0x02-metasploit-cheat-sheet">0x02 Metasploit Cheat Sheet</h3>
 <p>常见命令可以看下 <a href="https://www.comparitech.com/net-admin/metasploit-cheat-sheet/?_blank">https://www.comparitech.com/net-admin/metasploit-cheat-sheet/</a></p>
 </div>
     </article>

@@ -82,102 +82,84 @@
     [<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-几个编码函数">0x00 几个编码函数</h3>
-
-<pre><code>* ord(x)  
-    将字符转换为10进制整数(0~255之间) #ord('a')==&gt;97
+      <div><h3 id="0x00-几个编码函数">0x00 几个编码函数</h3>
+<pre tabindex="0"><code>* ord(x)  
+    将字符转换为10进制整数(0~255之间) #ord(&#39;a&#39;)==&gt;97
 * chr(x)  
-    将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;'a'，chr(0x61)==&gt;'a'
+    将10进制整数(0~255之间)转换为字符 #chr(97)==&gt;&#39;a&#39;，chr(0x61)==&gt;&#39;a&#39;
 
 * b2a_hex(x)  
-    将字符转换为对应的16进制 #import binascii;binascii.b2a_hex('a')==&gt;'61'
+    将字符转换为对应的16进制 #import binascii;binascii.b2a_hex(&#39;a&#39;)==&gt;&#39;61&#39;
 * a2b_hex(x)  
-    将16进制转换为对应的字符 #import binascii;binascii.a2b_hex('61')==&gt;'a'
+    将16进制转换为对应的字符 #import binascii;binascii.a2b_hex(&#39;61&#39;)==&gt;&#39;a&#39;
 
 * hex(x)  
-    将10进制整数转换为对应的16进制 #hex(16)==&gt;'0x10'
+    将10进制整数转换为对应的16进制 #hex(16)==&gt;&#39;0x10&#39;
 * oct(x)  
-    将10进制整数转换为对应的8进制  #oct(9)==&gt;'011'
-</code></pre>
-
-<h3 id="0x01-设置为utf-8">0x01 设置为utf-8</h3>
-
+    将10进制整数转换为对应的8进制  #oct(9)==&gt;&#39;011&#39;
+</code></pre><h3 id="0x01-设置为utf-8">0x01 设置为utf-8</h3>
 <ul>
-<li><p>在py文件开头设置</p>
-
-<pre><code class="language-python">#!/usr/bin/env python
-#-*- coding: utf-8 -*-
-或：
-#coding=utf8
-</code></pre></li>
-
-<li><p>永久编码(推荐)
-<img src="/img/post/unicode_encode_error.png" alt="python编码出错.png" />
-可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：</p>
-
-<pre><code class="language-python">#coding=utf8
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-# 此方法修改了python环境，设置系统默认编码，永久有效
-</code></pre></li>
+<li>在py文件开头设置</li>
 </ul>
-
-<h3 id="0x03-编码转换">0x03 编码转换</h3>
-
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#-*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>或<span style="color:#960050;background-color:#1e0010">：</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#coding=utf8</span>
+</span></span></code></pre></div><ul>
+<li>永久编码(推荐)
+<img src="/img/post/unicode_encode_error.png" alt="python编码出错.png">
+可以在python安装路径下的Lib\site-packages下新建文件sitecustomize.py文件，内容如下：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#coding=utf8</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>reload(sys)
+</span></span><span style="display:flex;"><span>sys<span style="color:#f92672">.</span>setdefaultencoding(<span style="color:#e6db74">&#39;utf8&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 此方法修改了python环境，设置系统默认编码，永久有效</span>
+</span></span></code></pre></div><h3 id="0x03-编码转换">0x03 编码转换</h3>
 <p>python默认unicode为中间编码，所以无论是何种编码，解码时默认都解码为unicode</p>
-
-<pre><code>python2中的字符串一般包含两种类型：str和unicode
+<pre tabindex="0"><code>python2中的字符串一般包含两种类型：str和unicode
 str：str为ascii类型的字符串，utf-8、utf-16、GB2312、GBK等都是ascii类型的字符串
 unicode：unicode编码的字符串才是unicode类型的字符串
 
 可通过isinstance()和type()来判断
 
-&gt;&gt;&gt; aa = '小明'
+&gt;&gt;&gt; aa = &#39;小明&#39;
 &gt;&gt;&gt; isinstance(aa,str)
 True
 &gt;&gt;&gt; type(aa)
-&lt;type 'str'&gt;
+&lt;type &#39;str&#39;&gt;
 
-&gt;&gt;&gt; bb = u'小明'
+&gt;&gt;&gt; bb = u&#39;小明&#39;
 &gt;&gt;&gt; isinstance(bb,unicode)
 True
 &gt;&gt;&gt; type(bb)
-&lt;type 'unicode'&gt;
-</code></pre>
+&lt;type &#39;unicode&#39;&gt;
+</code></pre><pre tabindex="0"><code>&gt;&gt;&gt; u&#39;小明&#39;.encode(&#39;utf8&#39;) #unicode到utf8
+&#39;\xe5\xb0\x8f\xe6\x98\x8e&#39;
+&gt;&gt;&gt; &#39;小明&#39;.decode(&#39;utf8&#39;) #utf8到unicode
+u&#39;\u5c0f\u660e&#39;
 
-<pre><code>&gt;&gt;&gt; u'小明'.encode('utf8') #unicode到utf8
-'\xe5\xb0\x8f\xe6\x98\x8e'
-&gt;&gt;&gt; '小明'.decode('utf8') #utf8到unicode
-u'\u5c0f\u660e'
-
-&gt;&gt;&gt; u'小明'.encode('unicode-escape') #unicode到unicode-escape
-'\\u5c0f\\u660e'
-&gt;&gt;&gt; '\\u5c0f\\u660e'.decode('unicode-escape')
-u'\u5c0f\u660e'
-&gt;&gt;&gt; print '\\u5c0f\\u660e'.decode('unicode-escape')
+&gt;&gt;&gt; u&#39;小明&#39;.encode(&#39;unicode-escape&#39;) #unicode到unicode-escape
+&#39;\\u5c0f\\u660e&#39;
+&gt;&gt;&gt; &#39;\\u5c0f\\u660e&#39;.decode(&#39;unicode-escape&#39;)
+u&#39;\u5c0f\u660e&#39;
+&gt;&gt;&gt; print &#39;\\u5c0f\\u660e&#39;.decode(&#39;unicode-escape&#39;)
 小明
-</code></pre>
-
-<h3 id="0x04-网页的编码">0x04 网页的编码</h3>
-
-<pre><code class="language-python">#!/usr/bin/env python
-#-*- coding:utf-8 -*-
-
-import requests
-
-resp = requests.get('http://soft.nyist.edu.cn/')
-print resp.apparent_encoding #UTF-8-SIG
-resp.encoding = resp.apparent_encoding #获取原网页的编码格式，并赋给resp.encoding
-html = resp.text #以resp.encoding的格式解码为unicode
-# print html.encode('gb18030') #转码为gbk不能正常输出html源码
-print type(html) #&lt;type 'unicode'&gt;
-title = html.lower().split('&lt;title&gt;')[1].split('&lt;/title')[0]
-print title #南阳理工学院
-</code></pre>
-</div>
+</code></pre><h3 id="0x04-网页的编码">0x04 网页的编码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#-*- coding:utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>resp <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;http://soft.nyist.edu.cn/&#39;</span>)
+</span></span><span style="display:flex;"><span>print resp<span style="color:#f92672">.</span>apparent_encoding <span style="color:#75715e">#UTF-8-SIG</span>
+</span></span><span style="display:flex;"><span>resp<span style="color:#f92672">.</span>encoding <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>apparent_encoding <span style="color:#75715e">#获取原网页的编码格式，并赋给resp.encoding</span>
+</span></span><span style="display:flex;"><span>html <span style="color:#f92672">=</span> resp<span style="color:#f92672">.</span>text <span style="color:#75715e">#以resp.encoding的格式解码为unicode</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># print html.encode(&#39;gb18030&#39;) #转码为gbk不能正常输出html源码</span>
+</span></span><span style="display:flex;"><span>print type(html) <span style="color:#75715e">#&lt;type &#39;unicode&#39;&gt;</span>
+</span></span><span style="display:flex;"><span>title <span style="color:#f92672">=</span> html<span style="color:#f92672">.</span>lower()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;&lt;title&gt;&#39;</span>)[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;&lt;/title&#39;</span>)[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>print title <span style="color:#75715e">#南阳理工学院</span>
+</span></span></code></pre></div></div>
     </article>
   </main>
 

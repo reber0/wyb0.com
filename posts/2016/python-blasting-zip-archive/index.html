@@ -82,76 +82,71 @@
     [<a href="/categories/Pentest">Pentest</a>,<a href="/categories/Python">Python</a>](<a href="/tags/%E7%88%86%E7%A0%B4">爆破</a>,<a href="/tags/python">python</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-代码">0x00 代码</h3>
-
+      <div><h3 id="0x00-代码">0x00 代码</h3>
 <p>多线程爆破加密的zip压缩包</p>
-
-<pre><code class="language-python">#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import sys
-import optparse
-import zipfile
-import threading
-import Queue
-
-queue = Queue.Queue()
-lock = threading.Lock()
-result = ''
-
-def load_pwd(filename):
-    for line in open(filename,'r'):
-        if line:
-            queue.put(line.strip())
-
-def bruter(zipname,queue):
-    global result
-    zFile = zipfile.ZipFile(zipname)
-    while not queue.empty():
-        password = queue.get()
-        try:
-            zFile.extractall(pwd=password) # 解压
-            lock.acquire()
-            print &quot;[Ok] password is: %s&quot; % password
-            lock.release()
-            result = password
-        except:
-            lock.acquire()
-            print &quot;[Error] password not is: %s&quot; % password
-            lock.release()
-        queue.task_done()
-
-def main():
-    parser = optparse.OptionParser()
-    parser.add_option('-f', '--file', dest='zipfile',
-        type='string', help='Target zip file.')
-    parser.add_option('-p', '--pfile', dest='pwdfile',default='pass.txt',
-        type='string', help='Password file.')
-    parser.add_option('-t', '--thread_num', dest='thread_num',default=60,
-        type='int', help='Thread number.')
-
-    (options, args) = parser.parse_args()
-
-    if options.zipfile and options.pwdfile:
-        load_pwd(options.pwdfile)
-    else:
-        parser.print_help()
-        sys.exit(0)
-
-    threads = []
-    for x in range(options.thread_num):
-        t = threading.Thread(target=bruter,args=(options.zipfile,queue,))
-        t.setDaemon(True)
-        t.start()
-    queue.join()
-    print &quot;result is: %s&quot; % result
-
-if __name__ == '__main__':
-    main()
-</code></pre>
-</div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># -*- coding: utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> optparse
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> zipfile
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> threading
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> Queue
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>queue <span style="color:#f92672">=</span> Queue<span style="color:#f92672">.</span>Queue()
+</span></span><span style="display:flex;"><span>lock <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Lock()
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">load_pwd</span>(filename):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> open(filename,<span style="color:#e6db74">&#39;r&#39;</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> line:
+</span></span><span style="display:flex;"><span>            queue<span style="color:#f92672">.</span>put(line<span style="color:#f92672">.</span>strip())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">bruter</span>(zipname,queue):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">global</span> result
+</span></span><span style="display:flex;"><span>    zFile <span style="color:#f92672">=</span> zipfile<span style="color:#f92672">.</span>ZipFile(zipname)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#f92672">not</span> queue<span style="color:#f92672">.</span>empty():
+</span></span><span style="display:flex;"><span>        password <span style="color:#f92672">=</span> queue<span style="color:#f92672">.</span>get()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            zFile<span style="color:#f92672">.</span>extractall(pwd<span style="color:#f92672">=</span>password) <span style="color:#75715e"># 解压</span>
+</span></span><span style="display:flex;"><span>            lock<span style="color:#f92672">.</span>acquire()
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;[Ok] password is: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> password
+</span></span><span style="display:flex;"><span>            lock<span style="color:#f92672">.</span>release()
+</span></span><span style="display:flex;"><span>            result <span style="color:#f92672">=</span> password
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            lock<span style="color:#f92672">.</span>acquire()
+</span></span><span style="display:flex;"><span>            print <span style="color:#e6db74">&#34;[Error] password not is: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> password
+</span></span><span style="display:flex;"><span>            lock<span style="color:#f92672">.</span>release()
+</span></span><span style="display:flex;"><span>        queue<span style="color:#f92672">.</span>task_done()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    parser <span style="color:#f92672">=</span> optparse<span style="color:#f92672">.</span>OptionParser()
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;-f&#39;</span>, <span style="color:#e6db74">&#39;--file&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;zipfile&#39;</span>,
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;string&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Target zip file.&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;-p&#39;</span>, <span style="color:#e6db74">&#39;--pfile&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;pwdfile&#39;</span>,default<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;pass.txt&#39;</span>,
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;string&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Password file.&#39;</span>)
+</span></span><span style="display:flex;"><span>    parser<span style="color:#f92672">.</span>add_option(<span style="color:#e6db74">&#39;-t&#39;</span>, <span style="color:#e6db74">&#39;--thread_num&#39;</span>, dest<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;thread_num&#39;</span>,default<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span>,
+</span></span><span style="display:flex;"><span>        type<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;int&#39;</span>, help<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;Thread number.&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    (options, args) <span style="color:#f92672">=</span> parser<span style="color:#f92672">.</span>parse_args()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> options<span style="color:#f92672">.</span>zipfile <span style="color:#f92672">and</span> options<span style="color:#f92672">.</span>pwdfile:
+</span></span><span style="display:flex;"><span>        load_pwd(options<span style="color:#f92672">.</span>pwdfile)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        parser<span style="color:#f92672">.</span>print_help()
+</span></span><span style="display:flex;"><span>        sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    threads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(options<span style="color:#f92672">.</span>thread_num):
+</span></span><span style="display:flex;"><span>        t <span style="color:#f92672">=</span> threading<span style="color:#f92672">.</span>Thread(target<span style="color:#f92672">=</span>bruter,args<span style="color:#f92672">=</span>(options<span style="color:#f92672">.</span>zipfile,queue,))
+</span></span><span style="display:flex;"><span>        t<span style="color:#f92672">.</span>setDaemon(<span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>        t<span style="color:#f92672">.</span>start()
+</span></span><span style="display:flex;"><span>    queue<span style="color:#f92672">.</span>join()
+</span></span><span style="display:flex;"><span>    print <span style="color:#e6db74">&#34;result is: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div></div>
     </article>
   </main>
 

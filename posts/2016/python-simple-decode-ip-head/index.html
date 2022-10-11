@@ -82,101 +82,93 @@
     [<a href="/categories/Python">Python</a>](<a href="/tags/python">python</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-解码ip头">0x00 解码IP头</h3>
-
-<p>Windows上运行时要以管理员身份运行<br />
+      <div><h3 id="0x00-解码ip头">0x00 解码IP头</h3>
+<p>Windows上运行时要以管理员身份运行<br>
 代码可以解码IP头统计通信信息并保存到文本，同时统计数量</p>
-
-<pre><code class="language-python">#!/usr/bin/env python
-#-*- coding:utf-8 -*-
-
-import socket
-import os
-import sys
-import time
-import struct 
-from ctypes import *
-
-host = &quot;10.22.114.114&quot;
-
-tcp_num = 0
-udp_num = 0
-icmp_num = 0
-
-class IP(Structure):
-    _fields_ = [
-        (&quot;ihl&quot;,         c_ubyte,4),
-        (&quot;version&quot;,     c_ubyte,4),
-        (&quot;tos&quot;,         c_ubyte),
-        (&quot;len&quot;,         c_ushort),
-        (&quot;id&quot;,          c_ushort),
-        (&quot;offset&quot;,      c_ushort),
-        (&quot;ttl&quot;,         c_ubyte),
-        (&quot;protocol_num&quot;,c_ubyte),
-        (&quot;sum&quot;,         c_ushort),
-        (&quot;src&quot;,         c_ulong),
-        (&quot;dst&quot;,         c_ulong)
-    ]
-
-    def __new__ (self,socket_buffer=None):
-        return self.from_buffer_copy(socket_buffer)
-
-    def __init__ (self,socket_buffer=None):
-        self.protocol_map = {1:&quot;ICMP&quot;,6:&quot;TCP&quot;,17:&quot;UDP&quot;}
-        
-        self.src_address = socket.inet_ntoa(struct.pack(&quot;&lt;L&quot;,self.src))
-        self.dst_address = socket.inet_ntoa(struct.pack(&quot;&lt;L&quot;,self.dst))
-        try:
-            self.protocol = self.protocol_map[self.protocol_num]
-        except:
-            self.protocol = str(self.protocol_num)
-
-if os.name == &quot;nt&quot;:
-    socket_protocol = socket.IPPROTO_IP
-else:
-    socket_protocol = socket.IPPROTO_ICMP
-
-sniffer = socket.socket(socket.AF_INET,socket.SOCK_RAW,socket_protocol)
-
-sniffer.bind((host,0))
-sniffer.setsockopt(socket.IPPROTO_IP,socket.IP_HDRINCL,1)
-
-if os.name == &quot;nt&quot;:
-    sniffer.ioctl(socket.SIO_RCVALL,socket.RCVALL_ON)
-
-try:
-    while True:
-        raw_buffer = sniffer.recvfrom(65565)[0]
-
-        ip_header = IP(raw_buffer[0:32])
-        msg = &quot;Protocol: %-5s %-15s -&gt; %s&quot; % (ip_header.protocol,ip_header.src_address,ip_header.dst_address)
-        if ip_header.protocol == &quot;TCP&quot;:
-            tcp_num = tcp_num + 1
-        elif ip_header.protocol == &quot;UDP&quot;:
-            udp_num = udp_num + 1
-        elif ip_header.protocol == &quot;ICMP&quot;:
-            icmp_num = icmp_num + 1
-        num = &quot;TCP:%d\tUDP:%d\tICMP:%d&quot; % (tcp_num,udp_num,icmp_num)
-        # print num
-        with open(&quot;data.txt&quot;,&quot;a+&quot;) as f:
-            f.write(msg+&quot;\n&quot;)
-        sys.stdout.write(num+&quot;\r&quot;)
-        sys.stdout.flush()
-        time.sleep(0.5)
-        print
-#CTRL-C
-except KeyboardInterrupt:
-    if os.name == &quot;nt&quot;:
-        sniffer.ioctl(socket.SIO_RCVALL,socket.RCVALL_OFF)
-</code></pre>
-
-<h3 id="0x01-结果">0x01 结果</h3>
-
-<p><img src="/img/post/ip_decoding_run_msg.png" alt="程序运行信息" /></p>
-
-<p><img src="/img/post/ip_decoding_data.png" alt="保存的数据" /></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#-*- coding:utf-8 -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> socket
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> struct 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> ctypes <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>host <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;10.22.114.114&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tcp_num <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>udp_num <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>icmp_num <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IP</span>(Structure):
+</span></span><span style="display:flex;"><span>    _fields_ <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;ihl&#34;</span>,         c_ubyte,<span style="color:#ae81ff">4</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;version&#34;</span>,     c_ubyte,<span style="color:#ae81ff">4</span>),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;tos&#34;</span>,         c_ubyte),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;len&#34;</span>,         c_ushort),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;id&#34;</span>,          c_ushort),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;offset&#34;</span>,      c_ushort),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;ttl&#34;</span>,         c_ubyte),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;protocol_num&#34;</span>,c_ubyte),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;sum&#34;</span>,         c_ushort),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;src&#34;</span>,         c_ulong),
+</span></span><span style="display:flex;"><span>        (<span style="color:#e6db74">&#34;dst&#34;</span>,         c_ulong)
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __new__ (self,socket_buffer<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>from_buffer_copy(socket_buffer)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__ (self,socket_buffer<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>protocol_map <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>:<span style="color:#e6db74">&#34;ICMP&#34;</span>,<span style="color:#ae81ff">6</span>:<span style="color:#e6db74">&#34;TCP&#34;</span>,<span style="color:#ae81ff">17</span>:<span style="color:#e6db74">&#34;UDP&#34;</span>}
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>src_address <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>inet_ntoa(struct<span style="color:#f92672">.</span>pack(<span style="color:#e6db74">&#34;&lt;L&#34;</span>,self<span style="color:#f92672">.</span>src))
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dst_address <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>inet_ntoa(struct<span style="color:#f92672">.</span>pack(<span style="color:#e6db74">&#34;&lt;L&#34;</span>,self<span style="color:#f92672">.</span>dst))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>protocol <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>protocol_map[self<span style="color:#f92672">.</span>protocol_num]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>protocol <span style="color:#f92672">=</span> str(self<span style="color:#f92672">.</span>protocol_num)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> os<span style="color:#f92672">.</span>name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;nt&#34;</span>:
+</span></span><span style="display:flex;"><span>    socket_protocol <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>IPPROTO_IP
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    socket_protocol <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>IPPROTO_ICMP
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sniffer <span style="color:#f92672">=</span> socket<span style="color:#f92672">.</span>socket(socket<span style="color:#f92672">.</span>AF_INET,socket<span style="color:#f92672">.</span>SOCK_RAW,socket_protocol)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sniffer<span style="color:#f92672">.</span>bind((host,<span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>sniffer<span style="color:#f92672">.</span>setsockopt(socket<span style="color:#f92672">.</span>IPPROTO_IP,socket<span style="color:#f92672">.</span>IP_HDRINCL,<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> os<span style="color:#f92672">.</span>name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;nt&#34;</span>:
+</span></span><span style="display:flex;"><span>    sniffer<span style="color:#f92672">.</span>ioctl(socket<span style="color:#f92672">.</span>SIO_RCVALL,socket<span style="color:#f92672">.</span>RCVALL_ON)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>        raw_buffer <span style="color:#f92672">=</span> sniffer<span style="color:#f92672">.</span>recvfrom(<span style="color:#ae81ff">65565</span>)[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ip_header <span style="color:#f92672">=</span> IP(raw_buffer[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">32</span>])
+</span></span><span style="display:flex;"><span>        msg <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Protocol: </span><span style="color:#e6db74">%-5s</span><span style="color:#e6db74"> </span><span style="color:#e6db74">%-15s</span><span style="color:#e6db74"> -&gt; </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (ip_header<span style="color:#f92672">.</span>protocol,ip_header<span style="color:#f92672">.</span>src_address,ip_header<span style="color:#f92672">.</span>dst_address)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ip_header<span style="color:#f92672">.</span>protocol <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;TCP&#34;</span>:
+</span></span><span style="display:flex;"><span>            tcp_num <span style="color:#f92672">=</span> tcp_num <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> ip_header<span style="color:#f92672">.</span>protocol <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;UDP&#34;</span>:
+</span></span><span style="display:flex;"><span>            udp_num <span style="color:#f92672">=</span> udp_num <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> ip_header<span style="color:#f92672">.</span>protocol <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;ICMP&#34;</span>:
+</span></span><span style="display:flex;"><span>            icmp_num <span style="color:#f92672">=</span> icmp_num <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        num <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;TCP:</span><span style="color:#e6db74">%d</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">UDP:</span><span style="color:#e6db74">%d</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">ICMP:</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (tcp_num,udp_num,icmp_num)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># print num</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;data.txt&#34;</span>,<span style="color:#e6db74">&#34;a+&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            f<span style="color:#f92672">.</span>write(msg<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>write(num<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\r</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        sys<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>flush()
+</span></span><span style="display:flex;"><span>        time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">0.5</span>)
+</span></span><span style="display:flex;"><span>        print
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#CTRL-C</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> <span style="color:#a6e22e">KeyboardInterrupt</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> os<span style="color:#f92672">.</span>name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;nt&#34;</span>:
+</span></span><span style="display:flex;"><span>        sniffer<span style="color:#f92672">.</span>ioctl(socket<span style="color:#f92672">.</span>SIO_RCVALL,socket<span style="color:#f92672">.</span>RCVALL_OFF)
+</span></span></code></pre></div><h3 id="0x01-结果">0x01 结果</h3>
+<p><img src="/img/post/ip_decoding_run_msg.png" alt="程序运行信息"></p>
+<p><img src="/img/post/ip_decoding_data.png" alt="保存的数据"></p>
 </div>
     </article>
   </main>

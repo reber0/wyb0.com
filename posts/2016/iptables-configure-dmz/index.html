@@ -82,10 +82,7 @@
     [<a href="/categories/Linux">Linux</a>](<a href="/tags/dmz">dmz</a>)
 </div>
 
-      <div>
-
-<h3 id="0x00-要求">0x00 要求</h3>
-
+      <div><h3 id="0x00-要求">0x00 要求</h3>
 <ol>
 <li>内网可以访问外网</li>
 <li>内网可以访问DMZ区</li>
@@ -94,22 +91,15 @@
 <li>DMZ区不能访问内网</li>
 <li>DMZ区不能主动访问外网</li>
 </ol>
-
 <h3 id="0x01-拓扑">0x01 拓扑</h3>
-
-<p><img src="/img/post/iptables_dmz_topology.png" alt="50" /></p>
-
+<p><img src="/img/post/iptables_dmz_topology.png" alt="50"></p>
 <h3 id="0x02-个主机ip信息">0x02 个主机IP信息</h3>
-
-<p>内网网段为：192.168.1.0/24<br />
+<p>内网网段为：192.168.1.0/24<br>
 DMZ区网段为：172.16.1.0/24
-<img src="/img/post/iptables_dmz_ip_info.png" alt="50" /></p>
-
+<img src="/img/post/iptables_dmz_ip_info.png" alt="50"></p>
 <h3 id="0x03-iptables的策略">0x03 iptables的策略</h3>
-
 <p>新建iptables.sh,内容如下：</p>
-
-<pre><code>#!/bin/bash
+<pre tabindex="0"><code>#!/bin/bash
 
 iptables –F #清空此表中的规则
 iptables –X #清空此表中的自定义规则
@@ -131,7 +121,7 @@ modprobe iptable_nat
 modprobe ip_conntrack
 modprobe ip_conntrack_ftp
 #开启转发功能
-echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward
+echo &#34;1&#34; &gt; /proc/sys/net/ipv4/ip_forward
 #********************************************************************
 #PREROUTING：
 iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 172.16.1.1
@@ -169,30 +159,34 @@ iptables -t nat -A POSTROUTING -o eth0 -s 172.16.1.0/24 -j SNAT --to-source 192.
 #********************************************************************
 service iptables save
 service iptables restart
-</code></pre>
-
-<h3 id="0x04-测试">0x04 测试</h3>
-
+</code></pre><h3 id="0x04-测试">0x04 测试</h3>
 <ol>
-<li><p>内网可以访问外网
-<img src="/img/post/iptables_dmz_lan_to_internet.png" alt="50" /></p></li>
-
-<li><p>内网可以访问DMZ
-<img src="/img/post/iptables_dmz_lan_to_dmz_www.png" alt="45" />
-<img src="/img/post/iptables_dmz_lan_to_dmz_ftp.png" alt="50" /></p></li>
-
-<li><p>外网不能访问内网
-<img src="/img/post/iptables_dmz_internet_not_to_lan.png" alt="50" /></p></li>
-
-<li><p>外网可以访问DMZ
-<img src="/img/post/iptables_dmz_internet_to_dmz_www.png" alt="45" />
-<img src="/img/post/iptables_dmz_internet_to_dmz_ftp.png" alt="40" /></p></li>
-
-<li><p>DMZ不能访问内网
-<img src="/img/post/iptables_dmz_dmz_not_to_lan.png" alt="40" /></p></li>
-
-<li><p>DMZ不能访问外网
-<img src="/img/post/iptables_dmz_dmz_not_to_internet.png" alt="50" /></p></li>
+<li>
+<p>内网可以访问外网
+<img src="/img/post/iptables_dmz_lan_to_internet.png" alt="50"></p>
+</li>
+<li>
+<p>内网可以访问DMZ
+<img src="/img/post/iptables_dmz_lan_to_dmz_www.png" alt="45">
+<img src="/img/post/iptables_dmz_lan_to_dmz_ftp.png" alt="50"></p>
+</li>
+<li>
+<p>外网不能访问内网
+<img src="/img/post/iptables_dmz_internet_not_to_lan.png" alt="50"></p>
+</li>
+<li>
+<p>外网可以访问DMZ
+<img src="/img/post/iptables_dmz_internet_to_dmz_www.png" alt="45">
+<img src="/img/post/iptables_dmz_internet_to_dmz_ftp.png" alt="40"></p>
+</li>
+<li>
+<p>DMZ不能访问内网
+<img src="/img/post/iptables_dmz_dmz_not_to_lan.png" alt="40"></p>
+</li>
+<li>
+<p>DMZ不能访问外网
+<img src="/img/post/iptables_dmz_dmz_not_to_internet.png" alt="50"></p>
+</li>
 </ol>
 </div>
     </article>
