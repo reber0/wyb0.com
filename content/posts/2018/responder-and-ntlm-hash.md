@@ -1,6 +1,7 @@
 ---
 draft: false
 date: 2018-09-10 09:48:10
+lastmod: 2022-10-12 17:00:23
 title: 内网渗透之 Responder 与 Net-NTLM hash
 description: 在内网中利用 Responder 这个工具获取 Net-NTLM hash
 categories:
@@ -10,11 +11,13 @@ tags:
 ---
 
 ### 0x00 一些概念
-* Windows 认证协议  
-分为：基于 NTLM 的认证和基于 kerberos 的认证
+* Windows 认证协议
 
-* 什么是 NTLM Hash？  
-早期 IBM 设计的 LM Hash 算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即 NTLM Hash
+    分为：基于 NTLM 的认证和基于 kerberos 的认证
+
+* 什么是 NTLM Hash？
+
+    早期 IBM 设计的 LM Hash 算法存在弱点，微软在保持向后兼容性的同时提出了自己的挑战响应机制，即 NTLM Hash
 
 * 什么是 Challenge-Response 挑战/响应验证机制？  
     * Client 输入 username、password、domain，然后将用户名及密码 hash 后存在本地，并将 username 发送到 DC
@@ -23,14 +26,17 @@ tags:
     * Server 将收到的 3 个值转发给 DC，然后 DC 根据传过来的 username 到域控的账号数据库 ntds.list 找到对应的密码 hash，将 hash 和 Client 传过来的 challenge 混合 hash，将这个混合 hash 与 Client 传过来的 response 进行对比验证
 
 * NTLM Hash 与 Net-NTLM Hash
-    * NTLM Hash 通常是指 Windows 系统下 SAM 中保存的用户密码 hash，通常可从 Windows 系统中的 SAM 文件和域控的 NTDS.dit 文件中获得所有用户的 hash（比如用 Mimikatz 提取），“挑战/响应验证”中的用户名及密码 hash 就是 NTLM Hash，可以用来进行 PTH 攻击
-    * Net-NTLM Hash 通常是指网络环境下 NTLM 认证中的 hash，是基于用户密码的 NTLM Hash 计算出来的，“挑战/响应验证”中的 response 中包含 Net-NTLM hash，而用 Responder 抓取的就是 Net-NTLM Hash，可以用来做中间人攻击
+    * NTLM Hash 通常是指 Windows 系统下 SAM 中保存的用户密码 hash，通常可从 Windows 系统中的 SAM 文件和域控的 NTDS.dit 文件中获得所有用户的 hash（比如用 Mimikatz 提取），“挑战/响应验证”中的用户名及密码 hash 就是 NTLM Hash，可以用来进行 PtH、PtT 攻击
+    * Net-NTLM Hash 通常是指网络环境下 NTLM 认证中的 hash，是基于用户密码的 NTLM Hash 计算出来的，“挑战/响应验证”中的 response 中包含 Net-NTLM hash，而用 Responder 抓取的就是 Net-NTLM Hash，可以用来做中继攻击
 
 * 关于 Responder  
-由 Laurent Gaffie 撰写的 Responder 是迄今为止，在每个渗透测试人员用于窃取不同形式的证书（包括 Net-NTLM hash）的最受欢迎的工具。它通过设置几个模拟的恶意守护进程（如 SQL 服务器，FTP，HTTP 和 SMB 服务器等）来直接提示凭据或模拟质询 – 响应验证过程并捕获客户端发送的必要 hash。Responder 也有能力攻击 LLMNR，NBT-NS 和 mDNS 等协议。
+    由 Laurent Gaffie 撰写的 Responder 是迄今为止，在每个渗透测试人员用于窃取不同形式的证书（包括 Net-NTLM hash）的最受欢迎的工具。它通过设置几个模拟的恶意守护进程（如 SQL 服务器，FTP，HTTP 和 SMB 服务器等）来直接提示凭据或模拟质询 – 响应验证过程并捕获客户端发送的必要 hash。Responder 也有能力攻击 LLMNR，NBT-NS 和 mDNS 等协议。
 
 * 什么是 NTLM 中继攻击？  
-攻击者可以直接通过 LM Hash 和 NTLM Hash 访问远程主机或服务，而不用提供明文密码。
+    Net-NTLM 中继攻击思路是让受害者把 Net-NTLM hash 发送给攻击者，然后攻击着拿着 Hash 访问远程服务  
+    对于 SMB、HTTP、LDAP、MSSQL 等用 NTLM 进行认证的程序，都可以尝试用来向攻击者发送 Net-NTLM hash  
+    比如 SMB 协议，客户端在连接服务端时，默认先使用本机的用户名和密码 hash 尝试登录，  
+    所以我们让目标访问 `\\your-vps-ip\aaa` 的话，他就会把 hash 发送到我们的 vps
 
 ### 0x01 软件环境
 * 可以从[https://github.com/lgandx/Responder](https://github.com/lgandx/Responder?_blank)下载Responder
