@@ -7,7 +7,7 @@ layout: default
 - reber
 
 ### E-mail
-- reber0ask#protonmail.com
+- reber0ask#qq.com
 
 ### WeChat & QQ
 <div style="width:350px;margin-left:40px;margin-top:10px;display:none;" >
