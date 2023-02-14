@@ -113,8 +113,59 @@
 </span></span><span style="display:flex;"><span>$ sudo apt-get install -y mongodb-org
 </span></span><span style="display:flex;"><span>$ ps -aux|grep mongodb
 </span></span><span style="display:flex;"><span>$ netstat -nlt|grep <span style="color:#ae81ff">27017</span>
-</span></span></code></pre></div><!-- raw HTML omitted -->
-<h3 id="0x02-案例代码">0x02 案例代码</h3>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ mongo
+</span></span><span style="display:flex;"><span>&gt; use admin
+</span></span><span style="display:flex;"><span>switched to db admin
+</span></span><span style="display:flex;"><span>&gt; db.createUser<span style="color:#f92672">({</span>user:<span style="color:#e6db74">&#39;root&#39;</span>,pwd:<span style="color:#e6db74">&#39;root&#39;</span>,roles:<span style="color:#f92672">[{</span>role:<span style="color:#e6db74">&#39;root&#39;</span>,db:<span style="color:#e6db74">&#39;admin&#39;</span><span style="color:#f92672">}]})</span>
+</span></span><span style="display:flex;"><span>Successfully added user: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;user&#34;</span> : <span style="color:#e6db74">&#34;root&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;roles&#34;</span> : <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;role&#34;</span> : <span style="color:#e6db74">&#34;root&#34;</span>,
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;db&#34;</span> : <span style="color:#e6db74">&#34;admin&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>&gt; db.auth<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;root&#39;</span>,<span style="color:#e6db74">&#39;root&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>&gt; use mrq
+</span></span><span style="display:flex;"><span>switched to db mrq
+</span></span><span style="display:flex;"><span>&gt; db.createUser<span style="color:#f92672">({</span>user:<span style="color:#e6db74">&#39;reber_mrq_u&#39;</span>,pwd:<span style="color:#e6db74">&#39;reber_mrq_p&#39;</span>,roles:<span style="color:#f92672">[{</span>role:<span style="color:#e6db74">&#39;dbOwner&#39;</span>,db:<span style="color:#e6db74">&#39;mrq&#39;</span><span style="color:#f92672">}]})</span>
+</span></span><span style="display:flex;"><span>Successfully added user: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;user&#34;</span> : <span style="color:#e6db74">&#34;reber_mrq_u&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;roles&#34;</span> : <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;role&#34;</span> : <span style="color:#e6db74">&#34;dbOwner&#34;</span>,
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;db&#34;</span> : <span style="color:#e6db74">&#34;mrq&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>&gt; db.auth<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;reber_mrq_u&#39;</span>,<span style="color:#e6db74">&#39;reber_mrq_p&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>&gt; db.shutdownServer<span style="color:#f92672">()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo vim /etc/mongod.conf
+</span></span><span style="display:flex;"><span>storage:
+</span></span><span style="display:flex;"><span>  dbPath: /var/lib/mongodb
+</span></span><span style="display:flex;"><span>  journal:
+</span></span><span style="display:flex;"><span>    enabled: true
+</span></span><span style="display:flex;"><span>systemLog:
+</span></span><span style="display:flex;"><span>  destination: file
+</span></span><span style="display:flex;"><span>  logAppend: true
+</span></span><span style="display:flex;"><span>  path: /var/log/mongodb/mongod.log
+</span></span><span style="display:flex;"><span>net:
+</span></span><span style="display:flex;"><span>  port: <span style="color:#ae81ff">27017</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#bindIp: 127.0.0.1</span>
+</span></span><span style="display:flex;"><span>security:
+</span></span><span style="display:flex;"><span>  authorization: enabled
+</span></span><span style="display:flex;"><span>$ sudo mongod --config /etc/mongod.conf &amp;
+</span></span><span style="display:flex;"><span>$ mongo
+</span></span><span style="display:flex;"><span>MongoDB shell version v3.4.6
+</span></span><span style="display:flex;"><span>connecting to: mongodb://127.0.0.1:27017
+</span></span><span style="display:flex;"><span>MongoDB server version: 3.4.6
+</span></span><span style="display:flex;"><span>&gt; use mrq
+</span></span><span style="display:flex;"><span>switched to db mrq
+</span></span><span style="display:flex;"><span>&gt; db.auth<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;reber_mrq_u&#39;</span>,<span style="color:#e6db74">&#39;reber_mrq_p&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><h3 id="0x02-案例代码">0x02 案例代码</h3>
 <pre tabindex="0"><code>$ mkdir mrqtest &amp;&amp; cd mrqtest
 $ touch __init__.py
 $ touch scheduler.py

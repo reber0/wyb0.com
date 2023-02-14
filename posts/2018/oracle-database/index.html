@@ -172,7 +172,8 @@ Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
 SQL&gt;
 </code></pre><h3 id="0x04-表空间操作">0x04 表空间操作</h3>
 <ul>
-<li>查看表空间
+<li>
+<p>查看表空间</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">--下面的表空间每个用户都默认存在
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SQL</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> tablespace_name,status <span style="color:#66d9ef">from</span> user_tablespaces;
 </span></span><span style="display:flex;"><span>
@@ -184,7 +185,8 @@ SQL&gt;
 </span></span><span style="display:flex;"><span>TEMP                           ONLINE
 </span></span><span style="display:flex;"><span>USERS                          ONLINE
 </span></span></code></pre></div></li>
-<li>创建表空间
+<li>
+<p>创建表空间</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">--创建数据表空间
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SQL</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">create</span> tablespace db_test_data <span style="color:#75715e">--创建一个新的表空间，名字是db_test_data
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#ae81ff">2</span>  datafile <span style="color:#e6db74">&#39;/tmp/db_test_data.dbf&#39;</span> <span style="color:#75715e">--表空间数据文件路径
@@ -220,7 +222,8 @@ SQL&gt;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">7</span> <span style="color:#66d9ef">rows</span> selected.
 </span></span></code></pre></div></li>
-<li>创建用户并指定表空间的映射
+<li>
+<p>创建用户并指定表空间的映射</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SQL</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">create</span> <span style="color:#66d9ef">user</span> utest identified <span style="color:#66d9ef">by</span> ptest
 </span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">2</span>  <span style="color:#66d9ef">default</span> tablespace db_test_data <span style="color:#75715e">--默认用户表空间
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#ae81ff">3</span>  <span style="color:#66d9ef">temporary</span> tablespace db_test_temp; <span style="color:#75715e">--默认临时表空间
@@ -246,7 +249,8 @@ SQL&gt;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ae81ff">13</span> <span style="color:#66d9ef">rows</span> selected.
 </span></span></code></pre></div></li>
-<li>给用户授予权限(也可以创建有相应权限的角色然后授予角色)
+<li>
+<p>给用户授予权限(也可以创建有相应权限的角色然后授予角色)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">--赋予用户角色，Oracle有dba、connect、resource这3个角色
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SQL</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">grant</span> <span style="color:#66d9ef">connect</span>,resource <span style="color:#66d9ef">to</span> utest;
 </span></span><span style="display:flex;"><span>
@@ -286,24 +290,26 @@ SQL&gt;
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SQL</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">grant</span> <span style="color:#66d9ef">select</span>,<span style="color:#66d9ef">insert</span>,<span style="color:#66d9ef">update</span>,<span style="color:#66d9ef">delete</span> <span style="color:#66d9ef">on</span> tuser <span style="color:#66d9ef">to</span> utest;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">Grant</span> succeeded.
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">--删除空的表空间，不包含物理文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">drop</span> tablespace tablespace_name;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">--删除空的表空间，包含物理文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">drop</span> tablespace tablespace_name <span style="color:#66d9ef">including</span> datafiles;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">--删除非空表空间，不包含物理文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">drop</span> tablespace tablespace_name <span style="color:#66d9ef">including</span> contents;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">--删除非空表空间，包含物理文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">drop</span> tablespace tablespace_name <span style="color:#66d9ef">including</span> contents <span style="color:#66d9ef">and</span> datafiles;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">--移除用户角色权限
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">revoke</span> <span style="color:#66d9ef">connect</span>,resource <span style="color:#66d9ef">from</span> utest;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">--撤回用户系统权限
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">revoke</span> <span style="color:#66d9ef">create</span> <span style="color:#66d9ef">view</span>,<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">any</span> <span style="color:#66d9ef">index</span> <span style="color:#66d9ef">from</span> utest;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">--撤回用户对象权限
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">revoke</span> <span style="color:#66d9ef">select</span>,<span style="color:#66d9ef">insert</span>,<span style="color:#66d9ef">update</span>,<span style="color:#66d9ef">delete</span> <span style="color:#66d9ef">on</span> tuser <span style="color:#66d9ef">from</span> utest;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">--删除用户
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">user</span> utest <span style="color:#66d9ef">cascade</span>;
 </span></span></code></pre></div></li>
 </ul>
-<!-- raw HTML omitted -->
-<pre><code>--删除非空表空间，不包含物理文件
-drop tablespace tablespace_name including contents;
---删除非空表空间，包含物理文件
-drop tablespace tablespace_name including contents and datafiles;
-
---移除用户角色权限
-revoke connect,resource from utest;
---撤回用户系统权限
-revoke create view,create any index from utest;
---撤回用户对象权限
-revoke select,insert,update,delete on tuser from utest;
---删除用户
-drop user utest cascade;
-```
-</code></pre>
 <h3 id="0x05-切换到用户utest">0x05 切换到用户utest</h3>
 <ul>
 <li>查看相关权限
@@ -439,7 +445,11 @@ drop user utest cascade;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SQL</span><span style="color:#f92672">&gt;</span>
 </span></span></code></pre></div></li>
 </ul>
-<!-- raw HTML omitted -->
+<h4 id="reference侵删">Reference(侵删)：</h4>
+<ul>
+<li><a href="https://www.aliyun.com/jiaocheng/318905.html?_blank">https://www.aliyun.com/jiaocheng/318905.html</a></li>
+<li><a href="https://www.cnblogs.com/jiangxinnju/p/5840420.html?_blank">https://www.cnblogs.com/jiangxinnju/p/5840420.html</a></li>
+</ul>
 </div>
     </article>
   </main>

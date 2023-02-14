@@ -91,71 +91,79 @@ yum install gcc g++
 yum remove wget
 yum list installed //显示已经安装过的软件
 yum list   //显示所有可以安装的包
-</code></pre><!-- raw HTML omitted -->
-<p>Name and summary matches only, use &ldquo;search all&rdquo; for everything.
+</code></pre><pre tabindex="0"><code>[wyb@localhost ~]$ wget -h  //验证有没有安装wget
+-bash: /usr/bin/wget: No such file or directory
+[wyb@localhost ~]$ sudo yum search wget  //通过yum查找wget，看有没有这个软件包
+Loaded plugins: fastestmirror, refresh-packagekit, security
+Loading mirror speeds from cached hostfile
+ * base: mirrors.yun-idc.com
+ * extras: mirrors.pubyun.com
+ * updates: mirrors.yun-idc.com
+============================== N/S Matched: wget ===============================
+wget.x86_64 : A utility for retrieving files using the HTTP or FTP protocols
+
+  Name and summary matches only, use &#34;search all&#34; for everything.
 [wyb@localhost ~]$ sudo yum deplist wget  //列出安装包的依赖项
 Loaded plugins: fastestmirror, refresh-packagekit, security
-Loading mirror speeds from cached hostfile</p>
-<ul>
-<li>base: mirrors.yun-idc.com</li>
-<li>extras: mirrors.pubyun.com</li>
-<li>updates: mirrors.yun-idc.com
+Loading mirror speeds from cached hostfile
+ * base: mirrors.yun-idc.com
+ * extras: mirrors.pubyun.com
+ * updates: mirrors.yun-idc.com
 Finding dependencies: 
 package: wget.x86_64 1.12-5.el6_6.1
-dependency: libssl.so.10()(64bit)
-provider: openssl.x86_64 1.0.1e-42.el6
-provider: openssl.x86_64 1.0.1e-42.el6_7.1
-provider: openssl.x86_64 1.0.1e-42.el6_7.2
-provider: openssl.x86_64 1.0.1e-42.el6_7.4
+  dependency: libssl.so.10()(64bit)
+   provider: openssl.x86_64 1.0.1e-42.el6
+   provider: openssl.x86_64 1.0.1e-42.el6_7.1
+   provider: openssl.x86_64 1.0.1e-42.el6_7.2
+   provider: openssl.x86_64 1.0.1e-42.el6_7.4
 [wyb@localhost ~]$ sudo yum install wget  //安装一个或两个软件包
 Loaded plugins: fastestmirror, refresh-packagekit, security
-Loading mirror speeds from cached hostfile</li>
-<li>base: mirrors.yun-idc.com</li>
-<li>extras: mirrors.pubyun.com</li>
-<li>updates: mirrors.yun-idc.com
+Loading mirror speeds from cached hostfile
+ * base: mirrors.yun-idc.com
+ * extras: mirrors.pubyun.com
+ * updates: mirrors.yun-idc.com
 Setting up Install Process
 Resolving Dependencies
-&ndash;&gt; Running transaction check
-&mdash;&gt; Package wget.x86_64 0:1.12-5.el6_6.1 will be installed
-&ndash;&gt; Finished Dependency Resolution
+--&gt; Running transaction check
+---&gt; Package wget.x86_64 0:1.12-5.el6_6.1 will be installed
+--&gt; Finished Dependency Resolution
 [wyb@localhost ~]$ sudo yum remove wget   //移除wget
 [sudo] password for wyb: 
 Loaded plugins: fastestmirror, refresh-packagekit, security
 Setting up Remove Process
 Resolving Dependencies
-&ndash;&gt; Running transaction check
-&mdash;&gt; Package wget.x86_64 0:1.12-5.el6_6.1 will be erased
-&ndash;&gt; Finished Dependency Resolution</li>
+--&gt; Running transaction check
+---&gt; Package wget.x86_64 0:1.12-5.el6_6.1 will be erased
+--&gt; Finished Dependency Resolution
+</code></pre><h3 id="0x01-rpm安装">0x01 rpm安装</h3>
+<p>分为：二进制包和源代码包<br>
+二进制包可直接安装，源码包会由rpm自动编译、安装，安装包常以src、rpm做为后缀</p>
+<ul>
+<li>主要参数</li>
 </ul>
-<pre tabindex="0"><code>
-### 0x01 rpm安装
-分为：二进制包和源代码包  
-二进制包可直接安装，源码包会由rpm自动编译、安装，安装包常以src、rpm做为后缀
-
-* 主要参数
-</code></pre><p>-ivh *.rpm  安装并显示安装进度
+<pre tabindex="0"><code>-ivh *.rpm  安装并显示安装进度
 -Uvh *.rpm	升级软件包
 -qpl *.rpm	查看rpm软件包内的包含的文件，显示安装后文件释放的绝对路径
--qpi *.rpm	列出rpm软件包的描述信息</p>
-<p>-qa 查找所有通过rpm安装的软件
+-qpi *.rpm	列出rpm软件包的描述信息
+
+-qa 查找所有通过rpm安装的软件
 -qf /etc/httpd/conf/httpd.conf  查找文件属于那个安装包
 -va 检验软件包有没有丢失信息
--e 软件名    移除软件包</p>
-<pre tabindex="0"><code>
-* 用rpm安装软件
-
-```bash
-[wyb@localhost ~]$ wget http://192.168.1.7/wget-1.12-5.el6_6.1.x86_64.rpm   //使用wget下载软件
---2016-04-18 04:31:27--  http://192.168.1.7/wget-1.12-5.el6_6.1.x86_64.rpm
-Connecting to 192.168.1.7:80... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 494884 (483K) [application/x-rpm]
-Saving to: 鈝get-1.12-5.el6_6.1.x86_64.rpm?
-
-100%[======================================&gt;] 494,884     1006K/s   in 0.5s    
-
-2016-04-18 04:31:27 (1006 KB/s) - 鈝get-1.12-5.el6_6.1.x86_64.rpm鈙aved [494884/494884]
+-e 软件名    移除软件包
 </code></pre><ul>
+<li>用rpm安装软件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>wyb@localhost ~<span style="color:#f92672">]</span>$ wget http://192.168.1.7/wget-1.12-5.el6_6.1.x86_64.rpm   //使用wget下载软件
+</span></span><span style="display:flex;"><span>--2016-04-18 04:31:27--  http://192.168.1.7/wget-1.12-5.el6_6.1.x86_64.rpm
+</span></span><span style="display:flex;"><span>Connecting to 192.168.1.7:80... connected.
+</span></span><span style="display:flex;"><span>HTTP request sent, awaiting response... <span style="color:#ae81ff">200</span> OK
+</span></span><span style="display:flex;"><span>Length: <span style="color:#ae81ff">494884</span> <span style="color:#f92672">(</span>483K<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>application/x-rpm<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Saving to: 鈝get-1.12-5.el6_6.1.x86_64.rpm?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>100%<span style="color:#f92672">[======================================</span>&gt;<span style="color:#f92672">]</span> 494,884     1006K/s   in 0.5s    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2016-04-18 04:31:27 <span style="color:#f92672">(</span><span style="color:#ae81ff">1006</span> KB/s<span style="color:#f92672">)</span> - 鈝get-1.12-5.el6_6.1.x86_64.rpm鈙aved <span style="color:#f92672">[</span>494884/494884<span style="color:#f92672">]</span>
+</span></span></code></pre></div><ul>
 <li>案例</li>
 </ul>
 <pre tabindex="0"><code>[wyb@localhost ~]$ ls
