@@ -272,7 +272,7 @@ location /files { #把/files改为/files/即可修复
 如果location没有add_header，则继承Http和server块的add_header内容。
 ```
 
-<br />
+
 #### Reference(侵删)：
 * [http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652844866&idx=1&sn=7c1d2879e7ad5ef662cccf8fb7663846](http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652844866&idx=1&sn=7c1d2879e7ad5ef662cccf8fb7663846)
 * [http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652845014&idx=1&sn=c6221031b486bbe84de6986c67b76fbc](http://mp.weixin.qq.com/s?__biz=MjM5MTYxNjQxOA==&mid=2652845014&idx=1&sn=c6221031b486bbe84de6986c67b76fbc)

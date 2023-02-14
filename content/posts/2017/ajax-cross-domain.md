@@ -73,7 +73,7 @@ tags:
 ?>
 ```
 ![ajax跨域请求](/img/post/ajax_cross_domain_jsonp.png)
-<br>
+
 我们看到调用的url中传递了一个name参数，告诉远端服务器获取name为xiaoliu的信息，而callback参数则告诉服务器，我的本地回调函数叫做callback_func，所以请把查询结果传入这个函数中。
 
 ### 0x02 jQuery中的ajax

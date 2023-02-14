@@ -125,7 +125,8 @@ C:\Users\Administrator\Desktop> python aa.py
 ### 0x06 FTP
 远程连接自己的ftp服务器，然后下载文件
 
-<br />
+
+
 #### Reference(侵删)：
 * [https://xianzhi.aliyun.com/forum/topic/1654](https://xianzhi.aliyun.com/forum/topic/1654?_blank)
 * [https://evi1cg.me/archives/Tricks.html](https://evi1cg.me/archives/Tricks.html?_blank)

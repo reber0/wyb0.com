@@ -47,7 +47,8 @@ $ sudo apt-get install -y mongodb-org
 $ ps -aux|grep mongodb
 $ netstat -nlt|grep 27017
 ```
-<br />
+
+
 ```bash
 $ mongo
 > use admin
@@ -79,7 +80,8 @@ Successfully added user: {
 > db.auth('reber_mrq_u','reber_mrq_p')
 > db.shutdownServer()
 ```
-<br />
+
+
 ```bash
 $ sudo vim /etc/mongod.conf
 storage:

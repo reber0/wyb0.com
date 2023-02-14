@@ -92,7 +92,7 @@ AttributeError: 'NoneType' object has no attribute 'read'
 >>> h.stderr.read()
 'ls: dsfj: No such file or directory\n'
 ```
-<br>
+
 
 ```python
 >>> cmd = "python /Users/reber/Desktop/task.py"

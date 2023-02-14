@@ -182,7 +182,7 @@ public static void main(String[] args) {
 在 jdk8u191 之后 RMI 和 LDAP 默认都不能从远程加载类，但还是可以在 RMI 和 LDAP 中获取对象
 
 
-<br>
+
 #### Reference(侵删)：
 * [https://mp.weixin.qq.com/s/cyeEAv31GO_hZCTXVRBkxw](https://mp.weixin.qq.com/s/cyeEAv31GO_hZCTXVRBkxw?_blank)
 * [https://mp.weixin.qq.com/s/GJ9Dio_7A8RCeipilIHXEg](https://mp.weixin.qq.com/s/GJ9Dio_7A8RCeipilIHXEg?_blank)

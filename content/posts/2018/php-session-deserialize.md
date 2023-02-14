@@ -168,7 +168,7 @@ class foo3{
 
 当PHP检测到这种POST请求时，它会在$_SESSION中添加一组数据, 索引是session.upload_progress.prefix与 session.upload_progress.name连接在一起的值。
 
-<br>
+
 
 假如说正常服务器php使用的是php_serialize处理器时，若post：name=xiaoming&passwd=123456|aaaaaaaaa，
 
@@ -178,11 +178,11 @@ class foo3{
 
 值为`|`后面的序列化字符串反序列化后的数据(因为php处理器存储的格式是：键名|反序列后的值)
 
-<br>
+
 
 当前代码的话没有向服务器提交数据，但是现在session.upload_progress.enabled是开启的，所以可以通过上传文件，从而在session文件中写入数据
 
-<br>
+
 
 * POC
 
@@ -273,7 +273,7 @@ a:1:{s:152:"upload_progress_123|O:4:"foo1":1:{s:4:"varr";O:4:"foo2":2:{s:4:"varr
 * 然后更改poc中的payload生成新的序列化字符串，重复上述操作即可得到flag
 
 
-<br>
+
 #### Reference(侵删)：
 * [PHP Session 序列化及反序列化处理器设置使用不当带来的安全隐患](http://drops.wooyun.org/tips/3909?_blank)
 * [安恒429|web 3 session反序列化](https://www.tuicool.com/articles/BfuayyI?_blank)

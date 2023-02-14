@@ -16,7 +16,7 @@ tags:
 * -N 不执行远程命令，一般与-f连用，用于端口转发
 * -C 压缩传输的数据，网速快时会影响速度
 
-<br>
+
 
 * -L l_port:r_host:r_port(将本地机的某个端口转发到远端指定机器的指定端口)
 * -R l_port:r_host:r_port(将远程主机的某个端口转发到本地端指定机器的指定端口)
@@ -98,6 +98,6 @@ reber@222.222.222.222's password:
 ![设置ssh socks5](/img/post/ssh_socks5_proxy_set_firefox.png)
 ![火狐通过代理可以上网](/img/post/ssh_socks5_proxy_firefox_internet.png)
 
-<br>
+
 #### Reference(侵删)：
 * [https://blog.csdn.net/linsanhua/article/details/17360369](https://blog.csdn.net/linsanhua/article/details/17360369)

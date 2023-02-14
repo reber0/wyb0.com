@@ -21,7 +21,8 @@ yum remove wget
 yum list installed //显示已经安装过的软件
 yum list   //显示所有可以安装的包
 ```
-<br />
+
+
 ```
 [wyb@localhost ~]$ wget -h  //验证有没有安装wget
 -bash: /usr/bin/wget: No such file or directory

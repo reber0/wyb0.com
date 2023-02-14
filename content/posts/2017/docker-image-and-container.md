@@ -325,6 +325,6 @@ ubuntu              14.04               7e4b16ae8b23        11 days ago         
 ubuntu              latest              1d9c17228a9e        11 days ago         86.7MB
 ```
 
-<br />
+
 #### Reference(侵删)：
 * [https://my.oschina.net/zjzhai/blog/225112](https://my.oschina.net/zjzhai/blog/225112?_blank)

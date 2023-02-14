@@ -224,7 +224,7 @@ mysql> show warnings;
 4 rows in set (0.00 sec)
 ```
 
-<br>
+
 #### Reference(侵删)：
 * [https://www.cnblogs.com/Le30bjectNs11/p/4341207.html](https://www.cnblogs.com/Le30bjectNs11/p/4341207.html)
 * [https://www.cnblogs.com/rollenholt/p/5442825.html](https://www.cnblogs.com/rollenholt/p/5442825.html)

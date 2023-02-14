@@ -130,6 +130,6 @@ $ sudo service docker restart
 $ newgrp - docker
 ```
 
-<br />
+
 #### Reference(侵删)：
 * [https://docs.docker.com/install/](https://docs.docker.com/install/?_blank)

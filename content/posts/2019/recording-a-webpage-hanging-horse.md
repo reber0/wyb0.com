@@ -79,9 +79,9 @@ document.writeln("</script>");
 
 判断了 Referer，是 baidu、sogou、soso 之类的话 location.href 跳转到恶意站点 https://71110tz.com/
 
-<br>
+
 以上
 
-<br>
+
 #### Reference(侵删)：
 * [https://www.test404.com/post-655.html?wafcloud=1](https://www.test404.com/post-655.html?wafcloud=1?_blank)

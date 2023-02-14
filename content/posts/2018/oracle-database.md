@@ -218,7 +218,7 @@ SQL>
 
     Grant succeeded.
     ```
-<br>
+
     ```sql
     --删除空的表空间，不包含物理文件
     drop tablespace tablespace_name;
@@ -377,7 +377,7 @@ SQL>
     SQL>
     ```
 
-<br />
+
 #### Reference(侵删)：
 * [https://www.aliyun.com/jiaocheng/318905.html](https://www.aliyun.com/jiaocheng/318905.html?_blank)
 * [https://www.cnblogs.com/jiangxinnju/p/5840420.html](https://www.cnblogs.com/jiangxinnju/p/5840420.html?_blank)
