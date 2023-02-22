@@ -1,6 +1,6 @@
 ---
 date: 2020-06-22 17:35:07
-title: 记一次 SQL 注入简单 bypass
+title: 记一次 SQLServer 注入
 description: 注入 bypass
 categories:
   - Pentest
