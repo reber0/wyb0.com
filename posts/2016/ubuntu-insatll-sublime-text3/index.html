@@ -106,17 +106,17 @@ sudo apt-get install sublime-text-installer</p>
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">gtk_im_context_set_client_window</span> (GtkIMContext <span style="color:#f92672">*</span>context,GdkWindow  <span style="color:#f92672">*</span>window)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>GtkIMContextClass <span style="color:#f92672">*</span>klass;
-</span></span><span style="display:flex;"><span>g_return_if_fail (GTK_IS_IM_CONTEXT (context));
-</span></span><span style="display:flex;"><span>klass <span style="color:#f92672">=</span> GTK_IM_CONTEXT_GET_CLASS (context);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">g_return_if_fail</span> (<span style="color:#a6e22e">GTK_IS_IM_CONTEXT</span> (context));
+</span></span><span style="display:flex;"><span>klass <span style="color:#f92672">=</span> <span style="color:#a6e22e">GTK_IM_CONTEXT_GET_CLASS</span> (context);
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (klass<span style="color:#f92672">-&gt;</span>set_client_window)
-</span></span><span style="display:flex;"><span>    klass<span style="color:#f92672">-&gt;</span>set_client_window (context, window);
-</span></span><span style="display:flex;"><span>g_object_set_data(G_OBJECT(context),<span style="color:#e6db74">&#34;window&#34;</span>,window);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>GDK_IS_WINDOW (window))
+</span></span><span style="display:flex;"><span>    klass<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">set_client_window</span> (context, window);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">g_object_set_data</span>(<span style="color:#a6e22e">G_OBJECT</span>(context),<span style="color:#e6db74">&#34;window&#34;</span>,window);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span><span style="color:#a6e22e">GDK_IS_WINDOW</span> (window))
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> width <span style="color:#f92672">=</span> gdk_window_get_width(window);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> height <span style="color:#f92672">=</span> gdk_window_get_height(window);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> width <span style="color:#f92672">=</span> <span style="color:#a6e22e">gdk_window_get_width</span>(window);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> height <span style="color:#f92672">=</span> <span style="color:#a6e22e">gdk_window_get_height</span>(window);
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(width <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> height <span style="color:#f92672">!=</span><span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>    gtk_im_context_focus_in(context);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">gtk_im_context_focus_in</span>(context);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><ol start="2">
 <li>将上一步的代码编译成共享库libsublime-imfix.so</li>

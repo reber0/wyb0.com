@@ -6,177 +6,140 @@
     <description>Recent content in SQL注入 on Reber&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2020 17:35:07 +0000</lastBuildDate><atom:link href="https://wyb0.com/tags/SQL%E6%B3%A8%E5%85%A5/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Jun 2020 17:35:07 +0000</lastBuildDate>
+    <atom:link href="https://wyb0.com/tags/SQL%E6%B3%A8%E5%85%A5/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>记一次 SQLServer 注入</title>
       <link>https://wyb0.com/posts/2020/recording-sqlserver-injection/</link>
       <pubDate>Mon, 22 Jun 2020 17:35:07 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2020/recording-sqlserver-injection/</guid>
       <description>0x00 存在 SQL 注入 总之是遇到一个站，登录的页面，数据包大致如下： POST /jsweb/userlogin/UserLoginAction.aspx HTTP/1.1 Host: 115.xxx.xxx.xxx:8042 Content-Length: 47 Accept: */* X-Requested-With: XMLHttpRequest User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36 Content-Type: application/x-www-form-urlencoded; charset=UTF-8 Origin: http://115.xxx.xxx.xxx:8042 Referer:</description>
     </item>
-    
     <item>
       <title>通过 selenium 和 flask 中转后利用 sqlmap 进行注入</title>
       <link>https://wyb0.com/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/</link>
       <pubDate>Sat, 27 Jul 2019 18:15:25 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2019/after-transit-via-selenium-flask-to-use-sqlmap/</guid>
       <description>0x00 先说前提 昨天某个小伙伴说有个注入没法搞 前端提交登陆表单时数据包加密了, 而且有个 sign 字符串每次都不一样用于校验, 应该是用 js</description>
     </item>
-    
     <item>
       <title>从 SQL Server 注入到 远程连接桌面</title>
       <link>https://wyb0.com/posts/2019/sql-server-from-sql-injection-to-remote-conn-desktop/</link>
       <pubDate>Tue, 25 Jun 2019 17:01:53 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2019/sql-server-from-sql-injection-to-remote-conn-desktop/</guid>
       <description>0x00 目标情况 只有一个登录框 0x01 发现注入 简单看了下登陆框，可以爆破用户名 加单引号后报错，试了试 and 1=1 确实存在注入 0x01 进一步测试 尝试</description>
     </item>
-    
     <item>
       <title>从 SQL Server 注入到 getshell</title>
       <link>https://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/</link>
       <pubDate>Sat, 02 Mar 2019 20:23:35 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/</guid>
       <description>0x00 目标情况 一个web站点111.*.*.63，只有一个登陆框，测试了没有注入，没有弱口令 扫描了全端口，没有发现什么有用的</description>
     </item>
-    
     <item>
       <title>SQL注入 tips(Oracle)</title>
       <link>https://wyb0.com/posts/2019/injection-tips-of-oracle/</link>
       <pubDate>Fri, 04 Jan 2019 20:23:35 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2019/injection-tips-of-oracle/</guid>
       <description>0x00 判断数据库类型 Oracle有一些自带的表：dual、user_tables id=45 and (select count(*) from user_tables)&amp;gt;0-- id=45 and (select count(*) from dual)&amp;gt;0-- 利用自带的一些函数：</description>
     </item>
-    
     <item>
       <title>记一次 SQL Server 报错注入</title>
       <link>https://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/</link>
       <pubDate>Mon, 24 Dec 2018 10:51:02 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2018/recording-an-sqlserver-sql-injection-of-error-based/</guid>
       <description>0x00 验证码前端验证 需要测试一个网站，刚开始看到网站时感觉希望不大，因为验证码是需要拖动的，这也就意味着很大可能没办法爆破，</description>
     </item>
-    
     <item>
       <title>SQL注入 tips(SQL Server)</title>
       <link>https://wyb0.com/posts/2018/injection-tips-of-sqlserver/</link>
       <pubDate>Tue, 04 Sep 2018 10:09:17 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2018/injection-tips-of-sqlserver/</guid>
       <description>0x00 基础信息探测 @@VERSION,@@SERVERNAME,@@SERVICENAME; --Microsoft SQL Server 2008 (RTM) - 10.0.1600.22 (X64) --WIN-2008 --MSSQLSERVER USER,CURRENT_USER,SESSION_USER,SYSTEM_USER; --dbo --dbo --dbo --sa USER_NAME(),HOST_NAME(),HOST_ID(),SUSER_NAME(); --dbo --wyb --46530 --sa USER_ID(),USER_SID(); --1 --&amp;lt;01&amp;gt; ORIGINAL_LOGIN(); --sa 0x01 UNION query &amp;amp; error-based 注入 判断存在注入 and 1=1/and 1=2 select * from msg where id=1 and 11=(select case when(1=1) then</description>
     </item>
-    
     <item>
       <title>SQL注入 tips(MySQL)</title>
       <link>https://wyb0.com/posts/2018/injection-tips-of-mysql/</link>
       <pubDate>Wed, 23 May 2018 11:14:51 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2018/injection-tips-of-mysql/</guid>
       <description>环境：MySQL 5.5.47 0x00 注入点在Order by后面 mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by id into outfile &amp;#39;C:\\Apps\\phpStudy\\WWW\\a.txt&amp;#39;; Query OK, 1 row affected (0.01 sec) mysql&amp;gt; select id,name,content from msg where id&amp;gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1);</description>
     </item>
-    
     <item>
       <title>ThinkPHP5 的 where 函数使用不当存在注入</title>
       <link>https://wyb0.com/posts/2018/thinkphp5-where-function/</link>
       <pubDate>Mon, 16 Apr 2018 19:16:14 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2018/thinkphp5-where-function/</guid>
       <description>0x00 关于thinkphp5的where函数 年前公司委托别的公司开发一个网站，使用的是ThinkPHP 5.0.13，存在一个</description>
     </item>
-    
     <item>
       <title>[转] MySQL 报错注入原理分析(count()、rand()、group by)</title>
       <link>https://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/</link>
       <pubDate>Sun, 13 Nov 2016 11:59:26 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2016/mysql-injection-error-based-theory-count-rand-groupby/</guid>
       <description>原文链接：http://drops.wooyun.org/tips/14312 0x00 疑问 一直在用mysql数据库报错注入方法</description>
     </item>
-    
     <item>
       <title>SQL 注入之防御</title>
       <link>https://wyb0.com/posts/2016/injection-of-defense/</link>
       <pubDate>Sat, 25 Jun 2016 10:25:11 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2016/injection-of-defense/</guid>
       <description>0x00 要做的事 也就是找到注入点然后修复 0x01 防御方法 使用预编译语句绑定变量(比如php的mysqli、pdo) &amp;lt;?php //预编译 $mysqli = new</description>
     </item>
-    
     <item>
       <title>SQL 注入之宽字节注入(MySQL)</title>
       <link>https://wyb0.com/posts/2016/injection-of-wide-byte/</link>
       <pubDate>Fri, 24 Jun 2016 15:32:34 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2016/injection-of-wide-byte/</guid>
       <description>0x00 应用场景 在注入时通常会使用单引号、双引号等特殊字符。在应用中，通常为了安全，开发者会开启php的magic_quote</description>
     </item>
-    
     <item>
       <title>SQL 注入之基于时间的注入(MySQL)</title>
       <link>https://wyb0.com/posts/2016/injection-of-time-based/</link>
       <pubDate>Fri, 24 Jun 2016 10:10:27 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2016/injection-of-time-based/</guid>
       <description>0x00 特点 当页面存在注入，但是没有显示位且不管怎么测试返回页面都没有变化，此时可以使用基于时间的盲注进行注入。 其实只要存在S</description>
     </item>
-    
     <item>
       <title>SQL 注入之布尔型注入(MySQL)</title>
       <link>https://wyb0.com/posts/2016/injection-of-boolian-based/</link>
       <pubDate>Thu, 23 Jun 2016 23:32:34 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2016/injection-of-boolian-based/</guid>
       <description>0x00 特点 当页面存在注入，但是没有显示位，且没有用echo &amp;#34;mysql_error()&amp;#34;输出错误信息时可以用</description>
     </item>
-    
     <item>
       <title>SQL 注入之报错型注入(MySQL)</title>
       <link>https://wyb0.com/posts/2016/injection-of-error-based/</link>
       <pubDate>Wed, 22 Jun 2016 15:30:54 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2016/injection-of-error-based/</guid>
       <description>0x00 前提 一般是在页面没有显示位、但用echo mysql_error();输出了错误信息的时候使用， 它的特点是注入速度快，但</description>
     </item>
-    
     <item>
       <title>SQL 注入之联合查询(MySQL)</title>
       <link>https://wyb0.com/posts/2016/injection-of-union-select/</link>
       <pubDate>Tue, 21 Jun 2016 22:30:18 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2016/injection-of-union-select/</guid>
       <description>0x00 前提 要用联合查询进行注入则：页面必须有显示位 0x01 联合查询 union可合并两个或多个select语句的结果集，前提是两个s</description>
     </item>
-    
     <item>
       <title>SQL 注入之 load_file 和 into outfile(MySQL)</title>
       <link>https://wyb0.com/posts/2016/injection-of-mysql-function/</link>
       <pubDate>Mon, 20 Jun 2016 08:10:27 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2016/injection-of-mysql-function/</guid>
       <description>0x00 load_file() 读文件 条件: 1. 要有file_priv权限: show global variables like &amp;#39;%secure%&amp;#39;; 2. 知道文件绝对路径 3. 能使用union 4. 对web目录有读权限 注：若</description>
     </item>
-    
     <item>
       <title>SQL 注入</title>
       <link>https://wyb0.com/posts/2016/injection/</link>
       <pubDate>Sun, 19 Jun 2016 20:18:48 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2016/injection/</guid>
       <description>0x00 含义 sql注入是将代码插入(拼接)到应用(用户)的输入参数中，之后再将这些参数传递给后台的SQL服务器加以解析并执行的</description>
     </item>
-    
     <item>
       <title>ASP Cookie 处联合注入</title>
       <link>https://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</link>
       <pubDate>Fri, 04 Dec 2015 19:42:19 +0000</pubDate>
-      
       <guid>https://wyb0.com/posts/2015/injection-of-asp-in-the-cookie/</guid>
       <description>0x00 Cookie注入的使用 三大Web提交方式 GET：直接在浏览器上面访问地址 POST：提交表单(会员注册、文件上传等) CO</description>
     </item>
-    
   </channel>
 </rss>
