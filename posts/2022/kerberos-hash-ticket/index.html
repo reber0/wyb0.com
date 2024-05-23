@@ -127,7 +127,7 @@ KDC 收到请求后，在 AD 中拿到对应用户的 Hash 对 Client 的预认�
 <li>KDC 用户 krbtgt 用户的 NTLM Hash 加密后的 TGT(包含原始 Session key、TGT 到期时间、PAC 等)</li>
 </ul>
 <p>Client 收到 AS 的返回后会用自己的 NTLM Hash 解密密文 Session Key 得到原始的 Session Key，然后在本地缓存原始 Session Key 和 TGT</p>
-<p><!-- raw HTML omitted -->注：如果我们能获取到 krbtgt 用户的 NTLM Hash 那就能自己制作 TGT，也就是黄金票据攻击<!-- raw HTML omitted --></p>
+<p><font color=red>注：如果我们能获取到 krbtgt 用户的 NTLM Hash 那就能自己制作 TGT，也就是黄金票据攻击</font></p>
 </li>
 <li>
 <p>3、TGS-REQ
@@ -148,7 +148,7 @@ Client 携带：</p>
 <li>用 Server 的 Hash 加密过的 ST 服务票据(包含 Client info、原始Server Session Key)</li>
 </ul>
 <p>Client 收到返回后通过缓存的原始 Session Key 解密得到原始 Server Session Key、ST 服务票据，然后缓存它们</p>
-<p><!-- raw HTML omitted -->注：如果我们拥有服务账号的 NTLM Hash，我们可以自己签发该服务的 ST 票据，这个票据也被称为白银票据。有些服务并没有验证 PAC 是白银票据能成功的前提，因为就算攻击者拥有用户 hash，可以制作 ST 票据，也不能制作 PAC。相较于黄金票据，白银票据使用要访问服务的 hash，而不是 krbtgt 的 hash，由于生成的是 ST 票据，不需要跟域控打交道，但是白银票票据只能访问特定服务。<!-- raw HTML omitted --></p>
+<p><font color=red>注：如果我们拥有服务账号的 NTLM Hash，我们可以自己签发该服务的 ST 票据，这个票据也被称为白银票据。有些服务并没有验证 PAC 是白银票据能成功的前提，因为就算攻击者拥有用户 hash，可以制作 ST 票据，也不能制作 PAC。相较于黄金票据，白银票据使用要访问服务的 hash，而不是 krbtgt 的 hash，由于生成的是 ST 票据，不需要跟域控打交道，但是白银票票据只能访问特定服务。</font></p>
 </li>
 <li>
 <p>5、AP-REQ
@@ -361,7 +361,7 @@ klist 查询票据是否导入成功<br>
     </p>
   
   <p class="copyright">
-    Copyright © 2015-2023
+    Copyright © 2015-2024
     <a href="https://wyb0.com/"><strong>Reber</strong></a>.
 
     Built with

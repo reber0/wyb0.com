@@ -115,7 +115,7 @@ class Index
 <pre tabindex="0"><code>SELECT * FROM `msg` WHERE ( id=1 )
 
 SELECT * FROM `msg` WHERE `id` = 1
-</code></pre><p>前者存在注入，当payload为: <!-- raw HTML omitted -->) and 1=1 and (1)=(1<!-- raw HTML omitted -->时判断返回如下：
+</code></pre><p>前者存在注入，当payload为: <f>) and 1=1 and (1)=(1</f>时判断返回如下：
 <img src="/img/post/tp5_where_str1.png" alt="80">
 <img src="/img/post/tp5_where_str2.png" alt="45">
 主要调用文件及函数顺序如下：</p>
@@ -637,7 +637,7 @@ public function query($sql, $bind = [], $master = false, $class = false)
     </p>
   
   <p class="copyright">
-    Copyright © 2015-2023
+    Copyright © 2015-2024
     <a href="https://wyb0.com/"><strong>Reber</strong></a>.
 
     Built with

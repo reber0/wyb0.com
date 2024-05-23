@@ -182,11 +182,11 @@
 </span></span></code></pre></div><p>post username=111&amp;password=222，经过 filter 后输出</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#a6e22e">O</span><span style="color:#f92672">:</span><span style="color:#ae81ff">4</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;User&#34;</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span><span style="color:#f92672">:</span>{<span style="color:#a6e22e">s</span><span style="color:#f92672">:</span><span style="color:#ae81ff">8</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;username&#34;</span>;<span style="color:#a6e22e">s</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;111&#34;</span>;<span style="color:#a6e22e">s</span><span style="color:#f92672">:</span><span style="color:#ae81ff">8</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;password&#34;</span>;<span style="color:#a6e22e">s</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span><span style="color:#f92672">:</span><span style="color:#e6db74">&#34;222&#34;</span>;}
 </span></span></code></pre></div><p>可以看出其实可控的是 111 及后面的 222，我们需要将 User 类序列化的字符串想办法构造为</p>
-<p><code>O:4:&quot;User&quot;:2:{s:8:&quot;username&quot;;s:4:&quot;111&quot;;     s:8:&quot;password&quot;;</code><!-- raw HTML omitted -->序列化后的 evil 字符串<!-- raw HTML omitted -->;}</p>
+<p><code>O:4:&quot;User&quot;:2:{s:8:&quot;username&quot;;s:4:&quot;111&quot;;     s:8:&quot;password&quot;;</code><f>序列化后的 evil 字符串</f>;}</p>
 <p>当我们传入构造后的序列化 payload 后
 <img src="/img/post/16258097627342.jpg" alt=""></p>
 <p>上图中，位置 2 在序列化的字符串中其实是 username 的值，是一个字符串，若我们在 1 的位置插入 60 个字符</p>
-<p>则 username 的值为我们插入的 60 个字符，而 password 的值则为 payload <!-- raw HTML omitted --><code>O:4:&quot;evil&quot;:1:{s:4:&quot;hint&quot;;s:8:&quot;hint.php&quot;;}</code><!-- raw HTML omitted -->，后面 3 位置的字符串失效，当反序列化时即可触发 evil，构造后如下图：
+<p>则 username 的值为我们插入的 60 个字符，而 password 的值则为 payload <f><code>O:4:&quot;evil&quot;:1:{s:4:&quot;hint&quot;;s:8:&quot;hint.php&quot;;}</code></f>，后面 3 位置的字符串失效，当反序列化时即可触发 evil，构造后如下图：
 <img src="/img/post/16258101773735.jpg" alt="">
 将 payload 中 evil 的属性个数改为大于存在的属性个数即可绕过 wakeup，最终得到 hint.php 的内容
 <img src="/img/post/16258103107382.jpg" alt=""></p>
@@ -229,7 +229,7 @@
     </p>
   
   <p class="copyright">
-    Copyright © 2015-2023
+    Copyright © 2015-2024
     <a href="https://wyb0.com/"><strong>Reber</strong></a>.
 
     Built with

@@ -108,7 +108,7 @@
 <p>客户端同样需要有运行时动态加载额外类的能力，客户端使用了与 RMI 注册表相同的机制，RMI 服务端将 URL 传递给客户端，客户端通过 HTTP 请求下载这些类</p>
 <h3 id="0x03-jndi-注入">0x03 JNDI 注入</h3>
 <p>JNDI 注入其实是把目标主机，即使用 JNDI 服务的主机当作了 Client，它请求了恶意的 RMI</p>
-<p>JNDI 接口在初始化时，可以将 RMI URI 作为参数传入，而 JNDI 注入就出现在客户端的 lookup() 函数中，如果<!-- raw HTML omitted -->lookup() 的参数可控<!-- raw HTML omitted -->就可能被攻击。</p>
+<p>JNDI 接口在初始化时，可以将 RMI URI 作为参数传入，而 JNDI 注入就出现在客户端的 lookup() 函数中，如果<f>lookup() 的参数可控</f>就可能被攻击。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
 </span></span><span style="display:flex;"><span>        String uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rmi://192.168.1.110:1099/rhello&#34;</span>;
@@ -235,7 +235,7 @@
     </p>
   
   <p class="copyright">
-    Copyright © 2015-2023
+    Copyright © 2015-2024
     <a href="https://wyb0.com/"><strong>Reber</strong></a>.
 
     Built with

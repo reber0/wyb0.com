@@ -130,7 +130,35 @@ awk工作流程是这样的：
 </span></span></code></pre></div><ul>
 <li>内置变量：</li>
 </ul>
-<!-- raw HTML omitted -->
+<table>
+    <tr>
+        <td bgcolor=black>
+ARGC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;命令行参数个数<br/>
+ARGV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;命令行参数排列<br/>
+ENVIRON&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;支持队列中系统环境变量的使用<br/>
+FILENAME&nbsp;&nbsp;&nbsp;awk浏览的文件名<br/>
+FNR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览文件的记录数<br/>
+FS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设置输入域分隔符，等价于命令行 -F选项<br/>
+NF&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览记录的域的个数<br/>
+NR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已读的记录数<br/>
+OFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出域分隔符<br/>
+ORS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出记录分隔符<br/>
+RS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;控制记录分隔符
+        </td>
+    </tr>
+</table>
+```
+[wyb@localhost temp]$ awk -F: '{print "filename:" FILENAME ",linenumber:" NR ",columns:" NF ",linecontent:"$0}' a.txt
+filename:a.txt,linenumber:1,columns:1,linecontent:1     root    12sf34s56
+filename:a.txt,linenumber:2,columns:1,linecontent:2     admin   ksdjfiweurf
+filename:a.txt,linenumber:3,columns:1,linecontent:3     dome    skd89453
+filename:a.txt,linenumber:4,columns:1,linecontent:4     tomkd   3jkke34
+filename:a.txt,linenumber:5,columns:1,linecontent:5     jarry   sdkj89ry4
+filename:a.txt,linenumber:6,columns:1,linecontent:6     canki   sdkj834
+filename:a.txt,linenumber:7,columns:1,linecontent:7     lola    er8f7734
+filename:a.txt,linenumber:8,columns:1,linecontent:8     marry   j8jkf78
+filename:a.txt,linenumber:9,columns:1,linecontent:9     candy   kd89943
+```
 <ul>
 <li>
 <p>awk编程：</p>
@@ -161,7 +189,19 @@ root bash is:/bin/bash
 <ul>
 <li>常用参数：nrABC</li>
 </ul>
-<!-- raw HTML omitted -->
+<table>
+    <tr>
+        <td bgcolor=black>
+-n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;输出匹配到的字符串所在行数<br/>
+-r&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;遍历子目录文件查找字符串<br/>
+-A 3&nbsp;&nbsp;显示匹配行及下面3行<br/>
+-B 4&nbsp;&nbsp;显示匹配行及上面4行<br/>
+-C 4&nbsp;&nbsp;显示匹配行及上下4行<br/>
+-i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不区分大小写<br/>
+-v&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示所有不包含字符的行
+        </td>
+    </tr>
+</table>
 <pre tabindex="0"><code>[wyb@localhost ~]$ grep root /etc/passwd #查找root这个字符
 root:x:0:0:root:/root:/bin/bash
 operator:x:11:0:operator:/root:/sbin/nologin
@@ -354,7 +394,7 @@ eth0      Link encap:Ethernet  HWaddr 00:0C:29:56:B4:10
     </p>
   
   <p class="copyright">
-    Copyright © 2015-2023
+    Copyright © 2015-2024
     <a href="https://wyb0.com/"><strong>Reber</strong></a>.
 
     Built with
