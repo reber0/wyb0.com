@@ -182,6 +182,6 @@ SSTI 模版注入一般都是先找到执行命令的模块模块，然后执行
 
 
 **Reference(侵删)：**
-* [Flask基础及模板注入漏洞（SSTI）](https://xz.aliyun.com/t/12163)
-* [SSTI的payload](https://www.cnblogs.com/chrysanthemum/p/12766783.html)
-* [Python 沙盒逃逸备忘](https://www.k0rz3n.com/2018/05/04/Python%20沙盒逃逸备忘/)
+* [Flask基础及模板注入漏洞（SSTI）](https://xz.aliyun.com/t/12163?_blank)
+* [SSTI的payload](https://www.cnblogs.com/chrysanthemum/p/12766783.html?_blank)
+* [Python 沙盒逃逸备忘](https://www.k0rz3n.com/2018/05/04/Python%20沙盒逃逸备忘/?_blank)
