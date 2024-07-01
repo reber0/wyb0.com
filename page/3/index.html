@@ -77,6 +77,48 @@
 		
 		
 			<article>
+  <h1 class="summary-title"><a href="https://wyb0.com/posts/2019/sql-server-from-sql-injection-to-remote-conn-desktop/">从 SQL Server 注入到 远程连接桌面</a></h1>
+  
+<div class="post-meta">
+    <time>2019-06-25</time>
+    [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/SQL%E6%B3%A8%E5%85%A5">SQL注入</a>)
+</div>
+
+  <div class="summary-body">
+    <p>0x00 目标情况 只有一个登录框 0x01 发现注入 简单看了下登陆框，可以爆破用户名 加单引号后报错，试了试 and 1=1 确实存在注入 0x01 进一步测试 尝试<a href="https://wyb0.com/posts/2019/sql-server-from-sql-injection-to-remote-conn-desktop/"> more...</a></p>
+  </div>
+</article>
+
+		
+			<article>
+  <h1 class="summary-title"><a href="https://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/">从 SQL Server 注入到 getshell</a></h1>
+  
+<div class="post-meta">
+    <time>2019-03-02</time>
+    [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/getshell">getshell</a>,<a href="/tags/SQL%E6%B3%A8%E5%85%A5">SQL注入</a>)
+</div>
+
+  <div class="summary-body">
+    <p>0x00 目标情况 一个web站点111.*.*.63，只有一个登陆框，测试了没有注入，没有弱口令 扫描了全端口，没有发现什么有用的<a href="https://wyb0.com/posts/2019/sql-server-from-injection-to-getshell/"> more...</a></p>
+  </div>
+</article>
+
+		
+			<article>
+  <h1 class="summary-title"><a href="https://wyb0.com/posts/2019/injection-tips-of-oracle/">SQL注入 tips(Oracle)</a></h1>
+  
+<div class="post-meta">
+    <time>2019-01-04</time>
+    [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/SQL%E6%B3%A8%E5%85%A5">SQL注入</a>,<a href="/tags/oracle">oracle</a>)
+</div>
+
+  <div class="summary-body">
+    <p>0x00 判断数据库类型 Oracle有一些自带的表：dual、user_tables id=45 and (select count(*) from user_tables)&gt;0-- id=45 and (select count(*) from dual)&gt;0-- 利用自带的一些函数：<a href="https://wyb0.com/posts/2019/injection-tips-of-oracle/"> more...</a></p>
+  </div>
+</article>
+
+		
+			<article>
   <h1 class="summary-title"><a href="https://wyb0.com/posts/2018/oracle-database/">Oracle 数据库简单使用</a></h1>
   
 <div class="post-meta">
@@ -170,48 +212,6 @@
 
   <div class="summary-body">
     <p>0x00 环境 公司出了一些ctf，说要摸底，然后根据答题成绩来分配相应工作。。。。。 其中有一道是php反序列化，直接用的就是 第三<a href="https://wyb0.com/posts/2018/php-session-deserialize/"> more...</a></p>
-  </div>
-</article>
-
-		
-			<article>
-  <h1 class="summary-title"><a href="https://wyb0.com/posts/2018/structs2-some-vulnerability-payload/">Struts 2 相关漏洞 payload</a></h1>
-  
-<div class="post-meta">
-    <time>2018-06-25</time>
-    [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/rce">rce</a>)
-</div>
-
-  <div class="summary-body">
-    <p>0x00 S2-001 该漏洞因为用户提交表单数据并且验证失败时，后端会将用户之前提交的参数值使用 OGNL 表达式 %{value} 进行解析，然后重新填充到对应的表<a href="https://wyb0.com/posts/2018/structs2-some-vulnerability-payload/"> more...</a></p>
-  </div>
-</article>
-
-		
-			<article>
-  <h1 class="summary-title"><a href="https://wyb0.com/posts/2018/injection-tips-of-mysql/">SQL注入 tips(MySQL)</a></h1>
-  
-<div class="post-meta">
-    <time>2018-05-23</time>
-    [<a href="/categories/Pentest">Pentest</a>](<a href="/tags/SQL%E6%B3%A8%E5%85%A5">SQL注入</a>)
-</div>
-
-  <div class="summary-body">
-    <p>环境：MySQL 5.5.47 0x00 注入点在Order by后面 mysql&gt; select id,name,content from msg where id&gt;1 order by id into outfile &#39;C:\\Apps\\phpStudy\\WWW\\a.txt&#39;; Query OK, 1 row affected (0.01 sec) mysql&gt; select id,name,content from msg where id&gt;1 order by updatexml(0,concat(0x7e,(SELECT concat(table_name) FROM information_schema.tables WHERE table_schema=database() limit 0,1),0x7e),1);<a href="https://wyb0.com/posts/2018/injection-tips-of-mysql/"> more...</a></p>
-  </div>
-</article>
-
-		
-			<article>
-  <h1 class="summary-title"><a href="https://wyb0.com/posts/2018/thinkphp5-where-function/">ThinkPHP5 的 where 函数使用不当存在注入</a></h1>
-  
-<div class="post-meta">
-    <time>2018-04-16</time>
-    [<a href="/categories/Pentest">Pentest</a>,<a href="/categories/PHP">PHP</a>](<a href="/tags/SQL%E6%B3%A8%E5%85%A5">SQL注入</a>,<a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1">代码审计</a>)
-</div>
-
-  <div class="summary-body">
-    <p>0x00 关于thinkphp5的where函数 年前公司委托别的公司开发一个网站，使用的是ThinkPHP 5.0.13，存在一个<a href="https://wyb0.com/posts/2018/thinkphp5-where-function/"> more...</a></p>
   </div>
 </article>
 
