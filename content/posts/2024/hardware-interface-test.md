@@ -77,7 +77,7 @@ tty.usbserial-AQ00DRLX
 
 
 **参考资料**
-* [物联网安全从零开始-路由器硬件安全初探](https://www.iotsec-zone.com/article/358)
-* [物联网安全从零开始-路由器jtag调试分析](https://www.iotsec-zone.com/article/375)
-* [嵌入式安全利器 JTAGulator 的制作与调试实战](https://yaseng.org/diy-JTAGulator-and-debugging.html)
-* [UART串口调试](https://www.secpulse.com/archives/157847.html)
+* [物联网安全从零开始-路由器硬件安全初探](https://www.iotsec-zone.com/article/358?_blank)
+* [物联网安全从零开始-路由器jtag调试分析](https://www.iotsec-zone.com/article/375?_blank)
+* [嵌入式安全利器 JTAGulator 的制作与调试实战](https://yaseng.org/diy-JTAGulator-and-debugging.html?_blank)
+* [UART串口调试](https://www.secpulse.com/archives/157847.html?_blank)

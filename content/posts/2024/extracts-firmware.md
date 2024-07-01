@@ -336,7 +336,7 @@ root@bad:~# binwalk --dd=your_directory --create-archive your_file.zip
 
 
 **参考资料**
-* [固件提取及分析技术](https://www.freebuf.com/articles/ics-articles/262454.html)
-* [挂载和反向制作 ubi 镜像](https://baurine.netlify.app/2015/06/13/mount_and_make_ubi/)
-* [IoT（八）ubi文件系统挂载&解包](https://www.gandalf.site/2019/01/iotubi.html)
-* [固件提取系列-UBI文件系统提取以及重打包](https://gorgias.me/2019/12/27/固件提取系列-UBI文件系统提取以及重打包/)
+* [固件提取及分析技术](https://www.freebuf.com/articles/ics-articles/262454.html?_blank)
+* [挂载和反向制作 ubi 镜像](https://baurine.netlify.app/2015/06/13/mount_and_make_ubi/?_blank)
+* [IoT（八）ubi文件系统挂载&解包](https://www.gandalf.site/2019/01/iotubi.html?_blank)
+* [固件提取系列-UBI文件系统提取以及重打包](https://gorgias.me/2019/12/27/固件提取系列-UBI文件系统提取以及重打包/?_blank)
