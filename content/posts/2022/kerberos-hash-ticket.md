@@ -162,13 +162,13 @@ kerbrute_windows_amd64.exe passwordspray -d yokan.com user.txt password
         银票：伪造的 ST，只能访问指定的服务，如 CIFS
     ```
 
-* 黄金票据
-在 Ticket 获取过程中，Client 与 KDC 两次通信得到对应 Server 资源的 Ticket。
-若攻击者已经获取 krbtgt 的 NTLM Hash 值时，可伪造自己的 TGT，而这个 TGT 就是常说的黄金票据。
+* 黄金票据  
+在 Ticket 获取过程中，Client 与 KDC 两次通信得到对应 Server 资源的 Ticket。  
+若攻击者已经获取 krbtgt 的 NTLM Hash 值时，可伪造自己的 TGT，而这个 TGT 就是常说的黄金票据。  
 而我们拥有了黄金票据，就可以不用经过 AS 认证，直接向 TGS 服务请求 Ticket。
 ![40](/img/post/Xnip2022-10-13_17-11-20.png)
 
-* 白银票据
+* 白银票据  
 当攻击者拥有 Server NTLM Hash 时，可直接伪造一个 Ticket 与 Server 通信让其验证。
  ![40](/img/post/Xnip2022-10-13_17-11-42.png)
 
